@@ -1,0 +1,11 @@
+#!/bin/bash
+
+process-template /etc/lirc/hardware.conf
+process-template /etc/modprobe.d/lirc-serial.conf
+
+LIRCD_CONF="$(dbget system.lirchw.lircd_conf)"
+if [ -n "$LIRCD_CONF" ]; then
+  if [ ! -e /etc/lirc/lircd.conf -o -L /etc/lirc/lircd.conf ]; then
+    ln -sf /usr/share/lirc/remotes/$LIRCD_CONF /etc/lirc/lircd.conf
+  fi
+fi

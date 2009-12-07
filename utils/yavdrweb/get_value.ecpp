@@ -1,0 +1,16 @@
+<%pre>
+#include <ClearSilver.h>
+#include "../common.h"
+</%pre>
+
+<%args>
+name;
+</%args>
+
+<%cpp>
+  HDF *hdfdb;
+  hdf_init(&hdfdb);
+  hdf_read_file(hdfdb, YAVDRDB);
+  reply.out() << hdf_get_value(hdfdb, name.c_str(), "NULL");
+  hdf_destroy(&hdfdb);
+</%cpp>

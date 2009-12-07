@@ -1,0 +1,24 @@
+#! /bin/bash
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=vdr
+DESC="Linux Video Disk Recorder"
+
+VDRPRG=/usr/bin/vdr
+
+test -x $VDRPRG || exit 0
+
+. /usr/lib/vdr/config-loader.sh
+
+# Set shutdown command
+test "$ENABLE_SHUTDOWN" = "1" && VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown.wrapper" \
+                              || VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown-message"
+
+. /usr/lib/vdr/plugin-loader.sh
+. /usr/lib/vdr/commands-loader.sh
+
+getplugins
+#mergecommands "commands"
+#mergecommands "reccmds"
+#echo "$REC_CMD" >/tmp/rec_cmd
+echo "$PLUGINS" >/tmp/vdr-plugins

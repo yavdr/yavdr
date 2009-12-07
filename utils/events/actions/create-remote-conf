@@ -1,0 +1,4 @@
+#!/bin/bash
+
+process-template /var/lib/vdr/remote.conf
+chown vdr:vdr /var/lib/vdr/remote.conf

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+process-template /etc/vdr/plugins/iptv/vlcinput/3Sat.conf
+process-template /etc/vdr/plugins/iptv/vlcinput/N-TV.conf
+process-template /etc/vdr/plugins/iptv/vlcinput/NASA.conf
+
+cat <<EOF >/var/lib/vdr/channels.conf
+3Sat;IPTV:1:IPTV|S0P0|EXT|vlc2iptv|1:P:0:5:6:0:0:7:0:0:0
+N-TV;IPTV:2:IPTV|S0P0|EXT|vlc2iptv|2:P:0:4:5:0:0:3:0:0:0
+NASA;IPTV:3:IPTV|S0P0|EXT|vlc2iptv|3:P:0:2:3:0:0:1:0:0:0
+EOF
+
+chown vdr:vdr /var/lib/vdr/channels.conf

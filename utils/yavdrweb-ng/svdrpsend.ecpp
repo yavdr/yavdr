@@ -1,0 +1,30 @@
+<%pre>
+#include <stdio.h>                                                                                               
+#include <string>
+
+using namespace std;
+</%pre>
+
+<%args>
+id;
+command;
+</%args>
+
+<%cpp>
+  string svdrpcmd = "/usr/bin/svdrpsend " + id + " " + command;
+
+  if (FILE *stream = popen(svdrpcmd.c_str(), "r"))
+  {                                                              
+    char buffer[1024];
+
+    while (!feof(stream))
+    {
+      if (fgets(buffer, sizeof(buffer), stream) != NULL)
+      {
+         reply.out() << buffer;
+      }      
+    }
+    pclose(stream); 
+  }
+</%cpp>
+

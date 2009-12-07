@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# get current resolution and save it
+/usr/bin/xwininfo -root >/tmp/xwininfo.out 2> /dev/null
+if [ -f /tmp/xwininfo.out ]; then
+  WIDTH=$(grep Width /tmp/xwininfo.out|tr -d ' '|cut -d ':' -f 2)
+  if [ "$(dbget system.display.width)" != "$WIDTH" ]; then
+    changed=1
+    dbset "system.display.width=$WIDTH"
+  fi
+  HEIGHT=$(grep Height /tmp/xwininfo.out|tr -d ' '|cut -d ':' -f 2)
+  if [ "$(dbget system.display.height)" != "$HEIGHT" ]; then
+    changed=1
+    dbset "system.display.height=$HEIGHT"
+  fi
+  if [ $changed -eq 1 ]; then
+    signal-event display-resolution-changed
+  fi
+fi
+
+DISPLAY=:1 /usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
+/usr/bin/unclutter -idle 1 -root -visible

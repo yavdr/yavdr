@@ -1,0 +1,40 @@
+Tabs {
+  home {
+    Image = image/Eterm.png
+    Title = Start
+    Groups {
+      common_tasks {
+        Title = Common Tasks
+        Components {
+          0 = lirc
+        }
+      }
+    }
+  }
+  setting {
+    Image = image/advancedsettings.png
+    Title = Einstellungen
+    Groups {
+      hardware {
+        Title = Hardware
+        Components {
+          0 = lirc
+          1 = resolution
+        }
+      }
+    }
+  }
+}
+Components {
+  lirc {
+    Image = image/wlassistant.png
+    Title = Lirc
+    Description = Lirc konfigurieren
+  }
+  resolution {
+    Image = image/klaptop.png
+    Title = Auflösung
+    Description = Auflösung einstellen
+  }
+}
+

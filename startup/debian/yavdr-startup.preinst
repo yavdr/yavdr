@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ install = "$1" -o upgrade = "$1" ]; then 
+   dpkg-divert --package yavdr-startup --add --rename \
+      --divert /etc/init/usplash.conf.dontremove /etc/init/usplash.conf
+fi  
+

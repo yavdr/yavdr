@@ -1,0 +1,288 @@
+yavdr-essential (0.0.41-1tvt1) karmic; urgency=low
+
+  * moved scripts to yavdr-startup
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 17 Nov 2009 09:27:50 +0100
+
+yavdr-essential (0.0.40-1tvt1) karmic; urgency=low
+
+  * another fix
+
+ -- Gerald Dachs <gda@dachsweb.de>  Mon, 16 Nov 2009 23:32:27 +0100
+
+yavdr-essential (0.0.39-1tvt1) karmic; urgency=low
+
+  * more fixes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Mon, 16 Nov 2009 22:50:16 +0100
+
+yavdr-essential (0.0.38-1tvt1) karmic; urgency=low
+
+  * fixed preinst and postrm scripts
+
+ -- Gerald Dachs <gda@dachsweb.de>  Mon, 16 Nov 2009 22:02:12 +0100
+
+yavdr-essential (0.0.37-1tvt1) karmic; urgency=low
+
+  * depends now on nvidia 190
+
+ -- Gerald Dachs <gda@dachsweb.de>  Mon, 16 Nov 2009 17:53:56 +0100
+
+yavdr-essential (0.0.36-1tvt1) karmic; urgency=low
+
+  * added acpi-support to yavdr-essential, removed from debian/control
+  * added the right yavdr repository
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 15 Nov 2009 23:10:29 +0100
+
+yavdr-essential (0.0.35-1tvt1) karmic; urgency=low
+
+  * modified S90.suspend2ram
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 15 Nov 2009 18:46:13 +0100
+
+yavdr-essential (0.0.34-1tvt1) karmic; urgency=low
+
+  * added HolgerRs S3-Scripts
+  * depend. acpi-support	
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 15 Nov 2009 16:51:55 +0100
+
+yavdr-essential (0.0.33-1gda1) karmic; urgency=low
+
+  * forgot to install the new usplash script
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 15 Nov 2009 14:39:32 +0100
+
+yavdr-essential (0.0.32-1gda1) karmic; urgency=low
+
+  * removed --lirc from frontend script.
+  * removed lirc start
+  * added HolgerRs upstart scripts
+  * trying to move original usplash.conf out of the way
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 15 Nov 2009 14:14:10 +0100
+
+yavdr-essential (0.0.31-1gda1) karmic; urgency=low
+
+  *  added "usplash-theme-ubuntu"
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 15 Nov 2009 13:25:15 +0100
+
+yavdr-essential (0.0.30-1gda1) karmic; urgency=low
+
+  * first try to add the ppa keys 
+
+ -- Gerald Dachs <gda@dachsweb.de>  Fri, 13 Nov 2009 00:12:32 +0100
+
+yavdr-essential (0.0.29-1gda1) karmic; urgency=low
+
+  * removed old nodm start script
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 10 Nov 2009 22:24:45 +0100
+
+yavdr-essential (0.0.28-1gda1) karmic; urgency=low
+
+  * removed lirc hack for irserver
+  * fixed alsa option for vdr-sxfe
+  * nodm starts now on startup
+  * vdr-frontend respawns
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 07 Nov 2009 23:58:13 +0100
+
+yavdr-essential (0.0.27-1gda1) karmic; urgency=low
+
+  * added nodm
+  * removed old start scripts
+  * added first try of upstart skripts
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 07 Nov 2009 13:07:54 +0100
+
+yavdr-essential (0.0.26-1gda1) karmic; urgency=low
+
+  * added the-vdr-team ppa
+  * added hepis ppa
+  * changed gda repository
+  * added more packages
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 07 Nov 2009 12:20:57 +0100
+
+yavdr-essential (0.0.25-1gda1) karmic; urgency=low
+
+  * changed sources.list from jaunty to karmic
+  * stupid bug in postinstall skript
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 11 Oct 2009 23:48:35 +0200
+
+yavdr-essential (0.0.24-1gda1) karmic; urgency=low
+
+  * removed requirement lirc-modules-source
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 10 Oct 2009 13:09:14 +0200
+
+yavdr-essential (0.0.23-1gda1) karmic; urgency=low
+
+  * added requirement build-essential
+
+ -- Gerald Dachs <gda@dachsweb.de>  Fri, 09 Oct 2009 22:44:06 +0200
+
+yavdr-essential (0.0.22-1gda1) karmic; urgency=low
+
+  * added requirement vdr-plugin-markad
+  * removed requirement vdr-addon-noad
+
+ -- Gerald Dachs <gda@dachsweb.de>  Thu, 08 Oct 2009 23:27:46 +0200
+
+yavdr-essential (0.0.21-1gda1) jaunty; urgency=low
+
+  * added entry for my repository
+
+ -- Gerald Dachs <gda@dachsweb.de>  Fri, 25 Sep 2009 00:28:48 +0200
+
+yavdr-essential (0.0.20-1gda1) jaunty; urgency=low
+
+  * added tntnet
+
+ -- Gerald Dachs <gda@dachsweb.de>  Wed, 23 Sep 2009 23:24:16 +0200
+
+yavdr-essential (0.0.19-1gda1) jaunty; urgency=low
+
+  * added w-scan
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 22 Sep 2009 23:52:08 +0200
+
+yavdr-essential (0.0.18-1gda1) jaunty; urgency=low
+
+  * added alsa-utils, cpufrequtils
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 22 Sep 2009 22:41:28 +0200
+
+yavdr-essential (0.0.17-1gda1) jaunty; urgency=low
+
+  * removed wirbelscan, added iptv plugin
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 20 Sep 2009 22:41:09 +0200
+
+yavdr-essential (0.0.16-1gda1) jaunty; urgency=low
+
+  * requires now yavdr-utils
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 13 Sep 2009 20:50:45 +0200
+
+yavdr-essential (0.0.15-1gda1) jaunty; urgency=low
+
+  * bug in postinst
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 12 Sep 2009 22:08:28 +0200
+
+yavdr-essential (0.0.14-1gda1) jaunty; urgency=low
+
+  * another fix
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 12 Sep 2009 14:16:09 +0200
+
+yavdr-essential (0.0.13-1gda1) jaunty; urgency=low
+
+  * more fixes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 12 Sep 2009 13:34:04 +0200
+
+yavdr-essential (0.0.12-1gda1) jaunty; urgency=low
+
+  * fixed runvdr-sxfe
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 12 Sep 2009 10:17:26 +0200
+
+yavdr-essential (0.0.11-1gda1) jaunty; urgency=low
+
+  * added x11-xserver-utils
+  * removed graphtft plugin
+
+ -- Gerald Dachs <gda@dachsweb.de>  Mon, 07 Sep 2009 00:46:42 +0200
+
+yavdr-essential (0.0.10-1gda1) jaunty; urgency=low
+
+  * fixed path of runvdr-sxfe
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 06 Sep 2009 23:55:01 +0200
+
+yavdr-essential (0.0.9-1gda1) jaunty; urgency=low
+
+  * added runvdr-sxfe
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 06 Sep 2009 23:31:04 +0200
+
+yavdr-essential (0.0.8-1gda1) jaunty; urgency=low
+
+  * added xserver-xorg-video-vesa
+  * cleaned up vdr-sxfe
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 06 Sep 2009 22:40:48 +0200
+
+yavdr-essential (0.0.7-1gda3) jaunty; urgency=low
+
+  * more fixes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 06 Sep 2009 21:40:50 +0200
+
+yavdr-essential (0.0.7-1gda2) jaunty; urgency=low
+
+  * fixed runlevel for x4vdr
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 06 Sep 2009 20:29:00 +0200
+
+yavdr-essential (0.0.7-1gda1) jaunty; urgency=low
+
+  * init scripts for x an vdr
+  * defaults for CPU < K10
+  * some fixes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 06 Sep 2009 18:44:13 +0200
+
+yavdr-essential (0.0.6-2gda1) jaunty; urgency=low
+
+  * don't install order.conf
+
+ -- Gerald Dachs <gda@dachsweb.de>  Fri, 04 Sep 2009 00:10:34 +0200
+
+yavdr-essential (0.0.6-1gda1) jaunty; urgency=low
+
+  * removed osdpip
+
+ -- Gerald Dachs <gda@dachsweb.de>  Thu, 03 Sep 2009 21:22:42 +0200
+
+yavdr-essential (0.0.5-1gda1) jaunty; urgency=low
+
+  * added wirbelscan
+
+ -- Gerald Dachs <gda@dachsweb.de>  Thu, 03 Sep 2009 21:08:16 +0200
+
+yavdr-essential (0.0.4-1gda1) jaunty; urgency=low
+
+  * added lirc-modules-source
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 01 Sep 2009 23:21:56 +0200
+
+yavdr-essential (0.0.3-1gda1) jaunty; urgency=low
+
+  * more packages
+
+ -- Gerald Dachs <gda@dachsweb.de>  Mon, 24 Aug 2009 16:35:06 +0200
+
+yavdr-essential (0.0.2-1gda1) jaunty; urgency=low
+
+  * some fixes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 22 Aug 2009 14:03:44 +0200
+
+yavdr-essential (0.0.1-1gda2) jaunty; urgency=low
+
+  * fixed build dependency
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sat, 22 Aug 2009 13:32:33 +0200
+
+yavdr-essential (0.0.1-1gda1) jaunty; urgency=low
+
+  * Initial release.
+
+ -- Gerald Dachs <gda@dachsweb.de>  Fri, 21 Aug 2009 19:35:49 +0200

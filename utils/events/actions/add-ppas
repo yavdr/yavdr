@@ -1,0 +1,54 @@
+#!/bin/bash
+
+#apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9A6F2FD5
+
+cat <<EOF >/etc/apt/sources.list.d/yavdr.list 
+deb http://ppa.launchpad.net/the-vdr-team/vdr-ubuntu-karmic/ubuntu karmic main
+deb http://ppa.launchpad.net/the-vdr-team/ppa/ubuntu karmic main
+deb http://ppa.launchpad.net/the-vdr-team/yavdr/ubuntu karmic main
+EOF
+cat <<EOF | apt-key add -
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+mI0ESo1TEQEEAPPOm4STMd5h+kUTaeTRRa6UR9Y+zgVx6+VXkt6nRAGT8yAb8HIC
+UfrV7lWVEtEYaOOE+8Q5Es9cXRcp6Z/6bWS1e7xA+A40SVuBqM6kltOobp1fpbnw
+m6ofxK9IOkQJW8sQWwhmvrZrSi2v8z77x+aK4tEj2FB/tYatbjbBJ0vtABEBAAG0
+HkxhdW5jaHBhZCBQUEEgZm9yIEdlcmFsZCBEYWNoc4i2BBMBAgAgBQJKjVMRAhsD
+BgsJCAcDAgQVAggDBBYCAwECHgECF4AACgkQYOfsdaWvNphbvAQAtEWwcA2LbTiZ
+JgHikIdFWQXD5u5wq3MNPbmzxzdljMEvBkIWaI8cCUgjMiFFhtfHdqgRs2CCsVV0
+7cmdAHtAgbvwO8rQkXnGMCNGPFVukyiG/f+063RYx6y6pPEIPbTRknpX7V9wqFCT
+7VivqvEoELs8DE2LSyw7rtoz3yYrsg8=
+=zyYz
+-----END PGP PUBLIC KEY BLOCK-----
+EOF
+cat <<EOF | apt-key add -
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+mI0ESeu4ogEEANJoI+N33GVup8xIWqsScNeA9iJ8NcYGWa1Mg5vcqGOtq1x38Nla
+X+1k42yVyefvdxYqB4OXo3vodKfcyfzKKu0Dq7+N+USb1xy2IAIQrLllZAEx5e1X
+xtvpMLzir73klOWtbGxgl4Bfhb3OFEozIs54n7J1l/Zm8ILWs0o4tDRnABEBAAG0
+K0xhdW5jaHBhZCBQUEEgbmFtZWQgeGJtYyBmb3IgSGVubmluZyBQaW5nZWyItgQT
+AQIAIAUCSeu4ogIbAwYLCQgHAwIEFQIIAwQWAgMBAh4BAheAAAoJELPIJ/cpnzYK
+YsUD+gNM924qz2G7xMd3vIBZcyp2cgFSt3j4tErmBkj0Uv+Gf8z5LCQ0dtSc6gOa
+E1gabaR5aEJZtggWQokYIK27TIk25w4xI8PeW+hsd5pWa26Pzfj3NqE72ALoKWjV
+n1lv2izAFDx17uPl4CLH10W18e9bb1ZdyUyeEp5C5oPdYz7R
+=oMRD
+-----END PGP PUBLIC KEY BLOCK-----
+EOF
+cat <<EOF | apt-key add -
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+mI0EStwxkwEEALYDKh6E9QOc9KMvWZxkyCDPxDyxDQi4FtYRWCtimYDPn53A6794
+27gBLK/Au8fNK6X2ssOWtQfEkdWnPzc7NS8NOLUptnP74iZNRDJSWyb49NjsoLuL
+N3cfov2r3Hk1mk7B53oxmzUwtUpG+24wMwjmBxy+91Qk03dyeKXTLVVFABEBAAG0
+EUxhdW5jaHBhZCBUaGUgVkRSiLYEEwECACAFAkrcMZMCGwMGCwkIBwMCBBUCCAME
+FgIDAQIeAQIXgAAKCRBGUO31bPIEdE1PBACgksF0g9cmACuse63YiJuS52MDvmMF
+jysJVPV1lW9m3Y8rFQ58aNeHWp0aMSlDWTSlxxtoZQ7Sp7lq4mhKpxBvsIAe+NSm
+xZ9BgEIBDwBZTLSVa1vOqBrC69+HvneyRwC2Tymy97cbQ11AkUhRcK9nmzKBoFPQ
+J8CU5hTBSs0dyw==
+=YAYJ
+-----END PGP PUBLIC KEY BLOCK-----
+EOF

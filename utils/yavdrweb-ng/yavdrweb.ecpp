@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>yaVDR Konfiguration</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="lang" content="de" />
+        <meta name="author" content="YAVDR Web Team" />
+        <link rel="stylesheet" type="text/css" href="ext/resources/css/ext-all.css" />
+        <script type="text/javascript" src="ext/adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="ext/ext-all.js"></script>
+        <!--script type="text/javascript" src="ext/ext-all-debug.js"></script-->
+        <!-- TODO: only use those parts of ext that a really used by this application. saves a lot of http traffic -->
+        
+        <script type="text/javascript" src="static/ext-extensions/GroupTabPanel.js"></script>
+        <script type="text/javascript" src="static/ext-extensions/GroupTab.js"></script>
+        <script type="text/javascript" src="static/ext-extensions/Portal.js"></script>
+        <script type="text/javascript" src="static/ext-extensions/PortalColumn.js"></script>
+        <script type="text/javascript" src="static/ext-extensions/Portlet.js"></script>
+        <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
+        <script type="text/javascript" src="static/config_tabs/x11.js"></script>
+        <script type="text/javascript" src="static/ext-extensions/grouptabs.js"></script>
+
+        <!-- overrides to base library -->
+        <link rel="stylesheet" type="text/css" href="static/ext-extensions/Portal.css" />
+        <link rel="stylesheet" type="text/css" href="static/ext-extensions/GroupTab.css" />
+
+        <!-- page specific -->
+        <style type="text/css">
+            /* styles for iconCls */
+        /*
+            .x-icon-tickets {
+                background-image: url('images/tickets.png');
+            }
+            .x-icon-subscriptions {
+                background-image: url('images/subscriptions.png');
+            }
+            .x-icon-users {
+                background-image: url('images/group.png');
+            }
+            .x-icon-templates {
+                background-image: url('images/templates.png');
+            }
+            */
+        </style>
+        <script>
+            //global vars (bad style, but works for now)
+            var lircData = <& get_lirchwdb >;
+
+            //FIXME: just example data, replace by real data
+            var resolutionArray = [[ 0, '1024x768'], [ 1, '1080p']];
+
+            Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
+
+        </script>
+        <& authenticate >
+    </head>
+    <body></body>
+</html>

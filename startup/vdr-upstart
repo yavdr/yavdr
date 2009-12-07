@@ -1,0 +1,83 @@
+#! /bin/bash
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=vdr
+DESC="Linux Video Disk Recorder"
+
+DAEMON=/usr/sbin/runvdr
+PIDFILE=/var/run/runvdr.pid
+VDRPRG=/usr/bin/vdr
+
+test -x $DAEMON || exit 0
+test -x $VDRPRG || exit 0
+
+. /usr/lib/vdr/config-loader.sh
+
+# Set shutdown command
+test "$ENABLE_SHUTDOWN" = "1" && VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown.wrapper" \
+                              || VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown-message"
+
+. /usr/lib/vdr/plugin-loader.sh
+. /usr/lib/vdr/commands-loader.sh
+
+
+clean_console()
+{
+    if [ "$KEYB_TTY" != "" ]; then
+        tput -Tlinux clear > $KEYB_TTY
+    fi
+}
+
+configure_console_input()
+{
+    if [ "$KEYB_TTY" != "" ]; then
+        clean_console
+        echo -e "This tty is currently mapped to VDR, keypresses aren't echoed.\r" > $KEYB_TTY
+        echo -n "For a login prompt switch to another console." > $KEYB_TTY
+        REDIRECT="< $KEYB_TTY"
+        if [ "$KEYB_TTY_SWITCH" = "1" ]; then
+            chvt `echo "$KEYB_TTY" | sed "s/\/dev\/tty//"`
+        fi
+    fi
+}
+
+get_status()
+{
+    if [ -r $PIDFILE ]; then
+	read PID < $PIDFILE
+	PROCESS=$(ps -p $PID -o comm=)
+	if [ "$PROCESS" = "${DAEMON##*/}" ]; then
+	    return 0
+	fi
+    fi
+    return 3
+}
+
+if [ "$ENABLED" != "0" ] ; then
+    # only start vdr if there is no other instance running
+    if ! get_status; then
+        if [ -f /tmp/vdr-plugins ]; then
+          PLUGINS=$(cat /tmp/vdr-plugins)
+        else
+          getplugins
+        fi
+        mergecommands "commands"
+        mergecommands "reccmds"
+        configure_console_input
+
+        if [ "$VFAT" == "1" ]; then
+            OPTIONS="--vfat $OPTIONS"
+        fi
+
+        $DAEMON \
+            -v $VIDEO_DIR -c $CFG_DIR -L $PLUGIN_DIR -r $REC_CMD \
+            -s $VDRSHUTDOWN -E $EPG_FILE -u $USER -g /tmp \
+            --port $SVDRP_PORT $OPTIONS $PLUGINS $REDIRECT
+        rm -f /var/run/runvdr.pid
+    else
+        echo -n " - seems to be running already"
+    fi
+else
+    echo -n " - aborted (to enable the daemon, edit /etc/default/vdr)"
+fi
+echo

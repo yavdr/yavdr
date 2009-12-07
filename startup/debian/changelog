@@ -1,0 +1,46 @@
+yavdr-startup (0.0.7-1tvt1) karmic; urgency=low
+
+  * rev.110
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Wed, 25 Nov 2009 23:26:22 +0100
+
+yavdr-startup (0.0.6-1tvt2) karmic; urgency=low
+
+  * rev.103
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Mon, 23 Nov 2009 15:18:51 +0100
+
+yavdr-startup (0.0.6-1tvt1) karmic; urgency=low
+
+  * rev.101
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Mon, 23 Nov 2009 14:44:14 +0100
+
+yavdr-startup (0.0.5-3tvt1) karmic; urgency=low
+
+  * rev.96
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sat, 21 Nov 2009 20:07:16 +0100
+
+yavdr-startup (0.0.5-2tvt1) karmic; urgency=low
+
+  * rev 88
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 19 Nov 2009 21:23:40 +0100
+
+yavdr-startup (0.0.3-1tvt1) karmic; urgency=low
+
+  * rev.80
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 19 Nov 2009 21:21:31 +0100
+yavdr-startup (0.0.2-1tvt1) karmic; urgency=low
+
+  * small cleanup
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 17 Nov 2009 20:22:30 +0100
+
+yavdr-startup (0.0.1-1tvt1) karmic; urgency=low
+
+  * initital release
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 17 Nov 2009 09:42:39 +0100

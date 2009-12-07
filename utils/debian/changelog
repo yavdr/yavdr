@@ -1,0 +1,96 @@
+yavdr-utils (0.0.17-1tvt1) karmic; urgency=low
+
+  * rev.97
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sat, 21 Nov 2009 20:15:25 +0100
+
+yavdr-utils (0.0.16-2tvt1) karmic; urgency=low
+
+  * rev. 84
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 19 Nov 2009 21:20:47 +0100
+
+yavdr-utils (0.0.15-2tvt1) karmic; urgency=low
+
+  * rev. 76
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 19 Nov 2009 18:36:42 +0100
+
+yavdr-utils (0.0.13-1gda1) jaunty; urgency=low
+
+  * added ppa key
+
+ -- Gerald Dachs <gda@dachsweb.de>  Fri, 25 Sep 2009 00:48:51 +0200
+
+yavdr-utils (0.0.12-1gda1) jaunty; urgency=low
+
+  * rejected last changes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Thu, 24 Sep 2009 23:09:33 +0200
+
+yavdr-utils (0.0.11-1gda1) jaunty; urgency=low
+
+  * more changes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Thu, 24 Sep 2009 15:49:52 +0200
+
+yavdr-utils (0.0.10-1gda1) jaunty; urgency=low
+
+  * added missing navigation.hdf
+  * fixed tntnet.conf
+
+ -- Gerald Dachs <gda@dachsweb.de>  Wed, 23 Sep 2009 23:50:33 +0200
+
+yavdr-utils (0.0.9-1gda1) jaunty; urgency=low
+
+  * many changes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Wed, 23 Sep 2009 11:36:34 +0200
+
+yavdr-utils (0.0.8-1gda1) jaunty; urgency=low
+
+  * unmute-alsa added
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 22 Sep 2009 23:05:42 +0200
+
+yavdr-utils (0.0.7-1gda1) jaunty; urgency=low
+
+  * added post-install action create-remote-conf
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 22 Sep 2009 22:18:02 +0200
+
+yavdr-utils (0.0.6-1gda1) jaunty; urgency=low
+
+  * ugly hack to get the dash out of the way
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 22 Sep 2009 22:06:31 +0200
+
+yavdr-utils (0.0.5-1gda1) jaunty; urgency=low
+
+  * create remote.conf
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 22 Sep 2009 00:41:39 +0200
+
+yavdr-utils (0.0.4-1gda1) jaunty; urgency=low
+
+  * fixed stupid mistake
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 22 Sep 2009 00:33:22 +0200
+
+yavdr-utils (0.0.3-1gda1) jaunty; urgency=low
+
+  * added cpufrequtils config for AMD
+
+ -- Gerald Dachs <gda@dachsweb.de>  Mon, 21 Sep 2009 23:34:19 +0200
+
+yavdr-utils (0.0.2-1gda1) jaunty; urgency=low
+
+  * major changes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Mon, 21 Sep 2009 23:06:13 +0200
+
+yavdr-utils (0.0.1-1gda1) jaunty; urgency=low
+
+  * Initial release 
+
+ -- Gerald Dachs <gda@dachsweb.de>  Sun, 13 Sep 2009 14:00:36 +0200

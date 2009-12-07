@@ -1,0 +1,4 @@
+#!/bin/bash
+
+process-template /etc/vdr/plugins/menuorg.xml
+chown vdr:vdr /etc/vdr/plugins/menuorg.xml

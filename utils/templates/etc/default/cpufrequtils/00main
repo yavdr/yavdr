@@ -1,0 +1,29 @@
+# if we have an AMD CPU less than K10 we overwrite the
+# settings for cpufrequtils so that it will not go under
+# 2000 MHz
+
+LTK10_GOVERNOR=performance
+LTK10_MIN_SPEED=2000
+
+isltk10 () {
+  cat /proc/cpuinfo | (while read line; do
+    if [[ "$line" =~ vendor_id.*:\ (.*) ]]; then
+      vendor_id=${BASH_REMATCH[1]}
+    fi
+    if [ "$vendor_id" = "AuthenticAMD" ]; then
+      if [[ "$line" =~ cpu\ family.*:\ (.*) ]]; then
+        cpu_family=${BASH_REMATCH[1]}
+        if [ $cpu_family -lt 16 ]; then
+          echo true
+          exit
+        fi
+      fi
+    fi
+  done
+  echo false)
+}
+
+if [ "$(isltk10)" = true ]; then
+  GOVERNOR=$LTK10_GOVERNOR
+  MIN_SPEED=$LTK10_MIN_SPEED
+fi

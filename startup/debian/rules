@@ -1,0 +1,69 @@
+#!/usr/bin/make -f
+# debian/rules for the yavdr-startup package.
+
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+# Use debhelper v4 features.
+export DH_COMPAT=4
+
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+
+build:
+# Nothing to do
+
+clean: 
+	dh_testdir
+	dh_testroot
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+
+#	dh_install order.conf /etc/vdr/plugins
+	dh_install cpufrequtils /etc/default/
+	dh_installdirs /var/log/vdr
+	dh_install vdr.conf /etc/init/
+	dh_install nodm.conf /etc/init/
+	dh_install vdr-frontend.conf /etc/init/
+	dh_install vdr-upstart /usr/sbin/
+	dh_install vdr-preupstart /usr/sbin/
+	dh_install Xsession.vdr /etc/X11/
+	dh_install vdr-pre.conf /etc/init 
+	dh_install usplash.conf /etc/init      
+	dh_install 20vdr_sleep /etc/pm/sleep.d
+	dh_install 10vdr_module /etc/pm/config.d
+	dh_install s3.conf /etc/init
+	dh_install S90.suspend2ram /usr/share/vdr/shutdown-hooks
+	dh_install lircrc /etc/lirc
+	dh_install xbmc.conf /etc/init
+	dh_install detect-resolution.conf /etc/init
+	dh_install 50_custom /etc/grub.d
+
+# Build architecture-independent files here.
+binary-indep: build install
+# Nothing to do
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+
+	dh_installdocs
+	dh_installchangelogs
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean svnclean binary-indep binary-arch binary install

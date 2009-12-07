@@ -1,0 +1,12 @@
+#!/bin/sh
+
+WIDTH=$(dbget system.display.width)
+HEIGHT=$(dbget system.display.height)
+
+sed "s/\(xineliboutput.OSD.Width[ ]*=\).*/\1 ${WIDTH}/" </var/lib/vdr/setup.conf |\
+sed "s/\(xineliboutput.OSD.Height[ ]*=\).*/\1 ${HEIGHT}/" |\
+sed "s/\(xineliboutput.OSD.Size[ ]*=\).*/\1 ${WIDTH}x${HEIGHT}/" >/tmp/setup.conf.$$
+
+mv /tmp/setup.conf.$$ /var/lib/vdr/setup.conf
+chown vdr:vdr /var/lib/vdr/setup.conf
+

@@ -1,0 +1,10 @@
+begin
+        prog   = irexec
+        button = taskswitcher
+        repeat = 0
+        config = /usr/sbin/service vdr-frontend stop
+	config = /usr/sbin/service vdr-frontend start
+        
+end
+
+

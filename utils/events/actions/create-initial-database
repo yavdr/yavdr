@@ -1,0 +1,8 @@
+#!/bin/bash
+
+touch /var/lib/yavdrdb.hdf
+for i in /usr/share/yavdr/defaults/*.hdf; do
+  cat $i >> /var/lib/yavdrdb.hdf
+done
+
+exit 0

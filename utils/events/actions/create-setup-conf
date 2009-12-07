@@ -1,0 +1,4 @@
+#!/bin/bash
+
+process-template /var/lib/vdr/setup.conf
+chown vdr:vdr /var/lib/vdr/setup.conf

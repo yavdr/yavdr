@@ -1,0 +1,122 @@
+<%pre>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <ctype.h>
+#include <ClearSilver.h>
+#include "../common.h"
+
+using namespace std;
+
+typedef vector<string> Record;
+typedef vector<Record> Records;
+</%pre>
+
+<%cpp>
+  HDF *hdf;
+  hdf_init(&hdf);
+  Records recs;
+  string selected;
+  string selected_tty;
+
+  Record rec;
+  string str;
+
+  hdf_read_file(hdf, YAVDRDB);
+  selected = hdf_get_value(hdf, "lirc_hw.description", "");
+  selected_tty = hdf_get_value(hdf, "lirc_hw.tty", "");
+
+  ifstream ifs ( "/usr/share/lirc/lirc.hwdb" , ifstream::in );
+
+  while (ifs.good())
+  {
+    getline(ifs, str); 
+
+    if (isalpha(str[0]))
+    {
+      string::size_type bof = 0;
+      string::size_type found;
+
+      while ((found = str.find_first_of(";", bof)) != string::npos)
+      {
+        rec.push_back(str.substr(bof, found - bof));
+        bof = found + 1;
+      }
+      recs.push_back(rec);
+      rec.clear();
+    }
+    else if (str[0] == '[')
+    {
+      rec.push_back(str.substr(1, str.find_first_of("]") - 1));
+      recs.push_back(rec);
+      rec.clear();
+    }
+  }
+  ifs.close();
+</%cpp>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="../jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="plate.js"></script>
+<script src="ajax.js" type="text/javascript"></script>
+<script type="text/javascript">
+function set_lirchw() {
+  var driver = document.getElementsByName("Entry");
+  ajaxGet("set_value?name=lirc_hw.description&value=" + driver.options[driver.selectedIndex].text);
+  var tty = document.getElementsByName("selected_tty");                                                  
+  var tty_desc = "";
+  for (var i = 0; i < tty.length; i++) {
+    if (tty[i].checked == true) {
+      tty_desc = tty[i].text;
+    }
+  }
+  ajaxGet("set_value?name=lirc_hw.tty&value=" + driver.options[driver.selectedIndex].text);
+}
+</script>
+</head>
+<body>
+<div style="margin: 20px auto; width: 400px;">
+<h2 style="border-bottom: 1px gray solid;">Language Setting</h2>
+
+<div style="margin-left: 20px;">
+
+<p>W&auml;hlen Sie Ihren Fernbedienungsempf&auml;nger</p>
+  <p>Zur Auswahl stehen:</p>
+  <p>
+  <table>
+    <tr>
+      <td>
+        <select name="Entry" size="1" onchange="show_tty_selection(this)">
+% for (Records::size_type i = 0; i < recs.size(); i++) {
+%   if (recs[i].size() ==  1) {
+          <optgroup label="<$ recs[i][0] $>">
+%   }
+%   if (recs[i].size() > 1) {
+            <option <? selected == recs[i][0] ? "selected" ?> value="<$ i $>"><$ recs[i][0] $></option>
+%   }
+%   if (((i + 1) == recs.size()) || (recs[i + 1].size() == 1)) {
+          </optgroup>
+%   }
+% }
+        </select>
+      </td>
+      <td id="select_tty" style="visibility:<? selected_tty != "" ? "visible" ?><? selected_tty == "" ? "hidden" ?>">
+        <input type="radio" name="selected_tty" value="/dev/ttyS0"> /dev/ttyS0<br>
+        <input type="radio" name="selected_tty" value="/dev/ttyS1"> /dev/ttyS1<br>
+      </td>
+    </tr>
+  </table>
+  </p>
+<p>
+<input type="button" value="&Auml;ndern" onclick="set_lirchw(); $(this).attr('disabled', 'disabled'); $(this).attr('value', 'Fertig');" />
+</p>
+</div>
+
+</body>
+</html>
+

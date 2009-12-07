@@ -1,0 +1,26 @@
+>
+    <multitype />
+    <visualistation />
+    <skin />
+    <pvr>
+        <addon>
+            <name>VDRClient</name>
+            <path pathversion="1">special://xbmc/addons/pvr/VDR/</path>
+            <thumbnail pathversion="1">special://xbmc/addons/pvr/VDR/vdr.tbn</thumbnail>  
+        </addon>
+    </pvr>
+    <script />
+    <scraperpvr />
+    <scrapervideo />
+    <scrapermusic />
+    <scraperprogram />
+    <screensaver />
+    <pluginpvr />
+    <pluginmusic />
+    <pluginvideo />
+    <pluginprogram />
+    <pluginpictures />
+    <pluginweather />
+    <dspaudio />
+</addons>
+
