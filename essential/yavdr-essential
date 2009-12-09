@@ -1,6 +1,7 @@
 acpi-support
 acpid
 alsa-utils
+anacron
 at
 build-essential
 cpufrequtils
