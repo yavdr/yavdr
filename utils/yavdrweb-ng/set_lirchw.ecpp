@@ -20,7 +20,6 @@ using namespace std;
   int i_receiver_id = -1;
   string str;
   int index = 0;
-  bool isSerial = false;
   string success = "false";
   string msg = "Unspecified error.";
 

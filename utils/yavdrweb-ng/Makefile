@@ -5,7 +5,7 @@ test: all
 	${TNTNET} -c tntnet.localtest.conf
 
 yavdrweb.so: get_lirchwdb.o neo_hdf.o neo_err.o auth.o authenticate.o yavdrweb.o set_lirchw.o \
-             svdrpsend.o
+             get_svdrp_response.o
 	${CXX} -o $@ $^ ${LDFLAGS}
 
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp .png

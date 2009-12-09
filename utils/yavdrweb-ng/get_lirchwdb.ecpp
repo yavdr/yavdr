@@ -33,7 +33,7 @@ using namespace std;
 
   ifstream ifs("/usr/share/lirc/lirc.hwdb", ifstream::in);
 
-  reply.out() << "\n{\n                'receiverlist' : [\n";
+  reply.out() << "\n{\n                \"receiverlist\" : [\n";
   
   while (ifs.good())
   {
@@ -58,11 +58,10 @@ using namespace std;
         if (i == 0)
           reply.out() << "                    [ " << index << ",";
 
-        //FIXME: missing escaping of substring  
-        reply.out() << " \"" 
-                    << str.substr(bof, found - bof) 
-                    << "\""
-                    << (i == 4 ? " ]" : ",");
+        reply.out()  << " \""; 
+        reply.sout() << str.substr(bof, found - bof); //we must escape special chars via sout (xss)
+        reply.out()  << "\""
+                     << (i == 4 ? " ]" : ",");
         bof = found + 1;
       }
       index++;
@@ -72,11 +71,11 @@ using namespace std;
   ifs.close();
 
   reply.out() << "                ],\n"
-              << "                'current_receiver' : " 
-              << current_lirchw_id
-              << ",\n"
-              << "                'current_serial_port' : \"" 
-              << current_serial_port 
-              << "\"\n}\n";
+              << "                \"current_receiver\" : ";
+  reply.sout()<< current_lirchw_id;  //we must escape special chars via sout (xss)
+  reply.out() << ",\n"
+              << "                \"current_serial_port\" : \"";
+  reply.sout()<< current_serial_port;  //we must escape special chars via sout (xss)
+  reply.out() << "\"\n}\n";
 
 </%cpp>

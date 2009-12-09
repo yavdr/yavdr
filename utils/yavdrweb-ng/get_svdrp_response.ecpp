@@ -1,0 +1,83 @@
+<%pre>
+#include <stdio.h>
+#include <string>
+
+using namespace std;
+</%pre><& authenticate ><%args>
+command;
+</%args><%cpp>
+
+/*
+  DELC Delete Channel
+  LSTC List Channel(s)
+  MOVC Move Channel
+  NEWC New Channel
+  
+  214-This is VDR version 1.7.10
+  214-Topics:
+  214-    CHAN      CLRE      DELC      DELR      DELT      
+  214-    EDIT      GRAB      HELP      HITK      LSTC      
+  214-    LSTE      LSTR      LSTT      MESG      MODC      
+  214-    MODT      MOVC      MOVT      NEWC      NEWT      
+  214-    NEXT      PLAY      PLUG      PUTE      REMO      
+  214-    RENR      SCAN      STAT      UPDT      VOLU      
+  214-    QUIT      
+  214-Plugin epgsearch v0.9.25.beta15 - Suche im EPG nach Wiederholungen und anderem
+  214-    LSTS      NEWS      DELS      EDIS      MODS      
+  214-    UPDS      UPDD      SETS      FIND      QRYS      
+  214-    QRYF      LSRD      LSTC      NEWC      EDIC      
+  214-    DELC      RENC      LSTB      NEWB      DELB      
+  214-    EDIB      LSTE      SETP      LSTT      NEWT      
+  214-    DELT      EDIT      DEFT      LSCC      MENU      
+  214-Plugin xineliboutput v1.0.90-cvs - X11/xine-lib Ausgabe-Plugin
+  214-    PMDA      PDVD      PMSC      PIMG      QMSC      
+  214-Plugin text2skin v1.3 - Lader für textbasierte Skins
+  214-    FLUS      
+  214-To report bugs in the implementation send email to
+  214-    vdr-bugs@tvdr.de
+  214 End of HELP info
+*/  
+
+
+//restrict commands
+if (command == "LSTC") // || command == "NEWC")
+{
+    string svdrpcmd = "/usr/bin/svdrpsend " + command;
+
+      if (FILE *stream = popen(svdrpcmd.c_str(), "r"))
+      {                                                              
+        char buffer[1024];
+        reply.out() << "{[\n"; 
+        int counter = 0;
+        while (!feof(stream))
+        {
+          if (fgets(buffer, sizeof(buffer), stream) != NULL)
+          {
+             int status = atoi(string(buffer).substr(0, 3).c_str());
+             if ( status != 220 && status != 221 ) //don't output meta lines
+             {
+                 string::size_type bof = 0;
+                 string::size_type found;
+                 found = string(buffer).find_first_of(" ", bof);
+                 int channel_nr = atoi(string(buffer).substr(4, found).c_str());
+                 string channel = string(buffer).substr(found + 1, strlen(buffer) - (3 + found) );
+                 if (counter != 0) 
+                     reply.out() << ",\n"; //new line 
+                 reply.out() << "    [\""; 
+                 reply.sout() << channel_nr;  //we must escape special chars via sout (xss)
+                 reply.out() << "\",\"";
+                 reply.sout() << channel;  //we must escape special chars via sout (xss)
+                 reply.out() << "\"]";
+                 counter ++;
+             }
+          }
+        }
+        pclose(stream); 
+      }
+      reply.out() << "\n]}"; 
+}
+else
+    reply.out() << "Illegal command.";
+
+</%cpp>
+
