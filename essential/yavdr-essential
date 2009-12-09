@@ -4,6 +4,7 @@ alsa-utils
 at
 build-essential
 cpufrequtils
+feh
 libavcodec-unstripped-52
 libavdevice-unstripped-52
 libavformat-unstripped-52
@@ -24,6 +25,7 @@ smbfs
 ssh
 tntnet
 unclutter
+ureadahead
 usplash
 usplash-theme-ubuntu
 vdr
