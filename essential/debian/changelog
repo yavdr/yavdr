@@ -1,3 +1,15 @@
+yavdr-essential (0.0.49-1tvt1) karmic; urgency=low
+
+  * rev.190
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 10 Dec 2009 19:39:23 +0100
+
+yavdr-essential (0.0.47-1tvt1) karmic; urgency=low
+
+  * rev.186
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Wed, 09 Dec 2009 20:13:56 +0100
+
 yavdr-essential (0.0.41-1tvt1) karmic; urgency=low
 
   * moved scripts to yavdr-startup
