@@ -5,12 +5,10 @@ extern "C" {
 </%pre>
 
 <%cpp>
-/*
 if ((request.getUsername() == "") ||
     (request.getPassword() == "") ||
     !authenticate_user(request.getUsername().c_str(), request.getPassword().c_str()))
 {
   reply.notAuthorized("who says what to open the sesame?");
 }
-*/
 </%cpp>
