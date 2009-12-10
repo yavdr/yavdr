@@ -18,9 +18,9 @@ libxine1-xvdr
 linux-firmware
 nfs-common
 nodm
-nvidia-kernel-source
-nvidia-libvdpau
-nvidia-glx
+nvidia-195-kernel-source
+nvidia-195-libvdpau
+nvidia-glx-195
 nvidia-settings
 smbfs
 ssh
