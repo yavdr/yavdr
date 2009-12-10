@@ -91,21 +91,97 @@ Ext.onReady(function() {
             }, {
                 expanded: true,
                 items: [{
-                    title: 'Plugins',
+                    title: 'Debug',
                     iconCls: 'x-icon-configuration',
-                    tabTip: 'Plugin tabtip',
+                    tabTip: 'Logfiles tabtip',
                     style: 'padding: 10px;',
                     frame: false,
                     border: false,
-                    html: 'Testing... 2' 
+                    html: 'Logfile-Contents anschauen' 
                 }, {
-                    title: 'streamdev-server',
+                    title: '/var/lib/yavdrdb.hdf',
                     iconCls: 'x-icon-templates',
-                    tabTip: 'streamdev-server tabtip',
+                    tabTip: 'logfile-messages tabtip',
                     style: 'padding: 40px;',
-                    html: 'Testing... 3'
-                }]
-            }]
-        }]
-    });
-});
+                    autoScroll: true,
+                    items: [
+                        new Ext.Panel({
+                            title: 'Database content /var/lib/yavdrdb.hdf (manual refresh only via F5, refreshes whole web-frontend!!!)',
+                            frame: false,
+                            plain: false,
+                            border: false,
+                            style: 'font-family: monospace; white-space: pre;',
+                            autoLoad: 'get_file_content?file=/var/lib/yavdrdb.hdf&mode=cat'
+                        })
+                    ]
+                }, {
+                    title: '/var/log/messages',
+                    iconCls: 'x-icon-templates',
+                    tabTip: 'logfile-messages tabtip',
+                    style: 'padding: 40px;',
+                    autoScroll: true,
+                    items: [
+                        new Ext.Panel({
+                            title: 'Logfile /var/log/messages (manual refresh only via F5, refreshes whole web-frontend!!!)',
+                            frame: false,
+                            plain: false,
+                            border: false,
+                            style: 'font-family: monospace; white-space: pre;',
+                            autoLoad: 'get_file_content?file=/var/log/messages'
+                        })
+                    ]
+                }, {
+                    title: '/var/log/user.log',
+                    iconCls: 'x-icon-templates',
+                    tabTip: 'logfile-messages tabtip',
+                    style: 'padding: 40px;',
+                    autoScroll: true,
+                    items: [
+                        new Ext.Panel({
+                            title: 'Logfile /var/log/user.log (manual refresh only via F5, refreshes whole web-frontend!!!)',
+                            frame: false,
+                            plain: false,
+                            border: false,
+                            style: 'font-family: monospace; white-space: pre;',
+                            autoLoad: 'get_file_content?file=/var/log/user.log'
+                        })
+                    ]
+                }, {
+                    title: '/var/log/syslog',
+                    iconCls: 'x-icon-templates',
+                    tabTip: 'logfile-messages tabtip',
+                    style: 'padding: 40px;',
+                    autoScroll: true,
+                    items: [
+                        new Ext.Panel({
+                            title: 'Logfile /var/log/syslog (manual refresh only via F5, refreshes whole web-frontend!!!)',
+                            frame: false,
+                            plain: false,
+                            border: false,
+                            style: 'font-family: monospace; white-space: pre;',
+                            autoLoad: 'get_file_content?file=/var/log/syslog'
+                        })
+                    ]
+                }, {
+                    title: '/var/log/tntnet/tntnet.log',
+                    iconCls: 'x-icon-templates',
+                    tabTip: 'logfile-messages tabtip',
+                    style: 'padding: 40px;',
+                    autoScroll: true,
+                    items: [
+                        new Ext.Panel({
+                            title: 'Logfile /var/log/tntnet/tntnet.log (manual refresh only via F5, refreshes whole web-frontend!!!)',
+                            frame: false,
+                            plain: false,
+                            border: false,
+                            style: 'font-family: monospace; white-space: pre;',
+                            autoLoad: 'get_file_content?file=/var/log/tntnet/tntnet.log&mode=tail'
+                        })
+                    ]
+                }
+                ]
+            }]//grouptabpanel items
+        }]//viewport items
+    });//viewport
+});//extonready
+

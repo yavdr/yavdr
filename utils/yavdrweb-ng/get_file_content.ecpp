@@ -1,0 +1,46 @@
+<%pre>
+#include <stdio.h>
+#include <string>
+
+using namespace std;
+</%pre><& authenticate ><%args>
+file;
+mode;
+</%args><%cpp>
+
+
+
+//restrict files and mode
+
+if (mode != "cat")
+    mode = "tail -n 50 ";
+
+if (
+        file == "/var/log/messages" || 
+        file == "/var/log/user.log" || 
+        file == "/var/log/syslog" || 
+        file == "/var/log/tntnet/tntnet.log" || 
+        file == "/var/lib/yavdrdb.hdf" 
+){
+    string cmd = "cat " + file;
+
+      if (FILE *stream = popen(cmd.c_str(), "r"))
+      {                                                              
+        char buffer[1024];
+        //reply.out() << "{[\n"; 
+        int counter = 0;
+        while (!feof(stream))
+        {
+          if (fgets(buffer, sizeof(buffer), stream) != NULL)
+          {
+             reply.sout() << buffer;  //we must escape special chars via sout (xss)
+          }
+        }
+        pclose(stream); 
+      }
+}
+else
+    reply.out() << "Illegal command.";
+
+</%cpp>
+
