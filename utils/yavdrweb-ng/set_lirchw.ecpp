@@ -27,6 +27,7 @@ using namespace std;
     "/usr/share/lirc/extras/more_remotes.hwdb"
   };
   int findex = 0;
+  bool remote_found = false;
 
   if (receiver_id != "")
   {
@@ -42,7 +43,7 @@ using namespace std;
 
     ifstream ifs;
 
-    for (findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
+    for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))) && !remote_found; findex++)
     {
       ifs.open(files[findex], ifstream::in);
 
@@ -58,6 +59,7 @@ using namespace std;
             string::size_type found;
             NEOERR *err;
             HDF *hdf = NULL;
+            remote_found = true;
 
             if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
             {
