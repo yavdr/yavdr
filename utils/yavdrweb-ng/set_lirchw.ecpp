@@ -40,9 +40,11 @@ using namespace std;
 
     const char *names[] = {"description", "driver", "lirc_driver", "hw_default", "lircd_conf"};
 
+    ifstream ifs;
+
     for (findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
     {
-      ifstream ifs(files[findex], ifstream::in);
+      ifs.open(files[findex], ifstream::in);
 
       while (ifs.good())
       {
