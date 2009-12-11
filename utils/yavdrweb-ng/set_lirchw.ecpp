@@ -22,6 +22,11 @@ using namespace std;
   int index = 0;
   string success = "false";
   string msg = "Unspecified error.";
+  const char *files[] = {
+    "/usr/share/lirc/lirc.hwdb",
+    "/usr/share/lirc/extras/more_remotes.hwdb"
+  };
+  int findex = 0;
 
   if (receiver_id != "")
   {
@@ -35,74 +40,77 @@ using namespace std;
 
     const char *names[] = {"description", "driver", "lirc_driver", "hw_default", "lircd_conf"};
 
-    ifstream ifs("/usr/share/lirc/lirc.hwdb", ifstream::in);
-
-    while (ifs.good())
+    for (findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
     {
-      getline(ifs, str); 
+      ifstream ifs(files[findex], ifstream::in);
 
-      if (isalpha(str[0]))
+      while (ifs.good())
       {
-        if (index == i_receiver_id)
-        {
-          string::size_type bof = 0;
-          string::size_type found;
-          NEOERR *err;
-          HDF *hdf = NULL;
+        getline(ifs, str); 
 
-          if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+        if (isalpha(str[0]))
+        {
+          if (index == i_receiver_id)
           {
-            nerr_log_error(err);
-            msg = "Error on hdf_init / hdf_read_file";
-            break;
-          }
-          for (int i = 0;(found = str.find_first_of(";", bof)) != string::npos; i++)
-          {
-            string value = str.substr(bof, found - bof);
-            err = hdf_set_valuef(hdf, "system.lirchw.%s=%s", names[i], value.c_str());
-            if (err != STATUS_OK){
-              msg = "Error on hdf_set_value";
+            string::size_type bof = 0;
+            string::size_type found;
+            NEOERR *err;
+            HDF *hdf = NULL;
+
+            if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+            {
+              nerr_log_error(err);
+              msg = "Error on hdf_init / hdf_read_file";
               break;
             }
-            //check if this lirc receiver really depends on the serial port
-            if ((i == 1 && value.c_str() == "lirc_dev lirc_serial") ||
-                (i == 2 && value.c_str() == "serial"))
+            for (int i = 0;(found = str.find_first_of(";", bof)) != string::npos; i++)
             {
-                err = hdf_set_valuef(hdf, "system.lirchw.serial_port=%s", serial_port.c_str());
-                if (err != STATUS_OK){
-                  msg = "Error on hdf_set_value";
-                  break;
-                }
+              string value = str.substr(bof, found - bof);
+              err = hdf_set_valuef(hdf, "system.lirchw.%s=%s", names[i], value.c_str());
+              if (err != STATUS_OK){
+                msg = "Error on hdf_set_value";
+                break;
+              }
+              //check if this lirc receiver really depends on the serial port
+              if ((i == 1 && value.c_str() == "lirc_dev lirc_serial") ||
+                  (i == 2 && value.c_str() == "serial"))
+              {
+                  err = hdf_set_valuef(hdf, "system.lirchw.serial_port=%s", serial_port.c_str());
+                  if (err != STATUS_OK){
+                    msg = "Error on hdf_set_value";
+                    break;
+                  }
+              }
+              else
+              {
+                  //the chosen receiver is not a serial receiver, so clear this field in the db
+                  err = hdf_set_valuef(hdf, "system.lirchw.serial_port=%s", "");
+                  if (err != STATUS_OK){
+                    msg = "Error on hdf_set_value";
+                    break;
+                  }
+              }
+              bof = found + 1;
+            }
+            if  ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK)
+            {
+              nerr_log_error(err);
+              msg = "Error on hdf_write_file";
             }
             else
             {
-                //the chosen receiver is not a serial receiver, so clear this field in the db
-                err = hdf_set_valuef(hdf, "system.lirchw.serial_port=%s", "");
-                if (err != STATUS_OK){
-                  msg = "Error on hdf_set_value";
-                  break;
-                }
+               int ret = system("/usr/bin/signal-event change-lirc-hardware");
+               success = "true";
+               msg = "OK. signal-event lirchw-changed";
             }
-            bof = found + 1;
+            hdf_destroy(&hdf);
+            break;
           }
-          if  ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK)
-          {
-            nerr_log_error(err);
-            msg = "Error on hdf_write_file";
-          }
-          else
-          {
-             int ret = system("/usr/bin/signal-event change-lirc-hardware");
-             success = "true";
-             msg = "OK. signal-event lirchw-changed";
-          }
-          hdf_destroy(&hdf);
-          break;
+          index++;
         }
-        index++;
       }
+      ifs.close();
     }
-    ifs.close();
   }
   else
   {

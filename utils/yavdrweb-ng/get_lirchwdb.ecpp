@@ -18,6 +18,11 @@ using namespace std;
   int current_lirchw_id = -1;
   HDF *hdf = NULL;
   NEOERR *err;
+  const char *files[] = {
+    "/usr/share/lirc/lirc.hwdb",
+    "/usr/share/lirc/extras/more_remotes.hwdb"
+  };
+  int findex = 0;
 
   //get current lirc settings from database
   if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
@@ -31,44 +36,47 @@ using namespace std;
   }
   
 
-  ifstream ifs("/usr/share/lirc/lirc.hwdb", ifstream::in);
-
   reply.out() << "\n{\n                \"receiverlist\" : [\n";
   
-  while (ifs.good())
+  for (findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
   {
-    getline(ifs, str); 
+    ifstream ifs(files[findex], ifstream::in);
 
-    if (isalpha(str[0]))
+    while (ifs.good())
     {
-      //end of line comma, should not be added on last line because of msie
-      if (index > 0)
+      getline(ifs, str); 
+
+      if (isalpha(str[0]))
+      {
+        //end of line comma, should not be added on last line because of msie
+        if (index > 0)
           reply.out() << ",\n";
       
-      string::size_type bof = 0;
-      string::size_type found;
+        string::size_type bof = 0;
+        string::size_type found;
 
-      for (int i = 0; i < 5; i++)
-      {
-        found = str.find_first_of(";", bof);
+        for (int i = 0; i < 5; i++)
+        {
+          found = str.find_first_of(";", bof);
 
-        if (current_lirchw_description != "" && str.substr(bof, found - bof) == current_lirchw_description)
-          current_lirchw_id = index;
+          if (current_lirchw_description != "" && str.substr(bof, found - bof) == current_lirchw_description)
+            current_lirchw_id = index;
 
-        if (i == 0)
-          reply.out() << "                    [ " << index << ",";
+          if (i == 0)
+            reply.out() << "                    [ " << index << ",";
 
-        reply.out()  << " \""; 
-        reply.sout() << str.substr(bof, found - bof); //we must escape special chars via sout (xss)
-        reply.out()  << "\""
-                     << (i == 4 ? " ]" : ",");
-        bof = found + 1;
+          reply.out()  << " \""; 
+          reply.sout() << str.substr(bof, found - bof); //we must escape special chars via sout (xss)
+          reply.out()  << "\""
+                       << (i == 4 ? " ]" : ",");
+          bof = found + 1;
+        }
+        index++;
       }
-      index++;
     }
-  }
 
-  ifs.close();
+    ifs.close();
+  }
 
   reply.out() << "                ],\n"
               << "                \"current_receiver\" : ";
