@@ -23,7 +23,11 @@ function getLircForm( lircData ){
                                  "hw_default",
                                  "lircd_conf"
                                  ],
-                                 data : lircData.receiverlist
+                        data : lircData.receiverlist,
+                        sortInfo: {
+                            field: 'description',
+                            direction: 'ASC'
+                        }
                     }),
                     //name: ... used in POST request
                     hiddenName: 'receiver_id', //key, defined in set_lirchw.ecpp, used in POST request
