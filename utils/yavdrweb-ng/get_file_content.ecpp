@@ -49,7 +49,7 @@ else{
             mode = "cat";
         
         string cmd = mode + " " + file;
-        reply.out() << "Command: " << cmd << "<br\>";
+        reply.out() << "Command: " << cmd << "<br/>";
         if (FILE *stream = popen(cmd.c_str(), "r"))
         {
             char buffer[1024];
