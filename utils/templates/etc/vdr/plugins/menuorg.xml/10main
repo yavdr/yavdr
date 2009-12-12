@@ -9,9 +9,7 @@ description of the config file format.
 -->
 <menus>
     <system name="Schedule" />
-    <menu name="Kanäle">
-        <system name="Channels" />
-        <plugin name="radiolist" />
+    <system name="Channels" />
     </menu>
     <menu name="Video">
         <system name="Timers" />
