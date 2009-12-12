@@ -5,42 +5,68 @@
 using namespace std;
 </%pre><& authenticate ><%args>
 file;
-mode;
 </%args><%cpp>
 
+const char *files[] = {
+    "/var/log/messages", 
+    "/var/log/user.log", 
+    "/var/log/syslog", 
+    "/var/log/tntnet/tntnet.log", 
+    
+    "/var/lib/yavdrdb.hdf",
+    "/etc/X11/xorg.conf",
+    "/etc/lirc/hardware.conf",
+    "/etc/lirc/lircd.conf",
+    "/etc/vdr/setup.conf",
+    "/etc/vdr/remote.conf"
+};
 
+int findex = 0;
 
-//restrict files and mode
-
-if (mode != "cat")
-    mode = "tail -n 50 ";
-
-if (
-        file == "/var/log/messages" || 
-        file == "/var/log/user.log" || 
-        file == "/var/log/syslog" || 
-        file == "/var/log/tntnet/tntnet.log" || 
-        file == "/var/lib/yavdrdb.hdf" 
-){
-    string cmd = "cat " + file;
-
-      if (FILE *stream = popen(cmd.c_str(), "r"))
-      {                                                              
-        char buffer[1024];
-        //reply.out() << "{[\n"; 
-        int counter = 0;
-        while (!feof(stream))
-        {
-          if (fgets(buffer, sizeof(buffer), stream) != NULL)
-          {
-             reply.sout() << buffer;  //we must escape special chars via sout (xss)
-          }
-        }
-        pclose(stream); 
-      }
+if (file == "filelist")
+{
+    for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))); findex++)
+    {
+        if (file == files[findex])
+            reply.out() << files[findex] << "\n";
+    }
 }
-else
-    reply.out() << "Illegal command.";
-
+else{
+    
+    bool validFileName = false;
+    for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))) && !validFileName; findex++)
+    {
+        if (file == files[findex])
+            validFileName = true;
+    }
+    
+    if (validFileName)
+    {
+        string mode;
+        if (file.substr(0,9) == "/var/log/")
+            mode = "tail -n 100";
+        else
+            mode = "cat";
+        
+        string cmd = mode + " " + file;
+        reply.out() << "Command: " << cmd << "<br\>";
+        if (FILE *stream = popen(cmd.c_str(), "r"))
+        {
+            char buffer[1024];
+            int counter = 0;
+            while (!feof(stream))
+            {
+              if (fgets(buffer, sizeof(buffer), stream) != NULL)
+              {
+                 reply.sout() << string(buffer).substr(0, strlen(buffer) - 1 );  //we must escape special chars via sout (xss) and cut off LF
+                 reply.out() << "<br/>";
+              }
+            }
+            pclose(stream); 
+          }
+    }
+    else
+        reply.out() << "Illegal command.";
+}
 </%cpp>
 

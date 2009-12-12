@@ -20,6 +20,29 @@ Ext.onReady(function() {
         }
     }];
 
+    function yaVDRLogFilePanel(file)
+    { 
+        return {
+            title: file,
+            iconCls: 'x-icon-templates',
+            tabTip: 'logfile tabtip' + file,
+            style: 'padding: 40px;',
+            autoScroll: true,
+            items: [
+                new Ext.Panel({
+                    title: file + ' (manual refresh only via F5, refreshes whole web-frontend!!!)',
+                    frame: false,
+                    plain: false,
+                    border: false,
+                    style: 'font-family: monospace; white-space: pre;',
+                    autoLoad: 'get_file_content?file='+file
+                })
+            ]
+        };
+    }
+
+    
+    
     var viewport = new Ext.Viewport({
         layout:'fit',
         items:[{
@@ -61,7 +84,7 @@ Ext.onReady(function() {
                                 items: [ getLircForm( lircData ) ]
                             })
                         ]
-                    },
+                    }/*obsolete, only demo ,
                     {
                         title: 'X11',
                         iconCls: 'x-icon-subscriptions',
@@ -78,7 +101,7 @@ Ext.onReady(function() {
                                 items: [ getX11Form( resolutionArray ) ]
                             })
                         ]    
-                    },
+                    },*//*
                     {
                         title: 'Dummy',
                         iconCls: 'x-icon-users',
@@ -86,7 +109,7 @@ Ext.onReady(function() {
                         style: 'padding: 10px;',
                         html: 'Testing... 1',
                         frame: true
-                    }
+                    }*/
                 ]
             }, {
                 expanded: true,
@@ -98,87 +121,17 @@ Ext.onReady(function() {
                     frame: false,
                     border: false,
                     html: 'Logfile-Contents anschauen' 
-                }, {
-                    title: '/var/lib/yavdrdb.hdf',
-                    iconCls: 'x-icon-templates',
-                    tabTip: 'logfile-messages tabtip',
-                    style: 'padding: 40px;',
-                    autoScroll: true,
-                    items: [
-                        new Ext.Panel({
-                            title: 'Database content /var/lib/yavdrdb.hdf (manual refresh only via F5, refreshes whole web-frontend!!!)',
-                            frame: false,
-                            plain: false,
-                            border: false,
-                            style: 'font-family: monospace; white-space: pre;',
-                            autoLoad: 'get_file_content?file=/var/lib/yavdrdb.hdf&mode=cat'
-                        })
-                    ]
-                }, {
-                    title: '/var/log/messages',
-                    iconCls: 'x-icon-templates',
-                    tabTip: 'logfile-messages tabtip',
-                    style: 'padding: 40px;',
-                    autoScroll: true,
-                    items: [
-                        new Ext.Panel({
-                            title: 'Logfile /var/log/messages (manual refresh only via F5, refreshes whole web-frontend!!!)',
-                            frame: false,
-                            plain: false,
-                            border: false,
-                            style: 'font-family: monospace; white-space: pre;',
-                            autoLoad: 'get_file_content?file=/var/log/messages'
-                        })
-                    ]
-                }, {
-                    title: '/var/log/user.log',
-                    iconCls: 'x-icon-templates',
-                    tabTip: 'logfile-messages tabtip',
-                    style: 'padding: 40px;',
-                    autoScroll: true,
-                    items: [
-                        new Ext.Panel({
-                            title: 'Logfile /var/log/user.log (manual refresh only via F5, refreshes whole web-frontend!!!)',
-                            frame: false,
-                            plain: false,
-                            border: false,
-                            style: 'font-family: monospace; white-space: pre;',
-                            autoLoad: 'get_file_content?file=/var/log/user.log'
-                        })
-                    ]
-                }, {
-                    title: '/var/log/syslog',
-                    iconCls: 'x-icon-templates',
-                    tabTip: 'logfile-messages tabtip',
-                    style: 'padding: 40px;',
-                    autoScroll: true,
-                    items: [
-                        new Ext.Panel({
-                            title: 'Logfile /var/log/syslog (manual refresh only via F5, refreshes whole web-frontend!!!)',
-                            frame: false,
-                            plain: false,
-                            border: false,
-                            style: 'font-family: monospace; white-space: pre;',
-                            autoLoad: 'get_file_content?file=/var/log/syslog'
-                        })
-                    ]
-                }, {
-                    title: '/var/log/tntnet/tntnet.log',
-                    iconCls: 'x-icon-templates',
-                    tabTip: 'logfile-messages tabtip',
-                    style: 'padding: 40px;',
-                    autoScroll: true,
-                    items: [
-                        new Ext.Panel({
-                            title: 'Logfile /var/log/tntnet/tntnet.log (manual refresh only via F5, refreshes whole web-frontend!!!)',
-                            frame: false,
-                            plain: false,
-                            border: false,
-                            style: 'font-family: monospace; white-space: pre;',
-                            autoLoad: 'get_file_content?file=/var/log/tntnet/tntnet.log&mode=tail'
-                        })
-                    ]
-                }
+                    },
+                    yaVDRLogFilePanel('/var/lib/yavdrdb.hdf'),
+                    yaVDRLogFilePanel('/etc/X11/xorg.conf'),
+                    yaVDRLogFilePanel('/etc/lirc/hardware.conf'),
+                    yaVDRLogFilePanel('/etc/lirc/lircd.conf'),
+                    yaVDRLogFilePanel('/etc/vdr/setup.conf'),
+                    yaVDRLogFilePanel('/etc/vdr/remote.conf'),
+                    yaVDRLogFilePanel('/var/log/messages'),
+                    yaVDRLogFilePanel('/var/log/user.log'),
+                    yaVDRLogFilePanel('/var/log/syslog'),
+                    yaVDRLogFilePanel('/var/log/tntnet/tntnet.log')
                 ]
             }]//grouptabpanel items
         }]//viewport items
