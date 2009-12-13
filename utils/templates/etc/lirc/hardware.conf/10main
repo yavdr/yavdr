@@ -2,9 +2,9 @@
 #
 #Chosen Remote Control
 REMOTE="<?cs var:system.lirchw.description ?>"
-REMOTE_MODULES="<?cs var:system.lirchw.driver ?>"
-REMOTE_DRIVER="<?cs var:system.lirchw.lirc_driver ?>"
-REMOTE_DEVICE="/dev/lirc0"
+REMOTE_MODULES="<?cs var:system.lirchw.lirc_driver ?>"
+REMOTE_DRIVER=""
+REMOTE_DEVICE=""
 REMOTE_LIRCD_CONF="<?cs var:system.lirchw.lircd_conf ?>"
 REMOTE_LIRCD_ARGS=""
 
