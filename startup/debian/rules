@@ -45,6 +45,7 @@ install: build
 	dh_install detect-resolution.conf /etc/init
 	dh_install 50_custom /etc/grub.d
 	dh_install yavdr_logo.png	/usr/share/yavdr/images
+	dh_install cleanTTY1.conf	/etc/init
 
 # Build architecture-independent files here.
 binary-indep: build install
