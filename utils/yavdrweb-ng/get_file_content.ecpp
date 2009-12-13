@@ -69,4 +69,3 @@ else{
         reply.out() << "Illegal command.";
 }
 </%cpp>
-

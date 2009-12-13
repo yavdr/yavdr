@@ -2,9 +2,7 @@
 extern "C" {
 #include "auth.h"
 };
-</%pre>
-
-<%cpp>
+</%pre><%cpp>
 if ((request.getUsername() == "") ||
     (request.getPassword() == "") ||
     !authenticate_user(request.getUsername().c_str(), request.getPassword().c_str()))

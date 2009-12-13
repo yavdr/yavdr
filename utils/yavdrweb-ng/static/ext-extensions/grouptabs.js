@@ -26,16 +26,22 @@ Ext.onReady(function() {
             title: file,
             iconCls: 'x-icon-templates',
             tabTip: 'logfile tabtip' + file,
-            style: 'padding: 40px;',
-            autoScroll: true,
+            style: 'padding: 20px 30px 20px 30px;',
+            layout:'fit',
             items: [
                 new Ext.Panel({
                     title: file + ' (manual refresh only via F5, refreshes whole web-frontend!!!)',
                     frame: false,
-                    plain: false,
-                    border: false,
-                    style: 'font-family: monospace; white-space: pre;',
-                    autoLoad: 'get_file_content?file='+file
+                    border: true,
+                    autoScroll: true,
+                    items: [
+                        new Ext.Panel({
+                            frame: false,
+                            border: false,
+                            style: 'font-family: monospace; white-space: pre;',
+                            autoLoad: 'get_file_content?file='+file
+                        })
+                    ]
                 })
             ]
         };
@@ -47,7 +53,7 @@ Ext.onReady(function() {
         layout:'fit',
         items:[{
             xtype: 'grouptabpanel',
-            tabWidth: 130,
+            tabWidth: 200,
             activeGroup: 0,
             items: [{
                 //mainItem: 1,
@@ -61,10 +67,10 @@ Ext.onReady(function() {
                         items:[
                            new Ext.Panel({
                                layout: 'fit',
-                               frame: true,
+                               frame: false,
                                plain: false,
                                border: false,
-                               html: 'Willkommen im yaVDR Web Front End!'
+                               html: '<h1>Willkommen im yaVDR Web Front End!</h1>'
                            })
                         ]
                     },
@@ -120,7 +126,7 @@ Ext.onReady(function() {
                     style: 'padding: 10px;',
                     frame: false,
                     border: false,
-                    html: 'Logfile-Contents anschauen' 
+                    html: 'Inhalte von wichtigen Logfiles und Konfigurationsdateien' 
                     },
                     yaVDRLogFilePanel('/var/lib/yavdrdb.hdf'),
                     yaVDRLogFilePanel('/etc/X11/xorg.conf'),
