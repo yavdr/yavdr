@@ -10,7 +10,6 @@ description of the config file format.
 <menus>
     <system name="Schedule" />
     <system name="Channels" />
-    </menu>
     <menu name="Video">
         <system name="Timers" />
         <system name="Recordings" />
