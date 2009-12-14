@@ -56,11 +56,7 @@ get_status()
 if [ "$ENABLED" != "0" ] ; then
     # only start vdr if there is no other instance running
     if ! get_status; then
-        if [ -f /tmp/vdr-plugins ]; then
-          PLUGINS=$(cat /tmp/vdr-plugins)
-        else
-          getplugins
-        fi
+        getplugins
         mergecommands "commands"
         mergecommands "reccmds"
         configure_console_input

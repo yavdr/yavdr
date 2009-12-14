@@ -9,8 +9,7 @@ case $1 in
      thaw|resume)
          echo "vdr gets started again"
          service nodm start
-         service vdr-pre start  
-         /sbin/initctl --quiet emit vdr-start
+         service vdr start  
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."
          ;;
