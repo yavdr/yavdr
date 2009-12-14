@@ -77,7 +77,7 @@ Ext.onReady(function() {
                     {
                         title: 'LIRC',
                         layout: 'fit',
-                        iconCls: 'x-icon-tickets',
+                        iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
                         tabTip: 'Lirc-Einstellungen (Fernbedienungs-Receiver)',
                         style: 'padding: 10px 30px 10px 30px;',
                         items: [
@@ -90,7 +90,25 @@ Ext.onReady(function() {
                                 items: [ getLircForm( lircData ) ]
                             })
                         ]
-                    }/*obsolete, only demo ,
+                    },
+                    {
+                        title: 'Kanal-Editor',
+                        layout: 'fit',
+                        iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
+                        tabTip: 'Kanal-Einstellungen (Radio- und Fernsehkanäle pflegen und sortieren)',
+                        style: 'padding: 20px 30px 20px 30px;',
+                        items: [
+                            new Ext.Panel({
+                                layout: 'fit',
+                                //title: 'Kanal-Editor',
+                                frame: false,
+                                plain: false,
+                                border: true,
+                                items: [ getChannelsForm() ]
+                            })
+                        ]
+                    }
+                    /*obsolete, only demo ,
                     {
                         title: 'X11',
                         iconCls: 'x-icon-subscriptions',
@@ -129,7 +147,7 @@ Ext.onReady(function() {
                     html: 'Inhalte von wichtigen Logfiles und Konfigurationsdateien' 
                     },
                     yaVDRLogFilePanel('/var/lib/yavdrdb.hdf'),
-                    yaVDRLogFilePanel('/etc/X11/xorg.conf'),
+                    yaVDRLogFilePanel('/etc/X11/xorg.conf.yavdr'),
                     yaVDRLogFilePanel('/etc/lirc/hardware.conf'),
                     yaVDRLogFilePanel('/etc/lirc/lircd.conf'),
                     yaVDRLogFilePanel('/etc/vdr/setup.conf'),

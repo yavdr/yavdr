@@ -16,7 +16,7 @@
         <script type="text/javascript" src="static/ext-extensions/PortalColumn.js"></script>
         <script type="text/javascript" src="static/ext-extensions/Portlet.js"></script>
         <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
-        <script type="text/javascript" src="static/config_tabs/x11.js"></script>
+        <script type="text/javascript" src="static/config_tabs/channels.js"></script>
         <script type="text/javascript" src="static/ext-extensions/grouptabs.js"></script>
 
         <!-- overrides to base library -->
@@ -46,7 +46,7 @@
             var lircData = <& get_lirchwdb >;
 
             //FIXME: just example data, replace by real data
-            var resolutionArray = [[ 0, '1024x768'], [ 1, '1080p']];
+            //var resolutionArray = [[ 0, '1024x768'], [ 1, '1080p']];
 
             Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
 

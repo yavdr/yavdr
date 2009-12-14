@@ -14,7 +14,7 @@ const char *files[] = {
     "/var/log/tntnet/tntnet.log", 
     
     "/var/lib/yavdrdb.hdf",
-    "/etc/X11/xorg.conf",
+    "/etc/X11/xorg.conf.yavdr",
     "/etc/lirc/hardware.conf",
     "/etc/lirc/lircd.conf",
     "/etc/vdr/setup.conf",
@@ -27,6 +27,7 @@ if (file == "filelist")
 {
     for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))); findex++)
     {
+        //TODO: this is not implemented completely... work in progress
         if (file == files[findex])
             reply.out() << files[findex] << "\n";
     }
