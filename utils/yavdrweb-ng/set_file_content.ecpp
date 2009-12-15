@@ -12,7 +12,7 @@ content;
 
 const char *files[] = {
     "/var/lib/vdr/remote.conf",
-    "/var/lib/vdr/diseqc.conf",
+    "/etc/vdr/diseqc.conf",
     "/var/lib/vdr/channels.conf"
 };
 
@@ -38,11 +38,12 @@ else{
 
     if (validFileName)
     {
+    	file = "/var/cache/yavdr/upload/" + file;
         ofstream myfile;
-        myfile.open ( file.c_str() );
+        myfile.open ( file.c_str(), ios::trunc );
         myfile << content;
         myfile.close();
-        reply.out() << "Datei " << file <<  "wurde gespeichert.";
+        reply.out() << "Datei " << file <<  " wurde gespeichert.";
 
     }
     else
