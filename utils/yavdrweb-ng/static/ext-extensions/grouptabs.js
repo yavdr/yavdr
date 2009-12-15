@@ -70,8 +70,8 @@ Ext.onReady(function() {
                                frame: false,
                                plain: false,
                                border: false,
-                               html: '<h1>Willkommen im yaVDR Web Front End!</h1>'.
-                                   '<p>Hier geht's zum <a href="static/tests/file_upload_test.html" target="_blank">File Upload Test</a>.</p>'
+                               html: '<h1>Willkommen im yaVDR Web Front End!</h1>'+
+                                   '<br/><p>Hier geht\'s zum <a href="static/tests/file_upload_test.html" target="_blank">File Upload Test</a>.</p>'
                            })
                         ]
                     },
