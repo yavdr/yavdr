@@ -39,7 +39,7 @@ else{
     if (validFileName)
     {
         ofstream myfile;
-        myfile.open ( file );
+        myfile.open ( file.c_str() );
         myfile << content;
         myfile.close();
         reply.out() << "Datei " << file <<  "wurde gespeichert.";
