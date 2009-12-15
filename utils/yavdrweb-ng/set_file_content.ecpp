@@ -1,0 +1,51 @@
+<%pre>
+#include <stdio.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+</%pre><& authenticate ><%args>
+file;
+content;
+</%args><%cpp>
+
+const char *files[] = {
+    "/var/lib/vdr/remote.conf",
+    "/var/lib/vdr/diseqc.conf",
+    "/var/lib/vdr/channels.conf"
+};
+
+int findex = 0;
+
+if (file == "filelist")
+{
+    for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))); findex++)
+    {
+        //TODO: this is not implemented completely... work in progress
+        if (file == files[findex])
+            reply.out() << files[findex] << "\n";
+    }
+}
+else{
+
+    bool validFileName = false;
+    for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))) && !validFileName; findex++)
+    {
+        if (file == files[findex])
+            validFileName = true;
+    }
+
+    if (validFileName)
+    {
+        ofstream myfile;
+        myfile.open ( file );
+        myfile << content;
+        myfile.close();
+        reply.out() << "Datei " << file <<  "wurde gespeichert.";
+
+    }
+    else
+        reply.out() << "Illegal command.";
+}
+</%cpp>
