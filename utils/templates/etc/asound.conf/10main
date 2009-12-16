@@ -1,0 +1,6 @@
+pcm.!default {
+        type hw
+        card <?cs var:system.hardware.audio.digitalout.card ?>
+        device <?cs var:system.hardware.audio.digitalout.device ?>
+}
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+devices=`grep "digital audio playback" /proc/asound/devices | sed -e "s/.*\[[ ]*//" -e "s/\].*$//" | tr -d ' '`
+for d in $devices
+do
+    card=`echo $d | sed "s/-.*$//"`
+    device=`echo $d | sed "s/.*-//"`
+
+    break
+done
+
+dbset "system.hardware.audio.digitalout.card=$card"
+dbset "system.hardware.audio.digitalout.device=$device"
+
+process-template /etc/asound.conf
