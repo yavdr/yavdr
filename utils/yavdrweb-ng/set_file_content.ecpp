@@ -38,7 +38,7 @@ else{
 
     if (validFileName)
     {
-    	file = "/var/cache/yavdr/upload/" + file;
+    	file = "/var/cache/yavdr/upload" + file;
         ofstream myfile;
         myfile.open ( file.c_str(), ios::trunc );
         myfile << content;
