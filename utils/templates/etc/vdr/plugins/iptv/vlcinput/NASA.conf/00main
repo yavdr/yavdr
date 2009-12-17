@@ -4,3 +4,5 @@ URL="http://www.nasa.gov/55644main_NASATV_Windows.asx"
 VPID=2
 APID=3
 SPID=4
+WIDTH=960
+HEIGHT=544
