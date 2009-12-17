@@ -1,4 +1,4 @@
-SUBDIRS = db-utils process-template signal-event yavdrweb-ng resize-pearlhd
+SUBDIRS = common db-utils process-template signal-event yavdrweb-ng resize-pearlhd
 .PHONY: $(SUBDIRS)
 
 ALL = $(addsuffix -all,$(SUBDIRS))

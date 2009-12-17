@@ -4,41 +4,12 @@
 #include <ClearSilver/ClearSilver.h>
 
 #include "common.h"
+#include "../common/make_dirs.h"
 
 NEOERR *csoutfunc(void *ctx, char *str)
 {
   fputs(str, (FILE *)ctx);   
   return STATUS_OK;
-}
-
-int make_dirs(const char *FileName)
-{
-  int result = 1;
-  char *s = strdup(FileName);
-  char *p = s;
-  if (*p == '/')
-    p++;
-  while ((p = strchr(p, '/')) != NULL)
-  {
-    struct stat fs;
-    if (p)
-      *p = 0;
-    if (stat(s, &fs) != 0 || !S_ISDIR(fs.st_mode))
-    {
-      if (mkdir(s, ACCESSPERMS) == -1)
-      {
-        perror(s);
-        result = 0;
-        break;
-      }
-    }
-    if (p)
-      *p++ = '/';
-    else
-      break;
-  }
-  free(s);
-  return result;
 }
 
 int process_template(char *infile, char *outfile)

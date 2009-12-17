@@ -2,3 +2,4 @@ usr/bin
 usr/sbin
 etc/yavdr
 usr/share/yavdr
+var/cache/yavdr/upload

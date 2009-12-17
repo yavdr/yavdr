@@ -1,5 +1,5 @@
 CFLAGS=-g -I.. -I/usr/include/ClearSilver
-LDLIBS=-lneo_utl -lneo_cs
+LDLIBS=../common/make_dirs.o -lneo_utl -lneo_cs
 
 all: process-template
 
