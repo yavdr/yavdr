@@ -32,14 +32,17 @@ vdr
 vdr-addon-acpiwakeup
 vdr-burnbackgrounds
 vdr-genindex
+vdr-plugin-avolctl
 vdr-plugin-burn
 vdr-plugin-epgsearch
+vdr-plugin-extrecmenu
 vdr-plugin-femon
 vdr-plugin-iptv
 vdr-plugin-live
 vdr-plugin-markad
 vdr-plugin-menuorg
 vdr-plugin-streamdev-server
+vdr-plugin-suspendoutput 
 vdr-plugin-text2skin
 vdr-plugin-wirbelscan
 vdr-plugin-xineliboutput
