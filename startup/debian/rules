@@ -45,6 +45,7 @@ install: build
 	dh_install cleanTTY1.conf	/etc/init
 	dh_install 10-dvb-remote.rules  /etc/udev/rules.d
 	dh_install dkms_autoinstaller.conf /etc/init
+	dh_install first-vdr-start.conf /etc/init
 
 # Build architecture-independent files here.
 binary-indep: build install
