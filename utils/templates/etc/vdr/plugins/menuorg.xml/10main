@@ -10,13 +10,27 @@ description of the config file format.
 <menus>
     <system name="Schedule" />
     <system name="Channels" />
-    <menu name="Video">
+    <menu name="Timer">
         <system name="Timers" />
+        <plugin name="epgsearchonly" />
+        <plugin name="quickepgsearch" />
+        <plugin name="conflictcheckonly" />
+    </menu>
+    <menu name="Video">
         <system name="Recordings" />
         <plugin name="burn" />
+        <plugin name="dvdswitch" />
+        <plugin name="dvdselect" />
+        <plugin name="dvd" />
         <plugin name="xineliboutput" />
     </menu>
-    <system name="Setup" />
-    <system name="Commands" />
+    <menu name="System">
+         <system name="Setup" />
+         <system name="Commands" />
+         <plugin name="femon" />
+         <plugin name="avolctl" />
+         <plugin name="suspendoutput" />
+         <plugin name="recstatus" />
+    </menu>
 </menus>
 
