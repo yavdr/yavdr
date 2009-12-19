@@ -5,6 +5,7 @@ case "$1" in
 	chown vdr:vdr /var/log/vdr
 	chsh -s /bin/bash vdr
 	adduser vdr audio
+	adduser vdr cdrom
 	update-rc.d -f vdr remove
 	update-rc.d -f nodm remove
 	update-rc.d -f dkms_autoinstaller remove
