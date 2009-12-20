@@ -38,7 +38,7 @@ Ext.onReady(function() {
                         new Ext.Panel({
                             frame: false,
                             border: false,
-                            style: 'font-family: monospace; white-space: pre;',
+                            style: 'font-family: monospace; white-space: pre; font-size: 12px;',
                             autoLoad: 'get_file_content?file='+file
                         })
                     ]
@@ -139,7 +139,7 @@ Ext.onReady(function() {
             }, {
                 expanded: true,
                 items: [{
-                    title: 'Debug',
+                    title: 'Diagnose',
                     iconCls: 'x-icon-configuration',
                     tabTip: 'Logfiles tabtip',
                     style: 'padding: 10px;',

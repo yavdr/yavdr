@@ -7,6 +7,8 @@ if ((request.getUsername() == "") ||
     (request.getPassword() == "") ||
     !authenticate_user(request.getUsername().c_str(), request.getPassword().c_str()))
 {
-  reply.notAuthorized("who says what to open the sesame?");
+  //leading quote compensates a bug in tntnet 1.6.3
+  //as long as there is no newer stable release available
+  reply.notAuthorized("\"yaVDR web front end");
 }
 </%cpp>
