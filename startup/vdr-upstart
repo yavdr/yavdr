@@ -68,7 +68,10 @@ if [ "$ENABLED" != "0" ] ; then
         $DAEMON \
             -v $VIDEO_DIR -c $CFG_DIR -L $PLUGIN_DIR -r $REC_CMD \
             -s $VDRSHUTDOWN -E $EPG_FILE -u $USER -g /tmp \
-            --port $SVDRP_PORT $OPTIONS $PLUGINS $REDIRECT
+            --port $SVDRP_PORT $OPTIONS $PLUGINS $REDIRECT &
+        DAEMONPID=$! 
+        trap 'kill -INT ${DAEMONPID} 2> /dev/null' INT EXIT QUIT TERM
+        wait $DAEMONPID 
         rm -f /var/run/runvdr.pid
     else
         echo -n " - seems to be running already"
