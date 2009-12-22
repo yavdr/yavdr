@@ -2,12 +2,13 @@
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
-         service vdr-frontend stop
+         service cleanTTY start
          service vdr stop
          service nodm stop
          ;;
      thaw|resume)
          echo "vdr gets started again"
+         service cleanTTY start
          service nodm start
          service vdr start  
          ;;
