@@ -48,6 +48,7 @@ install: build
 	dh_install dkms_autoinstaller.conf /etc/init
 	dh_install first-vdr-start.conf /etc/init
 	dh_install onshutdown.conf /etc/init
+	dh_install browser /usr/bin
 
 # Build architecture-independent files here.
 binary-indep: build install

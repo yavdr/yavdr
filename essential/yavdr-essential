@@ -2,10 +2,12 @@ acpi-support
 acpid
 alsa-utils
 anacron
+antiwm
 at
 build-essential
 cpufrequtils
 feh
+firefox
 libavcodec-unstripped-52
 libavdevice-unstripped-52
 libavformat-unstripped-52
