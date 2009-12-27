@@ -1,0 +1,6 @@
+xineliboutput.OSD.Blending = 1
+xineliboutput.OSD.BlendingLowRes = 1
+xineliboutput.OSD.Scaling = 1
+xineliboutput.OSD.Width = 1280
+xineliboutput.OSD.Height = 720
+xineliboutput.OSD.Size = 1920x1080
