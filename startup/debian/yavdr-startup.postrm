@@ -1,7 +1,18 @@
 #!/bin/sh
 
-if [ remove = "$1" ]; then 
-   dpkg-divert --package yavdr-startup --remove --rename \
-      --divert /etc/init/usplash.conf.dontremove /etc/init/usplash.conf
-fi 
+case "$1" in
+    purge)
+        rm -f /var/lib/vdr/.xine/* > /dev/null 2>&1 || true
+    ;;
+    remove)
+        dpkg-divert --package yavdr-startup --remove --rename \
+         --divert /etc/init/usplash.conf.dontremove /etc/init/usplash.conf
+    ;;
+    upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+    ;;
+    *)
+        echo "postrm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac 
 
