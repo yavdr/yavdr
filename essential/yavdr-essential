@@ -47,7 +47,7 @@ vdr-plugin-streamdev-server
 vdr-plugin-suspendoutput 
 vdr-plugin-text2skin
 vdr-plugin-wirbelscan
-vdr-plugin-xineliboutput
+vdr-plugin-xine
 vdr-skin-pearlhd
 vdr-skins-speciallogos
 vdr-xpmlogos
@@ -55,7 +55,7 @@ w-scan
 x11-utils
 x11-xserver-utils
 xbmc
-xineliboutput-sxfe
+xine-ui
 xinit
 xserver-xorg
 xserver-xorg-video-vesa
