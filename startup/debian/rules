@@ -52,7 +52,6 @@ install: build
 	dh_install start-xine /usr/bin
 	dh_install start-xbmc /usr/bin
 	dh_install start-firefox /usr/bin
-	dh_install externalplayer.conf /var/lib/vdr/plugins
 
 # Build architecture-independent files here.
 binary-indep: build install
