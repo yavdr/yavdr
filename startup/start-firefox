@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export DISPLAY=:1
+
+/usr/bin/firefox
+
+wait $!

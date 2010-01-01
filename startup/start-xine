@@ -1,0 +1,21 @@
+#!/bin/bash
+
+export DISPLAY=:1
+export HOME=/var/lib/vdr
+
+#ASPECT_RATIO="anamorphic"
+USE_AUTOCROP="1"
+
+test -f /etc/default/xine && . /etc/default/xine
+XINEOPTS="-f -V vdpau -A alsa --post vdr --post vdr_video --post vdr_audio --verbose=2 --no-gui --no-logo --no-splash"
+
+if [ -n "$ASPECT_RATIO" ]; then
+  XINEOPTS="$XINEOPTS --aspect-ratio=$ASPECT_RATIO"
+fi 
+
+if [ "$USE_AUTOCROP" = "1" ]; then
+  XINEOPTS="$XINEOPTS --post autocrop:enable_autodetect=0,enable_subs_detect=1,soft_start=1,stabilize=1"
+fi 
+
+while [ ! -e /tmp/vdr-xine/stream ] ; do sleep 1 ; done
+/usr/bin/xine $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes

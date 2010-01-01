@@ -31,7 +31,6 @@ install: build
 	dh_installdirs /var/log/vdr
 	dh_install vdr.conf /etc/init/
 	dh_install nodm.conf /etc/init/
-	dh_install vdr-frontend.conf /etc/init/
 	dh_install vdr-upstart /usr/sbin/
 	dh_install Xsession.vdr /etc/X11/
 	dh_install 20vdr_sleep /etc/pm/sleep.d
@@ -39,7 +38,6 @@ install: build
 	dh_install s3.conf /etc/init
 	dh_install S90.suspend2ram /usr/share/vdr/shutdown-hooks
 	dh_install lircrc /etc/lirc
-	dh_install xbmc.conf /etc/init
 	dh_install 50_custom /etc/grub.d
 	dh_install yavdr_logo.png	/usr/share/yavdr/images
 	dh_install cleanTTY.conf	/etc/init
@@ -49,7 +47,12 @@ install: build
 	dh_install first-vdr-start.conf /etc/init
 	dh_install onshutdown.conf /etc/init
 	dh_install browser /usr/bin
-        dh_install keymap /var/lib/yavdr/.xine
+        dh_install keymap /var/lib/vdr/.xine
+        dh_install xine.config /var/lib/vdr/.xine/config
+	dh_install start-xine /usr/bin
+	dh_install start-xbmc /usr/bin
+	dh_install start-firefox /usr/bin
+	dh_install externalplayer.conf /var/lib/vdr/plugins
 
 # Build architecture-independent files here.
 binary-indep: build install

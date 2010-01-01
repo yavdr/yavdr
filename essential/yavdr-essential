@@ -2,7 +2,6 @@ acpi-support
 acpid
 alsa-utils
 anacron
-antiwm
 at
 build-essential
 cpufrequtils
@@ -28,7 +27,6 @@ nvidia-settings
 smbfs
 ssh
 tntnet
-unclutter
 ureadahead
 vdr
 vdr-addon-acpiwakeup

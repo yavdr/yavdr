@@ -17,5 +17,4 @@ fi
 
 
 DISPLAY=:1 /usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
-#/usr/bin/unclutter -idle 1 -root -visible
-/usr/bin/antiwm
+/usr/bin/start-xine
