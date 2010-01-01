@@ -48,7 +48,7 @@ install: build
 	dh_install onshutdown.conf /etc/init
 	dh_install browser /usr/bin
         dh_install keymap /var/lib/vdr/.xine
-        dh_install xine.config /var/lib/vdr/.xine/config
+        dh_install config /var/lib/vdr/.xine
 	dh_install start-xine /usr/bin
 	dh_install start-xbmc /usr/bin
 	dh_install start-firefox /usr/bin
