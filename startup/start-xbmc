@@ -1,6 +1,5 @@
 #!/bin/bash
 
 export DISPLAY=:1
-export HOME=/var/lib/vdr
 
 /usr/bin/xbmc --standalone

@@ -4,6 +4,8 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 NAME=vdr
 DESC="Linux Video Disk Recorder"
 
+export HOME=/var/lib/vdr
+
 DAEMON=/usr/sbin/runvdr
 PIDFILE=/var/run/runvdr.pid
 VDRPRG=/usr/bin/vdr
