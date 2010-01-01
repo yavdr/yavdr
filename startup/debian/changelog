@@ -1,4 +1,49 @@
+yavdr-startup (0.0.22-1tvt1) karmic; urgency=low
+
+  * rev. 277
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sat, 19 Dec 2009 19:54:39 +0100
+
+yavdr-startup (0.0.20-1tvt1) karmic; urgency=low
+
+  * rev. 255
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sat, 19 Dec 2009 18:18:23 +0100
+
+yavdr-startup (0.0.19-1tvt1) karmic; urgency=low
+
+  * rev. 252
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sat, 19 Dec 2009 00:18:40 +0100
+
+yavdr-startup (0.0.18-1tvt1) karmic; urgency=low
+
+  * rev.247
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Fri, 18 Dec 2009 15:30:43 +0100
+
+yavdr-startup (0.0.17-1tvt1) karmic; urgency=low
+
+  * rev 231
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Wed, 16 Dec 2009 19:41:06 +0100
+
+yavdr-startup (0.0.16-1tvt1) karmic; urgency=low
+
+  * rev. 229
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Tue, 15 Dec 2009 23:23:31 +0100
+
+yavdr-startup (0.0.15-1tvt1) karmic; urgency=low
+
+  * rev.216
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 13 Dec 2009 16:45:00 +0100
+
+yavdr-startup (0.0.12-1tvt1) karmic; urgency=low
+=======
 yavdr-startup (0.0.24-1tvt1) karmic; urgency=low
+>>>>>>> .r276
 
   * rev.268
 
