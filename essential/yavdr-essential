@@ -36,6 +36,7 @@ vdr-genindex
 vdr-plugin-avolctl
 vdr-plugin-burn
 vdr-plugin-epgsearch
+vdr-plugin-externalplayer
 vdr-plugin-extrecmenu
 vdr-plugin-femon
 vdr-plugin-iptv
