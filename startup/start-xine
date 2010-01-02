@@ -7,7 +7,7 @@ export HOME=/var/lib/vdr
 USE_AUTOCROP="1"
 
 test -f /etc/default/xine && . /etc/default/xine
-XINEOPTS="-f -V vdpau -A alsa --post vdr --post vdr_video --post vdr_audio --verbose=2 --no-gui --no-logo --no-splash"
+XINEOPTS="-f -V vdpau -A alsa --post vdr --post vdr_video --post vdr_audio --verbose=2 --no-gui --no-logo --no-splash --deinterlace"
 
 if [ -n "$ASPECT_RATIO" ]; then
   XINEOPTS="$XINEOPTS --aspect-ratio=$ASPECT_RATIO"
@@ -18,4 +18,4 @@ if [ "$USE_AUTOCROP" = "1" ]; then
 fi 
 
 while [ ! -e /tmp/vdr-xine/stream ] ; do sleep 1 ; done
-/usr/bin/xine $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes --deinterlace temporal_spatial
+/usr/bin/xine $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes
