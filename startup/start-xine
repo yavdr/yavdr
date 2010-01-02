@@ -18,4 +18,4 @@ if [ "$USE_AUTOCROP" = "1" ]; then
 fi 
 
 while [ ! -e /tmp/vdr-xine/stream ] ; do sleep 1 ; done
-/usr/bin/xine $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes
+/usr/bin/xine $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes --deinterlace temporal_spatial
