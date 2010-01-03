@@ -7,7 +7,7 @@ export HOME=/var/lib/vdr
 USE_AUTOCROP="1"
 
 test -f /etc/default/xine && . /etc/default/xine
-XINEOPTS="-f -V vdpau -A alsa --post vdr --post vdr_video --post vdr_audio --verbose=2 --no-gui --no-logo --no-splash --deinterlace"
+XINEOPTS="-f -V vdpau -A alsa --post vdr --post vdr_video --post vdr_audio --verbose=2 --no-gui --no-logo --no-splash --deinterlace -pq"
 
 if [ -n "$ASPECT_RATIO" ]; then
   XINEOPTS="$XINEOPTS --aspect-ratio=$ASPECT_RATIO"

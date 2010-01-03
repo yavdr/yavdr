@@ -17,4 +17,5 @@ fi
 
 
 DISPLAY=:1 /usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
-/usr/bin/start-xine
+/usr/bin/unclutter -idle 1 -root -visible &
+while true; do /usr/bin/start-xine; done
