@@ -5,6 +5,7 @@ anacron
 at
 build-essential
 cpufrequtils
+ethtool
 feh
 firefox
 libavcodec-unstripped-52
