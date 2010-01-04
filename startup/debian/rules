@@ -33,6 +33,7 @@ install: build
 	dh_install nodm.conf /etc/init/
 	dh_install vdr-upstart /usr/sbin/
 	dh_install Xsession.vdr /etc/X11/
+	dh_install 30force-reload /etc/pm/sleep.d
 	dh_install 20vdr_sleep /etc/pm/sleep.d
 	dh_install 10vdr_module /etc/pm/config.d
 	dh_install s3.conf /etc/init
