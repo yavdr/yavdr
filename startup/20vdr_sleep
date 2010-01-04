@@ -8,7 +8,6 @@ case $1 in
          ;;
      thaw|resume)
          echo "vdr gets started again"
-         service cleanTTY start
          service nodm start
          service vdr start  
          ;;
