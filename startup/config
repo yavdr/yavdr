@@ -312,7 +312,7 @@ audio.device.alsa_front_device:default
 
 # Methode für Audio/Videosynchronisation
 # { metronom feedback  resample }, default: 0
-#audio.synchronization.av_sync_method:metronom feedback
+audio.synchronization.av_sync_method:resample
 
 # Wenn !=0, immer auf diese Rate anpassen
 # numeric, default: 0
