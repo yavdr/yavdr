@@ -3,4 +3,8 @@
 if [ remove = "$1" ]; then 
    dpkg-divert --package yavdr-startup --remove --rename \
       --divert /etc/init/usplash.conf.dontremove /etc/init/usplash.conf
+   dpkg-divert --package yavdr-startup --remove --rename \
+      --divert /var/lib/vdr/plugins/xine/noSignal4x3.mpg.dontremove /var/lib/vdr/plugins/xine/noSignal4x3.mpg
+   dpkg-divert --package yavdr-startup --remove --rename \
+      --divert /var/lib/vdr/plugins/xine/noSignal16x9.mpg.dontremove /var/lib/vdr/plugins/xine/noSignal16x9.mpg
 fi 
