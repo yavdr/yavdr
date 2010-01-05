@@ -348,7 +348,7 @@ audio.synchronization.av_sync_method:resample
 
 # vdpau: Try to recreate progressive frames from pulldown material
 # bool, default: 1
-#video.output.vdpau_enable_inverse_telecine:1
+video.output.vdpau_enable_inverse_telecine:0
 
 # vdpau: disable deinterlacing when progressive_frame flag is set
 # bool, default: 0
