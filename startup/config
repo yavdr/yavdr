@@ -563,7 +563,7 @@ video.output.vdpau_enable_inverse_telecine:0
 
 # SRC tuning step
 # numeric, default: 5000
-#media.xvdr.scr_tuning_step:5000
+media.xvdr.scr_tuning_step:50
 
 # Smoother SRC tuning
 # bool, default: 0
