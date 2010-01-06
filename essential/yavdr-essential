@@ -41,6 +41,7 @@ vdr-plugin-epgsearch
 vdr-plugin-externalplayer
 vdr-plugin-extrecmenu
 vdr-plugin-femon
+vdr-plugin-graphtft
 vdr-plugin-iptv
 vdr-plugin-live
 vdr-plugin-menuorg
