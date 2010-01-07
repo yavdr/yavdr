@@ -360,7 +360,7 @@ video.output.vdpau_deinterlace_method:bob
 
 # vdpau: disable advanced deinterlacers chroma filter
 # bool, default: 0
-#video.output.vdpau_skip_chroma_deinterlace:0
+video.output.vdpau_skip_chroma_deinterlace:1
 
 # Vertikale Bildposition im Ausgabefenster
 # [0..100], default: 50
