@@ -348,7 +348,7 @@ video.output.vdpau_deinterlace_method:bob
 
 # vdpau: Try to recreate progressive frames from pulldown material
 # bool, default: 1
-#video.output.vdpau_enable_inverse_telecine:0
+video.output.vdpau_enable_inverse_telecine:0
 
 # vdpau: disable deinterlacing when progressive_frame flag is set
 # bool, default: 0
@@ -631,7 +631,7 @@ media.xvdr.scr_tuning_step:50
 
 # Anzahl der Audiopuffer
 # numeric, default: 230
-#engine.buffers.audio_num_buffers:2000
+engine.buffers.audio_num_buffers:2000
 
 # Anzahl der Videopuffer
 # numeric, default: 500
