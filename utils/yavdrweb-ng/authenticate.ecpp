@@ -7,15 +7,9 @@ extern "C" {
 if ((request.getUsername() == "") ||
     (request.getPassword() == "") ||
     !authenticate_user(request.getUsername().c_str(), request.getPassword().c_str()))
-{	
-  /*possible workaround for safari
-  reply.resetContent(); //clearing everything that happened before
-  reply.setVersion( 1, 0 ); //setting HTTP version: HTTP/1.0
-  reply.setHeader ("WWW-Authenticate", "Basic realm=\"yaVDR web front end\"", false);
-  reply.setHeader ("status", "401 Unauthorized", false); //this maybe not needed
-  reply.setDirectMode(HTTP_UNAUTHORIZED, "Unauthorized");
-  */
-  
+{
+
+
   //leading quote compensates a bug in tntnet 1.6.3
   //as long as there is no newer stable release available
   reply.notAuthorized("\"yaVDR web front end");

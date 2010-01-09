@@ -17,7 +17,7 @@
         <script type="text/javascript" src="static/ext-extensions/Portlet.js"></script>
         <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
         <script type="text/javascript" src="static/config_tabs/channels.js"></script>
-        <script type="text/javascript" src="static/ext-extensions/grouptabs.js"></script>
+        <script type="text/javascript" src="static/config_tabs/grouptabs.js"></script>
 
         <!-- overrides to base library -->
         <link rel="stylesheet" type="text/css" href="static/ext-extensions/Portal.css" />
@@ -53,5 +53,5 @@
         </script>
         <& authenticate >
     </head>
-    <body></body>
+    <body style="background-color: #4E78B1;"></body>
 </html>

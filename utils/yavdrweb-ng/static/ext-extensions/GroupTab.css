@@ -4,9 +4,18 @@
  * licensing@extjs.com
  * http://www.extjs.com/license
  */
+body{
+}
+
 .x-grouptabs-panel {
     background-color: #4E78B1;
-    border: solid 15px #4E78B1;
+    border-style: solid;
+    border-width: 0px 15px 15px 15px;
+    border-color: #4E78B1;
+    padding-top: 120px;
+    background-image: url('../images/yavdr_web_logo_1.png');
+    background-repeat: no-repeat;
+    background-position:top left;
 }
 .x-tab-panel-left .x-grouptabs-panel-header,
 .x-tab-panel-right .x-grouptabs-panel-header {
