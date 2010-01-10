@@ -30,6 +30,7 @@ Ext.onReady(function() {
             layout:'fit',
             items: [
                 new Ext.Panel({
+                    id: 'diagnose_panel_wrapper_'+file,
                     title: file,
                     frame: false,
                     border: true,
@@ -41,9 +42,15 @@ Ext.onReady(function() {
                         handler: function(){
                             var thisObj = Ext.getCmp('diagnose_panel_'+file).getUpdater();
                             if(thisObj) thisObj.refresh();
-                            //Ext.Msg.alert('Message', 'The button was clicked.');
                         }
-                        //iconCls: 'add16'
+                    },'-',{
+                        text: 'Ans Ende springen',
+                        icon: 'ext/resources/images/default/layout/ns-expand.gif',
+                        tooltip: 'Klicken Sie diesen Button, um an das Endes des Inhalts dieses Panels zu springen.',
+                        handler: function(){
+                            var d = Ext.getCmp('diagnose_panel_wrapper_'+file).body.dom;
+                            d.scrollTop = d.scrollHeight - d.offsetHeight;
+                        }
                     }],
                     items: [
                         new Ext.Panel({
