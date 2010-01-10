@@ -52,6 +52,7 @@ vdr-plugin-suspendoutput
 vdr-plugin-text2skin
 vdr-plugin-wirbelscan
 vdr-plugin-xine
+vdr-plugin-xineliboutput
 vdr-skin-pearlhd
 vdr-skins-speciallogos
 vdr-tft-avp
@@ -64,6 +65,7 @@ x11-utils
 x11-xserver-utils
 xbmc
 xine-ui
+xineliboutput-sxfe
 xinit
 xserver-xorg
 xserver-xorg-video-vesa

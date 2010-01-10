@@ -15,7 +15,11 @@ if [ -f /tmp/xwininfo.out ]; then
   fi
 fi
 
+FRONTEND="/usr/bin/start-xine"
+if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
+  FRONTEND="/usr/bin/start-xineliboutput"
+fi
 
 DISPLAY=:1 /usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
 /usr/bin/unclutter -idle 1 -root -visible &
-while true; do /usr/bin/start-xine; done
+while true; do $FRONTEND; done

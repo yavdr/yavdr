@@ -11,3 +11,5 @@
 # /etc/vdr/plugins/plugin.<pluginname>.conf - each option in one line
 
 <?cs if:!vdr.plugin.graphtft.enabled ?>-graphtft<?cs /if ?>
+<?cs if:vdr.frontend != "xineliboutput" ?>-xineliboutput<?cs /if ?>
+<?cs if:vdr.frontend != "xine" ?>-xine<?cs /if ?>
