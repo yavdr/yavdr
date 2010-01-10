@@ -30,12 +30,24 @@ Ext.onReady(function() {
             layout:'fit',
             items: [
                 new Ext.Panel({
-                    title: file + ' (manual refresh only via F5, refreshes whole web-frontend!!!)',
+                    title: file,
                     frame: false,
                     border: true,
                     autoScroll: true,
+                    tbar: [{
+                        text: 'Aktualisieren',
+                        icon: 'ext/resources/images/default/grid/refresh.gif',
+                        tooltip: 'Klicken Sie diesen Button, um den Inhalt des Panels zu aktualisieren.',
+                        handler: function(){
+                            var thisObj = Ext.getCmp('diagnose_panel_'+file).getUpdater();
+                            if(thisObj) thisObj.refresh();
+                            //Ext.Msg.alert('Message', 'The button was clicked.');
+                        }
+                        //iconCls: 'add16'
+                    }],
                     items: [
                         new Ext.Panel({
+                            id: 'diagnose_panel_'+file,
                             frame: false,
                             border: false,
                             style: 'font-family: monospace; white-space: pre; font-size: 12px;',
@@ -70,8 +82,8 @@ Ext.onReady(function() {
                                frame: false,
                                plain: false,
                                border: false,
-                               html: '<h1>Willkommen im yaVDR Web Front End!</h1>'+
-                                   '<br/><p>Hier geht\'s zum <a href="static/tests/file_upload_test.html" target="_blank">File Upload Test</a>.</p>'
+                               html: '<h1 style="font-family: sans-serif;">Willkommen im yaVDR Web Front End!</h1>'+
+                                   '<br/><p  style="font-family: sans-serif;">Hier geht\'s zum <a href="static/tests/file_upload_test.html" target="_blank">File Upload Test</a>.</p>'
                            })
                         ]
                     },
