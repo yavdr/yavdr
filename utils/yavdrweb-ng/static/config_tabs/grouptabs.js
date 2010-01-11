@@ -60,7 +60,7 @@ Ext.onReady(function() {
                                 frame: false,
                                 plain: false,
                                 border: false,
-                                items: [ getLircForm( lircData ) ]
+                                items: [ getLircForm() ]
                             })
                         ]
                     },

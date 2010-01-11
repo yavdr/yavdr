@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="ext/resources/css/ext-all.css" />
         <script type="text/javascript" src="ext/adapter/ext/ext-base.js"></script>
         <script type="text/javascript" src="ext/ext-all.js"></script>
-        <!--script type="text/javascript" src="ext/ext-all-debug.js"></script-->
+        <!-- script type="text/javascript" src="ext/ext-all-debug.js"></script -->
         <!-- TODO: only use those parts of ext that a really used by this application. saves a lot of http traffic -->
         
         <script type="text/javascript" src="static/ext-extensions/GroupTabPanel.js"></script>
@@ -43,14 +43,7 @@
             */
         </style>
         <script>
-            //global vars (bad style, but works for now)
-            var lircData = <& get_lirchwdb >;
-
-            //FIXME: just example data, replace by real data
-            //var resolutionArray = [[ 0, '1024x768'], [ 1, '1080p']];
-
             Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
-
         </script>
         <& authenticate >
     </head>

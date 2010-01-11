@@ -47,13 +47,13 @@ function yaVDRLogFilePanel(file)
 function getDiagnoseItems(){
     return [
         {
-        title: 'Diagnose',
-        iconCls: 'x-icon-configuration',
-        tabTip: 'Logfiles tabtip',
-        style: 'padding: 10px;',
-        frame: false,
-        border: false,
-        html: 'Inhalte von wichtigen Logfiles und Konfigurationsdateien' 
+            title: 'Diagnose',
+            iconCls: 'x-icon-configuration',
+            tabTip: 'Logfiles tabtip',
+            style: 'padding: 10px;',
+            frame: false,
+            border: false,
+            html: '<p style="font-family: sans-serif;">Inhalte von wichtigen Logfiles und Konfigurationsdateien</p>' 
         },
         yaVDRLogFilePanel('/var/lib/yavdrdb.hdf'),
         yaVDRLogFilePanel('/etc/X11/xorg.conf.yavdr'),
