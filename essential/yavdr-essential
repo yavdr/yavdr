@@ -5,7 +5,6 @@ anacron
 at
 build-essential
 cpufrequtils
-dvb-s2api-liplianin-dkms
 ethtool
 feh
 firefox
