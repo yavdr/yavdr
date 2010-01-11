@@ -10,8 +10,10 @@ function yaVDRLogFilePanel(file)
             new Ext.Panel({
                 id: 'diagnose_panel_wrapper_'+file,
                 title: file,
-                frame: false,
+                frame: true,
                 border: true,
+                //bodyBorder: true,
+                bodyStyle: 'border: 1px solid lightgray; background-color: white; padding: 2px;',
                 autoScroll: true,
                 tbar: [{
                     text: 'Aktualisieren',
@@ -33,6 +35,7 @@ function yaVDRLogFilePanel(file)
                 items: [
                     new Ext.Panel({
                         id: 'diagnose_panel_'+file,
+                        layout: 'fit',
                         frame: false,
                         border: false,
                         style: 'font-family: monospace; white-space: pre; font-size: 12px;',

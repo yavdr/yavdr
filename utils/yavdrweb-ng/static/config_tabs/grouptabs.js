@@ -34,8 +34,8 @@ Ext.onReady(function() {
                         xtype: 'portal',
                         layout: 'fit',
                         title: 'Basics',
-                        tabTip: 'Konfigurieren Sie die Grundeinstellungen wie Fernbedienung, X11, etc.',
-                        style: 'padding: 10px 30px 10px 30px;',
+                        tabTip: 'Konfigurieren Sie die Grundeinstellungen wie Fernbedienung, Senderliste, etc.',
+                        style: 'padding: 20px 30px 20px 30px;',
                         items:[
                            new Ext.Panel({
                                layout: 'fit',
@@ -52,14 +52,14 @@ Ext.onReady(function() {
                         layout: 'fit',
                         iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
                         tabTip: 'Lirc-Einstellungen (Fernbedienungs-Receiver)',
-                        style: 'padding: 10px 30px 10px 30px;',
+                        style: 'padding: 20px 30px 20px 30px;',
                         items: [
                             new Ext.Panel({
-                                layout: 'fit',
+                                layout: 'auto',
                                 title: 'Fernbedienungs-Empfänger (LIRC)',
-                                frame: false,
+                                frame: true,
                                 plain: false,
-                                border: false,
+                                border: true,
                                 items: [ getLircForm() ]
                             })
                         ]
@@ -76,7 +76,7 @@ Ext.onReady(function() {
                                 //title: 'Kanal-Editor',
                                 frame: false,
                                 plain: false,
-                                border: true,
+                                border: false,
                                 items: [ getChannelsForm() ]
                             })
                         ]
