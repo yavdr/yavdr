@@ -7,12 +7,16 @@ using namespace std;
 file;
 </%args><%cpp>
 
+string xbmcLog = "/home/" + request.getUsername() + "/.xbmc/temp/xbmc.log"; 
+string xbmcLogOld = "/home/" + request.getUsername() + "/.xbmc/temp/xbmc.old.log"; 
+
 const char *files[] = {
     "/var/log/messages", 
     "/var/log/user.log", 
     "/var/log/syslog", 
-    "/var/log/tntnet/tntnet.log", 
-    
+    "/var/log/tntnet/tntnet.log",
+    xbmcLog.c_str(),
+    xbmcLogOld.c_str(),
     "/var/lib/yavdrdb.hdf",
     "/etc/X11/xorg.conf.yavdr",
     "/etc/lirc/hardware.conf",
