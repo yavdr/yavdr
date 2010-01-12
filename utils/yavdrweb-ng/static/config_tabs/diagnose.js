@@ -3,11 +3,10 @@ function yaVDRLogFilePanel(info, cmd, file)
     return new Ext.Panel({
         id: 'diagnose_panel_wrapper_'+file,
         title: info + ' (' + file + ')',
-        //layout: 'fit',
         frame: true,
         border: true,
         //bodyBorder: true,
-        bodyStyle: 'border: 1px solid lightgray; background-color: white; padding: 2px;',
+        bodyStyle: 'border: 1px solid lightgrey; background-color: white; padding: 2px;',
         autoScroll: true,
         tbar: [{
             text: 'Aktualisieren',
@@ -33,7 +32,7 @@ function yaVDRLogFilePanel(info, cmd, file)
                 frame: false,
                 border: false,
                 style: 'font-family: monospace; white-space: pre; font-size: 12px;',
-                autoLoad: cmd + '?' + (cmd === 'get_file_content' ? 'file' : 'command') + '='+file
+                autoLoad: cmd + '?' + (cmd === 'get_file_content' ? 'file' : 'command') + '=' + file
             })
         ]
     });
@@ -49,7 +48,7 @@ function getDiagnoseItems(){
             style: 'padding: 20px 30px 20px 30px;',
             frame: false,
             border: false,
-            html: '<p style="font-family: sans-serif;">Inhalte von wichtigen Logfiles und Konfigurationsdateien</p>' 
+            html: '<p style="font-family: sans-serif;">Inhalte von wichtigen Logfiles und Konfigurationsdateien</p>'
         },
         {
             title: 'System-Informationen',
@@ -68,12 +67,11 @@ function getDiagnoseItems(){
                     defaults:{autoScroll: true},
                     items: [
                             yaVDRLogFilePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
-                            yaVDRLogFilePanel('Systemstatus (top)', 'get_shell_response', 'top')
+                            yaVDRLogFilePanel('Systemstatus', 'get_shell_response', 'top')
                     ]
                 })
             ]
         },
-        
         {
             title: 'System-Logfiles',
             layout: 'fit',
@@ -90,9 +88,9 @@ function getDiagnoseItems(){
                     activeTab: 0,
                     defaults:{autoScroll: true},
                     items: [
-                            yaVDRLogFilePanel('System-Logfile: messages','get_file_content', '/var/log/messages'),
-                            yaVDRLogFilePanel('System-Logfile: user.log','get_file_content', '/var/log/user.log'),
-                            yaVDRLogFilePanel('System-Logfile: syslog','get_file_content', '/var/log/syslog'),
+                            yaVDRLogFilePanel('Logfile messages','get_file_content', '/var/log/messages'),
+                            yaVDRLogFilePanel('Logfile user.log','get_file_content', '/var/log/user.log'),
+                            yaVDRLogFilePanel('Logfile syslog','get_file_content', '/var/log/syslog')
                     ]
                 })
             ]
@@ -114,7 +112,7 @@ function getDiagnoseItems(){
                     defaults:{autoScroll: true},
                     items: [
                         yaVDRLogFilePanel('XBMC-Logfile','get_file_content', '/home/'+ user + '/.xbmc/temp/xbmc.log'),
-                        yaVDRLogFilePanel('XBMC-Logfile (old)','get_file_content', '/home/'+ user + '/.xbmc/temp/xbmc.old.log'),
+                        yaVDRLogFilePanel('XBMC-Logfile (old)','get_file_content', '/home/'+ user + '/.xbmc/temp/xbmc.old.log')
                     ]
                 })
             ]

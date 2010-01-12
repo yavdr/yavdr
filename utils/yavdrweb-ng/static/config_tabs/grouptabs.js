@@ -85,27 +85,19 @@ Ext.onReady(function() {
                         title: 'System',
                         iconCls: 'x-icon-subscriptions',
                         tabTip: 'Starten Sie den Rechner via Web-Frontend neu',
-                        style: 'padding: 10px 30px 10px 30px;',
+                        style: 'padding: 20px 30px 20px 30px;',
                         layout: 'fit',
                         items: [
                             new Ext.Panel({
                                 layout: 'auto',
                                 title: 'System-Kommandos',
-                                frame: false,
+                                frame: true,
                                 plain: false,
-                                border: false,
+                                border: true,
                                 items: [ getSystemForm() ]
                             })
-                        ]    
-                    }/*
-                    {
-                        title: 'Dummy',
-                        iconCls: 'x-icon-users',
-                        tabTip: 'Dummy tabtip',
-                        style: 'padding: 10px;',
-                        html: 'Testing... 1',
-                        frame: true
-                    }*/
+                        ]
+                    }
                 ]
             }, {
                 expanded: false,

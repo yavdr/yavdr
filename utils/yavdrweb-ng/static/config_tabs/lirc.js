@@ -49,7 +49,7 @@ function getLircForm(){
         border: false,
         bodyStyle:'padding:5px 5px 0',
         labelWidth: 130,
-        defaults: {width: 500},
+        defaults: {width: 400},
         defaultType: 'textfield',
         buttonAlign: 'left',
         items:[
