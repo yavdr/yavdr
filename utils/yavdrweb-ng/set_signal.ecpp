@@ -17,7 +17,7 @@ using namespace std;
   signal;
 </%args><%cpp>
 
-string success;
+string success = "false";
 
 if (signal == "reboot")
 {
