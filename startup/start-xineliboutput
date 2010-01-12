@@ -1,0 +1,5 @@
+#!/bin/bash
+
+while  ! netcat -z localhost 37890; do sleep 1; done;
+exec su -c 'DISPLAY=:1 /usr/bin/vdr-sxfe --post tvtime:method=use_vo_driver --reconnect --fullscreen --audio=alsa --syslog xvdr://127.0.0.1:37890' vdr
+
