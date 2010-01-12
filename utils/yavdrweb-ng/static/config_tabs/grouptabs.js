@@ -65,7 +65,7 @@ Ext.onReady(function() {
                         ]
                     },
                     {
-                        title: 'Kanal-Editor',
+                        title: 'Kanal-Liste',
                         layout: 'fit',
                         iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
                         tabTip: 'Kanal-Einstellungen (Radio- und Fernsehkanäle pflegen und sortieren)',

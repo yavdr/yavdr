@@ -59,6 +59,7 @@ function getDiagnoseItems(){
             html: '<p style="font-family: sans-serif;">Inhalte von wichtigen Logfiles und Konfigurationsdateien</p>' 
         },
         yaVDRLogFilePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
+        yaVDRLogFilePanel('Systemstatus (top)', 'get_shell_response', 'top'),
         yaVDRLogFilePanel('X-Server Konfiguration','get_file_content', '/etc/X11/xorg.conf.yavdr'),
         yaVDRLogFilePanel('LIRC: Hardware-Konfiguration','get_file_content', '/etc/lirc/hardware.conf'),
         yaVDRLogFilePanel('LIRC: lircd-Konfiguration', 'get_file_content', '/etc/lirc/lircd.conf'),

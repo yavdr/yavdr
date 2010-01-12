@@ -9,9 +9,11 @@ command;
 
 //restrict commands
 
-if (command == "ifconfig")
+if (command == "ifconfig" || command == "top")
 {
-    string cmd = "ifconfig";
+    string cmd = command;
+    if (command == "top")
+       cmd += " -b -n1";
 
     if (FILE *stream = popen(cmd.c_str(), "r"))
     {
