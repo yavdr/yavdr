@@ -1,7 +1,7 @@
-function yaVDRLogFilePanel(file)
+function yaVDRLogFilePanel(info, cmd, file)
 { 
     return {
-        title: file,
+        title: info,
         iconCls: 'x-icon-templates',
         tabTip: 'logfile tabtip' + file,
         style: 'padding: 20px 30px 20px 30px;',
@@ -9,7 +9,7 @@ function yaVDRLogFilePanel(file)
         items: [
             new Ext.Panel({
                 id: 'diagnose_panel_wrapper_'+file,
-                title: file,
+                title: info + ' (' + file + ')',
                 frame: true,
                 border: true,
                 //bodyBorder: true,
@@ -39,7 +39,7 @@ function yaVDRLogFilePanel(file)
                         frame: false,
                         border: false,
                         style: 'font-family: monospace; white-space: pre; font-size: 12px;',
-                        autoLoad: 'get_file_content?file='+file
+                        autoLoad: cmd + '?' + (cmd === 'get_file_content' ? 'file' : 'command') + '='+file
                     })
                 ]
             })
@@ -58,16 +58,17 @@ function getDiagnoseItems(){
             border: false,
             html: '<p style="font-family: sans-serif;">Inhalte von wichtigen Logfiles und Konfigurationsdateien</p>' 
         },
-        yaVDRLogFilePanel('/var/lib/yavdrdb.hdf'),
-        yaVDRLogFilePanel('/etc/X11/xorg.conf.yavdr'),
-        yaVDRLogFilePanel('/etc/lirc/hardware.conf'),
-        yaVDRLogFilePanel('/etc/lirc/lircd.conf'),
-        yaVDRLogFilePanel('/etc/vdr/setup.conf'),
-        yaVDRLogFilePanel('/etc/vdr/remote.conf'),
-        yaVDRLogFilePanel('/var/log/messages'),
-        yaVDRLogFilePanel('/var/log/user.log'),
-        yaVDRLogFilePanel('/var/log/syslog'),
-        yaVDRLogFilePanel('/var/log/tntnet/tntnet.log')
+        yaVDRLogFilePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
+        yaVDRLogFilePanel('X-Server Konfiguration','get_file_content', '/etc/X11/xorg.conf.yavdr'),
+        yaVDRLogFilePanel('LIRC: Hardware-Konfiguration','get_file_content', '/etc/lirc/hardware.conf'),
+        yaVDRLogFilePanel('LIRC: lircd-Konfiguration', 'get_file_content', '/etc/lirc/lircd.conf'),
+        yaVDRLogFilePanel('VDR: Setup', 'get_file_content', '/etc/vdr/setup.conf'),
+        yaVDRLogFilePanel('VDR: Fernbedienung','get_file_content', '/etc/vdr/remote.conf'),
+        yaVDRLogFilePanel('System-Logfile: messages','get_file_content', '/var/log/messages'),
+        yaVDRLogFilePanel('System-Logfile: user.log','get_file_content', '/var/log/user.log'),
+        yaVDRLogFilePanel('System-Logfile: syslog','get_file_content', '/var/log/syslog'),
+        yaVDRLogFilePanel('Webserver-Logfile (tntnet)','get_file_content', '/var/log/tntnet/tntnet.log'),
+        yaVDRLogFilePanel('yaVDR Datenbank', 'get_file_content', '/var/lib/yavdrdb.hdf')
     ];
 }
     

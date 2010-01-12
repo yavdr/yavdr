@@ -1,0 +1,33 @@
+<%pre>
+#include <stdio.h>
+#include <string>
+
+using namespace std;
+</%pre><& authenticate ><%args>
+command;
+</%args><%cpp>
+
+//restrict commands
+
+if (command == "ifconfig")
+{
+    string cmd = "ifconfig";
+
+    if (FILE *stream = popen(cmd.c_str(), "r"))
+    {
+        char buffer[1024];
+        while (!feof(stream))
+        {
+          if (fgets(buffer, sizeof(buffer), stream) != NULL)
+          {
+               reply.sout() << buffer; // << ",\n"; //we must escape special chars via sout (xss)
+          }
+        }
+        pclose(stream); 
+    }
+}
+else
+    reply.out() << "Illegal command.";
+
+</%cpp>
+
