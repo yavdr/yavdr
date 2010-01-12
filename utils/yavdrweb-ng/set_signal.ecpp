@@ -1,0 +1,30 @@
+<%pre>
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <ctype.h>
+extern "C" {
+#include <ClearSilver.h>
+};
+
+#include "common.h"
+
+using namespace std;
+</%pre><& authenticate ><%args>
+  //Default type of args is string and we should leave it like this
+  //For more robustness, avoid to define integer vars in here, better cast string to int later!!!
+  signal;
+</%args><%cpp>
+
+string success;
+
+if (signal == "reboot")
+{
+    string cmd = "/usr/bin/signal-event " + signal;
+    int ret = system( cmd.c_str());
+    success = "true"; //TODO: use ret to find out if we were successful.
+}
+</%cpp>{
+    success: <$success$>
+}

@@ -1,4 +1,4 @@
-function populateForm( lircData ){
+function populateLircForm( lircData ){
 
     var receiverStore = new Ext.data.ArrayStore({
         storeId : 'lirc_receiver_store',
@@ -24,7 +24,7 @@ function populateForm( lircData ){
     cbox.hiddenValue = lircData.current_receiver;  //initial value, used in POST request
     cbox.on({
         'select' : {
-            fn: onComboBoxChange,
+            fn: onLircComboBoxChange,
             scope: this,
             delay: 100
         }
@@ -117,14 +117,14 @@ function getLircForm(){
             catch (err) {
                 Ext.MessageBox.alert('ERROR', 'Could not decode lircData');
             }            
-            populateForm( lircData );
+            populateLircForm( lircData );
         }
     });
     
     return myform;
 }
 
-function onComboBoxChange( combo, record, index){
+function onLircComboBoxChange( combo, record, index){
     adjustSerialSettings(record.data.lirc_driver, record.data.driver );
 }
     

@@ -18,6 +18,7 @@
         <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
         <script type="text/javascript" src="static/config_tabs/channels.js"></script>
         <script type="text/javascript" src="static/config_tabs/diagnose.js"></script>
+        <script type="text/javascript" src="static/config_tabs/system.js"></script>
         <script type="text/javascript" src="static/config_tabs/grouptabs.js"></script>
 
         <!-- overrides to base library -->

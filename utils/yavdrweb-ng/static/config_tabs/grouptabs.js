@@ -80,25 +80,24 @@ Ext.onReady(function() {
                                 items: [ getChannelsForm() ]
                             })
                         ]
-                    }
-                    /*obsolete, only demo ,
+                    },
                     {
-                        title: 'X11',
+                        title: 'System',
                         iconCls: 'x-icon-subscriptions',
-                        tabTip: 'X11 tabtip',
+                        tabTip: 'Starten Sie den Rechner via Web-Frontend neu',
                         style: 'padding: 10px 30px 10px 30px;',
                         layout: 'fit',
                         items: [
                             new Ext.Panel({
-                                layout: 'fit',
-                                title: 'Bildschirmausgabe',
+                                layout: 'auto',
+                                title: 'System-Kommandos',
                                 frame: false,
                                 plain: false,
                                 border: false,
-                                items: [ getX11Form( resolutionArray ) ]
+                                items: [ getSystemForm() ]
                             })
                         ]    
-                    },*//*
+                    }/*
                     {
                         title: 'Dummy',
                         iconCls: 'x-icon-users',
