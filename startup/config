@@ -745,15 +745,15 @@ engine.buffers.video_num_frames:22
 
 # xines Methode zum Kopieren von Speicher
 # { probe  libc  kernel  mmx  mmxext  sse }, default: 0
-engine.performance.memcpy_method:sse
+engine.performance.memcpy_method:probe
 
 # Erlaubter Prozentsatz für verworfene Frames
 # numeric, default: 10
-#engine.performance.warn_discarded_threshold:10
+engine.performance.warn_discarded_threshold:100
 
 # Erlaubter Prozentsatz für übersprungene Frames
 # numeric, default: 10
-#engine.performance.warn_skipped_threshold:10
+engine.performance.warn_skipped_threshold:100
 
 # Erlaube implizierte Änderungen an Konfiguration (z.B. durch MRL)
 # bool, default: 0
