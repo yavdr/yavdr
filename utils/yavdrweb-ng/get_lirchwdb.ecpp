@@ -10,6 +10,7 @@ using namespace std;
 </%pre>
 <& authenticate >
 <%cpp>
+  reply.setHeader ("Cache-Control", "no-cache", false);
 
   string current_lirchw_description = "";
   string current_serial_port = "";

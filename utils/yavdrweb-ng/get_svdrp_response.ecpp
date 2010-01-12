@@ -6,6 +6,7 @@ using namespace std;
 </%pre><& authenticate ><%args>
 command;
 </%args><%cpp>
+reply.setHeader ("Cache-Control", "no-cache", false);
 
 /*
   DELC Delete Channel

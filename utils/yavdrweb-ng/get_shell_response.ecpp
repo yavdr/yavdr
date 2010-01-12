@@ -6,8 +6,7 @@ using namespace std;
 </%pre><& authenticate ><%args>
 command;
 </%args><%cpp>
-
-//FIXME: Add HTTP headers no-cache for internet explorer!!!!
+reply.setHeader ("Cache-Control", "no-cache", false);
 
 //restrict commands
 

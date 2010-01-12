@@ -6,6 +6,7 @@ using namespace std;
 </%pre><& authenticate ><%args>
 file;
 </%args><%cpp>
+reply.setHeader ("Cache-Control", "no-cache", false);
 
 string xbmcLog = "/home/" + request.getUsername() + "/.xbmc/temp/xbmc.log"; 
 string xbmcLogOld = "/home/" + request.getUsername() + "/.xbmc/temp/xbmc.old.log"; 

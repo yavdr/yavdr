@@ -3,7 +3,6 @@ function getChannelsForm(){
     var gridLoadMask = new Ext.LoadMask(Ext.getBody(), {msg:"Please wait..."});
     
     var channellist_store = new Ext.data.JsonStore({
-        // store configs
         autoDestroy: true,
         //autoLoad: true,
         url: 'get_svdrp_response?command=LSTC',
@@ -30,6 +29,15 @@ function getChannelsForm(){
             title: 'Kanal-Liste (alle Radio- und TV-Kanäle)  (Erste Demo! Es wird bisher nur eine Liste der Kanäle angezeigt!)',
             frame: true,
             loadMask: gridLoadMask,
+/*            tbar: [{
+                text: 'Aktualisieren',
+                icon: 'ext/resources/images/default/grid/refresh.gif',
+                tooltip: 'Klicken Sie diesen Button, um den Inhalt des Panels zu aktualisieren.',
+                handler: function(){
+                    var thisObj = Ext.getCmp('diagnose_panel_'+file).getUpdater();
+                    if(thisObj) thisObj.refresh();
+                }
+            }],*/
             viewConfig: {
                 forceFit: false
             }
