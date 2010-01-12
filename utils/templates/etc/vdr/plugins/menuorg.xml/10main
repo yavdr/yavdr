@@ -24,6 +24,7 @@ description of the config file format.
         <plugin name="dvd" />
         <plugin name="xineliboutput" />
     </menu>
+    <plugin name="externalplayer" title="Programme" />
     <menu name="System">
          <system name="Setup" />
          <system name="Commands" />
