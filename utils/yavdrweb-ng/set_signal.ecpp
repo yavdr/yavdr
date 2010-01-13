@@ -1,5 +1,4 @@
 <%pre>
-using namespace std;
 #include <stdlib.h>
 #include <string>
 #include <ctype.h>

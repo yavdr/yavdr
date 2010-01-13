@@ -5,14 +5,14 @@ function getVDRFrontendForm(){
         border: false,
         bodyStyle:'padding:5px 5px 0',
         labelWidth: 130,
-        defaults: {width: 500},
         defaultType: 'textfield',
         buttonAlign: 'left',
         items: [{
             id: 'frontend_radio_group',
             name: 'frontend',
             xtype: 'radiogroup',
-            fieldLabel: 'Gew&uuml;nschtes Frontend:',
+            fieldLabel: 'Gew&uuml;nschtes Frontend',
+            columns: 1,
             items: [
                 {id: 'frontend-rb1', boxLabel: 'xine', name: 'frontend', inputValue: 'xine'},
                 {id: 'frontend-rb2', boxLabel: 'xineliboutput', name: 'frontend', inputValue: 'xineliboutput'}

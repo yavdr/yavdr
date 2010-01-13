@@ -74,6 +74,7 @@ function getLircForm(){
                 id: 'serial_port_radio_group',
                 name: 'serial_port',
                 xtype: 'radiogroup',
+                columns: 1,
                 fieldLabel: 'Serielle Schnittstelle',
                 items: [
                     {id: 'rb1', boxLabel: 'keine',      name: 'serial_port', inputValue: ''},
