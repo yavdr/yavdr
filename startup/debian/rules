@@ -55,7 +55,7 @@ install: build
 	dh_install start-firefox /usr/bin
 	dh_install noSignal4x3.mpg	/var/lib/vdr/plugins/xine
 	dh_install noSignal16x9.mpg	/var/lib/vdr/plugins/xine
-	dh_install start-xineliboutput
+	dh_install start-xineliboutput	/usr/bin
 
 
 # Build architecture-independent files here.
