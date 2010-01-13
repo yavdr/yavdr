@@ -18,6 +18,7 @@ if (command == "ifconfig" || command == "top")
 
     if (FILE *stream = popen(cmd.c_str(), "r"))
     {
+        reply.out() << "<pre>";
         char buffer[1024];
         while (!feof(stream))
         {
@@ -28,6 +29,7 @@ if (command == "ifconfig" || command == "top")
           }
         }
         pclose(stream); 
+        reply.out() << "</pre>";
     }
 }
 else

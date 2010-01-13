@@ -42,8 +42,7 @@ Ext.onReady(function() {
                                frame: false,
                                plain: false,
                                border: false,
-                               html: '<h1 style="font-family: sans-serif;">Willkommen im yaVDR Web Front End!</h1>'+
-                                   '<br/><p  style="font-family: sans-serif;">Hier geht\'s zum <a href="static/tests/file_upload_test.html" target="_blank">File Upload Test</a>.</p>'
+                               html: '<h1 style="font-family: sans-serif;">Willkommen im yaVDR Web-Frontend!</h1>'
                            })
                         ]
                     },
@@ -95,6 +94,23 @@ Ext.onReady(function() {
                                 plain: false,
                                 border: true,
                                 items: [ getVDRFrontendForm() ]
+                            })
+                        ]
+                    },
+                    {
+                        title: 'VDR-Konfig-Upload',
+                        iconCls: 'x-icon-subscriptions',
+                        tabTip: 'Laden Sie existierende VDR-Konfigurationsdateien hoch',
+                        style: 'padding: 20px 30px 20px 30px;',
+                        layout: 'fit',
+                        items: [
+                            new Ext.Panel({
+                                layout: 'auto',
+                                title: 'VDR-Konfig-Upload',
+                                frame: true,
+                                plain: false,
+                                border: true,
+                                items: [ getVDRConfigUploadForm() ]
                             })
                         ]
                     },

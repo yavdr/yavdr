@@ -19,6 +19,7 @@ const char *files[] = {
 };
 
 int findex = 0;
+string success = "false";
 
 if (file == "filelist")
 {
@@ -65,8 +66,11 @@ else{
         }
       }
 // signal-event end
+      success = "true";
   }
   else
-    reply.out() << "Illegal command.";
+    reply.out() << "/*Illegal command.*/";
 }
-</%cpp>
+</%cpp>{
+    success: <$success$>
+}

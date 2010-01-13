@@ -56,6 +56,7 @@ else{
         
         string cmd = mode + " " + file;
         //reply.out() << "Command: " << cmd << "<br/>";
+        reply.out() << "<pre>";
         if (FILE *stream = popen(cmd.c_str(), "r"))
         {
             char buffer[1024];
@@ -70,6 +71,7 @@ else{
             }
             pclose(stream); 
           }
+          reply.out() << "</pre>";
     }
     else
         reply.out() << "Illegal command.";
