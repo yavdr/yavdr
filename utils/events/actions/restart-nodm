@@ -1,3 +1,4 @@
 #!/bin/bash
 
-restart nodm
+stop nodm
+start nodm
