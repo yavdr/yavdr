@@ -118,28 +118,6 @@ function getDiagnoseItems(){
             ]
         },
         {
-            title: 'yaVDR-Utils',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'yaVDR-Utils Diagnose (Datenbank + Web-Server)',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                        yaVDRLogFilePanel('yaVDR Datenbank', 'get_file_content', '/var/lib/yavdrdb.hdf'),
-                        yaVDRLogFilePanel('Webserver-Logfile (tntnet)','get_file_content', '/var/log/tntnet/tntnet.log')
-                    ]
-                })
-            ]
-        },
-        {
             title: 'LIRC-Konfiguration',
             layout: 'fit',
             iconCls: 'x-icon-configuration',
@@ -200,6 +178,28 @@ function getDiagnoseItems(){
                     defaults:{autoScroll: true},
                     items: [
                         yaVDRLogFilePanel('X-Server Konfiguration','get_file_content', '/etc/X11/xorg.conf.yavdr')
+                    ]
+                })
+            ]
+        },
+        {
+            title: 'yaVDR-Utils',
+            layout: 'fit',
+            iconCls: 'x-icon-configuration',
+            tabTip: 'yaVDR-Utils Diagnose (Datenbank + Web-Server)',
+            style: 'padding: 20px 30px 20px 30px;',
+            frame: false,
+            border: false,
+            items: [
+                new Ext.TabPanel({
+                    frame: false,
+                    border: false,
+                    plain: true,
+                    activeTab: 0,
+                    defaults:{autoScroll: true},
+                    items: [
+                        yaVDRLogFilePanel('yaVDR Datenbank', 'get_file_content', '/var/lib/yavdrdb.hdf'),
+                        yaVDRLogFilePanel('Webserver-Logfile (tntnet)','get_file_content', '/var/log/tntnet/tntnet.log')
                     ]
                 })
             ]

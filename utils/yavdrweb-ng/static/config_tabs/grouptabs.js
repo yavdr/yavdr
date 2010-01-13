@@ -82,23 +82,6 @@ Ext.onReady(function() {
                         ]
                     },
                     {
-                        title: 'System',
-                        iconCls: 'x-icon-subscriptions',
-                        tabTip: 'Starten Sie den Rechner via Web-Frontend neu',
-                        style: 'padding: 20px 30px 20px 30px;',
-                        layout: 'fit',
-                        items: [
-                            new Ext.Panel({
-                                layout: 'auto',
-                                title: 'System-Kommandos',
-                                frame: true,
-                                plain: false,
-                                border: true,
-                                items: [ getSystemForm() ]
-                            })
-                        ]
-                    },
-                    {
                         title: 'VDR-Frontend',
                         iconCls: 'x-icon-subscriptions',
                         tabTip: 'Wechseln Sie zwischen xine und xineliboutput',
@@ -112,6 +95,23 @@ Ext.onReady(function() {
                                 plain: false,
                                 border: true,
                                 items: [ getVDRFrontendForm() ]
+                            })
+                        ]
+                    },
+                    {
+                        title: 'System',
+                        iconCls: 'x-icon-subscriptions',
+                        tabTip: 'Starten Sie den Rechner via Web-Frontend neu',
+                        style: 'padding: 20px 30px 20px 30px;',
+                        layout: 'fit',
+                        items: [
+                            new Ext.Panel({
+                                layout: 'auto',
+                                title: 'System-Kommandos',
+                                frame: true,
+                                plain: false,
+                                border: true,
+                                items: [ getSystemForm() ]
                             })
                         ]
                     }

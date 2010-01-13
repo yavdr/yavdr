@@ -4,7 +4,7 @@ function getVDRFrontendForm(){
         plain: false,
         border: false,
         bodyStyle:'padding:5px 5px 0',
-        labelWidth: 130,
+        labelWidth: 150,
         defaultType: 'textfield',
         buttonAlign: 'left',
         items: [{

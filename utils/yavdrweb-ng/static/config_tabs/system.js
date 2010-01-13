@@ -11,7 +11,7 @@ function getSystemForm(){
     });
 
     var submit = myform.addButton({
-        text: 'Rechner neu starten',
+        text: 'Rechner neu starten (Vorsicht: Keine Sicherhheitsabfrage!)',
         icon: 'ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
