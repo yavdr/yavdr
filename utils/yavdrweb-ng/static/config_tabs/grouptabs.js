@@ -97,6 +97,23 @@ Ext.onReady(function() {
                                 items: [ getSystemForm() ]
                             })
                         ]
+                    },
+                    {
+                        title: 'VDR-Frontend',
+                        iconCls: 'x-icon-subscriptions',
+                        tabTip: 'Wechseln Sie zwischen xine und xineliboutput',
+                        style: 'padding: 20px 30px 20px 30px;',
+                        layout: 'fit',
+                        items: [
+                            new Ext.Panel({
+                                layout: 'auto',
+                                title: 'VDR-Frontend',
+                                frame: true,
+                                plain: false,
+                                border: true,
+                                items: [ getVDRFrontendForm() ]
+                            })
+                        ]
                     }
                 ]
             }, {
