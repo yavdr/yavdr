@@ -1,6 +1,8 @@
 Source: yavdr-essential
 Section: misc
 Priority: optional
+Vcs-Svn: https://svn.origo.ethz.ch/yavdr/trunk
+Vcs-Browser: http://svn.origo.ethz.ch/wsvn/yavdr/trunk
 Maintainer: Gerald Dachs <gda@dachsweb.de>
 Uploaders: Gerald Dachs <gda@dachsweb.de>
 Standards-Version: 3.8.3
