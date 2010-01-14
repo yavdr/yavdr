@@ -111,8 +111,8 @@ function getDiagnoseItems(){
                     activeTab: 0,
                     defaults:{autoScroll: true},
                     items: [
-                        yaVDRLogFilePanel('XBMC-Logfile','get_file_content', '/home/'+ user + '/.xbmc/temp/xbmc.log'),
-                        yaVDRLogFilePanel('XBMC-Logfile (old)','get_file_content', '/home/'+ user + '/.xbmc/temp/xbmc.old.log')
+                        yaVDRLogFilePanel('XBMC-Logfile','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.log'),
+                        yaVDRLogFilePanel('XBMC-Logfile (old)','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.old.log')
                     ]
                 })
             ]

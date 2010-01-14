@@ -8,16 +8,13 @@ file;
 </%args><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 
-string xbmcLog = "/home/" + request.getUsername() + "/.xbmc/temp/xbmc.log"; 
-string xbmcLogOld = "/home/" + request.getUsername() + "/.xbmc/temp/xbmc.old.log"; 
-
 const char *files[] = {
     "/var/log/messages", 
     "/var/log/user.log", 
     "/var/log/syslog", 
     "/var/log/tntnet/tntnet.log",
-    xbmcLog.c_str(),
-    xbmcLogOld.c_str(),
+    "/var/lib/vdr/.xbmc/temp/xbmc.log",
+    "/var/lib/vdr/.xbmc/temp/xbmc.old.log",
     "/var/lib/yavdrdb.hdf",
     "/etc/X11/xorg.conf.yavdr",
     "/etc/lirc/hardware.conf",
