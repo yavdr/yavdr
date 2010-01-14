@@ -7,5 +7,7 @@ if [ install = "$1" -o upgrade = "$1" ]; then
       --divert /var/lib/vdr/plugins/xine/noSignal4x3.mpg.dontremove /var/lib/vdr/plugins/xine/noSignal4x3.mpg
    dpkg-divert --package yavdr-startup --add --rename \
       --divert /var/lib/vdr/plugins/xine/noSignal16x9.mpg.dontremove /var/lib/vdr/plugins/xine/noSignal16x9.mpg
+   dpkg-divert --package yavdr-startup --add --rename \
+      --divert /usr/share/libxine1-xvdr/nosignal.mpg.dontremove /usr/share/libxine1-xvdr/nosignal.mpg
 fi  
 

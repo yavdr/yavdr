@@ -1,3 +1,9 @@
+yavdr-startup (0.0.38-1tvt1) karmic; urgency=low
+
+  * rev.357
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 14 Jan 2010 18:57:24 +0100
+
 yavdr-startup (0.0.37-1tvt1ubuntu1) karmic; urgency=low
 
   * rev.349
