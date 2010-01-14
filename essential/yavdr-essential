@@ -38,6 +38,7 @@ vdr-burnbackgrounds
 vdr-genindex
 vdr-plugin-avolctl
 vdr-plugin-burn
+vdr-plugin-channellists
 vdr-plugin-epgsearch
 vdr-plugin-externalplayer
 vdr-plugin-extrecmenu
