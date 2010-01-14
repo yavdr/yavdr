@@ -6,6 +6,6 @@ exec tail -n +3 $0
 if [ ${recordfail} = 1 ]; then
   set timeout=3
 else
-  set timeout=0
+  set timeout=1
 fi
 
