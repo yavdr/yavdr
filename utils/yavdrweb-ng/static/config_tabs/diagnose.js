@@ -67,7 +67,9 @@ function getDiagnoseItems(){
                     defaults:{autoScroll: true},
                     items: [
                             yaVDRLogFilePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
-                            yaVDRLogFilePanel('Systemstatus', 'get_shell_response', 'top')
+                            yaVDRLogFilePanel('Systemstatus', 'get_shell_response', 'top'),
+                            yaVDRLogFilePanel('Speicherplatz', 'get_shell_response', 'df'),
+                            yaVDRLogFilePanel('Alsa-Sound', 'get_shell_response', 'aplay')
                     ]
                 })
             ]
@@ -178,6 +180,27 @@ function getDiagnoseItems(){
                     defaults:{autoScroll: true},
                     items: [
                         yaVDRLogFilePanel('X-Server Konfiguration','get_file_content', '/etc/X11/xorg.conf.yavdr')
+                    ]
+                })
+            ]
+        },
+        {
+            title: 'Sound (ALSA)',
+            layout: 'fit',
+            iconCls: 'x-icon-configuration',
+            tabTip: 'Digitalsound-Problemdiagnose',
+            style: 'padding: 20px 30px 20px 30px;',
+            frame: false,
+            border: false,
+            items: [
+                new Ext.TabPanel({
+                    frame: false,
+                    border: false,
+                    plain: true,
+                    activeTab: 0,
+                    defaults:{autoScroll: true},
+                    items: [
+                        yaVDRLogFilePanel('Sound (ALSA)','get_file_content', '/etc/asound.conf')
                     ]
                 })
             ]

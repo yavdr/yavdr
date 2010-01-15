@@ -10,12 +10,17 @@ reply.setHeader ("Cache-Control", "no-cache", false);
 
 //restrict commands
 
-if (command == "ifconfig" || command == "top")
+if (command == "ifconfig" || command == "top" || command == "df" || command == "aplay")
 {
     string cmd = command;
     if (command == "top")
        cmd += " -b -n1";
+    if (command == "df")
+        cmd += " -h";
+    if (command == "aplay")
+        cmd += " -L";
 
+    
     if (FILE *stream = popen(cmd.c_str(), "r"))
     {
         reply.out() << "<pre>";

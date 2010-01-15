@@ -20,7 +20,8 @@ const char *files[] = {
     "/etc/lirc/hardware.conf",
     "/etc/lirc/lircd.conf",
     "/etc/vdr/setup.conf",
-    "/etc/vdr/remote.conf"
+    "/etc/vdr/remote.conf",
+    "/etc/asound.conf"
 };
 
 int findex = 0;
