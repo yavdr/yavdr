@@ -54,7 +54,7 @@ function getDiagnoseItems(){
             title: 'System-Informationen',
             layout: 'fit',
             iconCls: 'x-icon-configuration',
-            tabTip: 'Netzwerk-Status, Auslastung und Prozesse',
+            tabTip: 'Netzwerk-Status, Auslastung und Prozesse, Dateisystem-Belegung, Kernel',
             style: 'padding: 20px 30px 20px 30px;',
             frame: false,
             border: false,
@@ -68,7 +68,8 @@ function getDiagnoseItems(){
                     items: [
                             yaVDRLogFilePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
                             yaVDRLogFilePanel('Systemstatus', 'get_shell_response', 'top'),
-                            yaVDRLogFilePanel('Dateisystem-Belegung', 'get_shell_response', 'df')
+                            yaVDRLogFilePanel('Dateisystem-Belegung', 'get_shell_response', 'df'),
+                            yaVDRLogFilePanel('Kernel', 'get_shell_response', 'dmesg')
                     ]
                 })
             ]

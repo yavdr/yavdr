@@ -10,14 +10,14 @@ reply.setHeader ("Cache-Control", "no-cache", false);
 
 //restrict commands
 
-if (command == "ifconfig" || command == "top" || command == "df" || command == "aplay")
+if (command == "ifconfig" || command == "top" || command == "df" || command == "aplay" || command == "dmesg" )
 {
     string cmd = command;
     if (command == "top")
        cmd += " -b -n1";
-    if (command == "df")
+    else if (command == "df")
         cmd += " -h";
-    if (command == "aplay")
+    else if (command == "aplay")
         cmd += " -L";
 
     
