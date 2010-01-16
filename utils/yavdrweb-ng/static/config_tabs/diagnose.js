@@ -68,8 +68,7 @@ function getDiagnoseItems(){
                     items: [
                             yaVDRLogFilePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
                             yaVDRLogFilePanel('Systemstatus', 'get_shell_response', 'top'),
-                            yaVDRLogFilePanel('Speicherplatz', 'get_shell_response', 'df'),
-                            yaVDRLogFilePanel('Alsa-Sound', 'get_shell_response', 'aplay')
+                            yaVDRLogFilePanel('Dateisystem-Belegung', 'get_shell_response', 'df')
                     ]
                 })
             ]
@@ -200,6 +199,7 @@ function getDiagnoseItems(){
                     activeTab: 0,
                     defaults:{autoScroll: true},
                     items: [
+                        yaVDRLogFilePanel('Alsa-Sound', 'get_shell_response', 'aplay'),
                         yaVDRLogFilePanel('Sound (ALSA)','get_file_content', '/etc/asound.conf')
                     ]
                 })
