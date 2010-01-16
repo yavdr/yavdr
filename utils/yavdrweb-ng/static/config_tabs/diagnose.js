@@ -1,4 +1,4 @@
-function yaVDRLogFilePanel(info, cmd, file)
+function addDiagnosePanel(info, cmd, file)
 { 
     return new Ext.Panel({
         id: 'diagnose_panel_wrapper_'+file,
@@ -38,6 +38,28 @@ function yaVDRLogFilePanel(info, cmd, file)
     });
 }
 
+function addDiagnoseMenuItem( title, tabTip, tabs){
+    return [{
+        title: title,
+        layout: 'fit',
+        iconCls: 'x-icon-configuration', //needed for left padding even if we don't use an icon...
+        tabTip: tabTip,
+        style: 'padding: 20px 30px 20px 30px;',
+        frame: false,
+        border: false,
+        items: [
+            new Ext.TabPanel({
+                frame: false,
+                border: false,
+                plain: true,
+                activeTab: 0,
+                defaults:{autoScroll: true},
+                items: tabs 
+            })
+        ]
+    }];
+}
+
 function getDiagnoseItems(){
     return [
         {
@@ -50,183 +72,71 @@ function getDiagnoseItems(){
             border: false,
             html: '<p style="font-family: sans-serif;">Inhalte von wichtigen Logfiles und Konfigurationsdateien</p>'
         },
-        {
-            title: 'System-Informationen',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'Netzwerk-Status, Auslastung und Prozesse, Dateisystem-Belegung, Kernel',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                            yaVDRLogFilePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
-                            yaVDRLogFilePanel('Systemstatus', 'get_shell_response', 'top'),
-                            yaVDRLogFilePanel('Dateisystem-Belegung', 'get_shell_response', 'df'),
-                            yaVDRLogFilePanel('Kernel', 'get_shell_response', 'dmesg')
-                    ]
-                })
+        addDiagnoseMenuItem(
+            'System-Informationen', 
+            'Netzwerk-Status, Auslastung und Prozesse, Dateisystem-Belegung, Kernel',
+            [
+                addDiagnosePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
+                addDiagnosePanel('Systemstatus', 'get_shell_response', 'top'),
+                addDiagnosePanel('Kernel', 'get_shell_response', 'dmesg'),
+                addDiagnosePanel('Dateisystem-Belegung', 'get_shell_response', 'df')
             ]
-        },
-        {
-            title: 'System-Logfiles',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'Wichtige System-Logfiles',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                            yaVDRLogFilePanel('Logfile messages','get_file_content', '/var/log/messages'),
-                            yaVDRLogFilePanel('Logfile user.log','get_file_content', '/var/log/user.log'),
-                            yaVDRLogFilePanel('Logfile syslog','get_file_content', '/var/log/syslog')
-                    ]
-                })
+        ),
+        addDiagnoseMenuItem(
+            'System-Logfiles',
+            'Wichtige System-Logfiles',
+            [
+                addDiagnosePanel('Logfile messages','get_file_content', '/var/log/messages'),
+                addDiagnosePanel('Logfile user.log','get_file_content', '/var/log/user.log'),
+                addDiagnosePanel('Logfile syslog','get_file_content', '/var/log/syslog')
             ]
-        },
-        {
-            title: 'XBMC-Crashes',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'XBMC Logfiles',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                        yaVDRLogFilePanel('XBMC-Logfile','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.log'),
-                        yaVDRLogFilePanel('XBMC-Logfile (old)','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.old.log')
-                    ]
-                })
+        ),
+        addDiagnoseMenuItem(
+            'XBMC-Crashes',
+            'XBMC Logfiles',
+            [
+                addDiagnosePanel('XBMC-Logfile','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.log'),
+                addDiagnosePanel('XBMC-Logfile (old)','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.old.log')
             ]
-        },
-        {
-            title: 'LIRC-Konfiguration',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'LIRC-Problemdiagnose',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                        yaVDRLogFilePanel('LIRC: Hardware-Konfiguration','get_file_content', '/etc/lirc/hardware.conf'),
-                        yaVDRLogFilePanel('LIRC: lircd-Konfiguration', 'get_file_content', '/etc/lirc/lircd.conf')
-                    ]
-                })
+        ),
+        addDiagnoseMenuItem(
+            'LIRC-Konfiguration',
+            'LIRC-Problemdiagnose',
+            [
+                addDiagnosePanel('LIRC: Hardware-Konfiguration','get_file_content', '/etc/lirc/hardware.conf'),
+                addDiagnosePanel('LIRC: lircd-Konfiguration', 'get_file_content', '/etc/lirc/lircd.conf')
             ]
-        },
-        {
-            title: 'VDR-Konfiguration',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'VDR-Konfiguration',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                        yaVDRLogFilePanel('VDR: Setup', 'get_file_content', '/etc/vdr/setup.conf'),
-                        yaVDRLogFilePanel('VDR: Fernbedienung','get_file_content', '/etc/vdr/remote.conf')
-                    ]
-                })
+        ),
+        addDiagnoseMenuItem(
+            'VDR-Konfiguration',
+            'VDR-Konfiguration',
+            [
+                addDiagnosePanel('VDR: Setup', 'get_file_content', '/etc/vdr/setup.conf'),
+                addDiagnosePanel('VDR: Fernbedienung','get_file_content', '/etc/vdr/remote.conf')
             ]
-        },
-        {
-            title: 'X-Server',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'LIRC-Problemdiagnose',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                        yaVDRLogFilePanel('X-Server Konfiguration','get_file_content', '/etc/X11/xorg.conf.yavdr')
-                    ]
-                })
+        ),
+        addDiagnoseMenuItem(
+            'X-Server',
+            'LIRC-Problemdiagnose',
+            [
+                addDiagnosePanel('X-Server Konfiguration','get_file_content', '/etc/X11/xorg.conf.yavdr')
             ]
-        },
-        {
-            title: 'Sound (ALSA)',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'Digitalsound-Problemdiagnose',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                        yaVDRLogFilePanel('Alsa-Sound', 'get_shell_response', 'aplay'),
-                        yaVDRLogFilePanel('Sound (ALSA)','get_file_content', '/etc/asound.conf')
-                    ]
-                })
+        ),
+        addDiagnoseMenuItem(
+            'Sound (ALSA)',
+            'Digitalsound-Problemdiagnose',
+            [
+                addDiagnosePanel('Alsa-Sound', 'get_shell_response', 'aplay'),
+                addDiagnosePanel('Sound (ALSA)','get_file_content', '/etc/asound.conf')
             ]
-        },
-        {
-            title: 'yaVDR-Utils',
-            layout: 'fit',
-            iconCls: 'x-icon-configuration',
-            tabTip: 'yaVDR-Utils Diagnose (Datenbank + Web-Server)',
-            style: 'padding: 20px 30px 20px 30px;',
-            frame: false,
-            border: false,
-            items: [
-                new Ext.TabPanel({
-                    frame: false,
-                    border: false,
-                    plain: true,
-                    activeTab: 0,
-                    defaults:{autoScroll: true},
-                    items: [
-                        yaVDRLogFilePanel('yaVDR Datenbank', 'get_file_content', '/var/lib/yavdrdb.hdf'),
-                        yaVDRLogFilePanel('Webserver-Logfile (tntnet)','get_file_content', '/var/log/tntnet/tntnet.log')
-                    ]
-                })
+        ),
+        addDiagnoseMenuItem(
+            'yaVDR-Utils',
+            'yaVDR-Utils Diagnose (Datenbank + Web-Server)',
+            [
+                addDiagnosePanel('yaVDR Datenbank', 'get_file_content', '/var/lib/yavdrdb.hdf'),
+                addDiagnosePanel('Webserver-Logfile (tntnet)','get_file_content', '/var/log/tntnet/tntnet.log')
             ]
-        }
+        )
     ];
 }
