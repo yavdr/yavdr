@@ -12,7 +12,7 @@ if ((request.getUsername() == "") ||
 
   //leading quote compensates a bug in tntnet 1.6.3
   //as long as there is no newer stable release available
-  reply.notAuthorized("\"yaVDR web front end");
+  reply.notAuthorized("\"yaVDR Web Frontend");
 
 }
 </%cpp>

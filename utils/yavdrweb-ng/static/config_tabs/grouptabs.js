@@ -25,7 +25,7 @@ Ext.onReady(function() {
         layout:'fit',
         items:[{
             xtype: 'grouptabpanel',
-            tabWidth: 200,
+            tabWidth: 180,
             activeGroup: 0,
             items: [{
                 //mainItem: 1,
@@ -105,8 +105,8 @@ Ext.onReady(function() {
                         layout: 'fit',
                         items: [
                             new Ext.Panel({
-                                layout: 'auto',
-                                title: 'VDR-Konfig-Upload',
+                                layout: 'fit',
+                                title: 'VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei-Version)',
                                 frame: true,
                                 plain: false,
                                 border: true,
