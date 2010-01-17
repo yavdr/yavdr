@@ -81,7 +81,7 @@ Ext.onReady(function() {
                         ]
                     },
                     {
-                        title: 'VDR-Frontend',
+                        title: 'VDR-Frontend w&auml;hlen',
                         iconCls: 'x-icon-subscriptions',
                         tabTip: 'Wechseln Sie zwischen xine und xineliboutput',
                         style: 'padding: 20px 30px 20px 30px;',

@@ -112,7 +112,8 @@ function getDiagnoseItems(){
             'VDR-Konfiguration',
             [
                 addDiagnosePanel('VDR: Setup', 'get_file_content', '/etc/vdr/setup.conf'),
-                addDiagnosePanel('VDR: Fernbedienung','get_file_content', '/etc/vdr/remote.conf')
+                addDiagnosePanel('VDR: Fernbedienung','get_file_content', '/etc/vdr/remote.conf'),
+                addDiagnosePanel('VDR: Installierte Plugins + Addons', 'get_shell_response', 'dpkg')
             ]
         ),
         addDiagnoseMenuItem(

@@ -10,7 +10,12 @@ reply.setHeader ("Cache-Control", "no-cache", false);
 
 //restrict commands
 
-if (command == "ifconfig" || command == "top" || command == "df" || command == "aplay" || command == "dmesg" )
+if (command == "ifconfig" || 
+        command == "top" || 
+        command == "df" || 
+        command == "aplay" || 
+        command == "dmesg" || 
+        command == "dpkg")
 {
     string cmd = command;
     if (command == "top")
@@ -19,8 +24,9 @@ if (command == "ifconfig" || command == "top" || command == "df" || command == "
         cmd += " -h";
     else if (command == "aplay")
         cmd += " -L";
+    else if (command == "dpkg")
+        cmd += " --list | grep \"ii  vdr-\"";
 
-    
     if (FILE *stream = popen(cmd.c_str(), "r"))
     {
         reply.out() << "<pre>";
