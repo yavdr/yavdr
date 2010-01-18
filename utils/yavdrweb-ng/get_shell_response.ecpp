@@ -25,7 +25,7 @@ if (command == "ifconfig" ||
     else if (command == "aplay")
         cmd += " -L";
     else if (command == "dpkg")
-        cmd += " --list | grep \"ii  vdr-\"";
+        cmd += " --list | grep \"ii  vdr-\" | cut -c5-";
 
     if (FILE *stream = popen(cmd.c_str(), "r"))
     {
