@@ -3,7 +3,7 @@
 # 2000 MHz
 
 LTK10_GOVERNOR=performance
-LTK10_MIN_SPEED=2000
+LTK10_MIN_SPEED=2000MHz
 
 isltk10 () {
   cat /proc/cpuinfo | (while read line; do
