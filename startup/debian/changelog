@@ -1,3 +1,21 @@
+yavdr-startup (0.0.40-2tvt1) karmic; urgency=low
+
+  * rev.373
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Mon, 18 Jan 2010 20:22:02 +0100
+
+yavdr-startup (0.0.40-1tvt1) karmic; urgency=low
+
+  * rev.359
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 14 Jan 2010 20:36:41 +0100
+
+yavdr-startup (0.0.39-1tvt1) karmic; urgency=low
+
+  * rev.359
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 14 Jan 2010 19:49:25 +0100
+
 yavdr-startup (0.0.38-1tvt1) karmic; urgency=low
 
   * rev.357
