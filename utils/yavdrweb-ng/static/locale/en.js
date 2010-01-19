@@ -41,5 +41,33 @@ var locale = {
         error: {
             json_decode : 'Could not decode JSON receiver list'
         }
+    },
+    channels: {
+        menutab: {
+            title : 'Channel List',
+            tabtip : 'Channel settings (Maintain and sort radio and TV channels)',
+            panel_title : '' //unused
+        }
+    },
+    frontend: {
+        menutab: {
+            title : 'VDR Frontend',
+            tabtip : 'Switch between xine and xineliboutput frontend',
+            panel_title : 'VDR Frontend'
+        }
+    },
+    upload: {
+        menutab: {
+            title : 'VDR Config Upload',
+            tabtip : 'Upload your existing VDR configuration',
+            panel_title : 'VDR Config Upload (the uploaded version overwrites the existing version)'
+        }
+    },
+    system: {
+        menutab: {
+            title : 'System',
+            tabtip : 'Restart VDR or the whole system',
+            panel_title : 'System Commands'
+        }
     }
 };

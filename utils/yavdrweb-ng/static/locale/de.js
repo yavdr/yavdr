@@ -41,5 +41,33 @@ var locale = {
         error: {
             json_decode : 'Konnte JSON Empfängerliste nicht dekodieren'
         }
+    },
+    channels: {
+        menutab: {
+            title : 'Kanal-Liste',
+            tabtip : 'Kanal-Einstellungen (Radio- und Fernsehkanäle pflegen und sortieren)',
+            panel_title : '' //unused
+        }
+    },
+    frontend: {
+        menutab: {
+            title : 'VDR-Frontend w&auml;hlen',
+            tabtip : 'Wechseln Sie zwischen xine und xineliboutput',
+            panel_title : 'VDR-Frontend'
+        }
+    },
+    upload: {
+        menutab: {
+            title : 'VDR-Konfig-Upload',
+            tabtip : 'Laden Sie existierende VDR-Konfigurationsdateien hoch',
+            panel_title : 'VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei-Version)'
+        }
+    },
+    system: {
+        menutab: {
+            title : 'System',
+            tabtip : 'Starten Sie den VDR oder den Rechner neu',
+            panel_title : 'System-Kommandos'
+        }
     }
 };

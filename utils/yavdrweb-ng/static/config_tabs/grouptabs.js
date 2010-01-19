@@ -65,15 +65,15 @@ Ext.onReady(function() {
                         ]
                     },
                     {
-                        title: 'Kanal-Liste',
+                        title: locale.channels.menutab.title,
                         layout: 'fit',
                         iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
-                        tabTip: 'Kanal-Einstellungen (Radio- und Fernsehkanäle pflegen und sortieren)',
+                        tabTip: locale.channels.menutab.tabtip,
                         style: 'padding: 20px 30px 20px 30px;',
                         items: [
                             new Ext.Panel({
                                 layout: 'fit',
-                                //title: 'Kanal-Editor',
+                                //title: locale.channels.menutab.panel_title,
                                 frame: false,
                                 plain: false,
                                 border: false,
@@ -82,15 +82,15 @@ Ext.onReady(function() {
                         ]
                     },
                     {
-                        title: 'VDR-Frontend w&auml;hlen',
+                        title: locale.frontend.menutab.title,
                         iconCls: 'x-icon-subscriptions',
-                        tabTip: 'Wechseln Sie zwischen xine und xineliboutput',
+                        tabTip: locale.frontend.menutab.tabtip,
                         style: 'padding: 20px 30px 20px 30px;',
                         layout: 'fit',
                         items: [
                             new Ext.Panel({
                                 layout: 'auto',
-                                title: 'VDR-Frontend',
+                                title: locale.frontend.menutab.panel_title,
                                 frame: true,
                                 plain: false,
                                 border: true,
@@ -99,15 +99,15 @@ Ext.onReady(function() {
                         ]
                     },
                     {
-                        title: 'VDR-Konfig-Upload',
+                        title: locale.upload.menutab.title,
                         iconCls: 'x-icon-subscriptions',
-                        tabTip: 'Laden Sie existierende VDR-Konfigurationsdateien hoch',
+                        tabTip: locale.upload.menutab.tabtip,
                         style: 'padding: 20px 30px 20px 30px;',
                         layout: 'fit',
                         items: [
                             new Ext.Panel({
                                 layout: 'fit',
-                                title: 'VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei-Version)',
+                                title: locale.upload.menutab.panel_title,
                                 frame: true,
                                 plain: false,
                                 border: true,
@@ -116,15 +116,15 @@ Ext.onReady(function() {
                         ]
                     },
                     {
-                        title: 'System',
+                        title: locale.system.menutab.title,
                         iconCls: 'x-icon-subscriptions',
-                        tabTip: 'Starten Sie den Rechner via Web-Frontend neu',
+                        tabTip: locale.system.menutab.tabtip,
                         style: 'padding: 20px 30px 20px 30px;',
                         layout: 'fit',
                         items: [
                             new Ext.Panel({
                                 layout: 'auto',
-                                title: 'System-Kommandos',
+                                title: locale.system.menutab.panel_title,
                                 frame: true,
                                 plain: false,
                                 border: true,
