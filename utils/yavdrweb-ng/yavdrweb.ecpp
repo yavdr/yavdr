@@ -27,6 +27,7 @@
         <script type="text/javascript" src="static/ext-extensions/PortalColumn.js"></script>
         <script type="text/javascript" src="static/ext-extensions/Portlet.js"></script>
         
+        <script type="text/javascript" src="static/locale/de.js"></script>
         <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
         <script type="text/javascript" src="static/config_tabs/channels.js"></script>
         <script type="text/javascript" src="static/config_tabs/diagnose.js"></script>

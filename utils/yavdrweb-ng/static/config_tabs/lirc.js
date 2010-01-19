@@ -30,9 +30,9 @@ function populateLircForm( lircData ){
         }
     });
     
-    //if no serial port was chosen before, don't preselect
-    if (lircData.current_serial_port != "")
-        Ext.getCmp('serial_port_radio_group').value = lircData.current_serial_port;
+//    //if no serial port was chosen before, don't preselect
+//    if (lircData.current_serial_port != "")
+    Ext.getCmp('serial_port_radio_group').setValue(lircData.current_serial_port);
 
     //if no receiver was chosen before, don't preselect
     if (lircData.current_receiver != -1){
@@ -55,7 +55,7 @@ function getLircForm(){
         items:[
            new Ext.form.ComboBox({ 
                id : 'lirc_receiver_combobox',
-               tpl: '<tpl for="."><div ext:qtip="Treiber: {driver}<br/'+'>Lirc-Treiber: {lirc_driver}<br/'+
+               tpl: '<tpl for="."><div ext:qtip="' + locale.lirc.combobox.tooltip.driver + ': {driver}<br/'+'>' + locale.lirc.combobox.tooltip.lirc_driver + ': {lirc_driver}<br/'+
                '>HW-Default: {hw_default}<'+'br/'+'>Lircd-Conf: {lircd_conf}" class="x-combo-list-item">{description}</div></tpl>',
                //name: ... used in POST request
                hiddenName: 'receiver_id', //key, defined in set_lirchw.ecpp, used in POST request
@@ -66,8 +66,8 @@ function getLircForm(){
                forceSelection: true,
                mode: "local",
                triggerAction: 'all',
-               emptyText:'Bitte Empfänger für Fernbedienung wählen...',
-               fieldLabel: 'Empfänger',
+               emptyText: locale.lirc.combobox.emptytext,
+               fieldLabel: locale.lirc.combobox.label,
                selectOnFocus: true
            }),
            {
@@ -75,9 +75,9 @@ function getLircForm(){
                 name: 'serial_port',
                 xtype: 'radiogroup',
                 columns: 1,
-                fieldLabel: 'Serielle Schnittstelle',
+                fieldLabel: locale.lirc.serial_radiogroup.label,
                 items: [
-                    {id: 'rb1', boxLabel: 'keine',      name: 'serial_port', inputValue: ''},
+                    {id: 'rb1', boxLabel: locale.lirc.serial_radiogroup.boxlabel_none, name: 'serial_port', inputValue: ''},
                     {id: 'rb2', boxLabel: '/dev/ttyS0', name: 'serial_port', inputValue: '/dev/ttyS0'},
                     {id: 'rb3', boxLabel: '/dev/ttyS1', name: 'serial_port', inputValue: '/dev/ttyS1'}
                 ]
@@ -86,19 +86,19 @@ function getLircForm(){
     });
 
     var submit = myform.addButton({
-        text: 'Speichern',
+        text: locale.standardform.button.save,
         //formBind: true,
         //scope: this,
         handler: function() {
             myform.form.submit({
                 url: 'set_lirchw',
-                waitMsg:'Fernbedienungs-Settings werden gespeichert.',
+                waitMsg: locale.lirc.submit.waitmsg,
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert('Message', 'Ihre Auswahl wurde erfolgreich gespeichert.');
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.lirc.submit.success);
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert('Message', 'Fehler beim Speichern. Bitte noch einmal versuchen.');
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.lirc.submit.failure);
                 }
             })
         }
@@ -116,7 +116,7 @@ function getLircForm(){
                 //Ext.MessageBox.alert('Success', 'Decode of lircdata OK: ' + lircData.current_receiver);
             }
             catch (err) {
-                Ext.MessageBox.alert('ERROR', 'Could not decode lircData');
+                Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.lirc.error.json_decode);
             }            
             populateLircForm( lircData );
         }
@@ -131,15 +131,16 @@ function onLircComboBoxChange( combo, record, index){
     
 function adjustSerialSettings(lirc_driver, driver){
     var radioGroup = Ext.getCmp('serial_port_radio_group');
+    if (!radioGroup) 
+        Ext.MessageBox.alert('ERROR', 'Could not find radiogroup');
     if (lirc_driver === "lirc_dev lirc_serial" || driver ===  "serial"){
         //radioGroup.setVisible(true); radioGroup.show();
-        radioGroup.setDisabled(false);
+        Ext.getCmp('serial_port_radio_group').setDisabled(false);
     }
     else{
         //radioGroup.setVisible(false); radioGroup.hide();
         //Ext.getCmp('serial_port_radio_group').value = 'keine';
-        radioGroup.setDisabled(true);
-        var box = Ext.getCmp('rb1');
-        if (box) box.setValue( true );
+        Ext.getCmp('serial_port_radio_group').setValue( '' );
+        Ext.getCmp('serial_port_radio_group').setDisabled(true);
     }
 }

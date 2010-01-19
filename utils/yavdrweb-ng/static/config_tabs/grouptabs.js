@@ -6,7 +6,8 @@
  */
 Ext.onReady(function() {
 	Ext.QuickTips.init();
-    
+
+/*	
     // create some portlet tools using built in Ext tool ids
     var tools = [{
         id:'gear',
@@ -19,7 +20,7 @@ Ext.onReady(function() {
             panel.ownerCt.remove(panel, true);
         }
     }];
-    
+*/
     
     var viewport = new Ext.Viewport({
         layout:'fit',
@@ -33,8 +34,8 @@ Ext.onReady(function() {
                     {
                         xtype: 'portal',
                         layout: 'fit',
-                        title: 'Basics',
-                        tabTip: 'Konfigurieren Sie die Grundeinstellungen wie Fernbedienung, Senderliste, etc.',
+                        title: locale.menutabs.basics.title,
+                        tabTip: locale.menutabs.basics.tabtip,
                         style: 'padding: 20px 30px 20px 30px;',
                         items:[
                            new Ext.Panel({
@@ -42,20 +43,20 @@ Ext.onReady(function() {
                                frame: false,
                                plain: false,
                                border: false,
-                               html: '<h1 style="font-family: sans-serif;">Willkommen im yaVDR Web-Frontend!</h1>'
+                               html: '<h1 style="font-family: sans-serif;">' + locale.menutabs.basics.content + '</h1>'
                            })
                         ]
                     },
                     {
-                        title: 'LIRC',
+                        title: locale.lirc.menutab.title,
                         layout: 'fit',
                         iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
-                        tabTip: 'Lirc-Einstellungen (Fernbedienungs-Receiver)',
+                        tabTip: locale.lirc.menutab.tabtip,
                         style: 'padding: 20px 30px 20px 30px;',
                         items: [
                             new Ext.Panel({
                                 layout: 'auto',
-                                title: 'Fernbedienungs-Empfänger (LIRC)',
+                                title: locale.lirc.menutab.panel_title,
                                 frame: true,
                                 plain: false,
                                 border: true,
