@@ -93,12 +93,13 @@ function getLircForm(){
             myform.form.submit({
                 url: 'set_lirchw',
                 waitMsg: locale.lirc.submit.waitmsg,
+                waitTitle: locale.standardform.messagebox_caption.wait,
                 scope:this,
                 success: function (form, action) {
                     Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.lirc.submit.success);
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.lirc.submit.failure);
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.lirc.submit.failure);
                 }
             })
         }

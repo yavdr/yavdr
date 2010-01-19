@@ -15,7 +15,7 @@ function getVDRConfigUploadForm(){
             id: 'upload_config_radio_group',
             name: 'file',
             xtype: 'radiogroup',
-            fieldLabel: 'Hochzuladende Datei',
+            //fieldLabel: 'Hochzuladende Datei',
             columns: 1,
             height: 120,
             items: [
@@ -29,23 +29,24 @@ function getVDRConfigUploadForm(){
             maxLength : 1024*1022, // 1MB Upload Limit - 2 KB for Header
             //value: 'test test test',
             style: 'font-family: monospace; white-space: pre; font-size: 12px;',
-            fieldLabel: 'Datei-Inhalt',
+            //fieldLabel: 'Datei-Inhalt',
             name: 'content'
         })]
     });
 
     var submit = myform.addButton({
-        text: 'Datei hochladen',
+        text: locale.upload.button_label,
         handler: function() {
             myform.form.submit({
                 url: 'set_file_content',
-                waitMsg:'Konfigurationsdatei wird hochgeladen.',
+                waitMsg: locale.upload.submit.waitmsg,
+                waitTitle: locale.standardform.messagebox_caption.wait,
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert('Message', 'OK.');
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.upload.submit.success );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert('Message', 'Fehler.');
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.upload.submit.failure );
                 }
             })
         }

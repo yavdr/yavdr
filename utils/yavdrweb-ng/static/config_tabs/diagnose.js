@@ -9,17 +9,17 @@ function addDiagnosePanel(info, cmd, file)
         bodyStyle: 'border: 1px solid lightgrey; background-color: white; padding: 2px;',
         autoScroll: true,
         tbar: [{
-            text: 'Aktualisieren',
+            text: locale.diagnose.toolbar.button.refresh,
             icon: 'ext/resources/images/default/grid/refresh.gif',
-            tooltip: 'Klicken Sie diesen Button, um den Inhalt des Panels zu aktualisieren.',
+            tooltip: locale.diagnose.toolbar.button.refresh_tooltip,
             handler: function(){
                 var thisObj = Ext.getCmp('diagnose_panel_'+file).getUpdater();
                 if(thisObj) thisObj.refresh();
             }
         },'-',{
-            text: 'Ans Ende springen',
+            text: locale.diagnose.toolbar.button.jumpdown,
             icon: 'ext/resources/images/default/layout/ns-expand.gif',
-            tooltip: 'Klicken Sie diesen Button, um an das Endes des Inhalts dieses Panels zu springen.',
+            tooltip: locale.diagnose.toolbar.button.jumpdown_tooltip,
             handler: function(){
                 var d = Ext.getCmp('diagnose_panel_wrapper_'+file).body.dom;
                 d.scrollTop = d.scrollHeight - d.offsetHeight;
@@ -118,7 +118,7 @@ function getDiagnoseItems(){
         ),
         addDiagnoseMenuItem(
             'X-Server',
-            'LIRC-Problemdiagnose',
+            'X-Server-Problemdiagnose',
             [
                 addDiagnosePanel('X-Server Konfiguration','get_file_content', '/etc/X11/xorg.conf.yavdr')
             ]

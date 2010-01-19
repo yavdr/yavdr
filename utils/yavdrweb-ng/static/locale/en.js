@@ -12,7 +12,8 @@ var locale = {
         },
         messagebox_caption: {
             message: 'Message',
-            error: 'Error'
+            error: 'Error',
+            wait: 'Please wait...'           
         }
     },
     lirc: {
@@ -47,20 +48,39 @@ var locale = {
             title : 'Channel List',
             tabtip : 'Channel settings (Maintain and sort radio and TV channels)',
             panel_title : '' //unused
-        }
+        },
+        grid_header : { 
+            cid : 'No',
+            cname : 'Channel Name',
+            cstr : 'Complete Channel String'
+        },
+        grid_title : 'Channel List (all radio and TV channels)' 
     },
     frontend: {
         menutab: {
             title : 'VDR Frontend',
             tabtip : 'Switch between xine and xineliboutput frontend',
             panel_title : 'VDR Frontend'
-        }
+        },
+        label: 'Choose frontend',
+        button_label:  'Apply frontend settings',
+        submit: {
+            waitmsg : 'Frontend settings are updated.',    
+            success : 'Success.',
+            failure : 'Failure.'
+        }        
     },
     upload: {
         menutab: {
             title : 'VDR Config Upload',
             tabtip : 'Upload your existing VDR configuration',
             panel_title : 'VDR Config Upload (the uploaded version overwrites the existing version)'
+        },
+        button_label: 'Upload',
+        submit: {
+            waitmsg : 'File is being uploaded.',    
+            success : 'File was uploaded successfully.',
+            failure : 'There was a problem during file upload.'
         }
     },
     system: {
@@ -68,6 +88,33 @@ var locale = {
             title : 'System',
             tabtip : 'Restart VDR or the whole system',
             panel_title : 'System Commands'
+        },
+        vdr_restart : {
+            label: 'Restart VDR service',
+            submit: {
+                waitmsg: 'The signal to restart VDR is being sent.',
+                success: 'VDR will restart now.',
+                failure: 'Problem on sending signal. Please try again.'
+            }
+        },
+        system_restart : {
+            label: 'Reboot machine (Caution: Not asking for confirmation!)',
+            submit: {
+                waitmsg: 'The signal to reboot is being sent.',
+                success: 'The machine will reboot now.',
+                failure: 'Problem on sending signal. Please try again.'
+            }
+        }
+    },
+    diagnose : {
+        toolbar : {
+            button : {
+                refresh: 'Refresh',
+                refresh_tooltip: 'Please click this button to refresh the content of this panel.',
+                jumpdown: 'Jump to end of panel',
+                jumpdown_tooltip: 'Please click this button to jump to the end of this panel.'
+            }
         }
     }
+
 };

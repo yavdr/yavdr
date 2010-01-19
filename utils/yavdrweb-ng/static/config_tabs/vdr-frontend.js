@@ -11,7 +11,7 @@ function getVDRFrontendForm(){
             id: 'frontend_radio_group',
             name: 'frontend',
             xtype: 'radiogroup',
-            fieldLabel: 'Gew&uuml;nschtes Frontend',
+            fieldLabel: locale.frontend.label,
             columns: 1,
             items: [
                 {id: 'frontend-xine', boxLabel: 'xine', name: 'frontend', inputValue: 'xine'},
@@ -21,20 +21,21 @@ function getVDRFrontendForm(){
     });
 
     var submit = myform.addButton({
-        text: 'Frontend-Einstellung aktivieren',
+        text: locale.frontend.button_label,
         icon: 'ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
         handler: function() {
             myform.form.submit({
                 url: 'set_signal?signal=change-frontend',
-                waitMsg:'Frontend-Einstellungen werden aktualisiert.',
+                waitMsg: locale.frontend.submit.waitmsg,
+                waitTitle: locale.standardform.messagebox_caption.wait,
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert('Message', 'OK.');
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.frontend.submit.success );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert('Message', 'Fehler.');
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.frontend.submit.error );
                 }
             })
         }
@@ -51,18 +52,17 @@ function getVDRFrontendForm(){
                 currentFrontend = xhr.responseText;
             }
             catch (err) {
-                Ext.MessageBox.alert('ERROR', 'Could not recognize current frontend.');
+                Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current frontend.');
             }
             if (currentFrontend == "xine" || currentFrontend == "xineliboutput"){
                 var rButton = Ext.getCmp('frontend_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );
                 else
-                    Ext.MessageBox.alert('ERROR', 'Could not find frontend radiobutton group.');
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not find frontend radiobutton group.');
             }
         }
     });
-
     
     return myform;
 }

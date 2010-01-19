@@ -22,11 +22,11 @@ function getChannelsForm(){
             heigth: 500,
             width: '100%',
             columns: [
-                  {header: 'Nr.',  align: 'right', width: 50, dataIndex: 'cid', sortable: true},
-                  {header: 'Kanal-Name',  align: 'left', width: 200, dataIndex: 'cname', sortable: true},
-                  {header: 'Ganzer Kanal-String',  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
-                      ],
-            title: 'Kanal-Liste (alle Radio- und TV-Kanäle)  (Erste Demo! Es wird bisher nur eine Liste der Kanäle angezeigt!)',
+                {header: locale.channels.grid_header.cid,  align: 'right', width: 50, dataIndex: 'cid', sortable: true},
+                {header: locale.channels.grid_header.cname,  align: 'left', width: 200, dataIndex: 'cname', sortable: true},
+                {header: locale.channels.grid_header.cstr,  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
+            ],
+            title: locale.channels.grid_title,
             frame: true,
             loadMask: gridLoadMask,
 /*            tbar: [{
