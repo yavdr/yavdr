@@ -1,5 +1,7 @@
+xine.osdMode = osdOverlay
 xine.osdExtent.X = 1920
 xine.osdExtent.Y = 1080
 xine.osdGammaCorrection = 123
 xine.osdMode = osdBlendScaledAuto
 xine.transparencyMode = transparencyOn
+
