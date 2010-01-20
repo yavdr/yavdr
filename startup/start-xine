@@ -10,7 +10,7 @@ test -f /etc/default/xine && . /etc/default/xine
 XINEOPTS="-f -A alsa --post vdr --post vdr_video --post vdr_audio --verbose=2 --no-gui --no-logo --no-splash --deinterlace -pq"
 
 if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
-  XINEOPTS="$XINEOPTS -V vdpau"
+  vdpauinfo 2>/dev/null >/dev/null && XINEOPTS="$XINEOPTS -V vdpau"
 fi
 
 if [ -n "$ASPECT_RATIO" ]; then
