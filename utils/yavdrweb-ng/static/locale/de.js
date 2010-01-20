@@ -107,12 +107,47 @@ var locale = {
         }
     },
     diagnose : {
+        module_description: 'Inhalte von wichtigen Logfiles und Konfigurationsdateien',
         toolbar : {
             button : {
                 refresh: 'Aktualisieren',
                 refresh_tooltip: 'Klicken Sie auf diesen Button, um den Inhalt des Panels zu aktualisieren.',
                 jumpdown: 'Ans Ende springen',
                 jumpdown_tooltip: 'Klicken Sie auf diesen Button, um an das Endes des Inhalts dieses Panels zu springen.'
+            }
+        },
+        section : {
+            system_info: {
+                title : 'System-Informationen', 
+                description : 'Netzwerk-Status, Auslastung und Prozesse, Dateisystem-Belegung, Kernel'
+            },
+            system_logs: {
+                title :'System-Logfiles',
+                description : 'Wichtige System-Logfiles'
+            },
+            xbmc: {
+                title : 'XBMC-Crashes',
+                description : 'XBMC Logfiles'
+            },
+            lirc: {
+                title : 'LIRC-Konfiguration',
+                description : 'LIRC-Problemdiagnose'
+            },
+            vdr: {
+                title : 'VDR-Konfiguration',
+                description : 'VDR-Konfiguration'
+            },
+            xorg: {
+                title : 'X-Server',
+                description : 'X-Server-Problemdiagnose'
+            },
+            sound: {
+                title : 'Sound (ALSA)',
+                description : 'Digitalsound-Problemdiagnose'
+            },
+            yavdr: {
+                title : 'yaVDR-Utils',
+                description : 'yaVDR-Utils Diagnose (Datenbank + Web-Server)'
             }
         }
     }

@@ -70,11 +70,11 @@ function getDiagnoseItems(){
             style: 'padding: 20px 30px 20px 30px;',
             frame: false,
             border: false,
-            html: '<p style="font-family: sans-serif;">Inhalte von wichtigen Logfiles und Konfigurationsdateien</p>'
+            html: '<p style="font-family: sans-serif;">' + locale.diagnose.module_description + '</p>'
         },
         addDiagnoseMenuItem(
-            'System-Informationen', 
-            'Netzwerk-Status, Auslastung und Prozesse, Dateisystem-Belegung, Kernel',
+            locale.diagnose.section.system_info.title,
+            locale.diagnose.section.system_info.description,
             [
                 addDiagnosePanel('Netzwerkstatus', 'get_shell_response', 'ifconfig'),
                 addDiagnosePanel('Systemstatus', 'get_shell_response', 'top'),
@@ -83,8 +83,8 @@ function getDiagnoseItems(){
             ]
         ),
         addDiagnoseMenuItem(
-            'System-Logfiles',
-            'Wichtige System-Logfiles',
+            locale.diagnose.section.system_logs.title,
+            locale.diagnose.section.system_logs.description,
             [
                 addDiagnosePanel('Logfile messages','get_file_content', '/var/log/messages'),
                 addDiagnosePanel('Logfile user.log','get_file_content', '/var/log/user.log'),
@@ -92,48 +92,48 @@ function getDiagnoseItems(){
             ]
         ),
         addDiagnoseMenuItem(
-            'XBMC-Crashes',
-            'XBMC Logfiles',
+            locale.diagnose.section.xbmc.title,
+            locale.diagnose.section.xbmc.description,
             [
-                addDiagnosePanel('XBMC-Logfile','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.log'),
-                addDiagnosePanel('XBMC-Logfile (old)','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.old.log')
+                addDiagnosePanel('XBMC Logfile','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.log'),
+                addDiagnosePanel('XBMC Logfile (old)','get_file_content', '/var/lib/vdr/.xbmc/temp/xbmc.old.log')
             ]
         ),
         addDiagnoseMenuItem(
-            'LIRC-Konfiguration',
-            'LIRC-Problemdiagnose',
+            locale.diagnose.section.lirc.title,
+            locale.diagnose.section.lirc.description,
             [
-                addDiagnosePanel('LIRC: Hardware-Konfiguration','get_file_content', '/etc/lirc/hardware.conf'),
-                addDiagnosePanel('LIRC: lircd-Konfiguration', 'get_file_content', '/etc/lirc/lircd.conf')
+                addDiagnosePanel('LIRC Hardware-Konfiguration','get_file_content', '/etc/lirc/hardware.conf'),
+                addDiagnosePanel('LIRC lircd-Konfiguration', 'get_file_content', '/etc/lirc/lircd.conf')
             ]
         ),
         addDiagnoseMenuItem(
-            'VDR-Konfiguration',
-            'VDR-Konfiguration',
+            locale.diagnose.section.vdr.title,
+            locale.diagnose.section.vdr.description,
             [
-                addDiagnosePanel('VDR: Setup', 'get_file_content', '/etc/vdr/setup.conf'),
-                addDiagnosePanel('VDR: Fernbedienung','get_file_content', '/etc/vdr/remote.conf'),
-                addDiagnosePanel('VDR: Installierte Plugins + Addons', 'get_shell_response', 'dpkg')
+                addDiagnosePanel('VDR Setup', 'get_file_content', '/etc/vdr/setup.conf'),
+                addDiagnosePanel('VDR Fernbedienung','get_file_content', '/etc/vdr/remote.conf'),
+                addDiagnosePanel('VDR Installierte Plugins + Addons', 'get_shell_response', 'dpkg')
             ]
         ),
         addDiagnoseMenuItem(
-            'X-Server',
-            'X-Server-Problemdiagnose',
+            locale.diagnose.section.xorg.title,
+            locale.diagnose.section.xorg.description,
             [
                 addDiagnosePanel('X-Server Konfiguration','get_file_content', '/etc/X11/xorg.conf.yavdr')
             ]
         ),
         addDiagnoseMenuItem(
-            'Sound (ALSA)',
-            'Digitalsound-Problemdiagnose',
+            locale.diagnose.section.sound.title,
+            locale.diagnose.section.sound.description,
             [
                 addDiagnosePanel('Alsa-Sound', 'get_shell_response', 'aplay'),
                 addDiagnosePanel('Sound (ALSA)','get_file_content', '/etc/asound.conf')
             ]
         ),
         addDiagnoseMenuItem(
-            'yaVDR-Utils',
-            'yaVDR-Utils Diagnose (Datenbank + Web-Server)',
+            locale.diagnose.section.yavdr.title,
+            locale.diagnose.section.yavdr.description,
             [
                 addDiagnosePanel('yaVDR Datenbank', 'get_file_content', '/var/lib/yavdrdb.hdf'),
                 addDiagnosePanel('Webserver-Logfile (tntnet)','get_file_content', '/var/log/tntnet/tntnet.log')
