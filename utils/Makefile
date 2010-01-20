@@ -19,6 +19,7 @@ $(INSTALL):
 	chmod +x $(DESTDIR)/usr/share/yavdr/events/actions/*
 	cp -pr defaults $(DESTDIR)/usr/share/yavdr
 	install -m 700 untie-packages $(DESTDIR)/usr/sbin
+	install -m 700 change-vdr-uid $(DESTDIR)/usr/sbin
 
 $(CLEAN):
 	$(MAKE) -C $(@:-clean=) clean
