@@ -21,5 +21,17 @@ if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
 fi
 
 DISPLAY=:1 /usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
-/usr/bin/unclutter -idle 1 -root -visible &
-while true; do $FRONTEND; done
+
+# remove stale locks
+EXTPLAYLCK=/var/lib/vdr/.externalplayer.lck
+rm -f $EXTPLAYLCK
+
+while true; do 
+  
+# is an external player running?
+  while [ -f $EXTPLAYLCK ]; do 
+    sleep 1
+  done
+
+  $FRONTEND
+done

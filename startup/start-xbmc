@@ -2,4 +2,18 @@
 
 export DISPLAY=:1
 
+EXTPLAYLCK=/var/lib/vdr/.externalplayer.lck
+
+FRONTEND="xine"
+if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
+  FRONTEND="vdr-sxfe"
+fi
+
+touch $EXTPLAYLCK
+
+killall $FRONTEND
+
 /usr/bin/xbmc --standalone
+
+rm -f $EXTPLAYLCK
+
