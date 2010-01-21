@@ -4,6 +4,11 @@ var locale = {
             title: 'Basics',
             tabtip: 'Konfigurieren Sie die Grundeinstellungen wie Fernbedienung, Senderliste, etc.',
             content: 'Willkommen im yaVDR Web-Frontend!'
+        },
+        diagnose : {
+            title: 'Diagnose',
+            tabtip: 'Informieren Sie sich über den Zustand des Systems, betreiben Sie Fehleranalyse',
+            content: 'Inhalte von wichtigen Logfiles und Konfigurationsdateien'
         }
     },
     standardform: {
@@ -107,7 +112,6 @@ var locale = {
         }
     },
     diagnose : {
-        module_description: 'Inhalte von wichtigen Logfiles und Konfigurationsdateien',
         toolbar : {
             button : {
                 refresh: 'Aktualisieren',
@@ -119,7 +123,11 @@ var locale = {
         section : {
             system_info: {
                 title : 'System-Informationen', 
-                description : 'Netzwerk-Status, Auslastung und Prozesse, Dateisystem-Belegung, Kernel'
+                description : 'Netzwerk-Status, Auslastung und Prozesse, Dateisystem-Belegung, Kernel',
+                ifconfig : 'Netzwerkstatus',
+                top: 'Systemauslastung',
+                dmesg: 'Kernel',
+                df: 'Dateisystem-Belegung'
             },
             system_logs: {
                 title :'System-Logfiles',
@@ -127,27 +135,27 @@ var locale = {
             },
             xbmc: {
                 title : 'XBMC-Crashes',
-                description : 'XBMC Logfiles'
+                description : 'Finden Sie die Ursache von XBMC-Crashes oder andere XBMC-Problemen'
             },
             lirc: {
                 title : 'LIRC-Konfiguration',
-                description : 'LIRC-Problemdiagnose'
+                description : 'Informieren Sie sich über die aktuelle LIRC-Konfiguration'
             },
             vdr: {
                 title : 'VDR-Konfiguration',
-                description : 'VDR-Konfiguration'
+                description : 'Informieren Sie sich über die aktuelle VDR-Konfiguration'
             },
             xorg: {
                 title : 'X-Server',
-                description : 'X-Server-Problemdiagnose'
+                description : 'Informieren Sie sich über die aktuelle X-Konfiguration'
             },
             sound: {
                 title : 'Sound (ALSA)',
-                description : 'Digitalsound-Problemdiagnose'
+                description : 'Digitalsound-Problemdiagnose (digital/analog-Ausgabe)'
             },
             yavdr: {
                 title : 'yaVDR-Utils',
-                description : 'yaVDR-Utils Diagnose (Datenbank + Web-Server)'
+                description : 'yaVDR-Web-Frontend Diagnose (Datenbank + Web-Server)'
             }
         }
     }

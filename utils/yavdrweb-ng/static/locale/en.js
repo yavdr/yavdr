@@ -4,6 +4,11 @@ var locale = {
             title: 'Basics',
             tabtip: 'Configuration of basic settings like remote control receiver, channel list, etc.',
             content: 'Welcome to the yaVDR Web Frontend!'
+        },
+        diagnose : {
+            title: 'Diagnose',
+            tabtip: 'Stay informed about your system status, track problems',
+            content: 'Access to important log files and configuration files'
         }
     },
     standardform: {
@@ -13,7 +18,7 @@ var locale = {
         messagebox_caption: {
             message: 'Message',
             error: 'Error',
-            wait: 'Please wait...'           
+            wait: 'Please wait...'
         }
     },
     lirc: {
@@ -21,7 +26,7 @@ var locale = {
             title : 'LIRC',
             tabtip :'Lirc-Settings (Remote Control Receiver)',
             panel_title : 'Remote Control Receiver (LIRC)'
-        },        
+        },
         combobox: {
              tooltip : {
                  driver: 'Driver',
@@ -68,7 +73,7 @@ var locale = {
             waitmsg : 'Frontend settings are updated.',    
             success : 'Success.',
             failure : 'Failure.'
-        }        
+        }
     },
     upload: {
         menutab: {
@@ -114,7 +119,44 @@ var locale = {
                 jumpdown: 'Jump to end of panel',
                 jumpdown_tooltip: 'Please click this button to jump to the end of this panel.'
             }
+        },
+        section : {
+            system_info: {
+                title : 'System-Informationen', 
+                description : 'Network status, system load, file system usage, kernel',
+                ifconfig : 'Network Status',
+                top: 'System Load',
+                dmesg: 'Kernel',
+                df: 'File System Usage'
+            },
+            system_logs: {
+                title :'System Logfiles',
+                description : 'Important system Logfiles'
+            },
+            xbmc: {
+                title : 'XBMC-Crashes',
+                description : 'Find the reason for XBMC crashes or other XBMC problems'
+            },
+            lirc: {
+                title : 'LIRC Configuration',
+                description : 'Check the current configuration of LIRC'
+            },
+            vdr: {
+                title : 'VDR-Konfiguration',
+                description : 'Check the current configuration of VDR'
+            },
+            xorg: {
+                title : 'X-Server',
+                description : 'Check the current configuration of X'
+            },
+            sound: {
+                title : 'Sound (ALSA)',
+                description : 'Troubleshoot sound problems (digital / analog output)'
+            },
+            yavdr: {
+                title : 'yaVDR-Utils',
+                description : 'Troubleshoot problems with the yaVDR web frontend (database + web server)'
+            }
         }
     }
-
 };
