@@ -30,6 +30,7 @@ install: build
 	dh_install cpufrequtils /etc/default/
 	dh_installdirs /var/log/vdr
 	dh_install vdr.conf /etc/init/
+	dh_install vdr-frontend.conf /etc/init/
 	dh_install nodm.conf /etc/init/
 	dh_install vdr-upstart /usr/sbin/
 	dh_install Xsession.vdr /etc/X11/

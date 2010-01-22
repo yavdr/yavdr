@@ -9,6 +9,13 @@ case "$1" in
        update-rc.d -f vdr remove
        update-rc.d -f nodm remove
        update-rc.d -f dkms_autoinstaller remove
+
+       if ! grep yavdr-startup /etc/sudoers >/dev/null; then
+         echo >>/etc/sudoers
+         echo "# Added by yavdr-startup, don't remove" >>/etc/sudoers
+         echo "vdr ALL=NOPASSWD: /sbin/initctl" >>/etc/sudoers
+       fi
+
         ;;
 esac
 
