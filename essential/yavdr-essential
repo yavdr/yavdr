@@ -3,6 +3,7 @@ acpid
 alsa-utils
 anacron
 at
+autofs
 build-essential
 cpufrequtils
 ethtool
@@ -21,6 +22,7 @@ libxine1-xvdr
 linux-firmware
 linux-firmware-nonfree
 nfs-common
+nfs-kernel-server
 nodm
 nvidia-195-kernel-source
 nvidia-195-libvdpau
