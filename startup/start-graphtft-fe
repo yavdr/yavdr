@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export DISPLAY=:1
+
+test -f /etc/default/graphtft-fe && . /etc/default/graphtft-fe
+GRAPHTFTFEOPTS="-W 800 -H 600 -n -r"
+
+/usr/bin/graphtft-fe $GRAPHTFTFEOPTS -h localhost
