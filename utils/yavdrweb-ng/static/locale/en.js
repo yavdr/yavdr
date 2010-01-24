@@ -1,4 +1,9 @@
 var locale = {
+    meta_lang: {
+        local : 'Englisch',
+        int : 'English',
+        key : 'en'
+    },
     menutabs: {
         basics : {
             title: 'Basics',
@@ -109,6 +114,20 @@ var locale = {
                 success: 'The machine will reboot now.',
                 failure: 'Problem on sending signal. Please try again.'
             }
+        }
+    },
+    webfrontend: {
+        menutab: {
+            title : 'Web Frontend',
+            tabtip : 'Configure the appearance of the web frontend',
+            panel_title : 'Web Frontend Settings'
+        },
+        label: 'Choose web frontend language',
+        button_label:  'Apply language settings',
+        submit: {
+            waitmsg : 'Web frontend language settings are updated.',
+            success : 'Success. Please press F5 to reload the web frontend with the new language settings.',
+            failure : 'Failure.'
         }
     },
     diagnose : {

@@ -1,4 +1,4 @@
-function getVDRFrontendForm(){
+function getWebFrontendForm(){
     var myform = new Ext.FormPanel({
         frame: false,
         plain: false,
@@ -8,41 +8,41 @@ function getVDRFrontendForm(){
         //defaultType: 'textfield',
         buttonAlign: 'left',
         items: [{
-            id: 'frontend_radio_group',
-            name: 'frontend',
+            id: 'web_lang_radio_group',
+            name: 'value',
             xtype: 'radiogroup',
-            fieldLabel: locale.frontend.label,
+            fieldLabel: locale.webfrontend.label,
             columns: 1,
             items: [
-                {id: 'frontend-xine', boxLabel: 'xine', name: 'frontend', inputValue: 'xine'},
-                {id: 'frontend-xineliboutput', boxLabel: 'xineliboutput', name: 'frontend', inputValue: 'xineliboutput'}
+                {id: 'lang-en', boxLabel: 'English', name: 'value', inputValue: 'en'},
+                {id: 'lang-de', boxLabel: 'German', name: 'value', inputValue: 'de'}
             ]
         }]
     });
 
     var submit = myform.addButton({
-        text: locale.frontend.button_label,
+        text: locale.webfrontend.button_label,
         icon: 'ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
         handler: function() {
             myform.form.submit({
-                url: 'set_signal?signal=change-frontend',
-                waitMsg: locale.frontend.submit.waitmsg,
+                url: 'set_hdf_value?key=webfrontend.language',
+                waitMsg: locale.webfrontend.submit.waitmsg,
                 waitTitle: locale.standardform.messagebox_caption.wait,
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.frontend.submit.success );
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.webfrontend.submit.success );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.frontend.submit.error );
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.webfrontend.submit.error );
                 }
             })
         }
     });
     
     Ext.Ajax.request({
-        url: 'get_hdf_value?hdfpath=vdr.frontend',
+        url: 'get_hdf_value?hdfpath=webfrontend.language',
         timeout: 3000,
         method: 'GET',
         success: function(xhr) {
@@ -52,14 +52,15 @@ function getVDRFrontendForm(){
                 currentFrontend = xhr.responseText;
             }
             catch (err) {
-                Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current frontend.');
+                Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current web frontend language.');
             }
-            if (currentFrontend == "xine" || currentFrontend == "xineliboutput"){
-                var rButton = Ext.getCmp('frontend_radio_group');
+            if (currentFrontend == "") currentFrontend == "en";
+            if (currentFrontend == "de" || currentFrontend == "en"){
+                var rButton = Ext.getCmp('web_lang_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );
                 else
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not find frontend radiobutton group.');
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not find web frontend radiobutton group.');
             }
         }
     });

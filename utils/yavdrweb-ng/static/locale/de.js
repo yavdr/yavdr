@@ -1,4 +1,9 @@
 var locale = {
+    meta_lang: {
+        local : 'Deutsch',
+        int : 'German',
+        key : 'de'
+    },
     menutabs: {
         basics : {
             title: 'Basics',
@@ -109,6 +114,20 @@ var locale = {
                 success: 'Der Rechner wird nun neu gestartet.',
                 failure: 'Problem beim Absetzen des Signals. Bitte noch einmal versuchen.'
             }
+        }
+    },
+    webfrontend: {
+        menutab: {
+            title : 'Web Frontend',
+            tabtip : 'Das Erscheinungsbild des Web-Frontends einrichten.',
+            panel_title : 'Web Frontend Einstellungen'
+        },
+        label: 'Wählen Sie die Sprache des Web Frontends',
+        button_label:  'Anwenden',
+        submit: {
+            waitmsg : 'Die Spracheinstellungen für das Web Frontend werden aktualisiert.',
+            success : 'Die Spracheinstellungen für das Web Frontend wurden erfolgreich aktualisiert. Bitte F5 drücken, um das Web-Frontend neu zu laden.',
+            failure : 'Fehler.'
         }
     },
     diagnose : {

@@ -15,7 +15,7 @@ if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)
 }
 else
 {
-    lang = hdf_get_value(hdf, "web-frontend.language", "");
+    lang = hdf_get_value(hdf, "webfrontend.language", "");
     //reply.out() << value;
 }
 hdf_destroy(&hdf);
@@ -60,6 +60,7 @@ if (lang != "de" && lang != "en")
         <script type="text/javascript" src="static/config_tabs/system.js"></script>
         <script type="text/javascript" src="static/config_tabs/nfs.js"></script>
         <script type="text/javascript" src="static/config_tabs/vdr-frontend.js"></script>
+        <script type="text/javascript" src="static/config_tabs/web-frontend.js"></script>
         <script type="text/javascript" src="static/config_tabs/vdr-upload-config.js"></script>
         
         <script type="text/javascript" src="static/config_tabs/grouptabs.js"></script>

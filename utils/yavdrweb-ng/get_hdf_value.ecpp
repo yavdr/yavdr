@@ -15,17 +15,16 @@ hdfpath;
   reply.setHeader ("Cache-Control", "no-cache", false);
   string value = "";
   const char *valid_hdf_requests[] = {
+    "webfrontend.language",
     "vdr.frontend"
-    //""
   };
   
   bool validRequest = false;
   int findex = 0;
-  for (findex = 0; (findex < (sizeof(valid_hdf_requests) / sizeof(valid_hdf_requests[0]))); findex++)
+  for (findex = 0; (findex < (sizeof(valid_hdf_requests) / sizeof(valid_hdf_requests[0]))) && !validRequest; findex++)
   {
       if (hdfpath == valid_hdf_requests[findex])
           validRequest = true;
-          break;
   }
 
   if (validRequest){

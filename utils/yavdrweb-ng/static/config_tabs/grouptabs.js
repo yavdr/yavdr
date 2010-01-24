@@ -116,6 +116,23 @@ Ext.onReady(function() {
                                 items: [ getSystemForm() ]
                             })
                         ]
+                    },
+                    {
+                        title: locale.webfrontend.menutab.title,
+                        iconCls: 'x-icon-subscriptions',
+                        tabTip: locale.webfrontend.menutab.tabtip,
+                        style: 'padding: 20px 30px 20px 30px;',
+                        layout: 'fit',
+                        items: [
+                            new Ext.Panel({
+                                layout: 'auto',
+                                title: locale.webfrontend.menutab.panel_title,
+                                frame: true,
+                                plain: false,
+                                border: true,
+                                items: [ getWebFrontendForm() ]
+                            })
+                        ]
                     }
                     //, {
                     //     title: locale.system.menutab.title,
@@ -135,10 +152,11 @@ Ext.onReady(function() {
                     //     ]
                     // }
                 ]
-            }, {
+            },{
                 expanded: false,
                 items: [getDiagnoseItems()]
-            }]//grouptabpanel items
+                }
+            ]//grouptabpanel items
         }]//viewport items
     });//viewport
 });//extonready

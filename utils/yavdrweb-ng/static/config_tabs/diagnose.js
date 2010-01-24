@@ -95,7 +95,7 @@ function getDiagnoseItems(){
             [
                 addDiagnosePanelFileContent('Logfile', '/var/log/messages'),
                 addDiagnosePanelFileContent('Logfile', '/var/log/user.log'),
-                addDiagnosePanelFileContent('Logfile',   '/var/log/syslog')
+                addDiagnosePanelFileContent('Logfile', '/var/log/syslog')
             ]
         ),
         addDiagnoseMenuItem(
