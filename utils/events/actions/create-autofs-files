@@ -1,0 +1,3 @@
+#!/bin/bash
+process-template /etc/auto.master
+process-template /etc/auto.net.yavdr
