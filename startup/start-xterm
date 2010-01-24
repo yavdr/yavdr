@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export DISPLAY=:1
+
+sudo /sbin/initctl stop vdr-frontend
+
+/usr/bin/xterm 
+
+sudo /sbin/initctl start vdr-frontend
