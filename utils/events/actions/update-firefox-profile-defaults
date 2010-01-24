@@ -1,0 +1,3 @@
+#!/bin/bash
+
+process-template /etc/firefox-3.5/pref/firefox.js

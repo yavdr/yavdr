@@ -2,6 +2,6 @@
 
 export DISPLAY=:1
 
-/usr/bin/firefox http://localhost
+/usr/bin/firefox
 
 wait $!
