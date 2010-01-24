@@ -55,6 +55,7 @@ install: build
 	dh_install start-xbmc /usr/bin
 	dh_install start-firefox /usr/bin
 	dh_install start-xterm /usr/bin
+	dh_install start-graphtft-fe /usr/bin
 	dh_install noSignal4x3.mpg	/var/lib/vdr/plugins/xine
 	dh_install noSignal16x9.mpg	/var/lib/vdr/plugins/xine
 	dh_install nosignal.mpg		/usr/share/libxine1-xvdr			

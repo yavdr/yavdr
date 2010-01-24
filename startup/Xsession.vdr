@@ -16,4 +16,7 @@ if [ -f /tmp/xwininfo.out ]; then
 fi
 
 /usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
+if [ "$(dbget vdr.plugin.graphtft.enabled)x" = "1x" ]; then
+  /usr/bin/start-graphtft-fe &
+fi
 /usr/bin/openbox
