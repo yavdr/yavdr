@@ -51,6 +51,7 @@ Section "Device"
     <?cs if:system.hardware.nvidia.detected ?>Driver         "nvidia"
     VendorName     "NVIDIA Corporation"<?cs /if ?>
     Screen          0
+    Option         "DPI" "100x100"
 EndSection
 
 <?cs if:vdr.plugin.graphtft.enabled ?>Section "Device"
