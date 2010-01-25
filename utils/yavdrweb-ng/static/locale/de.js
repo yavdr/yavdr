@@ -100,7 +100,7 @@ var locale = {
             panel_title : 'System-Kommandos'
         },
         vdr_restart : {
-            label: 'VDR-Service neu starten',
+            label: 'VDR Backend neu starten',
             submit: {
                 waitmsg: 'Das Signal zum Neustarten des VDR wird abgesetzt.',
                 success: 'Der VDR wird nun neu gestartet.',
@@ -119,7 +119,7 @@ var locale = {
     webfrontend: {
         menutab: {
             title : 'Web Frontend',
-            tabtip : 'Das Erscheinungsbild des Web-Frontends einrichten.',
+            tabtip : 'Das Erscheinungsbild des Web-Frontends anpassen.',
             panel_title : 'Web Frontend Einstellungen'
         },
         label: 'Wählen Sie die Sprache des Web Frontends',

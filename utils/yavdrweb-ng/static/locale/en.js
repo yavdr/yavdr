@@ -100,7 +100,7 @@ var locale = {
             panel_title : 'System Commands'
         },
         vdr_restart : {
-            label: 'Restart VDR service',
+            label: 'Restart VDR backend',
             submit: {
                 waitmsg: 'The signal to restart VDR is being sent.',
                 success: 'VDR will restart now.',

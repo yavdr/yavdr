@@ -63,8 +63,15 @@ if (command == "LSTC") // || command == "NEWC")
              {
                  string sBuffer = string(buffer);
                  string::size_type bof = 0;
-                 string::size_type begin_of_channel_name  = sBuffer.substr(4, strlen(buffer) -4 ).find_first_of(" ", bof) + 4;
-                 string::size_type end_of_channel_name = sBuffer.substr(4, strlen(buffer) -4 ).find_first_of(";", bof) + 3;
+                 int channel_length = strlen(buffer);
+                 string::size_type begin_of_channel_name  = sBuffer.substr(4, channel_length -4 ).find_first_of(" ", bof) + 4;
+                 string::size_type first_semicolon = sBuffer.substr(4, channel_length -4 ).find_first_of(";", bof);
+                 string::size_type end_of_channel_name;
+                 if (first_semicolon != string::npos)
+                     end_of_channel_name = first_semicolon + 3;
+                 else
+                     end_of_channel_name = 0;
+                 
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
                  string channel = "";
                  string channel_name = "";
@@ -74,11 +81,14 @@ if (command == "LSTC") // || command == "NEWC")
                      reply.out() << ",\n"; //new line
                  }
 
-                 //check if we have got a channel group labe
+                 //check if we have got a channel group label
                  if (channel_nr != 0)
                  {
                      channel      = sBuffer.substr(begin_of_channel_name + 1, strlen(buffer) - 3 - begin_of_channel_name );
-                     channel_name = sBuffer.substr(begin_of_channel_name + 1, end_of_channel_name - begin_of_channel_name );
+                     if (end_of_channel_name > 0)
+                         channel_name = sBuffer.substr(begin_of_channel_name + 1, end_of_channel_name - begin_of_channel_name );
+                     else
+                         channel_name = "unknown";
                      counter ++;
                  }
                  else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
