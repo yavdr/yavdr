@@ -1,3 +1,35 @@
 #!/bin/bash
+ORDER_CONF=/etc/vdr/plugins/order.conf
+ORDER_CONF=order.conf
 
-process-template /etc/vdr/plugins/order.conf
+
+append_plugin () {
+  echo $1 >> $ORDER_CONF
+}
+
+enable_plugin () {
+  if grep -q $1 $ORDER_CONF; then
+    sed -ie "s/.*$1\$/$1/" $ORDER_CONF
+  fi
+}
+
+disable_plugin () {
+  if ! grep -q $1 $ORDER_CONF; then
+    append_plugin "-$1"
+  else
+    sed -ie "s/.*$1\$/-$1/" $ORDER_CONF
+  fi
+}
+
+if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
+  enable_plugin "xineliboutput"
+  disable_plugin "xine"
+else
+  enable_plugin "xine"
+  disable_plugin "xineliboutput"
+fi
+if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" ]; then
+  enable_plugin "graphtft"
+else
+  disable_plugin "graphtft"
+fi
