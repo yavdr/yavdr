@@ -119,8 +119,7 @@ function getDiagnoseItems(){
             locale.diagnose.section.vdr.description,
             [
                 addDiagnosePanelFileContent('VDR Setup', '/etc/vdr/setup.conf'),
-                addDiagnosePanelFileContent('VDR Fernbedienung', '/etc/vdr/remote.conf'),
-                addDiagnosePanelShellResponse('Installierte VDR-Pakete, VDR-Plugins, VDR-Addons', 'dpkg')
+                addDiagnosePanelFileContent('VDR Fernbedienung', '/etc/vdr/remote.conf')
             ]
         ),
         addDiagnoseMenuItem(
@@ -136,6 +135,13 @@ function getDiagnoseItems(){
             [
                 addDiagnosePanelShellResponse('Alsa Device List', 'aplay'),
                 addDiagnosePanelFileContent('Alsa Custom Sound Configuration', '/etc/asound.conf')
+            ]
+        ),
+        addDiagnoseMenuItem(
+            locale.diagnose.section.packages.title,
+            locale.diagnose.section.packages.description,
+            [
+                addDiagnosePanelShellResponse('Installierte Packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)', 'dpkg')
             ]
         ),
         addDiagnoseMenuItem(

@@ -172,6 +172,10 @@ var locale = {
                 title : 'Sound (ALSA)',
                 description : 'Troubleshoot sound problems (digital / analog output)'
             },
+            packages: {
+                title : 'Packages',
+                description : 'Check which packages and package versions are installed'
+            },
             yavdr: {
                 title : 'yaVDR-Utils',
                 description : 'Troubleshoot problems with the yaVDR web frontend (database + web server)'
