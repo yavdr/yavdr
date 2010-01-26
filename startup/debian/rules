@@ -42,6 +42,7 @@ install: build
 	dh_install S90.suspend2ram /usr/share/vdr/shutdown-hooks
 	dh_install lircrc /etc/lirc
 	dh_install 50_custom /etc/grub.d
+	dh_install issue /etc
 	dh_install yavdr_logo.png	/usr/share/yavdr/images
 	dh_install cleanTTY.conf	/etc/init
 	dh_install bootscreen.conf	/etc/init
