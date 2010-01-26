@@ -1,3 +1,35 @@
+yavdr-startup (0.0.46-1tvt1) karmic; urgency=low
+
+  * rev.410 small fix
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Tue, 26 Jan 2010 12:19:25 +0100
+
+yavdr-startup (0.0.45-1tvt1) karmic; urgency=low
+
+  * rev. 402 added "auto"-graphtft support
+  * autofs 
+ 
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 24 Jan 2010 22:26:35 +0100
+
+yavdr-startup (0.0.44-1tvt1) karmic; urgency=low
+
+  * rev.393 Added xterm (applikationen)
+  * alternative xbmc-start (rev.388)
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 24 Jan 2010 13:30:25 +0100
+
+yavdr-startup (0.0.43-1tvt1) karmic; urgency=low
+
+  * rev.386 change of xbmc start based on idea from Jörg Knitter
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 21 Jan 2010 11:19:42 +0100
+
+yavdr-startup (0.0.42-1tvt1) karmic; urgency=low
+
+  * rev.385
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 21 Jan 2010 10:29:31 +0100
+
 yavdr-startup (0.0.41-1tvt1) karmic; urgency=low
 
   * rev.381
