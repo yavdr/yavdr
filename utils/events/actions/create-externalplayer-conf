@@ -1,4 +1,0 @@
-#!/bin/bash
-
-process-template /var/lib/vdr/plugins/externalplayer.conf
-chown vdr:vdr /var/lib/vdr/plugins/externalplayer.conf
