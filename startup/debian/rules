@@ -61,7 +61,7 @@ install: build
 	dh_install noSignal16x9.mpg	/var/lib/vdr/plugins/xine
 	dh_install nosignal.mpg		/usr/share/libxine1-xvdr			
 	dh_install start-xineliboutput	/usr/bin
-	dh_install rc.xml	/var/lib/vdr/.config/
+	dh_install rc.xml	/var/lib/vdr/.config/openbox
 
 
 # Build architecture-independent files here.
