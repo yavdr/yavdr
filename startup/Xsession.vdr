@@ -15,7 +15,18 @@ if [ -f /tmp/xwininfo.out ]; then
   fi
 fi
 
+# set overscan compensation if set
+COMP=`dbget system.hardware.nvidia.overscan`
+
+if [ ! -z "$COMP" ]; then
+   if [ -e /usr/bin/nvidia-settings ] && DISPLAY=:1 /usr/bin/nvidia-settings -a OverscanCompensation=$COMP
+fi
+
+
+# set background
 /usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
+
+# start graphtft frontend if enabled
 if [ "$(dbget vdr.plugin.graphtft.enabled)x" = "1x" ]; then
   /usr/bin/start-graphtft-fe &
 fi
