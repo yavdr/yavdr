@@ -1,10 +1,9 @@
 function getChannelsForm(){
 
-    var gridLoadMask = new Ext.LoadMask(Ext.getBody(), {msg:"Please wait..."});
     
     var channellist_store = new Ext.data.JsonStore({
         autoDestroy: true,
-        //autoLoad: true,
+        autoLoad: false,
         url: 'get_svdrp_response?command=LSTC',
         storeId: 'channellist_store',
         // reader configs
@@ -12,15 +11,17 @@ function getChannelsForm(){
         idProperty: 'cid',
         remoteSort: false,
         totalProperty: 'totalCount',
-        fields: ['cid', 'cname', {name:'cname', type: 'string'}, 'cstr', {name:'cstr', type: 'string'}]
+        fields: ['cid', {name:'cid', type: 'int'}, 'cname', {name:'cname', type: 'string'}, 'cstr', {name:'cstr', type: 'string'}]
     });
 
+    var gridLoadMask = new Ext.LoadMask(Ext.getBody(), {
+        msg:"Please wait...",
+        store: channellist_store
+    });
     
     function createChannelGrid(){
         var grid = new Ext.grid.GridPanel({
             store: channellist_store,
-            heigth: 500,
-            width: '100%',
             columns: [
                 {header: locale.channels.grid_header.cid,  align: 'right', width: 50, dataIndex: 'cid', sortable: true},
                 {header: locale.channels.grid_header.cname,  align: 'left', width: 200, dataIndex: 'cname', sortable: true},
@@ -29,15 +30,14 @@ function getChannelsForm(){
             title: locale.channels.grid_title,
             frame: true,
             loadMask: gridLoadMask,
-/*            tbar: [{
+            tbar: [{
                 text: 'Aktualisieren',
                 icon: 'ext/resources/images/default/grid/refresh.gif',
                 tooltip: 'Klicken Sie diesen Button, um den Inhalt des Panels zu aktualisieren.',
                 handler: function(){
-                    var thisObj = Ext.getCmp('diagnose_panel_'+file).getUpdater();
-                    if(thisObj) thisObj.refresh();
+                    channellist_store.reload();
                 }
-            }],*/
+            }],
             viewConfig: {
                 forceFit: false
             }
