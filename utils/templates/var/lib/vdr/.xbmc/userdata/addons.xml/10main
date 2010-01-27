@@ -1,26 +1,9 @@
->
-    <multitype />
-    <visualistation />
-    <skin />
-    <pvr>
+<addons>
+    <pvrclient>
         <addon>
-            <name>VDRClient</name>
-            <path pathversion="1">special://xbmc/addons/pvr/VDR/</path>
-            <thumbnail pathversion="1">special://xbmc/addons/pvr/VDR/vdr.tbn</thumbnail>  
+            <name>VDRClient for streamdev</name>
+            <uuid>3ebaeda3-80d5-4447-9514-0de7a586a9d7</uuid>
+            <thumbnail pathversion="1">special://xbmc/addons/pvr/VDR/vdr.tbn</thumbnail>
         </addon>
-    </pvr>
-    <script />
-    <scraperpvr />
-    <scrapervideo />
-    <scrapermusic />
-    <scraperprogram />
-    <screensaver />
-    <pluginpvr />
-    <pluginmusic />
-    <pluginvideo />
-    <pluginprogram />
-    <pluginpictures />
-    <pluginweather />
-    <dspaudio />
+    </pvrclient>
 </addons>
-
