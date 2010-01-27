@@ -27,30 +27,20 @@ install: build
 
 
 #	dh_install order.conf /etc/vdr/plugins
+	dh_install etc-init/*.conf	/etc/init
 	dh_install cpufrequtils /etc/default/
 	dh_installdirs /var/log/vdr
-	dh_install etc-init/vdr.conf /etc/init/
-	dh_install etc-init/autofs.conf /etc/init/
-	dh_install etc-init/vdr-frontend.conf /etc/init/
-	dh_install etc-init/nodm.conf /etc/init/
 	dh_install vdr-upstart /usr/sbin/
 	dh_install Xsession.vdr /etc/X11/
 	dh_install 30force-reload /etc/pm/sleep.d
 	dh_install 20vdr_sleep /etc/pm/sleep.d
 	dh_install 10vdr_module /etc/pm/config.d
-	dh_install etc-init/s3.conf /etc/init
 	dh_install S90.suspend2ram /usr/share/vdr/shutdown-hooks
 	dh_install lircrc /etc/lirc
 	dh_install 50_custom /etc/grub.d
 	dh_install issue /etc
 	dh_install yavdr_logo.png	/usr/share/yavdr/images
-	dh_install etc-init/cleanTTY.conf	/etc/init
-	dh_install etc-init/bootscreen.conf	/etc/init
 	dh_install 10-dvb-remote.rules  /etc/udev/rules.d
-	dh_install etc-init/dkms_autoinstaller.conf /etc/init
-	dh_install etc-init/first-vdr-start.conf /etc/init
-	dh_install etc-init/onshutdown.conf /etc/init
-	dh_install etc-init/usb-wakeup.conf	/etc/init
 	dh_install browser /usr/bin
 	dh_install keymap /var/lib/vdr/.xine
 	dh_install config /var/lib/vdr/.xine
