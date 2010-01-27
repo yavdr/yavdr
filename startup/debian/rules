@@ -28,6 +28,7 @@ install: build
 
 #	dh_install order.conf /etc/vdr/plugins
 	dh_install etc-init/*.conf	/etc/init
+	dh_install usr-bin/*	/usr/bin
 	dh_install cpufrequtils /etc/default/
 	dh_installdirs /var/log/vdr
 	dh_install vdr-upstart /usr/sbin/
@@ -41,18 +42,11 @@ install: build
 	dh_install issue /etc
 	dh_install yavdr_logo.png	/usr/share/yavdr/images
 	dh_install 10-dvb-remote.rules  /etc/udev/rules.d
-	dh_install browser /usr/bin
 	dh_install keymap /var/lib/vdr/.xine
 	dh_install config /var/lib/vdr/.xine
-	dh_install start-xine /usr/bin
-	dh_install start-xbmc /usr/bin
-	dh_install start-firefox /usr/bin
-	dh_install start-xterm /usr/bin
-	dh_install start-graphtft-fe /usr/bin
 	dh_install noSignal4x3.mpg	/var/lib/vdr/plugins/xine
 	dh_install noSignal16x9.mpg	/var/lib/vdr/plugins/xine
 	dh_install nosignal.mpg		/usr/share/libxine1-xvdr			
-	dh_install start-xineliboutput	/usr/bin
 	dh_install rc.xml	/var/lib/vdr/.config/openbox
 	dh_install externalplayer.conf	/etc/vdr/plugins
 
