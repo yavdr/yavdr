@@ -1,3 +1,13 @@
+yavdr-utils (0.0.65-2tvt1) karmic; urgency=low
+
+  * rev.426
+  * restart tntnet after upgrade
+  * templating fix for firefox default homepage, hopefully fixing issue #29
+  * add overscan compensation
+  * added default graphtft-keys to remote.conf template
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Wed, 27 Jan 2010 11:08:37 +0100
+
 yavdr-utils (0.0.65-1tvt1) karmic; urgency=low
 
   * rev.410

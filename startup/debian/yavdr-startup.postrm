@@ -9,4 +9,6 @@ if [ remove = "$1" ]; then
       --divert /var/lib/vdr/plugins/xine/noSignal16x9.mpg.dontremove /var/lib/vdr/plugins/xine/noSignal16x9.mpg
    dpkg-divert --package yavdr-startup --remove --rename \
       --divert /usr/share/libxine1-xvdr/nosignal.mpg.dontremove /usr/share/libxine1-xvdr/nosignal.mpg
+   dpkg-divert --package yavdr-startup --remove --rename \
+      --divert /etc/issue.dontremove /etc/issue
 fi 

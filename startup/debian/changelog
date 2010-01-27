@@ -1,8 +1,11 @@
-yavdr-startup (0.0.46-1tvt1) karmic; urgency=low
+yavdr-startup (0.0.46-2tvt1) karmic; urgency=low
 
-  * rev.410 small fix
+  * rev.426
+  * added usb-wakeup.conf (rev.418-420)
+  * changed audio-buffer in xine-config
+  * added issue-file to startup
 
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Tue, 26 Jan 2010 12:19:25 +0100
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Wed, 27 Jan 2010 10:57:56 +0100
 
 yavdr-startup (0.0.45-1tvt1) karmic; urgency=low
 
