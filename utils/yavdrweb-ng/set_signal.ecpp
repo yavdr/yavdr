@@ -19,7 +19,10 @@ using namespace std;
 
 string success = "false";
 
-if ((signal == "reboot") || (signal == "change-frontend") || (signal == "restart-vdr"))
+if ((signal == "reboot") || 
+        (signal == "change-frontend") || 
+        (signal == "kill-xbmc") || 
+        (signal == "restart-vdr"))
 {
     
     if (signal == "change-frontend" )

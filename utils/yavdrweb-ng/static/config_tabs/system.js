@@ -46,7 +46,26 @@ function getSystemForm(){
             })
         }
     });
-    
+
+    var submit_kill_xbmc = myform.addButton({
+        text: locale.system.kill_xbmc.label,
+        //icon: 'ext/resources/images/default/grid/refresh.gif',
+        handler: function() {
+            myform.form.submit({
+                url: 'set_signal?signal=kill-xbmc',
+                waitMsg: locale.system.kill_xbmc.submit.waitmsg,
+                waitTitle: locale.standardform.messagebox_caption.wait,
+                scope:this,
+                success: function (form, action) {
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.system.kill_xbmc.submit.success );
+                },
+                failure:function(form, action) {
+                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.system.kill_xbmc.submit.failure );
+                }
+            })
+        }
+    });
+
     var submit_reboot = myform.addButton({
         text: locale.system.system_restart.label,
         icon: 'ext/resources/images/default/grid/refresh.gif',

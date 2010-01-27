@@ -107,6 +107,14 @@ var locale = {
                 failure: 'Problem beim Absetzen des Signals. Bitte noch einmal versuchen.'
             }
         },
+        kill_xbmc : {
+            label: 'Eingefrorenes XBMC abwürgen',
+            submit: {
+                waitmsg: 'Das Signal zum Abwürgen von XBMC wird abgesetzt.',
+                success: 'XBMC wird nun gestoppt.',
+                failure: 'Problem beim Absetzen des Signals. Bitte noch einmal versuchen.'
+            }
+        },
         system_restart : {
             label: 'Rechner neu starten (Vorsicht: Keine Sicherheitsabfrage!)',
             submit: {

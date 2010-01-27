@@ -107,6 +107,14 @@ var locale = {
                 failure: 'Problem on sending signal. Please try again.'
             }
         },
+        kill_xbmc : {
+            label: 'Kill XBMC (if frozen)',
+            submit: {
+                waitmsg: 'The signal to stop XBMC is being sent.',
+                success: 'XBMC was stopped.',
+                failure: 'Problem on sending signal. Please try again.'
+            }
+        },        
         system_restart : {
             label: 'Reboot machine (Caution: Not asking for confirmation!)',
             submit: {
