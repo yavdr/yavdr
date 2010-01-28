@@ -26,7 +26,6 @@ install: build
 	dh_installdirs
 
 
-#	dh_install order.conf /etc/vdr/plugins
 	dh_install etc-init/*.conf	/etc/init
 	dh_install usr-bin/*	/usr/bin
 	dh_install cpufrequtils /etc/default/
