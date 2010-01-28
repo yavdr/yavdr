@@ -22,7 +22,8 @@ string success = "false";
 if ((signal == "reboot") || 
         (signal == "change-frontend") || 
         (signal == "kill-xbmc") || 
-        (signal == "restart-vdr"))
+        (signal == "restart-vdr") ||
+        (signal == "change-auto-net-yavdr"))
 {
     
     if (signal == "change-frontend" )

@@ -133,24 +133,24 @@ Ext.onReady(function() {
                                 items: [ getWebFrontendForm() ]
                             })
                         ]
+                    },
+                    {
+                        title: locale.nfs.menutab.title,
+                        iconCls: 'x-icon-subscriptions',
+                        tabTip: locale.nfs.menutab.tabtip,
+                        style: 'padding: 20px 30px 20px 30px;',
+                        layout: 'fit',
+                        items: [
+                            new Ext.Panel({
+                                layout: 'auto',
+                                title: locale.nfs.menutab.panel_title,
+                                frame: true,
+                                plain: false,
+                                border: true,
+                                items: [ getNFSForm() ]
+                            })
+                        ]
                     }
-                    //, {
-                    //     title: locale.system.menutab.title,
-                    //     iconCls: 'x-icon-subscriptions',
-                    //     tabTip: locale.system.menutab.tabtip,
-                    //     style: 'padding: 20px 30px 20px 30px;',
-                    //     layout: 'fit',
-                    //     items: [
-                    //         new Ext.Panel({
-                    //             layout: 'auto',
-                    //             title: locale.system.menutab.panel_title,
-                    //             frame: true,
-                    //             plain: false,
-                    //             border: true,
-                    //             items: [ getNFSForm() ]
-                    //         })
-                    //     ]
-                    // }
                 ]
             },{
                 expanded: false,

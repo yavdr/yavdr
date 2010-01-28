@@ -124,6 +124,13 @@ var locale = {
             }
         }
     },
+    nfs: {
+        menutab: {
+            title : 'NFS',
+            tabtip : 'Verwalten der NFS Mounts und Freigaben',
+            panel_title : 'NFS-Konfiguration'
+        },
+    },
     webfrontend: {
         menutab: {
             title : 'Web Frontend',

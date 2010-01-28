@@ -124,6 +124,13 @@ var locale = {
             }
         }
     },
+    nfs: {
+        menutab: {
+            title : 'NFS',
+            tabtip : 'Maintain NFS mounts and shares',
+            panel_title : 'NFS-Configuration'
+        },
+    },
     webfrontend: {
         menutab: {
             title : 'Web Frontend',
