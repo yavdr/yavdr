@@ -1,5 +1,5 @@
 #!/bin/bash
 
 stop lirc
-sleep4
+sleep 4
 start lirc
