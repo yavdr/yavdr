@@ -1,4 +1,5 @@
 #!/bin/bash
 
 stop vdr
+sleep4
 start vdr
