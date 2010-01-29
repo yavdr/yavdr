@@ -2,13 +2,14 @@
 
 case "$1" in
     configure)
-       chown vdr:vdr /var/log/vdr
-       chsh -s /bin/bash vdr
-       adduser vdr audio
-       adduser vdr cdrom
-       update-rc.d -f vdr remove
-       update-rc.d -f nodm remove
-       update-rc.d -f dkms_autoinstaller remove
+	chown vdr:vdr /var/log/vdr
+	chsh -s /bin/bash vdr
+	adduser vdr audio
+	adduser vdr cdrom
+	update-rc.d -f vdr remove
+	update-rc.d -f nodm remove
+	update-rc.d -f dkms_autoinstaller remove
+	update-rc.d -f lirc remove
 
        if ! grep yavdr-startup /etc/sudoers >/dev/null; then
          echo >>/etc/sudoers
