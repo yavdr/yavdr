@@ -21,7 +21,7 @@ string success = "false";
 
 if ((key == "webfrontend.language"))
 {
-    if ((value == "de") || (value == "en"))
+    if ((value == "de") || (value == "en") || (value == "nl"))
     {
         NEOERR *err;
         HDF *hdf = NULL;

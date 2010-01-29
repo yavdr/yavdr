@@ -15,7 +15,8 @@ function getWebFrontendForm(){
             columns: 1,
             items: [
                 {id: 'lang-en', boxLabel: 'English', name: 'value', inputValue: 'en'},
-                {id: 'lang-de', boxLabel: 'German', name: 'value', inputValue: 'de'}
+                {id: 'lang-de', boxLabel: 'German', name: 'value', inputValue: 'de'},
+                {id: 'lang-nl', boxLabel: 'Dutch', name: 'value', inputValue: 'nl'}
             ]
         }]
     });

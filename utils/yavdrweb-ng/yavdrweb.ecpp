@@ -20,7 +20,7 @@ else
 }
 hdf_destroy(&hdf);
 
-if (lang != "de" && lang != "en") 
+if (lang == "") 
     lang = "en";
 
 
