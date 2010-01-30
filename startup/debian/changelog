@@ -1,3 +1,9 @@
+yavdr-startup (0.0.46-7tvt1) karmic; urgency=low
+
+  * aedde lirc upstart script 
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Fri, 29 Jan 2010 19:08:55 +0100
+
 yavdr-startup (0.0.46-6tvt1) karmic; urgency=low
 
   * the return of unclutter ...

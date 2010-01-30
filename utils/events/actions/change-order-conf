@@ -1,6 +1,6 @@
 #!/bin/bash
 ORDER_CONF=/etc/vdr/plugins/order.conf
-ORDER_CONF=order.conf
+#ORDER_CONF=order.conf
 
 
 append_plugin () {
