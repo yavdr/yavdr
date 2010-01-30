@@ -15,7 +15,7 @@ if [ -n "$LIRCD_CONF" ]; then
 fi
 
 #For atilibusb, we need to blacklist the kernel module
-for MODULE in `dbget system.lirchw.lirc_driver` ; do 
+for MODULE in `dbget system.lirchw.driver` ; do 
 if [ "x$MODULE" = "xatilibusb" ]; then
    BLACKLIST="lirc_atiusb ati_remote"
 elif [ "x$MODULE" = "xatiusb" ]; then
