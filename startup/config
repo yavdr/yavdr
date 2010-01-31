@@ -569,11 +569,11 @@ media.xvdr.scr_tuning_step:50
 
 # Anzahl der Audiopuffer
 # numeric, default: 230
-engine.buffers.audio_num_buffers:275
+engine.buffers.audio_num_buffers:2300
 
 # Anzahl der Videopuffer
 # numeric, default: 500
-engine.buffers.video_num_buffers:1700
+engine.buffers.video_num_buffers:5000
 
 # Standardanzahl von Videobildern
 # numeric, default: 15

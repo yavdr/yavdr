@@ -1,5 +1,3 @@
 #!/bin/bash
 
-stop lirc
-sleep 4
-start lirc
+service lirc restart
