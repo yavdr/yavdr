@@ -2,6 +2,7 @@
 
 process-template /etc/lirc/hardware.conf
 process-template /etc/modprobe.d/lirc-serial.conf
+process-template /etc/serial.conf
 
 LIRCD_CONF="$(dbget system.lirchw.lircd_conf)"
 if [ -n "$LIRCD_CONF" ]; then
