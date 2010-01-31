@@ -31,11 +31,11 @@ using namespace std;
 
   if (receiver_id != "")
   {
-      //security check for plausible value of serial_port
-      if (serial_port != "/dev/ttyS0" || serial_port != "/dev/ttyS1")
-          serial_port = "";
+    //security check for plausible value of serial_port
+    if (serial_port != "/dev/ttyS0" && serial_port != "/dev/ttyS1")
+        serial_port = "";
 
-      i_receiver_id = atoi(receiver_id.c_str()); 
+    i_receiver_id = atoi(receiver_id.c_str()); 
     //FIXME msg is not used correctly here, it should be a field specific feedback for the end user
     //and is abused as a cheap debug instrument
 
@@ -67,6 +67,12 @@ using namespace std;
               msg = "Error on hdf_init / hdf_read_file";
               break;
             }
+            //if the chosen receiver is not a serial receiver: clear serial field in the db
+            err = hdf_set_valuef(hdf, "system.lirchw.serial_port=%s", "");
+            if (err != STATUS_OK){
+              msg = "Error on hdf_set_value";
+              break;
+            }
             for (int i = 0;(found = str.find_first_of(";", bof)) != string::npos; i++)
             {
               string value = str.substr(bof, found - bof);
@@ -76,19 +82,11 @@ using namespace std;
                 break;
               }
               //check if this lirc receiver really depends on the serial port
-              if ((i == 1 && value.c_str() == "lirc_dev lirc_serial") ||
-                  (i == 2 && value.c_str() == "serial"))
+              if ((i == 2 && value == "lirc_dev lirc_serial") ||
+                  (i == 1 && value == "serial"))
               {
+                  //set serial port
                   err = hdf_set_valuef(hdf, "system.lirchw.serial_port=%s", serial_port.c_str());
-                  if (err != STATUS_OK){
-                    msg = "Error on hdf_set_value";
-                    break;
-                  }
-              }
-              else
-              {
-                  //the chosen receiver is not a serial receiver, so clear this field in the db
-                  err = hdf_set_valuef(hdf, "system.lirchw.serial_port=%s", "");
                   if (err != STATUS_OK){
                     msg = "Error on hdf_set_value";
                     break;
