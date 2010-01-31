@@ -131,6 +131,13 @@ var locale = {
             panel_title : 'NFS-Configuration'
         },
     },
+    nvidia: {
+        menutab: {
+            title : 'Nvidia',
+            tabtip : 'Maintain Nvidia settings',
+            panel_title : 'Nvidia configuration'
+        },
+    },
     webfrontend: {
         menutab: {
             title : 'Web Frontend',
