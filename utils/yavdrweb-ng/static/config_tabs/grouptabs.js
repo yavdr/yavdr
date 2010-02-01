@@ -128,11 +128,11 @@ Ext.onReady(function() {
                 {
                     expanded: false,
                     items: [getDiagnoseItems()]
-                }//,
+                },
                 /*
                  *  DEVELOPMENT MODULE (UNCOMMENT THIS TO MAKE IT VISIBLE)
                  */
-                /*{
+                {
                     expanded: false,
                         items: [
                             {
@@ -159,7 +159,7 @@ Ext.onReady(function() {
                                 items:   getNFSForm()
                             })
                         ]
-                }*/
+                }
             ]//grouptabpanel items
         }]//viewport items
     });//viewport
