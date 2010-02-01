@@ -131,6 +131,7 @@ function onLircComboBoxChange( combo, record, index){
 }
     
 function adjustSerialSettings(lirc_driver, driver){
+    /*buggy
     var radioGroup = Ext.getCmp('serial_port_radio_group');
     if (!radioGroup) 
         Ext.MessageBox.alert('ERROR', 'Could not find radiogroup');
@@ -143,5 +144,5 @@ function adjustSerialSettings(lirc_driver, driver){
         //Ext.getCmp('serial_port_radio_group').value = 'keine';
         Ext.getCmp('serial_port_radio_group').setValue( '' );
         Ext.getCmp('serial_port_radio_group').setDisabled(true);
-    }
+    }*/
 }
