@@ -15,23 +15,13 @@ test -x $VDRPRG || exit 0
 
 . /usr/lib/vdr/config-loader.sh
 
-if [ -e /etc/auto.net.yavdr ]; then
-    for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /video/ {print $1}'`; do
-        pushd /net/$d
-        if [ -d "/net/$d" ]; then
-            OPTIONS="$OPTIONS -v /net/$d"
-        fi
-        popd
-    done
-fi
-
 # Set shutdown command
 test "$ENABLE_SHUTDOWN" = "1" && VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown.wrapper" \
                               || VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown-message"
 
 . /usr/lib/vdr/plugin-loader.sh
 . /usr/lib/vdr/commands-loader.sh
-
+. /usr/lib/vdr/mount-loader.sh
 
 clean_console()
 {
