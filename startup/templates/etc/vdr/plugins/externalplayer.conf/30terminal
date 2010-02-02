@@ -1,0 +1,7 @@
+{
+  MenuEntry        = "Terminal";
+  Command          = "start-xterm";
+  OutputMode       = extern;
+  InputMode        = deactivateRemotes;
+}
+

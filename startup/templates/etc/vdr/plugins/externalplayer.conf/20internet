@@ -1,0 +1,7 @@
+{
+  MenuEntry        = "Internet";
+  Command          = "start-firefox";
+  OutputMode       = extern;
+  InputMode        = deactivateRemotes;
+}
+

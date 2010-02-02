@@ -47,9 +47,10 @@ install: build
 	dh_install images/noSignal16x9.mpg	/var/lib/vdr/plugins/xine
 	dh_install images/nosignal.mpg		/usr/share/libxine1-xvdr			
 	dh_install rc.xml	/var/lib/vdr/.config/openbox
-	dh_install externalplayer.conf	/etc/vdr/plugins
 	dh_install mount-loader.sh /usr/lib/vdr
 
+	dh_install events/* /usr/share/yavdr/events
+	dh_install templates/* /usr/share/yavdr/templates
 
 # Build architecture-independent files here.
 binary-indep: build install

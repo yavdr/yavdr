@@ -1,0 +1,8 @@
+# Syntax description: Every player block begins with "{" and end with "}".
+# Each block contains several entries with th following syntax:
+#   <setting> = <value>;
+# Each block must contain at least a MenuEntry and a Command.
+
+# Possible Input Modes: deactivateRemotes, slave, normal (default).
+# Possible Output Modes: extern (default), none, audioOnly, audioOnlyBlack.
+
