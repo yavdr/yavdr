@@ -1,9 +1,0 @@
-#!/bin/sh
-
-COMP=`dbget system.hardware.nvidia.overscan`
-
-if [ ! -z "$COMP" ]; then 
-DISPLAY=:1 nvidia-settings -a OverscanCompensation=$COMP
-fi 
-
-exit 0
