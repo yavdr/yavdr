@@ -6,7 +6,11 @@ yaVDR-startup Revision History
 -----------------
 fixed min cpu freq for k8
 NEW lirc upstart 
-unclutter fix 
+NEW setserial-minimal upstart (for lirc)
+FIX lirc - serial configuration, several bugfixes
+FIX lirc - blacklist for ati-remote works now
+NEW lirc - changes are effective immediatly now
+FIX unclutter reseting cursor position
 added gpl 2 licence
 NEW openbox as windowmanager
 NEW autoconfig. graphtft
