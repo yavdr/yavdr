@@ -1,0 +1,3 @@
+#!/bin/sh
+
+process-template /etc/issue
