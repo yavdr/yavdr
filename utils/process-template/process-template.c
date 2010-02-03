@@ -1,6 +1,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <dirent.h>
+#include <errno.h>
 #include <ClearSilver/ClearSilver.h>
 
 #include "common.h"
@@ -96,7 +97,7 @@ int write_segment(int templatefd, char *segmentname)
 
   if ((segmentfd = open(segmentname, O_RDONLY)) < 0)
   {
-    perror("open");
+    fprintf(stderr, "error: %s opening %s\n", strerror(errno), segmentname);
     ret = -1;
   }
   else
@@ -126,7 +127,7 @@ int merge_template(char *template)
  
   if (asprintf(&templatedir, "%s/%s", TEMPLATEPATH, template) < 0)
   {
-    perror("asprintf");
+    fprintf(stderr, "error: %s asprintf\n", strerror(errno));
     ret = -1;
   }
   else
@@ -135,14 +136,14 @@ int merge_template(char *template)
 
     if (numtemps < 0)
     {
-      perror("scandir");
+      fprintf(stderr, "error: %s scandir %s\n", strerror(errno), templatedir);
       ret = -2;
     }
     else
     {
       if (asprintf(&templatecustomdir, "%s/%s", TEMPLATECUSTOMPATH, template) < 0)
       {
-        perror("asprintf");
+        fprintf(stderr, "error: %s asprintf\n", strerror(errno));
         ret = -3;
       }
       else
@@ -151,25 +152,27 @@ int merge_template(char *template)
 
         if (numcustomtemps < 0)
         {
-          perror("scandir");
-          ret = -4;
+          fprintf(stderr, "info: %s scandir %s\n", strerror(errno), templatecustomdir);
+          numcustomtemps = 0;
+        }
+
+        if ((templatefd = mkstemp(templatename)) < 0)
+        {
+          fprintf(stderr, "error: %s mkstemp\n", strerror(errno));
+          ret = -5;
         }
         else
         {
-          if ((templatefd = mkstemp(templatename)) < 0)
-          {
-            perror("mkstemp");
-            ret = -5;
-          }
-   
           for (n = 0, m = 0; n < numtemps; n++)
           {
+            comp = 1;
+
             while ((ret == 0) && (m < numcustomtemps) && 
                    ((comp = strcmp(namelist[n]->d_name, namelistcustom[m]->d_name)) >= 0))
             {
               if (asprintf(&segmentname, "%s/%s", templatecustomdir, namelistcustom[m]->d_name) < 0)
               {
-                perror("asprintf");
+                fprintf(stderr, "error: %s asprintf\n", strerror(errno));
                 ret = -6;
               }
               else
@@ -191,7 +194,7 @@ int merge_template(char *template)
             {
               if (asprintf(&segmentname, "%s/%s", templatedir, namelist[n]->d_name) < 0)
               {
-                perror("asprintf");
+                fprintf(stderr, "error: %s asprintf\n", strerror(errno));
                 ret = -8;
               }
               else
@@ -211,7 +214,7 @@ int merge_template(char *template)
           {
             if (asprintf(&segmentname, "%s/%s", templatecustomdir, namelistcustom[m]->d_name) < 0)
             {
-              perror("asprintf");
+              fprintf(stderr, "error: %s asprintf\n", strerror(errno));
               ret = -10;
             }
             else
