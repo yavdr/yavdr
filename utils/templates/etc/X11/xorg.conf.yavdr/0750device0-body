@@ -1,0 +1,6 @@
+    Identifier     "Device0"
+    <?cs if:system.hardware.nvidia.detected ?>Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"<?cs /if ?>
+    Screen          0
+    Option         "DPI" "100x100"
+

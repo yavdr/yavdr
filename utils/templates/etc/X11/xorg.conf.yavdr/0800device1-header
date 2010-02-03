@@ -1,0 +1,2 @@
+<?cs if:vdr.plugin.graphtft.enabled ?>Section "Device"
+
