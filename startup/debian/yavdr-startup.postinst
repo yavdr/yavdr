@@ -11,6 +11,8 @@ case "$1" in
 	update-rc.d -f dkms_autoinstaller remove
 	update-rc.d -f lirc remove
 
+        chmod +x /usr/share/yavdr/events/actions/*
+
         signal-event post-upgrade
 
         if ! grep yavdr-startup /etc/sudoers >/dev/null; then
