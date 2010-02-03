@@ -1,2 +1,41 @@
 yaVDR-utils Revision History
 ---------------------------------------
+
+-----------------
+4.Feb.2010
+-----------------
+added gpl 2 licence
+added missing streamdev settings in setup.conf
+fixing bug #72 - webfrontend does not save serial_port
+restart tntnet after package-upgrade
+use 100x100 as default dpi setting
+fixed issue with order.conf
+web-frontend:
+- channel list bug fixes:
+- fixed parsing bug: channel lists were not displayed if a channel name doesn't contain a semicolon
+- added load mask while store is loading to indicate that user has to wait
+- make list sortable by channel number correctly
+- add toolbar button "reload" to refresh the list via SVDRP
+web-frontend NEW:
+- translated web-frontend labels into English and Dutch. Thanks to matchless for Dutch translation
+- added panel "Web frontend settings" where the displayed language can be chosen (en, de, nl)
+- added yavdr-webfrontend welcome page (no forced authentication dialog on browser start)
+- added yavdr-webfrontend welcome page as default homepage to firefox default profile, fixing issue #29
+- added list of installed packages
+- added button to kill xbmc
+-----------------
+17.Jan.2010 
+-----------------
+fixed config upload
+NEW channelist upload without vdr-restart
+NEW button to restart vdr
+-----------------
+15.Jan.2010 
+-----------------
+initial release
+----------------- 
+unfinished features:
+-----------------
+- added NVIDIA overscan correction (not finished yet)
+- added support for autofs configuration (not finished yet)
+

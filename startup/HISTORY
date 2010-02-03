@@ -1,2 +1,19 @@
 yaVDR-startup Revision History
 ---------------------------------------
+
+-----------------
+4.Feb.2010
+-----------------
+fixed min cpu freq for k8
+NEW lirc upstart 
+unclutter fix 
+added gpl 2 licence
+NEW openbox as windowmanager
+NEW autoconfig. graphtft
+NEW added xterm to applications
+NEW vdpauinfo check, now yavdr is usable without vdpau
+-----------------
+15.Jan.2010 
+-----------------
+initial release
+
