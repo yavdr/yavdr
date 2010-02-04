@@ -1,10 +1,10 @@
 # /etc/lirc/hardware.conf
-#
+# 
 #Chosen Remote Control
-REMOTE="<?cs var:system.lirchw.description ?>"
+REMOTE="<?cs if:system.lirchw.description != "" ?><?cs var:system.lirchw.description ?><?cs else ?>None<?cs /if ?>"
 REMOTE_MODULES="<?cs var:system.lirchw.lirc_driver ?>"
 REMOTE_DRIVER=""
-REMOTE_DEVICE="/dev/lirc0"
+REMOTE_DEVICE="<?cs if:system.lirchw.description != "" ?>/dev/lirc0<?cs /if ?>"
 REMOTE_LIRCD_CONF="<?cs var:system.lirchw.lircd_conf ?>"
 REMOTE_LIRCD_ARGS=""
 
@@ -17,7 +17,7 @@ TRANSMITTER_LIRCD_CONF=""
 TRANSMITTER_LIRCD_ARGS=""
 
 #Enable lircd
-START_LIRCD="true"
+START_LIRCD="<?cs if:system.lirchw.description != "" ?>true<?cs else ?>false<?cs /if ?>"
 
 #Don't start lircmd even if there seems to be a good config file
 #START_LIRCMD="false"
