@@ -38,6 +38,7 @@ using namespace std;
   
 
   reply.out() << "\n{\n                \"receiverlist\" : [\n";
+  reply.out() << "                    [ 0, \"-\", \"-\", \"-\", \"-\", \"-\" ],\n"; // no receiver, reset settings
   
   ifstream ifs;
 
@@ -63,10 +64,10 @@ using namespace std;
           found = str.find_first_of(";", bof);
 
           if (current_lirchw_description != "" && str.substr(bof, found - bof) == current_lirchw_description)
-            current_lirchw_id = index;
+            current_lirchw_id = index +1;
 
           if (i == 0)
-            reply.out() << "                    [ " << index << ",";
+            reply.out() << "                    [ " << index + 1 << ",";
 
           reply.out()  << " \""; 
           reply.sout() << str.substr(bof, found - bof); //we must escape special chars via sout (xss)
