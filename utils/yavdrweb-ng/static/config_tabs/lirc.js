@@ -47,7 +47,7 @@ function getLircForm(){
         frame: false,
         plain: false,
         border: false,
-        bodyStyle:'padding:5px 5px 0',
+        bodyStyle:'padding:15px 5px 0',
         labelWidth: 130,
         defaults: {width: 400},
         defaultType: 'textfield',
@@ -92,6 +92,7 @@ function getLircForm(){
         handler: function() {
             myform.form.submit({
                 url: 'set_lirchw',
+                tabTip: 'Test',
                 waitMsg: locale.lirc.submit.waitmsg,
                 waitTitle: locale.standardform.messagebox_caption.wait,
                 scope:this,
@@ -123,7 +124,17 @@ function getLircForm(){
         }
     });
     
-    return myform;
+    myform2 = [ new Ext.Panel({
+        width: "100%",
+        frame: false,
+        border: false,
+        bodyStyle:'padding:5px 5px 0',
+        html: '<p style="font-size: 12px;">' + locale.lirc.help + "</p>",
+    }),
+    myform ];
+    
+    
+    return myform2;
 }
 
 function onLircComboBoxChange( combo, record, index){

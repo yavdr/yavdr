@@ -32,6 +32,7 @@ var locale = {
             tabtip :'Lirc instellingen (Infrarood ontvanger)',
             panel_title : 'Infrarood ontvanger (LIRC)'
         },
+        help: '(not translated yet) When you press the button "Save" VDR will be restarted to notify VDR about the changed LIRC receiver settings. If you haven\'t assigned the buttons of your remote control (via remote.conf) VDR will offer you a step-by-step dialog on the OSD to learn the button assignment of your remote control from you. This dialog disappears after a few seconds if no key on the remote control was pressed. You can restart the dialog by simply pressing "Save" again.', //translate
         combobox: {
              tooltip : {
                  driver: 'Driver',

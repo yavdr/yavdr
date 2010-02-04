@@ -32,6 +32,7 @@ var locale = {
             tabtip :'Lirc-Einstellungen (Fernbedienungs-Receiver)',
             panel_title : 'Fernbedienungs-Empfänger (LIRC)'
         },
+        help: 'Sobald Sie den Button "Speichern" drücken, wird der VDR neu gestartet, um dem VDR die Änderung des LIRC-Empfängers bekanntzumachen. Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben (via remote.conf), wird der VDR Ihnen direkt nach dem Neustart auf dem On-Screen-Display eine Anlernphase für Ihre Fernbedienung anbieten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie unten wieder auf den Button "Speichern" drücken.',
         combobox: {
              tooltip : {
                  driver: 'Treiber',

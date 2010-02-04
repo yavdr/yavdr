@@ -12,7 +12,7 @@ Ext.onReady(function() {
 	function addGroupPanelTab( config ){
 	    if (!config.layout)
 	        config.layout = "auto"; //"auto" doesn't blow up forms to full height, "fit" does
-	    return {
+	    var tabpanel = {
             //xtype: 'portal',
             layout: 'fit',
             iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
@@ -30,6 +30,14 @@ Ext.onReady(function() {
                })
             ]
         };
+        
+        if (config.layout == "vbox")
+    	    tabpanel.layoutConfig = {
+                align : 'stretch'
+                //pack  : 'start'
+            };
+        
+        return tabpanel;
     };
 
     var viewport = new Ext.Viewport({
@@ -62,6 +70,7 @@ Ext.onReady(function() {
                     },
                     addGroupPanelTab({
                         section: "lirc",
+                        layout: "vbox",
                         items:   getLircForm()
                     }),
                     addGroupPanelTab({
