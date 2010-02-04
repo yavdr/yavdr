@@ -13,7 +13,14 @@ if [ -n "$LIRCD_CONF" ]; then
       ln -sf /usr/share/lirc/extras/more_remotes/$LIRCD_CONF /etc/lirc/lircd.conf
     fi
   fi
-fi
+else 
+  if [ -L /etc/lirc/lircd.conf ]; then 
+     rm -f /etc/lirc/lircd.conf
+  fi 
+     rm -f /etc/modprobe.d/lirc-blacklist.conf
+     rm -f /etc/modprobe.d/lirc-serial.conf
+     rm -f /etc/serial.conf
+fi 
 
 #For atilibusb, we need to blacklist the kernel module
 for MODULE in `dbget system.lirchw.driver` ; do 
