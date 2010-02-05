@@ -130,14 +130,14 @@ var locale = {
             title : 'NFS',
             tabtip : 'Verwalten der NFS Mounts und Freigaben',
             panel_title : 'NFS-Konfiguration'
-        },
+        }
     },
     nvidia: {
         menutab: {
             title : 'Nvidia',
             tabtip : 'Nvidia-Einstellungen pflegen',
             panel_title : 'Nvidia Konfiguration'
-        },
+        }
     },    
     webfrontend: {
         menutab: {

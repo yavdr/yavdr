@@ -124,17 +124,16 @@ function getLircForm(){
         }
     });
     
-    myform2 = [ new Ext.Panel({
-        width: "100%",
-        frame: false,
-        border: false,
-        bodyStyle:'padding:5px 5px 0',
-        html: '<p style="font-size: 12px;">' + locale.lirc.help + "</p>",
-    }),
-    myform ];
-    
-    
-    return myform2;
+    return [ 
+        myform,
+        new Ext.Panel({
+            width: "100%",
+            frame: false,
+            border: false,
+            bodyStyle:'padding:5px 5px 0',
+            html: '<p style="font-size: 12px;">' + locale.lirc.help + "</p>"
+        })
+    ];
 }
 
 function onLircComboBoxChange( combo, record, index){

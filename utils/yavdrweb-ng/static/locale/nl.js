@@ -130,14 +130,14 @@ var locale = {
             title : 'NFS', 
             tabtip : 'Onderhoud NFS mounts en shares',
             panel_title : 'NFS-Configuratie'
-        },
+        }
     },
     nvidia: {
         menutab: {
             title : 'Nvidia', 
             tabtip : 'Onderhoud Nvidia instellingen', 
             panel_title : 'Nvidia configuratie' 
-        },
+        }
     },
     webfrontend: {
         menutab: {
