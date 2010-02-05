@@ -2,7 +2,8 @@
 
 case "$1" in
     configure)
-        /usr/bin/service tntnet restart || /bin/true
+	mkdir /var/lib/vdr/yavdr-backup 
+       /usr/bin/service tntnet restart || /bin/true
         signal-event post-upgrade
         ;;
 esac

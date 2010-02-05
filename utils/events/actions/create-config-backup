@@ -1,0 +1,14 @@
+#!/bin/bash
+
+tar czf /var/lib/vdr/yavdr-backup/yavdr-utils.tar.gz \
+/var/lib/vdr/remote.conf \
+/var/lib/vdr/setup.conf \
+/etc/vdr/plugins/externalplayer.conf \
+/etc/firefox-3.5/profile/prefs.js \
+/etc/X11/xorg.conf.yavdr \
+/etc/vdr/plugins/order.conf \
+/var/lib/vdr/channels.conf \
+/etc/lirc/hardware.conf \
+/etc/lirc/lircd.conf \
+/etc/network/interfaces
+
