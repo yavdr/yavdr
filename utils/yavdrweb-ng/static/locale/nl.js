@@ -127,16 +127,16 @@ var locale = {
     },
     nfs: {
         menutab: {
-            title : 'NFS', //translate
-            tabtip : 'Maintain NFS mounts and shares',//translate
-            panel_title : 'NFS-Configuration'//translate
+            title : 'NFS', 
+            tabtip : 'Onderhoud NFS mounts en shares',
+            panel_title : 'NFS-Configuratie'
         },
     },
     nvidia: {
         menutab: {
-            title : 'Nvidia', //translate
-            tabtip : 'Maintain Nvidia settings', //translate
-            panel_title : 'Nvidia configuration' //translate
+            title : 'Nvidia', 
+            tabtip : 'Onderhoud Nvidia instellingen', 
+            panel_title : 'Nvidia configuratie' 
         },
     },
     webfrontend: {

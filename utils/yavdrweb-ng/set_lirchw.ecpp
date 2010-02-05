@@ -47,17 +47,17 @@ using namespace std;
         }
         else
         {
-            err = hdf_remove_tree(hdf, "system.lirchw");
+            /*err = hdf_remove_tree(hdf, "system.lirchw");
             if (err != STATUS_OK){
               msg = "Error on hdf_remove_tree";
-            }
-            /* alternative to hdf_remove_tree
+            }*/
             err = hdf_set_valuef(hdf, "system.lirchw.serial_port=");
             err = hdf_set_valuef(hdf, "system.lirchw.description=");
             err = hdf_set_valuef(hdf, "system.lirchw.driver=");
             err = hdf_set_valuef(hdf, "system.lirchw.lirc_driver=");
             err = hdf_set_valuef(hdf, "system.lirchw.hw_default=");
-            err = hdf_set_valuef(hdf, "system.lirchw.lircd_conf=");*/
+            err = hdf_set_valuef(hdf, "system.lirchw.lircd_conf=");
+            //FIXME: improve error handling
             if  ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK)
             {
               nerr_log_error(err);

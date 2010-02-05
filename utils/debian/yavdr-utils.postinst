@@ -3,8 +3,7 @@
 case "$1" in
     configure)
         /usr/bin/service tntnet restart || /bin/true
-        /usr/share/yavdr/events/actions/update-firefox-profile-defaults
-	signal-event post-upgrade
+        signal-event post-upgrade
         ;;
 esac
 
