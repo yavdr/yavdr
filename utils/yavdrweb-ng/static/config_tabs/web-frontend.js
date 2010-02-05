@@ -56,7 +56,7 @@ function getWebFrontendForm(){
                 Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current web frontend language.');
             }
             if (currentFrontend == "") currentFrontend == "en";
-            if (currentFrontend == "de" || currentFrontend == "en"){
+            if (currentFrontend == "de" || currentFrontend == "en" || currentFrontend == "nl"){
                 var rButton = Ext.getCmp('web_lang_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );
