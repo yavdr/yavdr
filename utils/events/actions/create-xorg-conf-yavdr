@@ -1,5 +1,5 @@
 #!/bin/bash
 
-if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
+if [ "x$(dbget system.hardware.nvidia.detected)" == "x1" ]; then
   process-template /etc/X11/xorg.conf.yavdr
 fi
