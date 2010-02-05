@@ -24,6 +24,7 @@ isltk10 () {
 }
 
 if [ "$(isltk10)" = true ]; then
+  ENABLE=true
   GOVERNOR=$LTK10_GOVERNOR
   MIN_SPEED=$LTK10_MIN_SPEED
 fi
