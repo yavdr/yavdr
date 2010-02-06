@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p /var/lib/vdr/yavdr-backup
+
 tar czf /var/lib/vdr/yavdr-backup/yavdr-utils.tar.gz \
 /var/lib/vdr/remote.conf \
 /var/lib/vdr/setup.conf \

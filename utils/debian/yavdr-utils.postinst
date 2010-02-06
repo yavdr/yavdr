@@ -2,7 +2,6 @@
 
 case "$1" in
     configure)
-	mkdir /var/lib/vdr/yavdr-backup 
        /usr/bin/service tntnet restart || /bin/true
         signal-event post-upgrade
         ;;
