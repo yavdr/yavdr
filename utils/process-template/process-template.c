@@ -152,7 +152,6 @@ int merge_template(char *template)
 
         if (numcustomtemps < 0)
         {
-          fprintf(stderr, "info: %s scandir %s\n", strerror(errno), templatecustomdir);
           numcustomtemps = 0;
         }
 
