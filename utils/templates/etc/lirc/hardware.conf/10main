@@ -3,7 +3,7 @@
 #Chosen Remote Control
 REMOTE="<?cs if:system.lirchw.description != "" ?><?cs var:system.lirchw.description ?><?cs else ?>None<?cs /if ?>"
 REMOTE_MODULES="<?cs if:system.lirchw.lirc_driver != "none" && if:system.lirchw.lirc_driver != "" ?><?cs var:system.lirchw.lirc_driver ?><?cs /if ?>"
-REMOTE_DRIVER=="<?cs if:system.lirchw.driver != "none" && if:system.lirchw.driver != "" && if:system.lirchw.lirc_driver != "none" && if:system.lirchw.lirc_driver != "" ?><?cs var:system.lirchw.driver ?><?cs /if ?>"
+REMOTE_DRIVER=="<?cs if:(system.lirchw.driver != "none" && !system.lirchw.driver )||(system.lirchw.lirc_driver != "none" && !system.lirchw.lirc_driver) ?><?cs var:system.lirchw.driver ?><?cs /if ?>"
 REMOTE_DEVICE="<?cs if:system.lirchw.lirc_driver != "" ?>/dev/lirc0<?cs /if ?>"
 REMOTE_LIRCD_CONF="<?cs var:system.lirchw.lircd_conf ?>"
 REMOTE_LIRCD_ARGS=""
