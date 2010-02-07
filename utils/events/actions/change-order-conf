@@ -8,13 +8,13 @@ append_plugin () {
 }
 
 enable_plugin () {
-  if grep -q $1 $ORDER_CONF; then
+  if grep -q "$1\$" $ORDER_CONF; then
     sed -ie "s/.*$1\$/$1/" $ORDER_CONF
   fi
 }
 
 disable_plugin () {
-  if ! grep -q $1 $ORDER_CONF; then
+  if ! grep -q "$1\$" $ORDER_CONF; then
     append_plugin "-$1"
   else
     sed -ie "s/.*$1\$/-$1/" $ORDER_CONF
