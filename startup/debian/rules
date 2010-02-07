@@ -31,7 +31,6 @@ install: build
 	dh_install cpufrequtils /etc/default/
 	dh_installdirs /var/log/vdr
 	dh_install vdr-upstart /usr/sbin/
-	dh_install Xsession.vdr /etc/X11/
 	dh_install 30force-reload /etc/pm/sleep.d
 	dh_install 20vdr_sleep /etc/pm/sleep.d
 	dh_install 10vdr_module /etc/pm/config.d
@@ -47,7 +46,6 @@ install: build
 	dh_install images/nosignal.mpg		/usr/share/libxine1-xvdr			
 	dh_install rc.xml	/var/lib/vdr/.config/openbox
 	dh_install mount-loader.sh /usr/lib/vdr
-
 	dh_install events/* /usr/share/yavdr/events
 	dh_install templates/* /usr/share/yavdr/templates
 
