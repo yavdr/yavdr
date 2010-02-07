@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
 #include <dirent.h>
@@ -6,6 +7,8 @@
 
 #include "common.h"
 #include "../common/make_dirs.h"
+
+#define BACKUPCMD "[ -f %s ] && mkdir -p %s%s && cp %s %s%s/$(date +%%Y%%m%%d%%H%%M%%S)"
 
 NEOERR *csoutfunc(void *ctx, char *str)
 {
@@ -123,6 +126,7 @@ int merge_template(char *template)
   char templatename[] = "/tmp/template.XXXXXX";
   int templatefd = 0;
   char *segmentname;
+  char *backupcmd;
   int ret = 0;
  
   if (asprintf(&templatedir, "%s/%s", TEMPLATEPATH, template) < 0)
@@ -241,9 +245,30 @@ int merge_template(char *template)
 
         if (ret == 0)
         {
-          if (process_template(templatename, template) < 0)
+          if (asprintf(&backupcmd, BACKUPCMD, 
+               template,                          // [ -f %s ] && 
+               PRCTMPLBACKDIR,template, 	  // mkdir -p %s%s && 
+               template, PRCTMPLBACKDIR, template // cp %s %s%s/
+              ) < 0)
           {
+            fprintf(stderr, "error: %s asprintf\n", strerror(errno));
             ret = -12;
+          }
+          else
+          {
+            if (system(backupcmd) < 0)
+            {
+              fprintf(stderr, "error: %s system\n", strerror(errno));
+              ret = -13;
+            }
+            else
+            { 
+              if (process_template(templatename, template) < 0)
+              {
+                ret = -14;
+              }
+            }
+            free(backupcmd);
           }
         }
       }
