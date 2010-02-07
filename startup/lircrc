@@ -1,9 +1,0 @@
-begin
-        prog   = irexec
-        button = taskswitcher
-        repeat = 0
-	config = /usr/sbin/service vdr-frontend stop;/usr/sbin/service xbmc start
-	config = /usr/sbin/service xbmc stop;/usr/sbin/service vdr-frontend start
-end
-
-

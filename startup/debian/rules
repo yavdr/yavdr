@@ -34,7 +34,6 @@ install: build
 	dh_install 30force-reload /etc/pm/sleep.d
 	dh_install 20vdr_sleep /etc/pm/sleep.d
 	dh_install 10vdr_module /etc/pm/config.d
-	dh_install S90.suspend2ram /usr/share/vdr/shutdown-hooks
 	dh_install lircrc /etc/lirc
 	dh_install 50_custom /etc/grub.d
 	dh_install images/yavdr_logo.png	/usr/share/yavdr/images
