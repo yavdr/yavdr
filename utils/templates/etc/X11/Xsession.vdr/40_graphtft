@@ -1,0 +1,4 @@
+# start graphtft frontend if enabled
+if [ "$(dbget vdr.plugin.graphtft.enabled)x" = "1x" ]; then
+  /usr/bin/start-graphtft-fe &
+fi
