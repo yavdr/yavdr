@@ -118,7 +118,7 @@ int write_segment(int templatefd, char *segmentname)
   return ret;
 }
 
-int merge_template(char *template)
+int merge_template(char *template, char *output)
 {
   struct dirent **namelist;
   struct dirent **namelistcustom;
@@ -267,7 +267,7 @@ int merge_template(char *template)
             }
             else
             { 
-              if (process_template(templatename, template) < 0)
+              if (process_template(templatename, output) < 0)
               {
                 ret = -14;
               }
@@ -289,6 +289,7 @@ int main(int argc, char *argv[])
   char *owner = NULL;
   char *group = NULL;
   mode_t mode = 0644;
+  char *output = NULL;
 
   while (1)
   {
@@ -298,6 +299,7 @@ int main(int argc, char *argv[])
       {"owner", 1, 0, 0},
       {"group", 1, 0, 0},
       {"mode", 1, 0, 0},
+      {"output", 1, 0, 0},
       {0, 0, 0, 0}
     };
  
@@ -318,12 +320,21 @@ int main(int argc, char *argv[])
       {
         sscanf(optarg, "%o", &mode);
       }
+      else if (!strcmp(longopts[longindex].name, "output"))
+      {
+        output = optarg;
+      }
       break;
      }
   }
   if (optind < argc)
   {
-    if ((ret = merge_template(argv[optind])) == 0)
+    if (!output)
+    {
+      output = argv[optind];
+    }
+
+    if ((ret = merge_template(argv[optind], output)) == 0)
     {
       int uid = 0;
       int gid = 0;
@@ -354,9 +365,9 @@ int main(int argc, char *argv[])
         }
       }
 
-      chown(argv[optind], uid, gid);
+      chown(output, uid, gid);
       
-      chmod(argv[optind], mode);
+      chmod(output, mode);
     }
   }
   else
