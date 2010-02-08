@@ -26,25 +26,25 @@ install: build
 	dh_installdirs
 
 
-	dh_install etc-init/*.conf	/etc/init
-	dh_install usr-bin/*	/usr/bin
-	dh_install cpufrequtils /etc/default/
+	dh_install scripts/cpufrequtils /etc/default/
+	dh_install scripts/rc.xml	/var/lib/vdr/.config/openbox
+	dh_install scripts/mount-loader.sh /usr/lib/vdr
+	dh_install scripts/vdr-upstart /usr/sbin/
+	dh_install scripts/keymap /var/lib/vdr/.xine
+	dh_install scripts/config /var/lib/vdr/.xine
 	dh_installdirs /var/log/vdr
-	dh_install vdr-upstart /usr/sbin/
 	dh_install 30force-reload /etc/pm/sleep.d
 	dh_install 20vdr_sleep /etc/pm/sleep.d
 	dh_install 10vdr_module /etc/pm/config.d
 	dh_install images/yavdr_logo.png	/usr/share/yavdr/images
 	dh_install 10-dvb-remote.rules  /etc/udev/rules.d
-	dh_install keymap /var/lib/vdr/.xine
-	dh_install config /var/lib/vdr/.xine
 	dh_install images/noSignal4x3.mpg	/var/lib/vdr/plugins/xine
 	dh_install images/noSignal16x9.mpg	/var/lib/vdr/plugins/xine
 	dh_install images/nosignal.mpg		/usr/share/libxine1-xvdr			
-	dh_install rc.xml	/var/lib/vdr/.config/openbox
-	dh_install mount-loader.sh /usr/lib/vdr
 	dh_install events/* /usr/share/yavdr/events
 	dh_install templates/* /usr/share/yavdr/templates
+	dh_install etc-init/*.conf	/etc/init
+	dh_install usr-bin/*	/usr/bin
 
 # Build architecture-independent files here.
 binary-indep: build install
