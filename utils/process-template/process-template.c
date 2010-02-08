@@ -1,8 +1,12 @@
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
 #include <dirent.h>
 #include <errno.h>
+#include <getopt.h>
+#include <pwd.h>
+#include <grp.h>
 #include <ClearSilver/ClearSilver.h>
 
 #include "common.h"
@@ -281,8 +285,77 @@ int merge_template(char *template)
 int main(int argc, char *argv[])
 {
   int ret = 0;
+  int c;
+  char *owner = NULL;
+  char *group = NULL;
 
-  ret = merge_template(argv[1]);
-  
+  while (1)
+  {
+    int longindex = 0;
+    
+    static struct option longopts[] = {
+      {"mode", 1, 0, 0},
+      {"owner", 1, 0, 0},
+      {"group", 1, 0, 0},
+      {0, 0, 0, 0}
+    };
+ 
+    if ((c = getopt_long(argc, argv, "", longopts, &longindex)) == -1)
+      break;
+
+    switch (c) {
+    case 0:
+      if (!strcmp(longopts[longindex].name, "owner"))
+      {
+        owner = optarg;
+      }
+      else if (!strcmp(longopts[longindex].name, "group"))
+      {
+        group = optarg;
+      }
+      break;
+     }
+  }
+  if (optind < argc)
+  {
+    if ((ret = merge_template(argv[optind])) == 0)
+    {
+      int uid = 0;
+      int gid = 0;
+
+      if (owner)
+      {
+        struct passwd *pwd = NULL;
+        if ((pwd = getpwnam(owner)) != NULL)
+        {
+          uid = pwd->pw_uid;
+        } 
+        else
+        {
+          fprintf(stderr, "can't get user id for user %s\n", owner);
+        }
+      }
+
+      if (group)
+      {
+        struct group *grp = NULL;
+        if ((grp = getgrnam(group)) != NULL)
+        {
+          gid = grp->gr_gid;
+        } 
+        else
+        {
+          fprintf(stderr, "can't get group id for group %s\n", group);
+        }
+      }
+
+      chown(argv[optind], uid, gid);
+    }
+  }
+  else
+  {
+    fprintf(stderr, "no template file name given!\n");
+  }
+
   return ret;
 }
