@@ -34,7 +34,6 @@ install: build
 	dh_install 30force-reload /etc/pm/sleep.d
 	dh_install 20vdr_sleep /etc/pm/sleep.d
 	dh_install 10vdr_module /etc/pm/config.d
-	dh_install lircrc /etc/lirc
 	dh_install 50_custom /etc/grub.d
 	dh_install images/yavdr_logo.png	/usr/share/yavdr/images
 	dh_install 10-dvb-remote.rules  /etc/udev/rules.d
