@@ -288,15 +288,16 @@ int main(int argc, char *argv[])
   int c;
   char *owner = NULL;
   char *group = NULL;
+  mode_t mode = 0644;
 
   while (1)
   {
     int longindex = 0;
     
     static struct option longopts[] = {
-      {"mode", 1, 0, 0},
       {"owner", 1, 0, 0},
       {"group", 1, 0, 0},
+      {"mode", 1, 0, 0},
       {0, 0, 0, 0}
     };
  
@@ -312,6 +313,10 @@ int main(int argc, char *argv[])
       else if (!strcmp(longopts[longindex].name, "group"))
       {
         group = optarg;
+      }
+      else if (!strcmp(longopts[longindex].name, "mode"))
+      {
+        sscanf(optarg, "%o", &mode);
       }
       break;
      }
@@ -350,6 +355,8 @@ int main(int argc, char *argv[])
       }
 
       chown(argv[optind], uid, gid);
+      
+      chmod(argv[optind], mode);
     }
   }
   else
