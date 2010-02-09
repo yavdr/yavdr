@@ -32,7 +32,7 @@ var locale = {
             tabtip :'Lirc instellingen (Infrarood ontvanger)',
             panel_title : 'Infrarood ontvanger (LIRC)'
         },
-        help: '(not translated yet) When you press the button "Save" VDR will be restarted to notify VDR about the changed LIRC receiver settings. If you haven\'t assigned the buttons of your remote control (via remote.conf) VDR will offer you a step-by-step dialog on the OSD to learn the button assignment of your remote control from you. This dialog disappears after a few seconds if no key on the remote control was pressed. You can restart the dialog by simply pressing "Save" again.', //translate
+        help: 'Als U op de knop "Bewaar" klikt wordt VDR opnieuw gestart om de veranderingen die U in de LIRC infrarood-ontvanger instellingen heeft gemaakt toe te passen. Als U geen knoppen van uw afstandsbediening (via remote.conf) heeft toegewezen zal VDR een stap-voor-stap instruktie geven via de OSD om de knoppen op uw afstandsbediening toe te wijzen aan de juiste commando\'s (bijv. kanaal omhoog/omlaag enz.). Dit is de zgn "leer-funktie". Deze instrukties verdwijnt als U na een paar seconden geen knop op uw afstandsbediening heeft ingedrukt. U kunt deze "Stap voor Stap" instrukties opnieuw oproepen als U weer op "Bewaar" klikt.',
         combobox: {
              tooltip : {
                  driver: 'Driver',
