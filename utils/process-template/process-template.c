@@ -20,12 +20,11 @@ NEOERR *csoutfunc(void *ctx, char *str)
   return STATUS_OK;
 }
 
-int process_template(char *infile, char *outfile)
+int process_template(HDF *hdf, char *infile, char *outfile)
 {
   int ret = 0;
   FILE *outfh = NULL;
   NEOERR *err;
-  HDF *hdf = NULL;
   CSPARSE *parse = NULL;
 
   if (!make_dirs(outfile))
@@ -41,48 +40,29 @@ int process_template(char *infile, char *outfile)
     }
     else
     {
-      err = hdf_init(&hdf);
+      err = cs_init(&parse, hdf);
       if (err != STATUS_OK)
       {
         nerr_log_error(err);
-        ret = -3;
+        ret = -5;
       }
       else
       { 
-        err = hdf_read_file(hdf, YAVDRDB);
+        err = cs_parse_file(parse, infile);
         if (err != STATUS_OK)
         {
           nerr_log_error(err);
-          ret = -4;
+          ret = -6;
         }
-        else
-        {
-          err = cs_init(&parse, hdf);
-          if (err != STATUS_OK)
-          {
-            nerr_log_error(err);
-            ret = -5;
-          }
-          else
-          { 
-            err = cs_parse_file(parse, infile);
-            if (err != STATUS_OK)
-            {
-              nerr_log_error(err);
-              ret = -6;
-            }
         
-            err = cs_render(parse, outfh, csoutfunc);  
-            if (err != STATUS_OK)
-            {
-              nerr_log_error(err);
-              ret = -7;
-            }
-
-            cs_destroy(&parse);
-          }
+        err = cs_render(parse, outfh, csoutfunc);  
+        if (err != STATUS_OK)
+        {
+          nerr_log_error(err);
+          ret = -7;
         }
-        hdf_destroy(&hdf);
+
+        cs_destroy(&parse);
       }
       fclose(outfh);
     }
@@ -118,7 +98,7 @@ int write_segment(int templatefd, char *segmentname)
   return ret;
 }
 
-int merge_template(char *template, char *output)
+int merge_template(HDF *hdf, char *template, char *output)
 {
   struct dirent **namelist;
   struct dirent **namelistcustom;
@@ -267,7 +247,7 @@ int merge_template(char *template, char *output)
             }
             else
             { 
-              if (process_template(templatename, output) < 0)
+              if (process_template(hdf, templatename, output) < 0)
               {
                 ret = -14;
               }
@@ -290,6 +270,9 @@ int main(int argc, char *argv[])
   char *group = NULL;
   mode_t mode = 0644;
   char *output = NULL;
+  char *database = YAVDRDB;
+  NEOERR *err;
+  HDF *hdf = NULL;
 
   while (1)
   {
@@ -300,6 +283,7 @@ int main(int argc, char *argv[])
       {"group", 1, 0, 0},
       {"mode", 1, 0, 0},
       {"output", 1, 0, 0},
+      {"database", 1, 0, 0},
       {0, 0, 0, 0}
     };
  
@@ -324,6 +308,10 @@ int main(int argc, char *argv[])
       {
         output = optarg;
       }
+      else if (!strcmp(longopts[longindex].name, "database"))
+      {
+        database = optarg;
+      }
       break;
      }
   }
@@ -334,40 +322,57 @@ int main(int argc, char *argv[])
       output = argv[optind];
     }
 
-    if ((ret = merge_template(argv[optind], output)) == 0)
+    err = hdf_init(&hdf);
+    if (err != STATUS_OK)
     {
-      int uid = 0;
-      int gid = 0;
-
-      if (owner)
+      nerr_log_error(err);
+    }
+    else
+    {
+      err = hdf_read_file(hdf, database);
+      if (err != STATUS_OK)
       {
-        struct passwd *pwd = NULL;
-        if ((pwd = getpwnam(owner)) != NULL)
+        nerr_log_error(err);
+      }
+      else
+      {
+        if ((ret = merge_template(hdf, argv[optind], output)) == 0)
         {
-          uid = pwd->pw_uid;
-        } 
-        else
-        {
-          fprintf(stderr, "can't get user id for user %s\n", owner);
+          int uid = 0;
+          int gid = 0;
+
+          if (owner)
+          {
+            struct passwd *pwd = NULL;
+            if ((pwd = getpwnam(owner)) != NULL)
+            {
+              uid = pwd->pw_uid;
+            } 
+            else
+            {
+              fprintf(stderr, "can't get user id for user %s\n", owner);
+            }
+          }
+
+          if (group)
+          {  
+            struct group *grp = NULL;
+            if ((grp = getgrnam(group)) != NULL)
+            {
+              gid = grp->gr_gid;
+            } 
+            else
+            {
+              fprintf(stderr, "can't get group id for group %s\n", group);
+            }
+          }
+
+          chown(output, uid, gid);
+        
+          chmod(output, mode);
         }
       }
-
-      if (group)
-      {
-        struct group *grp = NULL;
-        if ((grp = getgrnam(group)) != NULL)
-        {
-          gid = grp->gr_gid;
-        } 
-        else
-        {
-          fprintf(stderr, "can't get group id for group %s\n", group);
-        }
-      }
-
-      chown(output, uid, gid);
-      
-      chmod(output, mode);
+      hdf_destroy(&hdf);
     }
   }
   else
