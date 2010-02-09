@@ -250,9 +250,9 @@ int merge_template(char *template, char *output)
         if (ret == 0)
         {
           if (asprintf(&backupcmd, BACKUPCMD, 
-               template,                          // [ -f %s ] && 
-               PRCTMPLBACKDIR,template, 	  // mkdir -p %s%s && 
-               template, PRCTMPLBACKDIR, template // cp %s %s%s/
+               output,                          // [ -f %s ] && 
+               PRCTMPLBACKDIR,output, 	  // mkdir -p %s%s && 
+               template, PRCTMPLBACKDIR, output // cp %s %s%s/
               ) < 0)
           {
             fprintf(stderr, "error: %s asprintf\n", strerror(errno));
