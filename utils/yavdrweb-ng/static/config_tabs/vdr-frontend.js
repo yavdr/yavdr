@@ -28,6 +28,7 @@ function getVDRFrontendForm(){
         handler: function() {
             myform.form.submit({
                 url: 'set_signal?signal=change-frontend',
+                timeout: 30, //wait 30 seconds before telling it failed
                 waitMsg: locale.frontend.submit.waitmsg,
                 waitTitle: locale.standardform.messagebox_caption.wait,
                 scope:this,
