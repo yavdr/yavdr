@@ -32,18 +32,26 @@ if( cmd == "mounts" )
 	const char *apx[] = { "00", "01", "02", "03", "04",
 			      "05", "06", "07", "08", "09" };
 	string base = "system.net.media.video.";
-	int idx = 0;
-
-	for( mounts_type::const_iterator it = mounts.begin();
-	     ( ( it != mounts.end() )
-	       &&( idx < ( sizeof( apx ) / sizeof( apx[0] ) ) ) );
-	       ++it, ++idx )
+	mounts_type::const_iterator it = mounts.begin();
+	for( int idx = 0;
+	     idx < ( sizeof( apx ) / sizeof( apx[0] ) );
+	     ++idx )
 	  {
-	    log_info( *it );
-	    err = hdf_set_valuef( hdf,
-				  "system.net.media.video.%s=%s",
-				  apx[idx],
-				  it->c_str());
+	    string path = base + apx[idx];
+	    if( it != mounts.end() )
+	      {
+		log_info( path );
+		log_info( *it );
+		err = hdf_set_valuef( hdf,
+				      "%s=%s",
+				      path.c_str(),
+				      it->c_str() );
+		++it;
+	      }
+	    else
+	      {
+		err = hdf_remove_tree( hdf, path.c_str() );
+	      }
 	    if( STATUS_OK != err ) { break; }
 	  }
 

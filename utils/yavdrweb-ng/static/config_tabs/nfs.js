@@ -22,7 +22,14 @@ function getNFSForm(){
 	    multiSelect: false,
 	    height:      100,
 	    // config options for stateful behavior
-	    columns: [{dataIndex: 'netspec'}]
+	    columns: [{dataIndex: 'netspec'}],
+	    listeners: {
+		cellclick: function(grid, rowIndex, columnIndex, e) {
+		    var record = grid.getStore().getAt(rowIndex);
+		    newDir.setValue( record.data.netspec );
+		    grid.getStore().remove( record );
+}
+	    }
 	});
 	    
     var newDir = new Ext.form.TextField({
@@ -62,11 +69,13 @@ function getNFSForm(){
 			}
 		    }
 		},{
-		    text: 'Editieren',
-		    anchor: '100%'
-		},{
 		    text: 'Löschen',
-		    anchor: '100%'
+		    anchor: '100%',
+		    listeners: {
+			click: function() {
+			    newDir.setValue('');
+			}
+		    }
 		},{
 		    text: 'Übernehmen',
 		    anchor: '100%',
