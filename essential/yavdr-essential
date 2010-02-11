@@ -28,6 +28,7 @@ nvidia-195-kernel-source
 nvidia-195-libvdpau
 nvidia-glx-195
 nvidia-settings
+nvram-wakeup
 smbfs
 ssh
 tntnet
