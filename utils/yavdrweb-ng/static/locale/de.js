@@ -125,12 +125,26 @@ var locale = {
             }
         }
     },
-    nfs: {
-        menutab: {
-            title : 'NFS',
-            tabtip : 'Verwalten der NFS Mounts und Freigaben',
-            panel_title : 'NFS-Konfiguration'
-        }
+    network: {
+	menutab: {
+	    title : 'Netzwerk',
+	    tabtip : 'Verwalten des Netzwerks',
+	    panel_title : 'Netzwerk-Konfiguration'
+	},
+	nfs: {
+	    menutab: {
+		title : 'NFS',
+		tabtip : 'Verwalten der NFS Mounts und Freigaben',
+		panel_title : 'NFS-Konfiguration'
+	    },
+	    labels: {
+		newDir : 'Entferntes Verzeichnis',
+		add : 'Hinzufügen',
+		edit : 'Ändern',
+		delete: 'Löschen',
+		apply: 'Übernehmen'
+	    }
+	}
     },
     nvidia: {
         menutab: {

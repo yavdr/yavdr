@@ -164,7 +164,7 @@ Ext.onReady(function() {
                                 items:   getNvidiaForm()
                             }),
                             addGroupPanelTab({
-                                section: "nfs",
+                                section: "network",
                                 items:   getNFSForm()
                             })
                         ]

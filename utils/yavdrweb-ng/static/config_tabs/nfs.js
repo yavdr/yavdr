@@ -35,7 +35,7 @@ function getNFSForm(){
     });
 	    
   var newDir = new Ext.form.TextField({
-    fieldLabel: 'Remote directory',
+    fieldLabel: locale.network.nfs.labels.newDir,
 	name: 'remote',
 	anchor: '100%'
 	});
@@ -45,7 +45,7 @@ function getNFSForm(){
 	frame:       false,
 	plain:       false,
 	border:      false,
-	labelWidth:  100,
+	labelWidth:  150,
 	width:       400,
 
 	items: [ newDir, mounts ]
@@ -59,7 +59,7 @@ function getNFSForm(){
 	layoutConfig: {columns:1},
 	defaultType:  'button',
 	items: [{
-	text: 'Hinzufügen',
+	text: locale.network.nfs.labels.add,
 	    anchor: '100%',
 	    listeners: {
 	  click: function() {
@@ -73,20 +73,22 @@ function getNFSForm(){
 	    }
 	  }
 	},{
-	text: 'Ändern',
+	text: locale.network.nfs.labels.edit,
 	    anchor: '100%',
 	    listeners: {
 	  click: function() {
 	      if( 0 <= selectedRow ){
 		var record = store.getAt( selectedRow );
-		record.set( 'netspec', newDir.getValue() );
-		newDir.setValue('');
-		selectedRow = -1;
+		if( newDir.getValue().length ) {
+		  record.set( 'netspec', newDir.getValue() );
+		  newDir.setValue('');
+		  selectedRow = -1;
+		}
 	      }
 	    }
 	  }
 	},{
-	text: 'Löschen',
+	text: locale.network.nfs.labels.delete,
 	      anchor: '100%',
 	      listeners: {
 	  click: function() {
@@ -99,7 +101,7 @@ function getNFSForm(){
 	    }
 	  }
 	},{
-	text: 'Übernehmen',
+	text: locale.network.nfs.labels.apply,
 	      anchor: '100%',
 	      listeners: {
 	  click: function() {
