@@ -6,5 +6,6 @@
 #define TEMPLATECUSTOMPATH	"/etc/yavdr/templates_custom"
 #define YAVDREVENTS		"/usr/share/yavdr/events"
 #define YAVDRACTIONS		"/usr/share/yavdr/events/actions"
+#define PRCTMPLBACKDIR		"/var/cache/yavdr/process-template-backup"
 //#define YAVDRNAV	"/usr/share/yavdr/navigation.hdf" not needed for new web-interface
 #endif // __COMMON_H__
