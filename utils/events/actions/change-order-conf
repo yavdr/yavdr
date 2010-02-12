@@ -24,14 +24,9 @@ disable_plugin () {
 if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
   enable_plugin "xineliboutput"
   disable_plugin "xine"
-fi
-if [ "$(dbget vdr.frontend)" = "xine" ]; then
-  enable_plugin "xineliboutput"
-  disable_plugin "xine"
-fi
-if [ "$(dbget vdr.frontend)" = "xbmc" ]; then
+else
+  enable_plugin "xine"
   disable_plugin "xineliboutput"
-  disable_plugin "xine"
 fi
 if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" ]; then
   enable_plugin "graphtft"

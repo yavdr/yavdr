@@ -53,7 +53,7 @@ function getNvidiaForm(){
             catch (err) {
                 Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current frontend.');
             }
-            if (currentFrontend == "xine" || currentFrontend == "xineliboutput" || currentFrontend == "xbmc"){
+            if (currentFrontend == "xine" || currentFrontend == "xineliboutput"){
                 var rButton = Ext.getCmp('frontend_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );

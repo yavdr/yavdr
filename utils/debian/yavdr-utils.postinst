@@ -4,7 +4,6 @@ case "$1" in
     configure)
        /usr/bin/service tntnet restart || /bin/true
         signal-event post-upgrade
-	/usr/bin/process-template /lib/udev/rules.d/85-lirc.rules
         ;;
 esac
 
