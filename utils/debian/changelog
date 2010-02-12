@@ -1,3 +1,16 @@
+yavdr-utils (0.0.65-11tvt1) karmic; urgency=low
+
+  * web-frontend: fixing bug #72 - webfrontend does not save serial_port  (LIRC)
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 31 Jan 2010 22:24:29 +0100
+
+yavdr-utils (0.0.65-10tvt1) karmic; urgency=low
+
+  * rev479
+  * adding overscan correction
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 31 Jan 2010 17:22:57 +0100
+
 yavdr-utils (0.0.65-7tvt1) karmic; urgency=low
 
   * webfrontend nfs

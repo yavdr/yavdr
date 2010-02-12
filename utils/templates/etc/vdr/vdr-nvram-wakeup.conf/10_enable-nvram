@@ -1,0 +1,3 @@
+# Set to "yes" to enable nvram-wakeup for VDR
+#
+ENABLED="no" 

@@ -4,7 +4,7 @@ function getVDRFrontendForm(){
         plain: false,
         border: false,
         bodyStyle:'padding:5px 5px 0',
-        labelWidth: 150,
+        labelWidth: 225,
         //defaultType: 'textfield',
         buttonAlign: 'left',
         items: [{
@@ -16,6 +16,7 @@ function getVDRFrontendForm(){
             items: [
                 {id: 'frontend-xine', boxLabel: 'xine@vdr-plugin-xine', name: 'frontend', inputValue: 'xine'},
                 {id: 'frontend-xineliboutput', boxLabel: 'vdr-sxfe@vdr-plugin-xineliboutput', name: 'frontend', inputValue: 'xineliboutput'}
+		{id: 'frontend-xbmc', boxLabel: 'vdr@xbmc', name: 'frontend', inputValue: 'xbmc'}
             ]
         }]
     });
@@ -55,7 +56,7 @@ function getVDRFrontendForm(){
             catch (err) {
                 Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current frontend.');
             }
-            if (currentFrontend == "xine" || currentFrontend == "xineliboutput"){
+            if (currentFrontend == "xine" || currentFrontend == "xineliboutput" || currentFrontend == "xbmc" ){
                 var rButton = Ext.getCmp('frontend_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );

@@ -1,4 +1,10 @@
-yavdr-startup (0.0.46-8tvt1) karmic; urgency=low
+yavdr-startup (0.0.46-10tvt1) karmic; urgency=low
+
+  * add setserial.conf
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 31 Jan 2010 19:16:15 +0100
+
+yavdr-startup (0.0.46-9tvt1) karmic; urgency=low
 
   * aedde lirc upstart script 
 
