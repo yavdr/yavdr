@@ -1,6 +1,6 @@
 {
   MenuEntry        = "XBMC";
-  Command          = "start-xbmc";
+  Command          = "sudo start-xbmc";
   OutputMode       = extern;
   InputMode        = deactivateRemotes;
 }

@@ -17,10 +17,16 @@ case "$1" in
 
         signal-event post-upgrade
 
-        if ! grep yavdr-startup /etc/sudoers >/dev/null; then
+        if ! grep "vdr.*initctl" /etc/sudoers >/dev/null; then
           echo >>/etc/sudoers
           echo "# Added by yavdr-startup, don't remove" >>/etc/sudoers
           echo "vdr ALL=NOPASSWD: /sbin/initctl" >>/etc/sudoers
+        fi
+
+        if ! grep "vdr.*start-xbmc" /etc/sudoers >/dev/null; then
+          echo >>/etc/sudoers
+          echo "# Added by yavdr-startup, don't remove" >>/etc/sudoers
+          echo "vdr ALL=NOPASSWD: /usr/bin/start-xbmc" >>/etc/sudoers
         fi
 
         ;;

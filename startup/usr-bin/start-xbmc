@@ -4,7 +4,7 @@ export DISPLAY=:1
 
 sudo /sbin/initctl stop vdr-frontend
 
-/usr/bin/xbmc --standalone
+su -c "/usr/bin/xbmc --standalone" vdr
 
 sudo /sbin/initctl start vdr-frontend
 
