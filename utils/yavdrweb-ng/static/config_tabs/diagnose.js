@@ -83,10 +83,10 @@ function getDiagnoseItems(){
             locale.diagnose.section.system_info.title,
             locale.diagnose.section.system_info.description,
             [
-                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.ifconfig, 'ifconfig'),
                 addDiagnosePanelShellResponse( locale.diagnose.section.system_info.top,      'top'),
-                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.dmesg,    'dmesg'),
-                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.df,       'df')
+                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.ifconfig, 'ifconfig'),
+                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.df,       'df'),
+                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.dmesg,    'dmesg')
             ]
         ),
         addDiagnoseMenuItem(
@@ -126,7 +126,9 @@ function getDiagnoseItems(){
             locale.diagnose.section.xorg.title,
             locale.diagnose.section.xorg.description,
             [
-                addDiagnosePanelFileContent('X-Server Konfiguration', '/etc/X11/xorg.conf.yavdr')
+                addDiagnosePanelFileContent('X-Server Configuration (only if NVIDIA VDPAU present)', '/etc/X11/xorg.conf.yavdr'),
+                addDiagnosePanelFileContent('XSession.vdr', '/etc/X11/Xsession.vdr'),
+                addDiagnosePanelFileContent('X-Server Logfile', '/var/log/Xorg.1.log')
             ]
         ),
         addDiagnoseMenuItem(

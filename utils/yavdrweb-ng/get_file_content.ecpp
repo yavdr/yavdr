@@ -12,16 +12,22 @@ const char *files[] = {
     "/var/log/messages", 
     "/var/log/user.log", 
     "/var/log/syslog", 
+    "/var/log/Xorg.1.log",
     "/var/log/tntnet/tntnet.log",
+    
     "/var/lib/vdr/.xbmc/temp/xbmc.log",
     "/var/lib/vdr/.xbmc/temp/xbmc.old.log",
+    "/var/lib/vdr/remote.conf",
     "/var/lib/yavdrdb.hdf",
+    
     "/etc/X11/xorg.conf.yavdr",
+    "/etc/X11/Xsession.vdr",
     "/etc/lirc/hardware.conf",
     "/etc/lirc/lircd.conf",
     "/etc/vdr/setup.conf",
     "/etc/vdr/remote.conf",
     "/etc/asound.conf"
+
 };
 
 int findex = 0;
