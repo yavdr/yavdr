@@ -7,7 +7,6 @@ OSDTop = 0
 OSDTopP = 0,000000
 OSDLeft = 0
 OSDLeftP = 0,000000
-OSDLanguage = de_DE
 OSDMessageTime = 1
 OSDSkin = PearlHD
 OSDTheme = default
