@@ -18,6 +18,7 @@ libjs-ext
 libpostproc-unstripped-51
 libswscale-unstripped-0
 lirc
+lirc-nct677x-src
 libxine1-xvdr
 linux-firmware
 linux-firmware-nonfree
