@@ -125,11 +125,25 @@ var locale = {
             }
         }
     },
-    nfs: {
-        menutab: {
-            title : 'NFS', 
-            tabtip : 'Onderhoud NFS mounts en shares',
-            panel_title : 'NFS-Configuratie'
+    network: {
+        menutab: { //translate
+            title : 'Network',
+            tabtip : 'Maintain network',
+            panel_title : 'Network configuration'
+        },
+        nfs: {
+            menutab: {
+                title : 'NFS', 
+                tabtip : 'Onderhoud NFS mounts en shares',
+                panel_title : 'NFS-Configuratie'
+            },
+            labels: { //translate
+                newDir : 'Remote directory',
+                add : 'Add',
+                edit : 'Edit',
+                _delete: 'Remove',
+                apply: 'Apply'
+            }
         }
     },
     nvidia: {

@@ -88,7 +88,7 @@ function getNFSForm(){
 	    }
 	  }
 	},{
-	text: locale.network.nfs.labels.delete,
+	text: locale.network.nfs.labels._delete,
 	      anchor: '100%',
 	      listeners: {
 	  click: function() {

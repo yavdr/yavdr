@@ -126,25 +126,25 @@ var locale = {
         }
     },
     network: {
-	menutab: {
-	    title : 'Network',
-	    tabtip : 'Maintain network',
-	    panel_title : 'Network configuration'
-	},
-	nfs: {
-	    menutab: {
-		title : 'NFS',
-		tabtip : 'Maintain mounts and shares',
-		panel_title : 'NFS configuration'
-	    },
-	    labels: {
-		newDir : 'Remote directory',
-		add : 'Add',
-		edit : 'Edit',
-		delete: 'Remove',
-		apply: 'Apply'
-	    }
-	}
+        menutab: {
+            title : 'Network',
+            tabtip : 'Maintain network',
+            panel_title : 'Network configuration'
+        },
+        nfs: {
+            menutab: {
+                title : 'NFS',
+                tabtip : 'Maintain mounts and shares',
+                panel_title : 'NFS configuration'
+            },
+            labels: {
+                newDir : 'Remote directory',
+                add : 'Add',
+                edit : 'Edit',
+                _delete: 'Remove',
+                apply: 'Apply'
+            }
+        }
     },
     nvidia: {
         menutab: {

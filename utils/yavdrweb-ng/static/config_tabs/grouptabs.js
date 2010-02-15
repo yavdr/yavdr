@@ -44,7 +44,7 @@ Ext.onReady(function() {
         layout:'fit',
         items:[{
             xtype: 'grouptabpanel',
-            tabWidth: 180,
+            tabWidth: 190,
             activeGroup: 0,
             items: [{
                 //mainItem: 1,

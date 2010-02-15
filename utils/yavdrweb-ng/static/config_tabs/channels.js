@@ -31,9 +31,9 @@ function getChannelsForm(){
             frame: true,
             loadMask: gridLoadMask,
             tbar: [{
-                text: 'Aktualisieren',
+                text: 'Refresh', //TODO use locale here!
                 icon: 'ext/resources/images/default/grid/refresh.gif',
-                tooltip: 'Klicken Sie diesen Button, um den Inhalt des Panels zu aktualisieren.',
+                tooltip: 'Click this button to refresh channel list.',
                 handler: function(){
                     channellist_store.reload();
                 }
@@ -72,8 +72,6 @@ function getChannelsForm(){
         });
         return grid;
     }
-    
-    
     
     var myform = createChannelGrid();
     
