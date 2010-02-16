@@ -1,48 +1,6 @@
-yavdr-startup (0.0.46-10tvt1) karmic; urgency=low
+yavdr-startup (0.1.1-1yavdr1) karmic; urgency=low
 
-  * add setserial.conf
-
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 31 Jan 2010 19:16:15 +0100
-
-yavdr-startup (0.0.46-9tvt1) karmic; urgency=low
-
-  * aedde lirc upstart script 
-
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Fri, 29 Jan 2010 19:08:55 +0100
-
-yavdr-startup (0.0.46-6tvt1) karmic; urgency=low
-
-  * the return of unclutter ...
-
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 28 Jan 2010 15:29:59 +0100
-
-yavdr-startup (0.0.46-4tvt1) karmic; urgency=low
-
-  * rev.426
-  * added usb-wakeup.conf (rev.418-420)
-  * changed audio-buffer in xine-config
-  * added issue-file to startup
-
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Wed, 27 Jan 2010 10:57:56 +0100
-
-yavdr-startup (0.0.45-1tvt1) karmic; urgency=low
-
-  * rev. 402 added "auto"-graphtft support
-  * autofs 
- 
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 24 Jan 2010 22:26:35 +0100
-
-yavdr-startup (0.0.44-1tvt1) karmic; urgency=low
-
-  * rev.393 Added xterm (applikationen)
-  * alternative xbmc-start (rev.388)
-
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 24 Jan 2010 13:30:25 +0100
-
-yavdr-startup (0.0.43-1tvt1) karmic; urgency=low
-
-  * rev.386 change of xbmc start based on idea from Jörg Knitter
+  * build 
 
  -- Holger Schvestka <hotzenplotz5@gmx.de>  Thu, 21 Jan 2010 11:19:42 +0100
-
 

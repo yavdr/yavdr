@@ -1,14 +1,6 @@
-yavdr-essential (0.0.68-1tvt1) karmic; urgency=low
+yavdr-essential (0.1.1-1yavdr1) karmic; urgency=low
 
-  * rev.402 added vdr-tft-pearlhd
-
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 24 Jan 2010 22:21:51 +0100
-
-yavdr-essential (0.0.67-1tvt1) karmic; urgency=low
-
-  * rev.393 
-  * removed burn(rev.389), added nfs support (rev.391)
+  * build
 
  -- Holger Schvestka <hotzenplotz5@gmx.de>  Sun, 24 Jan 2010 13:33:48 +0100
-
 
