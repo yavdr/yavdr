@@ -7,7 +7,7 @@
 # emits an upstart event to suspend the PC instead of powering
 # it off.
 
-<?cs if:system.disable.suspend == "" ?>
+<?cs if:!?system.disable.suspend || if:system.disable.suspend == "" ?> 
 if grep -q "S3" /proc/acpi/sleep ; then
 echo "SHUTDOWNCMD=\"service vdr stop ; sleep 5 ; /sbin/initctl --quiet emit --no-wait init-s3\""
 fi
