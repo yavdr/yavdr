@@ -16,7 +16,8 @@ function getWebFrontendForm(){
             items: [
                 {id: 'lang-en', boxLabel: 'English', name: 'value', inputValue: 'en'},
                 {id: 'lang-de', boxLabel: 'German', name: 'value', inputValue: 'de'},
-                {id: 'lang-nl', boxLabel: 'Dutch', name: 'value', inputValue: 'nl'}
+                {id: 'lang-nl', boxLabel: 'Dutch', name: 'value', inputValue: 'nl'},
+                {id: 'lang-it', boxLabel: 'Italian', name: 'value', inputValue: 'it'}
             ]
         }]
     });
@@ -56,7 +57,7 @@ function getWebFrontendForm(){
                 Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current web frontend language.');
             }
             if (currentFrontend == "") currentFrontend == "en";
-            if (currentFrontend == "de" || currentFrontend == "en" || currentFrontend == "nl"){
+            if (currentFrontend == "de" || currentFrontend == "en" || currentFrontend == "nl" || currentFrontend == "it"){
                 var rButton = Ext.getCmp('web_lang_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );
