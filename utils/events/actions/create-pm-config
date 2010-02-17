@@ -1,5 +1,5 @@
 #!/bin/bash
 
-process-template --owner=vdr --group=vdr /etc/pm/config.d/10vdr_module
-process-template --owner=vdr --group=vdr /etc/pm/sleep.d/20vdr_sleep
-process-template --owner=vdr --group=vdr /etc/pm/sleep.d/30force-reload
+process-template /etc/pm/config.d/10vdr_module
+process-template /etc/pm/sleep.d/20vdr_sleep
+process-template /etc/pm/sleep.d/30force-reload
