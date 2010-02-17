@@ -27,7 +27,6 @@ install: build
 
 
 	dh_install scripts/cpufrequtils /etc/default/
-	dh_install scripts/rc.xml	/var/lib/vdr/.config/openbox
 	dh_install scripts/mount-loader.sh /usr/lib/vdr
 	dh_install scripts/vdr-upstart /usr/sbin/
 	dh_installdirs /var/log/vdr
