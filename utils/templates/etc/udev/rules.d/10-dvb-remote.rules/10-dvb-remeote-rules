@@ -1,0 +1,4 @@
+KERNELS=="input*", ATTRS{name}=="DVB on-card IR receiver", SYMLINK+="input/ir"
+KERNELS=="input*", ATTRS{name}=="cx88 IR (Hauppauge Nova-S-Plus", SYMLINK+="input/ircx88"
+KERNELS=="input*", ATTRS{name}=="Budget-CI dvb ir receiver saa7146 (0)", SYMLINK+="input/irbudget"
+
