@@ -2,6 +2,15 @@ yaVDR-startup Revision History
 ---------------------------------------
 
 -----------------
+17.Feb.2010
+-----------------
+cpufrequtils didn't get enabled,
+start-xine bugfix (547),
+added missing autofs dependency
+added usb-wakeup.conf without usb for wol
+added hack to solve live tv problem with xbmc
+alsa-utils didn't get startet
+-----------------
 4.Feb.2010
 -----------------
 fixed min cpu freq for k8

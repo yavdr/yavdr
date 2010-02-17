@@ -2,6 +2,39 @@ yaVDR-utils Revision History
 ---------------------------------------
 
 -----------------
+17.Feb.2010
+-----------------
+- splitted xorg.conf.yavdr into small parts; will now get recreated by
+post-upgrade too
+- make change-lirc-event effective immediatly
+  * stop lirc before changes
+  * start after applying udev-rule change
+  * add modprobe -r in blacklist loop
+  * extend template to reset it if remote has been set to none
+- let xine not change system volume
+- fix event for overscan compensation
+- web-frontend: adding possibility to reset LIRC settings to status
+"unconfigured", added empty line to combobox
+- added signal-event post-upgrade in debian/postinst
+- web-frontend:
+  * updating Dutch translation (thanks to matchless)
+  * setlirchw: don't delete LIRC keys from db on LIRC reset, use empty
+values for keys instead
+- yavdr-utils: small fixes for events (post-upgrade) + postinst
+NEW process-template makes now backups
+- divert /etc/firefox-3.5/profile/prefs.js
+- xine didn't get disabled
+- Xsession.vdr ---> template
+- S90.suspend2ram -->> template
+- web-frontend: fixing issue #65 - longer HTTP timeout for switch
+between xine based frontends
+- vdr-nvram-wakeup.conf templateso (no use)
+- web-frontend: diagnose-module: reordering tabs in system-info tab,
+adding Xsession.vdr and Xorg.1.log to X-Server tab
+- yavdr-utils: removing hardcoded OSDLanguage = de_DE from setup.conf
+template (VDR will determine OSD language from locales)
+- s3 script fix
+-----------------
 4.Feb.2010
 -----------------
 added gpl 2 licence

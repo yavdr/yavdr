@@ -2,6 +2,11 @@ yaVDR-essential Revision History
 ---------------------------------------
 
 -----------------
+17.Feb.2010
+-----------------
+added nvram-wakeup,
+added lirc-nct677x-src
+-----------------
 4.Feb.2010
 -----------------
 add gpl 2 licence
