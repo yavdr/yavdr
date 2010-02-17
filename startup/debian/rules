@@ -28,7 +28,6 @@ install: build
 	dh_install scripts/vdr-upstart /usr/sbin/
 	dh_installdirs /var/log/vdr
 	dh_install images/yavdr_logo.png	/usr/share/yavdr/images
-	dh_install 10-dvb-remote.rules  /etc/udev/rules.d
 	dh_install images/noSignal4x3.mpg	/var/lib/vdr/plugins/xine
 	dh_install images/noSignal16x9.mpg	/var/lib/vdr/plugins/xine
 	dh_install images/nosignal.mpg		/usr/share/libxine1-xvdr			
