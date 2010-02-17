@@ -1,3 +1,3 @@
 #!/bin/bash
 
-process-template /var/lib/vdr/.config/openbox/rc.xml/
+process-template /var/lib/vdr/.config/openbox/rc.xml
