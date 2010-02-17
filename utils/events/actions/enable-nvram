@@ -1,3 +1,3 @@
 #!/bin/bash
 
-process-template /etc/vdr/vdr-nvram-wakeup.conf --owner vdr --group vdr --mode 0755
+process-template --owner=vdr --group=vdr /etc/vdr/vdr-nvram-wakeup.conf
