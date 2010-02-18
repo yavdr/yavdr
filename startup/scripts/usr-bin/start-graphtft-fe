@@ -1,8 +1,11 @@
 #!/bin/bash
 
-export DISPLAY=:1
+export DISPLAY=:1.1
 
-test -f /etc/default/graphtft-fe && . /etc/default/graphtft-fe
 GRAPHTFTFEOPTS="-W 800 -H 600 -n -r"
+test -f /etc/default/graphtft-fe && . /etc/default/graphtft-fe
+
+ps -A |grep -q -w graphtft-fe && exit
+while  ! netcat -z localhost 2039; do sleep 1; done;
 
 /usr/bin/graphtft-fe $GRAPHTFTFEOPTS -h localhost
