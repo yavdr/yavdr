@@ -33,7 +33,7 @@ install: build
 	dh_install images/nosignal.mpg		/usr/share/libxine1-xvdr			
 	dh_install events/* /usr/share/yavdr/events
 	dh_install templates/* /usr/share/yavdr/templates
-	dh_install usr-bin/*	/usr/bin
+	dh_install scripts/usr-bin/*	/usr/bin
 
 # Build architecture-independent files here.
 binary-indep: build install
