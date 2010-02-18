@@ -2,8 +2,7 @@
 
 start on (filesystem and
           autofs-up and
-          networking stopped and
-          udevtrigger stopped) 
+          net-device-up IFACE=*[0123456789])
 
 stop on runlevel [016]
 
