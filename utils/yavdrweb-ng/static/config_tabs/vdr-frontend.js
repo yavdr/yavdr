@@ -14,8 +14,8 @@ function getVDRFrontendForm(){
             fieldLabel: locale.frontend.label,
             columns: 1,
             items: [
-                {id: 'frontend-xine', boxLabel: 'xine@vdr-plugin-xine', name: 'frontend', inputValue: 'xine'},
-                {id: 'frontend-xineliboutput', boxLabel: 'vdr-sxfe@vdr-plugin-xineliboutput', name: 'frontend', inputValue: 'xineliboutput'}
+                {id: 'frontend-xine', boxLabel: 'xine@vdr-plugin-xine', name: 'value', inputValue: 'xine'},
+                {id: 'frontend-xineliboutput', boxLabel: 'vdr-sxfe@vdr-plugin-xineliboutput', name: 'value', inputValue: 'xineliboutput'}
             ]
         }]
     });

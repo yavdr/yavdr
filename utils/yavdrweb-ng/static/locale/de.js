@@ -81,6 +81,20 @@ var locale = {
             failure : 'Fehler.'
         }
     },
+    shutdown: {
+        menutab: {
+            title : 'VDR-Shutdown w&auml;hlen',
+            tabtip : 'Wechseln Sie zwischen verschiedenen Shutdown-Mothoden',
+            panel_title : 'VDR-Shutdown'
+        },
+        label: 'Gew&uuml;nschte Methode',
+        button_label: 'Shutdown-Einstellung aktivieren',
+        submit: {
+            waitmsg : 'Shutdown-Einstellungen werden aktualisiert.',    
+            success : 'OK.',
+            failure : 'Fehler.'
+        }
+    },
     upload: {
         menutab: {
             title : 'VDR-Konfig-Upload',

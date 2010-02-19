@@ -81,6 +81,20 @@ var locale = {
             failure : 'Failure.'
         }
     },
+    shutdown: {
+        menutab: {
+            title : 'Shutdown',
+            tabtip : 'Switch between different shutdown methods',
+            panel_title : 'VDR Shutdown'
+        },
+        label: 'Choose shutdown',
+        button_label:  'Apply shutdown settings',
+        submit: {
+            waitmsg : 'Shutdown settings are updated.',    
+            success : 'Success.',
+            failure : 'Failure.'
+        }
+    },
     upload: {
         menutab: {
             title : 'VDR Config Upload',

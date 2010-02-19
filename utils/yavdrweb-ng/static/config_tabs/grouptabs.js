@@ -166,7 +166,11 @@ Ext.onReady(function() {
                             addGroupPanelTab({
                                 section: "network",
                                 items:   getNFSForm()
-                            })
+                            }),
+                    		addGroupPanelTab({
+                        		section: "shutdown",
+                        		items:   getVDRShutdownForm()
+                    		})
                         ]
                 }
             ]//grouptabpanel items

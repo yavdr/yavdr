@@ -16,7 +16,8 @@ hdfpath;
   string value = "";
   const char *valid_hdf_requests[] = {
     "webfrontend.language",
-    "vdr.frontend"
+    "vdr.frontend",
+    "vdr.shutdown"
   };
   
   bool validRequest = false;
