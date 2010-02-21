@@ -1,0 +1,10 @@
+# Change this to 1 if you want vdr to be able to shutdown the
+# computer
+ENABLE_SHUTDOWN=1
+
+# Commmand executed by vdr to shutdown the system
+<?cs if:system.shutdown == "reboot" ?> 
+SHUTDOWNCMD="/usr/sbin/grub-set-default PowerOff ; /sbin/reboot"
+<?cs else ?>
+SHUTDOWNCMD=""
+<?cs /if ?>

@@ -58,7 +58,7 @@ if ((signal == "reboot") ||
             {
               nerr_log_error(err);
             }
-            err = hdf_set_valuef(hdf, "vdr.shutdown=%s", value.c_str());
+            err = hdf_set_valuef(hdf, "system.shutdown=%s", value.c_str());
             /*if (err != STATUS_OK){
             }*/
             err = hdf_write_file(hdf, YAVDRDB);

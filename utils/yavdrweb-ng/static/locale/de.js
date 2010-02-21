@@ -93,6 +93,12 @@ var locale = {
             waitmsg : 'Shutdown-Einstellungen werden aktualisiert.',    
             success : 'OK.',
             failure : 'Fehler.'
+        },
+        items: {
+        	s3: 'suspend to RAM',
+        	s4: 'suspend to DISK',
+        	s5: 'shutdown',
+        	reboot: 'reboot PowerOff-kernel'
         }
     },
     upload: {

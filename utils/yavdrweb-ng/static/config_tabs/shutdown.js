@@ -14,10 +14,9 @@ function getVDRShutdownForm(){
             fieldLabel: locale.shutdown.label,
             columns: 1,
             items: [
-                {id: 'shutdown-s3', boxLabel: 's3', name: 'value', inputValue: 's3'},
-                {id: 'shutdown-s5', boxLabel: 's5', name: 'value', inputValue: 's5'},
-                {id: 'shutdown-poweroff', boxLabel: 'poweroff', name: 'value', inputValue: 'poweroff'},
-                {id: 'shutdown-reboot', boxLabel: 'reboot poweroff kernel', name: 'value', inputValue: 'reboot'}
+                {id: 'shutdown-s3', boxLabel: locale.shutdown.items.s3, name: 'value', inputValue: 's3'},
+                {id: 'shutdown-s5', boxLabel: locale.shutdown.items.s5, name: 'value', inputValue: 's5'},
+                {id: 'shutdown-reboot', boxLabel: locale.shutdown.items.reboot, name: 'value', inputValue: 'reboot'}
             ]
         }]
     });
@@ -45,7 +44,7 @@ function getVDRShutdownForm(){
     });
     
     Ext.Ajax.request({
-        url: 'get_hdf_value?hdfpath=vdr.shutdown',
+        url: 'get_hdf_value?hdfpath=system.shutdown',
         timeout: 3000,
         method: 'GET',
         success: function(xhr) {
