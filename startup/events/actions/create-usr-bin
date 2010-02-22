@@ -1,18 +1,13 @@
 #!/bin/bash
 
-process-template /usr/bin/start-firefox
-process-template /usr/bin/start-graphtft-fe
-process-template /usr/bin/start-xbmc
-process-template /usr/bin/start-xine
-process-template /usr/bin/start-xineliboutput
-process-template /usr/bin/start-xterm
+process-template --mode 755 /usr/bin/start-firefox
+process-template --mode 755 /usr/bin/start-graphtft-fe
+process-template --mode 755 /usr/bin/start-xbmc
+process-template --mode 755 /usr/bin/start-xine
+process-template --mode 755 /usr/bin/start-xineliboutput
+process-template --mode 755 /usr/bin/start-xterm
 
-chmod +x /usr/bin/start-firefox
-chmod +x /usr/bin/start-graphtft-fe
-chmod +x /usr/bin/start-xbmc
-chmod +x /usr/bin/start-xine
-chmod +x /usr/bin/start-xineliboutput
-chmod +x /usr/bin/start-xterm
+
 
 
 
