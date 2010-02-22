@@ -1,6 +1,3 @@
-#!/bin/bash
-
-export DISPLAY=:1
 
 sudo /sbin/initctl stop vdr-frontend
 

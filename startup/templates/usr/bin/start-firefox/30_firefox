@@ -1,7 +1,3 @@
-#!/bin/bash
-
-export DISPLAY=:1
 sudo /sbin/initctl stop vdr-frontend
 /usr/bin/firefox
 sudo /sbin/initctl start vdr-frontend
-
