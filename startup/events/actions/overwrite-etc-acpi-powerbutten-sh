@@ -1,0 +1,3 @@
+#!/bin/bash
+
+process-template --mode 755 /etc/acpi/powerbutton.sh
