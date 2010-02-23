@@ -5,8 +5,13 @@
 using namespace std;
 </%pre><& authenticate ><%args>
 file;
+puretext;
 </%args><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
+
+//string param puretext can be "true" or "false", defaults to "false"
+//"false" adds html conform formatting (<pre> + </br>) which allows the user to copy+paste from read-only panels 
+//"true" leaves original it unchanged for text editor purposes (html textareas) 
 
 const char *files[] = {
     "/var/log/messages", 
@@ -52,15 +57,20 @@ else{
     
     if (validFileName)
     {
+        //sanitize puretext param
+        if (puretext != "true") puretext == "false";
+        
         string mode;
         if (file.substr(0,9) == "/var/log/")
             mode = "tail -n 100";
         else
             mode = "cat";
         
+        string caret = "\n";
         string cmd = mode + " " + file;
         //reply.out() << "Command: " << cmd << "<br/>";
-        reply.out() << "<pre>";
+        if (puretext != "true") reply.out() << "<pre>";
+        
         if (FILE *stream = popen(cmd.c_str(), "r"))
         {
             char buffer[1024];
@@ -69,13 +79,24 @@ else{
             {
               if (fgets(buffer, sizeof(buffer), stream) != NULL)
               {
-                 reply.sout() << string(buffer).substr(0, strlen(buffer) - 1 );  //we must escape special chars via sout (xss) and cut off LF
-                 reply.out() << "<br/>";
+                 int bufferlength = strlen(buffer);
+                 if (puretext != "true")
+                 {
+                     if ( caret == string(buffer).substr( bufferlength -1, 1 ))
+                         reply.sout() << string(buffer).substr(0, bufferlength -1 );// << "[NL]";  //we must escape special chars via sout (xss) and cut off LF
+                     else
+                         reply.sout() << string(buffer).substr(0, bufferlength );// << "[MISSING NL]";  //we must escape special chars via sout (xss) and cut off LF                     
+                     reply.out() << "<br/>";
+                 }
+                 else
+                 {
+                     reply.sout() << string(buffer).substr(0, bufferlength );
+                 }
               }
             }
             pclose(stream); 
           }
-          reply.out() << "</pre>";
+        if (puretext != "true") reply.out() << "</pre>";
     }
     else
         reply.out() << "Illegal command.";
