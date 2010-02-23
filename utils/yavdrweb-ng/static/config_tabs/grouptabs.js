@@ -1,8 +1,22 @@
 function getLL( param ){
-    var label = eval("locale." + param);
-    //FIXME: this crashes if label is undefined!!!!
-    if (label == "")
-        label = "[label_undefined]";
+    paramArray = param.split(".");
+    var success = true;
+    var validstring = "locale";
+    for (var z=0; z < paramArray.length; z++){
+        validstring += "." + paramArray[z];
+        var check = eval("typeof " + validstring + ";");
+        if (check == "undefined"){
+            success = false;
+            break;
+        }
+    }
+    
+    if (!success){
+        label = "[undefined:"+param+"]";
+        alert("Hint for translators: Can't access locale." + param + ": " + validstring + " is undefined in current language.");
+    }
+    else
+        label = eval(validstring);
     return label;
 }
 

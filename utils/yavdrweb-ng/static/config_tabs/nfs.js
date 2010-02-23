@@ -35,7 +35,7 @@ function getNFSForm(){
     });
 	    
   var newDir = new Ext.form.TextField({
-    fieldLabel: locale.network.nfs.labels.newDir,
+    fieldLabel: getLL("network.nfs.labels.newDir"),
 	name: 'remote',
 	anchor: '100%'
 	});
@@ -59,7 +59,7 @@ function getNFSForm(){
 	layoutConfig: {columns:1},
 	defaultType:  'button',
 	items: [{
-	text: locale.network.nfs.labels.add,
+	text: getLL("network.nfs.labels.add"),
 	    anchor: '100%',
 	    listeners: {
 	  click: function() {
@@ -73,7 +73,7 @@ function getNFSForm(){
 	    }
 	  }
 	},{
-	text: locale.network.nfs.labels.edit,
+	text: getLL("network.nfs.labels.edit"),
 	    anchor: '100%',
 	    listeners: {
 	  click: function() {
@@ -88,7 +88,7 @@ function getNFSForm(){
 	    }
 	  }
 	},{
-	text: locale.network.nfs.labels._delete,
+	text: getLL("network.nfs.labels._delete"),
 	      anchor: '100%',
 	      listeners: {
 	  click: function() {
@@ -101,7 +101,7 @@ function getNFSForm(){
 	    }
 	  }
 	},{
-	text: locale.network.nfs.labels.apply,
+	text: getLL("network.nfs.labels.apply"),
 	      anchor: '100%',
 	      listeners: {
 	  click: function() {
@@ -116,13 +116,13 @@ function getNFSForm(){
 		    params: { 'cmd' : 'mounts',
 		      'mounts' : mounts },
 		    waitMsg: 'wait',
-		    waitTitle: locale.standardform.messagebox_caption.wait,
+		    waitTitle: getLL("standardform.messagebox_caption.wait"),
 		    scope:this,
 		    success: function (form, action) {
-		    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.upload.submit.success );
+		    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("upload.submit.success") );
 		  },
 		    failure:function(form, action) {
-		    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.upload.submit.failure );
+		    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("upload.submit.failure") );
 		  }
 		})
 		}

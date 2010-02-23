@@ -11,18 +11,18 @@ function getVDRShutdownForm(){
             id: 'shutdown_radio_group',
             name: 'shutdown',
             xtype: 'radiogroup',
-            fieldLabel: locale.shutdown.label,
+            fieldLabel: getLL("shutdown.label"),
             columns: 1,
             items: [
-                {id: 'shutdown-s3', boxLabel: locale.shutdown.items.s3, name: 'value', inputValue: 's3'},
-                {id: 'shutdown-s5', boxLabel: locale.shutdown.items.s5, name: 'value', inputValue: 's5'},
-                {id: 'shutdown-reboot', boxLabel: locale.shutdown.items.reboot, name: 'value', inputValue: 'reboot'}
+                {id: 'shutdown-s3', boxLabel: getLL("shutdown.items.s3"), name: 'value', inputValue: 's3'},
+                {id: 'shutdown-s5', boxLabel: getLL("shutdown.items.s5"), name: 'value', inputValue: 's5'},
+                {id: 'shutdown-reboot', boxLabel: getLL("shutdown.items.reboot"), name: 'value', inputValue: 'reboot'}
             ]
         }]
     });
 
     var submit = myform.addButton({
-        text: locale.shutdown.button_label,
+        text: getLL("shutdown.button_label"),
         icon: 'ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
@@ -30,14 +30,14 @@ function getVDRShutdownForm(){
             myform.form.submit({
                 url: 'set_signal?signal=change-shutdown',
                 timeout: 30, //wait 30 seconds before telling it failed
-                waitMsg: locale.shutdown.submit.waitmsg,
-                waitTitle: locale.standardform.messagebox_caption.wait,
+                waitMsg: getLL("shutdown.submit.waitmsg"),
+                waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.shutdown.submit.success );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("shutdown.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.shutdown.submit.error );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("shutdown.submit.error") );
                 }
             })
         }
@@ -54,14 +54,14 @@ function getVDRShutdownForm(){
                 currentshutdown = xhr.responseText;
             }
             catch (err) {
-                Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current shutdown.');
+                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current shutdown.');
             }
             if (currentshutdown == "s3" || currentshutdown == "s5" || currentshutdown == "poweroff" || currentshutdown == "reboot"){
                 var rButton = Ext.getCmp('shutdown_radio_group');
                 if (rButton)
                     rButton.setValue( currentshutdown );
                 else
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not find shutdown radiobutton group.');
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find shutdown radiobutton group.');
             }
         }
     });

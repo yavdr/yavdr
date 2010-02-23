@@ -8,17 +8,17 @@ function addDiagnosePanel(info, cmd, file){
         bodyStyle: 'border: 1px solid lightgrey; background-color: white; padding: 2px;',
         autoScroll: true,
         tbar: [{
-            text: locale.diagnose.toolbar.button.refresh,
+            text: getLL("diagnose.toolbar.button.refresh"),
             icon: 'ext/resources/images/default/grid/refresh.gif',
-            tooltip: locale.diagnose.toolbar.button.refresh_tooltip,
+            tooltip: getLL("diagnose.toolbar.button.refresh_tooltip"),
             handler: function(){
                 var thisObj = Ext.getCmp('diagnose_panel_'+file).getUpdater();
                 if(thisObj) thisObj.refresh();
             }
         },'-',{
-            text: locale.diagnose.toolbar.button.jumpdown,
+            text: getLL("diagnose.toolbar.button.jumpdown"),
             icon: 'ext/resources/images/default/layout/ns-expand.gif',
-            tooltip: locale.diagnose.toolbar.button.jumpdown_tooltip,
+            tooltip: getLL("diagnose.toolbar.button.jumpdown_tooltip"),
             handler: function(){
                 var d = Ext.getCmp('diagnose_panel_wrapper_'+file).body.dom;
                 d.scrollTop = d.scrollHeight - d.offsetHeight;
@@ -70,28 +70,28 @@ function addDiagnoseMenuItem( title, tabTip, tabs){
 function getDiagnoseItems(){
     return [
         {
-            title: locale.menutabs.diagnose.title,
+            title: getLL("menutabs.diagnose.title"),
             layout: 'fit',
             iconCls: 'x-icon-configuration',
-            tabTip: locale.menutabs.diagnose.tabtip,
+            tabTip: getLL("menutabs.diagnose.tabtip"),
             style: 'padding: 20px 30px 20px 30px;',
             frame: false,
             border: false,
-            html: '<p style="font-family: sans-serif;">' + locale.menutabs.diagnose.content + '</p>'
+            html: '<p style="font-family: sans-serif;">' + getLL("menutabs.diagnose.content") + '</p>'
         },
         addDiagnoseMenuItem(
-            locale.diagnose.section.system_info.title,
-            locale.diagnose.section.system_info.description,
+            getLL("diagnose.section.system_info.title"),
+            getLL("diagnose.section.system_info.description"),
             [
-                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.top,      'top'),
-                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.ifconfig, 'ifconfig'),
-                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.df,       'df'),
-                addDiagnosePanelShellResponse( locale.diagnose.section.system_info.dmesg,    'dmesg')
+                addDiagnosePanelShellResponse( getLL("diagnose.section.system_info.top"),      'top'),
+                addDiagnosePanelShellResponse( getLL("diagnose.section.system_info.ifconfig"), 'ifconfig'),
+                addDiagnosePanelShellResponse( getLL("diagnose.section.system_info.df"),       'df'),
+                addDiagnosePanelShellResponse( getLL("diagnose.section.system_info.dmesg"),    'dmesg')
             ]
         ),
         addDiagnoseMenuItem(
-            locale.diagnose.section.system_logs.title,
-            locale.diagnose.section.system_logs.description,
+            getLL("diagnose.section.system_logs.title"),
+            getLL("diagnose.section.system_logs.description"),
             [
                 addDiagnosePanelFileContent('Logfile', '/var/log/messages'),
                 addDiagnosePanelFileContent('Logfile', '/var/log/user.log'),
@@ -99,32 +99,32 @@ function getDiagnoseItems(){
             ]
         ),
         addDiagnoseMenuItem(
-            locale.diagnose.section.xbmc.title,
-            locale.diagnose.section.xbmc.description,
+            getLL("diagnose.section.xbmc.title"),
+            getLL("diagnose.section.xbmc.description"),
             [
                 addDiagnosePanelFileContent('XBMC Logfile', '/var/lib/vdr/.xbmc/temp/xbmc.log'),
                 addDiagnosePanelFileContent('XBMC Logfile (old)', '/var/lib/vdr/.xbmc/temp/xbmc.old.log')
             ]
         ),
         addDiagnoseMenuItem(
-            locale.diagnose.section.lirc.title,
-            locale.diagnose.section.lirc.description,
+            getLL("diagnose.section.lirc.title"),
+            getLL("diagnose.section.lirc.description"),
             [
                 addDiagnosePanelFileContent('LIRC Hardware Configuration', '/etc/lirc/hardware.conf'),
                 addDiagnosePanelFileContent('LIRCD Configuration', '/etc/lirc/lircd.conf')
             ]
         ),
         addDiagnoseMenuItem(
-            locale.diagnose.section.vdr.title,
-            locale.diagnose.section.vdr.description,
+            getLL("diagnose.section.vdr.title"),
+            getLL("diagnose.section.vdr.description"),
             [
                 addDiagnosePanelFileContent('VDR Setup', '/etc/vdr/setup.conf'),
                 addDiagnosePanelFileContent('VDR Fernbedienung', '/etc/vdr/remote.conf')
             ]
         ),
         addDiagnoseMenuItem(
-            locale.diagnose.section.xorg.title,
-            locale.diagnose.section.xorg.description,
+            getLL("diagnose.section.xorg.title"),
+            getLL("diagnose.section.xorg.description"),
             [
                 addDiagnosePanelFileContent('X-Server Configuration (only if NVIDIA VDPAU present)', '/etc/X11/xorg.conf.yavdr'),
                 addDiagnosePanelFileContent('XSession.vdr', '/etc/X11/Xsession.vdr'),
@@ -132,23 +132,23 @@ function getDiagnoseItems(){
             ]
         ),
         addDiagnoseMenuItem(
-            locale.diagnose.section.sound.title,
-            locale.diagnose.section.sound.description,
+            getLL("diagnose.section.sound.title"),
+            getLL("diagnose.section.sound.description"),
             [
                 addDiagnosePanelShellResponse('Alsa Device List', 'aplay'),
                 addDiagnosePanelFileContent('Alsa Custom Sound Configuration', '/etc/asound.conf')
             ]
         ),
         addDiagnoseMenuItem(
-            locale.diagnose.section.packages.title,
-            locale.diagnose.section.packages.description,
+            getLL("diagnose.section.packages.title"),
+            getLL("diagnose.section.packages.description"),
             [
                 addDiagnosePanelShellResponse('Installierte Packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)', 'dpkg')
             ]
         ),
         addDiagnoseMenuItem(
-            locale.diagnose.section.yavdr.title,
-            locale.diagnose.section.yavdr.description,
+            getLL("diagnose.section.yavdr.title"),
+            getLL("diagnose.section.yavdr.description"),
             [
                 addDiagnosePanelFileContent('yaVDR DB', '/var/lib/yavdrdb.hdf'),
                 addDiagnosePanelFileContent('Logfile Webserver', '/var/log/tntnet/tntnet.log')

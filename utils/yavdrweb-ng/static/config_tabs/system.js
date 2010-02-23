@@ -29,57 +29,57 @@ function getSystemForm(){
     });
     */
     var submit_vdr_restart = myform.addButton({
-        text: locale.system.vdr_restart.label,
+        text: getLL("system.vdr_restart.label"),
         icon: 'ext/resources/images/default/grid/refresh.gif',
         handler: function() {
             myform.form.submit({
                 url: 'set_signal?signal=restart-vdr',
-                waitMsg: locale.system.vdr_restart.submit.waitmsg,
-                waitTitle: locale.standardform.messagebox_caption.wait,
+                waitMsg: getLL("system.vdr_restart.submit.waitmsg"),
+                waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.system.vdr_restart.submit.success );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("system.vdr_restart.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.system.vdr_restart.submit.failure );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("system.vdr_restart.submit.failure") );
                 }
             })
         }
     });
 
     var submit_kill_xbmc = myform.addButton({
-        text: locale.system.kill_xbmc.label,
+        text: getLL("system.kill_xbmc.label"),
         //icon: 'ext/resources/images/default/grid/refresh.gif',
         handler: function() {
             myform.form.submit({
                 url: 'set_signal?signal=kill-xbmc',
-                waitMsg: locale.system.kill_xbmc.submit.waitmsg,
-                waitTitle: locale.standardform.messagebox_caption.wait,
+                waitMsg: getLL("system.kill_xbmc.submit.waitmsg"),
+                waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.system.kill_xbmc.submit.success );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("system.kill_xbmc.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.system.kill_xbmc.submit.failure );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("system.kill_xbmc.submit.failure") );
                 }
             })
         }
     });
 
     var submit_reboot = myform.addButton({
-        text: locale.system.system_restart.label,
+        text: getLL("system.system_restart.label"),
         icon: 'ext/resources/images/default/grid/refresh.gif',
         handler: function() {
             myform.form.submit({
                 url: 'set_signal?signal=reboot',
-                waitMsg: locale.system.system_restart.submit.waitmsg,
-                waitTitle: locale.standardform.messagebox_caption.wait,
+                waitMsg: getLL("system.system_restart.submit.waitmsg"),
+                waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.system.system_restart.submit.success );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("system.system_restart.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.system.system_restart.submit.failure );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("system.system_restart.submit.failure") );
                 }
             })
         }

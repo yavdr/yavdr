@@ -23,15 +23,15 @@ function getChannelsForm(){
         var grid = new Ext.grid.GridPanel({
             store: channellist_store,
             columns: [
-                {header: locale.channels.grid_header.cid,  align: 'right', width: 50, dataIndex: 'cid', sortable: true},
-                {header: locale.channels.grid_header.cname,  align: 'left', width: 200, dataIndex: 'cname', sortable: true},
-                {header: locale.channels.grid_header.cstr,  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
+                {header: getLL("channels.grid_header.cid"),  align: 'right', width: 50, dataIndex: 'cid', sortable: true},
+                {header: getLL("channels.grid_header.cname"),  align: 'left', width: 200, dataIndex: 'cname', sortable: true},
+                {header: getLL("channels.grid_header.cstr"),  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
             ],
-            title: locale.channels.grid_title,
+            title: getLL("channels.grid_title"),
             frame: true,
             loadMask: gridLoadMask,
             tbar: [{
-                text: 'Refresh', //TODO use locale here!
+                text: 'Refresh', //TODO use getLL here!
                 icon: 'ext/resources/images/default/grid/refresh.gif',
                 tooltip: 'Click this button to refresh channel list.',
                 handler: function(){

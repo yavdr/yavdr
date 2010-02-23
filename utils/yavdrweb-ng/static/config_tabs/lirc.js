@@ -55,8 +55,13 @@ function getLircForm(){
         items:[
            new Ext.form.ComboBox({ 
                id : 'lirc_receiver_combobox',
-               tpl: '<tpl for="."><div ext:qtip="' + locale.lirc.combobox.tooltip.driver + ': {driver}<br/'+'>' + locale.lirc.combobox.tooltip.lirc_driver + ': {lirc_driver}<br/'+
-               '>HW-Default: {hw_default}<'+'br/'+'>Lircd-Conf: {lircd_conf}" class="x-combo-list-item">{description}</div></tpl>',
+               tpl: '<tpl for="."><div ext:qtip="' + 
+                       getLL("lirc.combobox.tooltip.driver") + 
+                       ': {driver}<br/'+'>' + 
+                       getLL("lirc.combobox.tooltip.lirc_driver") + 
+                       ': {lirc_driver}<br/'+
+                       '>HW-Default: {hw_default}<'+'br/'+
+                       '>Lircd-Conf: {lircd_conf}" class="x-combo-list-item">{description}</div></tpl>',
                //name: ... used in POST request
                hiddenName: 'receiver_id', //key, defined in set_lirchw.ecpp, used in POST request
                //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
@@ -66,8 +71,8 @@ function getLircForm(){
                forceSelection: true,
                mode: "local",
                triggerAction: 'all',
-               emptyText: locale.lirc.combobox.emptytext,
-               fieldLabel: locale.lirc.combobox.label,
+               emptyText: getLL("lirc.combobox.emptytext"),
+               fieldLabel: getLL("lirc.combobox.label"),
                selectOnFocus: true
            }),
            {
@@ -75,9 +80,9 @@ function getLircForm(){
                 name: 'serial_port',
                 xtype: 'radiogroup',
                 columns: 1,
-                fieldLabel: locale.lirc.serial_radiogroup.label,
+                fieldLabel: getLL("lirc.serial_radiogroup.label"),
                 items: [
-                    {id: 'rb1', boxLabel: locale.lirc.serial_radiogroup.boxlabel_none, name: 'serial_port', inputValue: ''},
+                    {id: 'rb1', boxLabel: getLL("lirc.serial_radiogroup.boxlabel_none"), name: 'serial_port', inputValue: ''},
                     {id: 'rb2', boxLabel: '/dev/ttyS0', name: 'serial_port', inputValue: '/dev/ttyS0'},
                     {id: 'rb3', boxLabel: '/dev/ttyS1', name: 'serial_port', inputValue: '/dev/ttyS1'}
                 ]
@@ -86,21 +91,21 @@ function getLircForm(){
     });
 
     var submit = myform.addButton({
-        text: locale.standardform.button.save,
+        text: getLL("standardform.button.save"),
         //formBind: true,
         //scope: this,
         handler: function() {
             myform.form.submit({
                 url: 'set_lirchw',
                 tabTip: 'Test',
-                waitMsg: locale.lirc.submit.waitmsg,
-                waitTitle: locale.standardform.messagebox_caption.wait,
+                waitMsg: getLL("lirc.submit.waitmsg"),
+                waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.lirc.submit.success);
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("lirc.submit.success"));
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.lirc.submit.failure);
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.submit.failure"));
                 }
             })
         }
@@ -118,7 +123,7 @@ function getLircForm(){
                 //Ext.MessageBox.alert('Success', 'Decode of lircdata OK: ' + lircData.current_receiver);
             }
             catch (err) {
-                Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.lirc.error.json_decode);
+                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.error.json_decode"));
             }            
             populateLircForm( lircData );
         }
@@ -131,7 +136,7 @@ function getLircForm(){
             frame: false,
             border: false,
             bodyStyle:'padding:5px 5px 0',
-            html: '<p style="font-size: 12px;">' + locale.lirc.help + "</p>"
+            html: '<p style="font-size: 12px;">' + getLL("lirc.help") + "</p>"
         })
     ];
 }

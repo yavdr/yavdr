@@ -11,7 +11,7 @@ function getVDRFrontendForm(){
             id: 'frontend_radio_group',
             name: 'frontend',
             xtype: 'radiogroup',
-            fieldLabel: locale.frontend.label,
+            fieldLabel: getLL("frontend.label"),
             columns: 1,
             items: [
                 {id: 'frontend-xine', boxLabel: 'xine@vdr-plugin-xine', name: 'value', inputValue: 'xine'},
@@ -21,7 +21,7 @@ function getVDRFrontendForm(){
     });
 
     var submit = myform.addButton({
-        text: locale.frontend.button_label,
+        text: getLL("frontend.button_label"),
         icon: 'ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
@@ -29,14 +29,14 @@ function getVDRFrontendForm(){
             myform.form.submit({
                 url: 'set_signal?signal=change-frontend',
                 timeout: 30, //wait 30 seconds before telling it failed
-                waitMsg: locale.frontend.submit.waitmsg,
-                waitTitle: locale.standardform.messagebox_caption.wait,
+                waitMsg: getLL("frontend.submit.waitmsg"),
+                waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.message, locale.frontend.submit.success );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("frontend.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, locale.frontend.submit.error );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("frontend.submit.error") );
                 }
             })
         }
@@ -53,14 +53,14 @@ function getVDRFrontendForm(){
                 currentFrontend = xhr.responseText;
             }
             catch (err) {
-                Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not recognize current frontend.');
+                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current frontend.');
             }
             if (currentFrontend == "xine" || currentFrontend == "xineliboutput"){
                 var rButton = Ext.getCmp('frontend_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );
                 else
-                    Ext.MessageBox.alert( locale.standardform.messagebox_caption.error, 'Could not find frontend radiobutton group.');
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find frontend radiobutton group.');
             }
         }
     });
