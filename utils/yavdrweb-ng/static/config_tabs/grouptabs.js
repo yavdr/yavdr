@@ -13,7 +13,7 @@ function getLL( param ){
     
     if (!success){
         label = "[undefined:"+param+"]";
-        alert("Hint for translators: Can't access locale." + param + ": " + validstring + " is undefined in current language.");
+        //alert("Hint for translators: Can't access locale." + param + ": " + validstring + " is undefined in current language.");
     }
     else
         label = eval(validstring);

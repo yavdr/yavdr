@@ -66,7 +66,6 @@ else{
         else
             mode = "cat";
         
-        string caret = "\n";
         string cmd = mode + " " + file;
         //reply.out() << "Command: " << cmd << "<br/>";
         if (puretext != "true") reply.out() << "<pre>";
@@ -82,15 +81,19 @@ else{
                  int bufferlength = strlen(buffer);
                  if (puretext != "true")
                  {
+                     string caret = "\n";
                      if ( caret == string(buffer).substr( bufferlength -1, 1 ))
-                         reply.sout() << string(buffer).substr(0, bufferlength -1 );// << "[NL]";  //we must escape special chars via sout (xss) and cut off LF
+                         reply.sout() << string(buffer).substr(0, bufferlength -1 );// << "[NL]";
+                         //we must escape special chars via sout (xss) and cut off LF
                      else
-                         reply.sout() << string(buffer).substr(0, bufferlength );// << "[MISSING NL]";  //we must escape special chars via sout (xss) and cut off LF                     
+                         reply.sout() << string(buffer).substr(0, bufferlength );// << "[MISSING NL]";
+                         //we must escape special chars via sout (xss) and cut off LF                     
                      reply.out() << "<br/>";
                  }
                  else
                  {
-                     reply.sout() << string(buffer).substr(0, bufferlength );
+                     reply.sout() << string(buffer).substr(0, bufferlength ); 
+                     //we must escape special chars via sout (xss), LF stay like they are
                  }
               }
             }
