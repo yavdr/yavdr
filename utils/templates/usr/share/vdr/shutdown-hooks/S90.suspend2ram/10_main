@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# VDR shutdown hook for suspend to ram (S3) - Holger Reichelt
+# VDR shutdown hook for suspend to ram (S3), power down or reboot - Holger Reichelt, Volker Richert
 # --------------------------
 #
 # This shutdown hook checks wether "S3" is available and in case
@@ -11,4 +11,7 @@
 if grep -q "S3" /proc/acpi/sleep ; then
 	echo "SHUTDOWNCMD=\"service vdr stop ; sleep 5 ; /sbin/initctl --quiet emit --no-wait init-s3\""
 fi
+<?cs elif:(system.shutdown == "s5") ?>
+<?cs elif:(system.shutdown == "reboot") ?>
+echo "SHUTDOWNCMD=\"/usr/sbin/grub-set-default PowerOff ; /sbin/reboot\""
 <?cs /if ?>
