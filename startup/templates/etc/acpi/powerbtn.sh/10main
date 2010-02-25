@@ -14,6 +14,12 @@ if pidof gnome-power-manager kded4 > /dev/null; then
     exit
 fi
 
+if [ "0$(cat /tmp/powerbtn 2>/dev/null)" -lt "0$(($(date +%s)-1))" ]; then
+  svdrpsend hitk power
+  date +%s > /tmp/powerbtn
+  exit
+fi
+
 # If all else failed, just initiate a plain shutdown.
 #/sbin/shutdown -h now "Power button pressed"
 /usr/bin/svdrpsend hitk power
