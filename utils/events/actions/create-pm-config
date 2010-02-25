@@ -1,9 +1,7 @@
 #!/bin/bash
 
-process-template /etc/pm/config.d/10vdr_module
-process-template /etc/pm/sleep.d/20vdr_sleep
-process-template /etc/pm/sleep.d/30force-reload
-chmod +x /etc/pm/config.d/10vdr_module
-chmod +x /etc/pm/sleep.d/20vdr_sleep
-chmod +x /etc/pm/sleep.d/30force-reload
+process-template --mode 755 /etc/pm/config.d/10vdr_module
+process-template --mode 755 /etc/pm/sleep.d/20vdr_sleep
+process-template --mode 755 /etc/pm/sleep.d/30force-reload
+
 

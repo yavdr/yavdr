@@ -1,4 +1,4 @@
 #!/bin/bash
 
-process-template /etc/X11/Xsession.vdr
-chmod +x /etc/X11/Xsession.vdr
+process-template --mode 755 /etc/X11/Xsession.vdr
+

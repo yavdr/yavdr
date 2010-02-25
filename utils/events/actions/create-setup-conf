@@ -1,4 +1,3 @@
 #!/bin/bash
 
-process-template /var/lib/vdr/setup.conf
-chown vdr:vdr /var/lib/vdr/setup.conf
+process-template --owner=vdr --group=vdr /var/lib/vdr/setup.conf
