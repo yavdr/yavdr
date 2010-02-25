@@ -111,24 +111,25 @@ function getNFSForm(){
 		       function(k, v){
 			 mounts.push( k.data.netspec );},
 		       this);
-	      panel.form.submit({
-		url: 'set_autofs_config',
-		    params: { 'cmd' : 'mounts',
-		      'mounts' : mounts },
-		    waitMsg: 'wait',
-		    waitTitle: getLL("standardform.messagebox_caption.wait"),
-		    scope:this,
-		    success: function (form, action) {
-		    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("upload.submit.success") );
-		  },
-		    failure:function(form, action) {
-		    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("upload.submit.failure") );
+	      Ext.Ajax.request({
+		      url: 'set_autofs_config',
+			  timeout: 3000,
+			  method:  'GET',
+			  params: { 'cmd' : 'mounts',
+			      'mounts' : mounts },
+			  waitMsg: 'wait',
+			  waitTitle: getLL("standardform.messagebox_caption.wait"),
+			  success: function(xhr) {
+			  Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("upload.submit.success") );
+		      },
+			  failure:function(form, action) {
+			  Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("upload.submit.failure") );
+		      }
+		  })
+		      }
 		  }
-		})
-		}
-	  }
-	}]
-	});
+	      }]
+      });
     
   var panel = new Ext.FormPanel({
     layout:'column',
