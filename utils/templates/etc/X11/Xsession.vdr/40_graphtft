@@ -1,4 +1,5 @@
 # start graphtft frontend if enabled
 if [ "$(dbget vdr.plugin.graphtft.enabled)x" = "1x" ]; then
+  DISPLAY=:1.1 /usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
   /usr/bin/start-graphtft-fe &
 fi
