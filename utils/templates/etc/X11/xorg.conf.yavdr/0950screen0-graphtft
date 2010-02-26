@@ -1,0 +1,2 @@
+<?cs if:vdr.plugin.graphtft.enabled ?>
+Option         "metamodes" "DFP: nvidia-auto-select +0+0"<?cs /if ?>
