@@ -73,6 +73,7 @@ xine-ui
 xineliboutput-sxfe
 xinit
 xserver-xorg
+xserver-xorg-input-evtouch
 xserver-xorg-video-vesa
 yavdr-startup
 yavdr-utils
