@@ -1,7 +1,9 @@
-
-sudo /sbin/initctl stop vdr-frontend
+if [ "$1" != "standalone" ]; then
+  sudo /sbin/initctl stop vdr-frontend
+fi
 
 su -c "/usr/bin/xbmc --standalone" vdr
 
-sudo /sbin/initctl start vdr-frontend
-
+if [ "$1" != "standalone" ]; then
+  sudo /sbin/initctl start vdr-frontend
+fi
