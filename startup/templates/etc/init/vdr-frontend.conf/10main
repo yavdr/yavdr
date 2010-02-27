@@ -13,9 +13,9 @@ script
   if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
     FRONTEND="/usr/bin/start-xineliboutput"
   elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
-    FRONTEND="sudo /usr/bin/start-xbmc standalone"
+    FRONTEND="sudo /usr/bin/start-xbmc frontend"
   fi
 
 
-  su -c $FRONTEND vdr
+  su -c "$FRONTEND" vdr
 end script
