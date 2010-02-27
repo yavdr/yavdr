@@ -23,6 +23,13 @@ hdf_destroy(&hdf);
 if (lang == "") 
     lang = "en";
 
+string non_english_language = "";
+if (lang != "en")
+{
+    non_english_language = "<script type=\"text/javascript\" src=\"static/locale/" +lang + ".js\"></script>";
+}
+
+
 
 </%cpp><html>
     <head>
@@ -47,16 +54,21 @@ if (lang == "")
         
         <script>
             Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
-            var user = "<$request.getUsername()$>";
+            var yavdrwebGlobalInfo = { 
+                user : "<$request.getUsername()$>",
+                lang : "<$lang$>"
+            };
         </script>
-        
+
         <script type="text/javascript" src="static/ext-extensions/GroupTabPanel.js"></script>
         <script type="text/javascript" src="static/ext-extensions/GroupTab.js"></script>
         <script type="text/javascript" src="static/ext-extensions/Portal.js"></script>
         <script type="text/javascript" src="static/ext-extensions/PortalColumn.js"></script>
         <script type="text/javascript" src="static/ext-extensions/Portlet.js"></script>
-        
-        <script type="text/javascript" src="static/locale/<$lang$>.js"></script>
+
+        <script type="text/javascript" src="static/locale/en.js"></script>
+        <{ if (lang != "en") reply.out() << "<script type=\"text/javascript\" src=\"static/locale/" << lang << ".js\"></script>"; }>
+
         <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
         <script type="text/javascript" src="static/config_tabs/channels.js"></script>
         <script type="text/javascript" src="static/config_tabs/diagnose.js"></script>

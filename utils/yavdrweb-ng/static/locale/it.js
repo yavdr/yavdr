@@ -1,4 +1,4 @@
-var locale = {
+var locale_it = {
     meta_lang: {
         local : 'Italiano',
         int : 'Italian',
