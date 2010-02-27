@@ -16,20 +16,11 @@ if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)
 else
 {
     lang = hdf_get_value(hdf, "webfrontend.language", "");
-    //reply.out() << value;
 }
 hdf_destroy(&hdf);
 
 if (lang == "") 
     lang = "en";
-
-string non_english_language = "";
-if (lang != "en")
-{
-    non_english_language = "<script type=\"text/javascript\" src=\"static/locale/" +lang + ".js\"></script>";
-}
-
-
 
 </%cpp><html>
     <head>
@@ -67,8 +58,7 @@ if (lang != "en")
         <script type="text/javascript" src="static/ext-extensions/Portlet.js"></script>
 
         <script type="text/javascript" src="static/locale/en.js"></script>
-        <{ if (lang != "en") reply.out() << "<script type=\"text/javascript\" src=\"static/locale/" << lang << ".js\"></script>"; }>
-
+<{ if (lang != "en") reply.out() << "        <script type=\"text/javascript\" src=\"static/locale/" << lang << ".js\"></script>\n"; }>
         <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
         <script type="text/javascript" src="static/config_tabs/channels.js"></script>
         <script type="text/javascript" src="static/config_tabs/diagnose.js"></script>
