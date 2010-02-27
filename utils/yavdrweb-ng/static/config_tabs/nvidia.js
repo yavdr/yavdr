@@ -34,7 +34,7 @@ function getNvidiaForm(){
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("frontend.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("frontend.submit.error") );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("frontend.submit.failure") );
                 }
             })
         }

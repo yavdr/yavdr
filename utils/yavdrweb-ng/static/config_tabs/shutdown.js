@@ -37,7 +37,7 @@ function getVDRShutdownForm(){
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("shutdown.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("shutdown.submit.error") );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("shutdown.submit.failure") );
                 }
             })
         }

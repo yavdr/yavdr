@@ -37,7 +37,7 @@ function getWebFrontendForm(){
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("webfrontend.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("webfrontend.submit.error") );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("webfrontend.submit.failure") );
                 }
             })
         }
