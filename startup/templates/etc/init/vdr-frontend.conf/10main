@@ -13,7 +13,7 @@ script
   if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
     FRONTEND="/usr/bin/start-xineliboutput"
   elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
-    FRONTEND="sudo /usr/bin/start-xbmc frontend"
+    FRONTEND="start-xbmc-frontend"
   fi
 
 
