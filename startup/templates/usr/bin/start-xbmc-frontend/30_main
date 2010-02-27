@@ -1,0 +1,4 @@
+
+while ! netcat -z localhost 2004; do sleep 1; done;
+su -c "/usr/bin/xbmc --standalone" vdr
+
