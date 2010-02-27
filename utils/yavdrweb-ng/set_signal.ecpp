@@ -29,7 +29,7 @@ if ((signal == "reboot") ||
     
     if (signal == "change-frontend" )
     {
-        if ((value == "xine") || (value == "xineliboutput"))
+        if ((value == "xine") || (value == "xineliboutput") || (value == "xbmc"))
         {
             NEOERR *err;
             HDF *hdf = NULL;

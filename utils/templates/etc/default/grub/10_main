@@ -1,6 +1,8 @@
 # If you change this file, run 'update-grub' afterwards to update
 # /boot/grub/grub.cfg.
-# 
+#
+# Do not make any changes here! They will be overwriten by the webserver
+#
 # If you want to change it add a custom_template and run
 # process_template /etc/default/grub before update-grub  
 GRUB_DEFAULT=saved
