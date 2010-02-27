@@ -3,6 +3,7 @@
 process-template --mode 755 /usr/bin/start-firefox
 process-template --mode 755 /usr/bin/start-graphtft-fe
 process-template --mode 755 /usr/bin/start-xbmc
+process-template --mode 755 /usr/bin/start-xbmc-frontend
 process-template --mode 755 /usr/bin/start-xine
 process-template --mode 755 /usr/bin/start-xineliboutput
 process-template --mode 755 /usr/bin/start-xterm
