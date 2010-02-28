@@ -1,8 +1,4 @@
 #!/bin/bash
 
-update-rc.d -f vdr remove
-update-rc.d -f nodm remove
-update-rc.d -f dkms_autoinstaller remove
-update-rc.d -f lirc remove
 update-rc.d -f alsa-utils remove
 update-rc.d alsa-utils defaults
