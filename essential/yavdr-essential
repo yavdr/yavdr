@@ -42,6 +42,7 @@ vdr-addon-noad
 vdr-genindex
 vdr-plugin-avolctl
 vdr-plugin-channellists
+vdr-plugin-dummydevice
 vdr-plugin-epgsearch
 vdr-plugin-externalplayer
 vdr-plugin-extrecmenu
