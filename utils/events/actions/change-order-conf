@@ -30,6 +30,7 @@ if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
   enable_plugin "yaepghd"
   enable_plugin "extrecmenu"
   enable_plugin "suspendoutput"
+  disable_plugin "dummydevice"
 elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   enable_plugin "xine"
   disable_plugin "xineliboutput"
@@ -39,7 +40,9 @@ elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   enable_plugin "yaepghd"
   enable_plugin "extrecmenu"
   enable_plugin "suspendoutput"
+  disable_plugin "dummydevice"
 elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
+  enable_plugin "dummydevice"
   disable_plugin "xine"
   disable_plugin "xineliboutput"
   disable_plugin "iptv"
