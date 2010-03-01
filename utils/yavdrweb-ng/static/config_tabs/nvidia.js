@@ -44,7 +44,7 @@ function getNvidiaForm(){
     });
     
     Ext.Ajax.request({
-        url: 'get_hdf_value?hdfpath=system.hardware.nvidia.overscan ',
+        url: 'get_hdf_value?hdfpath=system.hardware.nvidia.overscan',
         timeout: 3000,
         method: 'GET',
         success: function(xhr) {

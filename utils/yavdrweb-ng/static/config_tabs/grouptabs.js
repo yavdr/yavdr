@@ -45,7 +45,7 @@ Ext.onReady(function() {
       this.hiddenEl = this.el.createChild({
           tag: 'input', 
           type: 'text', 
-          name: this.name || this.id + "_dummy", 
+          name: this.name + "_dummy"|| this.id + "_dummy", 
           disabled:true, 
           style: 'position: relative; float:left; left: 200px; margin-top:-20px; font-size:10px; width: 30px;'
         });
