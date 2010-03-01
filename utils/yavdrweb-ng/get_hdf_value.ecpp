@@ -17,7 +17,8 @@ hdfpath;
   const char *valid_hdf_requests[] = {
     "webfrontend.language",
     "vdr.frontend",
-    "system.shutdown"
+    "system.shutdown",
+    "system.hardware.nvidia.overscan" 
   };
   
   bool validRequest = false;

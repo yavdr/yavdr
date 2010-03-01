@@ -8,57 +8,60 @@ function getNvidiaForm(){
         //defaultType: 'textfield',
         buttonAlign: 'left',
         items: [
-            new Ext.Slider({
-                fieldLabel: 'Nvidia Overscan compensation',
+            {
+                xtype: 'sliderfield',
+                id: 'nvidia-overscan-slider',
                 width: 200,
-                value: 0,
+                name: 'value',
                 increment: 1,
-                minValue: 0,
-                maxValue: 255
-            })
+                minValue: '0',
+                maxValue: 255,
+                fieldLabel: getLL("nvidia.overscan_slider_label"),
+                value: 4
+            }
                 ]
     });
 
     var submit = myform.addButton({
-        text: getLL("frontend.button_label"),
+        text: getLL("nvidia.button_label"),
         icon: 'ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
         handler: function() {
             myform.form.submit({
-                url: 'set_signal?signal=change-frontend',
-                waitMsg: getLL("frontend.submit.waitmsg"),
+                url: 'set_signal?signal=change-overscan-compensation',
+                waitMsg: getLL("nvidia.submit.waitmsg"),
                 waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("frontend.submit.success") );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("nvidia.submit.success") );
                 },
                 failure:function(form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("frontend.submit.failure") );
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("nvidia.submit.failure") );
                 }
             })
         }
     });
     
     Ext.Ajax.request({
-        url: 'get_hdf_value?hdfpath=vdr.frontend',
+        url: 'get_hdf_value?hdfpath=system.hardware.nvidia.overscan ',
         timeout: 3000,
         method: 'GET',
         success: function(xhr) {
             //alert('Response is "' + xhr.responseText + '"');
-            var currentFrontend = "";
+            var currentOverscan = "";
             try {
-                currentFrontend = xhr.responseText;
+                currentOverscan = xhr.responseText;
             }
             catch (err) {
-                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current frontend.');
+                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize overscan value.');
             }
-            if (currentFrontend == "xine" || currentFrontend == "xineliboutput"){
-                var rButton = Ext.getCmp('frontend_radio_group');
-                if (rButton)
-                    rButton.setValue( currentFrontend );
+            if (currentOverscan > 0 && currentOverscan < 256){
+                var slider = Ext.getCmp('nvidia-overscan-slider');
+                if (slider)
+                    slider.setValue( currentOverscan );
                 else
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find frontend radiobutton group.');
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'nvidia-overscan-slider.');
             }
         }
     });

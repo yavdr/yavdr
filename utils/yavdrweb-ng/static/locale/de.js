@@ -171,8 +171,15 @@ var locale_de = {
             title : 'Nvidia',
             tabtip : 'Nvidia-Einstellungen pflegen',
             panel_title : 'Nvidia Konfiguration'
+        },
+        overscan_slider_label : 'Nvidia-Overscan Kompensation',
+        button_label : 'Wert anwenden',
+        submit: {
+            waitmsg : 'Der Nvidia-Overscan-Wert wird aktualisiert.',
+            success : 'Erfolg.',
+            failure : 'Fehler.'
         }
-    },    
+    },
     webfrontend: {
         menutab: {
             title : 'Web Frontend',

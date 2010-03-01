@@ -171,6 +171,13 @@ var locale_en = {
             title : 'Nvidia',
             tabtip : 'Maintain Nvidia settings',
             panel_title : 'Nvidia configuration'
+        },
+        overscan_slider_label : 'Nvidia Overscan compensation',
+        button_label : 'Apply value',
+        submit: {
+            waitmsg : 'Nvidia overscan settings are updated.',
+            success : 'Success.',
+            failure : 'Failure.'
         }
     },
     webfrontend: {
