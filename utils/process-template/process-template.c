@@ -13,6 +13,7 @@
 #include "../common/make_dirs.h"
 
 #define BACKUPCMD "[ -f %s ] && mkdir -p %s%s && cp %s %s%s/$(date +%%Y%%m%%d%%H%%M%%S)"
+#define MAX_DATA_ENTRIES 100
 
 NEOERR *csoutfunc(void *ctx, char *str)
 {
@@ -273,6 +274,8 @@ int main(int argc, char *argv[])
   char *database = YAVDRDB;
   NEOERR *err;
   HDF *hdf = NULL;
+  char *data[MAX_DATA_ENTRIES];
+  int numdata = 0;
 
   while (1)
   {
@@ -283,6 +286,7 @@ int main(int argc, char *argv[])
       {"group", 1, 0, 0},
       {"mode", 1, 0, 0},
       {"output", 1, 0, 0},
+      {"data", 1, 0, 0},
       {"database", 1, 0, 0},
       {0, 0, 0, 0}
     };
@@ -307,6 +311,17 @@ int main(int argc, char *argv[])
       else if (!strcmp(longopts[longindex].name, "output"))
       {
         output = optarg;
+      }
+      else if (!strcmp(longopts[longindex].name, "data"))
+      {
+        if (numdata < MAX_DATA_ENTRIES)
+        {
+          data[numdata++] = optarg;
+        }
+        else
+        {
+          fprintf(stderr, "max. data entires reached! %s ignored", optarg);
+        }
       }
       else if (!strcmp(longopts[longindex].name, "database"))
       {
@@ -336,6 +351,16 @@ int main(int argc, char *argv[])
       }
       else
       {
+        int i;
+   
+        for (i = 0; i < numdata; i++)
+        {
+          err = hdf_set_valuef(hdf, data[i]);
+          if (err != STATUS_OK)
+          {
+            nerr_log_error(err);
+          }
+        }
         if ((ret = merge_template(hdf, argv[optind], output)) == 0)
         {
           int uid = 0;
@@ -366,9 +391,7 @@ int main(int argc, char *argv[])
               fprintf(stderr, "can't get group id for group %s\n", group);
             }
           }
-
           chown(output, uid, gid);
-        
           chmod(output, mode);
         }
       }
