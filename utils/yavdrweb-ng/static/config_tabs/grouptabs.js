@@ -31,8 +31,6 @@ function getLL( param ){
 }
 
 Ext.onReady(function() {
-
-    
   //http://www.extjs.com/forum/showthread.php?t=42990&page=2
   Ext.form.SliderField = Ext.extend(Ext.Slider, {
     isFormField: true,
@@ -85,6 +83,14 @@ Ext.onReady(function() {
 	function addGroupPanelTab( config ){
 	    if (!config.layout)
 	        config.layout = "auto"; //"auto" doesn't blow up forms to full height, "fit" does
+	    var contentPanel = new Ext.Panel({
+		    layout: config.layout,
+		    title: getLL( config.section + ".menutab.panel_title"),
+		    frame: true,
+		    plain: false,
+		    border: true
+		});
+	
 	    var tabpanel = {
             //xtype: 'portal',
             layout: 'fit',
@@ -92,29 +98,28 @@ Ext.onReady(function() {
             title: getLL( config.section + ".menutab.title" ),
             tabTip: getLL( config.section + ".menutab.tabtip"),
             style: 'padding: 20px 30px 20px 30px;',
-            items:[
-               new Ext.Panel({
-                   layout: config.layout,
-                   title: getLL( config.section + ".menutab.panel_title"),
-                   frame: true,
-                   plain: false,
-                   border: true,
-                   items: [ config.items ]
-               })
-            ]
-        };
+            items:[ contentPanel ],
+	    listeners: {
+		    beforerender: function( panel ) {
+			var content = config.items();
+			// alert( contentPanel.title );
+			contentPanel.add( content );
+			contentPanel.doLayout();
+		    }
+		}
+	    };
+	    
+	    if (config.layout == "vbox")
+		tabpanel.layoutConfig = {
+		    align : 'stretch'
+		    //pack  : 'start'
+		};
         
-        if (config.layout == "vbox")
-    	    tabpanel.layoutConfig = {
-                align : 'stretch'
-                //pack  : 'start'
-            };
-        
-        return tabpanel;
-    };
+	    return tabpanel;
+	};
 
     var viewport = new Ext.Viewport({
-        layout:'fit',
+	layout:'fit',
         items:[{
             xtype: 'grouptabpanel',
             tabWidth: 190,
@@ -144,24 +149,24 @@ Ext.onReady(function() {
                     addGroupPanelTab({
                         section: "lirc",
                         layout: "vbox",
-                        items:   getLircForm()
+                        items:   getLircForm
                     }),
                     addGroupPanelTab({
                         section: "frontend",
-                        items:   getVDRFrontendForm()
+                        items:   getVDRFrontendForm
                     }),
                     addGroupPanelTab({
                         section: "upload",
                         layout: "fit",
-                        items:   getVDRConfigUploadForm()
+                        items:   getVDRConfigUploadForm
                     }),
                     addGroupPanelTab({
                         section: "system",
-                        items:   getSystemForm()
+                        items:   getSystemForm
                     }),
                     addGroupPanelTab({
                         section: "webfrontend",
-                        items:   getWebFrontendForm()
+                        items:   getWebFrontendForm
                     })
                 ]},
                 /*
@@ -233,16 +238,16 @@ Ext.onReady(function() {
                                 ]
                             },
                             addGroupPanelTab({
-                                section: "nvidia",
-                                items:   getNvidiaForm()
+				    section: "nvidia",
+				    items:   getNvidiaForm
                             }),
                             addGroupPanelTab({
-                                section: "network",
-                                items:   getNFSForm()
+				    section: "network",
+				    items:   getNFSForm
                             }),
-                    		addGroupPanelTab({
-                        		section: "shutdown",
-                        		items:   getVDRShutdownForm()
+			    addGroupPanelTab({
+				    section: "shutdown",
+				    items:   getVDRShutdownForm
                     		})
                         ]
                 }

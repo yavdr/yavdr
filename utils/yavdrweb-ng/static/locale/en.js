@@ -152,6 +152,7 @@ var locale_en = {
             panel_title : 'Network configuration'
         },
         nfs: {
+	    help: 'Define the nfs shares from other hosts that should be used from VDR. Directories have to be qualified like "server:/path". The button "Apply" actually submits the changes to your local configuration. VDR uses them after next restart.',
             menutab: {
                 title : 'NFS',
                 tabtip : 'Maintain mounts and shares',

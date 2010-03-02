@@ -131,6 +131,11 @@ function getNFSForm(){
 	      }]
       });
     
+  var description = new Ext.form.TextField({
+	  disabled: true,
+	  originalValue: getLL("network.nfs.help")
+      });
+
   var panel = new Ext.FormPanel({
     layout:'column',
 	frame: false,
@@ -142,5 +147,16 @@ function getNFSForm(){
 		mountactions]
 	});
 
-  return panel;
+    return [ 
+        panel,
+        new Ext.Panel({
+            width: "100%",
+            frame: false,
+            border: false,
+            bodyStyle:'padding:5px 5px 0',
+            html: '<p style="font-size: 12px;">' + getLL("network.nfs.help") + "</p>"
+        })
+    ];
+
+    //return panel;
 }
