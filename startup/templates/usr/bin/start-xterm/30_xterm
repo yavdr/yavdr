@@ -1,6 +1,6 @@
 
 sudo /sbin/initctl stop vdr-frontend
 
-/usr/bin/xterm 
+su -c "/usr/bin/xterm" <?cs var:user ?>
 
 sudo /sbin/initctl start vdr-frontend

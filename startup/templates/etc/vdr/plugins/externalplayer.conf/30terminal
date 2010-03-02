@@ -1,6 +1,6 @@
 {
   MenuEntry        = "Terminal";
-  Command          = "start-xterm";
+  Command          = "sudo start-xterm";
   OutputMode       = extern;
   InputMode        = deactivateRemotes;
 }

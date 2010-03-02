@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if ! grep "vdr.*start-xterm" /etc/sudoers >/dev/null; then                                                       
+  echo >>/etc/sudoers                                                                                           
+  echo "# Added by yavdr-startup, don't remove" >>/etc/sudoers                                                  
+  echo "vdr ALL=NOPASSWD: /usr/bin/start-xterm" >>/etc/sudoers                                                   
+fi                                                             
