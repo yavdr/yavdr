@@ -260,7 +260,7 @@ var locale_en = {
             success : 'Success.',
             failure : 'Failure.'
         },
-        minText: 'The maximum value for this field is {0}',
+        maxText: 'The maximum value for this field is {0}',
         minText: 'The minimum value for this field is {0}'
     }
 };
