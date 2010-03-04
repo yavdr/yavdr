@@ -238,16 +238,21 @@ Ext.onReady(function() {
                                 ]
                             },
                             addGroupPanelTab({
-				    section: "nvidia",
-				    items:   getNvidiaForm
+				    			section: "nvidia",
+				    			items:   getNvidiaForm
                             }),
                             addGroupPanelTab({
-				    section: "network",
-				    items:   getNFSForm
+				    			section: "network",
+				    			items:   getNFSForm
                             }),
-			    addGroupPanelTab({
-				    section: "shutdown",
-				    items:   getVDRShutdownForm
+			    			addGroupPanelTab({
+				    			section: "shutdown",
+				    			items:   getVDRShutdownForm
+                    		})
+                    		,
+			    			addGroupPanelTab({
+				    			section: "timeout",
+				    			items:   getGRUBTimeoutForm
                     		})
                         ]
                 }

@@ -18,7 +18,8 @@ hdfpath;
     "webfrontend.language",
     "vdr.frontend",
     "system.shutdown",
-    "system.hardware.nvidia.overscan" 
+    "system.hardware.nvidia.overscan",
+    "system.grub.timeout"
   };
   
   bool validRequest = false;

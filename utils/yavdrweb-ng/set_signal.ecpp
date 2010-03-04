@@ -26,7 +26,8 @@ if (
         (signal == "kill-xbmc") || 
         (signal == "restart-vdr") ||
         (signal == "change-auto-net-yavdr") ||
-        (signal == "change-overscan-compensation")
+        (signal == "change-overscan-compensation") ||
+        (signal == "change-timeout")
         
     )
 {
@@ -94,6 +95,28 @@ if (
             }
             hdf_destroy(&hdf);
         } 
+    }
+    else if (signal == "change-timeout" )
+    {
+        int timeoutval = atoi(value.c_str());
+        if (timeoutval >= 0 && timeoutval <= 10)
+        {
+            NEOERR *err;
+            HDF *hdf = NULL;
+            if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+            {
+              nerr_log_error(err);
+            }
+            err = hdf_set_valuef(hdf, "system.grub.timeout=%i", timeoutval);
+            /*if (err != STATUS_OK){
+            }*/
+            err = hdf_write_file(hdf, YAVDRDB);
+            if (err != STATUS_OK)
+            {
+              nerr_log_error(err);
+            }
+            hdf_destroy(&hdf);
+        }
     }
 
     string cmd = "/usr/bin/signal-event " + signal;

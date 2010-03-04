@@ -246,5 +246,21 @@ var locale_de = {
                 description : 'yaVDR-Web-Frontend Diagnose (Datenbank + Web-Server)'
             }
         }
+    },
+    timeout: {
+        menutab: {
+            title : 'GRUB Timeout',
+            tabtip : 'GRUB Timeout einstellen',
+            panel_title : 'GRUB Timeout'
+        },
+        label: 'Wähle Timeout',
+        button_label:  'Setze GRUB Timeout',
+        submit: {
+            waitmsg : 'Einstellungen werden aktualisiert.',    
+            success : 'Erfolg.',
+            failure : 'Fehler.'
+        },
+        maxText: 'Der Maximalwert ist {0}!',
+        minText: 'Der Minimalwert ist {0}!'
     }
 };

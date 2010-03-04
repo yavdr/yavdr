@@ -246,5 +246,21 @@ var locale_en = {
                 description : 'Troubleshoot problems with the yaVDR web frontend (database + web server)'
             }
         }
+    },
+    timeout: {
+        menutab: {
+            title : 'GRUB timeout',
+            tabtip : 'Set GRUB timeout',
+            panel_title : 'GRUB timeout'
+        },
+        label: 'Choose timeout',
+        button_label:  'Apply timeout settings',
+        submit: {
+            waitmsg : 'Timeout settings are updated.',    
+            success : 'Success.',
+            failure : 'Failure.'
+        },
+        minText: 'The maximum value for this field is {0}',
+        minText: 'The minimum value for this field is {0}'
     }
 };

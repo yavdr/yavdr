@@ -34,6 +34,7 @@ if (lang == "")
         <!-- overrides to base library -->
         <link rel="stylesheet" type="text/css" href="static/ext-extensions/Portal.css" />
         <link rel="stylesheet" type="text/css" href="static/ext-extensions/GroupTab.css" />
+        <link rel="stylesheet" type="text/css" href="static/ext-extensions/Spinner.css" />
 
         <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
@@ -56,6 +57,8 @@ if (lang == "")
         <script type="text/javascript" src="static/ext-extensions/Portal.js"></script>
         <script type="text/javascript" src="static/ext-extensions/PortalColumn.js"></script>
         <script type="text/javascript" src="static/ext-extensions/Portlet.js"></script>
+        <script type="text/javascript" src="static/ext-extensions/Spinner.js"></script>
+        <script type="text/javascript" src="static/ext-extensions/SpinnerField.js"></script>
 
         <script type="text/javascript" src="static/locale/en.js"></script>
 <{ if (lang != "en") reply.out() << "        <script type=\"text/javascript\" src=\"static/locale/" << lang << ".js\"></script>\n"; }>
@@ -69,7 +72,8 @@ if (lang == "")
         <script type="text/javascript" src="static/config_tabs/web-frontend.js"></script>
         <script type="text/javascript" src="static/config_tabs/vdr-upload-config.js"></script>
         <script type="text/javascript" src="static/config_tabs/shutdown.js"></script>
-        
+		<script type="text/javascript" src="static/config_tabs/shutdown.js"></script>
+		<script type="text/javascript" src="static/config_tabs/timeout.js"></script>
         <script type="text/javascript" src="static/config_tabs/grouptabs.js"></script>
     </head>
     <body style="background-color: #4E78B1;"></body>
