@@ -19,7 +19,8 @@ hdfpath;
     "vdr.frontend",
     "system.shutdown",
     "system.hardware.nvidia.overscan",
-    "system.grub.timeout"
+    "system.grub.timeout",
+    "vdr.plugin.graphtft.enabled"
   };
   
   bool validRequest = false;
