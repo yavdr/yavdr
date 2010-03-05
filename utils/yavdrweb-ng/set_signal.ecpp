@@ -28,8 +28,8 @@ if (
         (signal == "restart-vdr") ||
         (signal == "change-auto-net-yavdr") ||
         (signal == "change-overscan-compensation") ||
-        (signal == "change-timeout")
-        
+        (signal == "change-timeout") ||
+        (signal == "graphtft-state-change")
     )
 {
     
@@ -53,25 +53,7 @@ if (
             }
             hdf_destroy(&hdf);
         }
-        if ((value2 == "") || (value2 == "1"))
-        {
-            NEOERR *err;
-            HDF *hdf = NULL;
-            if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
-            {
-              nerr_log_error(err);
-            }
-            err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (value2 == ""?"0":"1"));
-            /*if (err != STATUS_OK){
-            }*/
-            err = hdf_write_file(hdf, YAVDRDB);
-            if (err != STATUS_OK)
-            {
-              nerr_log_error(err);
-            }
-            hdf_destroy(&hdf);
-        }
-    } 
+    }
     else if (signal == "change-shutdown" )
     {
         if ((value == "s3") || (value == "s5") || (value == "poweroff") || (value == "reboot"))
@@ -91,7 +73,7 @@ if (
               nerr_log_error(err);
             }
             hdf_destroy(&hdf);
-        } 
+        }
     }
     else if (signal == "change-overscan-compensation" )
     {
@@ -127,6 +109,27 @@ if (
               nerr_log_error(err);
             }
             err = hdf_set_valuef(hdf, "system.grub.timeout=%i", timeoutval);
+            /*if (err != STATUS_OK){
+            }*/
+            err = hdf_write_file(hdf, YAVDRDB);
+            if (err != STATUS_OK)
+            {
+              nerr_log_error(err);
+            }
+            hdf_destroy(&hdf);
+        }
+    }
+    else if (signal == "graphtft-state-change")
+    {
+        if ((value == "") || (value == "1"))
+        {
+            NEOERR *err;
+            HDF *hdf = NULL;
+            if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+            {
+              nerr_log_error(err);
+            }
+            err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (value2 == ""?"0":"1"));
             /*if (err != STATUS_OK){
             }*/
             err = hdf_write_file(hdf, YAVDRDB);

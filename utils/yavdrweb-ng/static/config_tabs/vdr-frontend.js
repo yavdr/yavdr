@@ -18,18 +18,6 @@ function getVDRFrontendForm(){
                 {id: 'frontend-xineliboutput', boxLabel: 'vdr-sxfe@vdr-plugin-xineliboutput', name: 'value', inputValue: 'xineliboutput'},
                 {id: 'frontend-xbmc', boxLabel: 'XBMC', name: 'value', inputValue: 'xbmc'}
             ]
-        }/*, {
-        	id: 'frontend_graphtft_hidden',
-        	name: 'value2',
-        	xtype: 'hidden',
-        	value: 0
-        }*/, {
-        	id: 'frontend_graphtft',
-        	name: 'value2',
-        	fieldLabel: 'GraphTFT',
-        	boxLabel: 'aktiviert',
-        	xtype: 'checkbox',
-        	inputValue: 1
         }]
     });
 
@@ -75,28 +63,6 @@ function getVDRFrontendForm(){
                 else
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find frontend radiobutton group.');
             }
-        }
-    });
-
-    Ext.Ajax.request({
-        url: 'get_hdf_value?hdfpath=vdr.plugin.graphtft.enabled',
-        timeout: 3000,
-        method: 'GET',
-        success: function(xhr) {
-            //alert('Response is "' + xhr.responseText + '"');
-            var graphtftEnabled = "";
-            try {
-                graphtftEnabled = xhr.responseText;
-            }
-            catch (err) {
-                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current frontend.');
-            }
-            
-            var rButton = Ext.getCmp('frontend_graphtft');
-            if (rButton)
-                rButton.setValue( graphtftEnabled == "1" );
-            else
-                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
         }
     });
     
