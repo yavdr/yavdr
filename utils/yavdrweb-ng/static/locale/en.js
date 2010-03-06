@@ -262,5 +262,22 @@ var locale_en = {
         },
         maxText: 'The maximum value for this field is {0}',
         minText: 'The minimum value for this field is {0}'
+    },
+    x11: {
+        menutab: {
+            title : 'display settings',
+            tabtip : 'display settings',
+            panel_title : 'display settings'
+        },
+        graphtft: {
+        	label: 'graphTFT',
+        	boxlabel: 'activated'
+       	},
+        button_label:  'Apply display settings',
+        submit: {
+            waitmsg : 'Display settings are updated.',    
+            success : 'Success.',
+            failure : 'Failure.'
+        }
     }
 };

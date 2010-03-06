@@ -262,5 +262,22 @@ var locale_de = {
         },
         maxText: 'Der Maximalwert ist {0}!',
         minText: 'Der Minimalwert ist {0}!'
+    },
+    x11: {
+        menutab: {
+            title : 'Anzeige',
+            tabtip : 'Anzeigeneinstellungen',
+            panel_title : 'Anzeige'
+        },
+        graphtft: {
+        	label: 'GraphTFT',
+        	boxlabel: 'aktiviert'
+        },
+        button_label:  'Setze Anzeigeneinstellungen',
+        submit: {
+            waitmsg : 'Einstellungen werden aktualisiert.',    
+            success : 'Erfolg.',
+            failure : 'Fehler.'
+        }
     }
 };

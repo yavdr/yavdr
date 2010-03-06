@@ -248,11 +248,14 @@ Ext.onReady(function() {
 			    			addGroupPanelTab({
 				    			section: "shutdown",
 				    			items:   getVDRShutdownForm
-                    		})
-                    		,
+                    		}),
 			    			addGroupPanelTab({
 				    			section: "timeout",
 				    			items:   getGRUBTimeoutForm
+                    		}),
+			    			addGroupPanelTab({
+				    			section: "x11",
+				    			items:   getX11Form
                     		})
                         ]
                 }

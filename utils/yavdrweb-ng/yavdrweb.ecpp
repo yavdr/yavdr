@@ -75,6 +75,7 @@ if (lang == "")
 		<script type="text/javascript" src="static/config_tabs/shutdown.js"></script>
 		<script type="text/javascript" src="static/config_tabs/timeout.js"></script>
         <script type="text/javascript" src="static/config_tabs/grouptabs.js"></script>
+		<script type="text/javascript" src="static/config_tabs/x11.js"></script>
     </head>
     <body style="background-color: #4E78B1;"></body>
 </html>

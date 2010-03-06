@@ -129,7 +129,7 @@ if (
             {
               nerr_log_error(err);
             }
-            err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (value2 == ""?"0":"1"));
+            err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (value == ""?"0":"1"));
             /*if (err != STATUS_OK){
             }*/
             err = hdf_write_file(hdf, YAVDRDB);
