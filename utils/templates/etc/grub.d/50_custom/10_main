@@ -6,6 +6,6 @@ exec tail -n +3 $0
 if [ ${recordfail} = 1 ]; then
   set timeout=<?cs if:(#system.grub.timeout > #3) ?><?cs var:#system.grub.timeout ?><?cs else ?>3<?cs /if ?>
 else
-  set timeout=<?cs var:system.grub.timeout ?>
+  set timeout=<?cs if:system.grub.timeout != "" ?><?cs var:system.grub.timeout ?><?cs else ?>0<?cs /if ?>
 fi
 
