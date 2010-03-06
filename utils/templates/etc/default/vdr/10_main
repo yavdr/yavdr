@@ -13,4 +13,4 @@ ENABLE_SHUTDOWN=1
 # Options that will be passed to vdr's commandline
 # for example: OPTIONS="-w 15"
 OPTIONS="-w 60"
-VDR_CHARSET_OVERRIDE="ISO-8859-15"
+
