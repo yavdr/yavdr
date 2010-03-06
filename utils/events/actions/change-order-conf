@@ -55,7 +55,7 @@ elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
   disable_plugin "iptv"
 #  disable_plugin "text2skin"
   enable_plugin "text2skin"
-  disable_plugin "menuorg"
+  enable_plugin "menuorg"
   disable_plugin "yaepghd"
   disable_plugin "extrecmenu"
   disable_plugin "suspendoutput"
