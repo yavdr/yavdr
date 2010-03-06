@@ -38,7 +38,11 @@ if (lang == "")
 
         <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
-        
+        <style>
+			.x-viewport, .x-viewport body {
+				overflow: auto !important;
+			}
+		</style>
         <script type="text/javascript" src="ext/adapter/ext/ext-base.js"></script>
         <script type="text/javascript" src="ext/ext-all.js"></script>
         <!-- script type="text/javascript" src="ext/ext-all-debug.js"></script -->
