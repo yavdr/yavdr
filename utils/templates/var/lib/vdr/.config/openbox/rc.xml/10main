@@ -714,6 +714,11 @@
     <maximized>true</maximized>
  </application>
 
+<application class="xine*">
+     <decor>no</decor>
+    <maximized>true</maximized>
+ </application>
+
 </applications>
 
 </openbox_config>
