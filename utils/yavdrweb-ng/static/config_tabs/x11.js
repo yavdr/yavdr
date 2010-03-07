@@ -43,6 +43,7 @@ function getX11Form(){
         url: 'get_hdf_value?hdfpath=vdr.plugin.graphtft.enabled',
         timeout: 3000,
         method: 'GET',
+        scope: myform,
         success: function(xhr) {
             //alert('Response is "' + xhr.responseText + '"');
             var currentGraphTFT = "";
@@ -53,7 +54,7 @@ function getX11Form(){
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current graphTFT settings.');
             }
             if (currentGraphTFT == "0" || currentGraphTFT == "1") {
-                var rButton = Ext.getCmp('x11_graphtft');
+                var rButton = this.getComponent('x11_graphtft');
                 if (rButton)
                     rButton.setValue( currentGraphTFT == "1" );
                 else

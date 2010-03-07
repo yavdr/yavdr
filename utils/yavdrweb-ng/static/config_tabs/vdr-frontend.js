@@ -47,6 +47,7 @@ function getVDRFrontendForm(){
         url: 'get_hdf_value?hdfpath=vdr.frontend',
         timeout: 3000,
         method: 'GET',
+        scope: myform,
         success: function(xhr) {
             //alert('Response is "' + xhr.responseText + '"');
             var currentFrontend = "";
@@ -57,7 +58,7 @@ function getVDRFrontendForm(){
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current frontend.');
             }
             if (currentFrontend == "xine" || currentFrontend == "xineliboutput" || currentFrontend == "xbmc"){
-                var rButton = Ext.getCmp('frontend_radio_group');
+                var rButton = this.getComponent('frontend_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );
                 else

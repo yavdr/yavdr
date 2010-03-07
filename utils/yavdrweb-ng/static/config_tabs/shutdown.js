@@ -47,6 +47,7 @@ function getVDRShutdownForm(){
         url: 'get_hdf_value?hdfpath=system.shutdown',
         timeout: 3000,
         method: 'GET',
+        scope: myform,
         success: function(xhr) {
             //alert('Response is "' + xhr.responseText + '"');
             var currentshutdown = "";
@@ -57,7 +58,7 @@ function getVDRShutdownForm(){
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current shutdown.');
             }
             if (currentshutdown == "s3" || currentshutdown == "s5" || currentshutdown == "poweroff" || currentshutdown == "reboot"){
-                var rButton = Ext.getCmp('shutdown_radio_group');
+                var rButton = this.getComponent('shutdown_radio_group');
                 if (rButton)
                     rButton.setValue( currentshutdown );
                 else

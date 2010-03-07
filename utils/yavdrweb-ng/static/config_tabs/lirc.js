@@ -1,4 +1,4 @@
-function populateLircForm( lircData ){
+function populateLircForm( form, lircData ){
 
     var receiverStore = new Ext.data.ArrayStore({
         storeId : 'lirc_receiver_store',
@@ -19,7 +19,7 @@ function populateLircForm( lircData ){
         }
     });
     
-    var cbox = Ext.getCmp('lirc_receiver_combobox');
+    var cbox = form.getComponent('lirc_receiver_combobox');
     cbox.store = receiverStore;
     cbox.hiddenValue = lircData.current_receiver;  //initial value, used in POST request
     cbox.on({
@@ -32,7 +32,7 @@ function populateLircForm( lircData ){
     
 //    //if no serial port was chosen before, don't preselect
 //    if (lircData.current_serial_port != "")
-    Ext.getCmp('serial_port_radio_group').setValue(lircData.current_serial_port);
+    form.getComponent('serial_port_radio_group').setValue(lircData.current_serial_port);
 
     //if no receiver was chosen before, don't preselect
     if (lircData.current_receiver != -1){
@@ -115,6 +115,7 @@ function getLircForm(){
         url: 'get_lirchwdb',
         timeout: 3000,
         method: 'GET',
+        scope: myform,
         success: function(xhr) {
             //alert('Response is "' + xhr.responseText + '"');
             var lircData = 0;
@@ -125,7 +126,7 @@ function getLircForm(){
             catch (err) {
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.error.json_decode"));
             }            
-            populateLircForm( lircData );
+            populateLircForm( this, lircData );
         }
     });
     

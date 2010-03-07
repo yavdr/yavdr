@@ -47,6 +47,7 @@ function getWebFrontendForm(){
         url: 'get_hdf_value?hdfpath=webfrontend.language',
         timeout: 3000,
         method: 'GET',
+        scope: myform,
         success: function(xhr) {
             //alert('Response is "' + xhr.responseText + '"');
             var currentFrontend = "";
@@ -58,7 +59,7 @@ function getWebFrontendForm(){
             }
             if (currentFrontend == "") currentFrontend == "en";
             if (currentFrontend == "de" || currentFrontend == "en" || currentFrontend == "nl" || currentFrontend == "it"){
-                var rButton = Ext.getCmp('web_lang_radio_group');
+                var rButton = this.getComponent('web_lang_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );
                 else
