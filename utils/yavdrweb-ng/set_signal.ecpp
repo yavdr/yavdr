@@ -78,7 +78,7 @@ if (
     else if (signal == "change-overscan-compensation" )
     {
         int overscanval = atoi(value.c_str());
-        if (overscanval > 0 && overscanval < 256)
+        if (overscanval >= 0 && overscanval < 256)
         {
             NEOERR *err;
             HDF *hdf = NULL;
