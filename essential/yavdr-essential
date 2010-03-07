@@ -52,7 +52,6 @@ vdr-plugin-iptv
 vdr-plugin-live
 vdr-plugin-menuorg
 vdr-plugin-streamdev-server
-vdr-plugin-suspendoutput 
 vdr-plugin-text2skin
 vdr-plugin-wirbelscan
 vdr-plugin-xine
