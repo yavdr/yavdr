@@ -38,7 +38,7 @@ var locale_it = {
                  driver: 'Driver',
                  lirc_driver: 'Driver LIRC'
              },
-             emptytext: 'Seleziona un ricevitore per il telecomando...',
+             emptytext: 'Seleziona il ricevitore del telecomando...',
              label: 'Ricevitore'
         },
         serial_radiogroup: {
@@ -70,10 +70,10 @@ var locale_it = {
     frontend: {
         menutab: {
             title : 'Interfaccia VDR',
-            tabtip : 'Alterna tra l\'interfaccia Xine e Xineliboutput',
+            tabtip : 'Alterna tra le interfacce Xine e Xineliboutput',
             panel_title : 'Interfaccia VDR'
         },
-        label: 'Scegli interfaccia',
+        label: 'Seleziona interfaccia',
         button_label:  'Applica impostazioni interfaccia',
         submit: {
             waitmsg : 'Impostazioni interfaccia aggiornate.',    
@@ -84,10 +84,10 @@ var locale_it = {
     shutdown: {
         menutab: {
             title : 'Spegnimento',
-            tabtip : 'Scegli tra diversi metodi di spegnimento',
+            tabtip : 'Seleziona tra diversi metodi di spegnimento',
             panel_title : 'Spegnimento VDR'
         },
-        label: 'Scegli spegnimento',
+        label: 'Seleziona spegnimento',
         button_label:  'Applica impostazioni spegnimento',
         submit: {
             waitmsg : 'Impostazioni spegnimento aggiornate.',    
@@ -179,7 +179,7 @@ var locale_it = {
             tabtip : 'Configura l\'aspetto dell\'interfaccia web',
             panel_title : 'Impostazioni interfaccia Web'
         },
-        label: 'Scegli lingua interfaccia web',
+        label: 'Seleziona lingua interfaccia web',
         button_label:  'Applica impostazioni lingua',
         submit: {
             waitmsg : 'Impostazioni lingua interfaccia web aggiornate.',
@@ -198,10 +198,10 @@ var locale_it = {
         },
         section : {
             system_info: {
-                title : 'Informazioni sistema', 
-                description : 'Stato rete, carico sistema, utilizzo file system, kernel',
+                title : 'Informazioni di sistema', 
+                description : 'Stato rete, utilizzo sistema, utilizzo file system, kernel',
                 ifconfig : 'Stato rete',
-                top: 'Carico sistema',
+                top: 'Utilizzo sistema',
                 dmesg: 'Kernel',
                 df: 'Utilizzo file System'
             },
@@ -223,7 +223,7 @@ var locale_it = {
             },
             xorg: {
                 title : 'Server X',
-                description : 'Verifica la configurazione attuale di X'
+                description : 'Verifica la configurazione attuale del server X'
             },
             sound: {
                 title : 'Suono (ALSA)',
