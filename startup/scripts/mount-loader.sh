@@ -5,7 +5,8 @@ function checkmount()
     retry=3
     while [ $retry -gt 0 ]; do
         logger "testing for $1"
-        if [ -d "$1" ]; then
+        sudo -u vdr touch $1/.update
+        if [ $? -eq 0 ]; then
             logger "found $1"
             MOUNTS="$MOUNTS -v $1"
 	    break
