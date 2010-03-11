@@ -1,4 +1,4 @@
 #!/bin/bash
 
-process-template --owner=vdr --group=vdr /etc/vdr/plugins/menuorg.xml
+process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 
