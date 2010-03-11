@@ -5,13 +5,13 @@
 
 # start playback
 Play {
-	key = F12
+	key = period
 	modifier = none
 }
 
 # playback pause toggle
 Pause {
-	key = F11
+	key = comma
 	modifier = none
 }
 
@@ -203,7 +203,7 @@ SpeedFaster {
 
 # decrement playback speed
 SpeedSlower {
-	key = F12
+	key = period
 	modifier = control
 }
 
@@ -251,7 +251,7 @@ Mute {
 
 # select next audio channel
 AudioChannelNext {
-	key = F11
+	key = comma
 	modifier = control
 }
 
@@ -395,19 +395,19 @@ Menu {
 
 # jump to Title Menu
 TitleMenu {
-	key = F1
+	key = j
 	modifier = none
 }
 
 # jump to Root Menu
 RootMenu {
-	key = F2
+	key = r
 	modifier = none
 }
 
 # jump to Subpicture Menu
 SubpictureMenu {
-	key = F3
+	key = y
 	modifier = none
 }
 
@@ -419,13 +419,13 @@ AudioMenu {
 
 # jump to Angle Menu
 AngleMenu {
-	key = F5
+	key = B
 	modifier = none
 }
 
 # jump to Part Menu
 PartMenu {
-	key = F6
+	key = C
 	modifier = none
 }
 
@@ -713,7 +713,7 @@ SeekRelative- {
 
 # change audio video syncing (delay video)
 AudioVideoDecay+ {
-	key = F6
+	key = N
 	modifier = control
 }
 
@@ -845,25 +845,25 @@ PVRSave {
 
 # VDR Red button
 VDRButtonRed {
-	key = r
+	key = F1
 	modifier = none
 }
 
 # VDR Green button
 VDRButtonGreen {
-	key = g
+	key = F2
 	modifier = none
 }
 
 # VDR Yellow button
 VDRButtonYellow {
-	key = y
+	key = F3
 	modifier = none
 }
 
 # VDR Blue button
 VDRButtonBlue {
-	key = b
+	key = F4
 	modifier = none
 }
 
@@ -893,19 +893,19 @@ VDRRecord {
 
 # VDR Fast forward
 VDRFastFwd {
-	key = Adiaeresis
+	key = F6
 	modifier = control, meta
 }
 
 # VDR Fast rewind
 VDRFastRew {
-	key = VOID
+	key = F5
 	modifier = none
 }
 
 # VDR Power
 VDRPower {
-	key = e
+	key = p
 	modifier = none
 }
 
@@ -1019,13 +1019,13 @@ VDRUser9 {
 
 # VDR Volume +
 VDRVolumePlus {
-	key = period
+	key = F12
 	modifier = none
 }
 
 # VDR Volume -
 VDRVolumeMinus {
-	key = comma
+	key = F11
 	modifier = none
 }
 
