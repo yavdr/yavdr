@@ -29,7 +29,7 @@ function getVDRShutdownForm(){
         handler: function() {
             myform.form.submit({
                 url: 'set_signal?signal=change-shutdown',
-                timeout: 30, //wait 30 seconds before telling it failed
+                timeout: 60, //wait 60 seconds before telling it failed
                 waitMsg: getLL("shutdown.submit.waitmsg"),
                 waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
