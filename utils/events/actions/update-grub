@@ -1,3 +1,6 @@
 #!/bin/bash
 
 update-grub
+
+# set default to to item
+/usr/sbin/grub-set-default 0
