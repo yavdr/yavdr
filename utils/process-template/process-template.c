@@ -125,25 +125,30 @@ int merge_template(HDF *hdf, char *template, char *output)
 
     if (numtemps < 0)
     {
-      fprintf(stderr, "error: %s scandir %s\n", strerror(errno), templatedir);
-      ret = -2;
+      numtemps = 0;
+    }
+
+    if (asprintf(&templatecustomdir, "%s/%s", TEMPLATECUSTOMPATH, template) < 0)
+    {
+      fprintf(stderr, "error: %s asprintf\n", strerror(errno));
+      ret = -3;
     }
     else
-    {
-      if (asprintf(&templatecustomdir, "%s/%s", TEMPLATECUSTOMPATH, template) < 0)
+    {  
+      numcustomtemps = scandir(templatecustomdir, &namelistcustom, scandirfilter, alphasort);
+
+      if (numcustomtemps < 0)
       {
-        fprintf(stderr, "error: %s asprintf\n", strerror(errno));
-        ret = -3;
+        numcustomtemps = 0;
+      }
+
+      if ((numtemps + numcustomtemps) == 0)
+      {
+        fprintf(stderr, "error: %s scandir %s\n", strerror(errno), templatedir);
+        ret = -4;
       }
       else
-      {  
-        numcustomtemps = scandir(templatecustomdir, &namelistcustom, scandirfilter, alphasort);
-
-        if (numcustomtemps < 0)
-        {
-          numcustomtemps = 0;
-        }
-
+      {
         if ((templatefd = mkstemp(templatename)) < 0)
         {
           fprintf(stderr, "error: %s mkstemp\n", strerror(errno));
@@ -157,7 +162,7 @@ int merge_template(HDF *hdf, char *template, char *output)
 
             while ((ret == 0) && (m < numcustomtemps) && 
                    ((comp = strcmp(namelist[n]->d_name, namelistcustom[m]->d_name)) >= 0))
-            {
+            {  
               if (asprintf(&segmentname, "%s/%s", templatecustomdir, namelistcustom[m]->d_name) < 0)
               {
                 fprintf(stderr, "error: %s asprintf\n", strerror(errno));
@@ -226,38 +231,38 @@ int merge_template(HDF *hdf, char *template, char *output)
             close(templatefd);
           }
         }
-        free(templatedir);
+      }
+      free(templatedir);
 
-        if (ret == 0)
+      if (ret == 0)
+      {
+        if (asprintf(&backupcmd, BACKUPCMD, 
+             output,                          // [ -f %s ] && 
+             PRCTMPLBACKDIR,output, 	  // mkdir -p %s%s && 
+             template, PRCTMPLBACKDIR, output // cp %s %s%s/
+            ) < 0)
         {
-          if (asprintf(&backupcmd, BACKUPCMD, 
-               output,                          // [ -f %s ] && 
-               PRCTMPLBACKDIR,output, 	  // mkdir -p %s%s && 
-               template, PRCTMPLBACKDIR, output // cp %s %s%s/
-              ) < 0)
+          fprintf(stderr, "error: %s asprintf\n", strerror(errno));
+          ret = -12;
+        }
+        else
+        {
+          if (system(backupcmd) < 0)
           {
-            fprintf(stderr, "error: %s asprintf\n", strerror(errno));
-            ret = -12;
+            fprintf(stderr, "error: %s system\n", strerror(errno));
+            ret = -13;
           }
           else
-          {
-            if (system(backupcmd) < 0)
+          { 
+            if (process_template(hdf, templatename, output) < 0)
             {
-              fprintf(stderr, "error: %s system\n", strerror(errno));
-              ret = -13;
+              ret = -14;
             }
-            else
-            { 
-              if (process_template(hdf, templatename, output) < 0)
-              {
-                ret = -14;
-              }
-            }
-            free(backupcmd);
           }
+          free(backupcmd);
         }
       }
-    }  
+    }
   }  
   return ret;
 }
