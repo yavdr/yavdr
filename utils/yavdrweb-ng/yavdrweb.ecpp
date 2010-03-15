@@ -70,7 +70,7 @@ if (lang == "")
         <script type="text/javascript" src="static/config_tabs/channels.js"></script>
         <script type="text/javascript" src="static/config_tabs/diagnose.js"></script>
         <script type="text/javascript" src="static/config_tabs/system.js"></script>
-        <script type="text/javascript" src="static/config_tabs/nfs.js"></script>
+        <script type="text/javascript" src="static/config_tabs/network.js"></script>
         <script type="text/javascript" src="static/config_tabs/nvidia.js"></script>
         <script type="text/javascript" src="static/config_tabs/vdr-frontend.js"></script>
         <script type="text/javascript" src="static/config_tabs/web-frontend.js"></script>
