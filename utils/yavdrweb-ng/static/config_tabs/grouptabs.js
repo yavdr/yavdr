@@ -102,7 +102,6 @@ Ext.onReady(function() {
 	    listeners: {
 		    beforerender: function( panel ) {
 			var content = config.items();
-			// alert( contentPanel.title );
 			contentPanel.add( content );
 			contentPanel.doLayout();
 		    }
@@ -242,8 +241,9 @@ Ext.onReady(function() {
 				    			items:   getNvidiaForm
                             }),
                             addGroupPanelTab({
-				    			section: "network",
-				    			items:   getNFSForm
+				    layout: 'fit',
+				    section: "network",
+				    items:   getNetworkForm
                             }),
 			    			addGroupPanelTab({
 				    			section: "shutdown",
