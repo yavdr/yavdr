@@ -1,0 +1,27 @@
+#!/bin/bash
+
+RECOVERYIMAGEVERSION="v1"
+RECOVERYIMAGE=yavdr-recovery-image
+FILELIST="/var/lib/yavdrdb.hdf\
+ /etc/yavdr/templates_custom\
+ /var/cache/yavdr/local-repository\
+ /etc/apt/sources.list.d/yavdr-local-repository\
+ /usr/share/yavdr/events/recovery-hooks"
+
+
+for f in $FILELIST; do 
+  if [ -e $f ]; then
+    FILES2SAVE="$FILES2SAVE $f"
+  fi 
+done
+
+if [ "x$FILES2SAVE" != "x" ]; then
+  mkdir $RECOVERYIMAGE
+  pushd $RECOVERYIMAGE >/dev/null
+
+  tar cjf ${RECOVERYIMAGE}.tar.bz2 $FILES2SAVE
+
+  echo $RECOVERYIMAGEVERSION >VERSION
+
+  popd >/dev/null
+fi

@@ -1,0 +1,13 @@
+Source: yavdr-recovery
+Section: misc
+Priority: extra
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.0
+Homepage: http://yavdr.origo.ethz.ch/
+
+Package: yavdr-recovery
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, yavdr-utils
+Description: recovery for yaVDR
+ Scripts and files for generation and installation of yaVDR recovery images
