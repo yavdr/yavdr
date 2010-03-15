@@ -156,7 +156,6 @@ var locale_de = {
             menutab: {
                 title : 'NFS',
                 tabtip : 'Verwalten der NFS Mounts und Freigaben',
-                panel_title : 'NFS-Konfiguration'
             },
             labels: {
                 newDir : 'Entferntes Verzeichnis',
@@ -165,7 +164,13 @@ var locale_de = {
                 _delete: 'Löschen',
                 apply: 'Übernehmen'
             }
-        }
+        },
+	samba: {
+	    menutab: {
+		title : 'Samba',
+		tabtip : 'Verwalten der Samba Freigaben'
+	    }
+	}
     },
     nvidia: {
         menutab: {

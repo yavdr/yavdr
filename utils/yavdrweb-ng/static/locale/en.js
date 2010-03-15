@@ -155,8 +155,7 @@ var locale_en = {
 	    help: 'Define the nfs shares from other hosts that should be used from VDR. Directories have to be qualified like "server:/path". The button "Apply" actually submits the changes to your local configuration. VDR uses them after next restart.',
             menutab: {
                 title : 'NFS',
-                tabtip : 'Maintain mounts and shares',
-                panel_title : 'NFS configuration'
+                tabtip : 'Maintain NFS mounts and shares',
             },
             labels: {
                 newDir : 'Remote directory',
@@ -165,7 +164,13 @@ var locale_en = {
                 _delete: 'Remove',
                 apply: 'Apply'
             }
-        }
+        },
+	samba: {
+	    menutab: {
+		title : 'Samba',
+		tabtip : 'Maintain samba shares'
+	    }
+	}
     },
     nvidia: {
         menutab: {
