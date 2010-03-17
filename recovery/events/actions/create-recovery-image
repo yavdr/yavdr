@@ -6,7 +6,11 @@ FILELIST="/var/lib/yavdrdb.hdf\
  /etc/yavdr/templates_custom\
  /var/cache/yavdr/local-repository\
  /etc/apt/sources.list.d/yavdr-local-repository\
- /usr/share/yavdr/events/recovery-hooks"
+ /var/lib/vdr\
+ /usr/share/yavdr/events/recovery-hooks\
+ /etc/yavdr/force-reload-*.list\
+ /etc/vdr\
+ /etc/nvram-wakeup.conf"                                                                  
 
 
 for f in $FILELIST; do 
