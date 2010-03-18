@@ -124,7 +124,6 @@ Ext.onReady(function() {
             tabWidth: 190,
             activeGroup: 0,
             items: [{
-                //mainItem: 1,
                 items: [
                     /*
                      *  BASICS MODULE
@@ -132,8 +131,8 @@ Ext.onReady(function() {
                     {
                         xtype: 'portal',
                         layout: 'fit',
-                        title: getLL("menutabs.basics.title"),
-                        tabTip: getLL("menutabs.basics.tabtip"),
+                        title: getLL("menutabs.vdr.title"),
+                        tabTip: getLL("menutabs.vdr.tabtip"),
                         style: 'padding: 20px 30px 20px 30px;',
                         items:[
                            new Ext.Panel({
@@ -141,15 +140,10 @@ Ext.onReady(function() {
                                frame: false,
                                plain: false,
                                border: false,
-                               html: '<h1 style="font-family: sans-serif;">' + getLL("menutabs.basics.content") + '</h1>'
+                               html: '<h1 style="font-family: sans-serif;">' + getLL("menutabs.vdr.content") + '</h1>'
                            })
                         ]
                     },
-                    addGroupPanelTab({
-                        section: "lirc",
-                        layout: "vbox",
-                        items:   getLircForm
-                    }),
                     addGroupPanelTab({
                         section: "frontend",
                         items:   getVDRFrontendForm
@@ -159,6 +153,49 @@ Ext.onReady(function() {
                         layout: "fit",
                         items:   getVDRConfigUploadForm
                     }),
+			    	addGroupPanelTab({
+				    	section: "shutdown",
+				    	items:   getVDRShutdownForm
+					})
+                ]
+			},{
+                /*
+                 *  SYSTEM MODULE
+                 */
+				expanded: false,
+                items: [
+                	{
+                        layout: 'fit',
+                        title: getLL("menutabs.system.title"),
+                        tabTip: getLL("menutabs.system.tabtip"),
+                        style: 'padding: 20px 30px 20px 30px;',
+                        items:[
+                        	new Ext.Panel({
+                            	layout: 'fit',
+                                frame: false,
+                                plain: false,
+                                border: false,
+                                html: '<h1 style="font-family: sans-serif;">' + getLL("menutabs.system.content") + '</h1>'
+                            })
+                        ]
+                    },
+                    addGroupPanelTab({
+                        section: "lirc",
+                        layout: "vbox",
+                        items:   getLircForm
+                    }),
+			    	addGroupPanelTab({
+				    	section: "timeout",
+				    	items:   getGRUBTimeoutForm
+                    }),
+			    	addGroupPanelTab({
+				    	section: "x11",
+				    	items:   getX11Form
+                    }),
+                        addGroupPanelTab({
+				    		section: "nvidia",
+				    		items:   getNvidiaForm
+                        }),
                     addGroupPanelTab({
                         section: "system",
                         items:   getSystemForm
@@ -166,98 +203,81 @@ Ext.onReady(function() {
                     addGroupPanelTab({
                         section: "webfrontend",
                         items:   getWebFrontendForm
-                    })
-                ]},
+                    }),
+                    	
+                ]
+            },{
+            /*
+             *  DEMO MODULE
+             */
+                expanded: false,
+                items: [
+                    {
+                        layout: 'fit',
+                        title: "Demos", //getLL("menutabs.development.title"),
+                        tabTip: "Proof of concept, demos of possible new features", //getLL("menutabs.development.tabtip"),
+                        style: 'padding: 20px 30px 20px 30px;',
+                        items:[
+                        	new Ext.Panel({
+                            	layout: 'fit',
+                                frame: false,
+                                plain: false,
+                                border: false,
+                                html: '<h1 style="font-family: sans-serif;">Demos of possible new features</h1>'
+                            })
+                        ]
+                    },
+                    {
+                    	title: getLL("channels.menutab.title") + " (SVDRP)",
+                        layout: 'fit',
+                        iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
+                        tabTip: getLL("channels.menutab.tabtip"),
+                        style: 'padding: 20px 30px 20px 30px;',
+                        items: [
+                            new Ext.Panel({
+                                layout: 'fit',
+                                //title: getLL("channels.menutab.panel_title"),
+                                frame: false,
+                                plain: false,
+                                border: false,
+                                items: [ getChannelsForm() ]
+                            })
+                        ]
+                    }
+                ]
+            },{ 
+            /*
+             *  DIAGNOSE MODULE
+             */
+                expanded: false,
+                items: [getDiagnoseItems()]
+            },{
                 /*
-                 *  DEMO MODULE
+                 *  DEVELOPMENT MODULE (UNCOMMENT THIS TO MAKE IT VISIBLE)
                  */
-                {
                     expanded: false,
                     items: [
                         {
                             layout: 'fit',
-                            title: "Demos", //getLL("menutabs.development.title"),
-                            tabTip: "Proof of concept, demos of possible new features", //getLL("menutabs.development.tabtip"),
+                            title: "Development", //getLL("menutabs.development.title"),
+                            tabTip: "Under Development", //getLL("menutabs.development.tabtip"),
                             style: 'padding: 20px 30px 20px 30px;',
                             items:[
-                               new Ext.Panel({
-                                   layout: 'fit',
-                                   frame: false,
-                                   plain: false,
-                                   border: false,
-                                   html: '<h1 style="font-family: sans-serif;">Demos of possible new features</h1>'
-                               })
-                            ]
-                        },
-                        {
-                            title: getLL("channels.menutab.title") + " (SVDRP)",
-                            layout: 'fit',
-                            iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
-                            tabTip: getLL("channels.menutab.tabtip"),
-                            style: 'padding: 20px 30px 20px 30px;',
-                            items: [
-                                new Ext.Panel({
-                                    layout: 'fit',
-                                    //title: getLL("channels.menutab.panel_title"),
+                            	new Ext.Panel({
+                                	layout: 'fit',
                                     frame: false,
                                     plain: false,
                                     border: false,
-                                    items: [ getChannelsForm() ]
+                                    html: '<h1 style="font-family: sans-serif;">New features under development, they don\'t work properly yet.</h1>'
                                 })
                             ]
-                        }
+                        },
+                        addGroupPanelTab({
+				    		layout: 'fit',
+				    		section: "network",
+				    		items:   getNetworkForm
+                        })
                     ]
-                },
-                /*
-                 *  DIAGNOSE MODULE
-                 */
-                {
-                    expanded: false,
-                    items: [getDiagnoseItems()]
-                },
-                /*
-                 *  DEVELOPMENT MODULE (UNCOMMENT THIS TO MAKE IT VISIBLE)
-                 */
-                {
-                    expanded: false,
-                        items: [
-                            {
-                                layout: 'fit',
-                                title: "Development", //getLL("menutabs.development.title"),
-                                tabTip: "Under Development", //getLL("menutabs.development.tabtip"),
-                                style: 'padding: 20px 30px 20px 30px;',
-                                items:[
-                                   new Ext.Panel({
-                                       layout: 'fit',
-                                       frame: false,
-                                       plain: false,
-                                       border: false,
-                                       html: '<h1 style="font-family: sans-serif;">New features under development, they don\'t work properly yet.</h1>'
-                                   })
-                                ]
-                            },
-                            addGroupPanelTab({
-				    			section: "nvidia",
-				    			items:   getNvidiaForm
-                            }),
-                            addGroupPanelTab({
-				    layout: 'fit',
-				    section: "network",
-				    items:   getNetworkForm
-                            }),
-			    			addGroupPanelTab({
-				    			section: "shutdown",
-				    			items:   getVDRShutdownForm
-                    		}),
-			    			addGroupPanelTab({
-				    			section: "timeout",
-				    			items:   getGRUBTimeoutForm
-                    		}),
-			    			addGroupPanelTab({
-				    			section: "x11",
-				    			items:   getX11Form
-                    		})
-                        ]
                 }
             ]//grouptabpanel items
         }]//viewport items

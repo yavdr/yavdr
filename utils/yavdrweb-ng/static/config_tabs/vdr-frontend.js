@@ -16,7 +16,7 @@ function getVDRFrontendForm(){
             items: [
                 {id: 'frontend-xine', boxLabel: 'xine@vdr-plugin-xine', name: 'value', inputValue: 'xine'},
                 {id: 'frontend-xineliboutput', boxLabel: 'vdr-sxfe@vdr-plugin-xineliboutput', name: 'value', inputValue: 'xineliboutput'},
-                {id: 'frontend-xbmc', boxLabel: 'XBMC', name: 'value', inputValue: 'xbmc'}
+                {id: 'frontend-xbmc', boxLabel: 'XBMC@vdr-plugin-streamdev (experimental)', name: 'value', inputValue: 'xbmc'}
             ]
         }]
     });

@@ -5,9 +5,14 @@ var locale_nl = {
         key : 'nl'
     },
     menutabs: {
-        basics : {
-            title: 'Basis',
-            tabtip: 'Configureren van de Basis-instellingen zoals Afstandsbediening, Zenderlijst, etc.',
+        vdr : {
+            title: 'Your VDR',
+            tabtip: 'Configuration of basic settings of your VDR',
+            content: 'Welkom in het yaVDR Web-Frontend!'
+        },
+        system : {
+            title: 'System',
+            tabtip: 'Configuration of basic settings of the system',
             content: 'Welkom in het yaVDR Web-Frontend!'
         },
         diagnose : {

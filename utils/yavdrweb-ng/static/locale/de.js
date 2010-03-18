@@ -5,9 +5,14 @@ var locale_de = {
         key : 'de'
     },
     menutabs: {
-        basics : {
-            title: 'Basics',
-            tabtip: 'Konfigurieren Sie die Grundeinstellungen wie Fernbedienung, Senderliste, etc.',
+        vdr : {
+            title: 'Ihr VDR',
+            tabtip: 'Konfigurieren Sie die Grundeinstellungen rund um Ihren yaVDR',
+            content: 'Willkommen im yaVDR Web-Frontend!'
+        },
+        system : {
+            title: 'System',
+            tabtip: 'Konfigurieren Sie die Grundeinstellungen des Systems',
             content: 'Willkommen im yaVDR Web-Frontend!'
         },
         diagnose : {

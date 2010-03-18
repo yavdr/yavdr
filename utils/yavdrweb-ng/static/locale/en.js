@@ -5,9 +5,14 @@ var locale_en = {
         key : 'en'
     },
     menutabs: {
-        basics : {
-            title: 'Basics',
-            tabtip: 'Configuration of basic settings like remote control receiver, channel list, etc.',
+        vdr : {
+            title: 'Your VDR',
+            tabtip: 'Configuration of basic settings of your VDR',
+            content: 'Welcome to the yaVDR Web Frontend!'
+        },
+        system : {
+            title: 'System',
+            tabtip: 'Configuration of basic settings of the system',
             content: 'Welcome to the yaVDR Web Frontend!'
         },
         diagnose : {

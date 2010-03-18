@@ -5,9 +5,14 @@ var locale_it = {
         key : 'it'
     },
     menutabs: {
-        basics : {
-            title: 'Base',
-            tabtip: 'Configurazione delle impostazioni base come il ricevitore del telecomando, la lista canali, etc.',
+        vdr : {
+            title: 'Your VDR',
+            tabtip: 'Configuration of basic settings of your VDR',
+            content: 'Benvenuto nell\'interfaccia Web di yaVDR!'
+        },
+        system : {
+            title: 'System',
+            tabtip: 'Configuration of basic settings of the system',
             content: 'Benvenuto nell\'interfaccia Web di yaVDR!'
         },
         diagnose : {
@@ -32,7 +37,7 @@ var locale_it = {
             tabtip :'Opzioni LIRC (ricevitore telecomando)',
             panel_title : 'Ricevitore telecomando (LIRC)'
         },
-        help: 'Quando premi il pulsante "Salva" VDR si riavvierà per notificare a VDR le modifiche del ricevitore del telecomando LIRC. Se non hai assegnato i tasti al tuo telecomando (tramite remote.conf) VDR mostrerà una schermata passo a passo nell\'OSD per l\'apprendimento dei tasti del telecomando. Questa schermata sparirà dopo pochi secondi se nessun tasto del telecomando viene premuto. Puoi riavviare la schermata semplicemente premendo ancora il tasto "Salva".',
+        help: 'Quando premi il pulsante "Salva" VDR si riavvierï¿½ per notificare a VDR le modifiche del ricevitore del telecomando LIRC. Se non hai assegnato i tasti al tuo telecomando (tramite remote.conf) VDR mostrerï¿½ una schermata passo a passo nell\'OSD per l\'apprendimento dei tasti del telecomando. Questa schermata sparirï¿½ dopo pochi secondi se nessun tasto del telecomando viene premuto. Puoi riavviare la schermata semplicemente premendo ancora il tasto "Salva".',
         combobox: {
              tooltip : {
                  driver: 'Driver',
@@ -61,7 +66,7 @@ var locale_it = {
             panel_title : '' //unused
         },
         grid_header : { 
-            cid : 'N°',
+            cid : 'Nï¿½',
             cname : 'Nome canale',
             cstr : 'Stringa completa canale'
         },
@@ -111,7 +116,7 @@ var locale_it = {
         submit: {
             waitmsg : 'Caricamento file.',    
             success : 'File caricato con successo.',
-            failure : 'Si è verificato un errore durante il caricamento.'
+            failure : 'Si ï¿½ verificato un errore durante il caricamento.'
         }
     },
     system: {
@@ -123,24 +128,24 @@ var locale_it = {
         vdr_restart : {
             label: 'Riavvia VDR',
             submit: {
-                waitmsg: 'Il segnale di riavvio VDR è stato inviato.',
-                success: 'VDR si riavvierà adesso.',
+                waitmsg: 'Il segnale di riavvio VDR ï¿½ stato inviato.',
+                success: 'VDR si riavvierï¿½ adesso.',
                 failure: 'Problemi con l\'invio del segnale. Riprova.'
             }
         },
         kill_xbmc : {
             label: 'Termina XBMC (se bloccato)',
             submit: {
-                waitmsg: 'Il segnale per fermare XBMC è stato inviato.',
-                success: 'XBMC è stato fermato.',
+                waitmsg: 'Il segnale per fermare XBMC ï¿½ stato inviato.',
+                success: 'XBMC ï¿½ stato fermato.',
                 failure: 'Problemi con l\'invio del segnale. Riprova.'
             }
         },        
         system_restart : {
             label: 'Riavvia il computer (Attenzione: nessuna richiesta di conferma!)',
             submit: {
-                waitmsg: 'Il segnale per riavviare è stato inviato.',
-                success: 'Il computer si riavvierà adesso.',
+                waitmsg: 'Il segnale per riavviare ï¿½ stato inviato.',
+                success: 'Il computer si riavvierï¿½ adesso.',
                 failure: 'Problemi con l\'invio del segnale. Riprova.'
             }
         }
