@@ -1,6 +1,11 @@
 yaVDR-startup Revision History
 ---------------------------------------
 
+NEW
+- hard shutdown with double press on power button
+- fsck on shutdown
+FIX
+- xterm starts now as system owner
 -----------------
 17.Feb.2010
 -----------------

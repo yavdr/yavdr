@@ -1,6 +1,18 @@
 yaVDR-utils Revision History
 ---------------------------------------
 
+NEW 
+- default enabled live tv in xmbc
+- english language labels are now always loaded as a fallback.
+- changed xine-ui keymap 
+Webfrontend:
+- VDR-shutdown tab, switch between suspend2ram,shutdown, reboot poweroff-kernel
+- Nvidia Overscan  compensation tab/"slider"
+- BootMenu tab to choose grub timeout between 0-10
+- Display-settings tab and added graphtft support
+- Network tab (Define the nfs shares from other hosts that should be used from VDR.) 
+- XBMC as vdr-frontend (now possible to switch between xine, vdr-sxfe, XBMC)
+- add favicon to Webfrontend
 -----------------
 17.Feb.2010
 -----------------

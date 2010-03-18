@@ -1,6 +1,9 @@
 yaVDR-essential Revision History
 ---------------------------------------
 
+added touchscreen driver
+added vdr-plugin-dummydevice
+remove suspendoutput
 -----------------
 17.Feb.2010
 -----------------
