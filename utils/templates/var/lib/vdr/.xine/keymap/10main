@@ -413,7 +413,7 @@ SubpictureMenu {
 
 # jump to Audio Menu
 AudioMenu {
-	key = F4
+	key = A
 	modifier = none
 }
 
