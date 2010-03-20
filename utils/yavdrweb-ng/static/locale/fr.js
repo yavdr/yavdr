@@ -7,18 +7,18 @@ var locale_fr = {
     menutabs: {
         vdr : {
             title: 'Votre VDR',
-            tabtip: 'Configuration des paramètres de base de votre VDR',
+            tabtip: 'Configuration des paramÃ¨tres de base de votre VDR',
             content: 'Bienvenue sur l\'interface Web de yaVDR!'
         },
         system : {
             title: 'Systeme',
-            tabtip: 'Configuration des paramètres de base du systeme',
+            tabtip: 'Configuration des paramÃ¨tres de base du systeme',
             content: 'Bienvenue sur l\'interface Web de yaVDR!'
         },
         diagnose : {
             title: 'Diagnostiquer',
-            tabtip: 'Restez informé sur l\'état du système, le suivi des problèmes',
-            content: 'Accès aux fichiers de log importants et aux fichiers de configuration'
+            tabtip: 'Restez informÃ© sur l\'Ã©tat du systÃ¨me, le suivi des problÃ¨mes',
+            content: 'AccÃ¨s aux fichiers de log importants et aux fichiers de configuration'
         }
     },
     standardform: {
@@ -34,43 +34,43 @@ var locale_fr = {
     lirc: {
         menutab: {
             title : 'LIRC',
-            tabtip :'Lirc-Paramètres (Récepteur de la télécommande)',
-            panel_title : 'Récepteur de la télécommande (LIRC)'
+            tabtip :'Lirc-ParamÃ¨tres (RÃ©cepteur de la tÃ©lÃ©commande)',
+            panel_title : 'RÃ©cepteur de la tÃ©lÃ©commande (LIRC)'
         },
-        help: 'Lorsque vous appuyez sur le bouton "Enregistrer" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur LIRC. Si vous n\'avez pas affecté les boutons de votre télécommande (via remote.conf), VDR vous offrira a travers l\'OSD étape par étape la configuration de chaque touche de votre télécommande. Cette boîte de dialogue disparaîtra après quelques secondes si aucune touche de la télécommande n\'est pressée. Vous pouvez relancer le dialogue en appuyant simplement sur "Enregistrer".',
+        help: 'Lorsque vous appuyez sur le bouton "Enregistrer" VDR sera redÃ©marrÃ© pour prendre en compte les nouveaux paramÃ¨tres du rÃ©cepteur LIRC. Si vous n\'avez pas affectÃ© les boutons de votre tÃ©lÃ©commande (via remote.conf), VDR vous offrira a travers l\'OSD Ã©tape par Ã©tape la configuration de chaque touche de votre tÃ©lÃ©commande. Cette boÃ®te de dialogue disparaÃ®tra aprÃ¨s quelques secondes si aucune touche de la tÃ©lÃ©commande n\'est pressÃ©e. Vous pouvez relancer le dialogue en appuyant simplement sur "Enregistrer".',
         combobox: {
              tooltip : {
                  driver: 'Driver',
                  lirc_driver: 'LIRC Driver'
              },
-             emptytext: 'S\'il vous plaît choisissez un récepteur pour votre télécommande ...',
+             emptytext: 'S\'il vous plaÃ®t choisissez un rÃ©cepteur pour votre tÃ©lÃ©commande ...',
              label: 'Recepteur'
         },
         serial_radiogroup: {
-             label : 'Interface Série',
+             label : 'Interface SÃ©rie',
              boxlabel_none : 'Aucun'
         },
         submit: {
-            waitmsg : 'Les paramètres LIRC vont maintenant être enregistrés.',    
-            success : 'Les paramètres ont été correctement enregistré.',
-            failure : 'Erreur pendant l\'enregistrement des paramètres. S\'il vous plaît essayez de nouveau.'
+            waitmsg : 'Les paramÃ¨tres LIRC vont maintenant Ãªtre enregistrÃ©s.',    
+            success : 'Les paramÃ¨tres ont Ã©tÃ© correctement enregistrÃ©.',
+            failure : 'Erreur pendant l\'enregistrement des paramÃ¨tres. S\'il vous plaÃ®t essayez de nouveau.'
         },
         error: {
-            json_decode : 'Impossible de décoder la liste de récepteur JSON'
+            json_decode : 'Impossible de dÃ©coder la liste de rÃ©cepteur JSON'
         }
     },
     channels: {
         menutab: {
-            title : 'Liste de Chaîne',
-            tabtip : 'Réglages des chaînes (modifs et tri des radios et chaînes de télévision)',
+            title : 'Liste de ChaÃ®ne',
+            tabtip : 'RÃ©glages des chaÃ®nes (modifs et tri des radios et chaÃ®nes de tÃ©lÃ©vision)',
             panel_title : '' //unused
         },
         grid_header : { 
-            cid : 'N°',
-            cname : 'Chaîne Nom',
-            cstr : 'Séquence Complete de la Chaîne'
+            cid : 'NÂ°',
+            cname : 'ChaÃ®ne Nom',
+            cstr : 'SÃ©quence Complete de la ChaÃ®ne'
         },
-        grid_title : 'Liste de Chaîne (toute radio et chaînes de TV)' 
+        grid_title : 'Liste de ChaÃ®ne (toute radio et chaÃ®nes de TV)' 
     },
     frontend: {
         menutab: {
@@ -79,91 +79,91 @@ var locale_fr = {
             panel_title : 'VDR Interface'
         },
         label: 'Choix de l\'interface',
-        button_label:  'Appliquer les paramètres de l\'interface',
+        button_label:  'Appliquer les paramÃ¨tres de l\'interface',
         submit: {
-            waitmsg : 'Les paramètres de l\'interface on été modifiés.',    
-            success : 'Succès.',
-            failure : 'Échec.'
+            waitmsg : 'Les paramÃ¨tres de l\'interface on Ã©tÃ© modifiÃ©s.',    
+            success : 'SuccÃ¨s.',
+            failure : 'Ã‰chec.'
         }
     },
     shutdown: {
         menutab: {
             title : 'Extinction',
-            tabtip : 'Choix entre différente méthode d\'extinction',
+            tabtip : 'Choix entre diffÃ©rente mÃ©thode d\'extinction',
             panel_title : 'VDR Extinction'
         },
         label: 'Choisisser l\'extinction',
-        button_label:  'Appliquer les paramètres d\'extinction',
+        button_label:  'Appliquer les paramÃ¨tres d\'extinction',
         submit: {
-            waitmsg : 'Les paramètres d\'extinction on été modifié.',    
-            success : 'Succès.',
+            waitmsg : 'Les paramÃ¨tres d\'extinction on Ã©tÃ© modifiÃ©.',    
+            success : 'SuccÃ¨s.',
             failure : 'Echec.'
         },
         items: {
             s3: 'suspend to RAM',
             s4: 'suspend to DISK',
             s5: 'extinction',
-            reboot: 'redémarrage "PowerOff" kernel'
+            reboot: 'redÃ©marrage "PowerOff" kernel'
         }
     },
     upload: {
         menutab: {
             title : 'VDR Configue Import',
             tabtip : 'Importez votre configuration existante de VDR',
-            panel_title : 'VDR Configue Import (la version importée supprime la version existante)'
+            panel_title : 'VDR Configue Import (la version importÃ©e supprime la version existante)'
         },
         button_label: 'Import',
         submit: {
             waitmsg : 'Le fichier est en cours d\'importation.',    
-            success : 'Le fichier a été importé avec succès.',
-            failure : 'Un problème est survenu durant l\'importation.'
+            success : 'Le fichier a Ã©tÃ© importÃ© avec succÃ¨s.',
+            failure : 'Un problÃ¨me est survenu durant l\'importation.'
         }
     },
     system: {
         menutab: {
             title : 'Systeme',
-            tabtip : 'Redémarrez VDR ou l\'ensemble du système.',
+            tabtip : 'RedÃ©marrez VDR ou l\'ensemble du systÃ¨me.',
             panel_title : 'Systeme Commandes'
         },
         vdr_restart : {
-            label: 'Redémarrez VDR',
+            label: 'RedÃ©marrez VDR',
             submit: {
-                waitmsg: 'Le signal pour redémarrer VDR a été envoyé.',
-                success: 'VDR va maintenant redémarrer.',
-                failure: 'Problème sur le signal d\'envoi. S\'il vous plaît essayez de nouveau.'
+                waitmsg: 'Le signal pour redÃ©marrer VDR a Ã©tÃ© envoyÃ©.',
+                success: 'VDR va maintenant redÃ©marrer.',
+                failure: 'ProblÃ¨me sur le signal d\'envoi. S\'il vous plaÃ®t essayez de nouveau.'
             }
         },
         kill_xbmc : {
             label: 'Tuer XBMC (Si bloquer)',
             submit: {
-                waitmsg: 'Le signal pour arrêter XBMC a été envoyé.',
-                success: 'XBMC est arrêté.',
-                failure: 'Problème sur le signal d\'envoi. S\'il vous plaît essayez de nouveau.'
+                waitmsg: 'Le signal pour arrÃªter XBMC a Ã©tÃ© envoyÃ©.',
+                success: 'XBMC est arrÃªtÃ©.',
+                failure: 'ProblÃ¨me sur le signal d\'envoi. S\'il vous plaÃ®t essayez de nouveau.'
             }
         },        
         system_restart : {
-            label: 'Redémarrer la machine (Attention: pas de demande de confirmation!)',
+            label: 'RedÃ©marrer la machine (Attention: pas de demande de confirmation!)',
             submit: {
-                waitmsg: 'Le signal de redémarrage a été envoyé.',
-                success: 'La machine va maintenant redémarrer.',
-                failure: 'Problème sur le signal d\'envoi. S\'il vous plaît essayez de nouveau.'
+                waitmsg: 'Le signal de redÃ©marrage a Ã©tÃ© envoyÃ©.',
+                success: 'La machine va maintenant redÃ©marrer.',
+                failure: 'ProblÃ¨me sur le signal d\'envoi. S\'il vous plaÃ®t essayez de nouveau.'
             }
         }
     },
     network: {
         menutab: {
-            title : 'Réseau',
-            tabtip : 'Entretien du réseau',
-            panel_title : 'Réseau configuration'
+            title : 'RÃ©seau',
+            tabtip : 'Entretien du rÃ©seau',
+            panel_title : 'RÃ©seau configuration'
         },
         nfs: {
-        help: 'Définir les partages NFS depuis d\'autres hôtes qui devraient être utilisés par VDR. Les répertoires doivent être qualifiés comme "serveur: / chemin". Le bouton "Appliquer" soutient effectivement les modifications de votre configuration locale. VDR les utilisera au prochain redémarrage.',
+        help: 'DÃ©finir les partages NFS depuis d\'autres hÃ´tes qui devraient Ãªtre utilisÃ©s par VDR. Les rÃ©pertoires doivent Ãªtre qualifiÃ©s comme "serveur: / chemin". Le bouton "Appliquer" soutient effectivement les modifications de votre configuration locale. VDR les utilisera au prochain redÃ©marrage.',
             menutab: {
                 title : 'NFS',
                 tabtip : 'Entretien des montages NFS et partages',
             },
             labels: {
-                newDir : 'Répertoire',
+                newDir : 'RÃ©pertoire',
                 add : 'Ajouter',
                 edit : 'Editer',
                 _delete: 'Supprimer',
@@ -180,14 +180,14 @@ var locale_fr = {
     nvidia: {
         menutab: {
             title : 'Nvidia',
-            tabtip : 'Entretien des paramètres Nvidia',
+            tabtip : 'Entretien des paramÃ¨tres Nvidia',
             panel_title : 'Nvidia configuration'
         },
         overscan_slider_label : 'Nvidia compensation Overscan',
         button_label : 'Appliquer la valeur',
         submit: {
-            waitmsg : 'Nvidia overscan paramètres mise à jour.',
-            success : 'Succès.',
+            waitmsg : 'Nvidia overscan paramÃ¨tres mise Ã  jour.',
+            success : 'SuccÃ¨s.',
             failure : 'Echec.'
         }
     },
@@ -195,13 +195,13 @@ var locale_fr = {
         menutab: {
             title : 'Web Interface',
             tabtip : 'Configure l\'apparance de l\'interface web',
-            panel_title : 'Web Interface Paramètres'
+            panel_title : 'Web Interface ParamÃ¨tres'
         },
         label: 'Choisisser le langage de l\'interface web',
-        button_label:  'Appliquer les paramètres du langage',
+        button_label:  'Appliquer les paramÃ¨tres du langage',
         submit: {
-            waitmsg : 'La langue de l\'interface Web à été mise à jour.',
-            success : 'Succès. S\'il vous plaît pressez F5 pour recharger l\interface web avec la nouvelle langue.',
+            waitmsg : 'La langue de l\'interface Web Ã  Ã©tÃ© mise Ã  jour.',
+            success : 'SuccÃ¨s. S\'il vous plaÃ®t pressez F5 pour recharger l\interface web avec la nouvelle langue.',
             failure : 'Echec.'
         }
     },
@@ -209,19 +209,19 @@ var locale_fr = {
         toolbar : {
             button : {
                 refresh: 'Rafraichir',
-                refresh_tooltip: 'S\'il vous plaît cliquer sur ce bouton pour rafraîchir le contenu du panneau.',
+                refresh_tooltip: 'S\'il vous plaÃ®t cliquer sur ce bouton pour rafraÃ®chir le contenu du panneau.',
                 jumpdown: 'Sauter jusqu\'a la fin du panneau',
-                jumpdown_tooltip: 'S\'il vous plaît cliquer sur ce bouton pour sauter jusqu\'a la fin du panneau.'
+                jumpdown_tooltip: 'S\'il vous plaÃ®t cliquer sur ce bouton pour sauter jusqu\'a la fin du panneau.'
             }
         },
         section : {
             system_info: {
                 title : 'Information Systeme', 
-                description : 'L\'état du réseau, la charge du système, l\'utilisation des fichiers système, le kernel',
-                ifconfig : 'L\'état du réseau',
-                top: 'La charge du système',
+                description : 'L\'Ã©tat du rÃ©seau, la charge du systÃ¨me, l\'utilisation des fichiers systÃ¨me, le kernel',
+                ifconfig : 'L\'Ã©tat du rÃ©seau',
+                top: 'La charge du systÃ¨me',
                 dmesg: 'Kernel',
-                df: 'L\'utilisation des fichiers système'
+                df: 'L\'utilisation des fichiers systÃ¨me'
             },
             system_logs: {
                 title :'Logs des Fichiers Systeme',
@@ -229,45 +229,45 @@ var locale_fr = {
             },
             xbmc: {
                 title : 'XBMC-Plantage',
-                description : 'Trouver la cause des plantages d\'XBMC ou autres problèmes'
+                description : 'Trouver la cause des plantages d\'XBMC ou autres problÃ¨mes'
             },
             lirc: {
                 title : 'LIRC Configuration',
-                description : 'Vérifiez la configuration actuelle de LIRC'
+                description : 'VÃ©rifiez la configuration actuelle de LIRC'
             },
             vdr: {
                 title : 'VDR Configuration',
-                description : 'Vérifiez la configuration actuelle de VDR'
+                description : 'VÃ©rifiez la configuration actuelle de VDR'
             },
             xorg: {
                 title : 'X-Serveur',
-                description : 'Vérifiez la configuration actuelle de X'
+                description : 'VÃ©rifiez la configuration actuelle de X'
             },
             sound: {
                 title : 'Son (ALSA)',
-                description : 'Résoudre les problèmes de son (numérique / sortie analogique)'
+                description : 'RÃ©soudre les problÃ¨mes de son (numÃ©rique / sortie analogique)'
             },
             packages: {
                 title : 'Paquets',
-                description : 'Vérifier quels paquets et versions sont installés'
+                description : 'VÃ©rifier quels paquets et versions sont installÃ©s'
             },
             yavdr: {
                 title : 'yaVDR-Utils',
-                description : 'Résoudre les problèmes de l\'interface web yaVDR (base de données + serveur web)'
+                description : 'RÃ©soudre les problÃ¨mes de l\'interface web yaVDR (base de donnÃ©es + serveur web)'
             }
         }
     },
     timeout: {
         menutab: {
-            title : 'GRUB délai',
-            tabtip : 'Fixer le délai de GRUB',
-            panel_title : 'GRUB délai'
+            title : 'GRUB dÃ©lai',
+            tabtip : 'Fixer le dÃ©lai de GRUB',
+            panel_title : 'GRUB dÃ©lai'
         },
-        label: 'Choisir le délai',
-        button_label:  'Appliquer le délai',
+        label: 'Choisir le dÃ©lai',
+        button_label:  'Appliquer le dÃ©lai',
         submit: {
-            waitmsg : 'Le paramètre du délai ont été mise à jour.',    
-            success : 'Succès.',
+            waitmsg : 'Le paramÃ¨tre du dÃ©lai ont Ã©tÃ© mise Ã  jour.',    
+            success : 'SuccÃ¨s.',
             failure : 'Echec.'
         },
         maxText: 'La valeur maximum de ce champ est (0)',
@@ -275,18 +275,18 @@ var locale_fr = {
     },
     x11: {
         menutab: {
-            title : 'paramètres d\'affichage',
-            tabtip : 'paramètres d\'affichage',
-            panel_title : 'paramètres d\'affichage'
+            title : 'paramÃ¨tres d\'affichage',
+            tabtip : 'paramÃ¨tres d\'affichage',
+            panel_title : 'paramÃ¨tres d\'affichage'
         },
         graphtft: {
             label: 'graphTFT',
             boxlabel: 'activater'
         },
-        button_label:  'Appliquer les paramètres d\'affichage',
+        button_label:  'Appliquer les paramÃ¨tres d\'affichage',
         submit: {
-            waitmsg : 'Les paramètres d\'affichage on été mise à jour.',    
-            success : 'Succès.',
+            waitmsg : 'Les paramÃ¨tres d\'affichage on Ã©tÃ© mise Ã  jour.',    
+            success : 'SuccÃ¨s.',
             failure : 'Echec.'
         }
     }
