@@ -1,3 +1,4 @@
+<?cs if:(!?system.remoted || system.remoted == "lircd") ?>
 # Starts LIRC daemon.
 #
 # LIRC is used to control different
@@ -91,4 +92,4 @@ build_remote_args ()
 
 exec /usr/sbin/lircd --nodaemon $REMOTE_LIRCD_ARGS 
 end script
-
+<?cs /if ?>

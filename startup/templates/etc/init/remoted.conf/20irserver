@@ -1,0 +1,20 @@
+<?cs if:(system.remoted == "irserver") ?>
+# Starts Irserver daemon.
+#
+# Irserver is used to control different
+# infrared receivers and transceivers.
+
+description     "Irserver Daemon"
+author          "Gerald Dachs <gda@dachsweb.de>"
+
+start on starting vdr
+stop on runlevel [016]
+
+respawn
+
+script
+test -f /usr/bin/irserver || exit 0
+
+exec /usr/bin/irserver /dev/ttyUSB0
+end script
+<?cs /if ?>
