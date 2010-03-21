@@ -15,6 +15,6 @@ respawn
 script
 test -f /usr/bin/irserver || exit 0
 
-exec /usr/bin/irserver /dev/ttyUSB0
+exec /usr/bin/irserver -http_port 9010 -logfile /var/log/irserver.log -loglevel 3 usb
 end script
 <?cs /if ?>
