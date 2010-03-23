@@ -18,7 +18,7 @@ var locale_fr = {
         diagnose : {
             title: 'Diagnostiquer',
             tabtip: 'Restez informé sur l\'état du système, le suivi des problèmes',
-            content: 'Accès aux fichiers de log importants et aux fichiers de configuration'
+            content: 'Accès aux fichiers des logs importants et aux fichiers de configuration'
         }
     },
     standardform: {
@@ -37,7 +37,7 @@ var locale_fr = {
             tabtip :'Lirc-Paramètres (Récepteur de la télécommande)',
             panel_title : 'Récepteur de la télécommande (LIRC)'
         },
-        help: 'Lorsque vous appuyez sur le bouton "Enregistrer" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur LIRC. Si vous n\'avez pas affecté les boutons de votre télécommande (via remote.conf), VDR vous offrira a travers l\'OSD étape par étape la configuration de chaque touche de votre télécommande. Cette boîte de dialogue disparaîtra après quelques secondes si aucune touche de la télécommande n\'est pressée. Vous pouvez relancer le dialogue en appuyant simplement sur "Enregistrer".',
+        help: 'Lorsque vous appuyez sur le bouton "Enregistrer" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur LIRC. Si vous n\'avez pas affecté les boutons de votre télécommande (via remote.conf), VDR vous offrira à travers l\'OSD, étape par étape, la configuration de chaque touche de votre télécommande. Cette boîte de dialogue disparaîtra après quelques secondes si aucune touche de la télécommande n\'est pressée. Vous pouvez relancer le dialogue en appuyant simplement sur "Enregistrer".',
         combobox: {
              tooltip : {
                  driver: 'Driver',
@@ -52,7 +52,7 @@ var locale_fr = {
         },
         submit: {
             waitmsg : 'Les paramètres LIRC vont maintenant être enregistrés.',    
-            success : 'Les paramètres ont été correctement enregistré.',
+            success : 'Les paramètres ont été correctement enregistrés.',
             failure : 'Erreur pendant l\'enregistrement des paramètres. S\'il vous plaît essayez de nouveau.'
         },
         error: {
@@ -61,7 +61,7 @@ var locale_fr = {
     },
     channels: {
         menutab: {
-            title : 'Liste de Chaîne',
+            title : 'Liste des Chaînes',
             tabtip : 'Réglages des chaînes (modifs et tri des radios et chaînes de télévision)',
             panel_title : '' //unused
         },
@@ -70,7 +70,7 @@ var locale_fr = {
             cname : 'Chaîne Nom',
             cstr : 'Séquence Complete de la Chaîne'
         },
-        grid_title : 'Liste de Chaîne (toute radio et chaînes de TV)' 
+        grid_title : 'Liste des Chaînes (toute radio et chaînes de TV)' 
     },
     frontend: {
         menutab: {
@@ -81,7 +81,7 @@ var locale_fr = {
         label: 'Choix de l\'interface',
         button_label:  'Appliquer les paramètres de l\'interface',
         submit: {
-            waitmsg : 'Les paramètres de l\'interface on été modifiés.',    
+            waitmsg : 'Les paramètres de l\'interface ont été modifiés.',    
             success : 'Succès.',
             failure : 'Échec.'
         }
@@ -89,13 +89,13 @@ var locale_fr = {
     shutdown: {
         menutab: {
             title : 'Extinction',
-            tabtip : 'Choix entre différente méthode d\'extinction',
+            tabtip : 'Choix entre différentes méthodes d\'extinction',
             panel_title : 'VDR Extinction'
         },
         label: 'Choisisser l\'extinction',
         button_label:  'Appliquer les paramètres d\'extinction',
         submit: {
-            waitmsg : 'Les paramètres d\'extinction on été modifié.',    
+            waitmsg : 'Les paramètres d\'extinction ont été modifiés.',    
             success : 'Succès.',
             failure : 'Echec.'
         },
@@ -160,7 +160,7 @@ var locale_fr = {
         help: 'Définir les partages NFS depuis d\'autres hôtes qui devraient être utilisés par VDR. Les répertoires doivent être qualifiés comme "serveur: / chemin". Le bouton "Appliquer" soutient effectivement les modifications de votre configuration locale. VDR les utilisera au prochain redémarrage.',
             menutab: {
                 title : 'NFS',
-                tabtip : 'Entretien des montages NFS et partages',
+                tabtip : 'Entretien des montages NFS et partages'
             },
             labels: {
                 newDir : 'Répertoire',
@@ -186,7 +186,7 @@ var locale_fr = {
         overscan_slider_label : 'Nvidia compensation Overscan',
         button_label : 'Appliquer la valeur',
         submit: {
-            waitmsg : 'Nvidia overscan paramètres mise à jour.',
+            waitmsg : 'Nvidia overscan paramètres mis à jour.',
             success : 'Succès.',
             failure : 'Echec.'
         }
@@ -225,7 +225,7 @@ var locale_fr = {
             },
             system_logs: {
                 title :'Logs des Fichiers Systeme',
-                description : 'Les fichiers de log importants'
+                description : 'Les fichiers des logs importants'
             },
             xbmc: {
                 title : 'XBMC-Plantage',
@@ -266,7 +266,7 @@ var locale_fr = {
         label: 'Choisir le délai',
         button_label:  'Appliquer le délai',
         submit: {
-            waitmsg : 'Le paramètre du délai ont été mise à jour.',    
+            waitmsg : 'Le paramètre du délai a été mis à jour.',    
             success : 'Succès.',
             failure : 'Echec.'
         },
@@ -285,7 +285,7 @@ var locale_fr = {
         },
         button_label:  'Appliquer les paramètres d\'affichage',
         submit: {
-            waitmsg : 'Les paramètres d\'affichage on été mise à jour.',    
+            waitmsg : 'Les paramètres d\'affichage ont été mis à jour.',    
             success : 'Succès.',
             failure : 'Echec.'
         }

@@ -160,7 +160,7 @@ var locale_de = {
 	    help: 'Hier können NFS Freigaben von anderen Rechnern eingebunden werden. Die Verzeichnisse müssen in der Form "server:/pfad" angegeben werden. Der Button "Übernehmen" trägt sie tatsächlich in die lokale Konfiguration ein. Beim nächsten Neustart des VDR stehen sie dann zur Verfügung.',
             menutab: {
                 title : 'NFS',
-                tabtip : 'Verwalten der NFS Mounts und Freigaben',
+                tabtip : 'Verwalten der NFS Mounts und Freigaben'
             },
             labels: {
                 newDir : 'Entferntes Verzeichnis',
