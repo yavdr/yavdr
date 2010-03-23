@@ -4,7 +4,7 @@ if [ -n "$ASPECT_RATIO" ]; then
 fi 
 
 if [ "$USE_AUTOCROP" = "1" ]; then
-  XINEOPTS="$XINEOPTS --post autocrop:enable_autodetect=0,enable_subs_detect=1,soft_start=1,stabilize=1"
+  XINEOPTS="$XINEOPTS --post autocrop:enable_autodetect=1,enable_subs_detect=1,soft_start=1,stabilize=1"
 fi 
 
 while [ ! -e /tmp/vdr-xine/stream ] ; do sleep 1 ; done
