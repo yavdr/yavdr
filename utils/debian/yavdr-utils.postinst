@@ -3,7 +3,7 @@
 case "$1" in
     configure)
        /usr/bin/service tntnet restart || /bin/true
-        signal-event post-upgrade
+        [ -f /var/lib/yavdrdb.hdf ] && signal-event post-upgrade
         ;;
 esac
 

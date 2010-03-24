@@ -9,7 +9,7 @@ case "$1" in
 
         chmod +x /usr/share/yavdr/events/actions/*
 
-        signal-event post-upgrade
+        [ -f /var/lib/yavdrdb.hdf ] && signal-event post-upgrade
 
         if ! grep "vdr.*initctl" /etc/sudoers >/dev/null; then
           echo >>/etc/sudoers
