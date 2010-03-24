@@ -21,5 +21,9 @@ if [ "0$(cat /tmp/powerbtn 2>/dev/null)" -lt "0$(($(date +%s)-1))" ]; then
 fi
 
 # If all else failed, just initiate a plain shutdown.
+<?cs elif:(system.shutdown == "reboot") ?>
+/usr/sbin/grub-set-default PowerOff; /sbin/reboot
+<?cs else ?>
 /sbin/shutdown -h now "Power button pressed"
+<?cs /if ?>
 
