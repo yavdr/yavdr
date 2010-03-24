@@ -21,6 +21,5 @@ if [ "0$(cat /tmp/powerbtn 2>/dev/null)" -lt "0$(($(date +%s)-1))" ]; then
 fi
 
 # If all else failed, just initiate a plain shutdown.
-#/sbin/shutdown -h now "Power button pressed"
-/usr/bin/svdrpsend hitk power
+/sbin/shutdown -h now "Power button pressed"
 
