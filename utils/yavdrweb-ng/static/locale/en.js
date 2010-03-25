@@ -1,3 +1,36 @@
+function LLForLangExists(paramArray, lang){
+    var success = true;
+    var validstring = "locale_" + lang; //global language var
+    for (var z=0; z < paramArray.length; z++){
+        validstring += "." + paramArray[z];
+        var check = eval("typeof " + validstring + ";");
+        if (check == "undefined"){
+            success = false;
+            break;
+        }
+    }
+    return success;
+}
+
+function getLL( param ){
+    var paramArray = param.split(".");
+    if (!LLForLangExists(paramArray, yavdrwebGlobalInfo.lang)){
+        label = "[undefined:"+param+"]";
+        //check if we can find the label in English language labels
+        if ( yavdrwebGlobalInfo.lang != "en" && LLForLangExists(paramArray, "en")){
+            label = "[untranslated] " + eval( "locale_en." + param );
+            //alert("Hint for translators: locale." + param + " was not yet translated to language "+lang+".");
+        }
+        else{
+            alert("locale_en." + param + " does not exist in English language labels.");
+        }
+    }
+    else {
+        label = eval( "locale_" + yavdrwebGlobalInfo.lang + "." + param );
+    }
+    return label;
+}
+
 var locale_en = {
     meta_lang: {
         local : 'Englisch',
@@ -100,10 +133,10 @@ var locale_en = {
             failure : 'Failure.'
         },
         items: {
-        	s3: 'suspend to RAM',
-        	s4: 'suspend to DISK',
-        	s5: 'shutdown',
-        	reboot: 'reboot "PowerOff" kernel'
+            s3: 'suspend to RAM',
+            s4: 'suspend to DISK',
+            s5: 'shutdown',
+            reboot: 'reboot "PowerOff" kernel'
         }
     },
     upload: {
@@ -157,7 +190,7 @@ var locale_en = {
             panel_title : 'Network configuration'
         },
         nfs: {
-	    help: 'Define the nfs shares from other hosts that should be used from VDR. Directories have to be qualified like "server:/path". The button "Apply" actually submits the changes to your local configuration. VDR uses them after next restart.',
+            help: 'Define the nfs shares from other hosts that should be used from VDR. Directories have to be qualified like "server:/path". The button "Apply" actually submits the changes to your local configuration. VDR uses them after next restart.',
             menutab: {
                 title : 'NFS',
                 tabtip : 'Maintain NFS mounts and shares'
@@ -280,9 +313,9 @@ var locale_en = {
             panel_title : 'display settings'
         },
         graphtft: {
-        	label: 'graphTFT',
-        	boxlabel: 'activated'
-       	},
+            label: 'graphTFT',
+            boxlabel: 'activated'
+        },
         button_label:  'Apply display settings',
         submit: {
             waitmsg : 'Display settings are updated.',    
