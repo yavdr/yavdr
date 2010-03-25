@@ -25,8 +25,9 @@ function getLL( param ){
             alert("locale_en." + param + " does not exist in English language labels.");
         }
     }
-    else
+    else {
         label = eval( "locale_" + yavdrwebGlobalInfo.lang + "." + param );
+    }
     return label;
 }
 
@@ -203,8 +204,7 @@ Ext.onReady(function() {
                     addGroupPanelTab({
                         section: "webfrontend",
                         items:   getWebFrontendForm
-                    }),
-                    	
+                    })
                 ]
             },{
             /*
