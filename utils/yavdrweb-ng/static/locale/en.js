@@ -49,7 +49,7 @@ var locale_en = {
             content: 'Welcome to the yaVDR Web Frontend!'
         },
         diagnose : {
-            title: 'Diagnose',
+            title: 'Diagnostics',
             tabtip: 'Stay informed about your system status, track problems',
             content: 'Access to important log files and configuration files'
         }
@@ -249,7 +249,7 @@ var locale_en = {
         },
         section : {
             system_info: {
-                title : 'System-Informationen', 
+                title : 'System information', 
                 description : 'Network status, system load, file system usage, kernel',
                 ifconfig : 'Network Status',
                 top: 'System Load',
@@ -261,7 +261,7 @@ var locale_en = {
                 description : 'Important system Logfiles'
             },
             xbmc: {
-                title : 'XBMC-Crashes',
+                title : 'XBMC log files',
                 description : 'Find the reason for XBMC crashes or other XBMC problems'
             },
             lirc: {
@@ -269,7 +269,7 @@ var locale_en = {
                 description : 'Check the current configuration of LIRC'
             },
             vdr: {
-                title : 'VDR-Konfiguration',
+                title : 'VDR Configuration',
                 description : 'Check the current configuration of VDR'
             },
             xorg: {
