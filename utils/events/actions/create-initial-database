@@ -6,6 +6,6 @@ for i in /usr/share/yavdr/defaults/*.hdf; do
 done
 
 language=`echo $LANG | cut -d_ -f1`
-[ -f /usr/lib/yavdrweb/static/locale/$language.js ] || dbset "webfrontend.language=$language"
+[ -f /usr/lib/yavdrweb/static/locale/$language.js ] && dbset "webfrontend.language=$language"
 
 exit 0
