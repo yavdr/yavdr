@@ -1,5 +1,5 @@
-DPkg::Post-Invoke {"update-rc.d vdr remove 2>/dev/null >/dev/null||/bin/true"};
-DPkg::Post-Invoke {"update-rc.d nodm remove 2>/dev/null >/dev/null||/bin/true"};
-DPkg::Post-Invoke {"update-rc.d lirc remove 2>/dev/null >/dev/null||/bin/true"};
-DPkg::Post-Invoke {"update-rc.d dkms_autoinstaller remove 2>/dev/null >/dev/null||/bin/true"};
+DPkg::Post-Invoke {"update-rc.d -f vdr remove 2>/dev/null >/dev/null||/bin/true"};
+DPkg::Post-Invoke {"update-rc.d -f nodm remove 2>/dev/null >/dev/null||/bin/true"};
+DPkg::Post-Invoke {"update-rc.d -f lirc remove 2>/dev/null >/dev/null||/bin/true"};
+DPkg::Post-Invoke {"update-rc.d -f dkms_autoinstaller remove 2>/dev/null >/dev/null||/bin/true"};
 DPkg::Post-Invoke {"rm -f /lib/udev/rules.d/85-lirc.rules 2>/dev/null >/dev/null||/bin/true"};
