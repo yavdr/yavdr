@@ -1,4 +1,4 @@
-yaVDR-startup Revision History
+yaVDR-startup release history
 ---------------------------------------
 
 NEW
@@ -7,8 +7,9 @@ NEW
 FIX
 - xterm starts now as system owner
 -----------------
-17.Feb.2010
+Version 0.1.1 (18.Feb.2010)
 -----------------
+startup with more flexible network interface name 
 cpufrequtils didn't get enabled,
 start-xine bugfix (547),
 added missing autofs dependency

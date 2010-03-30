@@ -1,4 +1,4 @@
-yaVDR-utils Revision History
+yaVDR-utils release history
 ---------------------------------------
 
 NEW 
@@ -14,7 +14,7 @@ Webfrontend:
 - XBMC as vdr-frontend (now possible to switch between xine, vdr-sxfe, XBMC)
 - add favicon to Webfrontend
 -----------------
-17.Feb.2010
+Version 0.1.1 (18.Feb.2010)
 -----------------
 - splitted xorg.conf.yavdr into small parts; will now get recreated by
 post-upgrade too
@@ -30,6 +30,7 @@ post-upgrade too
 - added signal-event post-upgrade in debian/postinst
 - web-frontend:
   * updating Dutch translation (thanks to matchless)
+  * added Italian translation (thanks to Diego Pierotto)
   * setlirchw: don't delete LIRC keys from db on LIRC reset, use empty
 values for keys instead
 - yavdr-utils: small fixes for events (post-upgrade) + postinst
@@ -46,6 +47,7 @@ adding Xsession.vdr and Xorg.1.log to X-Server tab
 - yavdr-utils: removing hardcoded OSDLanguage = de_DE from setup.conf
 template (VDR will determine OSD language from locales)
 - s3 script fix
+- 
 -----------------
 4.Feb.2010
 -----------------

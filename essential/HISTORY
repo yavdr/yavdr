@@ -1,11 +1,11 @@
-yaVDR-essential Revision History
+yaVDR-essential release history
 ---------------------------------------
 
 added touchscreen driver
 added vdr-plugin-dummydevice
 remove suspendoutput
 -----------------
-17.Feb.2010
+Version 0.1.1 (17.Feb.2010)
 -----------------
 added nvram-wakeup,
 added lirc-nct677x-src
