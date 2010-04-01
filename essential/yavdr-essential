@@ -34,6 +34,7 @@ nvram-wakeup
 smbfs
 ssh
 tntnet
+update-manager-core
 unclutter
 ureadahead
 vdr
