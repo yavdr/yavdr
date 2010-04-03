@@ -111,13 +111,37 @@ var locale_en = {
         combobox: {
              tooltip : {
                  driver: 'Driver',
-                 lirc_driver: 'LIRC Driver'
+                 lirc_driver: 'Inputlirc Driver'
              },
              emptytext: 'Please choose a receiver for your remote control...',
              label: 'Receiver'
         },
         submit: {
-            waitmsg : 'LIRC receiver settings are being saved.',    
+            waitmsg : 'Inputlirc receiver settings are being saved.',    
+            success : 'The settings were successfully saved.',
+            failure : 'Error on saving settings. Please try again.'
+        },
+        error: {
+            json_decode : 'Could not decode JSON receiver list'
+        }
+    },
+    irserver: {
+        menutab: {
+            title : 'IRServer',
+            tabtip :'IRServer-Settings (Remote Control Receiver)',
+            panel_title : 'Remote Control Receiver (IRServer)'
+        },
+        help: 'When you press the button "Save" VDR will be restarted to notify VDR about the changed IRServer receiver settings. .......',
+        combobox: {
+             tooltip : {
+                 driver: 'Driver',
+                 lirc_driver: 'IRDriver Driver'
+             },
+             emptytext: 'Please choose a receiver for your remote control...',
+             label: 'Receiver'
+        },
+        submit: {
+            waitmsg : 'IRServer receiver settings are being saved.',    
             success : 'The settings were successfully saved.',
             failure : 'Error on saving settings. Please try again.'
         },

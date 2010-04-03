@@ -37,9 +37,8 @@ function populateInputlircForm( form, inputlircData ){
     }
 }
 
-
 function getInputlircForm(){
-    var myform = new Ext.FormPanel({
+    var myform = new Ext.form.RemoteFormPanel({
         frame: true,
         plain: false,
         border: true,
@@ -51,7 +50,17 @@ function getInputlircForm(){
         //width:300, height: 300,
         layout: 'form',
 
-        items:[
+        items:[{
+                xtype: 'radio',
+                name: 'remotetype',
+                fieldLabel: 'Inputlirc aktivieren',
+                handler: function(checkbox, checked) {
+                    if (checked) {
+                        var panel = this.findParentByType('remotetabpanel');
+                        panel.enableRemoteTab(this);
+                    }
+                }
+            },
             new Ext.form.ComboBox({ 
                id : 'inputlirc_receiver_combobox',
                tpl: '<tpl for="."><div ext:qtip="' + 
@@ -72,7 +81,8 @@ function getInputlircForm(){
                triggerAction: 'all',
                emptyText: getLL("inputlirc.combobox.emptytext"),
                fieldLabel: getLL("inputlirc.combobox.label"),
-               selectOnFocus: true
+               selectOnFocus: true,
+               disabled: true
            })
         ]
     });
@@ -95,7 +105,8 @@ function getInputlircForm(){
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("inputlirc.submit.failure"));
                 }
             })
-        }
+        },
+        disabled: true
     });
 
     Ext.Ajax.request({

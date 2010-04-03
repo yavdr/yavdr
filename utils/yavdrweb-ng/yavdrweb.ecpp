@@ -69,6 +69,7 @@ if (lang == "")
         <script type="text/javascript" src="static/config_tabs/remote.js"></script>
         <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
         <script type="text/javascript" src="static/config_tabs/inputlirc.js"></script>
+        <script type="text/javascript" src="static/config_tabs/irserver.js"></script>
         <script type="text/javascript" src="static/config_tabs/channels.js"></script>
         <script type="text/javascript" src="static/config_tabs/diagnose.js"></script>
         <script type="text/javascript" src="static/config_tabs/system.js"></script>

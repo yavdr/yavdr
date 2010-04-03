@@ -43,20 +43,19 @@ function populateLircForm( form, lircData ){
 }
 
 function getLircForm(){
-    var myform = new Ext.FormPanel({
-        frame: true,
-        plain: false,
-        border: true,
-        bodyStyle:'padding:15px 5px 0',
-        labelWidth: 130,
-        defaults: {width: 400},
-        defaultType: 'textfield',
-        buttonAlign: 'left',
-        //width:300, height: 300,
-        layout: 'form',
-
-        items:[
-           new Ext.form.ComboBox({ 
+    var myform = new Ext.form.RemoteFormPanel({
+        items:[{
+                xtype: 'radio',
+                name: 'remotetype',
+                fieldLabel: 'LIRC aktivieren',
+                handler: function(checkbox, checked) {
+                    if (checked) {
+                        var panel = this.findParentByType('remotetabpanel');
+                        panel.enableRemoteTab(this);
+                    }
+                }
+            },
+            new Ext.form.ComboBox({ 
                id : 'lirc_receiver_combobox',
                tpl: '<tpl for="."><div ext:qtip="' + 
                        getLL("lirc.combobox.tooltip.driver") + 
@@ -76,7 +75,8 @@ function getLircForm(){
                triggerAction: 'all',
                emptyText: getLL("lirc.combobox.emptytext"),
                fieldLabel: getLL("lirc.combobox.label"),
-               selectOnFocus: true
+               selectOnFocus: true,
+               disabled: true
            }),
            {
                 id: 'serial_port_radio_group',
@@ -88,11 +88,12 @@ function getLircForm(){
                     {id: 'rb1', boxLabel: getLL("lirc.serial_radiogroup.boxlabel_none"), name: 'serial_port', inputValue: ''},
                     {id: 'rb2', boxLabel: '/dev/ttyS0', name: 'serial_port', inputValue: '/dev/ttyS0'},
                     {id: 'rb3', boxLabel: '/dev/ttyS1', name: 'serial_port', inputValue: '/dev/ttyS1'}
-                ]
+                ],
+                disabled: true
             }
         ]
     });
-
+    
     var submit = myform.addButton({
         text: getLL("standardform.button.save"),
         //formBind: true,
@@ -111,7 +112,8 @@ function getLircForm(){
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.submit.failure"));
                 }
             })
-        }
+        },
+        disabled: true
     });
   
     Ext.Ajax.request({
