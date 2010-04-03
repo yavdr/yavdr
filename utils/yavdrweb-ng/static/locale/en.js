@@ -21,11 +21,13 @@ function getLL( param ){
             label = "[untranslated] " + eval( "locale_en." + param );
             //alert("Hint for translators: locale." + param + " was not yet translated to language "+lang+".");
         }
-        else{
+        else
+        {
             alert("locale_en." + param + " does not exist in English language labels.");
         }
     }
-    else {
+    else
+    {
         label = eval( "locale_" + yavdrwebGlobalInfo.lang + "." + param );
     }
     return label;
@@ -64,6 +66,13 @@ var locale_en = {
             wait: 'Please wait...'
         }
     },
+    remote: {
+        menutab: {
+            title : 'Remotes',
+            tabtip :'Remote-Settings (Remote Control Receiver)',
+            panel_title : 'Remote Control Receiver'
+        },
+    },
     lirc: {
         menutab: {
             title : 'LIRC',
@@ -82,6 +91,30 @@ var locale_en = {
         serial_radiogroup: {
              label : 'Serial Interface',
              boxlabel_none : 'none'
+        },
+        submit: {
+            waitmsg : 'LIRC receiver settings are being saved.',    
+            success : 'The settings were successfully saved.',
+            failure : 'Error on saving settings. Please try again.'
+        },
+        error: {
+            json_decode : 'Could not decode JSON receiver list'
+        }
+    },
+    inputlirc: {
+        menutab: {
+            title : 'Inputlirc',
+            tabtip :'Inputlirc-Settings (Remote Control Receiver)',
+            panel_title : 'Remote Control Receiver (LIRC)'
+        },
+        help: 'When you press the button "Save" VDR will be restarted to notify VDR about the changed inputlirc receiver settings. .......',
+        combobox: {
+             tooltip : {
+                 driver: 'Driver',
+                 lirc_driver: 'LIRC Driver'
+             },
+             emptytext: 'Please choose a receiver for your remote control...',
+             label: 'Receiver'
         },
         submit: {
             waitmsg : 'LIRC receiver settings are being saved.',    

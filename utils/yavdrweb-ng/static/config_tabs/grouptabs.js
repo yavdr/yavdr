@@ -1,50 +1,50 @@
 Ext.onReady(function() {
-  //http://www.extjs.com/forum/showthread.php?t=42990&page=2
-  Ext.form.SliderField = Ext.extend(Ext.Slider, {
-    isFormField: true,
-    initComponent: function() {
-      this.originalValue = this.value;
-      Ext.form.SliderField.superclass.initComponent.call(this);
-    },
-    onRender: function(){
-      Ext.form.SliderField.superclass.onRender.apply(this, arguments);
-      this.hiddenEl = this.el.createChild({
-          tag: 'input', 
-          type: 'text', 
-          name: this.name + "_dummy"|| this.id + "_dummy", 
-          disabled:true, 
-          style: 'position: relative; float:left; left: 200px; margin-top:-20px; font-size:10px; width: 30px;'
-        });
-      this.hiddenEl2 = this.el.createChild({
-        tag: 'input', 
-        type: 'hidden', 
-        name: this.name || this.id 
-      });
-    },
-    setValue: function(v) {
-      v = parseInt(v);
-      if(this.maxValue && v > this.maxValue) v = this.maxValue;
-      if(this.minValue && v < this.minValue) v = this.minValue;
-      Ext.form.SliderField.superclass.setValue.apply(this, [v]);
-      if(this.rendered){
-        this.hiddenEl.dom.value = v;
-        this.hiddenEl2.dom.value = v;
-      }
-    },
-    reset: function() {
-      this.setValue(this.originalValue);
-      this.clearInvalid();
-    },
-    getName: function() {
-      return this.name;
-    },
-    validate: function() {
-      return true;
-    },
-    markInvalid: Ext.emptyFn,
-    clearInvalid: Ext.emptyFn
-  });
-  Ext.reg('sliderfield', Ext.form.SliderField);
+    //http://www.extjs.com/forum/showthread.php?t=42990&page=2
+    Ext.form.SliderField = Ext.extend(Ext.Slider, {
+        isFormField: true,
+        initComponent: function() {
+            this.originalValue = this.value;
+            Ext.form.SliderField.superclass.initComponent.call(this);
+        },
+        onRender: function(){
+            Ext.form.SliderField.superclass.onRender.apply(this, arguments);
+            this.hiddenEl = this.el.createChild({
+                tag: 'input', 
+                type: 'text', 
+                name: this.name + "_dummy"|| this.id + "_dummy", 
+                disabled:true, 
+                style: 'position: relative; float:left; left: 200px; margin-top:-20px; font-size:10px; width: 30px;'
+            });
+            this.hiddenEl2 = this.el.createChild({
+                tag: 'input', 
+                type: 'hidden', 
+                name: this.name || this.id 
+            });
+        },
+        setValue: function(v) {
+            v = parseInt(v);
+            if(this.maxValue && v > this.maxValue) v = this.maxValue;
+            if(this.minValue && v < this.minValue) v = this.minValue;
+            Ext.form.SliderField.superclass.setValue.apply(this, [v]);
+            if(this.rendered){
+                this.hiddenEl.dom.value = v;
+                this.hiddenEl2.dom.value = v;
+            }
+        },
+        reset: function() {
+            this.setValue(this.originalValue);
+            this.clearInvalid();
+        },
+        getName: function() {
+            return this.name;
+        },
+        validate: function() {
+            return true;
+        },
+        markInvalid: Ext.emptyFn,
+        clearInvalid: Ext.emptyFn
+    });
+    Ext.reg('sliderfield', Ext.form.SliderField);
     
 	Ext.QuickTips.init();
 
@@ -148,9 +148,9 @@ Ext.onReady(function() {
                         ]
                     },
                     addGroupPanelTab({
-                        section: "lirc",
-                        layout: "vbox",
-                        items:   getLircForm
+                        section: "remote",
+                        //layout: "vbox",
+                        items:   getRemoteForm
                     }),
 			    	addGroupPanelTab({
 				    	section: "timeout",

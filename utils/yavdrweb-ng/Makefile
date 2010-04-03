@@ -9,7 +9,8 @@ yavdrweb.so: ../common/make_dirs.o \
              set_lirchw.o set_file_content.o set_signal.o set_hdf_value.o \
              get_lirchwdb.o get_svdrp_response.o get_file_content.o \
              get_shell_response.o get_hdf_value.o \
-             get_autofs_config.o set_autofs_config.o
+             get_autofs_config.o set_autofs_config.o \
+             get_inputlirc.o
 	${CXX} -o $@ $^ ${LDFLAGS}
 
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp .png
@@ -36,7 +37,7 @@ LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lpam #-lcxxtools
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -c $<
 
 clean:
-	@rm -f *.o *.so 
+	@rm -f *.o *.so *.cpp
 
 install:
 	@install -d $(DESTDIR)/usr/lib/yavdrweb

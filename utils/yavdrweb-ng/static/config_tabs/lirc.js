@@ -44,14 +44,17 @@ function populateLircForm( form, lircData ){
 
 function getLircForm(){
     var myform = new Ext.FormPanel({
-        frame: false,
+        frame: true,
         plain: false,
-        border: false,
+        border: true,
         bodyStyle:'padding:15px 5px 0',
         labelWidth: 130,
         defaults: {width: 400},
         defaultType: 'textfield',
         buttonAlign: 'left',
+        //width:300, height: 300,
+        layout: 'form',
+
         items:[
            new Ext.form.ComboBox({ 
                id : 'lirc_receiver_combobox',
@@ -110,7 +113,7 @@ function getLircForm(){
             })
         }
     });
-    
+  
     Ext.Ajax.request({
         url: 'get_lirchwdb',
         timeout: 3000,
@@ -129,11 +132,14 @@ function getLircForm(){
             populateLircForm( this, lircData );
         }
     });
+
+    //return myform;
     
     return [ 
         myform,
         new Ext.Panel({
             width: "100%",
+            layout: 'fit',
             frame: false,
             border: false,
             bodyStyle:'padding:5px 5px 0',

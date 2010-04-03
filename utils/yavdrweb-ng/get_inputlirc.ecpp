@@ -1,0 +1,51 @@
+<%pre>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <ctype.h>
+#include <ClearSilver.h>
+#include "../common.h"
+
+using namespace std;
+</%pre>
+<& authenticate >
+<%cpp>
+  reply.setHeader ("Cache-Control", "no-cache", false);
+
+  string current_inputlirc_path = "";
+  string str;
+  int index = 0;
+  int current_lirchw_id = -1;
+  HDF *hdf = NULL;
+  NEOERR *err;
+
+  int findex = 0;
+
+  //get current inputlirc settings from database
+  if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+  {
+    nerr_log_error(err);
+  }
+  else
+  {
+    current_inputlirc_path = hdf_get_value(hdf, "system.inputlirc.path", "");
+  }
+  
+  reply.out() << "\n{\n                \"receiverlist\" : [\n";
+  reply.out() << "                    [ \"\", \"-\" ],\n"; // no receiver, reset settings
+
+  reply.out() << "                    [ \"pci-0000:00:1a.0-usb-0:2.2:1.0-event-kbd\", \"pci-0000:00:1a.0-usb-0:2.2:1.0-event-kbd\" ],\n";
+  reply.out() << "                    [ \"pci-0000:00:1a.0-usb-0:2.3:1.0-event-mouse\", \"pci-0000:00:1a.0-usb-0:2.3:1.0-event-mouse\" ],\n";
+  reply.out() << "                    [ \"pci-0000:00:1a.0-usb-0:2.3:1.0-mouse\", \"pci-0000:00:1a.0-usb-0:2.3:1.0-mouse\" ],\n";
+  reply.out() << "                    [ \"pci-0000:00:1d.0-usb-0:2:1.0-event-mouse\", \"pci-0000:00:1d.0-usb-0:2:1.0-event-mouse\" ],\n";
+  reply.out() << "                    [ \"pci-0000:00:1d.0-usb-0:2:1.0-mouse\", \"pci-0000:00:1d.0-usb-0:2:1.0-mouse\" ],\n";
+  reply.out() << "                    [ \"platform-i8042-serio-0-event-kbd\", \"platform-i8042-serio-0-event-kbd\" ],\n";
+  reply.out() << "                    [ \"platform-i8042-serio-1-event-mouse\", \"platform-i8042-serio-1-event-mouse\" ],\n";
+  reply.out() << "                    [ \"platform-i8042-serio-1-mouse\", \"platform-i8042-serio-1-mouse\" ]\n";
+
+  reply.out() << "                ],\n"
+              << "                \"current_receiver\" : \"";
+  reply.sout()<< current_inputlirc_path;  //we must escape special chars via sout (xss)
+  reply.out() << "\"\n}\n";
+
+</%cpp>
