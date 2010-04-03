@@ -63,13 +63,6 @@ function getInputlircForm(){
             },
             new Ext.form.ComboBox({ 
                id : 'inputlirc_receiver_combobox',
-               tpl: '<tpl for="."><div ext:qtip="' + 
-                       getLL("lirc.combobox.tooltip.driver") + 
-                       ': {driver}<br/'+'>' + 
-                       getLL("lirc.combobox.tooltip.lirc_driver") + 
-                       ': {lirc_driver}<br/'+
-                       '>HW-Default: {hw_default}<'+'br/'+
-                       '>Lircd-Conf: {lircd_conf}" class="x-combo-list-item">{description}</div></tpl>',
                //name: ... used in POST request
                hiddenName: 'receiver_id', //key, defined in set_lirchw.ecpp, used in POST request
                //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
@@ -103,6 +96,32 @@ function getInputlircForm(){
                 },
                 failure:function(form, action) {
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("inputlirc.submit.failure"));
+                }
+            })
+        },
+        disabled: true
+    });
+
+
+    var submit = myform.addButton({
+        text: "reload",
+        handler: function() {
+            Ext.Ajax.request({
+                url: 'get_inputlirc',
+                timeout: 3000,
+                method: 'GET',
+                scope: myform,
+                success: function(xhr) {
+                    //alert('Response is "' + xhr.responseText + '"');
+                    var inputlircData = 0;
+                    try {
+                        inputlircData = Ext.util.JSON.decode( xhr.responseText );
+                        //Ext.MessageBox.alert('Success', 'Decode of lircdata OK: ' + lircData.current_receiver);
+                    }
+                    catch (err) {
+                        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.error.json_decode"));
+                    }            
+                    populateInputlircForm( this, inputlircData );
                 }
             })
         },
