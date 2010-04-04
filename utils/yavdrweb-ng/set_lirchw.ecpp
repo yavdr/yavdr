@@ -16,6 +16,7 @@ using namespace std;
   //For more robustness, avoid to define integer vars in here, better cast string to int later!!!
   receiver_id;
   serial_port;
+  remotetype;
 </%args><%cpp>
   int i_receiver_id = -1;
   string str;
@@ -26,7 +27,7 @@ using namespace std;
     "/usr/share/lirc/extras/more_remotes.hwdb"
   };
 
-  if (receiver_id != "")
+  if (receiver_id != "" && remotetype == "lirc")
   {
     //security check for plausible value of serial_port
     if (serial_port != "/dev/ttyS0" && serial_port != "/dev/ttyS1")
@@ -51,6 +52,7 @@ using namespace std;
             if (err != STATUS_OK){
               msg = "Error on hdf_remove_tree";
             }*/
+            err = hdf_set_valuef(hdf, "system.remote=");
             err = hdf_set_valuef(hdf, "system.lirchw.serial_port=");
             err = hdf_set_valuef(hdf, "system.lirchw.description=");
             err = hdf_set_valuef(hdf, "system.lirchw.driver=");
@@ -64,7 +66,7 @@ using namespace std;
               msg = "Error on hdf_write_file";
             }
             hdf_destroy(&hdf);
-            int ret = system("/usr/bin/signal-event change-lirc-hardware");
+            int ret = system("/usr/bin/signal-event change-remote-hardware");
             success = "true";
             msg = "OK. Resetting LIRC settings.signal-event lirchw-changed sent.";
         }
@@ -127,6 +129,13 @@ using namespace std;
                   }
                   bof = found + 1;
                 }
+                
+                err = hdf_set_valuef(hdf, "system.remote=lirc");
+                if (err != STATUS_OK) {
+                    msg = "Error on hdf_set_value";
+                    break;
+                }
+                      
                 if  ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK)
                 {
                   nerr_log_error(err);
@@ -134,7 +143,7 @@ using namespace std;
                 }
                 else
                 {
-                   int ret = system("/usr/bin/signal-event change-lirc-hardware");
+                   int ret = system("/usr/bin/signal-event change-remote-hardware");
                    success = "true";
                    msg = "OK. signal-event lirchw-changed";
                 }

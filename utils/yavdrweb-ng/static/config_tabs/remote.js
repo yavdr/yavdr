@@ -15,6 +15,9 @@ Ext.form.RemoteFormPanel = Ext.extend(Ext.form.FormPanel, {
     enable: function() {
         this.items.each(function(e) {
             e.enable();
+            if (e.name == 'remotetype') {
+                e.setValue(true);
+            }
         });
         Ext.each(this.buttons, function(e) {
             e.enable();

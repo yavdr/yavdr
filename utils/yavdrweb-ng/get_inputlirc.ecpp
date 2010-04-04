@@ -19,6 +19,7 @@ using namespace std;
     unsigned char isDir =0x4;
 
     string current_inputlirc_path = "";
+    string current_remote = "";
     string str;
     int index = 0;
     int current_lirchw_id = -1;
@@ -38,6 +39,7 @@ using namespace std;
     else
     {
         current_inputlirc_path = hdf_get_value(hdf, "system.inputlirc.path", "");
+        current_remote         = hdf_get_value(hdf, "system.remote", "");
     }
   
     reply.out() << "\n{\n                \"receiverlist\" : [\n";
@@ -49,7 +51,7 @@ using namespace std;
         while (ep = readdir (dp))
         {
             if (ep->d_type != isDir) {
-                reply.out() << "                    ,[ \"";
+                reply.out() << "                    ,[ \"/dev/input/by-path/";
                 reply.sout()<< ep->d_name;
                 reply.out() << "\", \"";
                 reply.sout()<< ep->d_name;
@@ -62,6 +64,9 @@ using namespace std;
     reply.out() << "                ],\n"
                 << "                \"current_receiver\" : \"";
     reply.sout()<< current_inputlirc_path;  //we must escape special chars via sout (xss)
+    reply.out() << "\",\n"
+              << "                \"current_remote\" : \"";
+    reply.sout()<< current_remote;  //we must escape special chars via sout (xss)
     reply.out() << "\"\n}\n";
 
 </%cpp>

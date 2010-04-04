@@ -40,6 +40,10 @@ function populateLircForm( form, lircData ){
         var currentRecord = receiverStore.getById( lircData.current_receiver );
         adjustSerialSettings(currentRecord.get('lirc_driver'), currentRecord.get('driver'));
     }
+    
+    if (lircData.current_remote == 'lirc') {
+        form.enable();
+    }
 }
 
 function getLircForm(){
@@ -47,6 +51,7 @@ function getLircForm(){
         items:[{
                 xtype: 'radio',
                 name: 'remotetype',
+                inputValue: 'lirc',
                 fieldLabel: 'LIRC aktivieren',
                 handler: function(checkbox, checked) {
                     if (checked) {
@@ -135,8 +140,6 @@ function getLircForm(){
         }
     });
 
-    //return myform;
-    
     return [ 
         myform,
         new Ext.Panel({
@@ -145,7 +148,7 @@ function getLircForm(){
             frame: false,
             border: false,
             bodyStyle:'padding:5px 5px 0',
-            html: '<p style="font-size: 12px;">' + getLL("lirc.help") + "</p>"
+            
         })
     ];
 }

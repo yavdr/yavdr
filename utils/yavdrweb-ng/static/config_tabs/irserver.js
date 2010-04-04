@@ -1,4 +1,8 @@
 function populateIRServerForm( form, irserverData ){
+
+    if (irserverData.current_remote == 'irserver') {
+        form.enable();
+    }
 }
 
 function getIRServerForm(){
@@ -18,9 +22,12 @@ function getIRServerForm(){
                 xtype: 'radio',
                 name: 'remotetype',
                 fieldLabel: 'IRServer aktivieren',
+                inputValue: 'irserver',
                 handler: function(checkbox, checked) {
-                    var panel = this.findParentByType('remotetabpanel');
-                    panel.enableRemoteTab(this);
+                    if (checked) {
+                        var panel = this.findParentByType('remotetabpanel');
+                        panel.enableRemoteTab(this);
+                    }
                 }
         }]
     });

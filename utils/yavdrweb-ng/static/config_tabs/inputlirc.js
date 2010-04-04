@@ -32,8 +32,12 @@ function populateInputlircForm( form, inputlircData ){
     */
 
     //if no receiver was chosen before, don't preselect
-    if (inputlircData.current_receiver != ''){
-        cbox.value = lircData.current_receiver;
+    if (inputlircData.current_receiver != '' ){
+        cbox.value = inputlircData.current_receiver;
+    }
+    
+    if (inputlircData.current_remote == 'inputlirc') {
+        form.enable();
     }
 }
 
@@ -54,6 +58,7 @@ function getInputlircForm(){
                 xtype: 'radio',
                 name: 'remotetype',
                 fieldLabel: 'Inputlirc aktivieren',
+                inputValue: 'inputlirc',
                 handler: function(checkbox, checked) {
                     if (checked) {
                         var panel = this.findParentByType('remotetabpanel');
@@ -64,9 +69,9 @@ function getInputlircForm(){
             new Ext.form.ComboBox({ 
                id : 'inputlirc_receiver_combobox',
                //name: ... used in POST request
-               hiddenName: 'receiver_id', //key, defined in set_lirchw.ecpp, used in POST request
+               hiddenName: 'receiver_path', //key, defined in set_lirchw.ecpp, used in POST request
                //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
-               valueField: 'id', //value column, used in POST request
+               valueField: 'path', //value column, used in POST request
                displayField:'description',
                typeAhead: true,
                forceSelection: true,
