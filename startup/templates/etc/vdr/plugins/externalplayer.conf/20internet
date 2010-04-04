@@ -1,7 +1,7 @@
 {
   MenuEntry        = "Internet";
-  Command          = "start-firefox";
-  OutputMode       = extern;
+  Command          = "/usr/bin/start-firefox";
+  OutputMode       = none;
   InputMode        = deactivateRemotes;
 }
 

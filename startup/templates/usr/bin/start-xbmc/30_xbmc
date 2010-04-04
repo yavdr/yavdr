@@ -1,6 +1,6 @@
-  sudo /sbin/initctl stop vdr-frontend
+/sbin/stop vdr-frontend
 
-su -c "/usr/bin/xbmc --standalone" vdr
+xbmc --standalone
 
-  sudo /sbin/initctl start vdr-frontend
+/sbin/start vdr-frontend
 

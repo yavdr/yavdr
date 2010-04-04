@@ -1,3 +1,4 @@
 #!/bin/sh
 
 process-template /etc/vdr/plugins/externalplayer.conf
+process-template /etc/dbus-1/system.d/vdr-upstart.conf

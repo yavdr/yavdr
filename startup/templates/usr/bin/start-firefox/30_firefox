@@ -1,3 +1,3 @@
-sudo /sbin/initctl stop vdr-frontend
-/usr/bin/firefox
-sudo /sbin/initctl start vdr-frontend
+/sbin/stop vdr-frontend
+firefox
+/sbin/start vdr-frontend
