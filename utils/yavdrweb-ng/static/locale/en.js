@@ -50,6 +50,16 @@ var locale_en = {
             tabtip: 'Configuration of basic settings of the system',
             content: 'Welcome to the yaVDR Web Frontend!'
         },
+        demos : {
+            title: 'Demos',
+            tabtip: 'Proof of concept, demos of possible new features, can be used for testing purposes',
+            content: 'Proof of concept, demos of possible new features, can be used for testing purposes'
+        },
+        development : {
+            title: 'Development',
+            tabtip: 'New features that are under construction, don\'t use them. They don\'t work properly yet.',
+            content: 'New features that are under construction, don\'t use them. They don\'t work properly yet.'
+        },
         diagnose : {
             title: 'Diagnostics',
             tabtip: 'Stay informed about your system status, track problems',
@@ -151,7 +161,7 @@ var locale_en = {
     },
     channels: {
         menutab: {
-            title : 'Channel List',
+            title : 'Channel List (SVDRP)',
             tabtip : 'Channel settings (Maintain and sort radio and TV channels)',
             panel_title : '' //unused
         },

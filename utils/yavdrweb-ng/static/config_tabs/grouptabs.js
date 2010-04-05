@@ -46,208 +46,170 @@ Ext.onReady(function() {
     });
     Ext.reg('sliderfield', Ext.form.SliderField);
     
-	Ext.QuickTips.init();
+    Ext.QuickTips.init();
 
-	function addGroupPanelTab( config ){
-	    if (!config.layout)
-	        config.layout = "auto"; //"auto" doesn't blow up forms to full height, "fit" does
-	    var contentPanel = new Ext.Panel({
-		    layout: config.layout,
-		    title: getLL( config.section + ".menutab.panel_title"),
-		    frame: true,
-		    plain: false,
-		    border: true
-		});
-	
-	    var tabpanel = {
-            //xtype: 'portal',
+    function addGroupPanelSection( config ){
+        return tabpanel = {
+            xtype: 'portal',
+            layout: 'fit',
+            title: getLL(  "menutabs." + config.section + ".title" ),
+            tabTip: getLL(  "menutabs." + config.section + ".tabtip"),
+            style: 'padding: 20px 30px 20px 30px;',
+            items:[ new Ext.Panel({
+                layout: 'fit',
+                frame: false,
+                plain: false,
+                border: false,
+                html: '<h1 style="font-family: sans-serif;">' + getLL("menutabs." + config.section + ".content") + '</h1>'
+            })]
+        };
+    };
+
+    function addGroupPanelTab( config ){
+        if (!config.layout)
+            config.layout = "auto"; //"auto" doesn't blow up forms to full height, "fit" does
+        if (typeof config.border == "undefined")
+            config.border = true;
+        if (typeof config.frame == "undefined")
+            config.frame = true;
+        
+        var contentPanel = new Ext.Panel({
+            layout: config.layout,
+            title: getLL( config.section + ".menutab.panel_title"),
+            frame: config.frame,
+            plain: false,
+            border: config.border
+        });
+    
+        var tabpanel = {
             layout: 'fit',
             iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
             title: getLL( config.section + ".menutab.title" ),
             tabTip: getLL( config.section + ".menutab.tabtip"),
             style: 'padding: 20px 30px 20px 30px;',
             items:[ contentPanel ],
-	    listeners: {
-		    beforerender: function( panel ) {
-			var content = config.items();
-			contentPanel.add( content );
-			contentPanel.doLayout();
-		    }
-		}
-	    };
-	    
-	    if (config.layout == "vbox")
-		tabpanel.layoutConfig = {
-		    align : 'stretch'
-		    //pack  : 'start'
-		};
+            listeners: {
+                beforerender: function( panel ) {
+                var content = config.items();
+                contentPanel.add( content );
+                contentPanel.doLayout();
+                }
+            }
+        };
         
-	    return tabpanel;
-	};
+        if (config.layout == "vbox")
+        tabpanel.layoutConfig = {
+            align : 'stretch'
+            //pack  : 'start'
+        };
+        
+        return tabpanel;
+    };
+
+    var groupPanelItems = new Array(
+        {
+            //BASICS MODULE
+            items: [
+                addGroupPanelSection({
+                    section: "vdr"
+                }),
+                addGroupPanelTab({
+                    section: "frontend",
+                    items:   getVDRFrontendForm
+                }),
+                addGroupPanelTab({
+                    section: "upload",
+                    layout: "fit",
+                    items:   getVDRConfigUploadForm
+                }),
+                addGroupPanelTab({
+                    section: "shutdown",
+                    items:   getVDRShutdownForm
+                })
+            ]
+        },
+        {
+            //SYSTEM MODULE
+            expanded: false,
+            items: [
+                addGroupPanelSection({
+                    section: "system"
+                }),
+                addGroupPanelTab({
+                    section: "remote",
+                    items:   getRemoteForm
+                }),
+                addGroupPanelTab({
+                    section: "timeout",
+                    items:   getGRUBTimeoutForm
+                }),
+                addGroupPanelTab({
+                    section: "x11",
+                    items:   getX11Form
+                }),
+                    addGroupPanelTab({
+                        section: "nvidia",
+                        items:   getNvidiaForm
+                    }),
+                addGroupPanelTab({
+                    section: "system",
+                    items:   getSystemForm
+                }),
+                addGroupPanelTab({
+                    section: "webfrontend",
+                    items:   getWebFrontendForm
+                })
+            ]
+        },
+        {
+            //DEMO MODULE
+            expanded: false,
+            items: [
+                addGroupPanelSection({
+                    section: "demos"
+                }),
+                addGroupPanelTab({
+                    section: "channels",
+                    layout: "fit",
+                    border: false,
+                    frame: false,
+                    items:   getChannelsForm
+                })
+            ]
+        },
+        { 
+            //DIAGNOSE MODULE
+            expanded: false,
+            items: [getDiagnoseItems()]
+        }
+    );
+    
+    /*
+     *  Should we render the DEVELOPMENT MODULE? (only if devmode is "1")
+     */
+    if (yavdrwebGlobalInfo.devmode == "1"){
+        groupPanelItems[groupPanelItems.length] = {
+            expanded: false,
+            items: [
+                addGroupPanelSection({
+                    section: "development"
+                }),
+                addGroupPanelTab({
+                    layout: 'fit',
+                    section: "network",
+                    items:   getNetworkForm
+                })
+            ]
+        };
+    }
 
     var viewport = new Ext.Viewport({
-	layout:'fit',
+    layout:'fit',
         items:[{
             xtype: 'grouptabpanel',
             tabWidth: 190,
             activeGroup: 0,
-            items: [{
-                items: [
-                    /*
-                     *  BASICS MODULE
-                     */
-                    {
-                        xtype: 'portal',
-                        layout: 'fit',
-                        title: getLL("menutabs.vdr.title"),
-                        tabTip: getLL("menutabs.vdr.tabtip"),
-                        style: 'padding: 20px 30px 20px 30px;',
-                        items:[
-                           new Ext.Panel({
-                               layout: 'fit',
-                               frame: false,
-                               plain: false,
-                               border: false,
-                               html: '<h1 style="font-family: sans-serif;">' + getLL("menutabs.vdr.content") + '</h1>'
-                           })
-                        ]
-                    },
-                    addGroupPanelTab({
-                        section: "frontend",
-                        items:   getVDRFrontendForm
-                    }),
-                    addGroupPanelTab({
-                        section: "upload",
-                        layout: "fit",
-                        items:   getVDRConfigUploadForm
-                    }),
-			    	addGroupPanelTab({
-				    	section: "shutdown",
-				    	items:   getVDRShutdownForm
-					})
-                ]
-			},{
-                /*
-                 *  SYSTEM MODULE
-                 */
-				expanded: false,
-                items: [
-                	{
-                        layout: 'fit',
-                        title: getLL("menutabs.system.title"),
-                        tabTip: getLL("menutabs.system.tabtip"),
-                        style: 'padding: 20px 30px 20px 30px;',
-                        items:[
-                        	new Ext.Panel({
-                            	layout: 'fit',
-                                frame: false,
-                                plain: false,
-                                border: false,
-                                html: '<h1 style="font-family: sans-serif;">' + getLL("menutabs.system.content") + '</h1>'
-                            })
-                        ]
-                    },
-                    addGroupPanelTab({
-                        section: "remote",
-                        //layout: "vbox",
-                        items:   getRemoteForm
-                    }),
-			    	addGroupPanelTab({
-				    	section: "timeout",
-				    	items:   getGRUBTimeoutForm
-                    }),
-			    	addGroupPanelTab({
-				    	section: "x11",
-				    	items:   getX11Form
-                    }),
-                        addGroupPanelTab({
-				    		section: "nvidia",
-				    		items:   getNvidiaForm
-                        }),
-                    addGroupPanelTab({
-                        section: "system",
-                        items:   getSystemForm
-                    }),
-                    addGroupPanelTab({
-                        section: "webfrontend",
-                        items:   getWebFrontendForm
-                    })
-                ]
-            },{
-            /*
-             *  DEMO MODULE
-             */
-                expanded: false,
-                items: [
-                    {
-                        layout: 'fit',
-                        title: "Demos", //getLL("menutabs.development.title"),
-                        tabTip: "Proof of concept, demos of possible new features", //getLL("menutabs.development.tabtip"),
-                        style: 'padding: 20px 30px 20px 30px;',
-                        items:[
-                        	new Ext.Panel({
-                            	layout: 'fit',
-                                frame: false,
-                                plain: false,
-                                border: false,
-                                html: '<h1 style="font-family: sans-serif;">Demos of possible new features</h1>'
-                            })
-                        ]
-                    },
-                    {
-                    	title: getLL("channels.menutab.title") + " (SVDRP)",
-                        layout: 'fit',
-                        iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
-                        tabTip: getLL("channels.menutab.tabtip"),
-                        style: 'padding: 20px 30px 20px 30px;',
-                        items: [
-                            new Ext.Panel({
-                                layout: 'fit',
-                                //title: getLL("channels.menutab.panel_title"),
-                                frame: false,
-                                plain: false,
-                                border: false,
-                                items: [ getChannelsForm() ]
-                            })
-                        ]
-                    }
-                ]
-            },{ 
-            /*
-             *  DIAGNOSE MODULE
-             */
-                expanded: false,
-                items: [getDiagnoseItems()]
-            },{
-                /*
-                 *  DEVELOPMENT MODULE (UNCOMMENT THIS TO MAKE IT VISIBLE)
-                 */
-                    expanded: false,
-                    items: [
-                        {
-                            layout: 'fit',
-                            title: "Development", //getLL("menutabs.development.title"),
-                            tabTip: "Under Development", //getLL("menutabs.development.tabtip"),
-                            style: 'padding: 20px 30px 20px 30px;',
-                            items:[
-                            	new Ext.Panel({
-                                	layout: 'fit',
-                                    frame: false,
-                                    plain: false,
-                                    border: false,
-                                    html: '<h1 style="font-family: sans-serif;">New features under development, they don\'t work properly yet.</h1>'
-                                })
-                            ]
-                        },
-                        addGroupPanelTab({
-				    		layout: 'fit',
-				    		section: "network",
-				    		items:   getNetworkForm
-                        })
-                    ]
-                }
-            ]//grouptabpanel items
+            items: groupPanelItems
         }]//viewport items
     });//viewport
 });//extonready
-

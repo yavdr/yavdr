@@ -19,7 +19,7 @@ using namespace std;
 
 string success = "false";
 
-if ((key == "webfrontend.language"))
+if (key == "webfrontend.language")
 {
     if (
     	(value == "de") ||
@@ -46,6 +46,31 @@ if ((key == "webfrontend.language"))
     } 
     success = "true";
 }
+else if (key == "webfrontend.devmode")
+{
+    if (
+        (value == "0") ||
+        (value == "1"))
+    {
+        NEOERR *err;
+        HDF *hdf = NULL;
+        if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+        {
+          nerr_log_error(err);
+        }
+        err = hdf_set_valuef(hdf, "%s=%s", key.c_str(), value.c_str());
+        /*if (err != STATUS_OK){
+        }*/
+        err = hdf_write_file(hdf, YAVDRDB);
+        if (err != STATUS_OK)
+        {
+          nerr_log_error(err);
+        }
+        hdf_destroy(&hdf);
+    } 
+    success = "true";
+}
+
 </%cpp>{
     success: <$success$>
 }

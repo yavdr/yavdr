@@ -13,8 +13,18 @@ var locale_de = {
         system : {
             title: 'System',
             tabtip: 'Konfigurieren Sie die Grundeinstellungen des Systems',
-            content: 'Willkommen im yaVDR Web-Frontend!'
+            content: 'Konfigurieren Sie die Grundeinstellungen des Systems'
         },
+        demos : {
+            title: 'Demos',
+            tabtip: 'Proof of concept, Ausblick auf mögliche neue Features',
+            content: 'Proof of concept, Ausblick auf mögliche neue Features'
+        },
+        development : {
+            title: 'Development',
+            tabtip: 'New features that are under construction, don\'t use them. They don\'t work properly yet.',
+            content: 'New features that are under construction, don\'t use them. They don\'t work properly yet.'
+        },        
         diagnose : {
             title: 'Diagnose',
             tabtip: 'Informieren Sie sich über den Zustand des Systems, betreiben Sie Fehleranalyse',
@@ -61,7 +71,7 @@ var locale_de = {
     },
     channels: {
         menutab: {
-            title : 'Kanal-Liste',
+            title : 'Kanal-Liste (SVDRP)',
             tabtip : 'Kanal-Einstellungen (Radio- und Fernsehkanäle pflegen und sortieren)',
             panel_title : '' //unused
         },
