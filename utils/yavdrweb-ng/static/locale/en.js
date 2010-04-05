@@ -81,7 +81,7 @@ var locale_en = {
             title : 'Remotes',
             tabtip :'Remote-Settings (Remote Control Receiver)',
             panel_title : 'Remote Control Receiver'
-        },
+        }
     },
     lirc: {
         menutab: {

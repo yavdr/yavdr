@@ -147,8 +147,7 @@ function getLircForm(){
             layout: 'fit',
             frame: false,
             border: false,
-            bodyStyle:'padding:5px 5px 0',
-            
+            bodyStyle:'padding:5px 5px 0'
         })
     ];
 }

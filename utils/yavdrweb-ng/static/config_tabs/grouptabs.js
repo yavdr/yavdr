@@ -147,10 +147,10 @@ Ext.onReady(function() {
                     section: "x11",
                     items:   getX11Form
                 }),
-                    addGroupPanelTab({
-                        section: "nvidia",
-                        items:   getNvidiaForm
-                    }),
+                addGroupPanelTab({
+                    section: "nvidia",
+                    items:   getNvidiaForm
+                }),
                 addGroupPanelTab({
                     section: "system",
                     items:   getSystemForm
