@@ -45,6 +45,7 @@ using namespace std;
     reply.out() << "\n{\n                \"receiverlist\" : [\n";
     reply.out() << "                    [ \"\", \"-\" ]\n"; // no receiver, reset settings
 
+/*
     dp = opendir ("/dev/input/by-path/");
     if (dp != NULL)
     {
@@ -60,6 +61,44 @@ using namespace std;
         }
         (void) closedir (dp);
     }
+    */
+    
+    ifstream f("/proc/bus/input/devices", ios::in);
+    string line = "", name = "", event = "";
+    while (!f.eof())
+    {
+        getline(f, line);        // Lese eine Zeile
+        if (line != "") {
+            if (line.substr(0,2) == "N:") {
+                name = line.substr(9, line.length()-10);
+            }
+            else if(line.substr(0,2) == "H:")
+            {
+                string buf; // Have a buffer string
+                stringstream ss(line.substr(12)); // Insert the string into a stream
+
+                vector<string> tokens; // Create vector to hold our words
+
+                while (ss >> buf) {
+                    if (buf.substr(0,5) == "event")
+                        event = buf;
+                }
+            } 
+        }
+        else
+        {
+            if (event != "" && name != "") {
+                reply.out() << "                    ,[ \"/dev/input/";
+                reply.sout()<< event;
+                reply.out() << "\", \"";
+                reply.sout()<< name;
+                reply.out() << "\" ]\n";
+                event = "";
+                name = "";
+            }
+        }
+    }
+    f.close();                // Datei wieder schließen
     
     reply.out() << "                ],\n"
                 << "                \"current_receiver\" : \"";
