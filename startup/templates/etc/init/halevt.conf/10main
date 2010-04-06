@@ -11,8 +11,8 @@ respawn
 normal exit 0
 
 pre-start script
-rm -f /var/lib/halevt/dev_tab
-[ ! -e /var/run/halevt/ ] && mkdir -p /var/run/halevt/
+[ -e /var/lib/halevt/dev_tab ] && rm -f /var/lib/halevt/dev_tab || /bin/true
+[ ! -e /var/run/halevt/ ] && mkdir -p /var/run/halevt/ || /bin/true
 end script
 
 script
