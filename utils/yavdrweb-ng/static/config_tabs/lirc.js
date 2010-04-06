@@ -41,7 +41,7 @@ function populateLircForm( form, lircData ){
         adjustSerialSettings(currentRecord.get('lirc_driver'), currentRecord.get('driver'));
     }
     
-    if (lircData.current_remoted == 'lirc') {
+    if (lircData.current_remoted == 'lircd') {
         form.enable();
     }
 }

@@ -27,7 +27,7 @@ using namespace std;
     "/usr/share/lirc/extras/more_remotes.hwdb"
   };
 
-  if (receiver_id != "" && remotetype == "lirc")
+  if (receiver_id != "" && remotetype == "lircd")
   {
     //security check for plausible value of serial_port
     if (serial_port != "/dev/ttyS0" && serial_port != "/dev/ttyS1")
@@ -130,7 +130,7 @@ using namespace std;
                   bof = found + 1;
                 }
                 
-                err = hdf_set_valuef(hdf, "system.remoted=lirc");
+                err = hdf_set_valuef(hdf, "system.remoted=lircd");
                 if (err != STATUS_OK) {
                     msg = "Error on hdf_set_value system.remoted";
                     break;
