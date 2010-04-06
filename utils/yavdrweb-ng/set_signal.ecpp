@@ -56,7 +56,7 @@ if (
     }
     else if (signal == "change-shutdown" )
     {
-        if ((value == "s3") || (value == "s5") || (value == "poweroff") || (value == "reboot"))
+        if ((value == "s3") || (value == "s4") || (value == "s5") || (value == "poweroff") || (value == "reboot"))
         {
             NEOERR *err;
             HDF *hdf = NULL;

@@ -15,6 +15,7 @@ function getVDRShutdownForm(){
             columns: 1,
             items: [
                 {id: 'shutdown-s3', boxLabel: getLL("shutdown.items.s3"), name: 'value', inputValue: 's3'},
+                {id: 'shutdown-s4', boxLabel: getLL("shutdown.items.s4"), name: 'value', inputValue: 's4'},
                 {id: 'shutdown-s5', boxLabel: getLL("shutdown.items.s5"), name: 'value', inputValue: 's5'},
                 {id: 'shutdown-reboot', boxLabel: getLL("shutdown.items.reboot"), name: 'value', inputValue: 'reboot'}
             ]
@@ -57,7 +58,7 @@ function getVDRShutdownForm(){
             catch (err) {
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current shutdown.');
             }
-            if (currentshutdown == "s3" || currentshutdown == "s5" || currentshutdown == "poweroff" || currentshutdown == "reboot"){
+            if (currentshutdown == "s3" || currentshutdown == "s4" || currentshutdown == "s5" || currentshutdown == "poweroff" || currentshutdown == "reboot"){
                 var rButton = this.getComponent('shutdown_radio_group');
                 if (rButton)
                     rButton.setValue( currentshutdown );
