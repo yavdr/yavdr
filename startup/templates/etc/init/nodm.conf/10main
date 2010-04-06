@@ -10,6 +10,7 @@ start on filesystem
 
 stop on runlevel [016]
 
+<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?> 
 respawn
 
 script
@@ -70,5 +71,9 @@ post-start script
 export DISPLAY=:1
 while ! xset -q && [ ! -e /tmp/nodm.failed ]; do sleep 1 ; done
 end script
-
+<?cs else ?>
+script
+    echo "headless yaVDR Server"
+end script
+<?cs /if ?>
 

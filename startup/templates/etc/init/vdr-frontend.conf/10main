@@ -5,7 +5,7 @@ description     "yavdr-frontend"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
 start on started nodm
-
+<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?> 
 respawn
 
 script
@@ -19,3 +19,8 @@ script
 
   su -c "$FRONTEND" vdr
 end script
+<?cs else ?>
+script
+    echo "headless yaVDR Server"
+end script
+<?cs /if ?>
