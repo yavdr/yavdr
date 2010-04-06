@@ -1,0 +1,8 @@
+# Sends PC to hibernate
+
+start on init-s4
+stop on runlevel [016]
+
+script
+/usr/sbin/pm-hibernate
+end script
