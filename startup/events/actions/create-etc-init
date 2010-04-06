@@ -12,6 +12,7 @@ process-template /etc/init/remoted.conf
 process-template /etc/init/nodm.conf
 process-template /etc/init/onshutdown.conf
 process-template /etc/init/s3.conf
+process-template /etc/init/s4.conf
 process-template /etc/init/setserial-minimal.conf
 process-template /etc/init/usb-wakeup.conf
 process-template /etc/init/vdr.conf
