@@ -11,6 +11,10 @@
 if grep -q "S3" /proc/acpi/sleep ; then
 	echo "SHUTDOWNCMD=\"service vdr stop ; sleep 5 ; /sbin/initctl --quiet emit --no-wait init-s3\""
 fi
+<?cs elif:(system.shutdown == "s4") ?>
+if grep -q "S4" /proc/acpi/sleep ; then
+    echo "SHUTDOWNCMD=\"service vdr stop ; sleep 5 ; /sbin/initctl --quiet emit --no-wait init-s4\""
+fi
 <?cs elif:(system.shutdown == "s5") ?>
 <?cs elif:(system.shutdown == "reboot") ?>
 echo "SHUTDOWNCMD=\"/usr/sbin/grub-set-default PowerOff ; /sbin/reboot\""
