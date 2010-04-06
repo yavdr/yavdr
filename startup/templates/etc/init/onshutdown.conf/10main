@@ -6,5 +6,6 @@ task
 
 script
   /usr/sbin/update-rc.d -f vdr remove >/dev/null
+  /usr/sbin/update-rc.d -f inputlirc remove >/dev/null
 end script
 

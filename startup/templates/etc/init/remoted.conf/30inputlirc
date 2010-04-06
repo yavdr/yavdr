@@ -1,0 +1,20 @@
+<?cs if:(system.remoted == "inputlirc") ?>
+# Starts Inputlirc daemon.
+#
+# Inputlirc is used to control different
+# infrared receivers and transceivers.
+
+description     "Inputlirc Daemon"
+author          "Gerald Dachs <gda@dachsweb.de>"
+
+start on starting vdr
+stop on runlevel [016]
+
+respawn
+
+script
+test -f /usr/sbin/inputlircd || exit 0
+
+exec /usr/sbin/inputlircd -f <?cs var:system.inputlirc.path ?>
+end script
+<?cs /if ?>
