@@ -35,7 +35,7 @@ if (
     
     if (signal == "change-frontend" )
     {
-        if ((value == "xine") || (value == "xineliboutput") || (value == "xbmc"))
+        if ((value == "xine") || (value == "xineliboutput") || (value == "xbmc") || (value == "headless"))
         {
             NEOERR *err;
             HDF *hdf = NULL;

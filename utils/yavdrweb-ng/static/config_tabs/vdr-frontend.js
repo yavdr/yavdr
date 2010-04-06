@@ -17,6 +17,7 @@ function getVDRFrontendForm(){
                 {id: 'frontend-xine', boxLabel: 'xine@vdr-plugin-xine', name: 'value', inputValue: 'xine'},
                 {id: 'frontend-xineliboutput', boxLabel: 'vdr-sxfe@vdr-plugin-xineliboutput', name: 'value', inputValue: 'xineliboutput'},
                 {id: 'frontend-xbmc', boxLabel: 'XBMC@vdr-plugin-streamdev (experimental)', name: 'value', inputValue: 'xbmc'}
+                {id: 'headless', boxLabel: 'headless (yaVDR server)', name: 'value', inputValue: 'headless'}
             ]
         }]
     });
@@ -57,7 +58,7 @@ function getVDRFrontendForm(){
             catch (err) {
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current frontend.');
             }
-            if (currentFrontend == "xine" || currentFrontend == "xineliboutput" || currentFrontend == "xbmc"){
+            if (currentFrontend == "headless" || currentFrontend == "xine" || currentFrontend == "xineliboutput" || currentFrontend == "xbmc"){
                 var rButton = this.getComponent('frontend_radio_group');
                 if (rButton)
                     rButton.setValue( currentFrontend );
