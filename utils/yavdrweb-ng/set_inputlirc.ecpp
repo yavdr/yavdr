@@ -29,7 +29,7 @@ using namespace std;
     else
     {
       if (receiver_path == "") {
-        err = hdf_set_valuef(hdf, "system.remote=");
+        err = hdf_set_valuef(hdf, "system.remoted=");
         err = hdf_set_valuef(hdf, "system.inputlirc.path=");
       }
       else
@@ -42,9 +42,9 @@ reply.out() << " /* 1 */";
         else
         {
       reply.out() << " /* 2 */";
-          err = hdf_set_valuef(hdf, "system.remote=inputlirc");
+          err = hdf_set_valuef(hdf, "system.remoted=inputlirc");
           if (err != STATUS_OK) {
-            msg = "Error on hdf_set_value system.remote";
+            msg = "Error on hdf_set_value system.remoted";
           }
         }
       }
@@ -54,7 +54,7 @@ reply.out() << " /* 1 */";
       }
       hdf_destroy(&hdf);
       if (err == STATUS_OK) {
-        int ret = system("/usr/bin/signal-event change-remote-hardware");
+        int ret = system("/usr/bin/signal-event change-remoted");
         success = "true";
         msg = "OK. signal-event lirchw-changed";
       }

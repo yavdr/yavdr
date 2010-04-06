@@ -39,7 +39,7 @@ using namespace std;
     else
     {
         current_inputlirc_path = hdf_get_value(hdf, "system.inputlirc.path", "");
-        current_remote         = hdf_get_value(hdf, "system.remote", "");
+        current_remote         = hdf_get_value(hdf, "system.remoted", "");
     }
   
     reply.out() << "\n{\n                \"receiverlist\" : [\n";
@@ -104,7 +104,7 @@ using namespace std;
                 << "                \"current_receiver\" : \"";
     reply.sout()<< current_inputlirc_path;  //we must escape special chars via sout (xss)
     reply.out() << "\",\n"
-              << "                \"current_remote\" : \"";
+              << "                \"current_remoted\" : \"";
     reply.sout()<< current_remote;  //we must escape special chars via sout (xss)
     reply.out() << "\"\n}\n";
 

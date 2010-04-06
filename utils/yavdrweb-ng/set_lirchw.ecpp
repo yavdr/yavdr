@@ -52,7 +52,7 @@ using namespace std;
             if (err != STATUS_OK){
               msg = "Error on hdf_remove_tree";
             }*/
-            err = hdf_set_valuef(hdf, "system.remote=");
+            err = hdf_set_valuef(hdf, "system.remoted=");
             err = hdf_set_valuef(hdf, "system.lirchw.serial_port=");
             err = hdf_set_valuef(hdf, "system.lirchw.description=");
             err = hdf_set_valuef(hdf, "system.lirchw.driver=");
@@ -66,7 +66,7 @@ using namespace std;
               msg = "Error on hdf_write_file";
             }
             hdf_destroy(&hdf);
-            int ret = system("/usr/bin/signal-event change-remote-hardware");
+            int ret = system("/usr/bin/signal-event change-remoted");
             success = "true";
             msg = "OK. Resetting LIRC settings.signal-event lirchw-changed sent.";
         }
@@ -130,9 +130,9 @@ using namespace std;
                   bof = found + 1;
                 }
                 
-                err = hdf_set_valuef(hdf, "system.remote=lirc");
+                err = hdf_set_valuef(hdf, "system.remoted=lirc");
                 if (err != STATUS_OK) {
-                    msg = "Error on hdf_set_value";
+                    msg = "Error on hdf_set_value system.remoted";
                     break;
                 }
                       
@@ -143,7 +143,7 @@ using namespace std;
                 }
                 else
                 {
-                   int ret = system("/usr/bin/signal-event change-remote-hardware");
+                   int ret = system("/usr/bin/signal-event change-remoted");
                    success = "true";
                    msg = "OK. signal-event lirchw-changed";
                 }

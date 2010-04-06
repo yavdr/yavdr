@@ -1,6 +1,6 @@
 function populateIRServerForm( form, irserverData ){
 
-    if (irserverData.current_remote == 'irserver') {
+    if (irserverData.current_remoted == 'irserver') {
         form.enable();
     }
 }

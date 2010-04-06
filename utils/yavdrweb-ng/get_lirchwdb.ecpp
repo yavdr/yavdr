@@ -35,7 +35,7 @@ using namespace std;
   {
     current_lirchw_description = hdf_get_value(hdf, "system.lirchw.description", "");
     current_serial_port        = hdf_get_value(hdf, "system.lirchw.serial_port", "");
-    current_remote             = hdf_get_value(hdf, "system.remote", "");
+    current_remote             = hdf_get_value(hdf, "system.remoted", "");
   }
   
 
@@ -91,7 +91,7 @@ using namespace std;
               << "                \"current_serial_port\" : \"";
   reply.sout()<< current_serial_port;  //we must escape special chars via sout (xss)
   reply.out() << "\",\n"
-              << "                \"current_remote\" : \"";
+              << "                \"current_remoted\" : \"";
   reply.sout()<< current_remote;  //we must escape special chars via sout (xss)
   reply.out() << "\"\n}\n";
 

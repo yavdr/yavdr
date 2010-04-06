@@ -36,7 +36,7 @@ function populateInputlircForm( form, inputlircData ){
         cbox.value = inputlircData.current_receiver;
     }
     
-    if (inputlircData.current_remote == 'inputlirc') {
+    if (inputlircData.current_remoted == 'inputlirc') {
         form.enable();
     }
 }

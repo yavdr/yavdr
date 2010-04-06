@@ -23,11 +23,11 @@ using namespace std;
     }
     else
     {
-        current_remote         = hdf_get_value(hdf, "system.remote", "");
+        current_remote         = hdf_get_value(hdf, "system.remoted", "");
     }
   
     reply.out() << "\n{\n"
-                << "                \"current_remote\" : \"";
+                << "                \"current_remoted\" : \"";
     reply.sout()<< current_remote;  //we must escape special chars via sout (xss)
     reply.out() << "\"\n}\n";
 
