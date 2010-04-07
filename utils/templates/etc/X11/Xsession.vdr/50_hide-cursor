@@ -1,0 +1,2 @@
+# hide cursor
+/usr/bin/unclutter -idle 1 -root -visible -grab

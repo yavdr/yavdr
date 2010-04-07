@@ -25,7 +25,6 @@ install: build
 	dh_clean -k
 	dh_installdirs
 	dh_install scripts/mount-loader.sh /usr/lib/vdr
-	dh_install scripts/vdr-upstart /usr/sbin/
 	dh_installdirs /var/log/vdr
 	dh_install images/yavdr_logo.png	/usr/share/yavdr/images
 	dh_install images/noSignal4x3.mpg	/var/lib/vdr/plugins/xine

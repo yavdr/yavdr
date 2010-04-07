@@ -1,4 +1,0 @@
-#!/bin/bash
-
-update-rc.d -f alsa-utils remove
-update-rc.d alsa-utils defaults

@@ -1,6 +1,11 @@
 
 /sbin/stop vdr-frontend
 
+/usr/bin/openbox &
+
 xterm -e su <?cs var:user ?>
 
+killall openbox
+
 /sbin/start vdr-frontend
+

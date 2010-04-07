@@ -61,9 +61,11 @@ script
     fi
 
     NODM_USER=vdr
-    NODM_X_OPTIONS=":1 vt9 -br"
+    NODM_FIRST_VT=9
+    NODM_X_OPTIONS="-br"
     NODM_XSESSION=/etc/X11/Xsession.vdr
-    export NODM_USER NODM_X_OPTIONS NODM_XSESSION
+    DISPLAY=:1
+    export NODM_USER NODM_FIRST_VT NODM_X_OPTIONS NODM_XSESSION DISPLAY
     if ! /usr/sbin/nodm; then touch /tmp/nodm.failed ; fi 
 end script
 

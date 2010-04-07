@@ -9,7 +9,7 @@ start on started nodm
 respawn
 
 script
-  FRONTEND="/usr/bin/start-xine"
+  FRONTEND="/usr/bin/start-xineliboutput"
   if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
     FRONTEND="/usr/bin/start-xineliboutput"
   elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then

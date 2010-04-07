@@ -1,4 +1,0 @@
-# hide cursor and set background
-/usr/bin/unclutter -idle 1 -root -visible -grab &
-/usr/bin/feh --bg-center /usr/share/yavdr/images/yavdr_logo.png
-

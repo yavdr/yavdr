@@ -294,7 +294,7 @@ video.output.vdpau_enable_inverse_telecine:0
 
 # vdpau: restrict enabling video properties for SD video only
 # { none  noise  sharpness  noise+sharpness }, default: 0
-#video.output.vdpau_sd_only_properties:none
+video.output.vdpau_sd_only_properties:noise+sharpness
 
 # vdpau: disable advanced deinterlacers chroma filter
 # bool, default: 0
@@ -310,7 +310,7 @@ video.output.vdpau_skip_chroma_deinterlace:1
 
 # Choose speed over specification compliance
 # bool, default: 0
-#video.processing.ffmpeg_choose_speed_over_accuracy:0
+video.processing.ffmpeg_choose_speed_over_accuracy:1
 
 # Qualität der MPEG-4 Nachbearbeitungsstufe
 # [0..6], default: 3
@@ -318,7 +318,7 @@ video.output.vdpau_skip_chroma_deinterlace:1
 
 # Skip loop filter
 # { default  none  nonref  bidir  nonkey  all }, default: 0
-#video.processing.ffmpeg_skip_loop_filter:default
+video.processing.ffmpeg_skip_loop_filter:all
 
 # FFmpeg video decoding thread count
 # numeric, default: 1
@@ -497,7 +497,7 @@ video.output.vdpau_skip_chroma_deinterlace:1
 
 # number of buffers for HD content
 # numeric, default: 2500
-#media.xvdr.num_buffers_hd:2500
+media.xvdr.num_buffers_hd:10000
 
 # SRC tuning step
 # numeric, default: 5000

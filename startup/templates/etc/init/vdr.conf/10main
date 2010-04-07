@@ -1,15 +1,12 @@
-# Startet VDR
+# Starts the vdr, with config and installed plugins
+
+description     "VDR upstart script"
+author          "Steffen Barszus <steffenbpunkt@gmail.com"
 
 start on (filesystem and
-          autofs-up and
           net-device-up IFACE=*[0123456789])
 
 stop on runlevel [016]
-
-respawn
-
-exec /usr/sbin/vdr-upstart
-
 
 post-start script
   service vdr-frontend start
@@ -21,5 +18,32 @@ end script
 
 post-stop script
   signal-event post-stop-vdr
+end script
+
+respawn
+kill timeout 5
+
+script
+# load default values and overrides from /etc/default/vdr 
+. /usr/lib/vdr/config-loader
+
+# load all plugins from plugin folder
+. /usr/lib/vdr/plugin-loader
+
+# extract and prepare all commands
+. /usr/lib/vdr/commands-loader
+mergecommands "commands"
+mergecommands "reccmds"
+
+# Set shutdown command
+test "$ENABLE_SHUTDOWN" = "1" && VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown.wrapper" \
+                              || VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown-message"
+
+# set language (default by environment, else by /etc/default/vdr)
+LANG=$VDR_LANG 
+LC_ALL=$VDR_LANG
+export LANG LC_ALL
+
+exec /usr/bin/vdr -v $VIDEO_DIR -c $CFG_DIR -L $PLUGIN_DIR -r $REC_CMD -s $VDRSHUTDOWN -E $EPG_FILE -u $USER -g /tmp --port $SVDRP_PORT $OPTIONS "${PLUGINS[@]}" $REDIRECT &> /tmp/vdr.log
 end script
 
