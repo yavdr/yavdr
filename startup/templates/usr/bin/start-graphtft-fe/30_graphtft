@@ -1,7 +1,12 @@
 
+TFT_SIZE=`xrandr -q -d $DISPLAY | awk '/default connected/ {print $3}' | cut -d '+' -f1`
+TFT_WIDTH=`echo $TFT_SIZE | cut -d 'x' -f1`
+TFT_HEIGHT=`echo $TFT_SIZE | cut -d 'x' -f2`
 
-GRAPHTFTFEOPTS="-W 800 -H 600 -n -r"
+# override default settings
 test -f /etc/default/graphtft-fe && . /etc/default/graphtft-fe
+
+GRAPHTFTFEOPTS="-W $TFT_WIDTH -H $TFT_HEIGHT -n -r"
 
 ps -A |grep -q -w graphtft-fe && exit
 while  ! netcat -z localhost 2039; do sleep 1; done;
