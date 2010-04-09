@@ -41,6 +41,7 @@ vdr
 vdr-addon-acpiwakeup
 vdr-addon-noad
 vdr-genindex
+vdr-plugin-avolctl
 vdr-plugin-channellists
 vdr-plugin-dummydevice
 vdr-plugin-epgsearch
