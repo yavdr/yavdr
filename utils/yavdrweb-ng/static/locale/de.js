@@ -111,8 +111,10 @@ var locale_de = {
         },
         items: {
         	s3: 'suspend to RAM',
-        	s4: 'suspend to DISK',
-        	s5: 'shutdown',
+            s3unavailable: 'suspend to RAM (nicht verfügbar)',
+            s4: 'suspend to DISK',
+            s4unavailable: 'suspend to DISK (nicht verfügbar)',
+            s5: 'shutdown',
         	reboot: 'reboot PowerOff-kernel'
         }
     },

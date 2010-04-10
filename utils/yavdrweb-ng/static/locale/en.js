@@ -201,7 +201,9 @@ var locale_en = {
         },
         items: {
             s3: 'suspend to RAM',
+            s3unavailable: 'suspend to RAM (unavailable)',
             s4: 'suspend to DISK',
+            s4unavailable: 'suspend to DISK  (unavailable)',
             s5: 'shutdown',
             reboot: 'reboot "PowerOff" kernel'
         }

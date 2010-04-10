@@ -1,3 +1,12 @@
+Ext.override(Ext.form.Checkbox, {
+    setBoxLabel: function(boxLabel){
+        this.boxLabel = boxLabel;
+        if(this.rendered){
+            this.wrap.child('.x-form-cb-label').update(boxLabel);
+        }
+    }
+});
+
 function getVDRShutdownForm(){
     var myform = new Ext.FormPanel({
         frame: false,
@@ -43,6 +52,24 @@ function getVDRShutdownForm(){
             })
         }
     });
+    
+    Ext.Ajax.request({
+        url: 'get_file_content?file=/proc/acpi/sleep&puretext=true',
+        timeout: 3000,
+        method: 'GET',
+        scope: myform,
+        success: function(xhr) {
+            //alert('Response is "' + xhr.responseText + '"');
+            var allowed = xhr.responseText;
+            if (allowed.indexOf("S3") < 0) {
+                Ext.getCmp('shutdown-s3').disable().setBoxLabel(getLL("shutdown.items.s3unavailable"));
+            }
+            if (allowed.indexOf("S4") < 0) {
+                Ext.getCmp('shutdown-s4').disable().setBoxLabel(getLL("shutdown.items.s4unavailable"));
+            }
+        }
+    });
+    
     
     Ext.Ajax.request({
         url: 'get_hdf_value?hdfpath=system.shutdown',
