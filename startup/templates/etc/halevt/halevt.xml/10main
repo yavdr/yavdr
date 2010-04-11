@@ -21,7 +21,7 @@ executed when the value of volume.is_mounted becomes true.
 !-->
 <halevt:Device match="hal.block.device &amp; hal.block.is_volume = true &amp; hal.volume.mount_point">
    <halevt:Property name="hal.volume.is_mounted">
-      <halevt:Action value="true" exec="halevt-mount -s; /usr/bin/vdr-mount-handler add $hal.volume.mount_point$ $hal.info.product$ "/>
+      <halevt:Action value="true" exec="halevt-mount -s; /usr/bin/vdr-mounter add $hal.volume.mount_point$ $hal.info.product$ "/>
    </halevt:Property>
 </halevt:Device>
 
@@ -30,7 +30,7 @@ When a device is unmounted, it is recorded by halevt-mount.
 !-->
 <halevt:Device match="hal.block.device &amp; hal.block.is_volume = true">
     <halevt:Property name="hal.volume.is_mounted">
-        <halevt:Action value="false" exec="/usr/bin/vdr-mount-handler remove $hal.info.product$ ; halevt-mount -s"/>
+        <halevt:Action value="false" exec="/usr/bin/vdr-mounter remove $hal.info.product$ ; halevt-mount -s"/>
     </halevt:Property>
 </halevt:Device>
 
@@ -41,7 +41,7 @@ Note that at that point the device is already out of hal, so we use
 udi to the command.
 !-->
 <halevt:Device match="hal.*">
-     <halevt:Removal exec="/usr/bin/vdr-mount-handler remove $hal.info.product$ ; halevt-umount -u $hal.udi$; halevt-umount -s"/>
+     <halevt:Removal exec="/usr/bin/vdr-mounter remove $hal.info.product$ ; halevt-umount -u $hal.udi$; halevt-umount -s"/>
 </halevt:Device>
 
 <!--
