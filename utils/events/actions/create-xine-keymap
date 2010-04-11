@@ -2,6 +2,6 @@
 
 if [ "$(dbget vdr.frontend)" = "xine" ]; then
 stop vdr-frontend
-process-template --owner=vdr --group=vdr /var/lib/vdr/.xine/keymap
+process-template --owner=vdr --group=vdr /etc/xine/keymap
 start vdr-frontend
 fi

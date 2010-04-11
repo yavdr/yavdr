@@ -1,3 +1,3 @@
 #!/bin/bash
 
-process-template --owner=vdr --group=vdr /var/lib/vdr/.xine/config
+process-template --owner=vdr --group=vdr /etc/xine/config
