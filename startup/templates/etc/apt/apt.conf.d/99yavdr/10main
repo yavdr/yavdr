@@ -5,3 +5,4 @@ DPkg::Post-Invoke {"update-rc.d -f dkms_autoinstaller remove 2>/dev/null >/dev/n
 DPkg::Post-Invoke {"rm -f /lib/udev/rules.d/85-lirc.rules 2>/dev/null >/dev/null||/bin/true"};
 DPkg::Post-Invoke {"ln -sf /bin/bash /bin/sh 2>/dev/null >/dev/null||/bin/true"};
 DPkg::Post-Invoke {"update-rc.d -f inputlirc remove 2>/dev/null >/dev/null||/bin/true"};
+DPkg::Post-Invoke {"update-rc.d -f halevt remove 2>/dev/null >/dev/null||/bin/true"};
