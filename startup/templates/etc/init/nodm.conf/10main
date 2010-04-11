@@ -34,7 +34,7 @@ script
 	export LANG LANGUAGE
     fi
 
-    if modprobe nvidia ; then
+    if modprobe nvidia-current ; then
         if [ "x$(dbget system.hardware.nvidia.detected)" != "x1" ]; then
            changed=1
            dbset "system.hardware.nvidia.detected=1"
