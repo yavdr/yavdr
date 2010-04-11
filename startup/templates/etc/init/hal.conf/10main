@@ -1,0 +1,19 @@
+# hal - hardware abstraction layer
+#
+# The HAL daemon collects and maintains information about your hardware
+# and provides an abstraction layer for applications to access that
+# information and utilise the hardware.
+
+description     "hardware abstraction layer"
+
+start on (filesystem
+          and started dbus
+          and started udev)
+stop on (stopping dbus
+         or stopping udev)
+
+expect fork
+respawn
+
+exec hald --daemon=yes
+
