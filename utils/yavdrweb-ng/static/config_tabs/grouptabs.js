@@ -1,4 +1,22 @@
 Ext.onReady(function() {
+/*
+// Start a simple clock task that updates a div once per second
+var updateClock = function(){
+    Ext.fly('ext-gen51').update(new Date().format('g:i:s A'));
+} 
+var task = {
+    run: updateClock,
+    interval: 1000 //1 second
+}
+var runner = new Ext.util.TaskRunner();
+runner.start(task);
+
+// equivalent using TaskMgr
+Ext.TaskMgr.start({
+    run: updateClock,
+    interval: 1000
+});
+*/
     //http://www.extjs.com/forum/showthread.php?t=42990&page=2
     Ext.form.SliderField = Ext.extend(Ext.Slider, {
         isFormField: true,

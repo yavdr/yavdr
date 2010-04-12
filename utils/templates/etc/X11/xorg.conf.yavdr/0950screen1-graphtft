@@ -1,2 +1,2 @@
-<?cs if:vdr.plugin.graphtft.enabled ?>
+<?cs if:system.x11.dualscreen.enabled ?>
 Option         "metamodes" "CRT: nvidia-auto-select +0+0"<?cs /if ?>

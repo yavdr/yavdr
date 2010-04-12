@@ -1,2 +1,2 @@
-<?cs if:vdr.plugin.graphtft.enabled ?>Section "Screen"
+<?cs if:system.x11.dualscreen.enabled ?>Section "Screen"
 

@@ -34,14 +34,12 @@ using namespace std;
       }
       else
       {
-reply.out() << " /* 1 */";
         err = hdf_set_valuef(hdf, "system.inputlirc.path=%s", receiver_path.c_str());
         if (err != STATUS_OK) {
           msg = "Error on hdf_set_value system.inputlirc.path";
         }
         else
         {
-      reply.out() << " /* 2 */";
           err = hdf_set_valuef(hdf, "system.remoted=inputlirc");
           if (err != STATUS_OK) {
             msg = "Error on hdf_set_value system.remoted";

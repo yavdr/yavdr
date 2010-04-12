@@ -272,12 +272,12 @@ var locale_en = {
                 apply: 'Apply'
             }
         },
-	samba: {
-	    menutab: {
-		title : 'Samba',
-		tabtip : 'Maintain samba shares'
-	    }
-	}
+        samba: {
+	        menutab: {
+                title : 'Samba',
+                tabtip : 'Maintain samba shares'
+            }
+	   }
     },
     nvidia: {
         menutab: {
@@ -390,6 +390,11 @@ var locale_en = {
             waitmsg : 'Display settings are updated.',    
             success : 'Success.',
             failure : 'Failure.'
+        },
+        dualhead: {
+            label: 'dual head',
+            boxlabel: 'activated',
+            switch_label: 'switch head of vdr frontend'
         }
     }
 };
