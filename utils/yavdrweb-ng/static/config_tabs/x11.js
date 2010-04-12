@@ -10,7 +10,7 @@ function getX11Form(){
         items: [
         {
             id: 'x11_dualhead',
-            name: 'value',
+            name: 'x11_dualhead',
             xtype: 'checkbox',
             fieldLabel: getLL("x11.dualhead.label"),
             boxLabel: getLL("x11.dualhead.boxlabel"),
@@ -26,7 +26,7 @@ function getX11Form(){
             }
         }, {
             id: 'x11_graphtft',
-            name: 'value',
+            name: 'x11_graphtft',
             xtype: 'checkbox',
             fieldLabel: getLL("x11.graphtft.label"),
             boxLabel: getLL("x11.graphtft.boxlabel"),

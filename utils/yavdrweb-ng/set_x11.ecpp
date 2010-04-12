@@ -27,13 +27,13 @@ using namespace std;
   else
   {
     if (x11_dualhead != "1") {
-      err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=");
-      err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=");
+      err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
+      err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
     }
     else
     {
       err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=1");
-      err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=" + (x11_graphtft=="1"?'1':'0'));
+      err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
     }
     if ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK) {
       nerr_log_error(err);

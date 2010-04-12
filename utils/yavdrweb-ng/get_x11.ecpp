@@ -31,7 +31,13 @@ command;
   else
   {
     dualhead_enabled = hdf_get_value(hdf, "system.x11.dualhead.enabled", "0");
+    if (dualhead_enabled == "") {
+        dualhead_enabled = "0";
+    }
     graphtft_enabled = hdf_get_value(hdf, "vdr.plugin.graphtft.enabled", "0");
+    if (graphtft_enabled == "") {
+        graphtft_enabled = "0";
+    }
     
     Display *dpy;
     Bool ret;
@@ -45,7 +51,7 @@ command;
      * Open a display connection, and make sure the NV-CONTROL X
      * extension is present on the screen we want to use.
      */
-    
+   /* 
     dpy = XOpenDisplay(NULL);
     if (dpy) {
         screen = DefaultScreen(dpy);
@@ -61,7 +67,7 @@ command;
     } else {
         fprintf(stderr, "Cannot open display '%s'.\n\n", XDisplayName(NULL));
     }
-    
+    */
   }
   
 
