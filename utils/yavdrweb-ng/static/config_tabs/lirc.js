@@ -51,7 +51,7 @@ function getLircForm(){
         items:[{
                 xtype: 'radio',
                 name: 'remotetype',
-                inputValue: 'lirc',
+                inputValue: 'lircd',
                 fieldLabel: 'LIRC aktivieren',
                 handler: function(checkbox, checked) {
                     if (checked) {
