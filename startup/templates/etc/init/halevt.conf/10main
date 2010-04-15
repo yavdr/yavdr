@@ -26,6 +26,7 @@ if [ "x$START_DAEMON" != "xyes" ]; then
   exit 0
 fi
 
+sleep 3
 export HOME
 exec /usr/bin/halevt -f -u $USER -g $GROUP -p /var/run/halevt/halevt.pid
 end script

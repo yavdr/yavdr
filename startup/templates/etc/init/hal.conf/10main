@@ -6,9 +6,7 @@
 
 description     "hardware abstraction layer"
 
-start on (filesystem
-          and started dbus
-          and started udev)
+start on started vdr
 stop on (stopping dbus
          or stopping udev)
 
