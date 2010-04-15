@@ -1,3 +1,9 @@
 #!/bin/bash
 
 process-template /etc/init/remoted.conf
+
+REMOTE=`dbget system.hardware.nvidia.overscan`
+
+if [ "x$REMOTE" = "x" -o "x$REMOTE" = "xlircd" ]; then
+  /usr/bin/signal-event change-remote-hardware
+fi
