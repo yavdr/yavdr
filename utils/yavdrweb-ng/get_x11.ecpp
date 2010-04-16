@@ -11,12 +11,15 @@ extern "C" {
 #include "NVCtrlLib.h"
 }
 
+char *display_device_name(int mask);
+
 using namespace std;
 </%pre><& authenticate ><%args>
 command;
 </%args><%cpp>
   reply.setHeader ("Cache-Control", "no-cache", false);
   reply.setHeader ("Content-Type", "application/json", false);
+  
   HDF *hdf = NULL;
   NEOERR *err;
   
@@ -46,38 +49,167 @@ command;
     char *displayDeviceNames[8];
     int nDisplayDevice;
     
+    reply.out() << "{\n"
+              << "  \"system\" : {\n"
+              << "    \"x11\" : {\n"
+              << "      \"dualhead\" : {\n"
+              << "         \"enabled\" : " + dualhead_enabled + "\n"
+              << "        }\n";
     
     /*
      * Open a display connection, and make sure the NV-CONTROL X
      * extension is present on the screen we want to use.
      */
-   /* 
+
+
     dpy = XOpenDisplay(NULL);
+    
     if (dpy) {
         screen = DefaultScreen(dpy);
 
         if (XNVCTRLIsNvScreen(dpy, screen)) {
-        } else {
+           ret = XNVCTRLQueryAttribute(dpy, screen, 0,
+                     NV_CTRL_CONNECTED_DISPLAYS, &display_devices);
+
+           if (ret) {
+             reply.out() << ","
+                         << "    \"screens\" : [\n";
+             nDisplayDevice = 0;
+             for (mask = 1; mask < (1 << 24); mask <<= 1) {
+                 if (display_devices & mask) {
+                     XNVCTRLQueryStringAttribute(dpy, screen, mask,
+                                                 NV_CTRL_STRING_DISPLAY_DEVICE_NAME,
+                                                 &str);
+                     if (nDisplayDevice != 0)
+                     {
+                        reply.out() << "      ,\n";
+                     }
+                     
+                     displayDeviceNames[nDisplayDevice++] = str;
+                     reply.out()  << "      {\n"
+                                  << "        \"name\" : \"";
+                     reply.sout() << str;
+                     reply.out()  << "\",\n"
+                                  << "        \"devicename\" : \"";
+                     switch (mask) {
+                       case (1 <<  0): reply.out()  << "CRT-0"; break;
+                       case (1 <<  1): reply.out()  << "CRT-1"; break;
+                       case (1 <<  2): reply.out()  << "CRT-2"; break;
+                       case (1 <<  3): reply.out()  << "CRT-3"; break;
+                       case (1 <<  4): reply.out()  << "CRT-4"; break;
+                       case (1 <<  5): reply.out()  << "CRT-5"; break;
+                       case (1 <<  6): reply.out()  << "CRT-6"; break;
+                       case (1 <<  7): reply.out()  << "CRT-7"; break;
+                
+                       case (1 <<  8): reply.out()  << "TV-0"; break;
+                       case (1 <<  9): reply.out()  << "TV-1"; break;
+                       case (1 << 10): reply.out()  << "TV-2"; break;
+                       case (1 << 11): reply.out()  << "TV-3"; break;
+                       case (1 << 12): reply.out()  << "TV-4"; break;
+                       case (1 << 13): reply.out()  << "TV-5"; break;
+                       case (1 << 14): reply.out()  << "TV-6"; break;
+                       case (1 << 15): reply.out()  << "TV-7"; break;
+                
+                       case (1 << 16): reply.out()  << "DFP-0"; break;
+                       case (1 << 17): reply.out()  << "DFP-1"; break;
+                       case (1 << 18): reply.out()  << "DFP-2"; break;
+                       case (1 << 19): reply.out()  << "DFP-3"; break;
+                       case (1 << 20): reply.out()  << "DFP-4"; break;
+                       case (1 << 21): reply.out()  << "DFP-5"; break;
+                       case (1 << 22): reply.out()  << "DFP-6"; break;
+                       case (1 << 23): reply.out()  << "DFP-7"; break;
+                       default: reply.out()  << "Unknown";
+                     }
+                     XFree(str);
+                     
+                     reply.out()  << "\",\n"
+                                  << "        \"current_modeline\" : \"";
+                     ret = XNVCTRLQueryStringAttribute(dpy, screen, mask,
+                                                       NV_CTRL_STRING_CURRENT_MODELINE,
+                                                       &str);
+                
+                     if (ret) {
+                       reply.sout()  << str;
+                       XFree(str);
+                     }
+                     else
+                     {
+                       fprintf(stderr, "Failed to query current ModeLine.\n\n");
+                       reply.out()  << "unknown";
+                     }
+
+                     /* query for modelines */
+                     reply.out()  << "\",\n"
+                                  << "        \"modelines\" : [";
+                                  
+                     ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
+                                                  NV_CTRL_BINARY_DATA_MODELINES,
+                                                  (unsigned char **) &str, &len);
+                        
+                     if (ret) {
+        
+                         /*
+                          * the returned data is in the form:
+                          *
+                          *  "ModeLine 1\0ModeLine 2\0ModeLine 3\0Last ModeLine\0\0"
+                          *
+                          * so walk from one "\0" to the next to print each ModeLine.
+                          */
+                         start = str;
+                         ret = true; // first modeline
+                         for (j = 0; j < len; j++) {
+                           if (str[j] == '\0' && start[0] != '\0') {
+                             if (!ret)
+                             {
+                               reply.out()  << ",";
+                             }
+                             else
+                             {
+                               ret = false;
+                             }
+                             
+                             reply.out()  << "{\n"
+                                          << "        \"name\" : \"\",\n"
+                                          << "        \"modeline\" : \"";
+                             reply.sout() << start;
+                             reply.out()  << "\"\n"
+                                          << "        }";
+                             start = &str[j+1];
+                           }
+                         }
+                         
+                         XFree(str);
+                     }
+                     reply.out()  << "]\n";
+                     reply.out() << "      }\n";
+
+                 }
+              }
+              reply.out() << "    ]\n";
+           }
+           else
+           {
+             reply.out() << "\n";
+             fprintf(stderr, "Failed to query the enabled Display Devices.\n\n");
+           }
+           
+        }
+        else
+        {
             fprintf(stderr, "The NV-CONTROL X extension is not available on screen "
                 "%d of '%s'.\n\n", screen, XDisplayName(NULL));
-            return 1;
         }
 
-    
-    } else {
+    }
+    else
+    {
         fprintf(stderr, "Cannot open display '%s'.\n\n", XDisplayName(NULL));
     }
-    */
-  }
-  
 
-  reply.out() << "{\n"
-              << "  \"system\" : {\n"
-              << "    \"x11\" : {\n"
-              << "      \"dualhead\" : {\n"
-              << "         \"enabled\" : " + dualhead_enabled + "\n"
-              << "        }\n"
-              << "      }\n"
+  }
+              
+  
+  reply.out() << "      }"
               << "    },\n"
               << "  \"vdr\" : {\n"
               << "    \"plugin\" : {\n"
@@ -87,6 +219,12 @@ command;
               << "      }\n"
               << "    }\n"
               << "}\n";
+
+
+/*
+ * display_device_name() - return the display device name correspoding
+ * to the specified display device mask.
+ */
 
 </%cpp>
 

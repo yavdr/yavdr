@@ -20,7 +20,7 @@ ECPPC=env ${EXTRA_ENV} ecppc -v
 TNTNET=env ${EXTRA_ENV} tntnet
 CXXFLAGS+=-I.. -I/usr/include -I/usr/include/ClearSilver -I/usr/include/NVCtrl -fPIC -O2
 CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl -fPIC -O2
-LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lpam #-lcxxtools
+LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lpam -lXNVCtrl -lX11 -lXext #-lcxxtools
 
 .ecpp.cpp:
 	${ECPPC} ${ECPPFLAGS} ${ECPPFLAGS_CPP} $<

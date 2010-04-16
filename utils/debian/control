@@ -2,13 +2,13 @@ Source: yavdr-utils
 Section: misc
 Priority: extra
 Maintainer: Gerald Dachs <gda@dachsweb.de>
-Build-Depends: debhelper (>= 7), clearsilver-dev, libtntnet-dev, libpam0g-dev, flex, libx11-dev, nvidia-settings
+Build-Depends: debhelper (>= 7), clearsilver-dev, libtntnet-dev, libpam0g-dev, flex, libx11-dev, nvidia-settings, libxext-dev
 Standards-Version: 3.8.0
 Homepage: http://yavdr.origo.ethz.ch/
 
 Package: yavdr-utils
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-ext, autofs
+Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-ext, autofs, libxext6
 Suggests: lirc
 Description: Utilities and WEB front end for yaVDR
  Utilities and WEB front end for yaVDR (yet another VDR) a VDR distribution

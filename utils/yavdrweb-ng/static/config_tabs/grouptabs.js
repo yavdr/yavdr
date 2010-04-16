@@ -17,6 +17,22 @@ Ext.TaskMgr.start({
     interval: 1000
 });
 */
+
+    /*
+     * Extend Checkbox to allow boxLabel to be changed
+     */ 
+    Ext.override(Ext.form.Checkbox, {
+        setBoxLabel: function(boxLabel){
+            this.boxLabel = boxLabel;
+            if(this.rendered){
+                this.wrap.child('.x-form-cb-label').update(boxLabel);
+            }
+            
+            return this;
+        }
+    });
+
+
     //http://www.extjs.com/forum/showthread.php?t=42990&page=2
     Ext.form.SliderField = Ext.extend(Ext.Slider, {
         isFormField: true,
