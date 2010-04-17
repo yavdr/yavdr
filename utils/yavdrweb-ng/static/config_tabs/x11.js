@@ -82,7 +82,7 @@ function getX11Form(){
     }
         
     Ext.Ajax.request({
-        url: 'get_x11',
+        url: 'get_x11?display=:1.0',
         timeout: 3000,
         method: 'GET',
         scope: myform,
@@ -91,7 +91,9 @@ function getX11Form(){
             try {
                 var displayData = Ext.util.JSON.decode( xhr.responseText );
                 var rButton = this.getComponent('x11_dualhead');
-                if (displayData.system.x11.screens.length >= 2) {
+                if (typeof displayData.system.x11.screens == "undefined") {
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'no screens found! -> enable form');
+                } else if (displayData.system.x11.screens.length >= 2) {
                     var current = displayData.system.x11.dualhead.enabled;
                     if (current == "0" || current == "1") {
                         if (rButton)
@@ -115,7 +117,6 @@ function getX11Form(){
                 }
             }
             catch (err) {
-                Ext.MessageBox.alert('', err);
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current display settings.' );
             }
         }

@@ -394,7 +394,7 @@ var locale_en = {
         dualhead: {
             label: 'dual head',
             boxlabel: 'activated',
-            boxlabelunavailable: 'disabled (< 2 screen found)',
+            boxlabelunavailable: 'disabled (< 2 screens found)',
             switch_label: 'switch head of vdr frontend'
         }
     }

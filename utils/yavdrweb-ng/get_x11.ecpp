@@ -4,6 +4,9 @@
 #include <ClearSilver.h>
 #include "../common.h"
 
+#include <cxxtools/loginit.h>
+#include <cxxtools/log.h>
+
 extern "C" {
 #include <X11/Xlib.h>
 
@@ -15,10 +18,12 @@ char *display_device_name(int mask);
 
 using namespace std;
 </%pre><& authenticate ><%args>
-command;
+display;
 </%args><%cpp>
   reply.setHeader ("Cache-Control", "no-cache", false);
   reply.setHeader ("Content-Type", "application/json", false);
+  
+  log_init();
   
   HDF *hdf = NULL;
   NEOERR *err;
@@ -44,9 +49,9 @@ command;
     
     Display *dpy;
     Bool ret;
-    int screen, display_devices, mask, major, minor, len, j;
-    char *str, *start, *str0, *str1;
-    char *displayDeviceNames[8];
+    int screen, display_devices, mask, len, j;
+    char *str, *start;
+
     int nDisplayDevice;
     
     reply.out() << "{\n"
@@ -62,7 +67,7 @@ command;
      */
 
 
-    dpy = XOpenDisplay(NULL);
+    dpy = XOpenDisplay((display == ""?NULL:display.c_str()));
     
     if (dpy) {
         screen = DefaultScreen(dpy);
@@ -80,12 +85,11 @@ command;
                      XNVCTRLQueryStringAttribute(dpy, screen, mask,
                                                  NV_CTRL_STRING_DISPLAY_DEVICE_NAME,
                                                  &str);
-                     if (nDisplayDevice != 0)
+                     if (nDisplayDevice++ != 0)
                      {
                         reply.out() << "      ,\n";
                      }
                      
-                     displayDeviceNames[nDisplayDevice++] = str;
                      reply.out()  << "      {\n"
                                   << "        \"name\" : \"";
                      reply.sout() << str;
@@ -134,7 +138,7 @@ command;
                      }
                      else
                      {
-                       fprintf(stderr, "Failed to query current ModeLine.\n\n");
+                       log_error("Failed to query current ModeLine.\n\n");
                        reply.out()  << "unknown";
                      }
 
@@ -190,20 +194,20 @@ command;
            else
            {
              reply.out() << "\n";
-             fprintf(stderr, "Failed to query the enabled Display Devices.\n\n");
+             log_error("Failed to query the enabled Display Devices.\n\n");
            }
            
         }
         else
         {
-            fprintf(stderr, "The NV-CONTROL X extension is not available on screen "
-                "%d of '%s'.\n\n", screen, XDisplayName(NULL));
+            log_error("The NV-CONTROL X extension is not available on screen "
+                << screen << " of '" << XDisplayName(NULL) << "'.\n\n");
         }
 
     }
     else
     {
-        fprintf(stderr, "Cannot open display '%s'.\n\n", XDisplayName(NULL));
+        log_error("Cannot open display '" << XDisplayName(NULL) << "'.\n\n");
     }
 
   }
