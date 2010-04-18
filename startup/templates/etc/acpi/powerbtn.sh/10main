@@ -15,8 +15,8 @@ if pidof gnome-power-manager kded4 > /dev/null; then
 fi
 
 if [ "0$(cat /tmp/powerbtn 2>/dev/null)" -lt "0$(($(date +%s)-1))" ]; then
-  svdrpsend hitk power
   date +%s > /tmp/powerbtn
+  svdrpsend hitk power
   exit
 fi
 
