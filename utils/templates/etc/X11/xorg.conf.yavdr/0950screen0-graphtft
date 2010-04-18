@@ -1,2 +1,2 @@
-<?cs if:system.x11.dualscreen.enabled ?>
+<?cs if:system.x11.dualhead.enabled ?>
 Option         "metamodes" "DFP: nvidia-auto-select +0+0"<?cs /if ?>

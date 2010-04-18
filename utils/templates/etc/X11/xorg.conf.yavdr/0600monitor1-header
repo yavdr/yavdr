@@ -1,2 +1,2 @@
-<?cs if:system.x11.dualscreen.enabled ?>Section "Monitor"
+<?cs if:system.x11.dualhead.enabled ?>Section "Monitor"
 
