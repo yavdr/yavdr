@@ -82,7 +82,7 @@ function getX11Form(){
     }
         
     Ext.Ajax.request({
-        url: 'get_x11?' + (yavdrwebGlobalInfo.devmode != '1'?'display=:1.0':'display=:0.0'),
+        url: 'get_x11',
         timeout: 3000,
         method: 'GET',
         scope: myform,
