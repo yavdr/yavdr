@@ -24,7 +24,7 @@ function getX11Form(){
                     e.disable().setValue(false);
                 }
             }
-        }, {
+        },{
             id: 'x11_graphtft',
             name: 'x11_graphtft',
             xtype: 'checkbox',
@@ -92,27 +92,50 @@ function getX11Form(){
                 var displayData = Ext.util.JSON.decode( xhr.responseText );
                 var rButton = this.getComponent('x11_dualhead');
                 if (typeof displayData.system.x11.screens == "undefined") {
+                    //this.add();
+                    //this.doLayout();
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'no screens found! -> enable form');
-                } else if (displayData.system.x11.screens.length >= 2) {
-                    var current = displayData.system.x11.dualhead.enabled;
-                    if (current == "0" || current == "1") {
-                        if (rButton)
-                            rButton.setValue( current == "1" );
-                        else
-                            Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find dualhead checkbox.');
-                    }
-                    
-                    current = displayData.vdr.plugin.graphtft.enabled;
-                    if (current == "0" || current == "1") {
-                        var rButton = this.getComponent('x11_graphtft');
-                        if (rButton)
-                            rButton.setValue( current == "1" );
-                        else
-                            Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
-                    }    
                 } else {
-                    if (rButton) {
-                        rButton.disable().setBoxLabel(getLL("x11.dualhead.boxlabelunavailable"));
+                    Ext.each(displayData.system.x11.screens, function(item, index, allitems) {
+                        this.insert(1, {
+                            xtype:'fieldset',
+                            checkboxToggle:false,
+                            title: 'screen ' + index + ': ' + item.name,
+                            autoHeight:true,
+                            defaults: {width: 210},
+                            //defaultType: 'textfield',
+                            collapsed: false,
+                            items: [{
+                                xtype: 'label',
+                                html: 'device: ' + item.devicename + '<br />'
+                            }, {
+                                xtype: 'label',
+                                html: 'modeline: ' + item.current_modeline.name + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
+                            }]
+                        });
+                    }, this);
+                    this.doLayout();
+                    if (displayData.system.x11.screens.length >= 2) {
+                        var current = displayData.system.x11.dualhead.enabled;
+                        if (current == "0" || current == "1") {
+                            if (rButton)
+                                rButton.setValue( current == "1" );
+                            else
+                                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find dualhead checkbox.');
+                        }
+                        
+                        current = displayData.vdr.plugin.graphtft.enabled;
+                        if (current == "0" || current == "1") {
+                            var rButton = this.getComponent('x11_graphtft');
+                            if (rButton)
+                                rButton.setValue( current == "1" );
+                            else
+                                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
+                        }    
+                    } else {
+                        if (rButton) {
+                            rButton.disable().setBoxLabel(getLL("x11.dualhead.boxlabelunavailable"));
+                        }
                     }
                 }
             }

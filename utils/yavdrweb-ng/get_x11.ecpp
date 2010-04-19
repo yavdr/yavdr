@@ -19,7 +19,28 @@ char *display_device_name(int mask);
 using namespace std;
 </%pre><& authenticate ><%args>
 display;
-</%args><%cpp>
+</%args><%shared>
+void Tokenize(const string& str,
+                       vector<string>& tokens,
+                       const string& delimiters = " ")
+{
+     // Skip delimiters at beginning.
+     string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+     // Find first "non-delimiter".
+     string::size_type pos     = str.find_first_of(delimiters, lastPos);
+
+     while (string::npos != pos || string::npos != lastPos)
+     {
+         // Found a token, add it to the vector.
+         tokens.push_back(str.substr(lastPos, pos - lastPos));
+         // Skip delimiters.  Note the "not_of"
+         lastPos = str.find_first_not_of(delimiters, pos);
+         // Find next "non-delimiter"
+         pos = str.find_first_of(delimiters, lastPos);
+     }
+}
+
+</%shared><%cpp>
   reply.setHeader ("Cache-Control", "no-cache", false);
   reply.setHeader ("Content-Type", "application/json", false);
   
@@ -51,6 +72,8 @@ display;
     Bool ret;
     int screen, display_devices, mask, len, j;
     char *str, *start;
+    
+    string _s;
 
     int nDisplayDevice;
     
@@ -65,7 +88,6 @@ display;
      * Open a display connection, and make sure the NV-CONTROL X
      * extension is present on the screen we want to use.
      */
-
 
     dpy = XOpenDisplay((display == ""?NULL:display.c_str()));
     
@@ -85,6 +107,7 @@ display;
                      XNVCTRLQueryStringAttribute(dpy, screen, mask,
                                                  NV_CTRL_STRING_DISPLAY_DEVICE_NAME,
                                                  &str);
+                     
                      if (nDisplayDevice++ != 0)
                      {
                         reply.out() << "      ,\n";
@@ -127,23 +150,40 @@ display;
                      XFree(str);
                      
                      reply.out()  << "\",\n"
-                                  << "        \"current_modeline\" : \"";
+                                  << "        \"current_modeline\" : {\n";
                      ret = XNVCTRLQueryStringAttribute(dpy, screen, mask,
                                                        NV_CTRL_STRING_CURRENT_MODELINE,
                                                        &str);
                 
                      if (ret) {
-                       reply.sout()  << str;
-                       XFree(str);
+                         _s = string(str);
+                         vector<string> tokens;
+                         Tokenize(_s, tokens);
+                         
+                         reply.out()  << "        \"name\" : \"";
+                         reply.sout() << tokens[2].substr(1, tokens[2].length()-2);
+                         reply.out()  << "\",\n"
+                                      << "        \"modeline\" : \"";
+                                      
+                         reply.sout() << str;
+                         reply.out()  << "\",\n"
+                                      << "        \"x\" : \"";
+                                      
+                         reply.sout() << tokens[4];
+                         reply.out()  << "\",\n"
+                                      << "        \"y\" : \"";
+                                      
+                         reply.sout() << tokens[8];
+                         reply.out()  << "\"\n";
+                         XFree(str);
                      }
                      else
                      {
-                       log_error("Failed to query current ModeLine.\n\n");
-                       reply.out()  << "unknown";
+                         log_error("Failed to query current ModeLine.\n\n");
                      }
 
                      /* query for modelines */
-                     reply.out()  << "\",\n"
+                     reply.out()  << "},\n"
                                   << "        \"modelines\" : [";
                                   
                      ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
@@ -172,10 +212,25 @@ display;
                                ret = false;
                              }
                              
+                             _s = string(start);
+                             vector<string> tokens;
+                             Tokenize(_s, tokens);
+                             
                              reply.out()  << "{\n"
-                                          << "        \"name\" : \"\",\n"
+                                          << "        \"name\" : \"";
+                             reply.sout() << tokens[2].substr(1, tokens[2].length()-2);
+                             reply.out()  << "\",\n"
                                           << "        \"modeline\" : \"";
+                                          
                              reply.sout() << start;
+                             reply.out()  << "\",\n"
+                                          << "        \"x\" : \"";
+                                          
+                             reply.sout() << tokens[4];
+                             reply.out()  << "\",\n"
+                                          << "        \"y\" : \"";
+                                          
+                             reply.sout() << tokens[8];
                              reply.out()  << "\"\n"
                                           << "        }";
                              start = &str[j+1];
