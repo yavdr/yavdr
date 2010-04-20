@@ -24,6 +24,7 @@ void Tokenize(const string& str,
                        vector<string>& tokens,
                        const string& delimiters = " ")
 {
+     tokens.clear();
      // Skip delimiters at beginning.
      string::size_type lastPos = str.find_first_not_of(delimiters, 0);
      // Find first "non-delimiter".
@@ -40,6 +41,37 @@ void Tokenize(const string& str,
      }
 }
 
+string display_device_name(int mask) {
+    switch (mask) {
+       case (1 <<  0): return "CRT-0"; break;
+       case (1 <<  1): return "CRT-1"; break;
+       case (1 <<  2): return "CRT-2"; break;
+       case (1 <<  3): return "CRT-3"; break;
+       case (1 <<  4): return "CRT-4"; break;
+       case (1 <<  5): return "CRT-5"; break;
+       case (1 <<  6): return "CRT-6"; break;
+       case (1 <<  7): return "CRT-7"; break;
+
+       case (1 <<  8): return "TV-0"; break;
+       case (1 <<  9): return "TV-1"; break;
+       case (1 << 10): return "TV-2"; break;
+       case (1 << 11): return "TV-3"; break;
+       case (1 << 12): return "TV-4"; break;
+       case (1 << 13): return "TV-5"; break;
+       case (1 << 14): return "TV-6"; break;
+       case (1 << 15): return "TV-7"; break;
+
+       case (1 << 16): return "DFP-0"; break;
+       case (1 << 17): return "DFP-1"; break;
+       case (1 << 18): return "DFP-2"; break;
+       case (1 << 19): return "DFP-3"; break;
+       case (1 << 20): return "DFP-4"; break;
+       case (1 << 21): return "DFP-5"; break;
+       case (1 << 22): return "DFP-6"; break;
+       case (1 << 23): return "DFP-7"; break;
+       default: return "Unknown";
+     }
+}
 </%shared><%cpp>
   reply.setHeader ("Cache-Control", "no-cache", false);
   reply.setHeader ("Content-Type", "application/json", false);
@@ -100,13 +132,16 @@ void Tokenize(const string& str,
 
            if (ret) {
              reply.out() << ","
-                         << "    \"screens\" : [\n";
+                         << "    \"displays\" : [\n";
              nDisplayDevice = 0;
              for (mask = 1; mask < (1 << 24); mask <<= 1) {
                  if (display_devices & mask) {
                      XNVCTRLQueryStringAttribute(dpy, screen, mask,
                                                  NV_CTRL_STRING_DISPLAY_DEVICE_NAME,
                                                  &str);
+                     
+                     string name = string(str);
+                     string display_device = display_device_name(mask);
                      
                      if (nDisplayDevice++ != 0)
                      {
@@ -115,38 +150,10 @@ void Tokenize(const string& str,
                      
                      reply.out()  << "      {\n"
                                   << "        \"name\" : \"";
-                     reply.sout() << str;
+                     reply.sout() << name;
                      reply.out()  << "\",\n"
                                   << "        \"devicename\" : \"";
-                     switch (mask) {
-                       case (1 <<  0): reply.out()  << "CRT-0"; break;
-                       case (1 <<  1): reply.out()  << "CRT-1"; break;
-                       case (1 <<  2): reply.out()  << "CRT-2"; break;
-                       case (1 <<  3): reply.out()  << "CRT-3"; break;
-                       case (1 <<  4): reply.out()  << "CRT-4"; break;
-                       case (1 <<  5): reply.out()  << "CRT-5"; break;
-                       case (1 <<  6): reply.out()  << "CRT-6"; break;
-                       case (1 <<  7): reply.out()  << "CRT-7"; break;
-                
-                       case (1 <<  8): reply.out()  << "TV-0"; break;
-                       case (1 <<  9): reply.out()  << "TV-1"; break;
-                       case (1 << 10): reply.out()  << "TV-2"; break;
-                       case (1 << 11): reply.out()  << "TV-3"; break;
-                       case (1 << 12): reply.out()  << "TV-4"; break;
-                       case (1 << 13): reply.out()  << "TV-5"; break;
-                       case (1 << 14): reply.out()  << "TV-6"; break;
-                       case (1 << 15): reply.out()  << "TV-7"; break;
-                
-                       case (1 << 16): reply.out()  << "DFP-0"; break;
-                       case (1 << 17): reply.out()  << "DFP-1"; break;
-                       case (1 << 18): reply.out()  << "DFP-2"; break;
-                       case (1 << 19): reply.out()  << "DFP-3"; break;
-                       case (1 << 20): reply.out()  << "DFP-4"; break;
-                       case (1 << 21): reply.out()  << "DFP-5"; break;
-                       case (1 << 22): reply.out()  << "DFP-6"; break;
-                       case (1 << 23): reply.out()  << "DFP-7"; break;
-                       default: reply.out()  << "Unknown";
-                     }
+                     reply.sout() << display_device;
                      XFree(str);
                      
                      reply.out()  << "\",\n"
@@ -157,23 +164,25 @@ void Tokenize(const string& str,
                 
                      if (ret) {
                          _s = string(str);
-                         vector<string> tokens;
-                         Tokenize(_s, tokens);
+                         vector<string> tokens, parts;
+                         tokens.clear();
+                         Tokenize(_s, parts, ":");
+                         Tokenize(parts[parts.size()-1], tokens);
                          
-                         reply.out()  << "        \"name\" : \"";
-                         reply.sout() << tokens[2].substr(1, tokens[2].length()-2);
+                         reply.out()  << "        \"id\" : \"";
+                         reply.sout() << tokens[0].substr(1, tokens[0].length()-2);
                          reply.out()  << "\",\n"
                                       << "        \"modeline\" : \"";
                                       
-                         reply.sout() << str;
+                         reply.sout() << parts[parts.size()-1];
                          reply.out()  << "\",\n"
                                       << "        \"x\" : \"";
                                       
-                         reply.sout() << tokens[4];
+                         reply.sout() << tokens[2];
                          reply.out()  << "\",\n"
                                       << "        \"y\" : \"";
                                       
-                         reply.sout() << tokens[8];
+                         reply.sout() << tokens[6];
                          reply.out()  << "\"\n";
                          XFree(str);
                      }
@@ -214,23 +223,25 @@ void Tokenize(const string& str,
                              
                              _s = string(start);
                              vector<string> tokens;
-                             Tokenize(_s, tokens);
+                             vector<string> parts;
+                             Tokenize(_s, parts, ":");
+                             Tokenize(parts[parts.size()-1], tokens);
                              
                              reply.out()  << "{\n"
-                                          << "        \"name\" : \"";
-                             reply.sout() << tokens[2].substr(1, tokens[2].length()-2);
+                                          << "        \"id\" : \"";
+                             reply.sout() << tokens[0].substr(1, tokens[0].length()-2);
                              reply.out()  << "\",\n"
                                           << "        \"modeline\" : \"";
                                           
-                             reply.sout() << start;
+                             reply.sout() << parts[parts.size()-1];
                              reply.out()  << "\",\n"
                                           << "        \"x\" : \"";
                                           
-                             reply.sout() << tokens[4];
+                             reply.sout() << tokens[2];
                              reply.out()  << "\",\n"
                                           << "        \"y\" : \"";
                                           
-                             reply.sout() << tokens[8];
+                             reply.sout() << tokens[6];
                              reply.out()  << "\"\n"
                                           << "        }";
                              start = &str[j+1];

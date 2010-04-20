@@ -91,16 +91,17 @@ function getX11Form(){
             try {
                 var displayData = Ext.util.JSON.decode( xhr.responseText );
                 var rButton = this.getComponent('x11_dualhead');
-                if (typeof displayData.system.x11.screens == "undefined") {
+                if (typeof displayData.system.x11.displays == "undefined") {
                     //this.add();
                     //this.doLayout();
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'no screens found! -> enable form');
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'no displays found! -> enable form');
                 } else {
-                    Ext.each(displayData.system.x11.screens, function(item, index, allitems) {
+                    Ext.each(displayData.system.x11.displays, function(item, index, allitems) {
+                    
                         this.insert(1, {
                             xtype:'fieldset',
                             checkboxToggle:false,
-                            title: 'screen ' + index + ': ' + item.name,
+                            title: 'display ' + index + ': ' + item.name,
                             autoHeight:true,
                             defaults: {width: 210},
                             //defaultType: 'textfield',
@@ -110,12 +111,44 @@ function getX11Form(){
                                 html: 'device: ' + item.devicename + '<br />'
                             }, {
                                 xtype: 'label',
-                                html: 'modeline: ' + item.current_modeline.name + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
-                            }]
+                                html: 'modeline: ' + item.current_modeline.id + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
+                            },
+                            new Ext.form.ComboBox({ 
+                               id : '_modelines',
+                               tpl: '<tpl for="."><div ext:qtip="modeline' +
+                                         ': {modeline}<br/'+'>' + 
+                                         'resolution:{x}x{y}" class="x-combo-list-item">{id}</div></tpl>',
+                               //name: ... used in POST request
+                               hiddenName: 'modes', //key, defined in set_lirchw.ecpp, used in POST request
+                               //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
+                               valueField: 'id', //value column, used in POST request
+                               displayField: 'id',
+                               typeAhead: true,
+                               forceSelection: true,
+                               mode: "local",
+                               triggerAction: 'all',
+                               emptyText: 'select resolution',
+                               fieldLabel: 'resolution',
+                               selectOnFocus: true,
+                               hiddenValue: item.current_modeline.id,
+                               store: new Ext.data.JsonStore({
+                                    storeId : 'yxc',
+                                    //autoDestroy: true,
+                                    //root: 'modelines',
+                                    //idIndex: 0,
+                                    fields: [
+                                             "id",
+                                             "modeline",
+                                             "x",
+                                             "y"
+                                             ],
+                                    data : item.modelines
+                                })
+                           })]
                         });
                     }, this);
                     this.doLayout();
-                    if (displayData.system.x11.screens.length >= 2) {
+                    if (displayData.system.x11.displays.length >= 2) {
                         var current = displayData.system.x11.dualhead.enabled;
                         if (current == "0" || current == "1") {
                             if (rButton)
