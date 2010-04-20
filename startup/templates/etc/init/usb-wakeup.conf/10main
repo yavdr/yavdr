@@ -1,6 +1,6 @@
 description  "enable USB Ports to wakeup machine"
 
-start on startup
+start on net-device-up IFACE=*[0123456789]
 
 script
 #for BUS in `grep -e '^.*USB' /proc/acpi/wakeup | cut -d" " -f1` ; do 
