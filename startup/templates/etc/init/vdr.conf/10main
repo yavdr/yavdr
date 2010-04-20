@@ -4,7 +4,6 @@ description     "VDR upstart script"
 author          "Steffen Barszus <steffenbpunkt@gmail.com"
 
 start on (filesystem and
-          autofs-up and
           net-device-up IFACE=*[0123456789])
 
 stop on runlevel [016]
