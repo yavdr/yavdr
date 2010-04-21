@@ -1,4 +1,4 @@
-i
+
 description     "YaVDR Configuration webinterface"
 
 start on startup
@@ -6,7 +6,6 @@ stop on runlevel [016]
 
 respawn
 normal exit 0
-expect fork
 
 env DISPLAY=:1.0
 export DISPLAY
