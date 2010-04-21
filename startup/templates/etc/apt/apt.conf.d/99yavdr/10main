@@ -6,3 +6,4 @@ DPkg::Post-Invoke {"rm -f /lib/udev/rules.d/85-lirc.rules 2>/dev/null >/dev/null
 DPkg::Post-Invoke {"ln -sf /bin/bash /bin/sh 2>/dev/null >/dev/null||/bin/true"};
 DPkg::Post-Invoke {"update-rc.d -f inputlirc remove 2>/dev/null >/dev/null||/bin/true"};
 DPkg::Post-Invoke {"update-rc.d -f halevt remove 2>/dev/null >/dev/null||/bin/true"};
+DPkg::Post-Invoke {"update-rc.d -f tntnet remove 2>/dev/null >/dev/null||/bin/true"};
