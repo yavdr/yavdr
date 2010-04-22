@@ -17,11 +17,25 @@ function checkmount()
     done
 }
 
-logger "executing $0"
-if [ -e /etc/auto.net.yavdr ]; then
-    logger "searching for video directories"
-    for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /video/ {print $1}'`; do
-        checkmount $VIDEO_DIR/net/$d
-    done
-fi
+function checksync()
+{
+    if [ -e /etc/auto.net.yavdr ]; then
+        logger "searching for video directories"
+        for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /video/ {print $1}'`; do
+            checkmount $VIDEO_DIR/net/$d
+        done
+    fi
+}
 
+logger "executing mount-loader"
+if [ $# -eq 0 ]; then
+    logger "entering async mode"
+    export VIDEO_DIR
+    /usr/lib/vdr/mount-loader sync &
+else
+    case "$1" in
+    sync)
+        checksync
+    ;;
+    esac
+fi

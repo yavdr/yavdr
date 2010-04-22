@@ -36,7 +36,7 @@ mergecommands "commands"
 mergecommands "reccmds"
 
 # test for network mounts
-/usr/lib/vdr/mount-loader &
+. /usr/lib/vdr/mount-loader
 
 # Set shutdown command
 test "$ENABLE_SHUTDOWN" = "1" && VDRSHUTDOWN="/usr/lib/vdr/vdr-shutdown.wrapper" \
