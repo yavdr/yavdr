@@ -24,6 +24,4 @@ process-template /etc/init/vdr-frontend.conf
 process-template --mode 755 /usr/lib/vdr/config-loader
 process-template --mode 755 /usr/lib/vdr/plugin-loader
 process-template --mode 755 /usr/lib/vdr/commands-loader
-process-template /etc/init/tntnet.conf
-# template also main conf of tntnet to not let tntnet drop into background
-process-template /etc/tntnet/tntnet.conf 
+

@@ -5,7 +5,7 @@ PropertyFile    /etc/tntnet/tntnet.properties
 Listen      0.0.0.0 80
 #SslListen  0.0.0.0 443 /etc/tntnet/tntnet.pem
 
-Daemon      1
+Daemon      0
 User       root
 Group      root
 CompPath    /usr/lib/tntnet

@@ -1,6 +1,5 @@
 #!/bin/bash
 
 process-template /etc/init/tntnet.conf
-# template also main conf of tntnet to not let tntnet drop into background
 process-template /etc/tntnet/tntnet.conf
 
