@@ -130,6 +130,38 @@ string display_device_name(int mask) {
                      NV_CTRL_CONNECTED_DISPLAYS, &display_devices);
 
            if (ret) {
+           
+             int num_gpus, i;
+
+             /* Get the number of gpus in the system */
+
+             ret = XNVCTRLQueryTargetCount(dpy, NV_CTRL_TARGET_TYPE_GPU,
+                                           &num_gpus);
+
+             if (ret) {
+                 /* Probe and list the Display devices */
+    
+                 for (i = 0; i < num_gpus; i++) {
+                      /* Get the gpu name */            
+                      //ret = XNVCTRLQueryTargetStringAttribute
+                      //    (dpy, NV_CTRL_TARGET_TYPE_GPU, i, 0,
+                      //     NV_CTRL_STRING_PRODUCT_NAME, &str);
+            
+                      //if (!ret) {
+                      //    fprintf(stderr, "Failed to query gpu name\n\n");
+                      //    return 1;
+                      //}
+            
+                      /* Probe the GPU for new/old display devices */
+                      ret = XNVCTRLQueryTargetAttribute(dpy,
+                                                        NV_CTRL_TARGET_TYPE_GPU, i,
+                                                        0,
+                                                        NV_CTRL_PROBE_DISPLAYS,
+                                                        &display_devices);
+                 }
+             }
+
+           
              reply.out() << ","
                          << "    \"displays\" : [\n";
              nDisplayDevice = 0;
