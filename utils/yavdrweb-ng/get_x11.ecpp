@@ -125,7 +125,6 @@ string display_device_name(int mask) {
     
     if (dpy) {
         screen = DefaultScreen(dpy);
-
         if (XNVCTRLIsNvScreen(dpy, screen)) {
            ret = XNVCTRLQueryAttribute(dpy, screen, 0,
                      NV_CTRL_CONNECTED_DISPLAYS, &display_devices);
@@ -157,50 +156,12 @@ string display_device_name(int mask) {
                      XFree(str);
                      
                      reply.out()  << "\",\n"
-                                  << "        \"current_modeline\" : {\n";
-                     ret = XNVCTRLQueryStringAttribute(dpy, screen, mask,
-                                                       NV_CTRL_STRING_CURRENT_MODELINE,
-                                                       &str);
-                
-                     if (ret) {
-                         _s = string(str);
-                         vector<string> tokens, parts;
-                         tokens.clear();
-                         Tokenize(_s, parts, ":");
-                         Tokenize(parts[parts.size()-1], tokens);
-                         
-                         reply.out()  << "        \"id\" : \"";
-                         reply.sout() << tokens[0].substr(1, tokens[0].length()-2);
-                         reply.out()  << "\",\n"
-                                      << "        \"modeline\" : \"";
-                                      
-                         reply.sout() << parts[parts.size()-1];
-                         reply.out()  << "\",\n"
-                                      << "        \"x\" : \"";
-                                      
-                         reply.sout() << tokens[2];
-                         reply.out()  << "\",\n"
-                                      << "        \"y\" : \"";
-                                      
-                         reply.sout() << tokens[6];
-                         reply.out()  << "\"\n";
-                         XFree(str);
-                     }
-                     else
-                     {
-                         log_error("Failed to query current ModeLine.\n\n");
-                     }
-
-                     /* query for modelines */
-                     reply.out()  << "},\n"
                                   << "        \"modelines\" : [";
-                                  
                      ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
                                                   NV_CTRL_BINARY_DATA_MODELINES,
                                                   (unsigned char **) &str, &len);
                         
                      if (ret) {
-        
                          /*
                           * the returned data is in the form:
                           *
@@ -250,8 +211,50 @@ string display_device_name(int mask) {
                          
                          XFree(str);
                      }
-                     reply.out()  << "]\n";
-                     reply.out() << "      }\n";
+                     reply.out()  << "],\n"
+                                  << "        \"current_modeline\" : {\n";
+                     
+                     if (!ret) { // found modelines -> must be checked to avoid X11 crash
+                         ret = XNVCTRLQueryStringAttribute(dpy, screen, mask,
+                                                           NV_CTRL_STRING_CURRENT_MODELINE,
+                                                           &str);
+                         if (ret) {
+                             _s = string(str);
+                             vector<string> tokens, parts;
+                             tokens.clear();
+                             Tokenize(_s, parts, ":");
+                             Tokenize(parts[parts.size()-1], tokens);
+                             
+                             reply.out()  << "        \"id\" : \"";
+                             reply.sout() << tokens[0].substr(1, tokens[0].length()-2);
+                             reply.out()  << "\",\n"
+                                          << "        \"modeline\" : \"";
+                                          
+                             reply.sout() << parts[parts.size()-1];
+                             reply.out()  << "\",\n"
+                                          << "        \"x\" : \"";
+                                          
+                             reply.sout() << tokens[2];
+                             reply.out()  << "\",\n"
+                                          << "        \"y\" : \"";
+                                          
+                             reply.sout() << tokens[6];
+                             reply.out()  << "\"\n";
+                             XFree(str);
+                         }
+                         else
+                         {
+                             log_error("Failed to query current ModeLine.\n\n");
+                         }
+                     } else {
+                        reply.out()  << "        \"id\" : \"unknown - no modelines found\",\n"
+                                     << "        \"modeline\" : \"\",\n"
+                                     << "        \"x\" : \"0\",\n"
+                                     << "        \"y\" : \"0\"\n";
+                     }
+                     /* query for modelines */
+                     reply.out() << "}\n"
+                                 << "      }\n";
 
                  }
               }
@@ -277,7 +280,6 @@ string display_device_name(int mask) {
     }
 
   }
-              
   
   reply.out() << "      }"
               << "    },\n"

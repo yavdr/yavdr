@@ -114,12 +114,12 @@ function getX11Form(){
                                 html: 'modeline: ' + item.current_modeline.id + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
                             },
                             new Ext.form.ComboBox({ 
-                               id : '_modelines',
+                               id : 'modeline_' + index,
                                tpl: '<tpl for="."><div ext:qtip="modeline' +
                                          ': {modeline}<br/'+'>' + 
                                          'resolution:{x}x{y}" class="x-combo-list-item">{id}</div></tpl>',
                                //name: ... used in POST request
-                               hiddenName: 'modes', //key, defined in set_lirchw.ecpp, used in POST request
+                               hiddenName: 'modeline['+index+']', //key, defined in set_lirchw.ecpp, used in POST request
                                //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
                                valueField: 'id', //value column, used in POST request
                                displayField: 'id',
@@ -130,12 +130,11 @@ function getX11Form(){
                                emptyText: 'select resolution',
                                fieldLabel: 'resolution',
                                selectOnFocus: true,
-                               hiddenValue: item.current_modeline.id,
                                store: new Ext.data.JsonStore({
-                                    storeId : 'yxc',
-                                    //autoDestroy: true,
+                                    storeId : 'modestore_'+index,
+                                    autoDestroy: true,
                                     //root: 'modelines',
-                                    //idIndex: 0,
+                                    idIndex: 0,
                                     fields: [
                                              "id",
                                              "modeline",
@@ -143,7 +142,8 @@ function getX11Form(){
                                              "y"
                                              ],
                                     data : item.modelines
-                                })
+                                }),
+                                hiddenValue: item.current_modeline.id
                            })]
                         });
                     }, this);
@@ -171,6 +171,7 @@ function getX11Form(){
                         }
                     }
                 }
+                
             }
             catch (err) {
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current display settings.' );
