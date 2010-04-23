@@ -11,7 +11,7 @@ stop on (stopping dbus
          or stopping udev)
 
 pre-start script
-sleep 5
+sleep 15
 end script
 
 expect fork
