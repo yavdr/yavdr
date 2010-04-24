@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SERVICES="vdr nodm lirc dkms_autoinstaller inputlirc halevt tntnet"
+
+for S in $SERVICES; do
+  /usr/sbin/update-rc.d -f $S remove 2>/dev/null >/dev/null
+done
