@@ -2,4 +2,4 @@
     <?cs if:system.hardware.nvidia.detected ?>Driver         "nvidia"
     VendorName     "NVIDIA Corporation"<?cs /if ?>
     Screen          1
-
+    Option "NoLogo" "True"
