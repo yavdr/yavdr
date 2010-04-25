@@ -92,4 +92,10 @@ build_remote_args ()
 
 exec /usr/sbin/lircd --nodaemon $REMOTE_LIRCD_ARGS 
 end script
+
+post-start script
+  while [ ! -e /dev/lircd ]; do
+    sleep 1
+  done
+end script
 <?cs /if ?>
