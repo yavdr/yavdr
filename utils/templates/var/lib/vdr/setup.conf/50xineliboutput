@@ -29,3 +29,4 @@ xineliboutput.Video.SwScale.Downscale = 0
 xineliboutput.Video.SwScale.Height = 576
 xineliboutput.Video.SwScale.Resize = 0
 xineliboutput.Video.SwScale.Width = 720
+xineliboutput.Audio.SoftwareVolumeControl = 1
