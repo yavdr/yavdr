@@ -98,7 +98,7 @@ function getX11Form(){
                 } else {
                     Ext.each(displayData.system.x11.displays, function(item, index, allitems) {
                     
-                        this.insert(1, {
+                        this.insert(index+1, {
                             xtype:'fieldset',
                             checkboxToggle:false,
                             title: 'display ' + index + ': ' + item.name + ' - DEMO - not working',
