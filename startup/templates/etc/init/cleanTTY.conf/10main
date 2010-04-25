@@ -7,4 +7,5 @@ script
   setterm -foreground black -store >/dev/tty9
   setterm -clear >/dev/tty1
   setterm -clear >/dev/tty9
+  chvt 9
 end script
