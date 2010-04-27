@@ -2,9 +2,9 @@
 
 function checkmount()
 {
-    retry=3
+    retry=30
     while [ $retry -gt 0 ]; do
-        logger "testing for $1"
+        logger "testing for $1 ($retry)"
         sudo -u vdr touch $1/.update
         if [ $? -eq 0 ]; then
             logger "found $1"
