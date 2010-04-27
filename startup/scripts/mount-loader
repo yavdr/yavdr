@@ -10,6 +10,7 @@ function checkmount()
         sudo -u vdr touch $1/.update
         if [ $? -eq 0 ]; then
             logger "found $1"
+            sudo -u vdr touch $VIDEO_DIR/.update
             $0 hold $1 &
 	    break
         else
