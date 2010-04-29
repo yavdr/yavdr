@@ -12,9 +12,33 @@ extern "C" {
 
 using namespace std;
 </%pre><& authenticate ><%args>
-  x11_graphtft;
-  x11_dualhead;
-</%args><%cpp>
+  x11_graphtft = "0";
+  x11_dualhead = "0";
+  defaultdisplay = "";
+  secondarydisplay = "";
+
+  string display0[];
+  string display1[];
+  string display2[];  
+</%args><%shared>
+bool writeDisplayToHDF(HDF *hdf, int id, std::vector<string> display) {
+    if (display.size() == 3) {
+        NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=%s"  , id, display[0].c_str());
+        err = hdf_set_valuef(hdf, "system.x11.display.%i.mode=%s"    , id, display[1].c_str());
+        err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline=%s", id, display[2].c_str());
+
+        return true;
+    }
+    return false;
+}
+
+void cleanDisplayInHDF(HDF *hdf, int id) {
+    NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=", id);
+    err = hdf_set_valuef(hdf, "system.x11.display.%i.mode="          , id);
+    err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline="      , id);
+}
+
+</%shared><%cpp>
   string success = "false";
   string msg = "Unspecified error.";
   
@@ -29,11 +53,50 @@ using namespace std;
     if (x11_dualhead != "1") {
       err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
+      
+      // writing primary display
+      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", defaultdisplay.c_str());
+      
+      if (display0.size() == 3 && defaultdisplay == display0[0]) {
+        writeDisplayToHDF(hdf, 0, display0);
+      } else if (display1.size() == 3 && defaultdisplay == display1[0]) {
+        writeDisplayToHDF(hdf, 0, display1);
+      } else if (display2.size() == 3 && defaultdisplay == display2[0]) {
+        writeDisplayToHDF(hdf, 0, display2);
+      } else {
+        cleanDisplayInHDF(hdf, 0);
+      }
     }
     else
     {
       err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=1");
+      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", defaultdisplay.c_str());
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
+      
+      
+      if (display0.size() == 3 && defaultdisplay == display0[0]) {
+        writeDisplayToHDF(hdf, 0, display0);
+      } else if (display1.size() == 3 && defaultdisplay == display1[0]) {
+        writeDisplayToHDF(hdf, 0, display1);
+      } else if (display2.size() == 3 && defaultdisplay == display2[0]) {
+        writeDisplayToHDF(hdf, 0, display2);
+      } else {
+        cleanDisplayInHDF(hdf, 0);
+      }
+      
+      if (secondarydisplay == defaultdisplay) {
+        cleanDisplayInHDF(hdf, 1);
+        err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
+        err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
+      } else if (display0.size() == 3 && secondarydisplay == display0[0]) {
+        writeDisplayToHDF(hdf, 1, display0);
+      } else if (display1.size() == 3 && secondarydisplay == display1[0]) {
+        writeDisplayToHDF(hdf, 1, display1);
+      } else if (display2.size() == 3 && secondarydisplay == display2[0]) {
+        writeDisplayToHDF(hdf, 1, display2);
+      } else {
+        cleanDisplayInHDF(hdf, 1);
+      }
     }
     if ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK) {
       nerr_log_error(err);
@@ -43,7 +106,7 @@ using namespace std;
     if (err == STATUS_OK) {
       int ret = system("/usr/bin/signal-event graphtft-state-change");
       success = "true";
-      msg = "OK. signal-event lirchw-changed";
+      msg = "OK. signal-event graphtft-state-change";
     }
   }
 </%cpp>{

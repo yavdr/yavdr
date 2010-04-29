@@ -72,6 +72,58 @@ string display_device_name(int mask) {
        default: return "Unknown";
      }
 }
+
+
+inline std::string trim_right(const std::string &source , const std::string& t = " ")
+{
+std::string str = source;
+return str.erase( str.find_last_not_of(t) + 1);
+}
+
+inline std::string trim_left( const std::string& source, const std::string& t = " ")
+{
+std::string str = source;
+return str.erase(0 , source.find_first_not_of(t) );
+}
+
+inline std::string trim(const std::string& source, const std::string& t = " ")
+{
+std::string str = source;
+return trim_left( trim_right( str , t) , t );
+} 
+
+string char2hex( char dec )
+{
+    char dig1 = (dec&0xF0)>>4;
+    char dig2 = (dec&0x0F);
+    if ( 0<= dig1 && dig1<= 9) dig1+=48;    //0,48inascii
+    if (10<= dig1 && dig1<=15) dig1+=97-10; //a,97inascii
+    if ( 0<= dig2 && dig2<= 9) dig2+=48;
+    if (10<= dig2 && dig2<=15) dig2+=97-10;
+
+    string r;
+    r.append( &dig1, 1);
+    r.append( &dig2, 1);
+    return r;
+}
+
+//based on javascript encodeURIComponent()
+string urlencode(const string &c)
+{
+   
+    string escaped="";
+    int max = c.length();
+    for(int i=0; i<max; i++)
+    {
+        if (c[i]=='"')
+        {
+            escaped.append( "\\" );
+        }
+        escaped.append( &c[i], 1 );
+    }
+    return escaped;
+}
+
 </%shared><%cpp>
   reply.setHeader ("Cache-Control", "no-cache", false);
   reply.setHeader ("Content-Type", "application/json", false);
@@ -83,6 +135,7 @@ string display_device_name(int mask) {
   
   string dualhead_enabled = "";
   string graphtft_enabled = "";
+  string devmode = "0";
   
   //get current lirc settings from database
   if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
@@ -99,6 +152,7 @@ string display_device_name(int mask) {
     if (graphtft_enabled == "") {
         graphtft_enabled = "0";
     }
+    devmode = hdf_get_value(hdf, "webfrontend.devmode", "0");
     
     Display *dpy;
     Bool ret;
@@ -192,7 +246,7 @@ string display_device_name(int mask) {
                      ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
                                                   NV_CTRL_BINARY_DATA_MODELINES,
                                                   (unsigned char **) &str, &len);
-                        
+                     
                      if (ret) {
                          /*
                           * the returned data is in the form:
@@ -201,8 +255,9 @@ string display_device_name(int mask) {
                           *
                           * so walk from one "\0" to the next to print each ModeLine.
                           */
-                         start = str;
                          ret = true; // first modeline
+                         
+                         start = str;
                          for (j = 0; j < len; j++) {
                            if (str[j] == '\0' && start[0] != '\0') {
                              if (!ret)
@@ -222,11 +277,11 @@ string display_device_name(int mask) {
                              
                              reply.out()  << "{\n"
                                           << "        \"id\" : \"";
-                             reply.sout() << tokens[0].substr(1, tokens[0].length()-2);
+                             reply.out() << trim(tokens[0].substr(1, tokens[0].length()-2));
                              reply.out()  << "\",\n"
                                           << "        \"modeline\" : \"";
                                           
-                             reply.sout() << parts[parts.size()-1];
+                             reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
                              reply.out()  << "\",\n"
                                           << "        \"x\" : \"";
                                           
@@ -242,7 +297,31 @@ string display_device_name(int mask) {
                          }
                          
                          XFree(str);
+                     } else
+                         ret = true;
+                     
+                     if ((display_device.substr(0,3) == "CRT" && name == display_device) || devmode == "1") {
+                         if (!ret)
+                         {
+                             reply.out()  << ",";
+                         }
+                         reply.out()  << "{\n"
+                                      << "        \"id\" : \"VGA2Scart 16:9\",\n"
+                                      << "        \"modeline\" : \"";    
+                         reply.sout() << "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
+                         reply.out()  << "\",\n"
+                                      << "        \"x\" : \"1024\",\n"
+                                      << "        \"y\" : \"576\"\n"
+                                      << "        },{\n"
+                                      << "        \"id\" : \"VGA2Scart 4:3\",\n"
+                                      << "        \"modeline\" : \"";
+                         reply.sout() << "13.875 720  744  808  888  576  580  585  625 -HSync -Vsync interlace";
+                         reply.out()  << "\",\n"
+                                      << "        \"x\" : \"720\",\n"
+                                      << "        \"y\" : \"576\"\n"
+                                      << "        }";
                      }
+                     
                      reply.out()  << "],\n"
                                   << "        \"current_modeline\" : {\n";
                      
@@ -258,11 +337,11 @@ string display_device_name(int mask) {
                              Tokenize(parts[parts.size()-1], tokens);
                              
                              reply.out()  << "        \"id\" : \"";
-                             reply.sout() << tokens[0].substr(1, tokens[0].length()-2);
+                             reply.sout() << trim(tokens[0].substr(1, tokens[0].length()-2));
                              reply.out()  << "\",\n"
                                           << "        \"modeline\" : \"";
                                           
-                             reply.sout() << parts[parts.size()-1];
+                             reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
                              reply.out()  << "\",\n"
                                           << "        \"x\" : \"";
                                           

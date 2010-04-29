@@ -20,8 +20,23 @@ function getX11Form(){
                 var e = Ext.getCmp("x11_graphtft");
                 if (checked) {
                     e.enable();
+                    for(i = 0; i< 3; i++) {
+                        var rButton = Ext.getCmp('display_'+i);
+                        if (rButton) {
+                            if (!rButton.getValue()) {
+                                rButton = Ext.getCmp('sec_'+i);
+                                if (rButton)
+                                    rButton.enable();
+                            }
+                        }
+                    }
                 } else {
                     e.disable().setValue(false);
+                    for(i = 0; i< 3; i++) {
+                        var rButton = Ext.getCmp('sec_'+i);
+                        if (rButton)
+                            rButton.disable();
+                    }
                 }
             }
         },{
@@ -97,29 +112,29 @@ function getX11Form(){
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'no displays found! -> enable form');
                 } else {
                     Ext.each(displayData.system.x11.displays, function(item, index, allitems) {
-                    
-                        this.insert(index+1, {
-                            xtype:'fieldset',
-                            checkboxToggle:false,
-                            title: 'display ' + index + ': ' + item.name + ' - DEMO - not working',
-                            autoHeight:true,
-                            defaults: {width: 210},
-                            //defaultType: 'textfield',
-                            collapsed: false,
-                            items: [{
+                        var hiddenmodeline = new Ext.form.Hidden({
+                            name: 'display'+index,
+                            value: item.current_modeline.modeline
+                        });
+                        
+                        newitems = [{
                                 xtype: 'label',
                                 html: 'device: ' + item.devicename + '<br />'
                             }, {
                                 xtype: 'label',
                                 html: 'modeline: ' + item.current_modeline.id + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
                             },
+                            new Ext.form.Hidden({
+                                name: 'display'+index,
+                                value: item.devicename
+                            }),
                             new Ext.form.ComboBox({ 
                                id : 'modeline_' + index,
                                tpl: '<tpl for="."><div ext:qtip="modeline' +
-                                         ': {modeline}<br/'+'>' + 
+                                         ': &quot;{id}&quot; {modeline}<br/'+'>' + 
                                          'resolution:{x}x{y}" class="x-combo-list-item">{id}</div></tpl>',
                                //name: ... used in POST request
-                               hiddenName: 'modeline['+index+']', //key, defined in set_lirchw.ecpp, used in POST request
+                               hiddenName: 'display' + index,  //key, defined in set_lirchw.ecpp, used in POST request
                                //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
                                valueField: 'id', //value column, used in POST request
                                displayField: 'id',
@@ -131,9 +146,8 @@ function getX11Form(){
                                fieldLabel: 'resolution',
                                selectOnFocus: true,
                                store: new Ext.data.JsonStore({
-                                    storeId : 'modestore_'+index,
+                                    storeId : 'modelinestore_'+index,
                                     autoDestroy: true,
-                                    //root: 'modelines',
                                     idIndex: 0,
                                     fields: [
                                              "id",
@@ -143,9 +157,74 @@ function getX11Form(){
                                              ],
                                     data : item.modelines
                                 }),
-                                hiddenValue: item.current_modeline.id
-                           })]
+                                value: item.current_modeline.id,
+                                hiddenValue: item.current_modeline.id,
+                                listeners:{
+                                    scope: hiddenmodeline,
+                                    'select' : function( combo, record, index){
+                                            this.setValue(record.data.modeline);
+                                            //this.adjustSerialSettings( record.data.lirc_driver, record.data.driver );
+                                    }
+                                }
+                                //disabled: (index > 0 && !displayData.system.x11.dualhead.enabled)
+                           }),
+                           hiddenmodeline,
+                           new Ext.form.Radio({
+                                id: 'display_' + index,
+                                _index: index,
+                                _dual: Ext.getCmp('x11_dualhead'),
+                                name: 'defaultdisplay',
+                                fieldLabel: 'standard',
+                                inputValue: item.devicename,
+                                checked: (allitems.length == 1),
+                                listeners: {
+                                    check: function( cb,  checked ) {
+                                        if (this._dual.getValue()) {
+                                            if (checked) {
+                                                for(i = 0;i<3;i++) {
+                                                    var rButton =  Ext.getCmp('sec_'+i);
+                                                    if (rButton) {
+                                                        if (i == this._index)
+                                                            rButton.disable().setValue(false);
+                                                        else
+                                                            rButton.enable();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                           })];
+                        
+                        if ((allitems.length >= 2)) {
+                          newitems[newitems.length] = new Ext.form.Radio({
+                                id: 'sec_' + index,
+                                _index: index,
+                                name: 'secondarydisplay',
+                                fieldLabel: 'secondary',
+                                inputValue: item.devicename,
+                                disabled: (displayData.system.x11.dualhead.enabled != '1'),
+                                listeners: {
+                                    check: function( cb,  checked ) {
+                                        //if (checked) alert(cb._index);
+                                    }
+                                }
+                                //checked: (allitems.length != 1)
+                           })
+                        }
+                        
+                        this.insert(index+1, {
+                            xtype:'fieldset',
+                            checkboxToggle:false,
+                            title: 'display ' + index + ': ' + item.name + ' - DEMO - not working',
+                            autoHeight:true,
+                            defaults: {width: 210},
+                            //defaultType: 'textfield',
+                            collapsed: false,
+                            items: newitems
+                           
                         });
+                        
                     }, this);
                     this.doLayout();
                     if (displayData.system.x11.displays.length >= 2) {
