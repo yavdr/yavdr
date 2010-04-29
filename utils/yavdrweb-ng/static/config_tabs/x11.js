@@ -197,7 +197,7 @@ function getX11Form(){
                            })];
                         
                         if ((allitems.length >= 2)) {
-                          newitems[newitems.length] = new Ext.form.Radio({
+                          newitems[newitems.length] = new Ext.form.Checkbox({
                                 id: 'sec_' + index,
                                 _index: index,
                                 name: 'secondarydisplay',
