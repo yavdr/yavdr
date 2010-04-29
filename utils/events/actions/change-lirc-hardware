@@ -4,14 +4,17 @@ process-template /etc/lirc/hardware.conf
 process-template /etc/modprobe.d/lirc-serial.conf
 process-template /etc/serial.conf
 
+LIRCD="$(dbget system.remoted)"
 LIRCD_CONF="$(dbget system.lirchw.lircd_conf)"
-if [ -n "$LIRCD_CONF" ]; then
+if [ "x$LIRCD" = "xlircd" ]; then
   if [ ! -e /etc/lirc/lircd.conf -o -L /etc/lirc/lircd.conf ]; then
+   if [ -n $LIRCD_CONF ]; then 
     if [ -e /usr/share/lirc/remotes/$LIRCD_CONF ]; then
       ln -sf /usr/share/lirc/remotes/$LIRCD_CONF /etc/lirc/lircd.conf
     elif [ -e /usr/share/lirc/extras/more_remotes/$LIRCD_CONF ]; then
       ln -sf /usr/share/lirc/extras/more_remotes/$LIRCD_CONF /etc/lirc/lircd.conf
     fi
+   fi
   fi
 else 
   if [ -L /etc/lirc/lircd.conf ]; then 
