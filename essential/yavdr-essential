@@ -25,7 +25,7 @@ linux-firmware-nonfree
 logrotate
 nfs-common
 nfs-kernel-server
-nodm
+xli
 libvdpau1
 nct677x-dkms
 nvidia-current
@@ -35,7 +35,6 @@ smbfs
 ssh
 tntnet
 update-manager-core
-unclutter
 ureadahead
 vdr
 vdr-addon-acpiwakeup
