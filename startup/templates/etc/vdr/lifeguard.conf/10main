@@ -1,0 +1,20 @@
+#
+# /etc/vdr/lifeguard.conf - configuration file for VDR lifeguard
+#
+# See manpage for vdr-addon-lifeguard (`man vdr-addon-lifeguard`)
+#
+
+# standard entries
+usr
+cmd	aptitude	Aptitude
+tcp	ssh		SSH
+tcp     nfs             NFS\ Mount
+tcp	ftp		FTP
+
+# other potentially useful entries
+#host	some.host.name
+smb	locks
+#afp
+#other	myscript.sh	My\ Script
+
+xbmc
