@@ -4,7 +4,6 @@ if [ ! -d /srv/vdr/video.00/net ]; then
    mkdir -p /srv/vdr/video.00/net
    chown -R vdr.vdr /srv/vdr
 fi
-process-template /etc/init/autofs.conf
 process-template /etc/init/bootscreen.conf
 process-template /etc/init/cleanTTY.conf
 process-template /etc/init/dkms_autoinstaller.conf
