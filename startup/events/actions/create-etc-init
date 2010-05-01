@@ -8,9 +8,6 @@ process-template /etc/init/bootscreen.conf
 process-template /etc/init/cleanTTY.conf
 process-template /etc/init/dkms_autoinstaller.conf
 process-template /etc/init/first-vdr-start.conf
-if [ -f /etc/init/lirc.conf ]; then
-  rm -f /etc/init/lirc.conf
-fi
 process-template /etc/init/remoted.conf
 process-template /etc/init/x.conf
 process-template /etc/init/onshutdown.conf
@@ -23,6 +20,5 @@ process-template /etc/init/vdr-frontend.conf
 process-template --mode 755 /usr/lib/vdr/config-loader
 process-template --mode 755 /usr/lib/vdr/plugin-loader
 process-template --mode 755 /usr/lib/vdr/commands-loader
-if [ -f /etc/init/nodm.conf ]; then
-  rm -f /etc/init/nodm.conf
-fi
+rm -f /etc/init/nodm.conf
+rm -f /etc/init/lirc.conf
