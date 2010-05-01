@@ -2,13 +2,9 @@
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
-         service cleanTTY start
-         service vdr stop
-         service nodm stop
          ;;
      thaw|resume)
          echo "vdr gets started again"
-         service nodm start
          service vdr start  
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."
