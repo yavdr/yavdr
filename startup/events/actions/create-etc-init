@@ -12,7 +12,7 @@ if [ -f /etc/init/lirc.conf ]; then
   rm -f /etc/init/lirc.conf
 fi
 process-template /etc/init/remoted.conf
-process-template /etc/init/nodm.conf
+process-template /etc/init/x.conf
 process-template /etc/init/onshutdown.conf
 process-template /etc/init/s3.conf
 process-template /etc/init/s4.conf
@@ -23,4 +23,6 @@ process-template /etc/init/vdr-frontend.conf
 process-template --mode 755 /usr/lib/vdr/config-loader
 process-template --mode 755 /usr/lib/vdr/plugin-loader
 process-template --mode 755 /usr/lib/vdr/commands-loader
-
+if [ -f /etc/init/nodm.conf ]; then
+  rm -f /etc/init/nodm.conf
+fi
