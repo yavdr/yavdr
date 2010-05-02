@@ -7,7 +7,6 @@ autofs
 build-essential
 cpufrequtils
 ethtool
-feh
 firefox
 graphtft-fe
 inputlirc
