@@ -12,6 +12,9 @@ NEW
 - english language labels are now always loaded as a fallback.
 - changed xine-ui keymap 
 - add Input-LIRC and IR-Server
+- add S4 S5 and PowerOfKernel to reboot options
+- default WF language settings after installation
+- fsck on shutdown
 - add hotplug of usb mass storage
 - move vdr script completly to upstart
 - bugfix for X10 and lirc_serial
