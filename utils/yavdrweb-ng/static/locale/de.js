@@ -41,6 +41,13 @@ var locale_de = {
             wait: 'Bitte warten...'
         }
     },
+    remote: {
+        menutab: {
+            title : 'Fernbedienungen',
+            tabtip :'Einstellungen für Fernbedienungen (Remote Control Receiver)',
+            panel_title : 'Einstellungen für Fernbedienungen'
+        }
+    },
     lirc: {
         menutab: {
             title : 'LIRC',
@@ -59,6 +66,54 @@ var locale_de = {
         serial_radiogroup: {
              label : 'Serielle Schnittstelle',
              boxlabel_none : 'keine'
+        },
+        submit: {
+            waitmsg : 'Fernbedienungs-Settings werden gespeichert.',    
+            success : 'Ihre Auswahl wurde erfolgreich gespeichert.',
+            failure : 'Fehler beim Speichern. Bitte noch einmal versuchen.'
+        },
+        error: {
+            json_decode : 'Konnte JSON Empfängerliste nicht dekodieren'
+        }
+    },
+    inputlirc: {
+        menutab: {
+            title : 'Inputlirc',
+            tabtip :'Input-Lirc-Einstellungen (Remote Control Receiver)',
+            panel_title : 'Input-Lirc-Einstellungen für Fernbedienungen (Input-LIRC)'
+        },
+        help: 'Sobald Sie den Button "Speichern" drücken, wird der VDR neu gestartet, um dem VDR die Änderung des Input-LIRC-Empfängers bekanntzumachen. Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben (via remote.conf), wird der VDR Ihnen direkt nach dem Neustart auf dem On-Screen-Display eine Anlernphase für Ihre Fernbedienung anbieten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie unten wieder auf den Button "Speichern" drücken.',
+        combobox: {
+             tooltip : {
+                 driver: 'Treiber',
+                 lirc_driver: 'Inputlirc Treiber'
+             },
+             emptytext: 'Bitte Empfänger für Fernbedienung wählen...',
+             label: 'Empfänger'
+        },
+        submit: {
+            waitmsg : 'Fernbedienungs-Settings werden gespeichert.',    
+            success : 'Ihre Auswahl wurde erfolgreich gespeichert.',
+            failure : 'Fehler beim Speichern. Bitte noch einmal versuchen.'
+        },
+        error: {
+            json_decode : 'Konnte JSON Empfängerliste nicht dekodieren'
+        }
+    },
+    irserver: {
+        menutab: {
+            title : 'IRServer',
+            tabtip :'IRServer-Settings (Remote Control Receiver)',
+            panel_title : 'IRServer-Einstellungen für Fernbedienungen (IRServer)'
+        },
+        help: 'Sobald Sie den Button "Speichern" drücken, wird der VDR neu gestartet, um dem VDR die Änderung des IRServer-Empfängers bekanntzumachen. Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben (via remote.conf), wird der VDR Ihnen direkt nach dem Neustart auf dem On-Screen-Display eine Anlernphase für Ihre Fernbedienung anbieten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie unten wieder auf den Button "Speichern" drücken.',
+        combobox: {
+             tooltip : {
+                 driver: 'Treiber',
+                 lirc_driver: 'IRServer Treiber'
+             },
+             emptytext: 'Bitte Empfänger für Fernbedienung wählen...',
+             label: 'Empfänger'
         },
         submit: {
             waitmsg : 'Fernbedienungs-Settings werden gespeichert.',    
@@ -300,6 +355,12 @@ var locale_de = {
             waitmsg : 'Einstellungen werden aktualisiert.',    
             success : 'Erfolg.',
             failure : 'Fehler.'
+        },
+        dualhead: {
+            label: '2-Bildschrimbetrieb',
+            boxlabel: 'aktiviert',
+            boxlabelunavailable: 'deaktiviert (< 2 Bildschirme gefunden)',
+            switch_label: 'Wechsel des VDR-Frontends auf 2. Bildschirm'
         }
     }
 };
