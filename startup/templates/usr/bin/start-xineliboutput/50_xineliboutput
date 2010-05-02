@@ -1,3 +1,3 @@
 
-while  ! netcat -z localhost 37890; do sleep 1; done;
+while  ! netcat -z localhost 37890; do sleep 0.1; done;
 /usr/bin/vdr-sxfe $XINELIBOUTPUTOPTS xvdr://127.0.0.1:37890

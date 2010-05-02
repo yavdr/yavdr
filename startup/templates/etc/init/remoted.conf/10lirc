@@ -95,7 +95,7 @@ end script
 
 post-start script
   while [ ! -e /dev/lircd ]; do
-    sleep 1
+    sleep 0.1
   done
 end script
 <?cs /if ?>

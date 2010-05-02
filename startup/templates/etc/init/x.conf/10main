@@ -13,6 +13,6 @@ exec /usr/bin/X :1 vt9
 
 post-start script
 while ! DISPLAY=:1 xli -onroot -center -border black /usr/share/yavdr/images/yavdr_logo.png ; do
-sleep 1
+sleep 0.1
 done
 end script
