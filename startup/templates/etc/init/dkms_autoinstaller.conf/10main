@@ -5,7 +5,7 @@
 description	"DKMS Automatic Build & Installation Service"
 author          "Mario Limonciello <Mario_Limonciello@Dell.com>"
 
-start on (starting nodm
+start on (starting x
           or starting vdr
           or stopping rc RUNLEVEL=[2345])
 
