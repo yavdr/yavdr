@@ -1,4 +1,4 @@
-
+<?cs if:(vdr.plugin.graphtft.enabled == "1") ?>
 script
 TFT_SIZE=`xrandr -q -d $DISPLAY | awk '/default connected/ {print $3}' | cut -d '+' -f1`
 TFT_WIDTH=`echo $TFT_SIZE | cut -d 'x' -f1`
@@ -13,4 +13,4 @@ while  ! netcat -z localhost 2039; do sleep 1; done;
 
 exec /usr/bin/graphtft-fe $GRAPHTFTFEOPTS -h localhost
 end script
-
+<?cs /if ?>
