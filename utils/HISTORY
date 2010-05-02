@@ -1,32 +1,38 @@
 yaVDR-utils release history
 ---------------------------------------
 
-NEW
-- extend Display-settings to set X11 resolutions
-- add IRServer & Input-lirc to remotes tab
-- update to ubuntu lucid
 -----------------
-Version 0.2.0 (02.May.2010)
+Version 0.2.0 (xx.xxx.2010)
 -----------------
 
-NEW 
+NEW
+- add IRServer & Input-lirc to remotes tab
+- update to ubuntu lucid
 - default enabled live tv in xmbc
 - english language labels are now always loaded as a fallback.
 - changed xine-ui keymap 
+- add Input-LIRC and IR-Server
+
 Webfrontend:
 - VDR-shutdown tab, switch between suspend2ram,shutdown, reboot poweroff-kernel
 - Nvidia Overscan  compensation tab/"slider"
 - BootMenu tab to choose grub timeout between 0-10
-- Display-settings tab and added graphtft support
+- Display-settings tab to set X11 resolutions 
+  and added graphtft support
 - Network tab (Define the nfs shares from other hosts that should be used from VDR.) 
 - XBMC as vdr-frontend (now possible to switch between xine, vdr-sxfe, XBMC)
+- add headless support
 - add favicon to Webfrontend
+- add fr, nl and it to web frontend
+- add Input-LIRC and IR-Server to Webfrontend
+- rearrange Tabs
+- 
 
 -----------------
 Version 0.1.1 (18.Feb.2010)
 -----------------
 - splitted xorg.conf.yavdr into small parts; will now get recreated by
-post-upgrade too
+  post-upgrade too
 - make change-lirc-event effective immediatly
   * stop lirc before changes
   * start after applying udev-rule change
