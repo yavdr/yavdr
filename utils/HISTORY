@@ -13,6 +13,9 @@ Webfrontend:
 - Network tab (Define the nfs shares from other hosts that should be used from VDR.) 
 - XBMC as vdr-frontend (now possible to switch between xine, vdr-sxfe, XBMC)
 - add favicon to Webfrontend
+- extend Display-settings to set X11 resolutions
+- add IRServer & Input-lirc to remotes tab
+
 -----------------
 Version 0.1.1 (18.Feb.2010)
 -----------------
