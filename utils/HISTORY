@@ -1,6 +1,14 @@
 yaVDR-utils release history
 ---------------------------------------
 
+NEW
+- extend Display-settings to set X11 resolutions
+- add IRServer & Input-lirc to remotes tab
+
+-----------------
+Version 0.2.0 (02.May.2010)
+-----------------
+
 NEW 
 - default enabled live tv in xmbc
 - english language labels are now always loaded as a fallback.
@@ -13,8 +21,6 @@ Webfrontend:
 - Network tab (Define the nfs shares from other hosts that should be used from VDR.) 
 - XBMC as vdr-frontend (now possible to switch between xine, vdr-sxfe, XBMC)
 - add favicon to Webfrontend
-- extend Display-settings to set X11 resolutions
-- add IRServer & Input-lirc to remotes tab
 
 -----------------
 Version 0.1.1 (18.Feb.2010)
@@ -50,7 +56,7 @@ adding Xsession.vdr and Xorg.1.log to X-Server tab
 - yavdr-utils: removing hardcoded OSDLanguage = de_DE from setup.conf
 template (VDR will determine OSD language from locales)
 - s3 script fix
-- 
+
 -----------------
 4.Feb.2010
 -----------------
@@ -86,6 +92,5 @@ initial release
 ----------------- 
 unfinished features:
 -----------------
-- added NVIDIA overscan correction (not finished yet)
 - added support for autofs configuration (not finished yet)
 
