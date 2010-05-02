@@ -1,5 +1,4 @@
-start on (filesystem
-          and started dbus
+start on (started dbus
           and (graphics-device-added fb0 PRIMARY_DEVICE_FOR_DISPLAY=1
                or drm-device-added card0 PRIMARY_DEVICE_FOR_DISPLAY=1
                or stopped udevtrigger))

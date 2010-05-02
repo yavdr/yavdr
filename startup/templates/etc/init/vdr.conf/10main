@@ -14,7 +14,6 @@ end script
 
 pre-stop script
   service vdr-frontend stop
-  killall Xorg
 end script
 
 post-stop script
