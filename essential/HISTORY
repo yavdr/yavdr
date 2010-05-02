@@ -1,6 +1,16 @@
 yaVDR-essential release history
 ---------------------------------------
 
+added xli
+added update-manager-core
+added vdr-addon-lifeguard
+added halevt
+added hal
+remove nodm
+remove unclutter
+-----------------
+Version 0.2.0 (02.May.2010)
+-----------------
 added touchscreen driver
 added vdr-plugin-dummydevice
 remove suspendoutput
