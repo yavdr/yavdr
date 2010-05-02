@@ -1,4 +1,4 @@
-#!/bin/sh
+
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"

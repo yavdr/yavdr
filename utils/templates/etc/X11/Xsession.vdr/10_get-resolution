@@ -1,4 +1,4 @@
-#!/bin/sh
+
 
 # get current resolution and save it
 /usr/bin/xwininfo -root >/tmp/xwininfo.out 2> /dev/null

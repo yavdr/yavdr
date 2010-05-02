@@ -1,4 +1,4 @@
-#!/bin/sh
+
 #
 # VDR shutdown hook for suspend to ram (S3), power down or reboot - Holger Reichelt, Volker Richert
 # --------------------------
