@@ -21,10 +21,10 @@ function getX11Form(){
                 if (checked) {
                     e.enable();
                     for(i = 0; i< 3; i++) {
-                        var rButton = Ext.getCmp('display_'+i);
+                        var rButton = Ext.getCmp('primary_'+i);
                         if (rButton) {
                             if (!rButton.getValue()) {
-                                rButton = Ext.getCmp('sec_'+i);
+                                rButton = Ext.getCmp('secondary_'+i);
                                 if (rButton)
                                     rButton.enable();
                             }
@@ -33,7 +33,7 @@ function getX11Form(){
                 } else {
                     e.disable().setValue(false);
                     for(i = 0; i< 3; i++) {
-                        var rButton = Ext.getCmp('sec_'+i);
+                        var rButton = Ext.getCmp('secondary_'+i);
                         if (rButton)
                             rButton.disable();
                     }
@@ -170,19 +170,19 @@ function getX11Form(){
                            }),
                            hiddenmodeline,
                            new Ext.form.Radio({
-                                id: 'display_' + index,
+                                id: 'primary_' + index,
                                 _index: index,
                                 _dual: Ext.getCmp('x11_dualhead'),
-                                name: 'defaultdisplay',
-                                fieldLabel: 'standard',
+                                name: 'primary',
+                                fieldLabel: 'primary',
                                 inputValue: item.devicename,
-                                checked: (allitems.length == 1),
+                                checked: item.primary,
                                 listeners: {
                                     check: function( cb,  checked ) {
                                         if (this._dual.getValue()) {
                                             if (checked) {
                                                 for(i = 0;i<3;i++) {
-                                                    var rButton =  Ext.getCmp('sec_'+i);
+                                                    var rButton =  Ext.getCmp('secondary_'+i);
                                                     if (rButton) {
                                                         if (i == this._index)
                                                             rButton.disable().setValue(false);
@@ -198,12 +198,13 @@ function getX11Form(){
                         
                         if ((allitems.length >= 2)) {
                           newitems[newitems.length] = new Ext.form.Radio({
-                                id: 'sec_' + index,
+                                id: 'secondary_' + index,
                                 _index: index,
-                                name: 'secondarydisplay',
+                                name: 'secondary',
                                 fieldLabel: 'secondary',
                                 inputValue: item.devicename,
                                 disabled: (displayData.system.x11.dualhead.enabled != '1'),
+                                checked: item.seconday,
                                 listeners: {
                                     check: function( cb,  checked ) {
                                         //if (checked) alert(cb._index);

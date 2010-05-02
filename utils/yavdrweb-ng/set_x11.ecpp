@@ -21,8 +21,8 @@ using namespace std;
 </%pre><& authenticate ><%args>
   x11_graphtft = "0";
   x11_dualhead = "0";
-  defaultdisplay = "";
-  secondarydisplay = "";
+  primary = "";
+  secondary = "";
 
   string display0[];
   string display1[];
@@ -62,13 +62,13 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
       
       // writing primary display
-      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", defaultdisplay.c_str());
+      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
       
-      if (display0.size() == 3 && defaultdisplay == display0[0]) {
+      if (display0.size() == 3 && primary == display0[0]) {
         writeDisplayToHDF(hdf, 0, display0);
-      } else if (display1.size() == 3 && defaultdisplay == display1[0]) {
+      } else if (display1.size() == 3 && primary == display1[0]) {
         writeDisplayToHDF(hdf, 0, display1);
-      } else if (display2.size() == 3 && defaultdisplay == display2[0]) {
+      } else if (display2.size() == 3 && primary == display2[0]) {
         writeDisplayToHDF(hdf, 0, display2);
       } else {
         cleanDisplayInHDF(hdf, 0);
@@ -77,29 +77,29 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
     else
     {
       err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=1");
-      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", defaultdisplay.c_str());
+      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
       
       
-      if (display0.size() == 3 && defaultdisplay == display0[0]) {
+      if (display0.size() == 3 && primary == display0[0]) {
         writeDisplayToHDF(hdf, 0, display0);
-      } else if (display1.size() == 3 && defaultdisplay == display1[0]) {
+      } else if (display1.size() == 3 && primary == display1[0]) {
         writeDisplayToHDF(hdf, 0, display1);
-      } else if (display2.size() == 3 && defaultdisplay == display2[0]) {
+      } else if (display2.size() == 3 && primary == display2[0]) {
         writeDisplayToHDF(hdf, 0, display2);
       } else {
         cleanDisplayInHDF(hdf, 0);
       }
       
-      if (secondarydisplay == defaultdisplay) {
+      if (secondary == primary) {
         cleanDisplayInHDF(hdf, 1);
         err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
         err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
-      } else if (display0.size() == 3 && secondarydisplay == display0[0]) {
+      } else if (display0.size() == 3 && secondary == display0[0]) {
         writeDisplayToHDF(hdf, 1, display0);
-      } else if (display1.size() == 3 && secondarydisplay == display1[0]) {
+      } else if (display1.size() == 3 && secondary == display1[0]) {
         writeDisplayToHDF(hdf, 1, display1);
-      } else if (display2.size() == 3 && secondarydisplay == display2[0]) {
+      } else if (display2.size() == 3 && secondary == display2[0]) {
         writeDisplayToHDF(hdf, 1, display2);
       } else {
         cleanDisplayInHDF(hdf, 1);

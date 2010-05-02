@@ -154,7 +154,7 @@ string urlencode(const string &c)
     
     Display *dpy;
     Bool ret;
-    int screen, display_devices, mask, len, j;
+    int screen, display_devices, enabled_devices, mask, len, j;
     char *str, *start;
     string primary = "", secondary = "";
     
@@ -181,7 +181,8 @@ string urlencode(const string &c)
         if (XNVCTRLIsNvScreen(dpy, screen)) {
            ret = XNVCTRLQueryAttribute(dpy, screen, 0,
                      NV_CTRL_CONNECTED_DISPLAYS, &display_devices);
-
+           ret = XNVCTRLQueryAttribute(dpy, screen, 0,
+                     NV_CTRL_ENABLED_DISPLAYS, &enabled_devices);
            if (ret) {
            
              int num_gpus, i;
@@ -286,80 +287,79 @@ string urlencode(const string &c)
                                   << "        \"x\" : \"0\",\n"
                                   << "        \"y\" : \"0\"\n"
                                   << "        }";
-                                  
-                     ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
-                                                  NV_CTRL_BINARY_DATA_MODELINES,
-                                                  (unsigned char **) &str, &len);
-                     
-                     if (ret) {
-                         /*
-                          * the returned data is in the form:
-                          *
-                          *  "ModeLine 1\0ModeLine 2\0ModeLine 3\0Last ModeLine\0\0"
-                          *
-                          * so walk from one "\0" to the next to print each ModeLine.
-                          */
-                         ret = true; // first modeline
+                     if (enabled_devices & mask) {
+                         ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
+                                                      NV_CTRL_BINARY_DATA_MODELINES,
+                                                      (unsigned char **) &str, &len);
                          
-                         start = str;
-                         for (j = 0; j < len; j++) {
-                           if (str[j] == '\0' && start[0] != '\0') {
-                             reply.out()  << ",";
-                             ret = false;
+                         if (ret) {
+                             /*
+                              * the returned data is in the form:
+                              *
+                              *  "ModeLine 1\0ModeLine 2\0ModeLine 3\0Last ModeLine\0\0"
+                              *
+                              * so walk from one "\0" to the next to print each ModeLine.
+                              */
+                             ret = true; // first modeline
                              
-                             _s = string(start);
-                             vector<string> tokens;
-                             vector<string> parts;
-                             Tokenize(_s, parts, ":");
-                             Tokenize(parts[parts.size()-1], tokens);
+                             start = str;
+                             for (j = 0; j < len; j++) {
+                               if (str[j] == '\0' && start[0] != '\0') {
+                                 reply.out()  << ",";
+                                 ret = false;
+                                 
+                                 _s = string(start);
+                                 vector<string> tokens;
+                                 vector<string> parts;
+                                 Tokenize(_s, parts, ":");
+                                 Tokenize(parts[parts.size()-1], tokens);
+                                 
+                                 reply.out()  << "{\n"
+                                              << "        \"id\" : \"";
+                                 reply.out() << trim(tokens[0].substr(1, tokens[0].length()-2));
+                                 reply.out()  << "\",\n"
+                                              << "        \"modeline\" : \"";
+                                              
+                                 reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
+                                 reply.out()  << "\",\n"
+                                              << "        \"x\" : \"";
+                                              
+                                 reply.sout() << tokens[2];
+                                 reply.out()  << "\",\n"
+                                              << "        \"y\" : \"";
+                                              
+                                 reply.sout() << tokens[6];
+                                 reply.out()  << "\"\n"
+                                              << "        }";
+                                 start = &str[j+1];
+                               }
+                             }
                              
-                             reply.out()  << "{\n"
-                                          << "        \"id\" : \"";
-                             reply.out() << trim(tokens[0].substr(1, tokens[0].length()-2));
+                             XFree(str);
+                         } else
+                             ret = true;
+                         
+                         if ((display_device.substr(0,3) == "CRT" && name == display_device) || devmode == "1") {
+                             reply.out()  << ",{\n"
+                                          << "        \"id\" : \"VGA2Scart 16:9\",\n"
+                                          << "        \"modeline\" : \"";    
+                             reply.sout() << "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
                              reply.out()  << "\",\n"
+                                          << "        \"x\" : \"1024\",\n"
+                                          << "        \"y\" : \"576\"\n"
+                                          << "        },{\n"
+                                          << "        \"id\" : \"VGA2Scart 4:3\",\n"
                                           << "        \"modeline\" : \"";
-                                          
-                             reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
+                             reply.sout() << "13.875 720  744  808  888  576  580  585  625 -HSync -Vsync interlace";
                              reply.out()  << "\",\n"
-                                          << "        \"x\" : \"";
-                                          
-                             reply.sout() << tokens[2];
-                             reply.out()  << "\",\n"
-                                          << "        \"y\" : \"";
-                                          
-                             reply.sout() << tokens[6];
-                             reply.out()  << "\"\n"
+                                          << "        \"x\" : \"720\",\n"
+                                          << "        \"y\" : \"576\"\n"
                                           << "        }";
-                             start = &str[j+1];
-                           }
                          }
-                         
-                         XFree(str);
-                     } else
-                         ret = true;
-                     
-                     if ((display_device.substr(0,3) == "CRT" && name == display_device) || devmode == "1") {
-                         reply.out()  << ",{\n"
-                                      << "        \"id\" : \"VGA2Scart 16:9\",\n"
-                                      << "        \"modeline\" : \"";    
-                         reply.sout() << "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
-                         reply.out()  << "\",\n"
-                                      << "        \"x\" : \"1024\",\n"
-                                      << "        \"y\" : \"576\"\n"
-                                      << "        },{\n"
-                                      << "        \"id\" : \"VGA2Scart 4:3\",\n"
-                                      << "        \"modeline\" : \"";
-                         reply.sout() << "13.875 720  744  808  888  576  580  585  625 -HSync -Vsync interlace";
-                         reply.out()  << "\",\n"
-                                      << "        \"x\" : \"720\",\n"
-                                      << "        \"y\" : \"576\"\n"
-                                      << "        }";
                      }
-                     
                      reply.out()  << "],\n"
                                   << "        \"current_modeline\" : {\n";
-                     
-                     if (!ret) { // found modelines -> must be checked to avoid X11 crash
+                     if (enabled_devices & mask) { 
                          ret = XNVCTRLQueryStringAttribute(dpy, screen, mask,
                                                            NV_CTRL_STRING_CURRENT_MODELINE,
                                                            &str);
@@ -398,9 +398,9 @@ string urlencode(const string &c)
                                      << "        \"y\" : \"0\"\n";
                      }
                      /* query for modelines */
+
                      reply.out() << "}\n"
                                  << "      }\n";
-
                  }
               }
               reply.out() << "    ]\n";
