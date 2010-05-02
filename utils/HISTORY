@@ -4,7 +4,7 @@ yaVDR-utils release history
 NEW
 - extend Display-settings to set X11 resolutions
 - add IRServer & Input-lirc to remotes tab
-
+- update to ubuntu lucid
 -----------------
 Version 0.2.0 (02.May.2010)
 -----------------
@@ -13,7 +13,6 @@ NEW
 - default enabled live tv in xmbc
 - english language labels are now always loaded as a fallback.
 - changed xine-ui keymap 
-- update to ubuntu lucid
 Webfrontend:
 - VDR-shutdown tab, switch between suspend2ram,shutdown, reboot poweroff-kernel
 - Nvidia Overscan  compensation tab/"slider"

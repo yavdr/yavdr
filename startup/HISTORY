@@ -1,6 +1,11 @@
 yaVDR-startup release history
 ---------------------------------------
 
+
+- update to ubuntu lucid
+-----------------
+Version 0.2.0 (02.May.2010)
+-----------------
 NEW
 - hard shutdown with double press on power button
 - fsck on shutdown
