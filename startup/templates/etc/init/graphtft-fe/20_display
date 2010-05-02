@@ -1,0 +1,4 @@
+env DISPLAY=:1.1
+export DISPLAY
+
+
