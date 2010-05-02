@@ -13,6 +13,7 @@ NEW
 - default enabled live tv in xmbc
 - english language labels are now always loaded as a fallback.
 - changed xine-ui keymap 
+- update to ubuntu licid
 Webfrontend:
 - VDR-shutdown tab, switch between suspend2ram,shutdown, reboot poweroff-kernel
 - Nvidia Overscan  compensation tab/"slider"
