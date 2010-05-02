@@ -1,0 +1,8 @@
+start on stopped vdr-frontend
+
+script
+sleep 1
+DISPLAY=:1 xli -onroot -center -border black /usr/share/yavdr/images/yavdr_logo.png
+end script
+
+
