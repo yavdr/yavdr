@@ -3,4 +3,5 @@
     VendorName     "NVIDIA Corporation"<?cs /if ?>
     Screen          0
     Option         "DPI" "100x100"
+<?cs if:system.lirchw.description != "" ?>    BusID          "PCI:<?cs var:system.hardware.nvidia.busid ?>"<?cs /if ?>
     Option "NoLogo" "True"

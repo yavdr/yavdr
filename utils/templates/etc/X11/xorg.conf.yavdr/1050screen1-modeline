@@ -1,0 +1,1 @@
+    Option         "metamodes" "<?cs var:system.x11.display.1.device ?>: <?cs var:system.x11.display.1.mode ?> +0+0"
