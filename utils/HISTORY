@@ -16,6 +16,8 @@ NEW
 - move vdr script completly to upstart
 - bugfix for X10 and lirc_serial
 - S3 should work on more machines now
+- moved xine & xineliboutput config to /etc
+- added warning to all templated files
 
 Webfrontend:
 - VDR-shutdown tab, switch between suspend2ram,shutdown, reboot poweroff-kernel
