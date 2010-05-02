@@ -6,7 +6,7 @@ Version 0.2.0 (xx.xxx.2010)
 -----------------
 
 NEW
-- add IRServer & Input-lirc to remotes tab
+- add IRServer & Input-lirc
 - update to ubuntu lucid
 - default enabled live tv in xmbc
 - english language labels are now always loaded as a fallback.
