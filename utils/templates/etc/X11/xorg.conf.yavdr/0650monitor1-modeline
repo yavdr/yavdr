@@ -1,1 +1,3 @@
+<?cs if:(?system.x11.display.1.mode && system.x11.display.1.mode != "" && system.x11.display.1.mode != "disabled" && system.x11.display.1.mode != "nvidia-auto-select") ?>
         Modeline "<?cs var:system.x11.display.1.mode ?>" <?cs var:system.x11.display.1.modeline ?>
+<?cs /if ?>

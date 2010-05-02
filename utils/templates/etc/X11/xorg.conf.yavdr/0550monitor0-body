@@ -1,7 +1,12 @@
     Identifier     "Monitor0"
     VendorName     "Unknown"
     ModelName      "Unknown"
+<?cs if:(system.x11.display.0.mode == "VGA2Scart4_3" || system.x11.display.0.mode == "VGA2Scart16_9") ?>
+    HorizSync       14-17
+    VertRefresh     49-61
+<?cs else ?>
     HorizSync       28.0 - 33.0
     VertRefresh     43.0 - 72.0
+<?cs /if ?>
     Option         "DPMS"
 

@@ -1,1 +1,5 @@
+<?cs if:(?system.x11.display.0.mode && system.x11.display.0.mode != "" && system.x11.display.0.mode != "disabled") ?>
     Option         "metamodes" "<?cs var:system.x11.display.0.device ?>: <?cs var:system.x11.display.0.mode ?> +0+0"
+<?cs else ?>
+    Option         "metamodes" "<?cs if:(?system.x11.display.0.device && system.x11.display.0.device != "") ?><?cs var:system.x11.display.0.device ?><?cs else ?>DFP<?cs /if ?>: nvidia-auto-select +0+0"
+<?cs /if ?>

@@ -204,7 +204,7 @@ function getX11Form(){
                                 fieldLabel: 'secondary',
                                 inputValue: item.devicename,
                                 disabled: (displayData.system.x11.dualhead.enabled != '1'),
-                                checked: item.seconday,
+                                checked: item.secondary,
                                 listeners: {
                                     check: function( cb,  checked ) {
                                         //if (checked) alert(cb._index);

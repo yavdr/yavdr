@@ -154,7 +154,7 @@ string urlencode(const string &c)
     
     Display *dpy;
     Bool ret;
-    int screen, display_devices, enabled_devices, mask, len, j;
+    int screen, display_devices, enabled_devices, screen_devices, mask, len, j;
     char *str, *start;
     string primary = "", secondary = "";
     
@@ -181,8 +181,9 @@ string urlencode(const string &c)
         if (XNVCTRLIsNvScreen(dpy, screen)) {
            ret = XNVCTRLQueryAttribute(dpy, screen, 0,
                      NV_CTRL_CONNECTED_DISPLAYS, &display_devices);
-           ret = XNVCTRLQueryAttribute(dpy, screen, 0,
-                     NV_CTRL_ENABLED_DISPLAYS, &enabled_devices);
+//           ret = XNVCTRLQueryAttribute(dpy, screen, 0,
+//                     NV_CTRL_ENABLED_DISPLAYS, &enabled_devices);
+//fprintf(stderr, "enabled: 0x%08x",enabled_devices );
            if (ret) {
            
              int num_gpus, i;
@@ -216,14 +217,19 @@ string urlencode(const string &c)
                  if (ret) {
                     /* List all X Screens on GPU */            
                     for (j = 1; j <= pData[0]; j++) {
-                        screen = pData[j];
+                        int screen = pData[j];
                         
-                        //printf("\n");
-                        //printf("   X Screen %d information:\n", screen);
-            
+                        ret = XNVCTRLQueryTargetAttribute(dpy,
+                            NV_CTRL_TARGET_TYPE_X_SCREEN,
+                            screen, // target_id
+                            0, // display_mask
+                            NV_CTRL_ENABLED_DISPLAYS,
+                            &screen_devices);
+                        
+                        
                         /* List all display devices on this X Screen */
                         for (mask = 1; mask < (1 << 24); mask <<= 1) {
-                            if (!(display_devices & mask)) {
+                            if (!(screen_devices & mask)) {
                                 continue;
                             }
             
@@ -234,21 +240,22 @@ string urlencode(const string &c)
                                  mask, // display_mask
                                  NV_CTRL_STRING_DISPLAY_DEVICE_NAME,
                                  &str);
-                                 
-                            switch(screen) {
-                                case 0: 
-                                    primary = string(str);
-                                    break;
-                                case 1:
-                                    secondary = string(str); 
-                                    break;
+//fprintf(stderr, "Screen %d: %s\n", screen, str);
+                            if (ret) {
+                                switch(screen) {
+                                    case 0: 
+                                        primary = string(str);
+                                        break;
+                                    case 1:
+                                        secondary = string(str); 
+                                        break;
+                                }
                             }
                         }
                     }
                  }
              }
 
-           
              reply.out() << ","
                          << "    \"displays\" : [\n";
              nDisplayDevice = 0;
@@ -287,7 +294,7 @@ string urlencode(const string &c)
                                   << "        \"x\" : \"0\",\n"
                                   << "        \"y\" : \"0\"\n"
                                   << "        }";
-                     if (enabled_devices & mask) {
+                     if (true) { // enabled_devices & mask) {
                          ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
                                                       NV_CTRL_BINARY_DATA_MODELINES,
                                                       (unsigned char **) &str, &len);
@@ -341,14 +348,14 @@ string urlencode(const string &c)
                          
                          if ((display_device.substr(0,3) == "CRT" && name == display_device) || devmode == "1") {
                              reply.out()  << ",{\n"
-                                          << "        \"id\" : \"VGA2Scart 16:9\",\n"
+                                          << "        \"id\" : \"VGA2Scart_16_9\",\n"
                                           << "        \"modeline\" : \"";    
                              reply.sout() << "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
                              reply.out()  << "\",\n"
                                           << "        \"x\" : \"1024\",\n"
                                           << "        \"y\" : \"576\"\n"
                                           << "        },{\n"
-                                          << "        \"id\" : \"VGA2Scart 4:3\",\n"
+                                          << "        \"id\" : \"VGA2Scart_4_3\",\n"
                                           << "        \"modeline\" : \"";
                              reply.sout() << "13.875 720  744  808  888  576  580  585  625 -HSync -Vsync interlace";
                              reply.out()  << "\",\n"
@@ -356,10 +363,17 @@ string urlencode(const string &c)
                                           << "        \"y\" : \"576\"\n"
                                           << "        }";
                          }
+                     } else {
+                         reply.out() << "        ,{"
+                                     << "        \"id\" : \"enabled\",\n"
+                                     << "        \"modeline\" : \"X11 restart required\",\n"
+                                     << "        \"x\" : \"0\",\n"
+                                     << "        \"y\" : \"0\"\n"
+                                     << "        }\n";
                      }
                      reply.out()  << "],\n"
                                   << "        \"current_modeline\" : {\n";
-                     if (enabled_devices & mask) { 
+                     if (!ret) { // enabled_devices & mask) {
                          ret = XNVCTRLQueryStringAttribute(dpy, screen, mask,
                                                            NV_CTRL_STRING_CURRENT_MODELINE,
                                                            &str);
