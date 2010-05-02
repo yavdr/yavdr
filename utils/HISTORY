@@ -12,6 +12,10 @@ NEW
 - english language labels are now always loaded as a fallback.
 - changed xine-ui keymap 
 - add Input-LIRC and IR-Server
+- add hotplug of usb mass storage
+- move vdr script completly to upstart
+- bugfix for X10 and lirc_serial
+- S3 should work on more machines now
 
 Webfrontend:
 - VDR-shutdown tab, switch between suspend2ram,shutdown, reboot poweroff-kernel
