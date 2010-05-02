@@ -1,7 +1,7 @@
     Identifier     "Monitor1"
     VendorName     "Unknown"
     ModelName      "Unknown"
-<?cs if:(system.x11.display.1.mode == "VGA2Scart4_3" || system.x11.display.1.mode == "VGA2Scart16_9") ?>
+<?cs if:(system.x11.display.1.mode == "VGA2Scart_4_3" || system.x11.display.1.mode == "VGA2Scart_16_9") ?>
     HorizSync       14-17
     VertRefresh     49-61
 <?cs else ?>
