@@ -1,0 +1,4 @@
+#!/bin/bash
+
+stop x
+start x
