@@ -4,7 +4,7 @@
 description     "yavdr-frontend"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
-start on started vdr
+start on started x
 <?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?> 
 respawn
 
