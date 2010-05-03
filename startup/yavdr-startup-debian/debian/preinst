@@ -15,3 +15,5 @@ if [ install = "$1" -o upgrade = "$1" ]; then
       --divert /etc/vdr/plugins/externalplayer.conf.dontremove /etc/vdr/plugins/externalplayer.conf 
 fi  
 
+#DEBHELPER#
+
