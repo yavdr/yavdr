@@ -14,3 +14,5 @@ if [ remove = "$1" ]; then
    dpkg-divert --package yavdr-startup --remove --rename \
       --divert /etc/vdr/plugins/externalplayer.conf.dontremove /etc/vdr/plugins/externalplayer.conf
 fi 
+
+#DEBHELPER#
