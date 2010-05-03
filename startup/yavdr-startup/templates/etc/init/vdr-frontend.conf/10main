@@ -13,16 +13,16 @@ script
 <?cs if:(!?vdr.frontend) ?>
   su -c "/usr/bin/start-xineliboutput" vdr
 <?cs /if ?>
-<?cs if:(vdr.frontend = "xineliboutput") ?>
+<?cs if:(vdr.frontend == "xineliboutput") ?>
   su -c "/usr/bin/start-xineliboutput" vdr
 <?cs /if ?>
-<?cs if:(vdr.frontend = "xine") ?>
+<?cs if:(vdr.frontend == "xine") ?>
   su -c "/usr/bin/start-xine" vdr
 <?cs /if ?>
-<?cs if:(vdr.frontend = "xbmc") ?>
+<?cs if:(vdr.frontend == "xbmc") ?>
   su -c "/usr/bin/start-xbmc-frontend" vdr
 <?cs /if ?>
-<?cs if:(vdr.frontend = "headless") ?>
+<?cs if:(vdr.frontend == "headless") ?>
   echo "headless yaVDR Server"
 <?cs /if ?>
 end script
