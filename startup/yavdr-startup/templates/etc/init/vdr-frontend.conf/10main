@@ -5,24 +5,10 @@ description     "yavdr-frontend"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
 start on started x
-<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?> 
-respawn
-<?cs /if ?>
+<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>respawn<?cs /if ?>
 
 script
-<?cs if:(!?vdr.frontend) ?>
-  su -c "/usr/bin/start-xineliboutput" vdr
-<?cs /if ?>
-<?cs if:(vdr.frontend == "xineliboutput") ?>
-  su -c "/usr/bin/start-xineliboutput" vdr
-<?cs /if ?>
-<?cs if:(vdr.frontend == "xine") ?>
-  su -c "/usr/bin/start-xine" vdr
-<?cs /if ?>
-<?cs if:(vdr.frontend == "xbmc") ?>
-  su -c "/usr/bin/start-xbmc-frontend" vdr
-<?cs /if ?>
-<?cs if:(vdr.frontend == "headless") ?>
-  echo "headless yaVDR Server"
-<?cs /if ?>
+<?cs if:(!?vdr.frontend) ?> su -c "/usr/bin/start-xineliboutput" vdr <?cs /if ?> <?cs if:(vdr.frontend == "xineliboutput") ?> su -c "/usr/bin/start-xineliboutput" vdr <?cs /if ?><?cs if:(vdr.frontend == "xine") ?> su -c "/usr/bin/start-xine" vdr <?cs /if ?><?cs if:(vdr.frontend == "xbmc") ?> su -c "/usr/bin/start-xbmc-frontend" vdr <?cs /if ?><?cs if:(vdr.frontend == "headless") ?> echo "headless yaVDR Server" <?cs /if ?>
 end script
+
+
