@@ -1,4 +1,4 @@
 
-while ! netcat -z localhost 2004; do sleep 1; done;
+while ! netcat -z localhost 34890; do sleep 1; done;
 /usr/bin/xbmc --standalone
 
