@@ -217,8 +217,6 @@ else
 									0, // display_mask
 									NV_CTRL_CONNECTED_DISPLAYS,
 									&display_devices);
-							printf("   Display Device Mask (Connected) : 0x%08x\n",
-									display_devices);
 
 							/* Enabled Display Devices on X Screen */
 							ret = XNVCTRLQueryTargetAttribute(dpy,
@@ -227,8 +225,6 @@ else
 									0, // display_mask
 									NV_CTRL_ENABLED_DISPLAYS,
 									&enabled_devices);
-							printf("   Display Device Mask (Enabled) : 0x%08x\n",
-									enabled_devices);
 
 							/* List all display devices on this X Screen */
 							for (mask = 1; mask < (1 << 24); mask <<= 1) {
@@ -400,8 +396,6 @@ else
 								<< "      }\n";
 
 							}
-							printf("   Display Device Mask (Disabled) : 0x%08x\n",
-									display_devices);
 
 							if (display_devices != 0) {
 								/* List all display devices on this X Screen */
