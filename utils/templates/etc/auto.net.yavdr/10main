@@ -6,6 +6,6 @@
 
 <?cs each:entry = system.net.media.video ?>
   <?cs if:entry != "" ?>
-video.<?cs name:entry ?> -fstype=nfs,hard,intr,nodev,nosuid,nonstrict,async <?cs var:entry ?>
+<?cs var:string.slice(entry,0,string.find(entry,":")) ?>.<?cs name:entry ?> -fstype=nfs,hard,intr,nodev,nosuid,nonstrict,async <?cs var:entry ?>
   <?cs /if ?>
 <?cs /each ?>
