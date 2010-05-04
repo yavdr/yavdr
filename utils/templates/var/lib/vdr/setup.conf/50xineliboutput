@@ -4,6 +4,7 @@ xineliboutput.OSD.Scaling = 1
 xineliboutput.OSD.Width = 1280
 xineliboutput.OSD.Height = 720
 xineliboutput.OSD.Size = 1920x1080
+xineliboutput.OSD.ExtSubSize = 4
 xineliboutput.Video.AspectRatio = 0
 xineliboutput.Video.AutoCrop = 0
 xineliboutput.Video.AutoCrop.AutoDetect = 1
