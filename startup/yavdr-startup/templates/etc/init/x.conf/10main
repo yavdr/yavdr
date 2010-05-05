@@ -12,6 +12,6 @@ export XORGCONFIG
 exec /usr/bin/X :1 vt9
 
 post-start script
-while ! xset -q; do sleep 0.1 ; done
+while ! DISPLAY=:1 xset -q; do sleep 0.1 ; done
 end script
 
