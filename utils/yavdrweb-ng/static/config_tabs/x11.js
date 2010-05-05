@@ -217,7 +217,7 @@ function getX11Form(){
                         this.insert(index+1, {
                             xtype:'fieldset',
                             checkboxToggle:false,
-                            title: 'display :'+item.displaynumber+'.' + item.screen + ' on ' + item.name,
+                            title: 'display ' + ((typeof item.displaynumber != 'undefined')?':'+item.displaynumber+'.' + item.screen + ' on ' + item.name:item.name+' disabled'),
                             autoHeight:true,
                             defaults: {width: 210},
                             //defaultType: 'textfield',
