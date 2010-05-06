@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# load default values and overrides from /etc/default/vdr 
+. /usr/lib/vdr/config-loader
+
 logger "VIDEO_DIR=$VIDEO_DIR"
 
 function checkmount()
@@ -7,11 +10,10 @@ function checkmount()
     retry=30
     while [ $retry -gt 0 ]; do
         logger "testing for $1 ($retry)"
-        sudo -u vdr touch $1/.update
+        touch $1/.update
         if [ $? -eq 0 ]; then
             logger "found $1"
             sudo -u vdr touch $VIDEO_DIR/.update
-            $0 hold $1 &
 	    break
         else
             logger "sleeping"
@@ -21,43 +23,12 @@ function checkmount()
     done
 }
 
-function holdmount()
-{
-    while (true) do
-        logger "testing for $1"
-        sudo -u vdr touch $1/.update
-        if [ $? -eq 0 ]; then
-            logger "found $1"
-            sleep 300
-        else
-            logger "sleeping"
-	    sleep 60
-        fi
-    done
-}
-
-function checksync()
-{
-    if [ -e /etc/auto.net.yavdr ]; then
-        logger "searching for video directories"
-        for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /video/ {print $1}'`; do
-            checkmount $VIDEO_DIR/net/$d
-        done
-    fi
-}
-
 logger "executing mount-loader"
-if [ $# -eq 0 ]; then
-    logger "entering async mode"
-    export VIDEO_DIR
-    /usr/lib/vdr/mount-loader sync &
-else
-    case "$1" in
-    sync)
-        checksync
-    ;;
-    hold)
-        holdmount $2
-    ;;
-    esac
+
+if [ -e /etc/auto.net.yavdr ]; then
+    logger "searching for video directories"
+    for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /video/ {print $1}'`; do
+        checkmount $VIDEO_DIR/net/$d
+    done
 fi
+
