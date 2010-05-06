@@ -13,7 +13,7 @@ function checkmount()
         touch $1/.update
         if [ $? -eq 0 ]; then
             logger "found $1"
-            sudo -u vdr touch $VIDEO_DIR/.update
+            touch $VIDEO_DIR/.update
 	    break
         else
             logger "sleeping"
