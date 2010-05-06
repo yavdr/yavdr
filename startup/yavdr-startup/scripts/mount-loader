@@ -1,5 +1,10 @@
 #!/bin/bash
 
+logger "starting mount-loader"
+
+# delayed start after vdr
+sleep 15
+
 # load default values and overrides from /etc/default/vdr 
 . /usr/lib/vdr/config-loader
 
