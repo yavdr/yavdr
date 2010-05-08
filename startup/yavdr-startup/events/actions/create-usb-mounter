@@ -8,6 +8,7 @@ process-template /etc/halevt/halevt.xml
 process-template /etc/init/halevt.conf
 process-template /etc/init/hal.conf
 process-template --mode 755 /usr/bin/vdr-mounter
+process-template /usr/share/vdr/command-hooks/commands.halevt.conf
 
 /sbin/start hal
 /sbin/start halevt
