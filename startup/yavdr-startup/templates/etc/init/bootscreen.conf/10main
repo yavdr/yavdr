@@ -2,6 +2,8 @@
 
 start on startup
 
+task
+
 script
   setterm -clear >/dev/tty1
   setterm -cursor off -store >/dev/tty1
