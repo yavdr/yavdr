@@ -4,8 +4,6 @@ if [ ! -d /srv/vdr/video.00/net ]; then
    mkdir -p /srv/vdr/video.00/net
    chown -R vdr.vdr /srv/vdr
 fi
-process-template /etc/init/bootscreen.conf
-process-template /etc/init/cleanTTY.conf
 process-template /etc/init/dkms_autoinstaller.conf
 process-template /etc/init/first-vdr-start.conf
 process-template /etc/init/remoted.conf
@@ -23,3 +21,5 @@ process-template --mode 755 /usr/lib/vdr/plugin-loader
 process-template --mode 755 /usr/lib/vdr/commands-loader
 rm -f /etc/init/nodm.conf
 rm -f /etc/init/lirc.conf
+rm -f /etc/init/bootscreen.conf
+rm -f /etc/init/cleanTTY.conf
