@@ -1,8 +1,9 @@
 start on stopped vdr-frontend
 
+task
+
 script
-sleep 1
-DISPLAY=:1 xli -onroot -center -border black /usr/share/yavdr/images/yavdr_logo.png
+while ! DISPLAY=:1 xli -onroot -center -border black /usr/share/yavdr/images/yavdr_logo.png; do sleep 0.1 ; done
 end script
 
 
