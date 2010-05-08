@@ -206,17 +206,20 @@ else
 							&len);
 
 					if (ret) {
+
+						/* Connected Display Devices on X Screen */
+						ret = XNVCTRLQueryTargetAttribute(dpy,
+								NV_CTRL_TARGET_TYPE_X_SCREEN,
+								0, // target_id
+								0, // display_mask
+								NV_CTRL_CONNECTED_DISPLAYS,
+								&display_devices);
+//						printf("   Display Device Mask (Connected)   : 0x%08x\n",
+//								display_devices);
+
 						/* List all X Screens on GPU */
 						for (j = 1; j <= pData[0]; j++) {
 							screen = pData[j];
-
-							/* Connected Display Devices on X Screen */
-							ret = XNVCTRLQueryTargetAttribute(dpy,
-									NV_CTRL_TARGET_TYPE_X_SCREEN,
-									screen, // target_id
-									0, // display_mask
-									NV_CTRL_CONNECTED_DISPLAYS,
-									&display_devices);
 
 							/* Enabled Display Devices on X Screen */
 							ret = XNVCTRLQueryTargetAttribute(dpy,
@@ -225,6 +228,8 @@ else
 									0, // display_mask
 									NV_CTRL_ENABLED_DISPLAYS,
 									&enabled_devices);
+//							printf("   Display Device Mask (Enabled)   : 0x%08x\n",
+//									enabled_devices);
 
 							/* List all display devices on this X Screen */
 							for (mask = 1; mask < (1 << 24); mask <<= 1) {
@@ -396,121 +401,96 @@ else
 								<< "      }\n";
 
 							}
+						}
+						
+						if (display_devices != 0) {
+//							printf("   Display Device Mask (disabled)   : 0x%08x\n",
+//									display_devices);
+							/* List all display devices on this X Screen */
+							for (mask = 1; mask < (1 << 24); mask <<= 1) {
+								if (!(display_devices & mask)) {
+									continue;
+								}
 
-							if (display_devices != 0) {
-								/* List all display devices on this X Screen */
-								for (mask = 1; mask < (1 << 24); mask <<= 1) {
-									if (!(display_devices & mask)) {
-										continue;
-									}
+								XNVCTRLQueryStringAttribute(dpy, screen, mask,
+										NV_CTRL_STRING_DISPLAY_DEVICE_NAME,
+										&str);
 
-									XNVCTRLQueryStringAttribute(dpy, screen, mask,
-											NV_CTRL_STRING_DISPLAY_DEVICE_NAME,
-											&str);
+								string name = string(str);
+								string displayDeviceName = display_device_name(mask);
 
-									string name = string(str);
-									string displayDeviceName = display_device_name(mask);
+								if (nDisplayDevice++ != 0)
+								{
+									reply.out() << "      ,\n";
+								}
 
-									if (nDisplayDevice++ != 0)
-									{
-										reply.out() << "      ,\n";
-									}
+								reply.out() << "        {\n"
+								<< "        \"name\" : \"";
+								reply.sout() << name;
+								reply.out() << "\",\n"
+								<< "        \"primary\" : false,\n"
+								<< "        \"secondary\" : false,\n"
+								//<< "        \"displaynumber\" : 1,\n"
+								//<< "        \"screen\" : screen,\n"
+								<< "        \"devicename\" : \"";
+								reply.sout() << displayDeviceName;
+								XFree(str);
 
-									reply.out() << "        {\n"
-									<< "        \"name\" : \"";
-									reply.sout() << name;
-									reply.out() << "\",\n"
-									<< "        \"primary\" : false,\n"
-									<< "        \"secondary\" : false,\n"
-									//<< "        \"displaynumber\" : 1,\n"
-									//<< "        \"screen\" : screen,\n"
-									<< "        \"devicename\" : \"";
-									reply.sout() << displayDeviceName;
-									XFree(str);
+								reply.out() << "\",\n"
+								<< "        \"modelines\" : [{\n"
+								<< "        \"id\" : \"disabled\",\n"
+								<< "        \"modeline\" : \"\",\n"
+								<< "        \"x\" : \"0\",\n"
+								<< "        \"y\" : \"0\"\n"
+								<< "        }";
 
-									reply.out() << "\",\n"
-									<< "        \"modelines\" : [{\n"
-									<< "        \"id\" : \"disabled\",\n"
-									<< "        \"modeline\" : \"\",\n"
-									<< "        \"x\" : \"0\",\n"
-									<< "        \"y\" : \"0\"\n"
-									<< "        }";
+								ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
+										NV_CTRL_BINARY_DATA_MODELINES,
+										(unsigned char **) &str, &len);
 
-									ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
-											NV_CTRL_BINARY_DATA_MODELINES,
-											(unsigned char **) &str, &len);
+								if (ret) {
+									/*
+									 * the returned data is in the form:
+									 *
+									 *  "ModeLine 1\0ModeLine 2\0ModeLine 3\0Last ModeLine\0\0"
+									 *
+									 * so walk from one "\0" to the next to print each ModeLine.
+									 */
+									ret = true; // first modeline
 
-									if (ret) {
-										/*
-										 * the returned data is in the form:
-										 *
-										 *  "ModeLine 1\0ModeLine 2\0ModeLine 3\0Last ModeLine\0\0"
-										 *
-										 * so walk from one "\0" to the next to print each ModeLine.
-										 */
-										ret = true; // first modeline
+									start = str;
+									for (int k = 0; k < len; k++) {
+										if (str[k] == '\0' && start[0] != '\0') {
+											reply.out() << ",";
+											ret = false;
 
-										start = str;
-										for (int k = 0; k < len; k++) {
-											if (str[k] == '\0' && start[0] != '\0') {
-												reply.out() << ",";
-												ret = false;
+											_s = string(start);
+											vector<string> tokens;
+											vector<string> parts;
+											Tokenize(_s, parts, ":");
+											Tokenize(parts[parts.size()-1], tokens);
 
-												_s = string(start);
-												vector<string> tokens;
-												vector<string> parts;
-												Tokenize(_s, parts, ":");
-												Tokenize(parts[parts.size()-1], tokens);
-
-												reply.out() << "{\n"
-												<< "        \"id\" : \"";
-												reply.out() << trim(tokens[0].substr(1, tokens[0].length()-2));
-												reply.out() << "\",\n"
-												<< "        \"modeline\" : \"";
-
-												reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
-												reply.out() << "\",\n"
-												<< "        \"x\" : \"";
-
-												reply.sout() << tokens[2];
-												reply.out() << "\",\n"
-												<< "        \"y\" : \"";
-
-												reply.sout() << tokens[6];
-												reply.out() << "\"\n"
-												<< "        }";
-												start = &str[k+1];
-											}
-										}
-										if (ret) {
-											reply.out() << "        ,{"
-											<< "        \"id\" : \"enabled\",\n"
-											<< "        \"modeline\" : \"X11 restart required\",\n"
-											<< "        \"x\" : \"0\",\n"
-											<< "        \"y\" : \"0\"\n"
-											<< "        }\n";
-										}
-
-										XFree(str);
-
-										if ((displayDeviceName.substr(0,3) == "CRT" && name == displayDeviceName) || devmode == "1") {
-											reply.out() << ",{\n"
-											<< "        \"id\" : \"VGA2Scart_16_9\",\n"
-											<< "        \"modeline\" : \"";
-											reply.sout() << "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
+											reply.out() << "{\n"
+											<< "        \"id\" : \"";
+											reply.out() << trim(tokens[0].substr(1, tokens[0].length()-2));
 											reply.out() << "\",\n"
-											<< "        \"x\" : \"1024\",\n"
-											<< "        \"y\" : \"576\"\n"
-											<< "        },{\n"
-											<< "        \"id\" : \"VGA2Scart_4_3\",\n"
 											<< "        \"modeline\" : \"";
-											reply.sout() << "13.875 720  744  808  888  576  580  585  625 -HSync -Vsync interlace";
+
+											reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
 											reply.out() << "\",\n"
-											<< "        \"x\" : \"720\",\n"
-											<< "        \"y\" : \"576\"\n"
+											<< "        \"x\" : \"";
+
+											reply.sout() << tokens[2];
+											reply.out() << "\",\n"
+											<< "        \"y\" : \"";
+
+											reply.sout() << tokens[6];
+											reply.out() << "\"\n"
 											<< "        }";
+											start = &str[k+1];
 										}
-									} else {
+									}
+									if (ret) {
 										reply.out() << "        ,{"
 										<< "        \"id\" : \"enabled\",\n"
 										<< "        \"modeline\" : \"X11 restart required\",\n"
@@ -518,20 +498,47 @@ else
 										<< "        \"y\" : \"0\"\n"
 										<< "        }\n";
 									}
-									reply.out() << "],\n"
-									<< "        \"current_modeline\" : {\n";
 
-									reply.out() << "        \"id\" : \"disabled\",\n"
-									<< "        \"modeline\" : \"enable display\",\n"
+									XFree(str);
+
+									if ((displayDeviceName.substr(0,3) == "CRT" && name == displayDeviceName) || devmode == "1") {
+										reply.out() << ",{\n"
+										<< "        \"id\" : \"VGA2Scart_16_9\",\n"
+										<< "        \"modeline\" : \"";
+										reply.sout() << "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
+										reply.out() << "\",\n"
+										<< "        \"x\" : \"1024\",\n"
+										<< "        \"y\" : \"576\"\n"
+										<< "        },{\n"
+										<< "        \"id\" : \"VGA2Scart_4_3\",\n"
+										<< "        \"modeline\" : \"";
+										reply.sout() << "13.875 720  744  808  888  576  580  585  625 -HSync -Vsync interlace";
+										reply.out() << "\",\n"
+										<< "        \"x\" : \"720\",\n"
+										<< "        \"y\" : \"576\"\n"
+										<< "        }";
+									}
+								} else {
+									reply.out() << "        ,{"
+									<< "        \"id\" : \"enabled\",\n"
+									<< "        \"modeline\" : \"X11 restart required\",\n"
 									<< "        \"x\" : \"0\",\n"
-									<< "        \"y\" : \"0\"\n";
-
-									/* query for modelines */
-
-									reply.out() << "}\n"
-									<< "      }\n";
-
+									<< "        \"y\" : \"0\"\n"
+									<< "        }\n";
 								}
+								reply.out() << "],\n"
+								<< "        \"current_modeline\" : {\n";
+
+								reply.out() << "        \"id\" : \"disabled\",\n"
+								<< "        \"modeline\" : \"enable display\",\n"
+								<< "        \"x\" : \"0\",\n"
+								<< "        \"y\" : \"0\"\n";
+
+								/* query for modelines */
+
+								reply.out() << "}\n"
+								<< "      }\n";
+
 							}
 						}
 
