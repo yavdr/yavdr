@@ -1,6 +1,6 @@
 #
 # xine config file
-#
+# 
 .version:2
 
 # Entries which are still set to their default values are commented out.
@@ -60,7 +60,7 @@ gui.osd_enabled:0
 
 # Audiomischpultmethode
 # { Sound card  Software }, default: 0
-gui.audio_mixer_method:Software
+#gui.audio_mixer_method:Sound card
 
 # Anzeigeverhalten von Bedienfeld
 # bool, default: 0
@@ -214,7 +214,7 @@ gui.audio_mixer_method:Software
 
 # Gerät für Stereoausgabe
 # string, default: plug:front:default
-audio.device.alsa_front_device:iec958
+audio.device.alsa_front_device:default
 
 # ALSA Mixergerät
 # string, default: PCM
@@ -238,7 +238,7 @@ audio.device.alsa_front_device:iec958
 
 # Lautsprecherplazierung
 # { Mono 1.0  Stereo 2.0  Headphones 2.0  Stereo 2.1  Surround 3.0  Surround 4.0  Surround 4.1  Surround 5.0  Surround 5.1  Surround 6.0  Surround 6.1  Surround 7.1  Pass Through }, default: 1
-audio.output.speaker_arrangement:Pass Through
+#audio.output.speaker_arrangement:Stereo 2.0
 
 # Versatz für digitales Passthrough
 # numeric, default: 0
