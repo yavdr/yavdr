@@ -5,6 +5,7 @@ description     "yavdr-frontend"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
 start on started vdr
+stop on stopping vdr
 <?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>respawn<?cs /if ?>
 
 script
