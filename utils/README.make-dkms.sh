@@ -2,7 +2,12 @@
 Short description
 -----------------
 
-Requirements: linux-headers-.... , mercurial (for update the repo's and getting the hg version), gcc etc
+Requirements: linux-headers-.... , 
+              mercurial (for update the repo's and getting the hg version), 
+              gcc etc,
+              dput,
+              gnupg-agent,
+              patched dkms
 
 Directory structure:
 make-dkms.sh
@@ -19,5 +24,7 @@ in this directories:
 call make-dkms.sh <name of the repo> will make test build, extract 
 the module names, and build the dkmsconf for it. Then the dkms package will be created
 and uploaded to launchpad.
+
+call make-dkms.sh clean to clean up after successfull build or when you like
 
 Good Luck ! ;) 

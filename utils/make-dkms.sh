@@ -11,12 +11,18 @@
 # make sure linux-headers is installed 
 # and adapt to the kernel you like to compile for
 ########################
-KERNEL=2.6.32-22-generic
+KERNEL=2.6.31-21-generic
 
 case $1 in 
-   s2-liplianin|v4l-dvb) 
+   s2liplianin|v4l-dvb) 
            REPO=$1
 	   ;;
+   clean)
+           [ -e tmp.* ] && rm -rf tmp.*
+           [ -e temp-build ] && rm -rf temp-build
+           [ -e dkms.conf.* ] && rm dkms.conf.*
+           exit 0
+           ;;
    *)
            exit 1
            ;;
@@ -67,7 +73,7 @@ cd ..
 srctree=`mktemp -d --tmpdir=$PWD`
 dkmstree=`mktemp -d --tmpdir=$PWD`
 cp /var/lib/dkms/dkms_dbversion $dkmstree
-#trap "rm -rf $srctree $dkmstree" 0 1 2 3 4 5 6 7 8 10 11 12 13 14 15
+trap "rm -rf $srctree $dkmstree" 0 1 2 3 4 5 6 7 8 10 11 12 13 14 15
 
 # copy to srctree (without .hg/)
 D="$srctree/${REPO}-$VERSION"
