@@ -1,7 +1,7 @@
 
 description     "YaVDR Configuration webinterface"
 
-start on startup
+start on stopped networking
 stop on runlevel [016]
 
 respawn
