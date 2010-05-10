@@ -1,4 +1,4 @@
 #!/bin/bash
 
-process-template --mode 755 /usr/share/initramfs-tools/scripts/local-top/message
+process-template --mode 755 /usr/share/initramfs-tools/scripts/local-top/bootmessage
 update-initramfs -u
