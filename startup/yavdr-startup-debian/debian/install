@@ -5,3 +5,5 @@ images/noSignal16x9.mpg	var/lib/vdr/plugins/xine/
 images/nosignal.mpg	usr/share/libxine1-xvdr/			
 events/*		usr/share/yavdr/events/
 templates/*		usr/share/yavdr/templates/
+scripts/black.pcf	usr/share/fonts/X11/misc/	
+scripts/fonts.dir	usr/share/fonts/X11/misc/
