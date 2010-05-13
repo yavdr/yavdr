@@ -7,15 +7,6 @@ start on local-filesystems
 
 stop on runlevel [016]
 
-post-start script
-  service vdr-frontend start
-end script
-
-pre-stop script
-  service vdr-frontend stop
-  killall Xorg
-end script
-
 post-stop script
   signal-event post-stop-vdr
 end script
