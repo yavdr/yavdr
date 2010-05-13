@@ -497,15 +497,7 @@ video.processing.ffmpeg_skip_loop_filter:all
 
 # number of buffers for HD content
 # numeric, default: 2500
-media.xvdr.num_buffers_hd:10000
-
-# SRC tuning step
-# numeric, default: 5000
-media.xvdr.scr_tuning_step:50
-
-# Smoother SRC tuning
-# bool, default: 0
-#media.xvdr.smooth_scr_tuning:0
+media.xvdr.num_buffers_hd:2500
 
 # Pfad zum Real-Player-Codecs
 # string, default: 
@@ -569,11 +561,11 @@ media.xvdr.scr_tuning_step:50
 
 # Anzahl der Audiopuffer
 # numeric, default: 230
-engine.buffers.audio_num_buffers:2300
+engine.buffers.audio_num_buffers:1000
 
 # Anzahl der Videopuffer
 # numeric, default: 500
-engine.buffers.video_num_buffers:5000
+engine.buffers.video_num_buffers:1000
 
 # Standardanzahl von Videobildern
 # numeric, default: 15
@@ -758,4 +750,20 @@ engine.performance.warn_skipped_threshold:100
 # Erlaube implizierte Änderungen an Konfiguration (z.B. durch MRL)
 # bool, default: 0
 #misc.implicit_config:0
+
+# SCR-Treshold for HD-Playback (%)
+# numeric, default: 40
+#media.xvdr.scr_treshold_hd:40
+
+# SCR-Treshold for SD-Playback (%)
+# numeric, default: 50
+media.xvdr.scr_treshold_sd:20
+
+# SRC tuning step
+# numeric, default: 5000
+media.xvdr.scr_tuning_step:1000
+
+# Smoother SRC tuning
+# bool, default: 0
+#media.xvdr.smooth_scr_tuning:0
 
