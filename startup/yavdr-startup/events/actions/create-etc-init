@@ -23,3 +23,4 @@ rm -f /etc/init/nodm.conf
 rm -f /etc/init/lirc.conf
 rm -f /etc/init/bootscreen.conf
 rm -f /etc/init/cleanTTY.conf
+rm -f /etc/init/logo.conf
