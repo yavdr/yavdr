@@ -1,4 +1,4 @@
-start on filesystem
+start on stopped displaydevice
 stop on runlevel [016]
 
 respawn
@@ -9,6 +9,13 @@ export XORGCONFIG
 exec /usr/bin/X :1 vt9
 
 post-start script
-while ! DISPLAY=:1 xset -q; do sleep 0.1 ; done
-end script
+if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
+    # set overscan compensation if set
+    COMP=`dbget system.hardware.nvidia.overscan`
 
+    if [ ! -z "$COMP" ]; then
+         [ -e /usr/bin/nvidia-settings ] && DISPLAY=:1 /usr/bin/nvidia-settings -a OverscanCompensation=$COMP
+    fi
+fi
+#while ! DISPLAY=:1 xset -q; do sleep 0.1 ; done
+end script

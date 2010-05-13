@@ -1,0 +1,28 @@
+start on filesystem
+stop on runlevel [016]
+
+task
+
+script
+if modprobe nvidia-current ; then
+    if [ "x$(dbget system.hardware.nvidia.detected)" != "x1" ]; then
+       changed=1
+       dbset "system.hardware.nvidia.detected=1"
+    fi
+else
+    if [ "x$(dbget system.hardware.nvidia.detected)" != "x0" ]; then
+       changed=1
+       dbset "system.hardware.nvidia.detected=0"
+    fi
+fi
+
+if [ "x$changed" = "x1" ]; then 
+    if [ "x$(dbget system.hardware.nvidia.detected)" = "x0" ]; then
+        [ -f /etc/X11/xorg.conf.yavdr ] && mv /etc/X11/xorg.conf.yavdr /etc/X11/xorg.conf.yavdr_disabled
+    fi
+    if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
+        [ -f /etc/X11/xorg.conf.yavdr ] && mv /etc/X11/xorg.conf.yavdr /etc/X11/xorg.conf.yavdr_backup
+        signal-event create-xorg-conf-yavdr
+    fi
+fi 
+end script

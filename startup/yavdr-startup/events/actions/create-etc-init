@@ -6,6 +6,7 @@ if [ ! -d /srv/vdr/video.00/net ]; then
 fi
 process-template /etc/init/first-vdr-start.conf
 process-template /etc/init/remoted.conf
+process-template /etc/init/displaydevice.conf
 process-template /etc/init/x.conf
 process-template /etc/init/onshutdown.conf
 process-template /etc/init/s3.conf
