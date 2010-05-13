@@ -24,7 +24,6 @@ linux-firmware-nonfree
 logrotate
 nfs-common
 nfs-kernel-server
-xli
 libvdpau1
 nct677x-dkms
 nvidia-current
@@ -70,6 +69,8 @@ x11-utils
 x11-xserver-utils
 xbmc
 xbmc-skin-pm3-hd
+xfonts-base
+hsetroot
 xine-ui
 xineliboutput-sxfe
 xinit
