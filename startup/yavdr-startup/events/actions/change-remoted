@@ -6,4 +6,7 @@ REMOTE=`dbget system.remoted`
 
 if [ "x$REMOTE" = "x" -o "x$REMOTE" = "xlircd" ]; then
   /usr/bin/signal-event change-remote-hardware
+else
+  restart remoted
 fi
+
