@@ -2,6 +2,6 @@
 
 if [ install = "$1" -o upgrade = "$1" ]; then 
    dpkg-divert --package yavdr-utils --add --rename \
-      --divert /etc/firefox-3.5/profile/prefs.js.dontremove /etc/firefox-3.5/profile/prefs.js
+      --divert /etc/firefox/profile/prefs.js.dontremove /etc/firefox/profile/prefs.js
 fi  
 

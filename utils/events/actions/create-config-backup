@@ -13,4 +13,4 @@ tar czf /var/lib/vdr/yavdr-backup/yavdr-utils.tar.gz \
 /etc/lirc/lircd.conf \
 /etc/network/interfaces
 
-#/etc/firefox-3.5/profile/prefs.js
+#/etc/firefox/profile/prefs.js
