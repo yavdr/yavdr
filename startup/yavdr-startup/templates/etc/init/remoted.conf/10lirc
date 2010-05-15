@@ -11,6 +11,7 @@ start on starting vdr
 stop on runlevel [016]
 
 respawn
+normal exit 0 
 
 script
 load_modules ()
@@ -32,10 +33,10 @@ if [ -f /etc/lirc/hardware.conf ];then
   . /etc/lirc/hardware.conf
 fi
 
-if [ ! -f /etc/lirc/lircd.conf ] || grep -q "^#UNCONFIGURED" /etc/lirc/lircd.conf; then
-  if [ "$1" = "start" ]; then
+if [ ! -f /etc/lirc/lircd.conf ] || \
+   grep -q "^#UNCONFIGURED" /etc/lirc/lircd.conf ||\
+   [ "x$START_LIRCD" = "xfalse" ]; then
     exit 0   
-  fi
 fi
 
 #We need default socket locations
@@ -94,8 +95,18 @@ exec /usr/sbin/lircd --nodaemon $REMOTE_LIRCD_ARGS
 end script
 
 post-start script
+if [ -f /etc/lirc/hardware.conf ];then
+  . /etc/lirc/hardware.conf
+fi
+
+if [ ! -f /etc/lirc/lircd.conf ] || \
+   grep -q "^#UNCONFIGURED" /etc/lirc/lircd.conf ||\
+   [ "x$START_LIRCD" = "xfalse" ]; then
+    exit 0
+else
   while [ ! -e /dev/lircd ]; do
     sleep 0.1
   done
+fi
 end script
 <?cs /if ?>
