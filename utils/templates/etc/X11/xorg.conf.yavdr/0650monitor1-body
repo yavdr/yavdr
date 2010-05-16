@@ -9,4 +9,6 @@
     VertRefresh     43.0 - 72.0
 <?cs /if ?>
     Option         "DPMS"
+    Option         "ExactModeTimingsDVI" "True"
+    Option         "UseEDIDFreqs" "False"
 
