@@ -336,7 +336,7 @@
 9x18B-ISO8859-9.pcf.gz -misc-fixed-bold-r-normal--18-120-100-100-c-90-iso8859-9
 9x18B.pcf.gz -misc-fixed-bold-r-normal--18-120-100-100-c-90-iso10646-1
 arabic24.pcf.gz -arabic-newspaper-medium-r-normal--32-246-100-100-p-137-iso10646-1
-black.pcf cursor
+black.pcf.gz cursor
 clB6x10.pcf.gz -schumacher-clean-bold-r-normal--10-100-75-75-c-60-iso646.1991-irv
 clB6x12.pcf.gz -schumacher-clean-bold-r-normal--12-120-75-75-c-60-iso646.1991-irv
 clB8x10.pcf.gz -schumacher-clean-bold-r-normal--10-100-75-75-c-80-iso646.1991-irv
