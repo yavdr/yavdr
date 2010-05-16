@@ -16,7 +16,7 @@ xineliboutput.Video.Contrast = -1
 xineliboutput.Video.Decoder.H264 = automatic
 xineliboutput.Video.Decoder.MPEG2 = automatic
 xineliboutput.Video.Deinterlace = tvtime
-xineliboutput.Video.DeinterlaceOptions = method=use_vo_driver,cheap_mode=1,pull$
+xineliboutput.Video.DeinterlaceOptions = method=use_vo_driver,cheap_mode=1,pulldown=none,framerate_mode=full,judder_correction=0,use_progressive_frame_flag=0,chroma_filter=0,enabled=1
 xineliboutput.Video.HUE = -1
 xineliboutput.Video.IBPTrickSpeed = 1
 xineliboutput.Video.MaxTrickSpeed = 12
