@@ -12,6 +12,12 @@ case "$1" in
         [ -f /var/lib/yavdrdb.hdf ] && signal-event post-upgrade
 
         ;;
+
+    triggered)
+	update-rc.d -f vdr remove
+	update-rc.d -f lirc remove
+	;;
+
 esac
 
 # dh_installdeb will replace this with shell code automatically
