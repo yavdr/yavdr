@@ -14,8 +14,7 @@ case "$1" in
         ;;
 
     triggered)
-	update-rc.d -f vdr remove
-	update-rc.d -f lirc remove
+	signal-event post-upgrade
 	;;
 
 esac
