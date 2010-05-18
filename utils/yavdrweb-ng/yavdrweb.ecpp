@@ -38,7 +38,8 @@ if (lang == "")
         <link rel="stylesheet" type="text/css" href="static/ext-extensions/Portal.css" />
         <link rel="stylesheet" type="text/css" href="static/ext-extensions/GroupTab.css" />
         <link rel="stylesheet" type="text/css" href="static/ext-extensions/Spinner.css" />
-
+        <link rel="stylesheet" type="text/css" href="static/yavdr.css" />
+        
         <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
         <style>

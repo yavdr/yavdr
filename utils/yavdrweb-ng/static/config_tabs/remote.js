@@ -81,12 +81,17 @@ function getRemoteForm() {
             html: 'Hilfe!'            
         },{
             title: 'LIRC',
+            bodyCssClass: 'lirc',
             items: getLircForm()
         },{
             title: 'Inputlirc',
+            layout: 'form',
+            bodyCssClass: 'inputlirc',
             items: getInputlircForm()
         },{
             title: 'IRServer',
+            layout: 'form',
+            bodyCssClass: 'irserver',
             items: getIRServerForm()
         }]
     });
