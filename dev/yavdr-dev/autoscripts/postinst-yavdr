@@ -1,0 +1,3 @@
+if [ -f /var/lib/yavdrdb.hdf -a -x /usr/sbin/signal-event ]; then
+  /usr/sbin/signal-event post-upgrade
+fi
