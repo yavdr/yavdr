@@ -20,7 +20,9 @@ inhibit_log();
 
 init();
 
-autoscript($package,"postinst","postinst-yavdr");
+foreach my $package (@{$dh{DOPACKAGES}}) {
+  autoscript($package,"postinst","postinst-yavdr");
+}
 
 =head1 SEE ALSO
 
