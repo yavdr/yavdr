@@ -18,6 +18,7 @@ hdfpath;
     "webfrontend.language",
     "vdr.frontend",
     "system.shutdown",
+    "system.sound.type",
     "system.hardware.nvidia.overscan",
     "system.grub.timeout",
     "vdr.plugin.graphtft.enabled"

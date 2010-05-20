@@ -29,6 +29,7 @@ if (
         (signal == "change-auto-net-yavdr") ||
         (signal == "change-overscan-compensation") ||
         (signal == "change-timeout") ||
+        (signal == "change-sound") ||
         (signal == "graphtft-state-change")
     )
 {
@@ -140,7 +141,28 @@ if (
             hdf_destroy(&hdf);
         }
     }
-
+    else if (signal == "change-sound" )
+    {
+        if ((value == "analog") || (value == "spdif") || (value == "hdmi") || (value == "passthrough"))
+        {
+            NEOERR *err;
+            HDF *hdf = NULL;
+            if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+            {
+              nerr_log_error(err);
+            }
+            err = hdf_set_valuef(hdf, "system.sound.type=%s", value.c_str());
+            /*if (err != STATUS_OK){
+            }*/
+            err = hdf_write_file(hdf, YAVDRDB);
+            if (err != STATUS_OK)
+            {
+              nerr_log_error(err);
+            }
+            hdf_destroy(&hdf);
+        }
+    }
+    
     string cmd = "/usr/bin/signal-event " + signal;
     int ret = system( cmd.c_str());
     success = "true"; //TODO: use ret to find out if we were successful.

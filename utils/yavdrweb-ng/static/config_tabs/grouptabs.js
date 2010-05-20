@@ -174,6 +174,10 @@ Ext.TaskMgr.start({
                     items:   getRemoteForm
                 }),
                 addGroupPanelTab({
+                    section: "sound",
+                    items:   getSoundForm
+                }),
+                addGroupPanelTab({
                     section: "timeout",
                     items:   getGRUBTimeoutForm
                 }),
