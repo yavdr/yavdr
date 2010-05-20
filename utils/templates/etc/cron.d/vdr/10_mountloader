@@ -3,4 +3,4 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/lib/vdr
 
-*/5 *    * * *   vdr	mount-loader
+*/2 *    * * *   vdr	mount-loader

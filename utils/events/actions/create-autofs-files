@@ -3,4 +3,5 @@
 process-template /etc/auto.master
 process-template /etc/auto.net.yavdr
 process-template /etc/exports
+process-template /etc/cron.d/vdr
 rm -f /etc/init.d/S19autofs
