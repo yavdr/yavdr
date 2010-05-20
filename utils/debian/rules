@@ -75,6 +75,7 @@ binary-arch: install
 #	dh_installcron
 #	dh_installinfo
 	dh_installman
+	dh_installyavdr
 	dh_link
 	dh_strip
 	dh_compress
