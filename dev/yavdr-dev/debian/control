@@ -1,0 +1,14 @@
+Source: yavdr-dev
+Section: misc
+Priority: extra
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.0
+Homepage: http://yavdr.origo.ethz.ch/
+
+Package: yavdr-dev
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, debhelper
+Suggests: lirc
+Description: Utilities and Scripts for building yaVDR packages
+ Utilities and Scripts for building yaVDR packages.
