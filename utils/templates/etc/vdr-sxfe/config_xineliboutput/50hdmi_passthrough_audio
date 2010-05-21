@@ -1,3 +1,5 @@
+<?cs if:system.sound.type == "" ?>
+
 # Zu benutzender Audiotreiber
 # { auto  null  pulseaudio  alsa  oss  esd  file  none }, default: 0
 audio.driver:alsa
@@ -73,4 +75,6 @@ audio.volume.mixer_volume:75
 # Lautstärke beim Starten wiederherstellen
 # bool, default: 0
 #audio.volume.remember_volume:0
+
+<?cs /if ?>
 
