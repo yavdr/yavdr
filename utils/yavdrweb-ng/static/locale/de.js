@@ -362,5 +362,19 @@ var locale_de = {
             boxlabelunavailable: 'deaktiviert (< 2 Bildschirme gefunden)',
             switch_label: 'Wechsel des VDR-Frontends auf 2. Bildschirm'
         }
+    },
+    sound: {
+        menutab: {
+            title : 'Sound',
+            tabtip : 'Sound settings',
+            panel_title : 'Sound'
+        },
+        button_label:  'Setze Soundeinstellungen',
+        submit: {
+            waitmsg : 'Einstellungen werden aktualisiert.',    
+            success : 'Erfolg.',
+            failure : 'Fehler.'
+        },
+        label: 'Soundeinstellungen'
     }
 };

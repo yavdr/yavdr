@@ -397,5 +397,19 @@ var locale_en = {
             boxlabelunavailable: 'disabled (< 2 screens found)',
             switch_label: 'switch head of vdr frontend'
         }
+    },
+    sound: {
+        menutab: {
+            title : 'sound settings',
+            tabtip : 'sound settings',
+            panel_title : 'sound settings'
+        },
+        button_label:  'Apply sound settings',
+        submit: {
+            waitmsg : 'Sound settings are updated.',    
+            success : 'Success.',
+            failure : 'Failure.'
+        },
+        label: 'sound setting'
     }
 };
