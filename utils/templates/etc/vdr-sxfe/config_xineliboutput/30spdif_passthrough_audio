@@ -38,7 +38,7 @@ audio.device.alsa_passthrough_device:w:iec958:AES0=0x6,AES1=0x82,AES2=0x0,AES3=0
 
 # Gerät für 4-Kanalausgabe
 # string, default: plug:surround40:0
-# audio.device.alsa_surround40_device:iec958:AES0=0x6,AES1=0x82,AES2=0x0,AES3=0x2
+audio.device.alsa_surround40_device:iec958:AES0=0x6,AES1=0x82,AES2=0x0,AES3=0x2
 
 # Gerät für 5.1-Kanalausgabe
 # string, default: plug:surround51:0
