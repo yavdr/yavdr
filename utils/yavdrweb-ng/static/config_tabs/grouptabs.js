@@ -194,6 +194,11 @@ Ext.TaskMgr.start({
                     items:   getSystemForm
                 }),
                 addGroupPanelTab({
+                    layout: 'fit',
+                    section: "network",
+                    items:   getNetworkForm
+                }),
+                addGroupPanelTab({
                     section: "webfrontend",
                     items:   getWebFrontendForm
                 })
@@ -225,21 +230,17 @@ Ext.TaskMgr.start({
     /*
      *  Should we render the DEVELOPMENT MODULE? (only if devmode is "1")
      */
-    if (yavdrwebGlobalInfo.devmode == "1"){
+    /*if (yavdrwebGlobalInfo.devmode == "1"){
         groupPanelItems[groupPanelItems.length] = {
             expanded: false,
             items: [
                 addGroupPanelSection({
                     section: "development"
                 }),
-                addGroupPanelTab({
-                    layout: 'fit',
-                    section: "network",
-                    items:   getNetworkForm
-                })
+                ...
             ]
         };
-    }
+    }*/
 
     var viewport = new Ext.Viewport({
     layout:'fit',

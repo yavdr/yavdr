@@ -127,10 +127,10 @@ function getNetworkForm(){
      	    items: [{
 		    title: getLL("network.nfs.menutab.title"),
 		    items: getNFSForm()
-		},{
+		}/*,{
 		    title: getLL("network.samba.menutab.title"),
 		    html: "not implemented yet"
-		}]
+		}*/]
      	});
 
     return panel;
