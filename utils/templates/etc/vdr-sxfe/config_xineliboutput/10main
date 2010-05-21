@@ -200,10 +200,6 @@ gui.osd_enabled:0
 # [0..100], default: 50
 #video.output.horizontal_position:50
 
-# vdpau: HD deinterlace method
-# { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3
-video.output.vdpau_deinterlace_method:bob
-
 # vdpau: Try to recreate progressive frames from pulldown material
 # bool, default: 1
 video.output.vdpau_enable_inverse_telecine:0

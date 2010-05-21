@@ -1,0 +1,4 @@
+# vdpau: HD deinterlace method
+# { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3
+video.output.vdpau_hd_deinterlace_method:bob
+
