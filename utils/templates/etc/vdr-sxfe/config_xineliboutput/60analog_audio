@@ -62,11 +62,11 @@ audio.synchronization.av_sync_method:resample
 
 # Wenn !=0, immer auf diese Rate anpassen
 # numeric, default: 0
-audio.synchronization.force_rate:48000
+# audio.synchronization.force_rate:0
 
 # Resampling benutzen
 # { auto  off  on }, default: 0
-audio.synchronization.resample_mode:on
+# audio.synchronization.resample_mode:auto
 
 # Startlautstärke
 # [0..100], default: 50
