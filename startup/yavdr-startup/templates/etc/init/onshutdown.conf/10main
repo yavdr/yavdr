@@ -5,7 +5,9 @@ start on runlevel [06]
 task
 
 script
+# disable some startup skript left for compatibility
   /usr/sbin/update-rc.d -f vdr remove >/dev/null
   /usr/sbin/update-rc.d -f inputlirc remove >/dev/null
+
 end script
 
