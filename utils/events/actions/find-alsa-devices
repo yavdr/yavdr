@@ -1,0 +1,16 @@
+#!/bin/bash
+
+LANG=C aplay -l | grep card |\
+while read SINK ; do 
+  # get the index id's
+  CARD=${SINK//card } ; CARD=${CARD%%:*}
+  DEVICE=${SINK//*device }; DEVICE=${DEVICE%%:*}
+
+  # put them into db
+  for INTERFACE in hdmi digital analog ; do 
+    if echo $SINK | grep -qi $INTERFACE ; then
+      dbset system.hardware.alsa.${INTERFACE}=plughw:$CARD,$DEVICE
+    fi 
+  done
+done 
+
