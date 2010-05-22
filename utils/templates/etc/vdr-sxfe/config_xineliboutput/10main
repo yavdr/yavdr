@@ -6,6 +6,14 @@
 # Entries which are still set to their default values are commented out.
 # Remove the '#' at the beginning of the line, if you want to change them.
 
+# vdpau: HD deinterlace method
+# { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3
+video.output.vdpau_hd_deinterlace_method:bob
+
+# vdpau: SD deinterlace method
+# { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3
+video.output.vdpau_sd_deinterlace_method:temporal_spatial
+
 # Deinterlacing automatisch aktivieren
 # bool, default: 0
 gui.deinterlace_by_default:1
