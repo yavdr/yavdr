@@ -10,5 +10,4 @@
 <?cs /if ?>
     Option         "DPMS"
     Option         "ExactModeTimingsDVI" "True"
-    Option         "UseEDIDFreqs" "False"
 
