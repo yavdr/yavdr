@@ -31,9 +31,5 @@ xineliboutput.Video.SwScale.Height = 576
 xineliboutput.Video.SwScale.Resize = 0
 xineliboutput.Video.SwScale.Width = 720
 xineliboutput.Audio.SoftwareVolumeControl = 1
-<?cs if:system.sound.type == "passthrough" ?>
-xineliboutput.Audio.Speakers = Pass Through
-<?cs /if ?>
-<?cs if:system.sound.type == "hdmi" ?>
 xineliboutput.Audio.Speakers = Stereo 2.0
-<?cs /if ?>
+
