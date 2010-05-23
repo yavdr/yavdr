@@ -32,4 +32,3 @@ xineliboutput.Video.SwScale.Resize = 0
 xineliboutput.Video.SwScale.Width = 720
 xineliboutput.Audio.SoftwareVolumeControl = 1
 xineliboutput.Audio.Speakers = Stereo 2.0
-
