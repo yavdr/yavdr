@@ -343,21 +343,21 @@ var locale_de = {
     x11: {
         menutab: {
             title : 'Anzeige',
-            tabtip : 'Anzeigeneinstellungen',
+            tabtip : 'Anzeigeeinstellungen',
             panel_title : 'Anzeige'
         },
         graphtft: {
         	label: 'GraphTFT',
         	boxlabel: 'aktiviert'
         },
-        button_label:  'Setze Anzeigeneinstellungen',
+        button_label:  'Setze Anzeigeeinstellungen',
         submit: {
             waitmsg : 'Einstellungen werden aktualisiert.',    
             success : 'Erfolg.',
             failure : 'Fehler.'
         },
         dualhead: {
-            label: '2-Bildschrimbetrieb',
+            label: '2-Bildschirmbetrieb',
             boxlabel: 'aktiviert',
             boxlabelunavailable: 'deaktiviert (< 2 Bildschirme gefunden)',
             switch_label: 'Wechsel des VDR-Frontends auf 2. Bildschirm'
