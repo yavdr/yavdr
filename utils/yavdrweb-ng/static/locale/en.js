@@ -82,7 +82,7 @@ var locale_en = {
             tabtip :'Remote-Settings (Remote Control Receiver)',
             panel_title : 'Remote Control Receiver'
         },
-        help: 'help!'
+        help: 'There are 3 different LIRC compatible servers supported at the moment. Please choose the one, which is fitting your device best. <br /> LIRC <br /><br /> This is supporting most devices. Please inform yourself, what driver is supporting your device. You have to choose the correct driver for your device and in case its a homebrew-serial port device (Attric, self-build and other similar devices) you need to choose the correct serial port.<br /><br />  Input Lirc<br /><br /> Some DVB cards include a remote control receiver. Most of them as well as some USB devices are made available as so called input devices. You only need to choose the correct device from the drop  down.<br /><br />Irserver <br /><br /> Some HTPC cases (for instance OrigenAE) have included remote control receiver, which can only be used with irserver. You only need to enable it and save it afterwards.' 
     },
     lirc: {
         menutab: {
@@ -118,7 +118,7 @@ var locale_en = {
             tabtip :'Inputlirc-Settings (Remote Control Receiver)',
             panel_title : 'Remote Control Receiver (LIRC)'
         },
-        help: 'When you press the button "Save" VDR will be restarted to notify VDR about the changed inputlirc receiver settings. .......',
+        help: 'Please Choose your Remote Receiver from above list. When you press the button "Save" VDR will be restarted to notify VDR about the changed inputlirc receiver settings.',
         combobox: {
              tooltip : {
                  driver: 'Driver',
@@ -142,7 +142,7 @@ var locale_en = {
             tabtip :'IRServer-Settings (Remote Control Receiver)',
             panel_title : 'Remote Control Receiver (IRServer)'
         },
-        help: 'When you press the button "Save" VDR will be restarted to notify VDR about the changed IRServer receiver settings. .......',
+        help: 'When you press the button "Save" VDR will be restarted to notify VDR about the changed IRServer receiver settings.',
         combobox: {
              tooltip : {
                  driver: 'Driver',
