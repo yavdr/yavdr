@@ -72,15 +72,5 @@ function getIRServerForm(){
         }
     });
 
-    return [ 
-        myform,
-        new Ext.Panel({
-            width: "100%",
-            layout: 'fit',
-            frame: false,
-            border: false,
-            bodyStyle:'padding:5px 5px 0',
-            html: '<p style="font-size: 12px;">' + getLL("irserver.help") + "</p>"
-        })
-    ];
+    return myform;
 }

@@ -168,16 +168,7 @@ lircForm.prototype.populateFields = function (){
  * getExtjsForm
  */
 lircForm.prototype.getExtjsForm = function(){
-    return [ 
-        this.myform,
-        new Ext.Panel({
-            width: "100%",
-            layout: 'fit',
-            frame: false,
-            border: false,
-            bodyStyle:'padding:5px 5px 0'
-        })
-    ];
+    return this.myform;
 }
 
 /*

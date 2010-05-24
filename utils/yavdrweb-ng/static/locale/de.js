@@ -362,7 +362,15 @@ var locale_de = {
             boxlabel: 'aktiviert',
             boxlabelunavailable: 'deaktiviert (< 2 Bildschirme gefunden)',
             switch_label: 'Wechsel des VDR-Frontends auf 2. Bildschirm'
-        }
+        },
+        primary: 'primär',
+        secondary: 'sekundär',
+        modeline: 'aktuelle Auflösung',
+        device: 'Gerät',
+        resolution: 'Auflösung',
+        select_res: 'wähle Auflösung',
+        enabled: 'aktiviert',
+        disabled: 'deaktiviert'
     },
     sound: {
         menutab: {

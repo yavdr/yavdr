@@ -119,10 +119,10 @@ function getX11Form(){
                         
                         newitems = [{
                                 xtype: 'label',
-                                html: 'device: ' + item.devicename + '<br />'
+                                html: getLL('x11.device')+': ' + item.devicename + '<br />'
                             }, {
                                 xtype: 'label',
-                                html: 'modeline: ' + item.current_modeline.id + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
+                                html: getLL('x11.modeline')+': ' + item.current_modeline.id + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
                             },
                             new Ext.form.Hidden({
                                 name: 'display'+index,
@@ -132,7 +132,7 @@ function getX11Form(){
                                id : 'modeline_' + index,
                                tpl: '<tpl for="."><div ext:qtip="modeline' +
                                          ': &quot;{id}&quot; {modeline}<br/'+'>' + 
-                                         'resolution:{x}x{y}" class="x-combo-list-item">{id}</div></tpl>',
+                                         getLL('x11.resolution')+':{x}x{y}" class="x-combo-list-item">{id}</div></tpl>',
                                //name: ... used in POST request
                                hiddenName: 'display' + index,  //key, defined in set_lirchw.ecpp, used in POST request
                                //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
@@ -142,8 +142,8 @@ function getX11Form(){
                                forceSelection: true,
                                mode: "local",
                                triggerAction: 'all',
-                               emptyText: 'select resolution',
-                               fieldLabel: 'resolution',
+                               emptyText: getLL('x11.select_res'),
+                               fieldLabel: getLL('x11.resolution'),
                                selectOnFocus: true,
                                store: new Ext.data.JsonStore({
                                     storeId : 'modelinestore_'+index,
@@ -174,7 +174,7 @@ function getX11Form(){
                                 _index: index,
                                 _dual: Ext.getCmp('x11_dualhead'),
                                 name: 'primary',
-                                fieldLabel: 'primary',
+                                fieldLabel: getLL('x11.primary'),
                                 inputValue: item.devicename,
                                 checked: item.primary,
                                 listeners: {
@@ -201,7 +201,7 @@ function getX11Form(){
                                 id: 'secondary_' + index,
                                 _index: index,
                                 name: 'secondary',
-                                fieldLabel: 'secondary',
+                                fieldLabel: getLL('x11.secondary'),
                                 inputValue: item.devicename,
                                 disabled: (displayData.system.x11.dualhead.enabled != '1'),
                                 checked: item.secondary,
@@ -217,7 +217,7 @@ function getX11Form(){
                         this.insert(index+1, {
                             xtype:'fieldset',
                             checkboxToggle:false,
-                            title: 'display ' + ((typeof item.displaynumber != 'undefined')?':'+item.displaynumber+'.' + item.screen + ' on ' + item.name:item.name+' disabled'),
+                            title: 'DISPLAY ' + ((typeof item.displaynumber != 'undefined')?':'+item.displaynumber+'.' + item.screen + ' (' + item.name:item.name+' disabled') + ')',
                             autoHeight:true,
                             defaults: {width: 210},
                             //defaultType: 'textfield',

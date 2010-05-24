@@ -397,7 +397,15 @@ var locale_en = {
             boxlabel: 'activated',
             boxlabelunavailable: 'disabled (< 2 screens found)',
             switch_label: 'switch head of vdr frontend'
-        }
+        },
+        primary: 'primary',
+        secondary: 'secondary',
+        modeline: 'current modeline',
+        device: 'device',
+        resolution: 'resolution',
+        select_res: 'select resolution',
+        enabled: 'enabled',
+        disabled: 'disabled'
     },
     sound: {
         menutab: {
