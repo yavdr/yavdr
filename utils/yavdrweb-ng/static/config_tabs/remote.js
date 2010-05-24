@@ -78,7 +78,7 @@ function getRemoteForm() {
             plain: true,
             border: true,
             bodyStyle:'padding:5px',
-            html: 'Hilfe!'            
+            html: getLL("remote.help")
         },{
             title: 'LIRC',
             bodyCssClass: 'lirc',

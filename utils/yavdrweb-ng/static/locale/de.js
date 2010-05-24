@@ -46,7 +46,8 @@ var locale_de = {
             title : 'Fernbedienungen',
             tabtip :'Einstellungen für Fernbedienungen (Remote Control Receiver)',
             panel_title : 'Einstellungen für Fernbedienungen'
-        }
+        },
+        help: 'Hilfe!'
     },
     lirc: {
         menutab: {
