@@ -47,7 +47,18 @@ var locale_de = {
             tabtip :'Einstellungen für Fernbedienungen (Remote Control Receiver)',
             panel_title : 'Einstellungen für Fernbedienungen'
         },
-        help: 'Zurzeit gibt es 3 verschiedene LIRC-kompatible Server. Es muss der Server ausgew&auml;hlt werden der am besten zur verwendeten Hardware passt.<br /><br /><h1>LIRC</h1> <br /><br />Dieses unterst&uuml;tzt die meisten Ger&auml;te. Zur Konfiguration ist es n&ouml;tig zu wissen welcher Treiber für das eigene Ger&auml;t benötigt wird. Wenn es ein serieller Empf&auml;nger ist, muss zusätzlich noch der verwendete Port ausgew&auml;hlt werden.<br /><br /><h1>Input Lirci</h1><br /><br /> Einige DVB Karten liefern einen Fernbedienungsempf&auml;nger mit. Viele deser Empf&auml;nger, sowie einige USB Empf&auml;nger werden als sogenannte INPUT Ger&auml;te eingebunden. Hier muss nur der Fernbedienungsempf&auml;nger aus der Liste erkannter Ger&auml;te ausgewählt werden.<br /><br /><h1>Irserver</h1><br /><br />Einige Geh&auml;se (z.B. OrigonAE) haben integrierte Empf&auml;nger, welche einen speziellen Server (Irserver) ben&ouml;tigen. Hier muss nur der Server aktiviert und anschlie&szlig;end gespeichert werden.'
+        help: 
+            'Um den Infrarot-Empfänger Ihrer Fernbedienung in Betrieb zu nehmen, '+
+            'wählen Sie LIRC oder einen der beiden zu LIRC kompatiblen Server (Inputlirc oder IRServer). '+
+            'Sie sollten denjenigen Server auswählen, welcher am besten zu der von Ihnen verwendeten Hardware passt.<br /><br />'+
+            '<h1>LIRC</h1> Dieses unterstützt die meisten Geräte. '+
+            'Zur Konfiguration ist es nötig zu wissen, welcher Treiber für das eigene Gerät benötigt wird. '+
+            'Wenn es ein serieller Empfänger ist, muss zusätzlich noch die verwendete serielle Schnittstelle ausgewählt werden.<br /><br />'+
+            '<h1>Inputlirc</h1>Einige DVB Karten liefern einen Fernbedienungsempfänger mit. '+
+            'Viele dieser Empfänger, sowie einige USB Empfänger werden als sogenannte INPUT Geräte eingebunden. '+
+            'Hier muss nur der Fernbedienungsempfänger aus der Liste erkannter Geräte ausgewählt werden.<br /><br />'+
+            '<h1>IRServer</h1>Einige HTPC-Gehäuse (z.B. OrigonAE) haben integrierte Empfänger, '+
+            'welche einen speziellen Server (Irserver) benötigen. Hier muss nur der Server aktiviert und anschließend gespeichert werden.'
     },
     lirc: {
         menutab: {
