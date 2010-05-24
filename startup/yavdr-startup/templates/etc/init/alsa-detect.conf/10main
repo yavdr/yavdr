@@ -1,0 +1,8 @@
+description  "execute something on boot"
+
+start on filesystem
+
+script
+signal-event on-boot
+
+end script
