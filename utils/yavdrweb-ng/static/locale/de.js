@@ -47,7 +47,7 @@ var locale_de = {
             tabtip :'Einstellungen für Fernbedienungen (Remote Control Receiver)',
             panel_title : 'Einstellungen für Fernbedienungen'
         },
-        help: 'Hilfe!'
+        help: 'Zurzeit gibt es 3 verschiedene LIRC-kompatible Server. Es muss der Server ausgew&auml;hlt werden der am besten zur verwendeten Hardware passt.<br /> LIRC <br /><br />Dieses unterst&uuml;tzt die meisten Ger&auml;te. Zur Konfiguration ist es n&ouml;tig zu wissen welcher Treiber für das eigene Ger&auml;t benötigt wird. Wenn es ein serieller Empf&auml;nger ist, muss zusätzlich noch der verwendete Port ausgew&auml;hlt werden.<br /><br />  Input Lirc<br /><br /> Einige DVB Karten liefern einen Fernbedienungsempf&auml;nger mit. Viele deser Empf&auml;nger, sowie einige USB Empf&auml;nger werden als sogenannte INPUT Ger&auml;te eingebunden. Hier muss nur der Fernbedienungsempf&auml;nger aus der Liste erkannter Ger&auml;te ausgewählt werden.<br /><br />Irserver <br /><br />Einige Geh&auml;se (z.B. OrigonAE) haben integrierte Empf&auml;nger, welche einen speziellen Server (Irserver) ben&ouml;tigen. Hier muss nur der Server aktiviert und anschlie&szlig;end gespeichert werden.'
     },
     lirc: {
         menutab: {
