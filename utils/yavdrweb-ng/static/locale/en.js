@@ -362,9 +362,9 @@ var locale_en = {
     },
     timeout: {
         menutab: {
-            title : 'GRUB timeout',
-            tabtip : 'Set GRUB timeout',
-            panel_title : 'GRUB timeout'
+            title : 'GRUB Timeout',
+            tabtip : 'Set GRUB Timeout',
+            panel_title : 'GRUB Timeout'
         },
         label: 'Choose timeout',
         button_label:  'Apply timeout settings',
@@ -378,9 +378,9 @@ var locale_en = {
     },
     x11: {
         menutab: {
-            title : 'display settings',
-            tabtip : 'display settings',
-            panel_title : 'display settings'
+            title : 'Display Settings',
+            tabtip : 'Display Settings',
+            panel_title : 'Display Settings'
         },
         graphtft: {
             label: 'graphTFT',
@@ -409,9 +409,9 @@ var locale_en = {
     },
     sound: {
         menutab: {
-            title : 'sound settings',
-            tabtip : 'sound settings',
-            panel_title : 'sound settings'
+            title : 'Sound Settings',
+            tabtip : 'Sound Settings',
+            panel_title : 'Sound Settings'
         },
         button_label:  'Apply sound settings',
         submit: {
