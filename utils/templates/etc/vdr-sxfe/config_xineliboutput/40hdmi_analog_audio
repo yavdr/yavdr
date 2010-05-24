@@ -18,11 +18,11 @@ audio.a52.level:200
 
 # Gerät für Monoausgabe
 # string, default: default
-audio.device.alsa_default_device:<?cs var:system.hardware.alsa.hdmi ?>
+audio.device.alsa_default_device:plughw:<?cs var:system.hardware.alsa.hdmi.card ?>,<?cs var:system.hardware.alsa.hdmi.device ?>
 
 # Gerät für Stereoausgabe
 # string, default: plug:front:default
-audio.device.alsa_front_device:<?cs var:system.hardware.alsa.hdmi ?>
+audio.device.alsa_front_device:plughw:<?cs var:system.hardware.alsa.hdmi.card ?>,<?cs var:system.hardware.alsa.hdmi.device ?>
 
 # ALSA Mixergerät
 # string, default: PCM
@@ -34,15 +34,15 @@ audio.device.alsa_mmap_enable:1
 
 # Gerät für 5.1-Kanalausgabe
 # string, default: iec958:AES0=0x6,AES1=0x82,AES2=0x0,AES3=0x2
-audio.device.alsa_passthrough_device:<?cs var:system.hardware.alsa.hdmi ?>
+audio.device.alsa_passthrough_device:plughw:<?cs var:system.hardware.alsa.hdmi.card ?>,<?cs var:system.hardware.alsa.hdmi.device ?>
 
 # Gerät für 4-Kanalausgabe
 # string, default: plug:surround40:0
-audio.device.alsa_surround40_device:<?cs var:system.hardware.alsa.hdmi ?>
+audio.device.alsa_surround40_device:plughw:<?cs var:system.hardware.alsa.hdmi.card ?>,<?cs var:system.hardware.alsa.hdmi.device ?>
 
 # Gerät für 5.1-Kanalausgabe
 # string, default: plug:surround51:0
-audio.device.alsa_surround51_device:<?cs var:system.hardware.alsa.hdmi ?>
+audio.device.alsa_surround51_device:plughw:<?cs var:system.hardware.alsa.hdmi.card ?>,<?cs var:system.hardware.alsa.hdmi.device ?>
 
 # Lautsprecherplazierung
 # { Mono 1.0  Stereo 2.0  Headphones 2.0  Stereo 2.1  Surround 3.0  Surround 4.0  Surround 4.1  Surround 5.0  Surround 5.1  Surround 6.0  Surround 6.1  Surround 7.1  Pass Through }, default: 1

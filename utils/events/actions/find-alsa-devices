@@ -9,8 +9,8 @@ while read SINK ; do
   # put them into db
   for INTERFACE in hdmi digital analog ; do 
     if echo $SINK | grep -qi $INTERFACE ; then
-      dbset system.hardware.alsa.${INTERFACE}=plughw:$CARD,$DEVICE
+      dbset system.hardware.alsa.${INTERFACE}.card=$CARD
+      dbset system.hardware.alsa.${INTERFACE}.device=$DEVICE
     fi 
   done
 done 
-
