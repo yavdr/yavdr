@@ -68,7 +68,7 @@ binary-arch: install
 #	dh_installdebconf
 #	dh_installlogrotate
 #	dh_installemacsen
-#	dh_installpam
+	dh_installpam --name=yavdr
 #	dh_installmime
 #	dh_python
 #	dh_installinit
