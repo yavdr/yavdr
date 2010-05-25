@@ -78,10 +78,10 @@ function getRemoteForm() {
             plain: true,
             border: true,
             bodyStyle:'padding:5px',
-            html: getLL("remote.help") /* FIXME: messages on tabs + 
-                '<h2>LIRC</h2><p>' + getLL("lirc.help") + '</p><br/>' +
-                '<h2>LIRCInput</h2><p>' + getLL("inputlirc.help") + '</p><br/>' +
-                '<h2>IRServer</h2><p>' + getLL("irserver.help") + '</p>'*/
+            html: '<p>' + getLL("remote.help") + '<br/>&nbsp;</p>' +
+                '<h2>Lirc</h2><p>' + getLL("lirc.help") + '<br/>&nbsp;</p>' +
+                '<h2>InputLirc</h2><p>' + getLL("inputlirc.help") + '<br/>&nbsp;</p>' +
+                '<h2>Irserver</h2><p>' + getLL("irserver.help") + '</p>'
         },{
             title: 'LIRC',
             bodyCssClass: 'lirc',

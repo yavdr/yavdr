@@ -50,15 +50,9 @@ var locale_de = {
         help: 
             'Um den Infrarot-Empfänger Ihrer Fernbedienung in Betrieb zu nehmen, '+
             'wählen Sie LIRC oder einen der beiden zu LIRC kompatiblen Server (Inputlirc oder IRServer). '+
-            'Sie sollten denjenigen Server auswählen, welcher am besten zu der von Ihnen verwendeten Hardware passt.<br /><br />'+
-            '<h1>LIRC</h1> Dieses unterstützt die meisten Geräte. '+
-            'Zur Konfiguration ist es nötig zu wissen, welcher Treiber für das eigene Gerät benötigt wird. '+
-            'Wenn es ein serieller Empfänger ist, muss zusätzlich noch die verwendete serielle Schnittstelle ausgewählt werden.<br /><br />'+
-            '<h1>Inputlirc</h1>Einige DVB Karten liefern einen Fernbedienungsempfänger mit. '+
-            'Viele dieser Empfänger, sowie einige USB Empfänger werden als sogenannte INPUT Geräte eingebunden. '+
-            'Hier muss nur der Fernbedienungsempfänger aus der Liste erkannter Geräte ausgewählt werden.<br /><br />'+
-            '<h1>IRServer</h1>Einige HTPC-Gehäuse (z.B. OrigonAE) haben integrierte Empfänger, '+
-            'welche einen speziellen Server (Irserver) benötigen. Hier muss nur der Server aktiviert und anschließend gespeichert werden.'
+            'Sie sollten denjenigen Server auswählen, welcher am besten zu der von Ihnen verwendeten Hardware passt. ' +
+            'Sobald Sie den jeweiligen Button "Speichern" drücken, wird der VDR neu gestartet, um dem VDR die Änderung bekanntzumachen.<br />' +
+            'Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben, wird der VDR Ihnen direkt nach dem Neustart auf dem On-Screen-Display eine Anlernphase für Ihre Fernbedienung anbieten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie erneut auf den Button "Speichern" drücken.'
     },
     lirc: {
         menutab: {
@@ -66,7 +60,9 @@ var locale_de = {
             tabtip :'Lirc-Einstellungen (Fernbedienungs-Receiver)',
             panel_title : 'Fernbedienungs-Empfänger (LIRC)'
         },
-        help: 'Sobald Sie den Button "Speichern" drücken, wird der VDR neu gestartet, um dem VDR die Änderung des LIRC-Empfängers bekanntzumachen. Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben (via remote.conf), wird der VDR Ihnen direkt nach dem Neustart auf dem On-Screen-Display eine Anlernphase für Ihre Fernbedienung anbieten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie unten wieder auf den Button "Speichern" drücken.',
+        help: 'Dieses unterstützt die meisten Geräte.<br />'+
+            'Zur Konfiguration ist es nötig zu wissen, welcher Treiber für das eigene Gerät benötigt wird.<br/>'+
+            'Wenn es ein serieller Empfänger ist, muss zusätzlich noch die verwendete serielle Schnittstelle ausgewählt werden.',
         combobox: {
              tooltip : {
                  driver: 'Treiber',
@@ -94,7 +90,9 @@ var locale_de = {
             tabtip :'Input-Lirc-Einstellungen (Remote Control Receiver)',
             panel_title : 'Input-Lirc-Einstellungen für Fernbedienungen (Input-LIRC)'
         },
-        help: 'Sobald Sie den Button "Speichern" drücken, wird der VDR neu gestartet, um dem VDR die Änderung des Input-LIRC-Empfängers bekanntzumachen. Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben (via remote.conf), wird der VDR Ihnen direkt nach dem Neustart auf dem On-Screen-Display eine Anlernphase für Ihre Fernbedienung anbieten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie unten wieder auf den Button "Speichern" drücken.',
+        help: 'Einige DVB Karten liefern einen Fernbedienungsempfänger mit. '+
+            'Viele dieser Empfänger, sowie einige USB Empfänger werden als sogenannte INPUT Geräte eingebunden. '+
+            'Hier muss nur der Fernbedienungsempfänger aus der Liste erkannter Geräte ausgewählt werden.',
         combobox: {
              tooltip : {
                  driver: 'Treiber',
@@ -118,7 +116,8 @@ var locale_de = {
             tabtip :'IRServer-Settings (Remote Control Receiver)',
             panel_title : 'IRServer-Einstellungen für Fernbedienungen (IRServer)'
         },
-        help: 'Sobald Sie den Button "Speichern" drücken, wird der VDR neu gestartet, um dem VDR die Änderung des IRServer-Empfängers bekanntzumachen. Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben (via remote.conf), wird der VDR Ihnen direkt nach dem Neustart auf dem On-Screen-Display eine Anlernphase für Ihre Fernbedienung anbieten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie unten wieder auf den Button "Speichern" drücken.',
+        help: 'Einige HTPC-Gehäuse (z.B. OrigonAE) haben integrierte Empfänger, '+
+            'welche einen speziellen Server (Irserver) benötigen. Hier muss nur der Server aktiviert und anschließend gespeichert werden.',
         combobox: {
              tooltip : {
                  driver: 'Treiber',
