@@ -30,6 +30,7 @@ nct677x-dkms
 nvidia-current
 nvidia-settings
 nvram-wakeup
+performous
 smbfs
 ssh
 tntnet
