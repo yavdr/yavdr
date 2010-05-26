@@ -5,7 +5,7 @@ case "$1" in
 
         chmod +x /usr/share/yavdr/events/actions/*
 
-        signal-event create-performous
+        /usr/bin/dpkg-trigger yavdr-addons-update
 
         ;;
 

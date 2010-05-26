@@ -1,10 +1,5 @@
 #!/bin/bash
 
-stop vdr 
-
 process-template --mode 755 /usr/bin/start-performous
-process-template /etc/vdr/plugins/externalplayer.conf                                       
 process-template --owner=vdr --group=vdr /var/lib/vdr/.config/performous/config.xml
-
-start vdr
 

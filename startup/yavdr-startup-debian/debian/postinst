@@ -14,7 +14,16 @@ case "$1" in
         ;;
 
     triggered)
-	signal-event post-upgrade
+        for trigger in $2; do
+            case "$trigger" in
+                yavdr-post-upgrade)
+	            signal-event post-upgrade
+                    ;;
+                yavdr-addons-update)
+	            signal-event yavdr-addons-update
+                    ;;
+            esac
+        done
 	;;
 
 esac
