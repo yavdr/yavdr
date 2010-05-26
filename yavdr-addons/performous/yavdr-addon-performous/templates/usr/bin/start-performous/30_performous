@@ -3,7 +3,7 @@
 
 /usr/bin/openbox &
 
-performous
+/usr/games/performous
 
 killall openbox
 
