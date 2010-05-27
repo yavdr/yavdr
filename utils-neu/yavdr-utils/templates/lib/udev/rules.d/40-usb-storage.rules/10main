@@ -1,0 +1,5 @@
+# Rules for USB mount -*- conf -*-
+KERNEL=="sd*", DRIVERS=="sbp2",         ACTION=="add",  RUN+="/sbin/initctl emit --no-wait usb-storage-added"
+KERNEL=="sd*", SUBSYSTEMS=="usb",       ACTION=="add",  RUN+="/sbin/initctl emit --no-wait usb-storage-added"
+KERNEL=="ub*", SUBSYSTEMS=="usb",       ACTION=="add",  RUN+="/sbin/initctl emit --no-wait usb-storage-added"
+

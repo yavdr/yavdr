@@ -1,0 +1,162 @@
+<%pre>
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <ctype.h>
+extern "C" {
+#include <ClearSilver.h>
+};
+
+#include "common.h"
+
+extern "C" {
+#include <X11/Xlib.h>
+
+#include "NVCtrl.h"
+#include "NVCtrlLib.h"
+}
+
+using namespace std;
+</%pre><& authenticate ><%args>
+  x11_graphtft = "0";
+  x11_dualhead = "0";
+  primary = "";
+  secondary = "";
+
+  string display0[];
+  string display1[];
+  string display2[];  
+</%args><%shared>
+bool writeDisplayToHDF(HDF *hdf, int id, std::vector<string> display) {
+    if (display.size() == 3) {
+        NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=%s"  , id, display[0].c_str());
+        if (display[1] == "enabled") {
+          err = hdf_set_valuef(hdf, "system.x11.display.%i.mode=nvidia-auto-select", id);
+          err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline=", id);
+        }
+        else
+        {
+          err = hdf_set_valuef(hdf, "system.x11.display.%i.mode=%s"    , id, display[1].c_str());
+          err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline=%s", id, display[2].c_str());
+        }
+        
+        return true;
+    }
+    return false;
+}
+
+void cleanDisplayInHDF(HDF *hdf, int id) {
+    NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=", id);
+    err = hdf_set_valuef(hdf, "system.x11.display.%i.mode="          , id);
+    err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline="      , id);
+}
+
+</%shared><%cpp>
+  string success = "false";
+  string msg = "Unspecified error.";
+  
+  NEOERR *err;
+  HDF *hdf = NULL;
+  if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+  {
+    msg = "Failed to reset display settings.";
+  }
+  else
+  {
+    if (x11_dualhead != "1") {
+      err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
+      err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
+      
+      // writing primary display
+      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
+      
+      if (display0.size() == 3 && primary == display0[0]) {
+        writeDisplayToHDF(hdf, 0, display0);
+      } else if (display1.size() == 3 && primary == display1[0]) {
+        writeDisplayToHDF(hdf, 0, display1);
+      } else if (display2.size() == 3 && primary == display2[0]) {
+        writeDisplayToHDF(hdf, 0, display2);
+      } else {
+        cleanDisplayInHDF(hdf, 0);
+      }
+    }
+    else
+    {
+      err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=1");
+      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
+      err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
+      
+      
+      if (display0.size() == 3 && primary == display0[0]) {
+        writeDisplayToHDF(hdf, 0, display0);
+      } else if (display1.size() == 3 && primary == display1[0]) {
+        writeDisplayToHDF(hdf, 0, display1);
+      } else if (display2.size() == 3 && primary == display2[0]) {
+        writeDisplayToHDF(hdf, 0, display2);
+      } else {
+        cleanDisplayInHDF(hdf, 0);
+      }
+      
+      if (secondary == primary) {
+        cleanDisplayInHDF(hdf, 1);
+        err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
+        err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
+      } else if (display0.size() == 3 && secondary == display0[0]) {
+        writeDisplayToHDF(hdf, 1, display0);
+      } else if (display1.size() == 3 && secondary == display1[0]) {
+        writeDisplayToHDF(hdf, 1, display1);
+      } else if (display2.size() == 3 && secondary == display2[0]) {
+        writeDisplayToHDF(hdf, 1, display2);
+      } else {
+        cleanDisplayInHDF(hdf, 1);
+      }
+    }
+    
+    // Query PCI-Device
+    Display *dpy = XOpenDisplay(NULL);
+    
+    if (dpy) {
+        int pci_bus;
+        int pci_device;
+        int pci_func;
+
+        int screen = DefaultScreen(dpy);
+        if (XNVCTRLIsNvScreen(dpy, screen)) {
+            Bool ret;
+            ret = XNVCTRLQueryTargetAttribute(dpy,
+                                              NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+                                              0,
+                                              NV_CTRL_PCI_BUS,
+                                              &pci_bus);
+            ret = XNVCTRLQueryTargetAttribute(dpy,
+                                              NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+                                              0,
+                                              NV_CTRL_PCI_DEVICE,
+                                              &pci_device);
+            ret = XNVCTRLQueryTargetAttribute(dpy,
+                                              NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+                                              0,
+                                              NV_CTRL_PCI_FUNCTION,
+                                              &pci_func);
+            err = hdf_set_valuef(hdf, "system.hardware.nvidia.busid=%i:%i:%i", pci_bus, pci_device, pci_func);
+        }
+    }                 
+    if ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK) {
+      nerr_log_error(err);
+      msg = "Error on hdf_write_file";
+    }
+    hdf_destroy(&hdf);
+    if (err == STATUS_OK) {
+      int ret = system("/usr/bin/signal-event graphtft-state-change");
+      success = "true";
+      msg = "OK. signal-event graphtft-state-change";
+    }
+  }
+</%cpp>{
+    success: <$success$>
+/*    errors: {
+        receiver_id: "<$msg$>"
+    }
+*/
+}

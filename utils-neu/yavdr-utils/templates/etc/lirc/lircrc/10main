@@ -1,0 +1,9 @@
+# dummy entry
+
+begin
+    prog = irexec
+    button = taskswitcher
+    config = stop vdr-frontend ; start xbmc
+    config = start vdr-frontend ; stop xbmc
+end
+

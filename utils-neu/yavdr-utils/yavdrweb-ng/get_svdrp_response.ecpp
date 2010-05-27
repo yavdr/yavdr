@@ -1,0 +1,121 @@
+<%pre>
+#include <stdio.h>
+#include <string>
+
+using namespace std;
+</%pre><& authenticate ><%args>
+command;
+</%args><%cpp>
+reply.setHeader ("Cache-Control", "no-cache", false);
+
+/*
+  DELC Delete Channel
+  LSTC List Channel(s)
+  MOVC Move Channel
+  NEWC New Channel
+  
+  214-This is VDR version 1.7.10
+  214-Topics:
+  214-    CHAN      CLRE      DELC      DELR      DELT      
+  214-    EDIT      GRAB      HELP      HITK      LSTC      
+  214-    LSTE      LSTR      LSTT      MESG      MODC      
+  214-    MODT      MOVC      MOVT      NEWC      NEWT      
+  214-    NEXT      PLAY      PLUG      PUTE      REMO      
+  214-    RENR      SCAN      STAT      UPDT      VOLU      
+  214-    QUIT      
+  214-Plugin epgsearch v0.9.25.beta15 - Suche im EPG nach Wiederholungen und anderem
+  214-    LSTS      NEWS      DELS      EDIS      MODS      
+  214-    UPDS      UPDD      SETS      FIND      QRYS      
+  214-    QRYF      LSRD      LSTC      NEWC      EDIC      
+  214-    DELC      RENC      LSTB      NEWB      DELB      
+  214-    EDIB      LSTE      SETP      LSTT      NEWT      
+  214-    DELT      EDIT      DEFT      LSCC      MENU      
+  214-Plugin xineliboutput v1.0.90-cvs - X11/xine-lib Ausgabe-Plugin
+  214-    PMDA      PDVD      PMSC      PIMG      QMSC      
+  214-Plugin text2skin v1.3 - Lader für textbasierte Skins
+  214-    FLUS      
+  214-To report bugs in the implementation send email to
+  214-    vdr-bugs@tvdr.de
+  214 End of HELP info
+*/  
+
+//TODO: check if charset conversion is needed, we assume UTF-8
+
+//restrict commands
+//string svdrpcmd = "/usr/bin/svdrpsend " + command;
+
+if (command == "LSTC") // || command == "NEWC")
+{
+    string svdrpcmd = "/usr/bin/svdrpsend LSTC :groups";
+
+    if (FILE *stream = popen(svdrpcmd.c_str(), "r"))
+    {
+        char buffer[1024];
+        reply.out() << "{ channelList: [\n"; 
+        int counter = 0;
+        int groupcounter = 0;
+        while (!feof(stream))
+        {
+          if (fgets(buffer, sizeof(buffer), stream) != NULL)
+          {
+             int status = atoi(string(buffer).substr(0, 3).c_str());
+             if ( status != 220 && status != 221 ) //don't output meta lines
+             {
+                 string sBuffer = string(buffer);
+                 string::size_type bof = 0;
+                 int channel_length = strlen(buffer);
+                 string::size_type begin_of_channel_name  = sBuffer.substr(4, channel_length -4 ).find_first_of(" ", bof) + 4;
+                 string::size_type first_semicolon = sBuffer.substr(4, channel_length -4 ).find_first_of(";", bof);
+                 string::size_type end_of_channel_name;
+                 if (first_semicolon != string::npos)
+                     end_of_channel_name = first_semicolon + 3;
+                 else
+                     end_of_channel_name = 0;
+                 
+                 int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
+                 string channel = "";
+                 string channel_name = "";
+
+                 if (counter + groupcounter > 0)
+                 {
+                     reply.out() << ",\n"; //new line
+                 }
+
+                 //check if we have got a channel group label
+                 if (channel_nr != 0)
+                 {
+                     channel      = sBuffer.substr(begin_of_channel_name + 1, strlen(buffer) - 3 - begin_of_channel_name );
+                     if (end_of_channel_name > 0)
+                         channel_name = sBuffer.substr(begin_of_channel_name + 1, end_of_channel_name - begin_of_channel_name );
+                     else
+                         channel_name = "unknown";
+                     counter ++;
+                 }
+                 else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
+                 {
+                     channel_name = sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
+                     groupcounter++;
+                     
+                 }
+                 
+                 int big_channel_id = groupcounter * 10000 + channel_nr;
+                 //reply.out() << buffer << ",\n"; //debug
+                 reply.out() << "    { cid : '"; 
+                 reply.sout() << big_channel_id;  //we must escape special chars via sout (xss)
+                 reply.out() << "', cname : '";
+                 reply.sout() << channel_name;  //we must escape special chars via sout (xss)
+                 reply.out() << "', cstr: '";
+                 reply.sout() << channel;  //we must escape special chars via sout (xss)
+                 reply.out() << "' }";
+             }
+          }
+        }
+        pclose(stream); 
+        reply.out() << "\n  ], \n  totalCount : " <<  counter << "\n}"; 
+    }
+}
+else
+    reply.out() << "Illegal command.";
+
+</%cpp>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+This is the config file for the Menuorg plug-in.
+
+See /usr/share/doc/vdr-plugin-menurg for examples and a full
+description of the config file format.
+
+-->
+<menus>
+    <system name="Schedule" />
+    <system name="Channels" />
+    <menu name="Timer">
+        <system name="Timers" />
+        <plugin name="epgsearchonly" />
+        <plugin name="quickepgsearch" />
+        <plugin name="conflictcheckonly" />
+    </menu>
+    <menu name="Video">
+        <system name="Recordings" />
+        <plugin name="burn" />
+        <plugin name="dvdswitch" />
+        <plugin name="dvdselect" />
+        <plugin name="dvd" />
+        <plugin name="xineliboutput" />
+    </menu>
+    <plugin name="externalplayer" title="Applications" />
+    <menu name="System">
+         <system name="Setup" />
+         <system name="Commands" />
+         <plugin name="femon" />
+         <plugin name="avolctl" />
+         <plugin name="suspendoutput" />
+         <plugin name="recstatus" />
+    </menu>
+</menus>
+

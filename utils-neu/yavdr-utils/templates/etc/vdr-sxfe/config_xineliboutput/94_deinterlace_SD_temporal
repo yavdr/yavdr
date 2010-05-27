@@ -1,0 +1,7 @@
+<?cs if:system.deinterlacer.type == "sd_temporal" ?>
+# vdpau: SD deinterlace method
+# { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3
+video.output.vdpau_sd_deinterlace_method:temporal
+
+<?cs /if ?>
+

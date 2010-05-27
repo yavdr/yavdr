@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for i in $(apt-cache depends yavdr-essential|grep ":"|tr -d ' '|cut -d ':' -f 2); do
+  apt-get install $i
+done
+dpkg --purge yavdr-essential 

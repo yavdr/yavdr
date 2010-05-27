@@ -1,0 +1,4 @@
+#!/bin/bash
+
+process-template --owner=vdr --group=vdr /etc/xine/keymap
+

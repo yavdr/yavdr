@@ -1,0 +1,5 @@
+#COM1 equivalent, /dev/ttyS0
+<?cs if:system.lirchw.serial_port != "/dev/ttyS0" ?>#<?cs /if ?>/dev/ttyS0 uart none
+#COM2 equivalent, /dev/ttyS1
+<?cs if:system.lirchw.serial_port != "/dev/ttyS1" ?>#<?cs /if ?>/dev/ttyS1 uart none
+

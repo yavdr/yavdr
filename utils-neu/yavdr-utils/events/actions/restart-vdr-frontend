@@ -1,0 +1,4 @@
+#!/bin/bash
+
+stop vdr-frontend
+start vdr-frontend

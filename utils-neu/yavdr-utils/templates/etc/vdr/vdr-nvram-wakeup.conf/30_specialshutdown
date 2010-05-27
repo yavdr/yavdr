@@ -1,0 +1,7 @@
+# If your mainboard needs to reboot before shutting down, set the command(s) to
+# do this here. i.e.:
+#
+# SPECIALSHUTDOWN="lilo -R PowerOff ; shutdown -r now"
+#
+SPECIALSHUTDOWN=""
+

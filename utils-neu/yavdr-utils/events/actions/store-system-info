@@ -1,0 +1,5 @@
+VDR_UID=`cat /etc/passwd | awk -F":" '/VDR user/ {print $3}'`
+VDR_GID=`cat /etc/passwd | awk -F":" '/VDR user/ {print $4}'`
+
+dbset "system.vdr.uid=$VDR_UID"
+dbset "system.vdr.gid=$VDR_GID"
