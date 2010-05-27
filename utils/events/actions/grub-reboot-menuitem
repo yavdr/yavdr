@@ -1,3 +1,0 @@
-#!/bin/bash
-
-process-template --mode 755 /etc/grub.d/40_custom

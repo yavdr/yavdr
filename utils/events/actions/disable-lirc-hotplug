@@ -1,4 +1,0 @@
-#!/bin/bash
-
-process-template /lib/udev/rules.d/85-lirc.rules
-

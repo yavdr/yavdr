@@ -1,7 +1,0 @@
-
-# To force a reboot whenever nvram-wakeup sets the time, independently of
-# whether a reboot is required, enable this option.
-#
-# FORCE_REBOOT="yes"
-#
-

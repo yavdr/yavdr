@@ -1,8 +1,0 @@
-#!/bin/bash
-
-amixer set 'Master' unmute
-amixer set 'IEC958' unmute
-amixer set 'IEC958,1' unmute
-amixer set 'PCM' unmute
-
-alsactl store all

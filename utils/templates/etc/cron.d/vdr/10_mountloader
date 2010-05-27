@@ -1,6 +1,0 @@
-# /etc/cron.d/vdr: crontab entries for vdr
-
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/lib/vdr
-
-*/2 *    * * *   vdr	mount-loader

@@ -1,4 +1,0 @@
-#!/bin/bash
-
-process-template /etc/auto.net.yavdr
-service autofs reload

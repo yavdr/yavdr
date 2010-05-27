@@ -1,3 +1,0 @@
-SUSPEND_MODULES="nvidia b2c2-flexcop-pci b2c2-flexcop mt352 dvb_usb_dib0700 ivtv ftdi_sio usbserial usbtouchscreen budget_av tda10021 tda10023 r8168"
-#HOOK_BLACKLIST="05led 10NetworkManager 49bluetooth 94cpufreq 95led 98smart-kernel-video"
-HOOK_BLACKLIST="05led 10NetworkManager 49bluetooth 94cpufreq 95led 98video-quirk-db-handler 99video"

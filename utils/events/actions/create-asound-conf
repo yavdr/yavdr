@@ -1,3 +1,0 @@
-#!/bin/bash
-
-process-template /etc/asound.conf

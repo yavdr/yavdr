@@ -1,9 +1,0 @@
-#!/bin/bash
-
-process-template /var/lib/vdr/.xbmc/userdata/addons.xml
-process-template /var/lib/vdr/.xbmc/userdata/addon_data/pvr/VDR/settings.xml
-process-template /var/lib/vdr/.xbmc/userdata/guisettings.xml
-
-chown -R vdr:vdr /var/lib/vdr/.xbmc
-
-

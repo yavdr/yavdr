@@ -1,7 +1,0 @@
-# set overscan compensation if set
-COMP=`dbget system.hardware.nvidia.overscan`
-
-if [ ! -z "$COMP" ]; then
-   [ -e /usr/bin/nvidia-settings ] && DISPLAY=:1 /usr/bin/nvidia-settings -a OverscanCompensation=$COMP
-fi
-

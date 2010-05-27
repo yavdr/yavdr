@@ -1,9 +1,0 @@
-#!/bin/bash
-
-WIDTH=$(dbget system.display.width)
-if [ $WIDTH -gt 0 -a \
-     ! -e /var/lib/vdr/plugins/text2skin/PearlHD/PearlHD.skin.$WIDTH ]; then
-  resize-pearlhd -w $WIDTH </usr/share/vdr-skins/pearlhd/PearlHD.skin \
-   >/var/lib/vdr/plugins/text2skin/PearlHD/PearlHD.skin.$WIDTH
-  ln -sf PearlHD.skin.$WIDTH /var/lib/vdr/plugins/text2skin/PearlHD/PearlHD.skin
-fi
