@@ -17,4 +17,4 @@ smb	locks
 #afp
 #other	myscript.sh	My\ Script
 
-xbmc
+cmd	xbmc.bin	XBMC
