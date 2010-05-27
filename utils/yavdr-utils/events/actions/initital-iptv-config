@@ -8,10 +8,10 @@ process-template /etc/vdr/plugins/iptv/vlcinput/THE_VOICE.conf
 
 cat <<EOF >/var/lib/vdr/channels.conf
 Sky-News;IPTV:1:S=0|P=0|F=EXT|U=vlc2iptv|A=1:I:0:1:2:0:0:3:0:0:0
-3Sat;IPTV:1:S=0|P=0|F=EXT|U=vlc2iptv|A=1:I:0:2:3:0:0:7:0:0:0
-Bundesliegen-TV;IPTV:4:S=0|P=0|F=EXT|U=vlc2iptv|A=4:I:0:3:4:0:0:1:0:0:0
-THE_VOICE;IPTV:5:S=0|P=0|F=EXT|U=vlc2iptv|A=5:I:0:4:5:0:0:1:0:0:0
-NASA;IPTV:3:S=0|P=0|F=EXT|U=vlc2iptv|A=3:I:0:5:6:0:0:1:0:0:0
+3Sat;IPTV:2:S=0|P=0|F=EXT|U=vlc2iptv|A=2:I:0:2:3:0:0:7:0:0:0
+Bundesliegen-TV;IPTV:3:S=0|P=0|F=EXT|U=vlc2iptv|A=3:I:0:3:4:0:0:1:0:0:0
+THE_VOICE;IPTV:4:S=0|P=0|F=EXT|U=vlc2iptv|A=4:I:0:4:5:0:0:1:0:0:0
+NASA;IPTV:5:S=0|P=0|F=EXT|U=vlc2iptv|A=5:I:0:5:6:0:0:1:0:0:0
 EOF
 
 chown vdr:vdr /var/lib/vdr/channels.conf
