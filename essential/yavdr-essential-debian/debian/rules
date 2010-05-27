@@ -1,22 +1,29 @@
 #!/usr/bin/make -f
 # debian/rules for the yavdr-essential package.
 
-include /usr/share/cdbs/1/rules/debhelper.mk
+
+
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+# Use debhelper v4 features.
+export DH_COMPAT=4
 
 DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
-
-common-build-arch::
+build:
 # Nothing to do
 
-cleanbuilddir::
+clean:
 	dh_testdir
 	dh_testroot
+
 	dh_clean
 
 install: build
 	dh_testdir
 	dh_testroot
+	dh_clean -k
 	dh_installdirs
 
 	printf > debian/yavdr-essential.substvars "yavdr-essential=%s\n" \
@@ -30,6 +37,7 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
+
 	dh_installdocs
 	dh_installchangelogs
 	dh_link
@@ -49,7 +57,6 @@ get-orig-source::
 	svn export -q https://svn.origo.ethz.ch/yavdr/trunk/essential/yavdr-essential $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
 	tar czf ../$(DEB_SOURCE_PACKAGE)_$(VERSION_ID).orig.tar.gz $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
 	rm -rf $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
-	dch -v "$(VERSION_ID)-1yavdr1" "New Upstream Snapshot" 
-
+	dch -v "$(VERSION_ID)-1yavdr1" "New Upstream Snapshot"
 
 
