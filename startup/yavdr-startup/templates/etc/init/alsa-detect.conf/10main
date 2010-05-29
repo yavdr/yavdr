@@ -1,8 +1,7 @@
 description  "execute something on boot"
 
-start on filesystem
+start on stopped udev-finish
 
 script
-signal-event on-boot
-
+  signal-event on-boot
 end script
