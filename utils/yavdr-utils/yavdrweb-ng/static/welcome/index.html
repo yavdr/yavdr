@@ -13,6 +13,8 @@
                 font-family: Arial, sans-serif; 
                 font-size: 14px; 
                 background-color: #4E78B1;
+                padding: 0px;
+                margin: 0px;
             }
             a{
                 display: block;
@@ -20,9 +22,9 @@
                 -moz-border-radius: 10px; 
                 border-radius: 10px; 
                 background-color: white;
-                color: black;
+                color: #4E78B1;
                 width: 600px;
-                padding: 30px;
+                padding: 20px;
                 margin: 10px auto 10px auto;
                 text-decoration: none;
                 opacity: 0.8;
@@ -34,11 +36,16 @@
                 filter: Alpha(opacity=100);
                 border: 2px solid orange;
             }
+            a:active{
+                background-color: orange;
+            }
             img{
                 border: none;
             }
             ul{
-              list-style-type: none;
+                list-style-type: none;
+                padding: 0px;
+                margin: 0px;
             }
             
         </style>
@@ -50,11 +57,11 @@
         <ul>
             <li>
                 <a href="../../"><img src="../images/yavdr_web_frontend.png" style="width: 400px; height: 232px;"/>
-                <br/>yaVDR Web Configuration Frontend</a>
+                <br/><br/>yaVDR Web Configuration Frontend</a>
             </li>
             <li>
                 <a href="http://localhost:8008"><img src="../images/vdr_live_logo.png" style="width: 175px; height: 70px;"/>
-                <br/>LIVE Interactive VDR Environment (vdr-plugin-live on port 8008)</a>
+                <br/><br/>LIVE Interactive VDR Environment (vdr-plugin-live on port 8008)</a>
                 </li>
             <li>
                 <a href="http://localhost:3000">HTTP Streaming (vdr-plugin-streamdev-server on port 3000) </a>
