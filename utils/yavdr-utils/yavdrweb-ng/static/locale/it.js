@@ -37,7 +37,7 @@ var locale_it = {
             tabtip :'Opzioni LIRC (ricevitore telecomando)',
             panel_title : 'Ricevitore telecomando (LIRC)'
         },
-        help: 'Quando premi il pulsante "Salva" VDR si riavvier� per notificare a VDR le modifiche del ricevitore del telecomando LIRC. Se non hai assegnato i tasti al tuo telecomando (tramite remote.conf) VDR mostrer� una schermata passo a passo nell\'OSD per l\'apprendimento dei tasti del telecomando. Questa schermata sparir� dopo pochi secondi se nessun tasto del telecomando viene premuto. Puoi riavviare la schermata semplicemente premendo ancora il tasto "Salva".',
+        help: 'Quando premi il pulsante "Salva" VDR si riavvierà per notificare a VDR le modifiche del ricevitore del telecomando LIRC. Se non hai assegnato i tasti al tuo telecomando (tramite remote.conf) VDR mostrerà una schermata passo a passo nell\'OSD per l\'apprendimento dei tasti del telecomando. Questa schermata sparirà dopo pochi secondi se nessun tasto del telecomando viene premuto. Puoi riavviare la schermata semplicemente premendo ancora il tasto "Salva".',
         combobox: {
              tooltip : {
                  driver: 'Driver',
@@ -66,7 +66,7 @@ var locale_it = {
             panel_title : '' //unused
         },
         grid_header : { 
-            cid : 'N�',
+            cid : 'N°',
             cname : 'Nome canale',
             cstr : 'Stringa completa canale'
         },
@@ -116,7 +116,7 @@ var locale_it = {
         submit: {
             waitmsg : 'Caricamento file.',    
             success : 'File caricato con successo.',
-            failure : 'Si � verificato un errore durante il caricamento.'
+            failure : 'Si è verificato un errore durante il caricamento.'
         }
     },
     system: {
@@ -128,24 +128,24 @@ var locale_it = {
         vdr_restart : {
             label: 'Riavvia VDR',
             submit: {
-                waitmsg: 'Il segnale di riavvio VDR � stato inviato.',
-                success: 'VDR si riavvier� adesso.',
+                waitmsg: 'Il segnale di riavvio VDR è stato inviato.',
+                success: 'VDR si riavvierà adesso.',
                 failure: 'Problemi con l\'invio del segnale. Riprova.'
             }
         },
         kill_xbmc : {
             label: 'Termina XBMC (se bloccato)',
             submit: {
-                waitmsg: 'Il segnale per fermare XBMC � stato inviato.',
-                success: 'XBMC � stato fermato.',
+                waitmsg: 'Il segnale per fermare XBMC è stato inviato.',
+                success: 'XBMC è stato fermato.',
                 failure: 'Problemi con l\'invio del segnale. Riprova.'
             }
         },        
         system_restart : {
             label: 'Riavvia il computer (Attenzione: nessuna richiesta di conferma!)',
             submit: {
-                waitmsg: 'Il segnale per riavviare � stato inviato.',
-                success: 'Il computer si riavvier� adesso.',
+                waitmsg: 'Il segnale per riavviare è stato inviato.',
+                success: 'Il computer si riavvierà adesso.',
                 failure: 'Problemi con l\'invio del segnale. Riprova.'
             }
         }
