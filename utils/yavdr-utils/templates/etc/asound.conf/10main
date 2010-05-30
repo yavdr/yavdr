@@ -6,7 +6,7 @@ pcm.!default {
 	device <?cs var:system.hardware.alsa.hdmi.device ?>
 }
 <?cs /if ?>
-<?cs if:system.sound.type == "digital" ?>
+<?cs if:system.sound.type == "spdif" ?>
 pcm.!default {
 	type hw
 	card <?cs var:system.hardware.alsa.digital.card ?>
