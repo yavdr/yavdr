@@ -17,6 +17,7 @@ process-template /etc/init/vdr.conf
 process-template /etc/init/vdr-frontend.conf
 process-template /etc/init/black.conf
 process-template /etc/init/alsa-detect.conf
+process-template /etc/init/yavdrautofs.conf
 process-template --mode 755 /usr/lib/vdr/config-loader
 process-template --mode 755 /usr/lib/vdr/plugin-loader
 process-template --mode 755 /usr/lib/vdr/commands-loader
