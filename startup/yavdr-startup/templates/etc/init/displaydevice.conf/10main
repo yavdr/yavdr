@@ -1,4 +1,4 @@
-start on filesystem
+start on mounted MOUNTPOINT=/
 stop on runlevel [016]
 
 task
