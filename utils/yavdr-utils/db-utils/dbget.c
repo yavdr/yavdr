@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
   { 
     int fd = 0;
 
-    if ((fd = open(YAVDRDB ".LCK", O_CREAT)) == -1)
+    if ((fd = open(YAVDRDB ".LCK", O_CREAT|O_WRONLY)) == -1)
     {
       ret = -2;
     }

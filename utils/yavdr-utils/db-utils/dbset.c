@@ -17,15 +17,15 @@ int main(int argc, char *argv[])
   }
   else
   { 
-    int fd = 0;                                                                                                         
-                                                                                                                        
-    if ((fd = open(YAVDRDB ".LCK", O_CREAT)) == -1)                                                                     
-    {                                                                                                                   
-      ret = -2;                                                                                                         
-    }                                                                                                                   
-    else                                                                                                                
-    {                                                                                                                   
-      flock(fd, LOCK_EX);                     
+    int fd = 0;
+
+    if ((fd = open(YAVDRDB ".LCK", O_CREAT|O_WRONLY)) == -1)
+    {
+      ret = -2;
+    }
+    else
+    {
+      flock(fd, LOCK_EX);
       err = hdf_read_file(hdf, YAVDRDB);
       if (err && !nerr_handle(&err, NERR_NOT_FOUND))
       {
