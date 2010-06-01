@@ -2,8 +2,6 @@
 
 # If you experience trouble with certain services or modules after S3 resume place their names in the corresponding *.list file to reload them.
 
-service cleanTTY start
-  
 case $1 in
     thaw|resume)
         FRMLIST="/etc/yavdr/force-reload-modules.list"
