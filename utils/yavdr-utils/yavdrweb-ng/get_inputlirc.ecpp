@@ -5,16 +5,16 @@
 #include <ctype.h>
 #include <ClearSilver.h>
 #include "../common.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <sys/types.h>
+
 #include <dirent.h>
+#include <jsoncpp/json.h>
 
 using namespace std;
 </%pre>
 <& authenticate >
 <%cpp>
-    reply.setHeader ("Cache-Control", "no-cache", false);
+	reply.setHeader ("Cache-Control", "no-cache", false);
+	reply.setHeader ("Content-Type", "application/json", false);
 
     unsigned char isDir =0x4;
 
@@ -41,28 +41,12 @@ using namespace std;
         current_inputlirc_path = hdf_get_value(hdf, "system.inputlirc.path", "");
         current_remote         = hdf_get_value(hdf, "system.remoted", "");
     }
-  
-    reply.out() << "\n{\n                \"receiverlist\" : [\n";
-    reply.out() << "                    [ \"\", \"-\" ]\n"; // no receiver, reset settings
 
-/*
-    dp = opendir ("/dev/input/by-path/");
-    if (dp != NULL)
-    {
-        while (ep = readdir (dp))
-        {
-            if (ep->d_type != isDir) {
-                reply.out() << "                    ,[ \"/dev/input/by-path/";
-                reply.sout()<< ep->d_name;
-                reply.out() << "\", \"";
-                reply.sout()<< ep->d_name;
-                reply.out() << "\" ]\n";
-            }
-        }
-        (void) closedir (dp);
-    }
-    */
+    Json::Value list;
+    list[0u][0u] = "";
+    list[0u][1u] = "-";
     
+    int next = 1;
     ifstream f("/proc/bus/input/devices", ios::in);
     string line = "", name = "", event = "";
     while (!f.eof())
@@ -88,24 +72,21 @@ using namespace std;
         else
         {
             if (event != "" && name != "") {
-                reply.out() << "                    ,[ \"/dev/input/";
-                reply.sout()<< event;
-                reply.out() << "\", \"";
-                reply.sout()<< name;
-                reply.out() << "\" ]\n";
+            	list[next][0u] = event;
+            	list[next][1u] = name;
                 event = "";
                 name = "";
+
+                next++;
             }
         }
     }
     f.close();                // Datei wieder schließen
     
-    reply.out() << "                ],\n"
-                << "                \"current_receiver\" : \"";
-    reply.sout()<< current_inputlirc_path;  //we must escape special chars via sout (xss)
-    reply.out() << "\",\n"
-              << "                \"current_remoted\" : \"";
-    reply.sout()<< current_remote;  //we must escape special chars via sout (xss)
-    reply.out() << "\"\n}\n";
+    Json::Value json;
+    json["receiverlist"] = list;
+    json["current_receiver"] = current_inputlirc_path;
+    json["current_remoted"] = current_remote;
+    reply.out() << json;
 
 </%cpp>

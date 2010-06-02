@@ -12,9 +12,12 @@ extern "C" {
 
 extern "C" {
 #include <X11/Xlib.h>
+#include <string.h> /* memcpy(), strerror() */
 
-#include "NVCtrl.h"
-#include "NVCtrlLib.h"
+//#include "NvCtrlAttributes.h"
+
+#include "NVCtrl/NVCtrl.h"
+#include "NVCtrl/NVCtrlLib.h"
 }
 
 using namespace std;
@@ -51,6 +54,49 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
     err = hdf_set_valuef(hdf, "system.x11.display.%i.mode="          , id);
     err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline="      , id);
 }
+/*
+int write_edid_to_file(string filename, unsigned char *data, int len)
+{
+    int fd = -1;
+    char *dst = (void *) -1;
+    char *msg = "";
+
+    fd = open(filename, O_RDWR | O_CREAT | O_TRUNC,
+              S_IRUSR | S_IWUSR | S_IRGRP);
+    if (fd == -1) {
+        msg = "Unable to open file for writing";
+        goto fail;
+    }
+
+    if (lseek(fd, len - 1, SEEK_SET) == -1) {
+        msg = "Unable to set file size";
+        goto fail;
+    }
+
+    if ((dst = mmap(0, len, PROT_READ | PROT_WRITE,
+                    MAP_SHARED, fd, 0)) == (void *) -1) {
+        msg = "Unable to map file for copying";
+        goto fail;
+    }
+
+    memcpy(dst, data, len);
+
+    if (munmap(dst, len) == -1) {
+        msg = "Unable to unmap output file";
+        goto fail;
+    }
+
+    close(fd);
+
+    return TRUE;
+
+ fail:
+
+    if (fd != -1) close(fd);
+
+    return FALSE;
+
+} /* write_edid_to_file() */
 
 </%shared><%cpp>
   string success = "false";
@@ -140,8 +186,79 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
                                               NV_CTRL_PCI_FUNCTION,
                                               &pci_func);
             err = hdf_set_valuef(hdf, "system.hardware.nvidia.busid=%i:%i:%i", pci_bus, pci_device, pci_func);
+
+
+            // read EDIDs
+            /* check if EDID is available for this display device */
+
+
+			int num_gpus, i;
+			/* Get the number of gpus in the system */
+			ret = XNVCTRLQueryTargetCount(dpy, NV_CTRL_TARGET_TYPE_GPU,
+					&num_gpus);
+
+			if (ret) {
+				int display_devices, len;
+
+				/* display information about all GPUs */
+				for (int gpu = 0; gpu < num_gpus; gpu++) {
+					int *pData;
+					/* X Screens driven by this GPU */
+					ret = XNVCTRLQueryTargetBinaryData(dpy,
+							NV_CTRL_TARGET_TYPE_GPU,
+							gpu, // target_id
+							0, // display_mask
+							NV_CTRL_BINARY_DATA_XSCREENS_USING_GPU,
+							(unsigned char **) &pData,
+							&len);
+
+					if (ret) {
+
+						/* Connected Display Devices on X Screen */
+						ret = XNVCTRLQueryTargetAttribute(dpy,
+								NV_CTRL_TARGET_TYPE_X_SCREEN,
+								0, // target_id
+								0, // display_mask
+								NV_CTRL_CONNECTED_DISPLAYS,
+								&display_devices);
+
+						/* List all X Screens on GPU */
+						for (int j = 1; j <= pData[0]; j++) {
+							screen = pData[j];
+
+							/* List all display devices on this X Screen */
+							for (int mask = 1; mask < (1 << 24); mask <<= 1) {
+								if (!(display_devices & mask)) {
+									continue;
+								}
+/*
+					            int val;
+					            ret = NvCtrlGetDisplayAttribute(dpy, display_devices & mask,
+					                                            NV_CTRL_EDID_AVAILABLE, &val);
+					            if ((ret == NvCtrlSuccess) && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
+					                ret = NvCtrlGetBinaryAttribute(ctk_edid->handle,
+					                                               ctk_edid->display_device_mask,
+					                                               NV_CTRL_BINARY_DATA_EDID,
+					                                               &data, &len);
+					                if (ret == NvCtrlSuccess) {
+										write_edid_to_file("/etc/X11/edid.bin",
+														   data, len);
+					                }
+					            } else {
+					            	err = hdf_set_valuef(hdf, "system.hardware.nvidia.0.edid=", pci_bus, pci_device, pci_func);
+					            }
+*/
+							}
+						}
+
+						XFree(pData);
+					}
+				}
+			} // number of gpus
+
+
         }
-    }                 
+    }
     if ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK) {
       nerr_log_error(err);
       msg = "Error on hdf_write_file";

@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <ClearSilver.h>
 #include "../common.h"
+#include <jsoncpp/json.h>
 
 #include <cxxtools/loginit.h>
 #include <cxxtools/log.h>
@@ -10,8 +11,8 @@
 extern "C" {
 #include <X11/Xlib.h>
 
-#include "NVCtrl.h"
-#include "NVCtrlLib.h"
+#include "NVCtrl/NVCtrl.h"
+#include "NVCtrl/NVCtrlLib.h"
 }
 
 using namespace std;
@@ -134,6 +135,8 @@ string dualhead_enabled = "";
 string graphtft_enabled = "";
 string devmode = "0";
 
+Json::Value json;
+
 //get current lirc settings from database
 if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
 {
@@ -158,20 +161,12 @@ else
 	string _s;
 	int nDisplayDevice;
 
-	reply.out() << "{\n"
-	<< "  \"system\" : {\n"
-	<< "    \"x11\" : {\n"
-	<< "      \"dualhead\" : {\n"
-	<< "         \"enabled\" : " + dualhead_enabled + "\n"
-	<< "        },\n";
+	json["system"]["x11"]["dualhead"]["enabled"] = dualhead_enabled;
 
 	/*
 	 * Open a display connection, and make sure the NV-CONTROL X
 	 * extension is present on the screen we want to use.
 	 */
-
-	reply.out() << "      \"displays\" : [\n";
-
 	dpy = XOpenDisplay((display == ""?NULL:display.c_str()));
 
 	if (dpy) {
@@ -183,6 +178,7 @@ else
 			ret = XNVCTRLQueryTargetCount(dpy, NV_CTRL_TARGET_TYPE_GPU,
 					&num_gpus);
 
+			Json::Value displays;
 			if (ret) {
 				int nDisplayDevice = 0;
 
@@ -214,8 +210,8 @@ else
 								0, // display_mask
 								NV_CTRL_CONNECTED_DISPLAYS,
 								&display_devices);
-//						printf("   Display Device Mask (Connected)   : 0x%08x\n",
-//								display_devices);
+						//						printf("   Display Device Mask (Connected)   : 0x%08x\n",
+						//								display_devices);
 
 						/* List all X Screens on GPU */
 						for (j = 1; j <= pData[0]; j++) {
@@ -228,8 +224,8 @@ else
 									0, // display_mask
 									NV_CTRL_ENABLED_DISPLAYS,
 									&enabled_devices);
-//							printf("   Display Device Mask (Enabled)   : 0x%08x\n",
-//									enabled_devices);
+							//							printf("   Display Device Mask (Enabled)   : 0x%08x\n",
+							//									enabled_devices);
 
 							/* List all display devices on this X Screen */
 							for (mask = 1; mask < (1 << 24); mask <<= 1) {
@@ -247,43 +243,26 @@ else
 								string name = string(str);
 								string displayDeviceName = display_device_name(mask);
 
-								if (nDisplayDevice++ != 0)
-								{
-									reply.out() << "      ,\n";
-								}
-
-								reply.out() << "        {\n"
-								<< "        \"name\" : \"";
-								reply.sout() << name;
-								reply.out() << "\",\n"
-								<< "        \"primary\" : ";
-								reply.out() << (screen == 0?"true":"false");
-								reply.out() << ",\n"
-								<< "        \"secondary\" : ";
-								reply.out() << (screen == 1?"true":"false");
-								reply.out() << ",\n"
-								<< "        \"displaynumber\" : ";
-								reply.out() << 1;
-								reply.out() << ",\n"
-								<< "        \"screen\" : ";
-								reply.out() << screen;
-								reply.out() << ",\n"
-								<< "        \"devicename\" : \"";
-								reply.sout() << displayDeviceName;
+								displays[nDisplayDevice]["name"] = name;
+								displays[nDisplayDevice]["primary"] = (screen == 0);
+								displays[nDisplayDevice]["secondary"] = (screen == 1);
+								displays[nDisplayDevice]["displaynumber"] = 1;
+								displays[nDisplayDevice]["screen"] = screen;
+								displays[nDisplayDevice]["devicename"] = displayDeviceName;
 								XFree(str);
 
-								reply.out() << "\",\n"
-								<< "        \"modelines\" : [{\n"
-								<< "        \"id\" : \"disabled\",\n"
-								<< "        \"modeline\" : \"\",\n"
-								<< "        \"x\" : \"0\",\n"
-								<< "        \"y\" : \"0\"\n"
-								<< "        }";
+								Json::Value modelines;
+
+								modelines[0u]["id"] = "disabled";
+								modelines[0u]["modeline"] = "";
+								modelines[0u]["x"] = 0;
+								modelines[0u]["y"] = 0;
 
 								ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
 										NV_CTRL_BINARY_DATA_MODELINES,
 										(unsigned char **) &str, &len);
 
+								int next = 1;
 								if (ret) {
 									/*
 									 * the returned data is in the form:
@@ -292,38 +271,22 @@ else
 									 *
 									 * so walk from one "\0" to the next to print each ModeLine.
 									 */
-									ret = true; // first modeline
-
 									start = str;
 									for (int k = 0; k < len; k++) {
 										if (str[k] == '\0' && start[0] != '\0') {
-											reply.out() << ",";
-											ret = false;
-
 											_s = string(start);
 											vector<string> tokens;
 											vector<string> parts;
 											Tokenize(_s, parts, ":");
 											Tokenize(parts[parts.size()-1], tokens);
 
-											reply.out() << "{\n"
-											<< "        \"id\" : \"";
-											reply.out() << trim(tokens[0].substr(1, tokens[0].length()-2));
-											reply.out() << "\",\n"
-											<< "        \"modeline\" : \"";
+											modelines[next]["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
+											modelines[next]["modeline"] = trim(parts[parts.size()-1].substr(tokens[0].length()+1));
+											modelines[next]["x"] = tokens[2];
+											modelines[next]["y"] = tokens[6];
 
-											reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
-											reply.out() << "\",\n"
-											<< "        \"x\" : \"";
-
-											reply.sout() << tokens[2];
-											reply.out() << "\",\n"
-											<< "        \"y\" : \"";
-
-											reply.sout() << tokens[6];
-											reply.out() << "\"\n"
-											<< "        }";
 											start = &str[k+1];
+											next++;
 										}
 									}
 
@@ -331,32 +294,20 @@ else
 								}
 
 								if ((displayDeviceName.substr(0,3) == "CRT" && name == displayDeviceName) || devmode == "1") {
-									reply.out() << ",{\n"
-									<< "        \"id\" : \"VGA2Scart_16_9\",\n"
-									<< "        \"modeline\" : \"";
-									reply.sout() << "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
-									reply.out() << "\",\n"
-									<< "        \"x\" : \"1024\",\n"
-									<< "        \"y\" : \"576\"\n"
-									<< "        },{\n"
-									<< "        \"id\" : \"VGA2Scart_4_3\",\n"
-									<< "        \"modeline\" : \"";
-									reply.sout() << "13.875 720  744  808  888  576  580  585  625 -HSync -Vsync interlace";
-									reply.out() << "\",\n"
-									<< "        \"x\" : \"720\",\n"
-									<< "        \"y\" : \"576\"\n"
-									<< "        }";
+									modelines[next]["id"] = "VGA2Scart_16_9";
+									modelines[next]["modeline"] = "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
+									modelines[next]["x"] = 1024;
+									modelines[next]["y"] = 576;
+
+									next++;
+									modelines[next]["id"] = "VGA2Scart_4_3";
+									modelines[next]["modeline"] = "13.875 720 744 808 888 576 580 585 625 -HSync -Vsync interlace";
+									modelines[next]["x"] = 720;
+									modelines[next]["y"] = 576;
 								}
-								/*} else {
-								 reply.out() << "        ,{"
-								 << "        \"id\" : \"enabled\",\n"
-								 << "        \"modeline\" : \"X11 restart required\",\n"
-								 << "        \"x\" : \"0\",\n"
-								 << "        \"y\" : \"0\"\n"
-								 << "        }\n";
-								 }*/
-								reply.out() << "],\n"
-								<< "        \"current_modeline\" : {\n";
+
+								displays[nDisplayDevice]["modelines"] = modelines;
+
 
 								ret = XNVCTRLQueryStringAttribute(dpy, screen, mask,
 										NV_CTRL_STRING_CURRENT_MODELINE,
@@ -368,44 +319,25 @@ else
 									Tokenize(_s, parts, ":");
 									Tokenize(parts[parts.size()-1], tokens);
 
-									reply.out() << "        \"id\" : \"";
-									reply.sout() << trim(tokens[0].substr(1, tokens[0].length()-2));
-									reply.out() << "\",\n"
-									<< "        \"modeline\" : \"";
+									displays[nDisplayDevice]["current_modeline"]["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
+									displays[nDisplayDevice]["current_modeline"]["modeline"] =  trim(parts[parts.size()-1].substr(tokens[0].length()+1));
+									displays[nDisplayDevice]["current_modeline"]["x"] = tokens[2];
+									displays[nDisplayDevice]["current_modeline"]["y"] = tokens[6];
 
-									reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
-									reply.out() << "\",\n"
-									<< "        \"x\" : \"";
-
-									reply.sout() << tokens[2];
-									reply.out() << "\",\n"
-									<< "        \"y\" : \"";
-
-									reply.sout() << tokens[6];
-									reply.out() << "\"\n";
 									XFree(str);
 								}
 								else
 								{
 									log_error("Failed to query current ModeLine.\n\n");
 								}
-								/*} else {
-								 reply.out() << "        \"id\" : \"disabled\",\n"
-								 << "        \"modeline\" : \"enable display\",\n"
-								 << "        \"x\" : \"0\",\n"
-								 << "        \"y\" : \"0\"\n";
-								 }*/
-								/* query for modelines */
-
-								reply.out() << "}\n"
-								<< "      }\n";
-
 							}
+
+							nDisplayDevice++;
 						}
-						
+
 						if (display_devices != 0) {
-//							printf("   Display Device Mask (disabled)   : 0x%08x\n",
-//									display_devices);
+							//							printf("   Display Device Mask (disabled)   : 0x%08x\n",
+							//									display_devices);
 							/* List all display devices on this X Screen */
 							for (mask = 1; mask < (1 << 24); mask <<= 1) {
 								if (!(display_devices & mask)) {
@@ -419,30 +351,20 @@ else
 								string name = string(str);
 								string displayDeviceName = display_device_name(mask);
 
-								if (nDisplayDevice++ != 0)
-								{
-									reply.out() << "      ,\n";
-								}
 
-								reply.out() << "        {\n"
-								<< "        \"name\" : \"";
-								reply.sout() << name;
-								reply.out() << "\",\n"
-								<< "        \"primary\" : false,\n"
-								<< "        \"secondary\" : false,\n"
-								//<< "        \"displaynumber\" : 1,\n"
-								//<< "        \"screen\" : screen,\n"
-								<< "        \"devicename\" : \"";
-								reply.sout() << displayDeviceName;
+								displays[nDisplayDevice]["name"] = name;
+								displays[nDisplayDevice]["primary"] = false;
+								displays[nDisplayDevice]["secondary"] = false;
+								displays[nDisplayDevice]["devicename"] = displayDeviceName;
+
 								XFree(str);
 
-								reply.out() << "\",\n"
-								<< "        \"modelines\" : [{\n"
-								<< "        \"id\" : \"disabled\",\n"
-								<< "        \"modeline\" : \"\",\n"
-								<< "        \"x\" : \"0\",\n"
-								<< "        \"y\" : \"0\"\n"
-								<< "        }";
+								Json::Value modelines;
+
+								modelines[0u]["id"] = "disabled";
+								modelines[0u]["modeline"] = "";
+								modelines[0u]["x"] = 0;
+								modelines[0u]["y"] = 0;
 
 								ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
 										NV_CTRL_BINARY_DATA_MODELINES,
@@ -456,13 +378,10 @@ else
 									 *
 									 * so walk from one "\0" to the next to print each ModeLine.
 									 */
-									ret = true; // first modeline
-
+									int next = 1;
 									start = str;
 									for (int k = 0; k < len; k++) {
 										if (str[k] == '\0' && start[0] != '\0') {
-											reply.out() << ",";
-											ret = false;
 
 											_s = string(start);
 											vector<string> tokens;
@@ -470,75 +389,52 @@ else
 											Tokenize(_s, parts, ":");
 											Tokenize(parts[parts.size()-1], tokens);
 
-											reply.out() << "{\n"
-											<< "        \"id\" : \"";
-											reply.out() << trim(tokens[0].substr(1, tokens[0].length()-2));
-											reply.out() << "\",\n"
-											<< "        \"modeline\" : \"";
+											modelines[next]["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
+											modelines[next]["modeline"] = trim(parts[parts.size()-1].substr(tokens[0].length()+1));
+											modelines[next]["x"] = tokens[2];
+											modelines[next]["y"] = tokens[6];
 
-											reply.sout() << trim(parts[parts.size()-1].substr(tokens[0].length()+1));
-											reply.out() << "\",\n"
-											<< "        \"x\" : \"";
-
-											reply.sout() << tokens[2];
-											reply.out() << "\",\n"
-											<< "        \"y\" : \"";
-
-											reply.sout() << tokens[6];
-											reply.out() << "\"\n"
-											<< "        }";
 											start = &str[k+1];
+											next++;
 										}
 									}
-									if (ret) {
-										reply.out() << "        ,{"
-										<< "        \"id\" : \"enabled\",\n"
-										<< "        \"modeline\" : \"X11 restart required\",\n"
-										<< "        \"x\" : \"0\",\n"
-										<< "        \"y\" : \"0\"\n"
-										<< "        }\n";
-									}
+
+									modelines[next]["id"] = "enabled";
+									modelines[next]["modeline"] = "X11 restart required";
+									modelines[next]["x"] = 0;
+									modelines[next]["y"] = 0;
 
 									XFree(str);
 
 									if ((displayDeviceName.substr(0,3) == "CRT" && name == displayDeviceName) || devmode == "1") {
-										reply.out() << ",{\n"
-										<< "        \"id\" : \"VGA2Scart_16_9\",\n"
-										<< "        \"modeline\" : \"";
-										reply.sout() << "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
-										reply.out() << "\",\n"
-										<< "        \"x\" : \"1024\",\n"
-										<< "        \"y\" : \"576\"\n"
-										<< "        },{\n"
-										<< "        \"id\" : \"VGA2Scart_4_3\",\n"
-										<< "        \"modeline\" : \"";
-										reply.sout() << "13.875 720  744  808  888  576  580  585  625 -HSync -Vsync interlace";
-										reply.out() << "\",\n"
-										<< "        \"x\" : \"720\",\n"
-										<< "        \"y\" : \"576\"\n"
-										<< "        }";
+										next++;
+										modelines[next]["id"] = "VGA2Scart_16_9";
+										modelines[next]["modeline"] = "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
+										modelines[next]["x"] = 1024;
+										modelines[next]["y"] = 576;
+
+										next++;
+										modelines[next]["id"] = "VGA2Scart_4_3";
+										modelines[next]["modeline"] = "13.875 720 744 808 888 576 580 585 625 -HSync -Vsync interlace";
+										modelines[next]["x"] = 720;
+										modelines[next]["y"] = 576;
 									}
 								} else {
-									reply.out() << "        ,{"
-									<< "        \"id\" : \"enabled\",\n"
-									<< "        \"modeline\" : \"X11 restart required\",\n"
-									<< "        \"x\" : \"0\",\n"
-									<< "        \"y\" : \"0\"\n"
-									<< "        }\n";
+									int next = modelines.size();
+									modelines[next]["id"] = "enabled";
+									modelines[next]["modeline"] = "X11 restart required";
+									modelines[next]["x"] = 0;
+									modelines[next]["y"] = 0;
 								}
-								reply.out() << "],\n"
-								<< "        \"current_modeline\" : {\n";
 
-								reply.out() << "        \"id\" : \"disabled\",\n"
-								<< "        \"modeline\" : \"enable display\",\n"
-								<< "        \"x\" : \"0\",\n"
-								<< "        \"y\" : \"0\"\n";
+								displays[nDisplayDevice]["modelines"] = modelines;
 
-								/* query for modelines */
+								displays[nDisplayDevice]["current_modeline"]["id"] = "disabled";
+								displays[nDisplayDevice]["current_modeline"]["modeline"] =  "enable display";
+								displays[nDisplayDevice]["current_modeline"]["x"] = 0;
+								displays[nDisplayDevice]["current_modeline"]["y"] = 0;
 
-								reply.out() << "}\n"
-								<< "      }\n";
-
+								nDisplayDevice++;
 							}
 						}
 
@@ -550,7 +446,7 @@ else
 			{
 				log_error("Failed to query number of GPUS.\n\n");
 			}
-
+			json["system"]["x11"]["displays"] = displays;
 		}
 		else
 		{
@@ -565,19 +461,10 @@ else
 	{
 		log_error("Cannot open display '" << XDisplayName(NULL) << "'.\n\n");
 	}
-	reply.out() << "    ]\n";
 }
 
-reply.out() << "      }"
-<< "    },\n"
-<< "  \"vdr\" : {\n"
-<< "    \"plugin\" : {\n"
-<< "      \"graphtft\" : {\n"
-<< "         \"enabled\" : " + graphtft_enabled + "\n"
-<< "        }\n"
-<< "      }\n"
-<< "    }\n"
-<< "}\n";
+json["vdr"]["plugin"]["graphtft"]["enabled"] = graphtft_enabled;
+
+reply.out() << json;
 
 </%cpp>
-

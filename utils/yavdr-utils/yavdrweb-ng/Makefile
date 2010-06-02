@@ -18,9 +18,9 @@ yavdrweb.so: ../common/make_dirs.o \
 EXTRA_ENV+="PATH=$$PATH:/usr/bin"
 ECPPC=env ${EXTRA_ENV} ecppc -v
 TNTNET=env ${EXTRA_ENV} tntnet
-CXXFLAGS+=-I.. -I/usr/include -I/usr/include/ClearSilver -I/usr/include/NVCtrl -fPIC -O2
+CXXFLAGS+=-I.. -I/usr/include -I/usr/include/ClearSilver -fPIC -O2
 CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl -fPIC -O2
-LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lpam -lXNVCtrl -lX11 -lXext #-lcxxtools
+LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lpam -lXNVCtrl -lX11 -lXext -ljson #-lcxxtools
 
 .ecpp.cpp:
 	${ECPPC} ${ECPPFLAGS} ${ECPPFLAGS_CPP} $<
