@@ -1,3 +1,4 @@
+xineliboutput.Audio.Visualization = none
 xineliboutput.OSD.Blending = 1
 xineliboutput.OSD.BlendingLowRes = 1
 xineliboutput.OSD.Scaling = 1
