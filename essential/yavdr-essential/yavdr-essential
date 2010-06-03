@@ -27,6 +27,7 @@ nfs-common
 nfs-kernel-server
 libvdpau1
 nct677x-dkms
+ntfs-3g
 nvidia-current
 nvidia-settings
 nvram-wakeup
