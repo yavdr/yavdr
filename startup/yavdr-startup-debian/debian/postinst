@@ -6,6 +6,7 @@ case "$1" in
 	chsh -s /bin/bash vdr
 	adduser vdr audio
 	adduser vdr cdrom
+        adduser vdr plugdev
 
         chmod +x /usr/share/yavdr/events/actions/*
 
