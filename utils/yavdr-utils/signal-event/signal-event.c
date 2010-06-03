@@ -8,9 +8,61 @@
 
 #include "common.h"
 
+#define PROCESSTEMPLATE "/usr/bin/process-template"
+
 int scandirfilter(const struct dirent *entry)
 {
-  return entry->d_name[0] - '.' ? strcmp(entry->d_name, "templates2expand") : 0;
+  return entry->d_name[0] - '.';
+}
+
+
+void process_template(char *dir)
+{
+  struct dirent **namelist;
+  int numtemps;
+  int n;
+  char *file = NULL;
+  struct stat statrec;
+  char *command = NULL;
+
+  numtemps = scandir(dir, &namelist, scandirfilter, alphasort);
+  if (numtemps < 0)
+  {
+    syslog(LOG_ERR, "ERROR: scandir %m: %s", dir);
+  }
+  else
+  {
+    for (n = 0; n < numtemps; n++)
+    {
+      if (asprintf(&file, "%s/%s", dir, namelist[n]->d_name) > 0)
+      {
+        if (stat(file, &statrec))
+        {
+          syslog(LOG_ERR, "ERROR: stat %m: %s", file);
+          continue;
+        }
+        if (S_ISDIR(statrec.st_mode))
+        {
+          process_template(file);
+        }
+        else
+        {
+          if (asprintf(&command, PROCESSTEMPLATE " %s", file) < 0)
+          {
+            syslog(LOG_INFO, "processing template %s", file);
+            if (system(command) == -1)
+            {
+              syslog(LOG_ERR, "ERROR: error processing template %s", file);
+            }
+            free(command);
+          }
+        }
+        free(file);
+      }
+      free(namelist[n]);
+    }
+    free(namelist);
+  }
 }
 
 int main(int argc, char *argv[])
@@ -23,6 +75,7 @@ int main(int argc, char *argv[])
   char *action = NULL;
   char *actioncmd = NULL;
   int i;
+  char *templates2expanddir = NULL;
 
   openlog(argv[0], LOG_PID | LOG_CONS, LOG_USER);
 
@@ -43,6 +96,15 @@ int main(int argc, char *argv[])
     }
     else
     {
+      if (asprintf(&templates2expanddir, "%s/%s", eventdir, "templates2expand") > 0)
+      {
+        if (access(templates2expanddir, F_OK | X_OK))
+        {
+          process_template(templates2expanddir);
+        }
+        free(templates2expanddir);
+      }
+
       numcmds = scandir(eventdir, &namelist, scandirfilter, alphasort);
       if (numcmds < 0)
       {
@@ -58,6 +120,9 @@ int main(int argc, char *argv[])
             free(action);
             action = NULL;
           }
+          
+          if (!strcmp(namelist[n]->d_name, "templates2expand"))
+            continue;
 
           if (asprintf(&action, "%s/%s", eventdir, namelist[n]->d_name) > 0)
           {
