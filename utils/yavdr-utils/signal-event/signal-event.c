@@ -10,7 +10,7 @@
 
 int scandirfilter(const struct dirent *entry)
 {
-  return entry->d_name[0] - '.';
+  return entry->d_name[0] - '.' ? strcmp(entry->d_name, "templates2expand") : 0;
 }
 
 int main(int argc, char *argv[])
