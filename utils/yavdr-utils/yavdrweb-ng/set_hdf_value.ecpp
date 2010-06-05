@@ -26,6 +26,7 @@ if (key == "webfrontend.language")
     	(value == "en") ||
     	(value == "nl") || 
     	(value == "fr") || 
+        (value == "zh") || 
     	(value == "it"))
     {
         NEOERR *err;

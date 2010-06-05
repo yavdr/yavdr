@@ -14,11 +14,12 @@ function getWebFrontendForm(){
             fieldLabel: getLL("webfrontend.label"),
             columns: 1,
             items: [
+                {id: 'lang-zh', boxLabel: 'Chinese', name: 'value', inputValue: 'zh'},
+                {id: 'lang-nl', boxLabel: 'Dutch',   name: 'value', inputValue: 'nl'},
                 {id: 'lang-en', boxLabel: 'English', name: 'value', inputValue: 'en'},
-                {id: 'lang-de', boxLabel: 'German', name: 'value', inputValue: 'de'},
-                {id: 'lang-nl', boxLabel: 'Dutch', name: 'value', inputValue: 'nl'},
+                {id: 'lang-de', boxLabel: 'German',  name: 'value', inputValue: 'de'},
                 {id: 'lang-it', boxLabel: 'Italian', name: 'value', inputValue: 'it'},
-                {id: 'lang-fr', boxLabel: 'French', name: 'value', inputValue: 'fr'}
+                {id: 'lang-fr', boxLabel: 'French',  name: 'value', inputValue: 'fr'}
             ]
         }]
     });
@@ -60,6 +61,7 @@ function getWebFrontendForm(){
             }
             if (currentFrontend == "") currentFrontend == "en";
             if (
+                currentFrontend == "zh" || 
             	currentFrontend == "de" || 
             	currentFrontend == "en" || 
             	currentFrontend == "nl" || 
