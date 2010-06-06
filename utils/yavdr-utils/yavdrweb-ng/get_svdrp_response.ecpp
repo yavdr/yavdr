@@ -52,11 +52,10 @@ if (command == "LSTC") // || command == "NEWC")
 
     if (FILE *stream = popen(svdrpcmd.c_str(), "r"))
     {
-        Json::Value jsonObj;
         char buffer[1024];
-        reply.out() << "{ \"channelList\": [\n"; 
         int counter = 0;
         int groupcounter = 0;
+        Json::Value json_channels;
         while (!feof(stream))
         {
           if (fgets(buffer, sizeof(buffer), stream) != NULL)
@@ -92,12 +91,7 @@ if (command == "LSTC") // || command == "NEWC")
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
                  string channel = "";
                  string channel_name = "";
-
-                 if (counter + groupcounter > 0)
-                 {
-                     reply.out() << ",\n"; //new line
-                 }
-
+                 
                  //check if we have got a channel group label
                  if (channel_nr != 0)
                  {
@@ -116,23 +110,20 @@ if (command == "LSTC") // || command == "NEWC")
                  }
                  
                  int big_channel_id = groupcounter * 10000 + channel_nr;
-                 //reply.out() << buffer << ",\n"; //debug
-                 reply.out() << "    { \"cid\" : \""; 
-                 reply.sout() << big_channel_id;  //we must escape special chars via sout (xss)
-                 reply.out() << "\", \"cnumber\" : "; 
-                 reply.sout() << channel_nr;  //we must escape special chars via sout (xss)
-                 reply.out() << ", \"cname\" : \"";
-                 reply.sout() << channel_name;  //we must escape special chars via sout (xss)
-                 reply.out() << "\", \"ctransp\" : \"";
-                 reply.sout() << channel_transponder;  //we must escape special chars via sout (xss)
-                 reply.out() << "\", \"cstr\": \"";
-                 reply.sout() << channel;  //we must escape special chars via sout (xss)
-                 reply.out() << "\" }";
+                 json_channels[counter]["cid"] = big_channel_id;
+                 json_channels[counter]["cnumber"] = channel_nr;
+                 json_channels[counter]["cname"] = channel_name;
+                 json_channels[counter]["ctransp"] = channel_transponder;
+                 json_channels[counter]["cstr"] = channel;
+
              }
           }
         }
-        pclose(stream); 
-        reply.out() << "\n  ], \n  \"totalCount\" : " <<  counter << "\n}"; 
+        pclose(stream);
+        Json::Value json_channellist;
+        json_channellist["channelList"] = json_channels;
+        json_channellist["totalCount"] = counter;
+        reply.out() << json_channellist;
     }
 }
 else
