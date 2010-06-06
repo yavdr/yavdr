@@ -144,6 +144,7 @@ var locale_de = {
         grid_header : { 
             cid : 'Nr.',
             cname : 'Kanal-Name',
+            cprovider : 'Anbieter',
             cstr : 'Kompletter Kanal-String'
         },
         grid_title : 'Kanal-Liste (alle Radio- und TV-Kanäle)' 

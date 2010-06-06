@@ -134,7 +134,7 @@ var locale_en = {
         grid_header : { 
             cnumber : 'No',
             cname : 'Channel Name',
-            ctransp : 'Transponder Name',
+            cprovider : 'Provider',
             cstr : 'Complete Channel String'
         },
         grid_title : 'Channel List (all radio and TV channels)' 

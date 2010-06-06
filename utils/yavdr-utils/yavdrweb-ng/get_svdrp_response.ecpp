@@ -71,14 +71,14 @@ if (command == "LSTC") // || command == "NEWC")
                  string::size_type first_doppelpunkt = sBuffer.substr(4, channel_length -4 ).find_first_of(":", bof);
                  string::size_type end_of_channel_name;
                  
-                 string channel_transponder = "";
+                 string provider = "";
                  if (first_semicolon != string::npos && first_doppelpunkt != string::npos){
                      if( first_semicolon > first_doppelpunkt){
                          //after channel name there is no transponder info
                          first_semicolon = first_doppelpunkt;
                      }
                      else{
-                         channel_transponder = sBuffer.substr(first_semicolon + 5, first_doppelpunkt - 1 - first_semicolon );
+                         provider = sBuffer.substr(first_semicolon + 5, first_doppelpunkt - 1 - first_semicolon );
                          
                      }
                  }
@@ -110,19 +110,19 @@ if (command == "LSTC") // || command == "NEWC")
                  }
                  
                  int big_channel_id = groupcounter * 10000 + channel_nr;
-                 json_channels[counter]["cid"] = big_channel_id;
+                 
+                 json_channels[counter]["cid"]     = big_channel_id;
                  json_channels[counter]["cnumber"] = channel_nr;
-                 json_channels[counter]["cname"] = channel_name;
-                 json_channels[counter]["ctransp"] = channel_transponder;
-                 json_channels[counter]["cstr"] = channel;
-
+                 json_channels[counter]["cname"]   = channel_name;
+                 json_channels[counter]["cprovider"] = provider;
+                 json_channels[counter]["cstr"]    = channel;
              }
           }
         }
         pclose(stream);
         Json::Value json_channellist;
         json_channellist["channelList"] = json_channels;
-        json_channellist["totalCount"] = counter;
+        json_channellist["totalCount"]  = counter;
         reply.out() << json_channellist;
     }
 }
