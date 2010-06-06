@@ -1,12 +1,14 @@
 <%pre>
 #include <stdio.h>
 #include <string>
+#include <jsoncpp/json.h>
 
 using namespace std;
 </%pre><& authenticate ><%args>
 command;
 </%args><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
+reply.setHeader ("Content-Type", "application/json", false);
 
 /*
   DELC Delete Channel
@@ -50,8 +52,9 @@ if (command == "LSTC") // || command == "NEWC")
 
     if (FILE *stream = popen(svdrpcmd.c_str(), "r"))
     {
+        Json::Value jsonObj;
         char buffer[1024];
-        reply.out() << "{ channelList: [\n"; 
+        reply.out() << "{ \"channelList\": [\n"; 
         int counter = 0;
         int groupcounter = 0;
         while (!feof(stream))
@@ -66,11 +69,25 @@ if (command == "LSTC") // || command == "NEWC")
                  int channel_length = strlen(buffer);
                  string::size_type begin_of_channel_name  = sBuffer.substr(4, channel_length -4 ).find_first_of(" ", bof) + 4;
                  string::size_type first_semicolon = sBuffer.substr(4, channel_length -4 ).find_first_of(";", bof);
+                 string::size_type first_doppelpunkt = sBuffer.substr(4, channel_length -4 ).find_first_of(":", bof);
                  string::size_type end_of_channel_name;
+                 
+                 string channel_transponder = "";
+                 if (first_semicolon != string::npos && first_doppelpunkt != string::npos){
+                     if( first_semicolon > first_doppelpunkt){
+                         //after channel name there is no transponder info
+                         first_semicolon = first_doppelpunkt;
+                     }
+                     else{
+                         channel_transponder = sBuffer.substr(first_semicolon + 5, first_doppelpunkt - 1 - first_semicolon );
+                         
+                     }
+                 }
+                 
                  if (first_semicolon != string::npos)
                      end_of_channel_name = first_semicolon + 3;
                  else
-                     end_of_channel_name = 0;
+                     end_of_channel_name = first_doppelpunkt + 3;
                  
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
                  string channel = "";
@@ -84,8 +101,8 @@ if (command == "LSTC") // || command == "NEWC")
                  //check if we have got a channel group label
                  if (channel_nr != 0)
                  {
-                     channel      = sBuffer.substr(begin_of_channel_name + 1, strlen(buffer) - 3 - begin_of_channel_name );
-                     if (end_of_channel_name > 0)
+                     channel = sBuffer.substr(begin_of_channel_name + 1, strlen(buffer) - 3 - begin_of_channel_name );
+                     if (end_of_channel_name > 0 && begin_of_channel_name > 0)
                          channel_name = sBuffer.substr(begin_of_channel_name + 1, end_of_channel_name - begin_of_channel_name );
                      else
                          channel_name = "unknown";
@@ -93,25 +110,29 @@ if (command == "LSTC") // || command == "NEWC")
                  }
                  else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
                  {
-                     channel_name = sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
+                     channel_name = "GROUP: " + sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
                      groupcounter++;
                      
                  }
                  
                  int big_channel_id = groupcounter * 10000 + channel_nr;
                  //reply.out() << buffer << ",\n"; //debug
-                 reply.out() << "    { cid : '"; 
+                 reply.out() << "    { \"cid\" : \""; 
                  reply.sout() << big_channel_id;  //we must escape special chars via sout (xss)
-                 reply.out() << "', cname : '";
+                 reply.out() << "\", \"cnumber\" : "; 
+                 reply.sout() << channel_nr;  //we must escape special chars via sout (xss)
+                 reply.out() << ", \"cname\" : \"";
                  reply.sout() << channel_name;  //we must escape special chars via sout (xss)
-                 reply.out() << "', cstr: '";
+                 reply.out() << "\", \"ctransp\" : \"";
+                 reply.sout() << channel_transponder;  //we must escape special chars via sout (xss)
+                 reply.out() << "\", \"cstr\": \"";
                  reply.sout() << channel;  //we must escape special chars via sout (xss)
-                 reply.out() << "' }";
+                 reply.out() << "\" }";
              }
           }
         }
         pclose(stream); 
-        reply.out() << "\n  ], \n  totalCount : " <<  counter << "\n}"; 
+        reply.out() << "\n  ], \n  \"totalCount\" : " <<  counter << "\n}"; 
     }
 }
 else

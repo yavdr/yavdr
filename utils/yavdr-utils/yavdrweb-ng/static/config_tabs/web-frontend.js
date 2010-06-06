@@ -17,9 +17,9 @@ function getWebFrontendForm(){
                 {id: 'lang-zh', boxLabel: 'Chinese', name: 'value', inputValue: 'zh'},
                 {id: 'lang-nl', boxLabel: 'Dutch',   name: 'value', inputValue: 'nl'},
                 {id: 'lang-en', boxLabel: 'English', name: 'value', inputValue: 'en'},
+                {id: 'lang-fr', boxLabel: 'French',  name: 'value', inputValue: 'fr'},
                 {id: 'lang-de', boxLabel: 'German',  name: 'value', inputValue: 'de'},
-                {id: 'lang-it', boxLabel: 'Italian', name: 'value', inputValue: 'it'},
-                {id: 'lang-fr', boxLabel: 'French',  name: 'value', inputValue: 'fr'}
+                {id: 'lang-it', boxLabel: 'Italian', name: 'value', inputValue: 'it'}
             ]
         }]
     });

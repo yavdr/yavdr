@@ -132,8 +132,9 @@ var locale_en = {
             panel_title : '' //unused
         },
         grid_header : { 
-            cid : 'No',
+            cnumber : 'No',
             cname : 'Channel Name',
+            ctransp : 'Transponder Name',
             cstr : 'Complete Channel String'
         },
         grid_title : 'Channel List (all radio and TV channels)' 

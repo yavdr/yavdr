@@ -11,7 +11,13 @@ function getChannelsForm(){
         idProperty: 'cid',
         remoteSort: false,
         totalProperty: 'totalCount',
-        fields: ['cid', {name:'cid', type: 'int'}, 'cname', {name:'cname', type: 'string'}, 'cstr', {name:'cstr', type: 'string'}]
+        fields: [
+             'cid', {name:'cid', type: 'string'},
+             'cnumber', {name:'cnumber', type: 'int'},
+             'cname', {name:'cname', type: 'string'},
+             'ctransp', {name:'ctransp', type: 'string'},
+             'cstr', {name:'cstr', type: 'string'}
+         ]
     });
 
     var gridLoadMask = new Ext.LoadMask(Ext.getBody(), {
@@ -23,8 +29,10 @@ function getChannelsForm(){
         var grid = new Ext.grid.GridPanel({
             store: channellist_store,
             columns: [
-                {header: getLL("channels.grid_header.cid"),  align: 'right', width: 50, dataIndex: 'cid', sortable: true},
+                //{header: getLL("channels.grid_header.cid"),  align: 'right', width: 50, dataIndex: 'cid', sortable: true},
+                {header: getLL("channels.grid_header.cnumber"),  align: 'right', width: 50, dataIndex: 'cnumber', sortable: true},
                 {header: getLL("channels.grid_header.cname"),  align: 'left', width: 200, dataIndex: 'cname', sortable: true},
+                {header: getLL("channels.grid_header.cname"),  align: 'left', width: 100, dataIndex: 'ctransp', sortable: true},
                 {header: getLL("channels.grid_header.cstr"),  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
             ],
             title: getLL("channels.grid_title"),
