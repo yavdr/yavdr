@@ -1,0 +1,2 @@
+# generate upstart event for dvb devices
+SUBSYSTEM=="dvb", ACTION=="add", KERNEL=="dvb*.dvr0", RUN+="/sbin/initctl --quiet emit --no-wait -e UDEV_KERNEL=$kernel -e UDEV_DEVPATH=$devpath dvb-device-add"

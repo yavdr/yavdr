@@ -1,0 +1,7 @@
+
+start on dvb-device-add
+
+task
+
+exec /sbin/stop vdr && /sbin/start vdr
+
