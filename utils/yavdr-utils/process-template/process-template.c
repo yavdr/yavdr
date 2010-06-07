@@ -274,13 +274,16 @@ int main(int argc, char *argv[])
   int c;
   char *owner = NULL;
   char *group = NULL;
-  mode_t mode = 0644;
+  mode_t mode = -1;
   char *output = NULL;
   char *database = YAVDRDB;
   NEOERR *err;
   HDF *hdf = NULL;
   char *data[MAX_DATA_ENTRIES];
   int numdata = 0;
+  struct stat orig_stat;
+  int gid;
+  int uid;
 
   while (1)
   {
@@ -341,7 +344,20 @@ int main(int argc, char *argv[])
     {
       output = argv[optind];
     }
-
+    if (stat(output,&orig_stat)==0)
+    {
+      uid = orig_stat.st_uid;
+      gid = orig_stat.st_gid;
+      if(mode == -1)
+        mode = orig_stat.st_mode;
+    }
+    else
+    {
+      uid = 0;
+      gid = 0;
+      if(mode == -1)
+        mode = 0644;
+    }
     err = hdf_init(&hdf);
     if (err != STATUS_OK)
     {
@@ -368,8 +384,6 @@ int main(int argc, char *argv[])
         }
         if ((ret = merge_template(hdf, argv[optind], output)) == 0)
         {
-          int uid = 0;
-          int gid = 0;
 
           if (owner)
           {
