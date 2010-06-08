@@ -35,6 +35,10 @@ LANG=$VDR_LANG
 LC_ALL=$VDR_LANG
 export LANG LC_ALL
 
+if [ -n "$VDR_CHARSET_OVERRIDE" ] ; then
+   export VDR_CHARSET_OVERRIDE=$VDR_CHARSET_OVERRIDE
+fi
+
 exec /usr/bin/vdr -v $VIDEO_DIR -c $CFG_DIR -L $PLUGIN_DIR -r $REC_CMD -s $VDRSHUTDOWN -E $EPG_FILE -u $USER -g /tmp --port $SVDRP_PORT $OPTIONS "${PLUGINS[@]}" $REDIRECT &> /tmp/vdr.log
 end script
 
