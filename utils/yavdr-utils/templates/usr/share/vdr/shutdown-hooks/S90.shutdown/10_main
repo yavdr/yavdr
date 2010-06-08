@@ -17,5 +17,5 @@ if grep -q "S4" /proc/acpi/sleep ; then
 fi
 <?cs elif:(system.shutdown == "s5") ?>
 <?cs elif:(system.shutdown == "reboot") ?>
-echo "SHUTDOWNCMD=\"/usr/sbin/grub-set-default PowerOff ; /sbin/reboot\""
+echo "SHUTDOWNCMD=\"/usr/sbin/grub-reboot PowerOff ; /sbin/reboot\""
 <?cs /if ?>

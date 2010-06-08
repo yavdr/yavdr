@@ -5,8 +5,6 @@ exec tail -n +16 $0
 # the 'exec tail' line above.
 <?cs if:system.shutdown == "reboot" ?> 
 menuentry "PowerOff" {
-    saved_entry=0
-    save_env saved_entry
     halt
 }
 <?cs /if ?>
