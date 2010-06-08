@@ -280,7 +280,7 @@ var locale_de = {
         button_label:  'Anwenden',
         submit: {
             waitmsg : 'Die Spracheinstellungen für das Web Frontend werden aktualisiert.',
-            success : 'Die Spracheinstellungen für das Web Frontend wurden erfolgreich aktualisiert. Bitte F5 drücken, um das Web-Frontend neu zu laden.',
+            success : 'Die Spracheinstellungen für das Web Frontend wurden erfolgreich aktualisiert. Möchten Sie das Web-Frontend nun mit den neuen Spracheinstellungen laden?',
             failure : 'Fehler.'
         }
     },

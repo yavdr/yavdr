@@ -270,7 +270,7 @@ var locale_en = {
         button_label:  'Apply language settings',
         submit: {
             waitmsg : 'Web frontend language settings are updated.',
-            success : 'Success. Please press F5 to reload the web frontend with the new language settings.',
+            success : 'Success. Do you want to reload the web frontend now with the new language settings?',
             failure : 'Failure.'
         }
     },

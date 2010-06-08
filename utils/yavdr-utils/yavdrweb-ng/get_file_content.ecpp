@@ -31,6 +31,7 @@ const char *files[] = {
     "/etc/lirc/lircd.conf",
     "/etc/vdr/setup.conf",
     "/etc/vdr/remote.conf",
+    "/etc/vdr/channels.conf",
     "/etc/asound.conf",
     
     "/proc/acpi/sleep"

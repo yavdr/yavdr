@@ -19,7 +19,8 @@ function getWebFrontendForm(){
                 {id: 'lang-en', boxLabel: 'English', name: 'value', inputValue: 'en'},
                 {id: 'lang-fr', boxLabel: 'French',  name: 'value', inputValue: 'fr'},
                 {id: 'lang-de', boxLabel: 'German',  name: 'value', inputValue: 'de'},
-                {id: 'lang-it', boxLabel: 'Italian', name: 'value', inputValue: 'it'}
+                {id: 'lang-it', boxLabel: 'Italian', name: 'value', inputValue: 'it'},
+                {id: 'lang-pt', boxLabel: 'Portugese', name: 'value', inputValue: 'pt'}
             ]
         }]
     });
@@ -36,7 +37,7 @@ function getWebFrontendForm(){
                 waitTitle: getLL("standardform.messagebox_caption.wait"),
                 scope:this,
                 success: function (form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("webfrontend.submit.success") );
+                    Ext.MessageBox.confirm( getLL("standardform.messagebox_caption.message"), getLL("webfrontend.submit.success"), function(){location.reload("http://localhost")} );
                 },
                 failure:function(form, action) {
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("webfrontend.submit.failure") );
@@ -66,6 +67,7 @@ function getWebFrontendForm(){
             	currentFrontend == "en" || 
             	currentFrontend == "nl" || 
             	currentFrontend == "fr" || 
+                currentFrontend == "pt" || 
             	currentFrontend == "it"
             ){
                 var rButton = this.getComponent('web_lang_radio_group');
