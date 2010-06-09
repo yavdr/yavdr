@@ -1,6 +1,11 @@
 # /etc/cron.d/vdr: crontab entries for vdr
 
+<?cs if:(?system.net.media.video.00 && system.net.media.video.00 != "") ?>
+
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/lib/vdr
 
-*/2 *    * * *   vdr	mount-loader
+*/2 *    * * *   vdr    mount-loader
+
+<?cs /if ?>
+
