@@ -3,11 +3,12 @@ description  "enable USB Ports to wakeup machine"
 start on net-device-up IFACE=*[0123456789]
 
 script
-#for BUS in `grep -e '^.*USB' /proc/acpi/wakeup | cut -d" " -f1` ; do 
-#    echo $BUS > /proc/acpi/wakeup 
-#done
 
-#Aktiviere Wake-On-LAN auf eth0...
+# you can get a list of capable USB devices with 'cat /proc/acpi/wakeup'
+#    echo YOUR_DEVICE_HERE > /proc/acpi/wakeup 
+
+ 
+# activate Wake-On-LAN for eth0...
 ethtool -s eth0 wol g
 
 end script
