@@ -1,6 +1,8 @@
 start on stopped displaydevice
 stop on runlevel [016]
 
+<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
+
 respawn
 
 env XORGCONFIG=/etc/X11/xorg.conf.yavdr
@@ -20,3 +22,6 @@ if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
 fi
 DISPLAY=:1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
 end script
+
+<?cs /if ?>
+
