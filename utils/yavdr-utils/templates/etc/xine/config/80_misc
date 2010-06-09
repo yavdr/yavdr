@@ -1,0 +1,3 @@
+# Erlaube implizierte Änderungen an Konfiguration (z.B. durch MRL)
+# bool, default: 0
+#misc.implicit_config:0

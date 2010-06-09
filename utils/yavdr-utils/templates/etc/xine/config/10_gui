@@ -1,0 +1,181 @@
+# Deinterlacing automatisch aktivieren
+# bool, default: 0
+gui.deinterlace_by_default:1
+
+# Erfahrenheit einstellen
+# { Beginner  Advanced  Expert  Master of the known universe }, default: 0
+gui.experience_level:Master of the known universe
+
+# OSD-Unterstützung aktivieren
+# bool, default: 1
+gui.osd_enabled:0
+
+# OSD Anzeigezeit [s]
+# numeric, default: 3
+#gui.osd_timeout:3
+
+# Benutzer fragen bei Wiedergabe mit nichtunterstütztem coder
+# bool, default: 0
+#gui.play_anyway:0
+
+# Automatische alte Playliste wiederherstellen
+# bool, default: 0
+#gui.playlist_auto_reload:0
+
+# Audio-Visualisierung
+# { goom  oscope  fftscope  fftgraph }, default: 0
+#gui.post_audio_plugin:goom
+
+# gui skin Thema
+# { xinetic }, default: 0
+#gui.skin:xinetic
+
+# xine-Verhalten für unerfahrene Benutzer anpassen
+# bool, default: 1
+#gui.smart_mode:1
+
+# Schnappschußverzeichnis
+# string, default: /var/lib/vdr
+#gui.snapshotdir:/var/lib/vdr
+
+# Untertitel automatisch laden
+# bool, default: 1
+#gui.subtitle_autoload:1
+
+# Stil der Videoanimation
+# { None  Post Plugin  Stream Animation }, default: 1
+#gui.visual_anim:Post Plugin
+
+# Fensterüberlagerung (mehr)
+# bool, default: 0
+#gui.always_layer_above:0
+
+# Audiomischpultmethode
+# { Sound card  Software }, default: 0
+#gui.audio_mixer_method:Sound card
+
+# Anzeigeverhalten von Bedienfeld
+# bool, default: 0
+#gui.auto_panel_visibility:0
+
+# Anzeigeverhalten des Ausgabefensters
+# bool, default: 0
+#gui.auto_video_output_visibility:0
+
+# Deinterlace-Plugin.
+# string, default: tvtime:method=LinearBlend,cheap_mode=1,pulldown=0,use_progressive_frame_flag=1
+#gui.deinterlace_plugin:tvtime:method=LinearBlend,cheap_mode=1,pulldown=0,use_progressive_frame_flag=1
+
+# Verhalten von Ereignissender
+# bool, default: 1
+#gui.eventer_sticky:1
+
+# Fensterüberlagerung
+# bool, default: 0
+#gui.layer_above:0
+
+# Unvergrößertes OSD benutzen
+# bool, default: 1
+#gui.osd_use_unscaled:1
+
+# Bildschirmschoner Resetintervall [s]
+# numeric, default: 10
+#gui.screensaver_timeout:10
+
+# Menu Tastenkürzelstil
+# { Windows style  Emacs style }, default: 0
+#gui.shortcut_style:Windows style
+
+# Datenstrominformationen
+# bool, default: 0
+#gui.sinfo_auto_update:0
+
+# Skin-Server URL
+# string, default: http://xine.sourceforge.net/skins/skins.slx
+#gui.skin_server_url:http://xine.sourceforge.net/skins/skins.slx
+
+# Kapitelspringen
+# bool, default: 1
+#gui.skip_by_chapter:1
+
+# Neue Datemstromgröße verändert Ausgabefenstergröße 
+# bool, default: 1
+#gui.stream_resize_window:1
+
+# Hinweiszeit (ms)
+# numeric, default: 5000
+#gui.tips_timeout:5000
+
+# gui Hinweise sichtbar
+# bool, default: 1
+#gui.tips_visible:1
+
+# Name des Video-Bildschirms
+# string, default: 
+#gui.video_display:
+
+# Synchrones X-Protokoll (Fehlersuche)
+# bool, default: 0
+#gui.xsynchronize:0
+
+# Doppelte Größe für kleine Datemströme (Erfordert stream_resize_window)
+# bool, default: 0
+#gui.zoom_small_stream:0
+
+# Logo MRL
+# string, default: file:/usr/share/xine/skins/xine-ui_logo.mpv
+#gui.logo_mrl:file:/usr/share/xine/skins/xine-ui_logo.mpv
+
+# Benutze XVidModeExtension beim Umschalten auf Vollbild
+# bool, default: 0
+#gui.use_xvidext:0
+
+# Höhe für Xinerama-Vollbildmodus (-8192 = automatisch)
+# numeric, default: -8192
+#gui.xinerama_fullscreen_height:-8192
+
+# Breite für Xinerama-Vollbildmodus (-8192 = automatisch)
+# numeric, default: -8192
+#gui.xinerama_fullscreen_width:-8192
+
+# X-Koordinate für Xinerama-Vollbildmodus (-8192 = automatisch)
+# numeric, default: -8192
+#gui.xinerama_fullscreen_x:-8192
+
+# Y-Koordinate für Xinerama-Vollbildmodus (-8192 = automatisch)
+# numeric, default: -8192
+#gui.xinerama_fullscreen_y:-8192
+
+# Zu nutzende Bildschirme im Xinerama Vollbildmodus (z.B. 0 2 3)
+# string, default: 0 1
+#gui.xinerama_use_screens:0 1
+
+# Verstärkungslevel
+# [0..200], default: 100
+#gui.amp_level:100
+
+# gui Fenster sichtbar
+# bool, default: 1
+#gui.panel_visible:1
+
+# numeric, default: 200
+#gui.panel_x:200
+
+# numeric, default: 100
+#gui.panel_y:100
+
+# [0..65535], default: -1
+#gui.vo_brightness:-1
+
+# [0..65535], default: -1
+#gui.vo_contrast:-1
+
+# [0..65535], default: -1
+#gui.vo_hue:-1
+
+# [0..65535], default: -1
+#gui.vo_saturation:-1
+
+# Farbpalette (Vordergrund-Rand-Hintergrund) für Untertitel und OSD
+# { white-black-transparent  white-none-transparent  white-none-translucid  yellow-black-transparent }, default: 0
+#ui.osd.text_palette:white-black-transparent

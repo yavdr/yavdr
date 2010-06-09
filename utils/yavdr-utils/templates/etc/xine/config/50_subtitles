@@ -1,0 +1,35 @@
+# opacity for the black parts of bitmapped subtitles
+# [0..100], default: 67
+#subtitles.bitmap.black_opacity:67
+
+# opacity for the colour parts of bitmapped subtitles
+# [0..100], default: 100
+#subtitles.bitmap.colour_opacity:100
+
+# Untertitelgröße
+# { tiny  small  normal  large  very large  huge }, default: 1
+#subtitles.separate.subtitle_size:small
+
+# Vertikaler Versatz für Untertitel
+# numeric, default: 0
+#subtitles.separate.vertical_offset:0
+
+# Zeichensatz für Untertitel
+# string, default: sans
+#subtitles.separate.font:sans
+
+# Zeichensatz für Untertitel
+# string, default: 
+#subtitles.separate.font_freetype:
+
+# ob Freetype-Zeichensätze genutzt werden
+# bool, default: 0
+#subtitles.separate.font_use_freetype:0
+
+# Zeichenkodierung für Untertitel
+# string, default: iso-8859-1
+#subtitles.separate.src_encoding:iso-8859-1
+
+# Benutze unskaliertes OSD falls möglich
+# bool, default: 1
+#subtitles.separate.use_unscaled_osd:1

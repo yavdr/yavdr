@@ -47,6 +47,70 @@ function getX11Form(){
             boxLabel: getLL("x11.graphtft.boxlabel"),
             inputValue: 1,
             disabled: true
+        },{
+            id: 'deinterlacer_hd',
+            name: 'deinterlacer_hd',
+            xtype: 'combo',
+            fieldLabel: getLL("x11.deinterlacer_hd.label"),
+            boxLabel: getLL("x11.deinterlacer_hd.boxlabel"),
+            inputValue: 'bob',
+            value: 'bob',
+            scope: myform,
+            typeAhead: true,
+            triggerAction: 'all',
+            lazyRender:true,
+            mode: 'local',
+            store: new Ext.data.ArrayStore({
+                id: 0,
+                fields: [
+                    'item'
+                ],
+                data: [
+                    ['bob'], 
+                    ['half temporal'], 
+                    ['half temporal_spatial'], 
+                    ['temporal'], 
+                    ['temporal_spatial']
+                ]
+            }),
+            valueField: 'item',
+            displayField: 'item',
+            handler: function(checkbox, checked) {
+                var e = Ext.getCmp("deinterlacer_hd");
+
+            }
+        },{
+            id: 'deinterlacer_sd',
+            name: 'deinterlacer_sd',
+            xtype: 'combo',
+            fieldLabel: getLL("x11.deinterlacer_sd.label"),
+            boxLabel: getLL("x11.deinterlacer_sd.boxlabel"),
+            inputValue: 'temporal',
+            value: 'temporal',
+            scope: myform,
+            typeAhead: true,
+            triggerAction: 'all',
+            lazyRender:true,
+            mode: 'local',
+            store: new Ext.data.ArrayStore({
+                id: 0,
+                fields: [
+                    'item'
+                ],
+                data: [
+                    ['bob'], 
+                    ['half temporal'], 
+                    ['half temporal_spatial'], 
+                    ['temporal'], 
+                    ['temporal_spatial']
+                ]
+            }),
+            valueField: 'item',
+            displayField: 'item',
+            handler: function(checkbox, checked) {
+                var e = Ext.getCmp("deinterlacer_hd");
+
+            }
         }]
     });
 
@@ -227,9 +291,9 @@ function getX11Form(){
                         });
                         
                     }, this);
-                    this.doLayout();
+                    var current;
                     if (displayData.system.x11.displays.length >= 2) {
-                        var current = displayData.system.x11.dualhead.enabled;
+                        current = displayData.system.x11.dualhead.enabled;
                         if (current == "0" || current == "1") {
                             if (rButton)
                                 rButton.setValue( current == "1" );
@@ -244,12 +308,41 @@ function getX11Form(){
                                 rButton.setValue( current == "1" );
                             else
                                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
-                        }    
+                        }   
+                        
                     } else {
                         if (rButton) {
                             rButton.disable().setBoxLabel(getLL("x11.dualhead.boxlabelunavailable"));
                         }
                     }
+                    
+                    current = displayData.vdr.deinterlacer.hd.type;
+                    if (current == "bob" || 
+                        current == "half temporal" || 
+                        current == "half temporal_spatial" || 
+                        current == "temporal" || 
+                        current == "temporal_spatial") {
+                        var rButton = this.getComponent('deinterlacer_hd');
+                        if (rButton)
+                            rButton.setValue( current );
+                        else
+                            Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find HD-Interlacer combo.');
+                    }
+                    
+                    current = displayData.vdr.deinterlacer.sd.type;
+                    if (current == "bob" || 
+                        current == "half temporal" || 
+                        current == "half temporal_spatial" || 
+                        current == "temporal" || 
+                        current == "temporal_spatial") {
+                        var rButton = this.getComponent('deinterlacer_sd');
+                        if (rButton)
+                            rButton.setValue( current );
+                        else
+                            Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find SD-Interlacer combo.');
+                    }
+                    
+                    this.doLayout();
                 }
                 
             }

@@ -133,6 +133,8 @@ NEOERR *err;
 
 string dualhead_enabled = "";
 string graphtft_enabled = "";
+string deinterlacer_hd = "bob";
+string deinterlacer_sd = "temporal";
 string devmode = "0";
 
 Json::Value json;
@@ -152,6 +154,14 @@ else
 	if (graphtft_enabled == "") {
 		graphtft_enabled = "0";
 	}
+	deinterlacer_hd = hdf_get_value(hdf, "vdr.deinterlacer.hd.type", "bob");
+	if (deinterlacer_hd == "") {
+		deinterlacer_hd = "bob";
+	}
+	deinterlacer_sd = hdf_get_value(hdf, "vdr.deinterlacer.sd.type", "temporal");
+	if (deinterlacer_hd == "") {
+		deinterlacer_hd = "temporal";
+	}
 	devmode = hdf_get_value(hdf, "webfrontend.devmode", "0");
 
 	Display *dpy;
@@ -162,7 +172,6 @@ else
 	int nDisplayDevice;
 
 	json["system"]["x11"]["dualhead"]["enabled"] = dualhead_enabled;
-
 	/*
 	 * Open a display connection, and make sure the NV-CONTROL X
 	 * extension is present on the screen we want to use.
@@ -461,9 +470,12 @@ else
 	{
 		log_error("Cannot open display '" << XDisplayName(NULL) << "'.\n\n");
 	}
-}
 
-json["vdr"]["plugin"]["graphtft"]["enabled"] = graphtft_enabled;
+	json["vdr"]["plugin"]["graphtft"]["enabled"] = graphtft_enabled;
+	json["vdr"]["deinterlacer"]["hd"]["type"] = deinterlacer_hd;
+	json["vdr"]["deinterlacer"]["sd"]["type"] = deinterlacer_sd;
+
+}
 
 reply.out() << json;
 

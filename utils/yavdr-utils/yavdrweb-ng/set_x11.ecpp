@@ -24,6 +24,8 @@ using namespace std;
 </%pre><& authenticate ><%args>
   x11_graphtft = "0";
   x11_dualhead = "0";
+  deinterlacer_hd = "";
+  deinterlacer_sd = "";
   primary = "";
   secondary = "";
 
@@ -110,6 +112,9 @@ int write_edid_to_file(string filename, unsigned char *data, int len)
   }
   else
   {
+    err = hdf_set_valuef(hdf, "vdr.deinterlacer.hd.type=%s", deinterlacer_hd.c_str());
+    err = hdf_set_valuef(hdf, "vdr.deinterlacer.sd.type=%s", deinterlacer_sd.c_str());
+
     if (x11_dualhead != "1") {
       err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
@@ -132,7 +137,6 @@ int write_edid_to_file(string filename, unsigned char *data, int len)
       err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=1");
       err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
-      
       
       if (display0.size() == 3 && primary == display0[0]) {
         writeDisplayToHDF(hdf, 0, display0);

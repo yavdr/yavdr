@@ -1,0 +1,36 @@
+
+# vdpau: HD deinterlace method
+# { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3
+<?cs if:?vdr.deinterlacer.hd.type ?>
+video.output.vdpau_hd_deinterlace_method:<?cs var:vdr.deinterlacer.hd.type ?>
+<?cs else ?>
+video.output.vdpau_hd_deinterlace_method:bob
+<?cs /if ?>
+
+# vdpau: Try to recreate progressive frames from pulldown material
+# bool, default: 1
+video.output.vdpau_enable_inverse_telecine:0
+
+# vdpau: disable deinterlacing when progressive_frame flag is set
+# bool, default: 0
+#video.output.vdpau_honor_progressive:0
+
+# vdpau: restrict enabling video properties for SD video only
+# { none  noise  sharpness  noise+sharpness }, default: 0
+#video.output.vdpau_sd_only_properties:none
+
+# vdpau: SD deinterlace method
+# { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3
+<?cs if:?vdr.deinterlacer.sd.type ?>
+video.output.vdpau_sd_deinterlace_method:<?cs var:vdr.deinterlacer.sd.type ?>
+<?cs else ?>
+video.output.vdpau_sd_deinterlace_method:temporal
+<?cs /if ?>
+
+# vdpau: disable advanced deinterlacers chroma filter
+# bool, default: 0
+video.output.vdpau_skip_chroma_deinterlace:1
+
+# default length of display queue
+# numeric, default: 2
+video.output.vdpau_display_queue_length:4

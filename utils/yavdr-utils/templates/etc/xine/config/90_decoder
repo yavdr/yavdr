@@ -1,0 +1,7 @@
+# Pfad zum Real-Player-Codecs
+# string, default: 
+#decoder.external.real_codecs_path:
+
+# Pfad zu win32-Codecs
+# string, default: /usr/lib/codecs
+#decoder.external.win32_codecs_path:/usr/lib/codecs

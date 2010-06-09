@@ -1,7 +1,0 @@
-<?cs if:system.deinterlacer.type == "hd_temporal_spatial" ?>
-# vdpau: HD deinterlace method
-# { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3
-video.output.vdpau_hd_deinterlace_method:temporal_spatial
-
-<?cs /if ?>
-
