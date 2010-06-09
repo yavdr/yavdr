@@ -1,7 +1,8 @@
+<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
 start on stopped displaydevice
 stop on runlevel [016]
 
-<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
+
 
 respawn
 
