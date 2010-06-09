@@ -13,4 +13,75 @@ pcm.!default {
 	device <?cs var:system.hardware.alsa.digital.device ?>
 }
 <?cs /if ?>
+
+
+<?cs if:system.sound.type == "hdmi+analog" ?>
+#
+# HDMi und analog output
+#
+pcm.!default {
+        type plug
+        slave {
+                pcm multi
+                rate 48000
+        }
+        ttable.0.0 1.0
+        ttable.1.1 1.0
+        ttable.0.2 1.0
+        ttable.1.3 1.0
+}
+
+#ctl.!default digital
+
+pcm.analog {
+        type hw
+        card 0
+        device 0
+}
+
+ctl.analog {
+        type hw
+        card 0
+        device 0
+}
+
+pcm.digital {
+        type hw
+        card <?cs var:system.hardware.alsa.hdmi.card ?>
+        device <?cs var:system.hardware.alsa.hdmi.device ?>
+}
+
+ctl.digital {
+        type hw
+        card <?cs var:system.hardware.alsa.hdmi.card ?>
+        device <?cs var:system.hardware.alsa.hdmi.device ?>
+}
+
+pcm.multi {
+        type multi
+        slaves.a.pcm "digital"
+        slaves.a.channels 2
+        slaves.b.pcm "analog"
+        slaves.b.channels 2
+
+        bindings.0.slave a
+        bindings.0.channel 0
+        bindings.1.slave a
+        bindings.1.channel 1
+
+
+        bindings.2.slave b
+        bindings.2.channel 0
+        bindings.3.slave b
+        bindings.3.channel 1
+
+}
+
+ctl.multi {
+        type hw
+        card 0
+}
+
+<?cs /if ?>
+
 <?cs /if ?>
