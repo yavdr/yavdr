@@ -17,6 +17,7 @@ function getSoundForm(){
                 {id: 'analog', boxLabel: 'Analog', name: 'value', inputValue: 'analog'},
                 {id: 'spdif', boxLabel: 'Digital (Toslink/SPDIF)', name: 'value', inputValue: 'spdif'},
                 {id: 'hdmi', boxLabel: 'HDMI Stereo', name: 'value', inputValue: 'hdmi'},
+		{id: 'hdmi+analog', boxLabel: 'HDMI-Analog', name: 'value', inputValue: 'hdmi+analog'},
                 {id: 'passthrough', boxLabel: 'HDMI Pass Through', name: 'value', inputValue: 'passthrough'}
             ]
         }]
@@ -61,6 +62,7 @@ function getSoundForm(){
             if (currentSound == "analog" 
                 || currentSound == "spdif" 
                 || currentSound == "hdmi" 
+		|| currentSound == "hdmi+analog"
                 || currentSound == "passthrough"){
                 var rButton = this.getComponent('sound_radio_group');
                 if (rButton)
