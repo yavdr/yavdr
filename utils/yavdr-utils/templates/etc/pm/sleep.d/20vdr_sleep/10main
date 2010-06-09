@@ -7,6 +7,7 @@ case $1 in
          echo "vdr gets started again"
          start vdr
          for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
+         start usb-wakeup
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."
          ;;
