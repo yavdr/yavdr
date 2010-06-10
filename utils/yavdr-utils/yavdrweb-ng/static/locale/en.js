@@ -354,11 +354,9 @@ var locale_en = {
         },
        deinterlacer_hd: {
             label: 'Xine-HD-Deinterlacer (default bob)',
-            boxlabel: ''
         },
        deinterlacer_sd: {
             label: 'Xine-SD-Deinterlacer (default temporal)',
-            boxlabel: ''
         },
         button_label:  'Apply display settings',
         submit: {
