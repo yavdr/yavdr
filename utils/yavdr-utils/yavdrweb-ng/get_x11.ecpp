@@ -332,6 +332,7 @@ else
 									displays[nDisplayDevice]["current_modeline"]["modeline"] =  trim(parts[parts.size()-1].substr(tokens[0].length()+1));
 									displays[nDisplayDevice]["current_modeline"]["x"] = tokens[2];
 									displays[nDisplayDevice]["current_modeline"]["y"] = tokens[6];
+									displays[nDisplayDevice]["current_modeline"]["overscan"] = hdf_get_valuef(hdf, "system.x11.display.%u.overscan", nDisplayDevice);
 
 									XFree(str);
 								}

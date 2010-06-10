@@ -186,10 +186,6 @@ Ext.TaskMgr.start({
                     items:   getX11Form
                 }),
                 addGroupPanelTab({
-                    section: "nvidia",
-                    items:   getNvidiaForm
-                }),
-                addGroupPanelTab({
                     section: "system",
                     items:   getSystemForm
                 }),

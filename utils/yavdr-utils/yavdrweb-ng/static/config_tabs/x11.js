@@ -256,7 +256,17 @@ function getX11Form(){
                                         }
                                     }
                                 }
-                           })];
+                           }),{
+                               xtype: 'sliderfield',
+                               id: 'nvidia-overscan-slider' + index,
+                               width: 200,
+                               name: 'overscan' + index,
+                               increment: 1,
+                               minValue: '0',
+                               maxValue: 255,
+                               fieldLabel: getLL("nvidia.overscan_slider_label"),
+                               value: item.current_modeline.overscan
+                           }];
                         
                         if ((allitems.length >= 2)) {
                           newitems[newitems.length] = new Ext.form.Radio({
@@ -339,7 +349,6 @@ function getX11Form(){
                         else
                             Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find SD-Interlacer combo.');
                     }
-                    
                     this.doLayout();
                 }
                 

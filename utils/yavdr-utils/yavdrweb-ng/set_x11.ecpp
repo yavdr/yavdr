@@ -32,8 +32,13 @@ using namespace std;
   string display0[];
   string display1[];
   string display2[];  
+
+  string overscan0;
+  string overscan1;
+  string overscan2;
+
 </%args><%shared>
-bool writeDisplayToHDF(HDF *hdf, int id, std::vector<string> display) {
+bool writeDisplayToHDF(HDF *hdf, int id, std::vector<string> display, string overscan) {
     if (display.size() == 3) {
         NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=%s"  , id, display[0].c_str());
         if (display[1] == "enabled") {
@@ -45,6 +50,7 @@ bool writeDisplayToHDF(HDF *hdf, int id, std::vector<string> display) {
           err = hdf_set_valuef(hdf, "system.x11.display.%i.mode=%s"    , id, display[1].c_str());
           err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline=%s", id, display[2].c_str());
         }
+        err = hdf_set_valuef(hdf, "system.x11.display.%i.overscan=%s", id, overscan.c_str());
         
         return true;
     }
@@ -55,6 +61,7 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
     NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=", id);
     err = hdf_set_valuef(hdf, "system.x11.display.%i.mode="          , id);
     err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline="      , id);
+    err = hdf_set_valuef(hdf, "system.x11.display.%i.overscan="      , id);
 }
 /*
 int write_edid_to_file(string filename, unsigned char *data, int len)
@@ -123,11 +130,11 @@ int write_edid_to_file(string filename, unsigned char *data, int len)
       err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
       
       if (display0.size() == 3 && primary == display0[0]) {
-        writeDisplayToHDF(hdf, 0, display0);
+        writeDisplayToHDF(hdf, 0, display0, overscan0);
       } else if (display1.size() == 3 && primary == display1[0]) {
-        writeDisplayToHDF(hdf, 0, display1);
+        writeDisplayToHDF(hdf, 0, display1, overscan1);
       } else if (display2.size() == 3 && primary == display2[0]) {
-        writeDisplayToHDF(hdf, 0, display2);
+        writeDisplayToHDF(hdf, 0, display2, overscan2);
       } else {
         cleanDisplayInHDF(hdf, 0);
       }
@@ -139,11 +146,11 @@ int write_edid_to_file(string filename, unsigned char *data, int len)
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
       
       if (display0.size() == 3 && primary == display0[0]) {
-        writeDisplayToHDF(hdf, 0, display0);
+        writeDisplayToHDF(hdf, 0, display0, overscan0);
       } else if (display1.size() == 3 && primary == display1[0]) {
-        writeDisplayToHDF(hdf, 0, display1);
+        writeDisplayToHDF(hdf, 0, display1, overscan1);
       } else if (display2.size() == 3 && primary == display2[0]) {
-        writeDisplayToHDF(hdf, 0, display2);
+        writeDisplayToHDF(hdf, 0, display2, overscan2);
       } else {
         cleanDisplayInHDF(hdf, 0);
       }
@@ -153,11 +160,11 @@ int write_edid_to_file(string filename, unsigned char *data, int len)
         err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
         err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
       } else if (display0.size() == 3 && secondary == display0[0]) {
-        writeDisplayToHDF(hdf, 1, display0);
+        writeDisplayToHDF(hdf, 1, display0, overscan0);
       } else if (display1.size() == 3 && secondary == display1[0]) {
-        writeDisplayToHDF(hdf, 1, display1);
+        writeDisplayToHDF(hdf, 1, display1, overscan1);
       } else if (display2.size() == 3 && secondary == display2[0]) {
-        writeDisplayToHDF(hdf, 1, display2);
+        writeDisplayToHDF(hdf, 1, display2, overscan2);
       } else {
         cleanDisplayInHDF(hdf, 1);
       }
