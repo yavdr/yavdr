@@ -362,6 +362,14 @@ var locale_de = {
         	label: 'GraphTFT',
         	boxlabel: 'aktiviert'
         },
+       deinterlacer_hd: {
+            label: 'Xine-HD-Deinterlacer (Voreinstellung: bob)',
+            boxlabel: ''
+        },
+       deinterlacer_sd: {
+            label: 'Xine-SD-Deinterlacer (Voreinstellung: temporal)',
+            boxlabel: ''
+        },
         button_label:  'Setze Anzeigeeinstellungen',
         submit: {
             waitmsg : 'Einstellungen werden aktualisiert.',    
