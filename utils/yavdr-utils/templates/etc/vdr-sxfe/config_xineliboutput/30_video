@@ -28,4 +28,4 @@ video.processing.ffmpeg_skip_loop_filter:all
 
 # FFmpeg video decoding thread count
 # numeric, default: 1
-video.processing.ffmpeg_thread_count:2
+# video.processing.ffmpeg_thread_count:1
