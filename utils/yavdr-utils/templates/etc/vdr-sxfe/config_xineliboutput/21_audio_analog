@@ -58,7 +58,7 @@ audio.output.speaker_arrangement:Stereo 2.0
 
 # Methode für Audio/Videosynchronisation
 # { metronom feedback  resample }, default: 0
-audio.synchronization.av_sync_method:resample
+# audio.synchronization.av_sync_method:resample
 
 # Wenn !=0, immer auf diese Rate anpassen
 # numeric, default: 0
