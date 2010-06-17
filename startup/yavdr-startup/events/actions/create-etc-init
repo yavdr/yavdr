@@ -13,6 +13,7 @@ process-template /etc/init/s3.conf
 process-template /etc/init/s4.conf
 process-template /etc/init/setserial-minimal.conf
 process-template /etc/init/usb-wakeup.conf
+process-template /etc/init/wol.conf
 process-template /etc/init/vdr.conf
 process-template /etc/init/vdr-frontend.conf
 process-template /etc/init/black.conf
