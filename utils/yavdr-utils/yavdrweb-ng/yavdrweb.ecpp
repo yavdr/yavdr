@@ -35,9 +35,9 @@ if (lang == "")
         
         <link rel="stylesheet" type="text/css" href="ext/resources/css/ext-all.css" />
         <!-- overrides to base library -->
-        <link rel="stylesheet" type="text/css" href="static/ext-extensions/Portal.css" />
-        <link rel="stylesheet" type="text/css" href="static/ext-extensions/GroupTab.css" />
-        <link rel="stylesheet" type="text/css" href="static/ext-extensions/Spinner.css" />
+        <link rel="stylesheet" type="text/css" href="ext-ux/css/Portal.css" />
+        <link rel="stylesheet" type="text/css" href="ext-ux/css/GroupTab.css" />
+        <link rel="stylesheet" type="text/css" href="ext-ux/css/Spinner.css" />
         <link rel="stylesheet" type="text/css" href="static/yavdr.css" />
         
         <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
@@ -60,13 +60,13 @@ if (lang == "")
             };
         </script>
 
-        <script type="text/javascript" src="static/ext-extensions/GroupTabPanel.js"></script>
-        <script type="text/javascript" src="static/ext-extensions/GroupTab.js"></script>
-        <script type="text/javascript" src="static/ext-extensions/Portal.js"></script>
-        <script type="text/javascript" src="static/ext-extensions/PortalColumn.js"></script>
-        <script type="text/javascript" src="static/ext-extensions/Portlet.js"></script>
-        <script type="text/javascript" src="static/ext-extensions/Spinner.js"></script>
-        <script type="text/javascript" src="static/ext-extensions/SpinnerField.js"></script>
+        <script type="text/javascript" src="ext-ux/GroupTabPanel.js"></script>
+        <script type="text/javascript" src="ext-ux/GroupTab.js"></script>
+        <script type="text/javascript" src="ext-ux/Portal.js"></script>
+        <script type="text/javascript" src="ext-ux/PortalColumn.js"></script>
+        <script type="text/javascript" src="ext-ux/Portlet.js"></script>
+        <script type="text/javascript" src="ext-ux/Spinner.js"></script>
+        <script type="text/javascript" src="ext-ux/SpinnerField.js"></script>
 
         <script type="text/javascript" src="static/locale/en.js"></script>
 <{ if (lang != "en") reply.out() << "        <script type=\"text/javascript\" src=\"static/locale/" << lang << ".js\"></script>\n"; }>
