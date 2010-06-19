@@ -257,15 +257,17 @@ function getX11Form(){
                                     }
                                 }
                            }),{
-                               xtype: 'sliderfield',
+                               xtype: 'spinnerfield',
                                id: 'nvidia-overscan-slider' + index,
-                               width: 200,
+                               //width: 200,
                                name: 'overscan' + index,
                                increment: 1,
+                               keyIncrement: 1,
                                minValue: '0',
                                maxValue: 255,
                                fieldLabel: getLL("nvidia.overscan_slider_label"),
-                               value: item.current_modeline.overscan
+                               useTip: true,
+                               value: parseInt(item.current_modeline.overscan)
                            }];
                         
                         if ((allitems.length >= 2)) {
@@ -285,7 +287,6 @@ function getX11Form(){
                                 //checked: (allitems.length != 1)
                            })
                         }
-                        
                         this.insert(index+1, {
                             xtype:'fieldset',
                             checkboxToggle:false,
@@ -294,10 +295,9 @@ function getX11Form(){
                             defaults: {width: 210},
                             //defaultType: 'textfield',
                             collapsed: false,
-                            items: newitems
-                           
+                            items: newitems                           
                         });
-                        
+
                     }, this);
                     var current;
                     if (displayData.system.x11.displays.length >= 2) {
