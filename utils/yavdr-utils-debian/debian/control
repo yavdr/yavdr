@@ -8,7 +8,7 @@ Homepage: http://yavdr.origo.ethz.ch/
 
 Package: yavdr-utils
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-ext, autofs, libxext6, libjsoncpp0, , libjs-ext-examples
+Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-ext, autofs, libxext6, libjsoncpp0, libjs-ext-examples
 Suggests: lirc
 Description: Utilities and WEB front end for yaVDR
  Utilities and WEB front end for yaVDR (yet another VDR) a VDR distribution
