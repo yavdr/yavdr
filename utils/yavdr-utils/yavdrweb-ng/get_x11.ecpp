@@ -5,9 +5,6 @@
 #include "../common.h"
 #include <jsoncpp/json.h>
 
-#include <cxxtools/loginit.h>
-#include <cxxtools/log.h>
-
 extern "C" {
 #include <X11/Xlib.h>
 
@@ -125,8 +122,6 @@ string urlencode(const string &c)
 </%shared><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 reply.setHeader ("Content-Type", "application/json", false);
-
-log_init();
 
 HDF *hdf = NULL;
 NEOERR *err;
