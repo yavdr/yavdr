@@ -326,6 +326,13 @@ var locale_en = {
             }
         }
     },
+    packages: {
+        menutab: {
+            title : 'yaVDR-Packages',
+            tabtip : 'Check which packages and package versions are installed',
+            panel_title : 'yaVDR-Packages'
+        }
+    },
     timeout: {
         menutab: {
             title : 'GRUB Timeout',

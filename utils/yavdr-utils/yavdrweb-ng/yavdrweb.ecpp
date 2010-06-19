@@ -87,6 +87,7 @@ if (lang == "")
         <script type="text/javascript" src="static/config_tabs/timeout.js"></script>
         <script type="text/javascript" src="static/config_tabs/x11.js"></script>
         <script type="text/javascript" src="static/config_tabs/sound.js"></script>
+		<script type="text/javascript" src="static/config_tabs/packages.js"></script>
         <script type="text/javascript" src="static/language-handling.js"></script>
         <script type="text/javascript" src="static/grouptabs.js"></script>
     </head>

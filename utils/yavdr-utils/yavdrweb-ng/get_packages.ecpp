@@ -1,0 +1,107 @@
+<%pre>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <ctype.h>
+#include <ClearSilver.h>
+#include "../common.h"
+#include <jsoncpp/json.h>
+
+using namespace std;
+</%pre><& authenticate ><%args>
+</%args><%shared>
+void Tokenize(const string& str,
+		vector<string>& tokens,
+		const string& delimiters = " ")
+{
+	tokens.clear();
+	// Skip delimiters at beginning.
+	string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+	// Find first "non-delimiter".
+	string::size_type pos = str.find_first_of(delimiters, lastPos);
+
+	while (string::npos != pos || string::npos != lastPos)
+	{
+		// Found a token, add it to the vector.
+		tokens.push_back(str.substr(lastPos, pos - lastPos));
+		// Skip delimiters.  Note the "not_of"
+		lastPos = str.find_first_not_of(delimiters, pos);
+		// Find next "non-delimiter"
+		pos = str.find_first_of(delimiters, lastPos);
+	}
+}
+
+inline std::string trim_right(const std::string &source , const std::string& t = " ")
+{
+	std::string str = source;
+	return str.erase( str.find_last_not_of(t) + 1);
+}
+
+inline std::string trim_left( const std::string& source, const std::string& t = " ")
+{
+	std::string str = source;
+	return str.erase(0 , source.find_first_not_of(t) );
+}
+
+inline std::string trim(const std::string& source, const std::string& t = " ")
+{
+	std::string str = source;
+	return trim_left( trim_right( str , t) , t );
+}
+
+</%shared><%cpp>
+reply.setHeader ("Cache-Control", "no-cache", false);
+reply.setHeader ("Content-Type", "application/json", false);
+
+const char *files[] = {
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_stable-vdr_ubuntu_dists_lucid_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_unstable-vdr_ubuntu_dists_lucid_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-vdr_ubuntu_dists_lucid_main_binary-i386_Packages"
+};
+
+Json::Value json;
+
+int next = 0;
+string line = "", key = "", value = "";
+
+for (int findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
+{
+	ifstream f(files[findex], ios::in);
+
+	if (f.good()) {
+		while (!f.eof())
+		{
+			getline(f, line);        // Lese eine Zeile
+			if (line != "") {
+				vector<string> parts;
+				Tokenize(line, parts, ":");
+				if (parts.size() > 1 && parts[0].substr(0,1) != " ") {
+					key = parts[0];
+					value = "";
+					for(int i = 1;i < parts.size(); i++) {
+						value += parts[i];
+					}
+					json[next][key] = value.substr(1);
+				} else { // continue
+					value = json[next][key].asString() + "\n";
+					for(int i = 0;i < parts.size(); i++) {
+						value += parts[i];
+					}
+					json[next][key] = value;
+				}
+			}
+			else
+			{
+				if (json.isValidIndex(next) && json[next].isMember("Package")) {
+					json[next]["id"] = next;
+					next++;
+				}
+			}
+		}
+	}
+	f.close();                // Datei wieder schließen
+}
+
+reply.out() << json;
+
+</%cpp>
