@@ -2,7 +2,7 @@
 #define __COMMON_H__
 
 #define YAVDRDB			"/var/lib/yavdrdb.hdf"
-#define YAVDRDB_LCK		"/var/lock/yavdrdb.hdf.LCK"
+//#define YAVDRDB_LCK		"/var/lock/yavdrdb.hdf.LCK"
 #define TEMPLATEPATH		"/usr/share/yavdr/templates"
 #define TEMPLATECUSTOMPATH	"/etc/yavdr/templates_custom"
 #define YAVDREVENTS		"/usr/share/yavdr/events"

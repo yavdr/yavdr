@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
   { 
     int fd = 0;
 
-    if ((fd = open(YAVDRDB_LCK, O_CREAT|O_WRONLY)) == -1)
+    if ((fd = open(YAVDRDB, O_CREAT|O_WRONLY)) == -1)
     {
       ret = -2;
     }
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
       }
       flock(fd, LOCK_UN);
       close(fd);
-      remove(YAVDRDB_LCK);
+      //remove(YAVDRDB_LCK);
     }
     hdf_destroy(&hdf);
   }
