@@ -134,29 +134,30 @@ function getX11Form(){
         }
     });
     
-    if (yavdrwebGlobalInfo.devmode == "1") {
-        var submit = myform.addButton({
-            text: getLL("x11.dualhead.switch_label"),
-            icon: 'ext/resources/images/default/grid/refresh.gif',
-            //formBind: true,
-            //scope: this,
-            handler: function() {
-                myform.form.submit({
-                    url: '',
-                    timeout: 30, //wait 30 seconds before telling it failed
-                    waitMsg: getLL("x11.submit.waitmsg"),
-                    waitTitle: getLL("standardform.messagebox_caption.wait"),
-                    scope:this,
-                    success: function (form, action) {
-                        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("x11.submit.success") );
-                    },
-                    failure:function(form, action) {
-                        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("x11.submit.failure") );
-                    }
-                })
-            }
-        });
-    }
+
+    var submit = myform.addButton({
+        text: getLL("x11.dualhead.switch_label"),
+        icon: 'ext/resources/images/default/grid/refresh.gif',
+        id: 'switch_display',
+        disabled: true && (yavdrwebGlobalInfo.devmode != "1"),
+        //formBind: true,
+        //scope: this,
+        handler: function() {
+            myform.form.submit({
+                url: 'set_signal?signal=change-display',
+                timeout: 30, //wait 30 seconds before telling it failed
+                waitMsg: getLL("x11.submit.waitmsg"),
+                waitTitle: getLL("standardform.messagebox_caption.wait"),
+                scope:this,
+                success: function (form, action) {
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("x11.submit.success") );
+                },
+                failure:function(form, action) {
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("x11.submit.failure") );
+                }
+            })
+        }
+    });
         
     Ext.Ajax.request({
         url: 'get_x11',
@@ -318,6 +319,10 @@ function getX11Form(){
                                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
                         }   
                         
+                        var rButton = this.getComponent('switch_display');
+                        if (rButton)
+                                rButton.enable();
+                                
                     } else {
                         if (rButton) {
                             rButton.disable().setBoxLabel(getLL("x11.dualhead.boxlabelunavailable"));

@@ -25,4 +25,7 @@ if [ "x$changed" = "x1" ]; then
         signal-event create-xorg-conf-yavdr
     fi
 fi 
+
+// reset tempdisplay
+dbset "vdr.tempdisplay="
 end script

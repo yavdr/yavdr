@@ -9,5 +9,5 @@ pre-stop script
 /usr/bin/svdrpsend remo on
 end script
 
-exec su -c "DISPLAY=:1 /usr/bin/xbmc --standalone" vdr
+exec su -c "DISPLAY=:1`dbget vdr.tempdisplay` /usr/bin/xbmc --standalone" vdr
 

@@ -30,7 +30,8 @@ if (
         (signal == "change-overscan-compensation") ||
         (signal == "change-timeout") ||
         (signal == "change-sound") ||
-        (signal == "graphtft-state-change")
+        (signal == "graphtft-state-change") ||
+        (signal == "change-display")
     )
 {
     
@@ -162,7 +163,7 @@ if (
             hdf_destroy(&hdf);
         }
     }
-    
+
     string cmd = "/usr/bin/signal-event " + signal;
     int ret = system( cmd.c_str());
     success = "true"; //TODO: use ret to find out if we were successful.
