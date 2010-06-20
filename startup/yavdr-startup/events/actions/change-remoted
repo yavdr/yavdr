@@ -1,7 +1,5 @@
 #!/bin/bash
 
-process-template /etc/init/remoted.conf
-
 REMOTE=`dbget system.remoted`
 
 if [ "x$REMOTE" = "x" -o "x$REMOTE" = "xlircd" ]; then

@@ -1,13 +1,4 @@
 #!/bin/bash 
 
-process-template /etc/dbus-1/system.d/vdr-halevt.conf
-process-template /etc/default/halevt
-process-template /etc/halevt/dvd-speed.xml
-process-template /etc/halevt/halevt.xml
-process-template /etc/halevt/halevt.xml
-process-template /etc/init/halevt.conf
-process-template /etc/init/hal.conf
 process-template --mode 755 /usr/bin/vdr-mounter
-process-template /usr/share/vdr/command-hooks/commands.halevt.conf
-process-template /lib/udev/rules.d/40-usb-storage.rules
 

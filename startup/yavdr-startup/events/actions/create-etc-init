@@ -4,21 +4,6 @@ if [ ! -d /srv/vdr/video.00/net ]; then
    mkdir -p /srv/vdr/video.00/net
    chown -R vdr.vdr /srv/vdr
 fi
-process-template /etc/init/first-vdr-start.conf
-process-template /etc/init/remoted.conf
-process-template /etc/init/displaydevice.conf
-process-template /etc/init/x.conf
-process-template /etc/init/onshutdown.conf
-process-template /etc/init/s3.conf
-process-template /etc/init/s4.conf
-process-template /etc/init/setserial-minimal.conf
-process-template /etc/init/usb-wakeup.conf
-process-template /etc/init/wol.conf
-process-template /etc/init/vdr.conf
-process-template /etc/init/vdr-frontend.conf
-process-template /etc/init/black.conf
-process-template /etc/init/alsa-detect.conf
-process-template /etc/init/yavdrautofs.conf
 process-template --mode 755 /usr/lib/vdr/config-loader
 process-template --mode 755 /usr/lib/vdr/plugin-loader
 process-template --mode 755 /usr/lib/vdr/commands-loader
