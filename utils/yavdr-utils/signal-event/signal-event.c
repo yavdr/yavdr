@@ -24,6 +24,12 @@ void process_template(char *dir)
   char *file = NULL;
   struct stat statrec;
   char *command = NULL;
+  static int initialpathlen = 0;
+
+  if (!initialpathlen)
+  {
+    initialpathlen = strlen(dir);
+  }
 
   numtemps = scandir(dir, &namelist, scandirfilter, alphasort);
   if (numtemps < 0)
@@ -47,12 +53,14 @@ void process_template(char *dir)
         }
         else
         {
-          if (asprintf(&command, PROCESSTEMPLATE " %s", file) < 0)
+          char *templatepath = &file[initialpathlen];
+
+          if (asprintf(&command, PROCESSTEMPLATE " %s", templatepath) > 0)
           {
-            syslog(LOG_INFO, "processing template %s", file);
+            syslog(LOG_INFO, "processing template %s", templatepath);
             if (system(command) == -1)
             {
-              syslog(LOG_ERR, "ERROR: error processing template %s", file);
+              syslog(LOG_ERR, "ERROR: error processing template %s", templatepath);
             }
             free(command);
           }
@@ -98,7 +106,7 @@ int main(int argc, char *argv[])
     {
       if (asprintf(&templates2expanddir, "%s/%s", eventdir, "templates2expand") > 0)
       {
-        if (access(templates2expanddir, F_OK | X_OK))
+        if (!access(templates2expanddir, F_OK | X_OK))
         {
           process_template(templates2expanddir);
         }
