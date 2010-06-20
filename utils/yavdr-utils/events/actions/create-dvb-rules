@@ -1,3 +1,0 @@
-#!/bin/bash
-
-process-template /etc/udev/rules.d/10-dvb-remote.rules

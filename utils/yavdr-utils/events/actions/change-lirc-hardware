@@ -1,9 +1,6 @@
 #!/bin/bash
 
 rm -f /etc/lirc/lircd.conf
-process-template /etc/lirc/hardware.conf
-process-template /etc/modprobe.d/lirc-serial.conf
-process-template /etc/serial.conf
 
 LIRCD="$(dbget system.remoted)"
 LIRCD_CONF="$(dbget system.lirchw.lircd_conf)"

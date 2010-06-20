@@ -1,4 +1,0 @@
-#!/bin/bash
-
-process-template /etc/firefox/profile/prefs.js
-process-template /etc/firefox/profile/bookmarks.html

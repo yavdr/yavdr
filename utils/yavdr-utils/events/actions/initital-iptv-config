@@ -1,12 +1,5 @@
 #!/bin/bash
 
-process-template /etc/vdr/plugins/iptv/vlcinput/3Sat.conf
-process-template /etc/vdr/plugins/iptv/vlcinput/Sky-News.conf
-process-template /etc/vdr/plugins/iptv/vlcinput/NASA.conf
-process-template /etc/vdr/plugins/iptv/vlcinput/Bundesligen-TV.conf
-process-template /etc/vdr/plugins/iptv/vlcinput/THE_VOICE.conf
-process-template /etc/vdr/plugins/iptv/vlcinput/Daytona-Beach.conf
-
 process-template --mode 755 --owner=vdr --group=vdr /var/lib/vdr/plugins/iptv/vlc2iptv
 
 cat <<EOF >/var/lib/vdr/channels.conf

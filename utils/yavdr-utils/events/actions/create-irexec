@@ -1,7 +1,0 @@
-#!/bin/bash 
-
-process-template /etc/init/irexec.conf 
-process-template /etc/init/xbmc.conf 
-process-template /etc/lirc/lircrc
-
-# Some dummy files what to switch and how
