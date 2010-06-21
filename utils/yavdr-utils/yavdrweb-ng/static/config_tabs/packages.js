@@ -3,8 +3,12 @@ function getPackagesForm(){
     var store = new Ext.data.JsonStore({
         // load using HTTP
         url: 'get_packages',
-        idProperty: 'id',
-        fields: ['id', 'Package', 'Version', 'Description', 'Maintainer' ]
+        idProperty: 'Package',
+        fields: ['id', 'Package', 'Version', 'Description', 'Maintainer' ],
+        sortInfo: {
+            field: 'Package',
+            direction: 'ASC' // or 'DESC' (case sensitive for local sorting)
+        }
     });
 
     // create the grid
@@ -14,7 +18,8 @@ function getPackagesForm(){
             {header: "Package", width: 180, dataIndex: 'Package', sortable: true},
             {header: "Version", width: 180, dataIndex: 'Version', sortable: true},
             {header: "Maintainer", width: 180, dataIndex: 'Maintainer', sortable: true},
-            {header: "Description",width: 1000, dataIndex: 'Description', sortable: true}
+            {header: "Description",width: 1000, dataIndex: 'Description', sortable: true},
+            {header: "Status",width: 50, dataIndex: 'id', sortable: true}
         ],
         sm: new Ext.grid.RowSelectionModel({singleSelect: true}),
         viewConfig: {
