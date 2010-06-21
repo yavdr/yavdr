@@ -65,6 +65,32 @@ const char *files[] = {
 	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-yavdr_ubuntu_dists_lucid_main_binary-i386_Packages"
 };
 
+Json::Value installed;
+
+// read installation status
+string cmd = "dpkg-query -W -f '${Status;1}:${Package}\n'";
+
+if (FILE *stream = popen(cmd.c_str(), "r"))
+{
+    char buffer[1024];
+    while (!feof(stream))
+    {
+      if (fgets(buffer, sizeof(buffer), stream) != NULL)
+      {
+    	  vector<string> parts;
+
+    	  string line = string(buffer);
+    	  line = line.substr(0,line.length()-1);
+    	  Tokenize(line, parts, ":");
+    	  if (parts[0] == "i") {
+    		  installed[parts[1]] = true;
+    	  }
+      }
+    }
+    pclose(stream);
+}
+//reply.out() << installed;
+
 Json::Value json;
 
 int next = 0;
@@ -100,12 +126,13 @@ for (int findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
 			{
 				if (json.isValidIndex(next) && json[next].isMember("Package")) {
 					json[next]["id"] = next;
+					json[next]["installed"] = ((installed[json[next]["Package"].asString()].isBool()) && installed[json[next]["Package"].asString()].asBool()?1:0);
 					next++;
 				}
 			}
 		}
 	}
-	f.close();                // Datei wieder schließen
+	f.close(); // Datei wieder schließen
 }
 
 reply.out() << json;

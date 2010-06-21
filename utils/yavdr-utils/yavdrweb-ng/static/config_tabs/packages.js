@@ -4,7 +4,7 @@ function getPackagesForm(){
         // load using HTTP
         url: 'get_packages',
         idProperty: 'Package',
-        fields: ['id', 'Package', 'Version', 'Description', 'Maintainer' ],
+        fields: ['id', 'Package', 'Version', 'Description', 'Maintainer', 'installed' ],
         sortInfo: {
             field: 'Package',
             direction: 'ASC' // or 'DESC' (case sensitive for local sorting)
@@ -19,7 +19,7 @@ function getPackagesForm(){
             {header: "Version", width: 180, dataIndex: 'Version', sortable: true},
             {header: "Maintainer", width: 180, dataIndex: 'Maintainer', sortable: true},
             {header: "Description",width: 1000, dataIndex: 'Description', sortable: true},
-            {header: "Status",width: 50, dataIndex: 'id', sortable: true}
+            {header: "",width: 22, dataIndex: 'installed', sortable: true, renderer: renderState}
         ],
         sm: new Ext.grid.RowSelectionModel({singleSelect: true}),
         viewConfig: {
@@ -72,3 +72,18 @@ function getPackagesForm(){
     
     return myform;
 }
+
+function renderState(state) {
+    switch(state) {
+        case 1:
+            return '<img src="/static/images/green.png" border="0">';
+            break;
+        case 0:
+            return '<img src="/static/images/red.png" border="0">';
+            break;
+        case -1:
+            return '<img src="/static/images/yellow.png" border="0">';
+            break;
+    }
+}
+
