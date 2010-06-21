@@ -6,14 +6,24 @@ var locale_it = {
     },
     menutabs: {
         vdr : {
-            title: 'Your VDR',
-            tabtip: 'Configuration of basic settings of your VDR',
+            title: 'VDR',
+            tabtip: 'Configurazione delle impostazioni base di VDR',
             content: 'Benvenuto nell\'interfaccia Web di yaVDR!'
         },
         system : {
-            title: 'System',
-            tabtip: 'Configuration of basic settings of the system',
+            title: 'Sistema',
+            tabtip: 'Configurazione delle impostazioni base del sistema',
             content: 'Benvenuto nell\'interfaccia Web di yaVDR!'
+        },
+        demos : {
+            title: 'Dimostrazioni',
+            tabtip: 'Prove di concetto e dimostrazioni di possibili nuove funzioni che si possono usare a scopo dimostrativo',
+            content: 'Prove di concetto e dimostrazioni di possibili nuove funzioni che si possono usare a scopo dimostrativo'
+        },
+        development : {
+            title: 'Sviluppo',
+            tabtip: 'Nuovi funzioni che sono in costruzione, non usarle. Ancora non funzionano correttamente.',
+            content: 'Nuovi funzioni che sono in costruzione, non usarle. Ancora non funzionano correttamente.'
         },
         diagnose : {
             title: 'Diagnostica',
@@ -31,13 +41,21 @@ var locale_it = {
             wait: 'Attendere prego...'
         }
     },
+    remote: {
+        menutab: {
+            title : 'Telecomando',
+            tabtip :'Impostazioni telecomando (ricevitore telecomando)',
+            panel_title : 'Ricevitore telecomando'
+        },
+        help: 'Al momento esistono 3 diversi server LIRC compatibili che sono supportati. Scegli quello che meglio si adatta al tuo dispositivo. <br /><h1>LIRC</h1><br /><br /> Supporta la maggior parte dei dispositivi. Informati sul driver supportato. Devi scegliere il driver corretto per il dispositivo e nel caso si tratti di una porta seriale autocostruita (Attric, autocostruito e dispositivi simili) devi scegliere la porta seriale corretta.<br /><br /><h1>Ingresso LIRC</h1><br /><br /> Alcune schede DVB includono un ricevitore del telecomando. Alcuni di essi, come i dispositivi USB vengono resi disponibili come i cosiddetti dispositivi di ingresso. Devi soltanto scegliere il dispositivo corretto dal menu a tendina.<br /><br /><h1>Irserver</h1><br /><br /> Alcuni HTPC (per esempio OrigenAE) hanno incluso un ricevitore del telecomando, che può essere usato solo con irserver. Devi soltanto abilitarlo e salvare le impostazioni.'
+    },
     lirc: {
         menutab: {
             title : 'LIRC',
             tabtip :'Opzioni LIRC (ricevitore telecomando)',
             panel_title : 'Ricevitore telecomando (LIRC)'
         },
-        help: 'Quando premi il pulsante "Salva" VDR si riavvierà per notificare a VDR le modifiche del ricevitore del telecomando LIRC. Se non hai assegnato i tasti al tuo telecomando (tramite remote.conf) VDR mostrerà una schermata passo a passo nell\'OSD per l\'apprendimento dei tasti del telecomando. Questa schermata sparirà dopo pochi secondi se nessun tasto del telecomando viene premuto. Puoi riavviare la schermata semplicemente premendo ancora il tasto "Salva".',
+        help: 'Quando premi il pulsante "Salva" il programma si riavvierà per notificare a VDR le modifiche del ricevitore del telecomando LIRC. Se non hai assegnato i tasti al tuo telecomando (tramite remote.conf) VDR mostrerà una schermata passo a passo nell\'OSD per l\'apprendimento dei tasti del telecomando. Questa schermata sparirà dopo pochi secondi se nessun tasto del telecomando viene premuto. Puoi riavviare la schermata semplicemente premendo ancora il tasto "Salva".',
         combobox: {
              tooltip : {
                  driver: 'Driver',
@@ -56,21 +74,70 @@ var locale_it = {
             failure : 'Impossibile salvare le impostazioni. Riprova ancora.'
         },
         error: {
-            json_decode : 'Impossibile decodificare la lista ricevitore JSON'
+            json_decode : 'Impossibile decodificare la lista JSON del ricevitore'
+        }
+    },
+    inputlirc: {
+        menutab: {
+            title : 'Ingresso LIRC',
+            tabtip :'Impostazioni ingresso LIRC (ricevitore telecomando)',
+            panel_title : 'Ricevitore telecomando (LIRC)'
+        },
+        help: 'Seleziona il ricevitore del telecomando dal precedente elenco. Quando premi il pulsante "Salva" il programma si riavvierà per notificare a VDR le modifiche del ricevitore di ingresso LIRC.',
+        combobox: {
+             tooltip : {
+                 driver: 'Driver',
+                 lirc_driver: 'Driver ingresso LIRC'
+             },
+             emptytext: 'Seleziona il ricevitore del telecomando...',
+             label: 'Ricevitore'
+        },
+        submit: {
+            waitmsg : 'Impostazioni ricevitore di ingresso LIRC salvate.',    
+            success : 'Impostazioni salvate con successo.',
+            failure : 'Impossibile salvare le impostazioni. Riprova ancora.'
+        },
+        error: {
+            json_decode : 'Impossibile decodificare la lista JSON del ricevitore'
+        }
+    },
+    irserver: {
+        menutab: {
+            title : 'IRServer',
+            tabtip :'Impostazioni IRServer (ricevitore telecomando)',
+            panel_title : 'Ricevitore telecomando (IRServer)'
+        },
+        help: 'Quando premi il pulsante "Salva" il programma si riavvierà per notificare a VDR le modifiche del ricevitore IRServer.',
+        combobox: {
+             tooltip : {
+                 driver: 'Driver',
+                 lirc_driver: 'Driver IRDriver'
+             },
+             emptytext: 'Seleziona il ricevitore del telecomando...',
+             label: 'Ricevitore'
+        },
+        submit: {
+            waitmsg : 'Impostazioni ricevitore IRServer salvate.',    
+            success : 'Impostazioni salvate con successo.',
+            failure : 'Impossibile salvare le impostazioni. Riprova ancora.'
+        },
+        error: {
+            json_decode : 'Impossibile decodificare la lista JSON del ricevitore'
         }
     },
     channels: {
         menutab: {
-            title : 'Lista canali',
+            title : 'Lista canali (SVDRP)',
             tabtip : 'Impostazioni canali (gestisci e ordina i canali radio e TV)',
             panel_title : '' //unused
         },
-        grid_header : { 
+        grid_header : {
             cid : 'N°',
             cname : 'Nome canale',
+            cprovider : 'Emittente',
             cstr : 'Stringa completa canale'
         },
-        grid_title : 'Lista canali (tutti i canali radio e TV)' 
+        grid_title : 'Lista canali (tutti i canali radio e TV)'
     },
     frontend: {
         menutab: {
@@ -100,10 +167,12 @@ var locale_it = {
             failure : 'Fallito.'
         },
         items: {
-        	s3: 'sospensione in RAM',
-        	s4: 'sospensione su DISCO',
-        	s5: 'spegnimento',
-        	reboot: 'riavvio kernel "PowerOff"'
+            s3: 'sospensione in RAM',
+            s3unavailable: 'sospensione in RAM (non disponibile)',
+            s4: 'sospensione su DISCO',
+            s4unavailable: 'sospensione su DISCO (non disponibile)',
+            s5: 'spegnimento',
+            reboot: 'riavvio kernel con "PowerOff"'
         }
     },
     upload: {
@@ -144,7 +213,7 @@ var locale_it = {
         system_restart : {
             label: 'Riavvia il computer (Attenzione: nessuna richiesta di conferma!)',
             submit: {
-                waitmsg: 'Il segnale per riavviare è stato inviato.',
+                waitmsg: 'Il segnale per riavviare il computer è stato inviato.',
                 success: 'Il computer si riavvierà adesso.',
                 failure: 'Problemi con l\'invio del segnale. Riprova.'
             }
@@ -157,10 +226,10 @@ var locale_it = {
             panel_title : 'Configurazione rete'
         },
         nfs: {
+            help: 'Definisci le condivisioni NFS di altri sistemi che dovrebbero essere usate da VDR. Le directory devono avere questa struttura "server:/percorso". Il pulsante "Applica" salva effettivamente le modifiche nella configurazione locale ma queste vengono applicate SOLO al prossimo riavvio di VDR.',
             menutab: {
                 title : 'NFS',
-                tabtip : 'Gestione mount e condivisioni',
-                panel_title : 'Configurazione NFS'
+                tabtip : 'Gestione mount NFS e condivisioni',
             },
             labels: {
                 newDir : 'Directory remota',
@@ -169,13 +238,26 @@ var locale_it = {
                 _delete: 'Elimina',
                 apply: 'Applica'
             }
-        }
+        },
+        samba: {
+            menutab: {
+                title : 'Samba',
+                tabtip : 'Maintieni condivisioni Samba'
+            }
+       }
     },
     nvidia: {
         menutab: {
-            title : 'Nvidia',
-            tabtip : 'Gestione impostazioni Nvidia',
-            panel_title : 'Configurazione Nvidia'
+            title : 'NVIDIA',
+            tabtip : 'Gestione impostazioni NVIDIA',
+            panel_title : 'Configurazione NVIDIA'
+        },
+        overscan_slider_label : 'Compensazione Overscan NVIDIA',
+        button_label : 'Applica valore',
+        submit: {
+            waitmsg : 'Impostazioni overscan NVIDIA aggiornate.',
+            success : 'Riuscito.',
+            failure : 'Fallito.'
         }
     },
     webfrontend: {
@@ -196,14 +278,14 @@ var locale_it = {
         toolbar : {
             button : {
                 refresh: 'Aggiorna',
-                refresh_tooltip: 'Fai click su questo pulsante per aggiornare il contenuto di questo pannello.',
+                refresh_tooltip: 'Fai click su questo pulsante per aggiornare il contenuto del pannello.',
                 jumpdown: 'Vai alla fine del pannello',
-                jumpdown_tooltip: 'Fai click su questo pulsante per andare alla fine di questo pannello.'
+                jumpdown_tooltip: 'Fai click su questo pulsante per andare alla fine del pannello.'
             }
         },
         section : {
             system_info: {
-                title : 'Informazioni di sistema', 
+                title : 'Informazioni di sistema',
                 description : 'Stato rete, utilizzo sistema, utilizzo file system, kernel',
                 ifconfig : 'Stato rete',
                 top: 'Utilizzo sistema',
@@ -243,5 +325,79 @@ var locale_it = {
                 description : 'Risolvi i problemi con l\'interfaccia web di yaVDR (database e server web)'
             }
         }
+    },
+    packages: {
+        menutab: {
+            title : 'Pacchetti yaVDR',
+            tabtip : 'Verifica quali pacchetti e quali versioni sono installati',
+            panel_title : 'Pacchetti yaVDR'
+        }
+    },
+    timeout: {
+        menutab: {
+            title : 'Ritardo GRUB',
+            tabtip : 'Imposta ritardo GRUB',
+            panel_title : 'Ritardo GRUB'
+        },
+        label: 'Scegli ritardo',
+        button_label:  'Applica impostazioni di ritardo',
+        submit: {
+            waitmsg : 'Impostazioni di ritardo aggiornate.',    
+            success : 'Riuscito.',
+            failure : 'Fallito.'
+        },
+        maxText: 'Il valore massimo di questo campo è {0}',
+        minText: 'Il valore minimo di questo campo è {0}'
+    },
+    x11: {
+        menutab: {
+            title : 'Impostazioni Video',
+            tabtip : 'Impostazioni Video',
+            panel_title : 'Impostazioni Video'
+        },
+        graphtft: {
+            label: 'GraphTFT',
+            boxlabel: 'attivato'
+        },
+       deinterlacer_hd: {
+            label: 'Deinterlacciamento Xine-HD (predefinito bob)',
+        },
+       deinterlacer_sd: {
+            label: 'Deinterlacciamento Xine-SD (predefinito temporal)',
+        },
+        button_label:  'Applica impostazioni video',
+        submit: {
+            waitmsg : 'Impostazioni video aggiornate.',    
+            success : 'Riuscito.',
+            failure : 'Fallito.'
+        },
+        dualhead: {
+            label: 'Doppio schermo',
+            boxlabel: 'attivato',
+            boxlabelunavailable: 'disabilitato (< 2 schermi trovati)',
+            switch_label: 'cambia schermo del frontend di VDR'
+        },
+        primary: 'primario',
+        secondary: 'secondario',
+        modeline: 'modeline attuale',
+        device: 'dispositivo',
+        resolution: 'risoluzione',
+        select_res: 'seleziona risoluzione',
+        enabled: 'abilitato',
+        disabled: 'disabilitato'
+    },
+    sound: {
+        menutab: {
+            title : 'Impostazioni Audio',
+            tabtip : 'Impostazioni Audio',
+            panel_title : 'Impostazioni Audio'
+        },
+        button_label:  'Applica impostazioni audio',
+        submit: {
+            waitmsg : 'Impostazioni audio aggiornate.',    
+            success : 'Riuscito.',
+            failure : 'Fallito.'
+        },
+        label: 'Impostazioni audio'
     }
 };
