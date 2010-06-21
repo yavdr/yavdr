@@ -36,7 +36,7 @@ cat <<EOF > /etc/modprobe.d/lirc-blacklist.conf
 
 EOF
 
-if [ ! -z $BLACKLIST ]; then
+if [ ! -z "$BLACKLIST" ]; then
 MODULE=""
 for MODULE in $BLACKLIST ; do 
     echo "blacklist $MODULE" >> /etc/modprobe.d/lirc-blacklist.conf 
