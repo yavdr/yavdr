@@ -32,6 +32,8 @@ nvidia-current
 nvidia-settings
 nvram-wakeup
 smbfs
+samba4
+samba4-clients
 ssh
 tntnet
 update-manager-core
