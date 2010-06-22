@@ -229,7 +229,7 @@ var locale_it = {
             help: 'Definisci le condivisioni NFS di altri sistemi che dovrebbero essere usate da VDR. Le directory devono avere questa struttura "server:/percorso". Il pulsante "Applica" salva effettivamente le modifiche nella configurazione locale ma queste vengono applicate SOLO al prossimo riavvio di VDR.',
             menutab: {
                 title : 'NFS',
-                tabtip : 'Gestione mount NFS e condivisioni',
+                tabtip : 'Gestione mount NFS e condivisioni'
             },
             labels: {
                 newDir : 'Directory remota',
