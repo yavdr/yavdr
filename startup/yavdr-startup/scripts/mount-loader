@@ -1,38 +1,49 @@
 #!/bin/bash
 
-logger "starting mount-loader"
+# log.level in WF:
+# 0  off
+# 1  error
+# 2  warn
+# 3  info
+debug=`dbget system.log.level`
 
-# delayed start after vdr
-sleep 15
+function loginfo()
+{
+    if [ $debug -gt 2 ]; then
+        logger -p user.info "$1"
+    fi
+}
+
+loginfo "starting mount-loader"
 
 # load default values and overrides from /etc/default/vdr 
 . /usr/lib/vdr/config-loader
 
-logger "VIDEO_DIR=$VIDEO_DIR"
+loginfo "VIDEO_DIR=$VIDEO_DIR"
 
 function checkmount()
 {
-    retry=30
+    retry=3
     while [ $retry -gt 0 ]; do
-        logger "testing for $1 ($retry)"
+        loginfo "testing for $1 ($retry)"
         touch $1/.update
         if [ $? -eq 0 ]; then
-            logger "found $1"
+            loginfo "found $1"
             touch $VIDEO_DIR/.update
 	    break
         else
-            logger "sleeping"
-	    sleep 1
+            loginfo "sleeping"
+	    sleep 3
             retry=$(expr $retry - 1)
         fi
     done
 }
 
-logger "executing mount-loader"
+loginfo "executing mount-loader"
 
 if [ -e /etc/auto.net.yavdr ]; then
-    logger "searching for video directories"
-    for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /video/ {print $1}'`; do
+    loginfo "searching for video directories"
+    for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`; do
         checkmount $VIDEO_DIR/net/$d
     done
 fi
