@@ -360,10 +360,10 @@ var locale_en = {
             boxlabel: 'activated'
         },
        deinterlacer_hd: {
-            label: 'Xine-HD-Deinterlacer (default bob)',
+            label: 'Xine-HD-Deinterlacer (default bob)'
         },
        deinterlacer_sd: {
-            label: 'Xine-SD-Deinterlacer (default temporal)',
+            label: 'Xine-SD-Deinterlacer (default temporal)'
         },
         button_label:  'Apply display settings',
         submit: {

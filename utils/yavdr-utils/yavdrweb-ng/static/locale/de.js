@@ -370,10 +370,10 @@ var locale_de = {
         	boxlabel: 'aktiviert'
         },
        deinterlacer_hd: {
-            label: 'Xine-HD-Deinterlacer (Voreinstellung: bob)',           
+            label: 'Xine-HD-Deinterlacer (Voreinstellung: bob)'
         },
        deinterlacer_sd: {
-            label: 'Xine-SD-Deinterlacer (Voreinstellung: temporal)',
+            label: 'Xine-SD-Deinterlacer (Voreinstellung: temporal)'
         },
         button_label:  'Setze Anzeigeeinstellungen',
         submit: {

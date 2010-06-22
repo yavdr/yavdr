@@ -360,10 +360,10 @@ var locale_it = {
             boxlabel: 'attivato'
         },
        deinterlacer_hd: {
-            label: 'Deinterlacciamento Xine-HD (predefinito bob)',
+            label: 'Deinterlacciamento Xine-HD (predefinito bob)'
         },
        deinterlacer_sd: {
-            label: 'Deinterlacciamento Xine-SD (predefinito temporal)',
+            label: 'Deinterlacciamento Xine-SD (predefinito temporal)'
         },
         button_label:  'Applica impostazioni video',
         submit: {
