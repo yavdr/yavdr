@@ -8,6 +8,6 @@ Build-Depends: debhelper (>= 7), cdbs
 
 Package: yavdr-startup
 Architecture: any
-Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, vdpauinfo, openbox, autofs
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils (>=0.2.1.1310), vdpauinfo, openbox, autofs
 Description: scripts for startup, shutdown and s3
   scripts for startup, shutdown and s3 for yaVDR
