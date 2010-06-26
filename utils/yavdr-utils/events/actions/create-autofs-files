@@ -13,7 +13,7 @@ if [ ! -d /net.yavdr ]; then
    mkdir -p /net.yavdr
 fi
 if [ -e /etc/auto.net.yavdr ]; then
-    for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /video/ {print $1}'`; do
+    for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`; do
         ln -s /net.yavdr/$d $VIDEO_DIR/net/$d
     done
 fi
