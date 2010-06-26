@@ -8,4 +8,4 @@
 #/misc	/etc/auto.misc --timeout=60
 #/smb	/etc/auto.smb
 #/misc	/etc/auto.misc
-/srv/vdr/video.00/net	/etc/auto.net.yavdr
+/net.yavdr	/etc/auto.net.yavdr

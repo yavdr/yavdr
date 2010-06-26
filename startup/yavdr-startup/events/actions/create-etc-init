@@ -4,6 +4,9 @@ if [ ! -d /srv/vdr/video.00/net ]; then
    mkdir -p /srv/vdr/video.00/net
    chown -R vdr.vdr /srv/vdr
 fi
+if [ ! -d /net.yavdr ]; then
+   mkdir -p /net.yavdr
+fi
 process-template --mode 755 /usr/lib/vdr/config-loader
 process-template --mode 755 /usr/lib/vdr/plugin-loader
 process-template --mode 755 /usr/lib/vdr/commands-loader
