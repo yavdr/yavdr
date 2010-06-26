@@ -11,4 +11,5 @@ if [ -e /etc/auto.net.yavdr ]; then
         ln -s /net.yavdr/$d $VIDEO_DIR/net/$d
     done
 fi
+touch $VIDEO_DIR/.update
 
