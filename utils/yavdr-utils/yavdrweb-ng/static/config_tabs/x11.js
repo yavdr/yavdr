@@ -319,7 +319,7 @@ function getX11Form(){
                                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
                         }   
                         
-                        var rButton = this.getComponent('switch_display');
+                        var rButton = Ext.getCmp('switch_display');
                         if (rButton)
                                 rButton.enable();
                                 

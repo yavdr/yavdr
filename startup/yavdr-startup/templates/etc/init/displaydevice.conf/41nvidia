@@ -1,9 +1,3 @@
-start on mounted MOUNTPOINT=/
-stop on runlevel [016]
-
-task
-
-script
 if modprobe nvidia-current ; then
     if [ "x$(dbget system.hardware.nvidia.detected)" != "x1" ]; then
        changed=1
@@ -24,8 +18,4 @@ if [ "x$changed" = "x1" ]; then
         [ -f /etc/X11/xorg.conf.yavdr ] && mv /etc/X11/xorg.conf.yavdr /etc/X11/xorg.conf.yavdr_backup
         signal-event create-xorg-conf-yavdr
     fi
-fi 
-
-// reset tempdisplay
-dbset "vdr.tempdisplay="
-end script
+fi
