@@ -46,7 +46,19 @@ function getX11Form(){
             fieldLabel: getLL("x11.graphtft.label"),
             boxLabel: getLL("x11.graphtft.boxlabel"),
             inputValue: 1,
-            disabled: true
+            disabled: true,
+            listeners:{
+                'check' : function( checkbox, checked ) {
+                    button = Ext.getCmp("switch_display");
+                    if (button) {
+                        if (checked || !Ext.getCmp("x11_dualhead").getValue()) {
+                            button.disable();
+                        } else {
+                            button.enable();
+                        }
+                    }
+                }
+            }
         },{
             id: 'deinterlacer_hd',
             name: 'deinterlacer_hd',
@@ -133,31 +145,6 @@ function getX11Form(){
             })
         }
     });
-    
-
-    var submit = myform.addButton({
-        text: getLL("x11.dualhead.switch_label"),
-        icon: 'ext/resources/images/default/grid/refresh.gif',
-        id: 'switch_display',
-        disabled: true && (yavdrwebGlobalInfo.devmode != "1"),
-        //formBind: true,
-        //scope: this,
-        handler: function() {
-            myform.form.submit({
-                url: 'set_signal?signal=change-display',
-                timeout: 30, //wait 30 seconds before telling it failed
-                waitMsg: getLL("x11.submit.waitmsg"),
-                waitTitle: getLL("standardform.messagebox_caption.wait"),
-                scope:this,
-                success: function (form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("x11.submit.success") );
-                },
-                failure:function(form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("x11.submit.failure") );
-                }
-            })
-        }
-    });
         
     Ext.Ajax.request({
         url: 'get_x11',
@@ -170,8 +157,6 @@ function getX11Form(){
                 var displayData = Ext.util.JSON.decode( xhr.responseText );
                 var rButton = this.getComponent('x11_dualhead');
                 if (typeof displayData.system.x11.displays == "undefined") {
-                    //this.add();
-                    //this.doLayout();
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'no displays found! -> enable form');
                 } else {
                     Ext.each(displayData.system.x11.displays, function(item, index, allitems) {
@@ -301,7 +286,7 @@ function getX11Form(){
 
                     }, this);
                     var current;
-                    if (displayData.system.x11.displays.length >= 2) {
+                    if (displayData.system.x11.displays.length >= 2 || (yavdrwebGlobalInfo.devmode == "1")) {
                         current = displayData.system.x11.dualhead.enabled;
                         if (current == "0" || current == "1") {
                             if (rButton)
@@ -318,11 +303,11 @@ function getX11Form(){
                             else
                                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
                         }   
-                        
-                        var rButton = Ext.getCmp('switch_display');
-                        if (rButton)
-                                rButton.enable();
-                                
+                        if (current != "1") {
+                            var rButton = Ext.getCmp('switch_display');
+                            if (rButton)
+                                    rButton.enable();
+                        }
                     } else {
                         if (rButton) {
                             rButton.disable().setBoxLabel(getLL("x11.dualhead.boxlabelunavailable"));
