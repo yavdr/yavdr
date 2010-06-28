@@ -5,7 +5,7 @@
 *  (c) 2010 Henning Pingel
 *  All rights reserved
 *
-*  This script is part of the Yaphobia project. Yaphobia is
+*  This script is part of the yaVDR project. yaVDR is
 *  free software; you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
 *  the Free Software Foundation; either version 2 of the License, or
@@ -36,17 +36,18 @@ class packageTrackerBase{
 
     function __construct($debrepos){
 
-	    if (file_exists(self::packagelistfile)){
-	        $this->package_megalist = unserialize(file_get_contents(self::packagelistfile));
+	    if (file_exists(dirname(__FILE__) . self::packagelistfile)){
+	        $this->package_megalist = unserialize(file_get_contents( dirname(__FILE__) . self::packagelistfile));
 	    }
-	    else
+	    else{
             $this->package_megalist = array();
-
-	    if (file_exists(self::repolistfile)){
-	        $this->debrepos = unserialize(file_get_contents(self::repolistfile));
 	    }
-        else
+	    if (file_exists(dirname(__FILE__) . self::repolistfile)){
+	        $this->debrepos = unserialize(file_get_contents( dirname(__FILE__) . self::repolistfile));
+	    }
+        else{
             $this->debrepos = $debrepos;
+        }
     }
 
     /* 
@@ -58,6 +59,5 @@ class packageTrackerBase{
     }
 
 }
-
 
 ?>

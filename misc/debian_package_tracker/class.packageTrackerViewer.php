@@ -6,7 +6,7 @@
 *  (c) 2010 Henning Pingel
 *  All rights reserved
 *
-*  This script is part of the Yaphobia project. Yaphobia is
+*  This script is part of the yaVDR project. yaVDR is
 *  free software; you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
 *  the Free Software Foundation; either version 2 of the License, or

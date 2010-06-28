@@ -5,7 +5,7 @@
 *  (c) 2010 Henning Pingel
 *  All rights reserved
 *
-*  This script is part of the Yaphobia project. Yaphobia is
+*  This script is part of the yaVDR project. yaVDR is
 *  free software; you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
 *  the Free Software Foundation; either version 2 of the License, or
@@ -307,7 +307,6 @@ class packageTrackerIndexer extends packageTrackerBase{
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        //curl_setopt($ch, CURLOPT_PROXY, "http://proxy:8080");
 
         if (substr($url, -3, 3) === '.gz')
             curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); 
