@@ -1,11 +1,11 @@
 #!/bin/bash
 
-rm -f /etc/lirc/lircd.conf
 
 LIRCD="$(dbget system.remoted)"
 LIRCD_CONF="$(dbget system.lirchw.lircd_conf)"
-if [ "x$LIRCD" = "xlircd" ]; then
-  if [ -n $LIRCD_CONF ]; then 
+if [ "$LIRCD" = "lircd" ]; then
+  if [ -n "$LIRCD_CONF" ]; then
+    rm -f /etc/lirc/lircd.conf
     if [ -e /usr/share/lirc/remotes/$LIRCD_CONF ]; then
       ln -sf /usr/share/lirc/remotes/$LIRCD_CONF /etc/lirc/lircd.conf
     elif [ -e /usr/share/lirc/extras/more_remotes/$LIRCD_CONF ]; then
@@ -20,9 +20,9 @@ fi
 
 #For atilibusb, we need to blacklist the kernel module
 for MODULE in `dbget system.lirchw.driver` ; do 
-if [ "x$MODULE" = "xatilibusb" ]; then
+if [ "$MODULE" = "atilibusb" ]; then
    BLACKLIST="lirc_atiusb ati_remote"
-elif [ "x$MODULE" = "xatiusb" ]; then
+elif [ "$MODULE" = "atiusb" ]; then
    BLACKLIST="ati_remote"
 else
    BLACKLIST=""
@@ -36,11 +36,11 @@ cat <<EOF > /etc/modprobe.d/lirc-blacklist.conf
 
 EOF
 
-if [ ! -z "$BLACKLIST" ]; then
+if [ -n "$BLACKLIST" ]; then
+
 MODULE=""
 for MODULE in $BLACKLIST ; do 
     echo "blacklist $MODULE" >> /etc/modprobe.d/lirc-blacklist.conf 
     modprobe -r $MODULE 
 done 
 fi 
-
