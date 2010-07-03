@@ -1,8 +1,8 @@
 
 description     "YaVDR Configuration webinterface"
 
-start on started vdr
-stop on stopping vdr
+start on (started vdr and started openbox)
+stop on (stopping vdr or stopping openbox)
 
 respawn
 normal exit 0

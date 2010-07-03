@@ -2,11 +2,15 @@
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
+	 stop openbox
+	 start x
          start usb-wakeup
          ;;
      thaw|resume)
          echo "vdr gets started again"
          start vdr
+	 stop x
+	 start openbox
          for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."

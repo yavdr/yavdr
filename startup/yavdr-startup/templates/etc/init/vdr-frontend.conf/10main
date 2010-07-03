@@ -4,23 +4,12 @@
 description     "yavdr-frontend"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
-start on started vdr
-stop on stopping vdr
+start on ((started vdr and started openbox) or vdr-frontend-restart)
+stop on (stopping vdr or stopping openbox)
+
 <?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>respawn<?cs /if ?>
 
 script
 <?cs if:(!?vdr.frontend) ?> su -c "/usr/bin/start-xineliboutput" vdr <?cs /if ?> <?cs if:(vdr.frontend == "xineliboutput") ?> su -c "/usr/bin/start-xineliboutput" vdr <?cs /if ?><?cs if:(vdr.frontend == "xine") ?> su -c "/usr/bin/start-xine" vdr <?cs /if ?><?cs if:(vdr.frontend == "xbmc") ?> su -c "/usr/bin/start-xbmc-frontend" vdr <?cs /if ?><?cs if:(vdr.frontend == "headless") ?> echo "headless yaVDR Server" <?cs /if ?>
 end script
-
-<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
-pre-start script
-  while ! DISPLAY=:1 xset -q; do sleep 0.1 ; done
-end script
-<?cs /if ?>
-
-<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
-post-stop script
-DISPLAY=:1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
-end script
-<?cs /if ?>
 

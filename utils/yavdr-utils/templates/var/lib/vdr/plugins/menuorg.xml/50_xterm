@@ -1,0 +1,1 @@
+        <command name="Xterm" execute="/usr/share/vdr/menuorg-appswitcher standalone=no desktop=2 app=xterm" />

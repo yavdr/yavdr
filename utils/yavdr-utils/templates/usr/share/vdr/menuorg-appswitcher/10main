@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# switch applications from vdr menu
+
+for ARG in $@ ; do
+   KEY="${ARG/=*}"
+   VALUE="${ARG/*=}"
+
+   case $KEY in
+        standalone)
+                 STANDALONE=$VALUE
+                 ;;
+        desktop)
+                 DESKTOP=$VALUE
+                 DESKTOP=$(( $DESKTOP -1 ))
+                 ;;
+        display)
+                 XDISPLAY=$VALUE
+                 ;;
+        window)
+                WINDOW=$VALUE
+                ;;
+        app)
+                 APP=$VALUE
+                 ;;
+        *)
+                 echo "unknown argument: $KEY"
+                 ;;
+    esac
+done
+
+# finished parsing arguments
+
+START="/sbin/initctl start --no-wait"
+STOP="/sbin/initctl stop --no-wait"
+WMCTRL="/usr/bin/wmctrl"
+
+# minimum required arguments
+if [ -z $STANDALONE ] || [ -z $APP ]; then
+        echo "minimum required argument (standalone, app) not given, exit now ..."
+        exit 0
+fi
+
+if [ ! -z $XDISPLAY ]; then
+   OPTIONS="DISPLAY=:$XDISPLAY"
+   export DISPLAY=:$XDISPLAY
+else
+   OPTIONS="DISPLAY=:1`dbget vdr.tempdisplay`"
+   export DISPLAY=:1`dbget vdr.tempdisplay`
+fi
+
+if [ "x$STANDALONE" = "xyes" ]; then
+    $STOP vdr-frontend
+    $START $APP $OPTIONS STANDALONE=yes
+else
+    if [ ! -z "$DESKTOP" ]; then
+        $WMCTRL -s $DESKTOP
+    fi
+    $START $APP $OPTIONS
+
+    if [ "x$WINDOW" = "xup" ]; then
+        $WMCTRL -r VDR -b toggle,fullscreen
+        $WMCTRL -r VDR -b remove,fullscreen,above -e 3,0,0,500,300
+    fi
+fi
+
+

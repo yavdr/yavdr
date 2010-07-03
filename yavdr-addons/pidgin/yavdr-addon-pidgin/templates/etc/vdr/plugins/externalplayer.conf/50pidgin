@@ -1,7 +1,0 @@
-{
- MenuEntry         = "Pidgin Messenger";
- Command           = "/usr/bin/start-pidgin";
- OutputMode        = none;
- InputMode         = deactivateRemotes;
-}
-

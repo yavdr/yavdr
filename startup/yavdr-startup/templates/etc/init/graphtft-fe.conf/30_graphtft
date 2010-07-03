@@ -1,5 +1,6 @@
 <?cs if:(vdr.plugin.graphtft.enabled == "1") ?>
 script
+export DISPLAY=:1.1
 TFT_SIZE=`xrandr -q -d $DISPLAY | awk '/default connected/ {print $3}' | cut -d '+' -f1`
 TFT_WIDTH=`echo $TFT_SIZE | cut -d 'x' -f1`
 TFT_HEIGHT=`echo $TFT_SIZE | cut -d 'x' -f2`

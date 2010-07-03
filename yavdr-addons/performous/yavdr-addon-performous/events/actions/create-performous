@@ -1,5 +1,6 @@
 #!/bin/bash
 
-process-template --mode 755 /usr/bin/start-performous
+process-template /etc/init/performous.conf
 process-template --owner=vdr --group=vdr /var/lib/vdr/.config/performous/config.xml
+rm -f /usr/bin/start-performous
 

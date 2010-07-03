@@ -1,6 +1,5 @@
 <?cs if:(vdr.plugin.graphtft.enabled == "1") ?>
 post-stop script 
-sleep 1
 xli -onroot -center -border black /usr/share/yavdr/images/yavdr_logo.pn
 end script
 <?cs /if ?>

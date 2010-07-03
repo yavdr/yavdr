@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 LIRCD="$(dbget system.remoted)"
 LIRCD_CONF="$(dbget system.lirchw.lircd_conf)"
 if [ "$LIRCD" = "lircd" ]; then
@@ -18,6 +17,12 @@ else
   rm -f /etc/serial.conf
 fi 
 
+if [ "x$LIRCD" = "xirserver" ]; then
+  process-template --mode 755 /etc/pm/sleep.d/30irserver
+else
+  rm -f /etc/pm/sleep.d/30irserver
+fi
+ 
 #For atilibusb, we need to blacklist the kernel module
 for MODULE in `dbget system.lirchw.driver` ; do 
 if [ "$MODULE" = "atilibusb" ]; then

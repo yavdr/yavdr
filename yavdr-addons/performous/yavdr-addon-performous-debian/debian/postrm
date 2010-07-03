@@ -3,3 +3,5 @@
 if [ remove = "$1" ]; then 
   /usr/bin/dpkg-trigger yavdr-addons-update
 fi
+
+#DEBHELPER#

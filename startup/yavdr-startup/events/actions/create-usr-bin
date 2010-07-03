@@ -1,15 +1,10 @@
 #!/bin/bash
 
-process-template --mode 755 /usr/bin/start-firefox
 process-template --mode 755 /usr/bin/start-xbmc
 process-template --mode 755 /usr/bin/start-xbmc-frontend
 process-template --mode 755 /usr/bin/start-xine
 process-template --mode 755 /usr/bin/start-xineliboutput
 
 USER=$(getent passwd 1000|cut -d ":" -f1)
-process-template --mode 755 --data "user=$USER" /usr/bin/start-xterm
-
-
-
-
+process-template --data "user=$USER" /etc/init/xterm.conf
 

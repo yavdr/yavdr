@@ -1,0 +1,1 @@
+        <command name="Performous" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes dektop=2 app=performous" />

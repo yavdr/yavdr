@@ -6,7 +6,8 @@ case "$1" in
         chmod +x /usr/share/yavdr/events/actions/*
 
         /usr/bin/dpkg-trigger yavdr-addons-update
-
+	mkdir -p /var/lib/vdr/.ultrastar
+	chown -R vdr:vdr /var/lib/vdr/.ultrastar
         ;;
 
 

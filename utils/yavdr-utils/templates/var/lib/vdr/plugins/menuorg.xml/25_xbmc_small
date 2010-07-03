@@ -1,0 +1,1 @@
+<?cs if:vdr.plugin.graphtft.enabled == "1" ?>       <command name="XBMC on graphtft Display" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=xbmc display=1.1" /> <?cs /if ?>

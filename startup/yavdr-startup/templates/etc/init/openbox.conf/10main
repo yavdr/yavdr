@@ -1,0 +1,16 @@
+<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
+start on stopped displaydevice
+stop on runlevel [016]
+
+respawn
+
+env DISPLAY=:1
+export DISPLAY
+
+env XORGCONFIG=/etc/X11/xorg.conf.yavdr
+export XORGCONFIG
+
+exec xinit /usr/bin/openbox --config-file /var/lib/vdr/.config/openbox/rc.xml -- :1
+
+<?cs /if ?>
+

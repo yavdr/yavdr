@@ -1,0 +1,1 @@
+        <command name="Pidgin" execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=pidgin" />

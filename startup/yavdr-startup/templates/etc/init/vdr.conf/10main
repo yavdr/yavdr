@@ -7,8 +7,8 @@ start on local-filesystems
 
 stop on runlevel [016]
 
-post-stop script
-  signal-event post-stop-vdr
+post-start script 
+LANG=C /sbin/status openbox | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 end script
 
 respawn

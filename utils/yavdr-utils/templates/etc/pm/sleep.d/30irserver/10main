@@ -1,0 +1,13 @@
+
+case $1 in
+     hibernate|suspend)
+         echo "irserver is going to sleep"
+	 stop irserver
+         ;;
+     thaw|resume)
+         echo "irserver gets started again"
+         start irserver
+         ;;
+     *)  echo "Irgendwer ruft mich total falsch auf."
+         ;;
+esac

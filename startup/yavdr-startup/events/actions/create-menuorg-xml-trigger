@@ -1,4 +1,4 @@
 #!/bin/bash
 
 process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
-process-template --owner=vdr --group=vdr --mode=755 /usr/share/vdr/menuorg-appswitcher
+

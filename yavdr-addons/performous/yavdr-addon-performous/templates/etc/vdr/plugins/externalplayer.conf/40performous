@@ -1,7 +1,0 @@
-{
- MenuEntry         = "Performous";
- Command           = "/usr/bin/start-performous";
- OutputMode        = none;
- InputMode         = deactivateRemotes;
-}
-
