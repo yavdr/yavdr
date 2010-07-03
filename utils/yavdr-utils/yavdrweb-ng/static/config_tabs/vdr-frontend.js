@@ -91,7 +91,7 @@ function getVDRFrontendForm(){
                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find frontend radiobutton group.');
             }
             var rButton = Ext.getCmp('switch_display');
-            if (data.system.x11.dualhead.enabled == "1" && vdr.plugin.graphtft.enabled != "1") {
+            if (data.system.x11.dualhead.enabled == "1" && data.vdr.plugin.graphtft.enabled != "1") {
                 rButton.enable();
             } else {
                 rButton.disable();

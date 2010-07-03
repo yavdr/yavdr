@@ -155,7 +155,7 @@ int write_edid_to_file(string filename, unsigned char *data, int len)
         cleanDisplayInHDF(hdf, 0);
       }
       
-      if (secondary == primary) {
+      if (primary != "" && secondary == primary) {
         cleanDisplayInHDF(hdf, 1);
         err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
         err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");

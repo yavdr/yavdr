@@ -156,9 +156,7 @@ function getX11Form(){
             try {
                 var displayData = Ext.util.JSON.decode( xhr.responseText );
                 var rButton = this.getComponent('x11_dualhead');
-                if (typeof displayData.system.x11.displays == "undefined") {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'no displays found! -> enable form');
-                } else {
+                if (typeof displayData.system.x11.displays != "undefined") {
                     Ext.each(displayData.system.x11.displays, function(item, index, allitems) {
                         var hiddenmodeline = new Ext.form.Hidden({
                             name: 'display'+index,
@@ -285,63 +283,66 @@ function getX11Form(){
                         });
 
                     }, this);
-                    var current;
-                    if (displayData.system.x11.displays.length >= 2 || (yavdrwebGlobalInfo.devmode == "1")) {
-                        current = displayData.system.x11.dualhead.enabled;
-                        if (current == "0" || current == "1") {
-                            if (rButton)
-                                rButton.setValue( current == "1" );
-                            else
-                                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find dualhead checkbox.');
-                        }
-                        
-                        current = displayData.vdr.plugin.graphtft.enabled;
-                        if (current == "0" || current == "1") {
-                            var rButton = this.getComponent('x11_graphtft');
-                            if (rButton)
-                                rButton.setValue( current == "1" );
-                            else
-                                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
-                        }   
-                        if (current != "1") {
-                            var rButton = Ext.getCmp('switch_display');
-                            if (rButton)
-                                    rButton.enable();
-                        }
-                    } else {
-                        if (rButton) {
-                            rButton.disable().setBoxLabel(getLL("x11.dualhead.boxlabelunavailable"));
-                        }
-                    }
-                    
-                    current = displayData.vdr.deinterlacer.hd.type;
-                    if (current == "bob" || 
-                        current == "half temporal" || 
-                        current == "half temporal_spatial" || 
-                        current == "temporal" || 
-                        current == "temporal_spatial") {
-                        var rButton = this.getComponent('deinterlacer_hd');
-                        if (rButton)
-                            rButton.setValue( current );
-                        else
-                            Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find HD-Interlacer combo.');
-                    }
-                    
-                    current = displayData.vdr.deinterlacer.sd.type;
-                    if (current == "bob" || 
-                        current == "half temporal" || 
-                        current == "half temporal_spatial" || 
-                        current == "temporal" || 
-                        current == "temporal_spatial") {
-                        var rButton = this.getComponent('deinterlacer_sd');
-                        if (rButton)
-                            rButton.setValue( current );
-                        else
-                            Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find SD-Interlacer combo.');
-                    }
+
                     this.doLayout();
                 }
+                var current;
                 
+                if (typeof displayData.system.x11.displays == "undefined"
+                    || displayData.system.x11.displays.length >= 2
+                    || (yavdrwebGlobalInfo.devmode == "1")) {
+                    current = displayData.system.x11.dualhead.enabled;
+                    if (current == "0" || current == "1") {
+                        if (rButton)
+                            rButton.setValue( current == "1" );
+                        else
+                            Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find dualhead checkbox.');
+                    }
+                    
+                    current = displayData.vdr.plugin.graphtft.enabled;
+                    if (current == "0" || current == "1") {
+                        var rButton = this.getComponent('x11_graphtft');
+                        if (rButton)
+                            rButton.setValue( current == "1" );
+                        else
+                            Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find graphTFT checkbox.');
+                    }   
+                    if (current != "1") {
+                        var rButton = Ext.getCmp('switch_display');
+                        if (rButton)
+                                rButton.enable();
+                    }
+                } else {
+                    if (rButton) {
+                        rButton.disable().setBoxLabel(getLL("x11.dualhead.boxlabelunavailable"));
+                    }
+                }
+                
+                current = displayData.vdr.deinterlacer.hd.type;
+                if (current == "bob" || 
+                    current == "half temporal" || 
+                    current == "half temporal_spatial" || 
+                    current == "temporal" || 
+                    current == "temporal_spatial") {
+                    var rButton = this.getComponent('deinterlacer_hd');
+                    if (rButton)
+                        rButton.setValue( current );
+                    else
+                        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find HD-Interlacer combo.');
+                }
+                
+                current = displayData.vdr.deinterlacer.sd.type;
+                if (current == "bob" || 
+                    current == "half temporal" || 
+                    current == "half temporal_spatial" || 
+                    current == "temporal" || 
+                    current == "temporal_spatial") {
+                    var rButton = this.getComponent('deinterlacer_sd');
+                    if (rButton)
+                        rButton.setValue( current );
+                    else
+                        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find SD-Interlacer combo.');
+                }
             }
             catch (err) {
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current display settings.' );
