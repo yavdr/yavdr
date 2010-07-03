@@ -2,11 +2,11 @@
 case $1 in
      hibernate|suspend)
          echo "irserver is going to sleep"
-	 stop irserver
+	 stop remoted
          ;;
      thaw|resume)
          echo "irserver gets started again"
-         start irserver
+         start remoted
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."
          ;;
