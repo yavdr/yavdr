@@ -1,0 +1,6 @@
+#!/bin/bash
+
+MB_TYPE=$(biosinfo 2>/dev/null | grep "Mainboard type:" | cut -d "\"" -f 2)
+
+dbset "system.hardware.mainboard.type=\"$MB_TYPE\""
+
