@@ -23,6 +23,12 @@ if [ "x$LIRCD" = "xirserver" ]; then
 else
   rm -f /etc/pm/sleep.d/30irserver
 fi
+
+#For Imon-Antec-Veris
+
+if [ $(dbget system.lirchw.lircd_conf) = $"imon/lircd.conf.imon-antec-veris" ]; then
+    process-template --owner=vdr --group=vdr /var/lib/vdr/remote.conf
+fi
  
 #For atilibusb, we need to blacklist the kernel module
 for MODULE in `dbget system.lirchw.driver` ; do 
