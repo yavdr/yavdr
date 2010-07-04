@@ -18,6 +18,12 @@ for i in "var/lib/vdr/remote.conf" "var/lib/vdr/diseqc.conf" "var/lib/vdr/channe
         svdrpsend PLUG channellists LOAD 2>/dev/null >/dev/null
         echo "OK uploaded file /$i"
         ;;
+      etc/lirc/lircd.conf)
+        mv $i /$i
+        stop remoted
+        start remoted
+        echo "OK uploaded file /$i"
+        ;;
       *)
         mv $i /$i
         ;;
