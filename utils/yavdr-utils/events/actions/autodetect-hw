@@ -2,5 +2,11 @@
 
 MB_TYPE=$(biosinfo 2>/dev/null | grep "Mainboard type:" | cut -d "\"" -f 2)
 
-dbset "system.hardware.mainboard.type=\"$MB_TYPE\""
+dbset "system.hardware.mainboard.type=$MB_TYPE"
 
+if [ "x$MB_TYPE" = "xAMCP7AION-HT" ]; then
+  dbset "if:system.lirchw.description=Nuvoton Transceivers/Remotes"
+  dbset "if:system.lirchw.lirc_driver=lirc_dev lirc_wb677"
+  dbset "if:system.lirchw.driver="
+  dbset "if:system.lirchw.lircd_conf=lirc_wb677/lircd.conf.wb677"
+fi

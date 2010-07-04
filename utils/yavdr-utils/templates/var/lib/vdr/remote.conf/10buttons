@@ -1,5 +1,4 @@
-<?cs if:system.remoted == "irserver" ?>
-LIRC.Up        up
+<?cs if:system.remoted == "irserver" ?>LIRC.Up        up
 LIRC.Down      down
 LIRC.Menu      info
 LIRC.Ok        ok
@@ -33,10 +32,8 @@ LIRC.Record    rec
 LIRC.FastFwd   fwd
 LIRC.FastRew   rew
 LIRC.Next      next
-LIRC.Prev      prev
-<?cs /if ?>
-<?cs if:system.hardware.mainboard.type == "\"AMCP7AION-HT\"" ?>
-LIRC.Up        Up
+LIRC.Prev      prev<?cs /if ?>
+<?cs if:system.hardware.mainboard.type == "AMCP7AION-HT" ?>LIRC.Up        Up
 LIRC.Down      Down
 LIRC.Menu      More
 LIRC.Ok        OK
@@ -64,5 +61,4 @@ LIRC.Mute      Mute
 LIRC.Channel+  ChanUp
 LIRC.Channel-  ChanDown
 LIRC.Volume+   VolUp
-Lirc.Volume-   VolDown
-<?cs /if ?>
+Lirc.Volume-   VolDown<?cs /if ?>
