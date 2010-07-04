@@ -2,7 +2,7 @@
 
 pushd /var/cache/yavdr/upload >/dev/null
 
-for i in "var/lib/vdr/remote.conf" "var/lib/vdr/diseqc.conf" "var/lib/vdr/channels.conf" "etc/lirc/lircd.conf; do
+for i in "var/lib/vdr/remote.conf" "var/lib/vdr/diseqc.conf" "var/lib/vdr/channels.conf" "etc/lirc/lircd.conf"; do
   if [ -f $i ]; then
     case $i in
       var/lib/vdr/remote.conf|var/lib/vdr/diseqc.conf)
