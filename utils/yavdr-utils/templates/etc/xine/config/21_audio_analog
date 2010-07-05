@@ -1,4 +1,4 @@
-<?cs if:(system.sound.type == "analog" || system.sound.type == "") ?>
+<?cs if:(!?system.sound.type || system.sound.type == "analog" || system.sound.type == "") ?>
 
 # Zu benutzender Audiotreiber
 # { auto  null  pulseaudio  alsa  oss  esd  file  none }, default: 0
