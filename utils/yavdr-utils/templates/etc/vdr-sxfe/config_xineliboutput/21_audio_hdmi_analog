@@ -66,7 +66,7 @@ audio.output.speaker_arrangement:Stereo 2.0
 
 # Resampling benutzen
 # { auto  off  on }, default: 0
-# audio.synchronization.resample_mode:on
+audio.synchronization.resample_mode:off
 
 # Startlautstärke
 # [0..100], default: 50
