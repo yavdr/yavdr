@@ -12,7 +12,6 @@ graphtft-fe
 irserver
 inputlirc
 irserver
-libjs-ext
 lirc
 libxine1-xvdr
 linux-firmware
@@ -30,7 +29,6 @@ smbfs
 samba4
 samba4-clients
 ssh
-tntnet
 update-manager-core
 ureadahead
 vdr
