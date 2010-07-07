@@ -12,12 +12,6 @@ graphtft-fe
 irserver
 inputlirc
 irserver
-libavcodec52
-libavdevice52
-libavformat52
-libavutil50
-libpostproc51
-libswscale0
 libjs-ext
 lirc
 libxine1-xvdr
