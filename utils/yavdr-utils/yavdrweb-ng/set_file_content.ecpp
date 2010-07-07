@@ -16,7 +16,8 @@ const char *files[] = {
     "/var/lib/vdr/remote.conf",
     "/etc/vdr/diseqc.conf",
     "/var/lib/vdr/channels.conf",
-    "/etc/lirc/lircd.conf"
+    "/etc/lirc/lircd.conf",
+    "/var/lib/vdr/.xbmc/userdata/Lircmap.xml"
 };
 
 int findex = 0;
