@@ -40,6 +40,7 @@ void Tokenize(const string& str,
   const char *valid_hdf_requests[] = {
     "webfrontend.language",
     "vdr.frontend",
+    "vdr.lifeguard.enable",
     "system.shutdown",
     "system.sound.type",
     "system.hardware.nvidia.overscan",

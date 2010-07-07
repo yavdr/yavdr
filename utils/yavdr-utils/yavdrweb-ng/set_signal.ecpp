@@ -24,6 +24,7 @@ if (
         (signal == "reboot") || 
         (signal == "change-frontend") || 
         (signal == "change-shutdown") || 
+        (signal == "change-lifeguard") ||
         (signal == "kill-xbmc") || 
         (signal == "restart-vdr") ||
         (signal == "change-auto-net-yavdr") ||
@@ -153,6 +154,28 @@ if (
               nerr_log_error(err);
             }
             err = hdf_set_valuef(hdf, "system.sound.type=%s", value.c_str());
+            /*if (err != STATUS_OK){
+            }*/
+            err = hdf_write_file(hdf, YAVDRDB);
+            if (err != STATUS_OK)
+            {
+              nerr_log_error(err);
+            }
+            hdf_destroy(&hdf);
+        }
+    }
+
+   else if (signal == "change-lifeguard" )
+    {
+        if ((value == "aptitude") || (value == "ssh") || (value == "nfs") || (value == "ftp") || (value == "xbmc") || (value == "smb"))
+        {
+            NEOERR *err;
+            HDF *hdf = NULL;
+            if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+            {
+              nerr_log_error(err);
+            }
+            err = hdf_set_valuef(hdf, "vdr.lifeguard.enable=%s", value.c_str());
             /*if (err != STATUS_OK){
             }*/
             err = hdf_write_file(hdf, YAVDRDB);

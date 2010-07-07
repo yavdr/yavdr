@@ -161,6 +161,10 @@ Ext.TaskMgr.start({
                     items:   getVDRShutdownForm
                 }),
                 addGroupPanelTab({
+                    section: "lifeguard",
+                    items:   getVDRLifeguardForm
+                }), 
+               addGroupPanelTab({
                     section: "packages",
                     items:   getPackagesForm
                 })
