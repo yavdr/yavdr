@@ -38,7 +38,7 @@ function getVDRConfigUploadForm(){
                 {id: 'upload-rb1', boxLabel: '/var/lib/vdr/remote.conf', name: 'file', inputValue: '/var/lib/vdr/remote.conf', checked: true },
                 {id: 'upload-rb2', boxLabel: '/etc/vdr/diseqc.conf', name: 'file', inputValue: '/etc/vdr/diseqc.conf'},
                 {id: 'upload-rb3', boxLabel: '/var/lib/vdr/channels.conf', name: 'file', inputValue: '/var/lib/vdr/channels.conf'},
-                {id: 'upload-rb4', boxLabel: '/etc/lirc/lircd.conf', name: 'file', inputValue: '/etc/lirc/lircd.conf'}
+                {id: 'upload-rb4', boxLabel: '/etc/lirc/lircd.conf', name: 'file', inputValue: '/etc/lirc/lircd.conf'},
                 {id: 'upload-rb5', boxLabel: '/var/lib/vdr/.xbmc/userdata/Lircmap.xml', name: 'file', inputValue: '/var/lib/vdr/.xbmc/userdata/Lircmap.xml'}
             ]
         },
