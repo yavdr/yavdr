@@ -399,7 +399,7 @@ var locale_en = {
             failure : 'Failure.'
         },
         label: 'sound setting'
-    }
+    },
     lifeguard: {
         help: 'Check whether VDR should shutdown the machine Perform various tests specified by the user when VDR wants to shutdown the machine. Shutdown is postponed if any of the tests indicate, that there are other processes that should not be interrupted. Enable here the processes, which VDR shoud not interrupt. Nothing selected is similar to deaktivate VDR-Lifeguard',
         menutab: {
