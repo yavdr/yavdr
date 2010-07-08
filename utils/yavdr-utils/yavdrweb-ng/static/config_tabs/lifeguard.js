@@ -21,7 +21,11 @@ function getVDRLifeguardForm(){
                 {id: 'smb', boxLabel: 'SMB', name: 'value', inputValue: 'smb'},		
                 {id: 'xbmc', boxLabel: 'XBMC', name: 'value', inputValue: 'xbmc'}
             ]
-        }]
+        },
+{
+html: '<br/><br/>' + getLL("lifeguard.help")
+}  
+]
     });
 
     var submit = myform.addButton({

@@ -411,6 +411,7 @@ var locale_de = {
         label: 'Soundeinstellungen'
     }
     lifeguard: {
+        help: 'VDR-Lifeguard prüft vor dem Shutdown ob diverse Prozesse aktiv sind. Sollen die Prozesse nicht unterbrochen werden, wird der Shutdown verschoben. Aktivieren Sie hier die Prozesse welche den Shutdown verhindern sollen. Nichts markiert ist gleich VDR-Lifeguard deaktiviert',
         menutab: {
             title : 'VDR-Lifeguard',
             tabtip : 'Lifeguard settings',
