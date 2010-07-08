@@ -10,9 +10,9 @@ function getVDRLifeguardForm(){
         items: [{
             id: 'lifeguard_radio_group',
             name: 'lifeguard',
-            xtype: 'radiogroup',
+            xtype: 'checkboxgroup',
             fieldLabel: getLL("lifeguard.label"),
-            columns: 1,
+            columns: 2,
             items: [
                 {id: 'aptitude', boxLabel: 'Aptitude', name: 'value', inputValue: 'aptitude'},
                 {id: 'ssh', boxLabel: 'SSH', name: 'value', inputValue: 'ssh'},
