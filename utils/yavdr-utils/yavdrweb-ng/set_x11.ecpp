@@ -14,8 +14,6 @@ extern "C" {
 #include <X11/Xlib.h>
 #include <string.h> /* memcpy(), strerror() */
 
-//#include "NvCtrlAttributes.h"
-
 #include "NVCtrl/NVCtrl.h"
 #include "NVCtrl/NVCtrlLib.h"
 }
@@ -63,49 +61,6 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
     err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline="      , id);
     err = hdf_set_valuef(hdf, "system.x11.display.%i.overscan="      , id);
 }
-/*
-int write_edid_to_file(string filename, unsigned char *data, int len)
-{
-    int fd = -1;
-    char *dst = (void *) -1;
-    char *msg = "";
-
-    fd = open(filename, O_RDWR | O_CREAT | O_TRUNC,
-              S_IRUSR | S_IWUSR | S_IRGRP);
-    if (fd == -1) {
-        msg = "Unable to open file for writing";
-        goto fail;
-    }
-
-    if (lseek(fd, len - 1, SEEK_SET) == -1) {
-        msg = "Unable to set file size";
-        goto fail;
-    }
-
-    if ((dst = mmap(0, len, PROT_READ | PROT_WRITE,
-                    MAP_SHARED, fd, 0)) == (void *) -1) {
-        msg = "Unable to map file for copying";
-        goto fail;
-    }
-
-    memcpy(dst, data, len);
-
-    if (munmap(dst, len) == -1) {
-        msg = "Unable to unmap output file";
-        goto fail;
-    }
-
-    close(fd);
-
-    return TRUE;
-
- fail:
-
-    if (fd != -1) close(fd);
-
-    return FALSE;
-
-} /* write_edid_to_file() */
 
 </%shared><%cpp>
   string success = "false";
@@ -237,29 +192,34 @@ int write_edid_to_file(string filename, unsigned char *data, int len)
 						for (int j = 1; j <= pData[0]; j++) {
 							screen = pData[j];
 
-							/* List all display devices on this X Screen */
-							for (int mask = 1; mask < (1 << 24); mask <<= 1) {
-								if (!(display_devices & mask)) {
-									continue;
+							int val;
+							char *data;
+							ret = XNVCTRLQueryTargetAttribute(dpy,
+									NV_CTRL_TARGET_TYPE_X_SCREEN,
+									screen,
+									0,
+									NV_CTRL_EDID_AVAILABLE,
+									&val);
+							if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
+								ret = XNVCTRLQueryTargetBinaryData(dpy,
+										NV_CTRL_TARGET_TYPE_X_SCREEN,
+										screen, // target_id
+										0, // display_mask
+										NV_CTRL_BINARY_DATA_EDID,
+										(unsigned char **) &data,
+										&len);
+								if (ret) {
+									char filename[100];
+									sprintf(filename, "/etc/X11/edid.%i.yavdr", screen);
+									ofstream myFile (filename , ios::out | ios::binary);
+									myFile.write (data, len);
+									myFile.close();
+									err = hdf_set_valuef(hdf, "system.hardware.nvidia.%i.edid=true", screen);
 								}
-/*
-					            int val;
-					            ret = NvCtrlGetDisplayAttribute(dpy, display_devices & mask,
-					                                            NV_CTRL_EDID_AVAILABLE, &val);
-					            if ((ret == NvCtrlSuccess) && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
-					                ret = NvCtrlGetBinaryAttribute(ctk_edid->handle,
-					                                               ctk_edid->display_device_mask,
-					                                               NV_CTRL_BINARY_DATA_EDID,
-					                                               &data, &len);
-					                if (ret == NvCtrlSuccess) {
-										write_edid_to_file("/etc/X11/edid.bin",
-														   data, len);
-					                }
-					            } else {
-					            	err = hdf_set_valuef(hdf, "system.hardware.nvidia.0.edid=", pci_bus, pci_device, pci_func);
-					            }
-*/
+							} else {
+								err = hdf_remove_tree(hdf, "system.hardware.nvidia.%i.edid");
 							}
+
 						}
 
 						XFree(pData);

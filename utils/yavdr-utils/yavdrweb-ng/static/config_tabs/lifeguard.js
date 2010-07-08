@@ -17,15 +17,13 @@ function getVDRLifeguardForm(){
                 {id: 'aptitude', boxLabel: 'Aptitude', name: 'values', inputValue: 'aptitude'},
                 {id: 'ssh', boxLabel: 'SSH', name: 'values', inputValue: 'ssh'},
                 {id: 'nfs', boxLabel: 'NFS', name: 'values', inputValue: 'nfs'},
-		{id: 'ftp', boxLabel: 'FTP', name: 'values', inputValue: 'ftp'},
+		        {id: 'ftp', boxLabel: 'FTP', name: 'values', inputValue: 'ftp'},
                 {id: 'smb', boxLabel: 'SMB', name: 'values', inputValue: 'smb'},		
                 {id: 'xbmc', boxLabel: 'XBMC', name: 'values', inputValue: 'xbmc'}
             ]
-        },
-{
-html: '<br/><br/>' + getLL("lifeguard.help")
-}  
-]
+        },{
+            html: '<br/><br/>' + getLL("lifeguard.help")
+        }]
     });
 
     var submit = myform.addButton({
@@ -67,7 +65,7 @@ html: '<br/><br/>' + getLL("lifeguard.help")
             if (currentLifeguard == "aptitude" 
                 || currentLifeguard == "ssh" 
                 || currentLifeguard == "nfs" 
-		|| currentLifeguard == "ftp"
+		        || currentLifeguard == "ftp"
                 || currentLifeguard == "smb"
                 || currentLifeguard == "xbmc"){
                 var rButton = this.getComponent('lifeguard_radio_group');
