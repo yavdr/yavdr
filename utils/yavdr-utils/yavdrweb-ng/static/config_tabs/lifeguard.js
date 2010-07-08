@@ -14,12 +14,12 @@ function getVDRLifeguardForm(){
             fieldLabel: getLL("lifeguard.label"),
             columns: 2,
             items: [
-                {id: 'aptitude', boxLabel: 'Aptitude', name: 'value', inputValue: 'aptitude'},
-                {id: 'ssh', boxLabel: 'SSH', name: 'value', inputValue: 'ssh'},
-                {id: 'nfs', boxLabel: 'NFS', name: 'value', inputValue: 'nfs'},
-		{id: 'ftp', boxLabel: 'FTP', name: 'value', inputValue: 'ftp'},
-                {id: 'smb', boxLabel: 'SMB', name: 'value', inputValue: 'smb'},		
-                {id: 'xbmc', boxLabel: 'XBMC', name: 'value', inputValue: 'xbmc'}
+                {id: 'aptitude', boxLabel: 'Aptitude', name: 'values', inputValue: 'aptitude'},
+                {id: 'ssh', boxLabel: 'SSH', name: 'values', inputValue: 'ssh'},
+                {id: 'nfs', boxLabel: 'NFS', name: 'values', inputValue: 'nfs'},
+		{id: 'ftp', boxLabel: 'FTP', name: 'values', inputValue: 'ftp'},
+                {id: 'smb', boxLabel: 'SMB', name: 'values', inputValue: 'smb'},		
+                {id: 'xbmc', boxLabel: 'XBMC', name: 'values', inputValue: 'xbmc'}
             ]
         },
 {
