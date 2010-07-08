@@ -410,4 +410,18 @@ var locale_de = {
         },
         label: 'Soundeinstellungen'
     }
+    lifeguard: {
+        menutab: {
+            title : 'VDR-Lifeguard',
+            tabtip : 'Lifeguard settings',
+            panel_title : 'VDR-Lifeguard'
+        },
+        button_label:  'Setze Lifeguard Einstellungen',
+        submit: {
+            waitmsg : 'Einstellungen werden aktualisiert.',    
+            success : 'Erfolg.',
+            failure : 'Fehler.'
+        },
+        label: 'VDR-Lifeguard Einstellungen'
+    }
 };

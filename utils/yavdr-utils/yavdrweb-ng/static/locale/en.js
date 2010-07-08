@@ -400,4 +400,18 @@ var locale_en = {
         },
         label: 'sound setting'
     }
+    lifeguard: {
+        menutab: {
+            title : 'VDR-Lifeguard',
+            tabtip : 'Lifeguard Settings',
+            panel_title : 'Lifeguard Settings'
+        },
+        button_label:  'Apply Lifeguard settings',
+        submit: {
+            waitmsg : 'Lifeguard settings are updated.',    
+            success : 'Success.',
+            failure : 'Failure.'
+        },
+        label: 'VDR-Lifeguard settings'
+    }
 };
