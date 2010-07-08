@@ -16,6 +16,7 @@ using namespace std;
   signal;
   value;
   value2;
+  string values[];
 </%args><%cpp>
 
 string success = "false";
@@ -166,8 +167,12 @@ if (
     }
 
    else if (signal == "change-lifeguard" )
-    {
-        if ((value == "aptitude") || (value == "ssh") || (value == "nfs") || (value == "ftp") || (value == "xbmc") || (value == "smb"))
+   {
+     for (int i = 0; i < values.size(); i++)i
+     {
+        if ((values[i] == "aptitude") || (values[i] == "ssh") ||
+            (values[i] == "nfs") || (values[i] == "ftp") ||
+            (values[i] == "xbmc") || (values[i] == "smb"))
         {
             NEOERR *err;
             HDF *hdf = NULL;
@@ -175,7 +180,7 @@ if (
             {
               nerr_log_error(err);
             }
-            err = hdf_set_valuef(hdf, "vdr.lifeguard.enable=%s", value.c_str());
+            err = hdf_set_valuef(hdf, "vdr.lifeguard.enable=%s", values[i].c_str());
             /*if (err != STATUS_OK){
             }*/
             err = hdf_write_file(hdf, YAVDRDB);
@@ -185,7 +190,8 @@ if (
             }
             hdf_destroy(&hdf);
         }
-    }
+     }
+   }
 
     string cmd = "/usr/bin/signal-event " + signal;
     int ret = system( cmd.c_str());
