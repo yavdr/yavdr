@@ -180,7 +180,7 @@ if (
             {
               nerr_log_error(err);
             }
-            err = hdf_set_valuef(hdf, "vdr.lifeguard.enable=%s", values[i].c_str());
+            err = hdf_set_valuef(hdf, "vdr.lifeguard.enable.%i=%s", i, values[i].c_str());
             /*if (err != STATUS_OK){
             }*/
             err = hdf_write_file(hdf, YAVDRDB);
