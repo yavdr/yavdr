@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sed -i '/epgsearch.SVDRPPort =/ s/2001/6419/g' /var/lib/vdr/setup.conf
