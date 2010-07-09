@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /sur/lib/vdr/config-loader
+. /usr/lib/vdr/config-loader
 
 LINE=`grep 'epgsearch.SVDRPPort =' /var/lib/vdr/setup.conf`
 PORT=${LINE//* = }
