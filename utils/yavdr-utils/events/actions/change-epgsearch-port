@@ -1,11 +1,10 @@
 #!/bin/bash
 
-. /usr/lib/vdr/config-loader
 
 LINE=`grep 'epgsearch.SVDRPPort =' /var/lib/vdr/setup.conf`
 PORT=${LINE//* = }
 
-if [ "$PORT" != "$SVDRP_PORT" ]; then 
+if [ $PORT = '2001' ]; then 
 /sbin/stop vdr 
 sed -i '/epgsearch.SVDRPPort =/ s/$PORT/$SVDRP_PORT/g' /var/lib/vdr/setup.conf
 /sbin/start vdr
