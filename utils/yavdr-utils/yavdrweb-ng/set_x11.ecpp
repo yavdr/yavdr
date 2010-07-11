@@ -191,35 +191,57 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
 						/* List all X Screens on GPU */
 						for (int j = 1; j <= pData[0]; j++) {
 							screen = pData[j];
+							int enabled_devices;
 
-							int val;
-							char *data;
+							/* Enabled Display Devices on X Screen */
 							ret = XNVCTRLQueryTargetAttribute(dpy,
 									NV_CTRL_TARGET_TYPE_X_SCREEN,
-									screen,
-									0,
-									NV_CTRL_EDID_AVAILABLE,
-									&val);
-							if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
-								ret = XNVCTRLQueryTargetBinaryData(dpy,
-										NV_CTRL_TARGET_TYPE_X_SCREEN,
-										screen, // target_id
-										0, // display_mask
-										NV_CTRL_BINARY_DATA_EDID,
-										(unsigned char **) &data,
-										&len);
-								if (ret) {
-									char filename[100];
-									sprintf(filename, "/etc/X11/edid.%i.yavdr", screen);
-									ofstream myFile (filename , ios::out | ios::binary);
-									myFile.write (data, len);
-									myFile.close();
-									err = hdf_set_valuef(hdf, "system.hardware.nvidia.%i.edid=true", screen);
-								}
-							} else {
-								err = hdf_remove_tree(hdf, "system.hardware.nvidia.%i.edid");
-							}
+									screen, // target_id
+									0, // display_mask
+									NV_CTRL_ENABLED_DISPLAYS,
+									&enabled_devices);
+							//printf("   Display Device Mask (Enabled)   : 0x%08x\n",
+							//enabled_devices);
 
+							/* List all display devices on this X Screen */
+							for (int mask = 1; mask < (1 << 24); mask <<= 1) {
+								if (!(enabled_devices & mask)) {
+									continue;
+								}
+								int val;
+								char *data;
+								ret = XNVCTRLQueryTargetAttribute(dpy,
+										NV_CTRL_TARGET_TYPE_X_SCREEN,
+										screen,
+										mask,
+										NV_CTRL_EDID_AVAILABLE,
+										&val);
+								ret = 1;
+								if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
+									//printf("edid avail\n");
+									ret = XNVCTRLQueryTargetBinaryData(dpy,
+											NV_CTRL_TARGET_TYPE_X_SCREEN,
+											screen, // target_id
+											mask, // display_mask
+											NV_CTRL_BINARY_DATA_EDID,
+											(unsigned char **) &data,
+											&len);
+									if (ret) {
+										//printf("writing edid\n");
+										char filename[100];
+										sprintf(filename, "/etc/X11/edid.%i.yavdr", screen);
+										ofstream myFile (filename , ios::out | ios::binary);
+										myFile.write (data, len);
+										myFile.close();
+										err = hdf_set_valuef(hdf, "system.hardware.nvidia.%i.edid=true", screen);
+									} else {
+										//printf("not writing edid\n");
+									}
+								} else {
+									//printf("edid not avail %i %i\n", ret, val);
+									err = hdf_remove_tree(hdf, "system.hardware.nvidia.%i.edid");
+								}
+							}
 						}
 
 						XFree(pData);
