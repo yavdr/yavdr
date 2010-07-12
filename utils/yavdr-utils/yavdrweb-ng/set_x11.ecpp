@@ -41,7 +41,9 @@ bool writeDisplayToHDF(HDF *hdf, int id, std::vector<string> display, string ove
         NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=%s"  , id, display[0].c_str());
         if (display[1] == "enabled") {
           err = hdf_set_valuef(hdf, "system.x11.display.%i.mode=nvidia-auto-select", id);
-          err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline=", id);
+          char buffer[100];
+          sprintf(buffer, "system.x11.display.%i.modeline=", id);
+          err = hdf_remove_tree(hdf, buffer);
         }
         else
         {
@@ -56,10 +58,9 @@ bool writeDisplayToHDF(HDF *hdf, int id, std::vector<string> display, string ove
 }
 
 void cleanDisplayInHDF(HDF *hdf, int id) {
-    NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=", id);
-    err = hdf_set_valuef(hdf, "system.x11.display.%i.mode="          , id);
-    err = hdf_set_valuef(hdf, "system.x11.display.%i.modeline="      , id);
-    err = hdf_set_valuef(hdf, "system.x11.display.%i.overscan="      , id);
+	char buffer[100];
+	sprintf(buffer, "system.x11.display.%i", id);
+    NEOERR *err = hdf_remove_tree(hdf, buffer);
 }
 
 </%shared><%cpp>
@@ -231,15 +232,21 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
 										char filename[100];
 										sprintf(filename, "/etc/X11/edid.%i.yavdr", screen);
 										ofstream myFile (filename , ios::out | ios::binary);
-										myFile.write (data, len);
-										myFile.close();
-										err = hdf_set_valuef(hdf, "system.hardware.nvidia.%i.edid=true", screen);
+										if (myFile) {
+											myFile.write (data, len);
+											myFile.close();
+											err = hdf_set_valuef(hdf, "system.hardware.nvidia.%i.edid=1", screen);
+										} else {
+											err = hdf_set_valuef(hdf, "system.hardware.nvidia.%i.edid=0", screen);
+										}
 									} else {
 										//printf("not writing edid\n");
 									}
 								} else {
 									//printf("edid not avail %i %i\n", ret, val);
-									err = hdf_remove_tree(hdf, "system.hardware.nvidia.%i.edid");
+									char buffer[100];
+									sprintf(buffer, "system.hardware.nvidia.%i.edid", screen);
+									err = hdf_remove_tree(hdf, buffer);
 								}
 							}
 						}

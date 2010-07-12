@@ -1,0 +1,3 @@
+<?cs if:(?system.hardware.nvidia.1.edid && system.hardware.nvidia.1.edid == "1") ?>
+    Option         "CustomEDID" "<?cs var:system.x11.display.1.device ?>:/etc/X11/edid.1.yavdr"
+<?cs /if ?>
