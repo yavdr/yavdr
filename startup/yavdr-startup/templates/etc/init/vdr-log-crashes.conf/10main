@@ -1,0 +1,9 @@
+start on vdr stopped failed EXIT_STATUS!=[012]
+
+task
+
+script
+logger -t "vdr-crash" "vdr exit with exit status $EXIT_STATUS . Restarting"
+end script
+
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -rf /var/lib/vdr/internet-radio
+su -c '/usr/bin/vtuner-download' vdr
+

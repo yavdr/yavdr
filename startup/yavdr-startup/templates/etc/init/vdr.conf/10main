@@ -3,7 +3,9 @@
 description     "VDR upstart script"
 author          "Steffen Barszus <steffenbpunkt@gmail.com"
 
-start on local-filesystems
+start on (local-filesystems or \
+          stopped dvb-driver-reload or \
+          stopped vdr-log-crashes)
 
 stop on runlevel [016]
 
@@ -11,7 +13,6 @@ post-start script
 LANG=C /sbin/status openbox | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 end script
 
-respawn
 kill timeout 5
 
 script

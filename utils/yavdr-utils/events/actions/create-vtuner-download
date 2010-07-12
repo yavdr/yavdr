@@ -1,0 +1,5 @@
+#!/bin/bash
+
+process-template --mode 0755 /usr/bin/vtuner-download
+process-template --mode 0755 /etc/cron.weekly/vtuner-download
+
