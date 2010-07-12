@@ -63,6 +63,61 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
     NEOERR *err = hdf_remove_tree(hdf, buffer);
 }
 
+
+int display_device_mask(string name) {
+	if (name == "CRT-0") {
+		return (1 << 0);
+	} else if (name == "CRT-1") {
+		return (1 << 1);
+	} else if (name == "CRT-2") {
+		return (1 << 2);
+	} else if (name == "CRT-3") {
+		return (1 << 3);
+	} else if (name == "CRT-4") {
+		return (1 << 4);
+	} else if (name == "CRT-5") {
+		return (1 << 5);
+	} else if (name == "CRT-6") {
+		return (1 << 6);
+	} else if (name == "CRT-7") {
+		return (1 << 7);
+	} else if (name == "TV-0") {
+		return (1 << 8);
+	} else if (name == "TV-1") {
+		return (1 << 9);
+	} else if (name == "TV-2") {
+		return (1 << 10);
+	} else if (name == "TV-3") {
+		return (1 << 11);
+	} else if (name == "TV-4") {
+		return (1 << 12);
+	} else if (name == "TV-5") {
+		return (1 << 13);
+	} else if (name == "TV-6") {
+		return (1 << 14);
+	} else if (name == "TV-7") {
+		return (1 << 15);
+	} else if (name == "DFP-0") {
+		return (1 << 16);
+	} else if (name == "DFP-1") {
+		return (1 << 17);
+	} else if (name == "DFP-2") {
+		return (1 << 18);
+	} else if (name == "DFP-3") {
+		return (1 << 19);
+	} else if (name == "DFP-4") {
+		return (1 << 20);
+	} else if (name == "DFP-5") {
+		return (1 << 21);
+	} else if (name == "DFP-6") {
+		return (1 << 22);
+	} else if (name == "DFP-7") {
+		return (1 << 23);
+	} else {
+		return 0;
+	}
+}
+
 </%shared><%cpp>
   string success = "false";
   string msg = "Unspecified error.";
@@ -180,7 +235,6 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
 							&len);
 
 					if (ret) {
-
 						/* Connected Display Devices on X Screen */
 						ret = XNVCTRLQueryTargetAttribute(dpy,
 								NV_CTRL_TARGET_TYPE_X_SCREEN,
@@ -204,11 +258,9 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
 							//printf("   Display Device Mask (Enabled)   : 0x%08x\n",
 							//enabled_devices);
 
-							/* List all display devices on this X Screen */
-							for (int mask = 1; mask < (1 << 24); mask <<= 1) {
-								if (!(enabled_devices & mask)) {
-									continue;
-								}
+							// edid for primary device
+							int mask = display_device_mask(primary);
+							if ((enabled_devices & mask)) {
 								int val;
 								char *data;
 								ret = XNVCTRLQueryTargetAttribute(dpy,
@@ -219,7 +271,6 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
 										&val);
 								ret = 1;
 								if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
-									//printf("edid avail\n");
 									ret = XNVCTRLQueryTargetBinaryData(dpy,
 											NV_CTRL_TARGET_TYPE_X_SCREEN,
 											screen, // target_id
@@ -228,25 +279,53 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
 											(unsigned char **) &data,
 											&len);
 									if (ret) {
-										//printf("writing edid\n");
-										char filename[100];
-										sprintf(filename, "/etc/X11/edid.%i.yavdr", screen);
-										ofstream myFile (filename , ios::out | ios::binary);
+										ofstream myFile ("/etc/X11/edid.0.yavdr" , ios::out | ios::binary);
 										if (myFile) {
 											myFile.write (data, len);
 											myFile.close();
-											err = hdf_set_valuef(hdf, "system.hardware.nvidia.%i.edid=1", screen);
+											err = hdf_set_valuef(hdf, "system.hardware.nvidia.0.edid=1");
 										} else {
-											err = hdf_set_valuef(hdf, "system.hardware.nvidia.%i.edid=0", screen);
+											err = hdf_set_valuef(hdf, "system.hardware.nvidia.0.edid=0");
 										}
-									} else {
-										//printf("not writing edid\n");
 									}
 								} else {
-									//printf("edid not avail %i %i\n", ret, val);
-									char buffer[100];
-									sprintf(buffer, "system.hardware.nvidia.%i.edid", screen);
-									err = hdf_remove_tree(hdf, buffer);
+									err = hdf_remove_tree(hdf, "system.hardware.nvidia.0.edid");
+								}
+							}
+
+
+							// edid for secondary device
+							mask = display_device_mask(secondary);
+							if ((enabled_devices & mask)) {
+								int val;
+								char *data;
+								ret = XNVCTRLQueryTargetAttribute(dpy,
+										NV_CTRL_TARGET_TYPE_X_SCREEN,
+										screen,
+										mask,
+										NV_CTRL_EDID_AVAILABLE,
+										&val);
+								ret = 1;
+								if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
+									ret = XNVCTRLQueryTargetBinaryData(dpy,
+											NV_CTRL_TARGET_TYPE_X_SCREEN,
+											screen, // target_id
+											mask, // display_mask
+											NV_CTRL_BINARY_DATA_EDID,
+											(unsigned char **) &data,
+											&len);
+									if (ret) {
+										ofstream myFile ("/etc/X11/edid.1.yavdr" , ios::out | ios::binary);
+										if (myFile) {
+											myFile.write (data, len);
+											myFile.close();
+											err = hdf_set_valuef(hdf, "system.hardware.nvidia.1.edid=1");
+										} else {
+											err = hdf_set_valuef(hdf, "system.hardware.nvidia.1.edid=0");
+										}
+									}
+								} else {
+									err = hdf_remove_tree(hdf, "system.hardware.nvidia.1.edid");
 								}
 							}
 						}
@@ -255,9 +334,9 @@ void cleanDisplayInHDF(HDF *hdf, int id) {
 					}
 				}
 			} // number of gpus
-
-
         }
+
+        XCloseDisplay(dpy);
     }
     if ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK) {
       nerr_log_error(err);
