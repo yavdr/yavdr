@@ -179,6 +179,7 @@ if (
             if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
             {
               nerr_log_error(err);
+              err = hdf_remove_tree(hdf, "vdr.lifeguard.enable");
             }
             err = hdf_set_valuef(hdf, "vdr.lifeguard.enable.%i=%s", i, values[i].c_str());
             /*if (err != STATUS_OK){
