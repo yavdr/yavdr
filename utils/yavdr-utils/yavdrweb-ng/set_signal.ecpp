@@ -165,34 +165,33 @@ if (
             hdf_destroy(&hdf);
         }
     }
-
-   else if (signal == "change-lifeguard" )
-   {
-     for (int i = 0; i < values.size(); i++)
-     {
-        if ((values[i] == "aptitude") || (values[i] == "ssh") ||
-            (values[i] == "nfs") || (values[i] == "ftp") ||
-            (values[i] == "xbmc") || (values[i] == "smb"))
-        {
-            NEOERR *err;
-            HDF *hdf = NULL;
-            if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
-            {
-              nerr_log_error(err);
-              err = hdf_remove_tree(hdf, "vdr.lifeguard.enable");
-            }
-            err = hdf_set_valuef(hdf, "vdr.lifeguard.enable.%i=%s", i, values[i].c_str());
-            /*if (err != STATUS_OK){
-            }*/
-            err = hdf_write_file(hdf, YAVDRDB);
-            if (err != STATUS_OK)
-            {
-              nerr_log_error(err);
-            }
-            hdf_destroy(&hdf);
-        }
-     }
-   }
+	else if (signal == "change-lifeguard" )
+	{
+	  NEOERR *err;
+	  HDF *hdf = NULL;
+	  if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+	  {
+		nerr_log_error(err);
+	  }
+	  err = hdf_remove_tree(hdf, "vdr.lifeguard.enable");
+  	  for (int i = 0; i < values.size(); i++)
+	  {
+		if ((values[i] == "aptitude") || (values[i] == "ssh") ||
+			(values[i] == "nfs") || (values[i] == "ftp") ||
+			(values[i] == "xbmc") || (values[i] == "smb"))
+		{
+			err = hdf_set_valuef(hdf, "vdr.lifeguard.enable.%i=%s", i, values[i].c_str());
+			/*if (err != STATUS_OK){
+			}*/
+		}
+  	  }
+	  err = hdf_write_file(hdf, YAVDRDB);
+	  if (err != STATUS_OK)
+	  {
+		nerr_log_error(err);
+	  }
+	  hdf_destroy(&hdf);
+	}
 
     string cmd = "/usr/bin/signal-event " + signal;
     int ret = system( cmd.c_str());
