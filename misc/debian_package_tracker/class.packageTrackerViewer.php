@@ -30,6 +30,9 @@ class packageTrackerViewer extends packageTrackerBase{
     private
         $empty_row;
 
+    /*
+     * html menu that contains links to all releases of all distributions + special menu entries
+     */
     public function printLinkMenu($distribution, $release, $mode){
 	    //generate link menu
 	    $menu = '';
@@ -47,6 +50,12 @@ class packageTrackerViewer extends packageTrackerBase{
             print "<h1>VDR Package Repositories for $distribution Linux ($release)</h1>";
     }
 
+    /*
+     *  returns a big html table with a comparison of different repos
+     *  @$arch determines which package types are displayed (i386, amd64, source)
+     *  @reposelection array contains all repo names that are to be displayed in the comparison 
+     */
+    
     public function printMegaListAsTable($arch, $reposelection){
         $tableheader = '<tr><th>Package</th>';
         $tableheader2 = '<tr><th>&nbsp;</th>';
@@ -92,13 +101,16 @@ class packageTrackerViewer extends packageTrackerBase{
         return '<table border="1">'.$tablecontent.'</table></br>';
     }
 
+    /*
+     * 
+     */
 
 	private function renderTableCell($architecture, $homes, $reponame){
 	  if (array_key_exists( $architecture, $homes[$reponame])){
 	      $cellcontent = '';
 	      foreach( $homes[$reponame][$architecture] as $area => $package){
    		$multi_version_indicator = "";
-		if (isset($_GET['mode']) && $_GET['mode'] == 'etobivshanno'){
+		if (isset($_GET['mode']) && $_GET['mode'] == 'yavdr'){
 
 		  if ( $this->current_version_number == '')
 			$this->current_version_number = $package['version'];
@@ -138,7 +150,7 @@ class packageTrackerViewer extends packageTrackerBase{
         return '<table border="1">'.$tablecontent.'</table></br>';
     }
 
-	public function printEtobiVsHanno(){
+	public function printYaVDRKarmicLucidComparison(){
         $ind_repos = array(
 			        'the-vdr-team' => $this->repos['Ubuntu']['karmic']['the-vdr-team'],
 			        'yavdr-testing-vdr' => $this->repos['Ubuntu']['lucid']['yavdr-testing-vdr']
