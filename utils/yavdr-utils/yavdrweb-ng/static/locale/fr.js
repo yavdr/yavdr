@@ -1,4 +1,4 @@
-var locale_fr = {
+﻿var locale_fr = {
     meta_lang: {
         local : 'Francais',
         int : 'French',
@@ -11,9 +11,19 @@ var locale_fr = {
             content: 'Bienvenue sur l\'interface Web de yaVDR!'
         },
         system : {
-            title: 'Systeme',
-            tabtip: 'Configuration des paramètres de base du systeme',
+            title: 'Système',
+            tabtip: 'Configuration des paramètres de base du système',
             content: 'Bienvenue sur l\'interface Web de yaVDR!'
+        },
+        demos : {
+            title: 'Démos',
+            tabtip: 'Validation de principe, démonstrations de nouvelles caractéristiques, peut être utilisé à des fins de test',
+            content: 'Validation de principe, démonstrations de nouvelles caractéristiques, peut être utilisé à des fins de test'
+        },
+        development : {
+            title: 'Développement',
+            tabtip: 'Nouvelles fonctionnalités qui sont en cours de développement, ne les utilisez pas. Ils ne fonctionnent pas correctement pour le moment.',
+            content: 'Nouvelles fonctionnalités qui sont en cours de développement, ne les utilisez pas. Ils ne fonctionnent pas correctement pour le moment.'
         },
         diagnose : {
             title: 'Diagnostiquer',
@@ -31,6 +41,14 @@ var locale_fr = {
             wait: 'Patienter S\'il vous plait...'
         }
     },
+    remote: {
+        menutab: {
+            title : 'Télécommande',
+            tabtip :'Télécommande-Paramètres (Récepteur de la télécommande)',
+            panel_title : 'Récepteur de la télécommande'
+        },
+        help: 'Il ya 3 différents serveurs LIRC compatibles supportés pour le moment. S\'il vous plaît choisissez celui qui convient le mieux pour votre appareil. <br /><h1>LIRC</h1><br /><br /> Celui-ci convient pour la plupart des appareils. S\'il vous plaît renseignez-vous, pour savoir quel pilote est supporté par votre appareil. Vous devez choisir le bon pilote pour votre périphérique et dans certain cas son pilote pour le port-série (Attric, montage perso et d\'autres dispositifs similaires), vous devez choisir le bon port série. <br /> <br /><h1>Input Lirc</h1><br /><br /> Certaines cartes DVB comprenne un récepteur de télécommande. La plupart d\'entre eux, ainsi que certains périphériques USB sont disponibles en tant que dispositifs dite d\'entrée. Vous avez seulement besoin de choisir le bon périphérique dans la liste déroulante. <br /><br /><h1>Irserver</h1><br /><br /> Certains cas d\'HTPC (par exemple OrigenAE) ont inclus un récepteur de télécommande , qui ne peut être utilisé qu\'avec irserver. Il vous suffit de l\'activer et de l\'enregistrer ensuite.' 
+    },
     lirc: {
         menutab: {
             title : 'LIRC',
@@ -40,18 +58,66 @@ var locale_fr = {
         help: 'Lorsque vous appuyez sur le bouton "Enregistrer" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur LIRC. Si vous n\'avez pas affecté les boutons de votre télécommande (via remote.conf), VDR vous offrira à travers l\'OSD, étape par étape, la configuration de chaque touche de votre télécommande. Cette boîte de dialogue disparaîtra après quelques secondes si aucune touche de la télécommande n\'est pressée. Vous pouvez relancer le dialogue en appuyant simplement sur "Enregistrer".',
         combobox: {
              tooltip : {
-                 driver: 'Driver',
-                 lirc_driver: 'LIRC Driver'
+                 driver: 'Pilote',
+                 lirc_driver: 'LIRC Pilote'
              },
-             emptytext: 'S\'il vous plaît choisissez un récepteur pour votre télécommande ...',
+             emptytext: 'S\'il vous plaît choisissez un récepteur pour votre télécommande...',
              label: 'Recepteur'
         },
         serial_radiogroup: {
              label : 'Interface Série',
-             boxlabel_none : 'Aucun'
+             boxlabel_none : 'aucun'
         },
         submit: {
-            waitmsg : 'Les paramètres LIRC vont maintenant être enregistrés.',    
+            waitmsg : 'Les paramètres LIRC sont enregistrés.',
+            success : 'Les paramètres ont été correctement enregistrés.',
+            failure : 'Erreur pendant l\'enregistrement des paramètres. S\'il vous plaît essayez de nouveau.'
+        },
+        error: {
+            json_decode : 'Impossible de décoder la liste de récepteur JSON'
+        }
+    },
+    inputlirc: {
+        menutab: {
+            title : 'Inputlirc',
+            tabtip :'Inputlirc-Paramètres (Récepteur de la télécommande)',
+            panel_title : 'Récepteur de la télécommande (LIRC)'
+        },
+        help: 'S\'il vous plaît Choisissez votre récepteur dans la liste ci-dessus. Lorsque vous appuyez sur le bouton "Enregistrer" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur Inputlirc.',
+        combobox: {
+             tooltip : {
+                 driver: 'Pilote',
+                 lirc_driver: 'Inputlirc Pilote'
+             },
+             emptytext: 'S\'il vous plaît choisissez un récepteur pour votre télécommande...',
+             label: 'Récepteur'
+        },
+        submit: {
+            waitmsg : 'Les paramètres du récepteur Inputlirc sont enregistrés.',    
+            success : 'Les paramètres ont été correctement enregistrés.',
+            failure : 'Erreur pendant l\'enregistrement des paramètres. S\'il vous plaît essayez de nouveau.'
+        },
+        error: {
+            json_decode : 'Impossible de décoder la liste de récepteur JSON'
+        }
+    },
+    irserver: {
+        menutab: {
+            title : 'IRServer',
+            tabtip :'IRServer-Paramètres (Récepteur de la télécommande)',
+            panel_title : 'Récepteur de la télécommande (IRServer)'
+        },
+        help: 'Lorsque vous appuyez sur le bouton "Enregistrer" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur IRServer.',
+        combobox: {
+             tooltip : {
+                 driver: 'Pilote',
+                 lirc_driver: 'IRDriver Pilote'
+             },
+             emptytext: 'S\'il vous plaît choisissez un récepteur pour votre télécommande...',
+             label: 'Récepteur'
+        },
+        submit: {
+            waitmsg : 'Les paramètres IRServer vont maintenant être enregistrés.',    
             success : 'Les paramètres ont été correctement enregistrés.',
             failure : 'Erreur pendant l\'enregistrement des paramètres. S\'il vous plaît essayez de nouveau.'
         },
@@ -66,8 +132,9 @@ var locale_fr = {
             panel_title : '' //unused
         },
         grid_header : { 
-            cid : 'N°',
-            cname : 'Chaîne Nom',
+            cnumber : 'N°',
+            cname : 'Nom de la chaîne',
+            cprovider : 'Fournisseur',
             cstr : 'Séquence Complete de la Chaîne'
         },
         grid_title : 'Liste des Chaînes (toute radio et chaînes de TV)' 
@@ -101,7 +168,9 @@ var locale_fr = {
         },
         items: {
             s3: 'suspend to RAM',
+            s3unavailable: 'suspend to RAM (unavailable)',
             s4: 'suspend to DISK',
+            s4unavailable: 'suspend to DISK  (unavailable)',
             s5: 'extinction',
             reboot: 'redémarrage "PowerOff" kernel'
         }
@@ -163,19 +232,19 @@ var locale_fr = {
                 tabtip : 'Entretien des montages NFS et partages'
             },
             labels: {
-                newDir : 'Répertoire',
+                newDir : 'Répertoire à distance',
                 add : 'Ajouter',
                 edit : 'Editer',
                 _delete: 'Supprimer',
                 apply: 'Appliquer'
             }
-        }, 
-    samba: { 
-        menutab: { 
-        title : 'Samba', 
-        tabtip : 'Entretien des partages samba' 
-        } 
-    } 
+        },
+        samba: {
+            menutab: {
+                title : 'Samba',
+                tabtip : 'Maintenir les partages Samba'
+            }
+       }
     },
     nvidia: {
         menutab: {
@@ -209,9 +278,9 @@ var locale_fr = {
         toolbar : {
             button : {
                 refresh: 'Rafraichir',
-                refresh_tooltip: 'S\'il vous plaît cliquer sur ce bouton pour rafraîchir le contenu du panneau.',
-                jumpdown: 'Sauter jusqu\'a la fin du panneau',
-                jumpdown_tooltip: 'S\'il vous plaît cliquer sur ce bouton pour sauter jusqu\'a la fin du panneau.'
+                refresh_tooltip: 'S\'il vous plaît cliquer sur ce bouton pour rafraîchir le contenu de la fenêtre.',
+                jumpdown: 'Bas de page',
+                jumpdown_tooltip: 'S\'il vous plaît cliquer sur ce bouton pour sauter en bas de page.'
             }
         },
         section : {
@@ -228,7 +297,7 @@ var locale_fr = {
                 description : 'Les fichiers des logs importants'
             },
             xbmc: {
-                title : 'XBMC-Plantage',
+                title : 'Logs des Fichiers d\'XBMC',
                 description : 'Trouver la cause des plantages d\'XBMC ou autres problèmes'
             },
             lirc: {
@@ -257,6 +326,13 @@ var locale_fr = {
             }
         }
     },
+    packages: {
+        menutab: {
+            title : 'yaVDR-Paquets',
+            tabtip : 'Vérifier quels paquets et versions sont installés',
+            panel_title : 'yaVDR-Paquets'
+        }
+    },
     timeout: {
         menutab: {
             title : 'GRUB délai',
@@ -266,7 +342,7 @@ var locale_fr = {
         label: 'Choisir le délai',
         button_label:  'Appliquer le délai',
         submit: {
-            waitmsg : 'Le paramètre du délai a été mis à jour.',    
+            waitmsg : 'Le paramètre du délai est mis à jour.',
             success : 'Succès.',
             failure : 'Echec.'
         },
@@ -281,13 +357,62 @@ var locale_fr = {
         },
         graphtft: {
             label: 'graphTFT',
-            boxlabel: 'activater'
+            boxlabel: 'activer'
+        },
+       deinterlacer_hd: {
+            label: 'Xine-HD-Désentrelacement  (défaut bob)'
+        },
+       deinterlacer_sd: {
+            label: 'Xine-SD-Désentrelacement  (défaut temporal)'
         },
         button_label:  'Appliquer les paramètres d\'affichage',
         submit: {
-            waitmsg : 'Les paramètres d\'affichage ont été mis à jour.',    
+            waitmsg : 'Paramètres d\'affichage mis à jour.',
             success : 'Succès.',
             failure : 'Echec.'
-        }
+        },
+        dualhead: {
+            label: 'double écran',
+            boxlabel: 'activer',
+            boxlabelunavailable: 'desactivé (< 2 ecrans trouvés)',
+            switch_label: 'changer d\'écran pour l\'interface VDR'
+        },
+        primary: 'primaire',
+        secondary: 'secondaire',
+        modeline: 'modeline actuelle',
+        device: 'dispositif',
+        resolution: 'résolution',
+        select_res: 'selectionner une résolution',
+        enabled: 'activer',
+        disabled: 'désactiver'
+    },
+    sound: {
+        menutab: {
+            title : 'Paramètres audio',
+            tabtip : 'Paramètres audio',
+            panel_title : 'Paramètres audio'
+        },
+        button_label:  'Appliquer les paramètres audio',
+        submit: {
+            waitmsg : 'Paramètres audio mis à jour.',
+            success : 'Succès.',
+            failure : 'Echec.'
+        },
+        label: 'Paramètres audio'
+    }
+    lifeguard: {
+        menutab: {
+            title : 'VDR-Lifeguard',
+            tabtip : 'Paramètres Lifeguard',
+            panel_title : 'Paramètres Lifeguard'
+        },
+        button_label:  'Appliquer les paramètres Lifeguard',
+        submit: {
+            waitmsg : 'Paramètres de Lifeguard mis à jour.',
+            success : 'Succès.',
+            failure : 'Echec.'
+        },
+        label: 'VDR-Lifeguard Paramètres'
     }
 };
+  
