@@ -72,16 +72,44 @@ using namespace std;
         else
         {
             if (event != "" && name != "") {
-            	list[next][0u] = event;
-            	list[next][1u] = name;
+    			DIR *Dir;
+    			struct dirent *DirEntry;
+
+    			Dir = opendir("/dev/input/by-id/");
+
+    			string pathById = "";
+    			while(DirEntry = readdir(Dir))
+    			{
+    				if ( DirEntry->d_type == DT_LNK )
+    				{
+    					char filename[256];
+    					char buffer[256];
+    					sprintf(filename, "/dev/input/by-id/%s", DirEntry->d_name);
+    					int len = readlink(filename, buffer, 256);
+    					if (len >= 0) {
+    						buffer[len] = 0;
+    						string symLink = string(buffer);
+    						symLink = symLink.substr( symLink.size() - event.size());
+
+    						if (symLink == event) {
+    							pathById = string(filename);
+    							break;
+    						}
+    					}
+    				}
+    			}
+    			if (pathById != "") {
+    				list[next][0u] = pathById;
+    				list[next][1u] = name;
+                    next++;
+    			}
+
                 event = "";
                 name = "";
-
-                next++;
             }
         }
     }
-    f.close();                // Datei wieder schließen
+    f.close(); // Datei wieder schließen
     
     Json::Value json;
     json["receiverlist"] = list;
