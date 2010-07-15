@@ -27,8 +27,10 @@ nvidia-settings
 nvram-wakeup
 r8168-dkms
 smbfs
-samba4
-samba4-clients
+samba
+samba-common
+samba-common-bin
+smbclient
 ssh
 update-manager-core
 ureadahead
