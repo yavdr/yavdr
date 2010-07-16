@@ -16,6 +16,7 @@ lirc
 libxine1-xvdr
 linux-firmware
 linux-firmware-nonfree
+linux-firmware-yavdr
 logrotate
 nfs-common
 nfs-kernel-server
