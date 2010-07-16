@@ -26,7 +26,6 @@ ntfs-3g
 nvidia-current
 nvidia-settings
 nvram-wakeup
-r8168-dkms
 smbfs
 samba
 samba-common
