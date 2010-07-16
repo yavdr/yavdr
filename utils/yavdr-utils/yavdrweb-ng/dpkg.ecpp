@@ -1,0 +1,57 @@
+<%pre>
+#include <stdio.h>
+#include <string>
+
+using namespace std;
+</%pre><%args>
+command;
+package;
+</%args><%cpp>
+reply.setHeader ("Cache-Control", "no-cache", false);
+
+//restrict commands
+
+if (command == "install" ||
+        command == "remove" ||
+        command == "autoremove")
+{
+    string cmd = "apt-get -d " + command;
+    if (command == "install")
+       cmd += " -b -n1";
+    else if (command == "df")
+        cmd += " -h";
+    else if (command == "aplay")
+        cmd += " -L";
+    else if (command == "dpkg")
+        cmd += " --list | egrep \"ii  (vdr|xbmc|yavdr)\" | cut -c5-";
+
+    cmd = "apt-get -y -d install " + package + " 2>&1";
+
+    if (FILE *stream = popen(cmd.c_str(), "r"))
+    {
+		reply.setDirectMode(200, "OK");
+
+        reply.out() << "<html><head>"
+        		<< "<link rel=\"stylesheet\" type=\"text/css\" href=\"static/dpkg.css\" />"
+        		<< "<body>\n";
+        reply.out().flush();
+        char buffer[1024];
+        while (!feof(stream))
+        {
+          if (fgets(buffer, sizeof(buffer), stream) != NULL)
+          {
+               reply.out() << string(buffer).substr(0, strlen(buffer) - 1 ); //we must escape special chars via sout (xss)
+               reply.out() << "<br />\n";
+               reply.out().flush();
+          }
+        }
+        pclose(stream); 
+        reply.out() << "</body></html>\n";
+        reply.out().flush();
+    }
+}
+else
+    reply.out() << "Illegal command.";
+
+</%cpp>
+

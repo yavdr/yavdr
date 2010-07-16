@@ -15,11 +15,11 @@ function getPackagesForm(){
     var grid = new Ext.grid.GridPanel({
         store: store,
         columns: [
+            {header: "",width: 22, dataIndex: 'installed', sortable: true, renderer: renderState},
             {header: "Package", width: 180, dataIndex: 'Package', sortable: true},
             {header: "Version", width: 180, dataIndex: 'Version', sortable: true},
             {header: "Maintainer", width: 180, dataIndex: 'Maintainer', sortable: true},
-            {header: "Description",width: 1000, dataIndex: 'Description', sortable: true},
-            {header: "",width: 22, dataIndex: 'installed', sortable: true, renderer: renderState}
+            {header: "Description",width: 1000, dataIndex: 'Description', sortable: true}
         ],
         sm: new Ext.grid.RowSelectionModel({singleSelect: true}),
         viewConfig: {
@@ -27,7 +27,47 @@ function getPackagesForm(){
         },
         height:210,
         split: true,
-        region: 'north'
+        region: 'north',
+        listeners: {
+            celldblclick: function(grid, row, col, event ) {
+                if ("installed" == grid.getColumnModel().getDataIndex(col)) {
+                    rec = grid.getStore().getAt(row);
+                    package = rec.id;
+                    // Show a dialog using config options:
+                    Ext.Msg.show({
+                       title:'Install package?',
+                       msg: 'Would you like to install package "' + package + '"?',
+                       buttons: Ext.Msg.YESNO,
+                       fn: function( buttonId, text, opt) {
+                           if (buttonId == "yes") {
+                               var win = new Ext.Window({
+                                   layout: 'fit',
+                                   id: 'installer',
+                                   title: 'yaVDR Paket Installer',
+                                   width:600,
+                                   height:450,
+                                   items: [{
+                                       html: '<iframe src="/dpkg?command=install&package='+package+'" style="width: 584px; height: 416px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
+                                   }],
+                                   resizable:false,
+                                   closable: false,
+                                   modal: true
+                               });
+                               
+                               win.addButton({
+                                   id: 'closeinstaller',
+                                   disabled:true,
+                                   text: 'Close'
+                               }, function() { win.close(); } );
+                               win.show(this);
+                           }
+                       },
+                       animEl: 'elId',
+                       icon: Ext.MessageBox.QUESTION
+                    });
+                }
+            } 
+        }
     });
     
     // define a template to use for the detail view

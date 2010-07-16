@@ -11,7 +11,7 @@ yavdrweb.so: ../common/make_dirs.o \
              get_shell_response.o get_hdf_value.o \
              get_autofs_config.o set_autofs_config.o \
              get_inputlirc.o get_irserver.o set_inputlirc.o set_irserver.o \
-             get_x11.o set_x11.o get_packages.o
+             get_x11.o set_x11.o get_packages.o dpkg.o
 	${CXX} -o $@ $^ ${LDFLAGS}
 
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp .png
@@ -20,7 +20,7 @@ ECPPC=env ${EXTRA_ENV} ecppc -v
 TNTNET=env ${EXTRA_ENV} tntnet
 CXXFLAGS+=-I.. -I/usr/include -I/usr/include/ClearSilver -fPIC -O2
 CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl -fPIC -O2
-LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lpam -lXNVCtrl -lX11 -lXext -ljson #-lcxxtools
+LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lpam -lXNVCtrl -lX11 -lXext -ljson
 
 .ecpp.cpp:
 	${ECPPC} ${ECPPFLAGS} ${ECPPFLAGS_CPP} $<

@@ -67,6 +67,7 @@ if (lang == "")
         <script type="text/javascript" src="ext-ux/Portlet.js"></script>
         <script type="text/javascript" src="ext-ux/Spinner.js"></script>
         <script type="text/javascript" src="ext-ux/SpinnerField.js"></script>
+        <script type="text/javascript" src="static/ux/miframe<? devmode != "0" ? "-debug" ?>.js"></script>
 
         <script type="text/javascript" src="static/locale/en.js"></script>
 <{ if (lang != "en") reply.out() << "        <script type=\"text/javascript\" src=\"static/locale/" << lang << ".js\"></script>\n"; }>
