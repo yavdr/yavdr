@@ -12,20 +12,18 @@ reply.setHeader ("Cache-Control", "no-cache", false);
 //restrict commands
 
 if (command == "install" ||
-        command == "remove" ||
+        command == "update" ||
         command == "autoremove")
 {
-    string cmd = "apt-get -d " + command;
+    string cmd = "";
     if (command == "install")
-       cmd += " -b -n1";
-    else if (command == "df")
-        cmd += " -h";
-    else if (command == "aplay")
-        cmd += " -L";
-    else if (command == "dpkg")
-        cmd += " --list | egrep \"ii  (vdr|xbmc|yavdr)\" | cut -c5-";
+       cmd = "apt-get -y install "+ package;
+    else if (command == "update")
+        cmd = "apt-get update";
+    else if (command == "autoremove")
+        cmd = "apt-get -y autoremove";
 
-    cmd = "apt-get -y -d install " + package + " 2>&1";
+    cmd += " 2>&1";
 
     if (FILE *stream = popen(cmd.c_str(), "r"))
     {

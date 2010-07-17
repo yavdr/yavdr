@@ -47,7 +47,7 @@ function getPackagesForm(){
                                    width:600,
                                    height:450,
                                    items: [{
-                                       html: '<iframe src="/dpkg?command=install&package='+package+'" style="width: 584px; height: 416px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
+                                       html: '<iframe src="/dpkg?command=install&package='+package+'" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
                                    }],
                                    resizable:false,
                                    closable: false,
@@ -58,7 +58,7 @@ function getPackagesForm(){
                                    id: 'closeinstaller',
                                    disabled:true,
                                    text: 'Close'
-                               }, function() { win.close(); } );
+                               }, function() { grid.getStore().load(); win.close(); } );
                                win.show(this);
                            }
                        },
@@ -95,7 +95,7 @@ function getPackagesForm(){
         //height: 500,
         layout: 'fit',
         items: [
-             grid,
+            grid,
             {
                 id: 'detailPanel',
                 region: 'center',
@@ -107,7 +107,52 @@ function getPackagesForm(){
                 html: 'Please select a package to see additional details.'
             }]
     });
+    
+    myform.addButton('apt-get update', function() {
+        var win = new Ext.Window({
+            layout: 'fit',
+            id: 'installer',
+            title: 'yaVDR Paket Installer',
+            width:600,
+            height:450,
+            items: [{
+                html: '<iframe src="/dpkg?command=update" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
+            }],
+            resizable:false,
+            closable: false,
+            modal: true
+        });
+       
+        win.addButton({
+            id: 'closeinstaller',
+            disabled:true,
+            text: 'Close'
+        }, function() { grid.getStore().load(); win.close(); } );
+        win.show(this);
+    });
 
+    myform.addButton('apt-get autoremove', function() {
+        var win = new Ext.Window({
+            layout: 'fit',
+            id: 'installer',
+            title: 'yaVDR Paket Installer',
+            width:600,
+            height:450,
+            items: [{
+                html: '<iframe src="/dpkg?command=autoremove" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
+            }],
+            resizable:false,
+            closable: false,
+            modal: true
+        });
+       
+        win.addButton({
+            id: 'closeinstaller',
+            disabled:true,
+            text: 'Close'
+        }, function() { grid.getStore().load(); win.close(); } );
+        win.show(this);
+    });
     store.load();
     
     return myform;
