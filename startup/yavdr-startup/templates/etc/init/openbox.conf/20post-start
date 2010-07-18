@@ -9,6 +9,8 @@ if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
     fi
 fi
 DISPLAY=:1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
+DISPLAY=:1 /usr/bin/unclutter -idle 1 -root -visible -grab &
+DISPLAY=:1 devilspie &
 LANG=C /sbin/status vdr | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 end script
 
