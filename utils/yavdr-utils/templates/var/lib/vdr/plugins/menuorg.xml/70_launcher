@@ -1,0 +1,1 @@
+        <command name="Launcher" execute="/sbin/initctl start --no-wait toggle JOBNAME=launcher|at now" />
