@@ -41,7 +41,7 @@ Plugin {
         button {
             icon = mozilla-firefox
             tooltip = Firefox web browser
-            action = firefox
+            action = /sbin/initctl start --no-wait firefox
         }
         button {
             icon = mozilla-firefox
@@ -126,7 +126,7 @@ Plugin {
     config {
         ShowIconified = true
         ShowMapped = true
-        ShowAllDesks = false
+        ShowAllDesks = true
         tooltips = true
         IconsOnly = false
         MaxTaskWidth = 150
