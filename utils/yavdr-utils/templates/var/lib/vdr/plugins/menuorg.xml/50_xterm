@@ -1,1 +1,2 @@
-        <command name="Xterm" execute="/sbin/initctl start --no-wait xterm|at now" />
+        <command name="Xterm" execute="echo '/sbin/initctl start --no-wait xterm'|at now" />
+

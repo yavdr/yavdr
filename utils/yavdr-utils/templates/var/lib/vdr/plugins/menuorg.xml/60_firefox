@@ -1,1 +1,2 @@
-        <command name="Internet" execute="/sbin/initctl start --no-wait firefox|at now" />
+        <command name="Internet" execute="echo '/sbin/initctl start --no-wait firefox'|at now" />
+
