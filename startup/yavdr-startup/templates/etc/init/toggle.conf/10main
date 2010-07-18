@@ -1,0 +1,8 @@
+description     "toggle job $JOBNAME"
+author          "Holger Reichelt <holgerr@yavdr.de>"
+
+script
+stop $JOBNAME || start $JOBNAME
+end script
+
+
