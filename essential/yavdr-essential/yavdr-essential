@@ -6,7 +6,9 @@ at
 autofs
 build-essential
 cpufrequtils
+devilspie
 ethtool
+fbpanel
 firefox
 graphtft-fe
 irserver
@@ -32,6 +34,7 @@ samba-common
 samba-common-bin
 smbclient
 ssh
+unclutter
 update-manager-core
 ureadahead
 vdr
