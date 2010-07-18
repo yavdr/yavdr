@@ -10,6 +10,8 @@ if [ "$LIRCD" = "lircd" ]; then
     elif [ -e /usr/share/lirc/extras/more_remotes/$LIRCD_CONF ]; then
       ln -sf /usr/share/lirc/extras/more_remotes/$LIRCD_CONF /etc/lirc/lircd.conf
     fi
+  elif [ -L /etc/lirc/lircd.conf ]; then 
+    rm -f /etc/lirc/lircd.conf
   fi
 else 
   rm -f /etc/modprobe.d/lirc-blacklist.conf
