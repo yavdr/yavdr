@@ -36,7 +36,7 @@ Plugin {
         button {
             icon = gnome-terminal
             tooltip = Terminal
-            action = /usr/bin/x-terminal-emulator
+            action = /sbin/initctl start --no-wait xterm
         }
         button {
             icon = mozilla-firefox
