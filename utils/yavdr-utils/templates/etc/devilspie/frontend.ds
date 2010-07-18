@@ -1,0 +1,12 @@
+(
+if
+(matches (application_name) "VDR.+")
+    (begin
+(pin)
+(skip_pager)
+(undecorate)
+(maximize)
+(below)
+    )
+)
+
