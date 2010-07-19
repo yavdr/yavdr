@@ -714,6 +714,18 @@
     <maximized>false</maximized>
  </application>
 
+   <application name="VDR*">
+     <decor>no</decor>
+    <maximized>true</maximized>
+    <skip_pager>yes</skip_pager>
+ </application>
+
+   <application name="xine*">
+     <decor>no</decor>
+    <maximized>true</maximized>
+    <skip_pager>yes</skip_pager>
+ </application>
+
 </applications>
 
 </openbox_config>
