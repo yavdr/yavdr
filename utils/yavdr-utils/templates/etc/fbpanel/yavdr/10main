@@ -7,15 +7,15 @@ Global {
     allign = center
     margin = 0
     widthtype = percent
-    width = 70
+    width = 100
     height = 75
     transparent = true
     tintcolor = #4e78b1
-    alpha = 90
+    alpha = 0
     setdocktype = true
     setpartialstrut = true
-    autohide = false
-    heightWhenHidden = 2
+    autohide = true
+    heightWhenHidden = 1
 }
 
 Plugin {

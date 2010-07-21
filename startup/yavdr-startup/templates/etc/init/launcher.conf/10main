@@ -1,6 +1,9 @@
 description     "Launcher for external applications"
 author          "Holger Reichelt <holgerr@yavdr.de>"
 
+start on started openbox
+stop on stopping openbox
+
 script
 export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/var/lib/vdr
