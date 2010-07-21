@@ -10,7 +10,7 @@ export DISPLAY
 env XORGCONFIG=/etc/X11/xorg.conf.yavdr
 export XORGCONFIG
 
-exec xinit /usr/bin/openbox --config-file /var/lib/vdr/.config/openbox/rc.xml -- :1 vt9
+exec xinit /usr/bin/openbox --config-file /etc/openbox/rc.xml -- :1 vt9
 
 <?cs /if ?>
 
