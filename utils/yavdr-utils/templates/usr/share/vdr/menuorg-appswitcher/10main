@@ -10,13 +10,6 @@ for ARG in $@ ; do
         standalone)
                  STANDALONE=$VALUE
                  ;;
-        desktop)
-                 DESKTOP=$VALUE
-                 DESKTOP=$(( $DESKTOP -1 ))
-                 ;;
-        display)
-                 XDISPLAY=$VALUE
-                 ;;
         window)
                 WINDOW=$VALUE
                 ;;
@@ -33,7 +26,6 @@ done
 
 START="/sbin/initctl start --no-wait"
 STOP="/sbin/initctl stop --no-wait"
-WMCTRL="/usr/bin/wmctrl"
 
 # minimum required arguments
 if [ -z $STANDALONE ] || [ -z $APP ]; then
@@ -53,15 +45,7 @@ if [ "x$STANDALONE" = "xyes" ]; then
     $STOP vdr-frontend
     $START $APP $OPTIONS STANDALONE=yes
 else
-    if [ ! -z "$DESKTOP" ]; then
-        $WMCTRL -s $DESKTOP
-    fi
     $START $APP $OPTIONS
-
-    if [ "x$WINDOW" = "xup" ]; then
-        $WMCTRL -r VDR -b toggle,fullscreen
-        $WMCTRL -r VDR -b remove,fullscreen,above -e 3,0,0,500,300
-    fi
 fi
 
 

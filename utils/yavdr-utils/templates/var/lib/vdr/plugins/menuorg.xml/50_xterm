@@ -1,2 +1,1 @@
-        <command name="Xterm" execute="echo '/sbin/initctl start --no-wait xterm'|at now" />
-
+        <command name="Xterm" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=yes app=xterm'|at now" />
