@@ -6,20 +6,4 @@
          <plugin name="suspendoutput" />
          <plugin name="recstatus" />
     </menu>
-    <system name="Schedule" />
-    <system name="Channels" />
-    <menu name="Timer">
-        <system name="Timers" />
-        <plugin name="epgsearchonly" />
-        <plugin name="quickepgsearch" />
-        <plugin name="conflictcheckonly" />
-    </menu>
-    <menu name="Video">
-        <system name="Recordings" />
-        <plugin name="burn" />
-        <plugin name="dvdswitch" />
-        <plugin name="dvdselect" />
-        <plugin name="dvd" />
-        <plugin name="xineliboutput" />
-    </menu>
 </menus>
