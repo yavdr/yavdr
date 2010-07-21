@@ -425,7 +425,7 @@ AngleMenu {
 
 # jump to Part Menu
 PartMenu {
-	key = C
+	key = E
 	modifier = none
 }
 
