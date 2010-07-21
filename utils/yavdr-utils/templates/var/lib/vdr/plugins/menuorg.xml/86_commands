@@ -1,0 +1,6 @@
+         <menu name="Befehle">
+               <command name="System herunterfahren" execute="echo '/usr/bin/svdrpsend hitk power' | at now" />
+               <command name="USB Massenspeicher sicher entfernen" execute="HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &> /dev/null" />
+               <command name="Aufnahmen-Liste aktualisieren" execute="echo '/usr/bin/touch /var/lib/video/.update' | at now" />
+               <system name="Commands" title="Sonstige Befehle" />
+         </menu>

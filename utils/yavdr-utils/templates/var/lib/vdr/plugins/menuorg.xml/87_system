@@ -1,0 +1,5 @@
+         <system name="Setup" />
+         <plugin name="femon" />
+         <plugin name="avolctl" />
+         <plugin name="suspendoutput" />
+         <plugin name="recstatus" />
