@@ -1,0 +1,11 @@
+description     "remove cursor from TV picture"
+author          "Steffen Barszus <steffenbpunkt@gmail.com>"
+
+env DISPLAY=:1
+export DISPLAY
+
+start on starting vdr-frontend
+stop on stopping vdr-frontend
+
+exec /usr/bin/unclutter -idle 1 -root -visible -grab
+
