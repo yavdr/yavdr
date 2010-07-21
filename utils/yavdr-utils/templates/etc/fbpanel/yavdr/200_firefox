@@ -1,0 +1,5 @@
+        button {
+            icon = mozilla-firefox
+            tooltip = Firefox web browser
+            action = /sbin/initctl start --no-wait firefox
+        }
