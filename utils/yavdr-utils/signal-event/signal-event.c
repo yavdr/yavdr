@@ -31,7 +31,7 @@ void process_template(char *dir)
     initialpathlen = strlen(dir);
   }
 
-  numtemps = scandir(dir, &namelist, NULL, alphasort);
+  numtemps = scandir(dir, &namelist, scandirfilter, alphasort);
   if (numtemps < 0)
   {
     syslog(LOG_ERR, "ERROR: scandir %m: %s", dir);
