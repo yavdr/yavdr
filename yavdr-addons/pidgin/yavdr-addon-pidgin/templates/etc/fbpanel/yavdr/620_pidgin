@@ -1,5 +1,5 @@
         button {
             image = /usr/share/yavdr/images/pidgin.svg
-            tooltip = Terminal
+            tooltip = Chat
             action = /usr/share/vdr/menuorg-appswitcher standalone=no app=pidgin
         }
