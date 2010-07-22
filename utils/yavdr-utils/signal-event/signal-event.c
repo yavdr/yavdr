@@ -49,7 +49,8 @@ void process_template(char *dir)
         }
         if (S_ISDIR(statrec.st_mode))
         {
-          process_template(file);
+          if (strcmp(file, ".") != 0 && strcmp(file, "..") != 0 )
+        	process_template(file);
         }
         else
         {
