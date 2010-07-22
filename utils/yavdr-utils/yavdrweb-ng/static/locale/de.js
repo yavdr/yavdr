@@ -17,13 +17,13 @@ var locale_de = {
         },
         demos : {
             title: 'Demos',
-            tabtip: 'Proof of concept, Ausblick auf mögliche neue Features',
-            content: 'Proof of concept, Ausblick auf mögliche neue Features'
+            tabtip: 'Machbarkeitsnachweis, Ausblick auf mögliche neue Features',
+            content: 'Machbarkeitsnachweis, Ausblick auf mögliche neue Features'
         },
         development : {
             title: 'Development',
-            tabtip: 'New features that are under construction, don\'t use them. They don\'t work properly yet.',
-            content: 'New features that are under construction, don\'t use them. They don\'t work properly yet.'
+            tabtip: 'Neue Funktionen die sich in Entwicklung befinden. Nicht benutzen, funktioniert noch nicht richtig.',
+            content: 'Neue Funktionen die sich in Entwicklung befinden. Nicht benutzen, funktioniert noch nicht richtig.'
         },        
         diagnose : {
             title: 'Diagnose',
@@ -49,10 +49,10 @@ var locale_de = {
         },
         help: 
             'Um den Infrarot-Empfänger Ihrer Fernbedienung in Betrieb zu nehmen, '+
-            'wählen Sie LIRC oder einen der beiden zu LIRC kompatiblen Server (Inputlirc oder IRServer). '+
+            'wählen Sie LIRC oder einen der beiden zu LIRC kompatiblen Server (Inputlirc oder IRServer) aus. '+
             'Sie sollten denjenigen Server auswählen, welcher am besten zu der von Ihnen verwendeten Hardware passt. ' +
-            'Sobald Sie den jeweiligen Button "Speichern" drücken, wird der VDR neu gestartet, um dem VDR die Änderung bekanntzumachen.<br />' +
-            'Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben, wird der VDR Ihnen direkt nach dem Neustart auf dem On-Screen-Display eine Anlernphase für Ihre Fernbedienung anbieten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie erneut auf den Button "Speichern" drücken.'
+            'Sobald Sie den Button "Speichern" drücken, wird die Anwendung VDR neu gestartet, um die Änderung zu übernehmen.<br />' +
+            'Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben, wird Ihnen direkt nach dem Neustart auf der Bildschirmanzeige ("On-Screen-Display") eine Anlernphase für Ihre Fernbedienung angeboten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie erneut auf den Button "Speichern" drücken.'
     },
     lirc: {
         menutab: {
@@ -76,9 +76,9 @@ var locale_de = {
              boxlabel_none : 'keine'
         },
         submit: {
-            waitmsg : 'Fernbedienungs-Settings werden gespeichert.',    
+            waitmsg : 'Fernbedienungs-Einstellungen werden gespeichert.',    
             success : 'Ihre Auswahl wurde erfolgreich gespeichert.',
-            failure : 'Fehler beim Speichern. Bitte noch einmal versuchen.'
+            failure : 'Fehler beim Speichern. Bitte erneut versuchen.'
         },
         error: {
             json_decode : 'Konnte JSON Empfängerliste nicht dekodieren'
@@ -113,10 +113,10 @@ var locale_de = {
     irserver: {
         menutab: {
             title : 'IRServer',
-            tabtip :'IRServer-Settings (Remote Control Receiver)',
+            tabtip :'IRServer-Einstellungen (Remote Control Receiver)',
             panel_title : 'IRServer-Einstellungen für Fernbedienungen (IRServer)'
         },
-        help: 'Einige HTPC-Gehäuse (z.B. OrigonAE) haben integrierte Empfänger, '+
+        help: 'Einige HTPC-Gehäuse (z.B. OrigonAE) haben integrierte Infrarot-Empfänger, '+
             'welche einen speziellen Server (Irserver) benötigen. Hier muss nur der Server aktiviert und anschließend gespeichert werden.',
         combobox: {
              tooltip : {
@@ -127,7 +127,7 @@ var locale_de = {
              label: 'Empfänger'
         },
         submit: {
-            waitmsg : 'Fernbedienungs-Settings werden gespeichert.',    
+            waitmsg : 'Fernbedienungs-Einstellungen werden gespeichert.',    
             success : 'Ihre Auswahl wurde erfolgreich gespeichert.',
             failure : 'Fehler beim Speichern. Bitte noch einmal versuchen.'
         },
@@ -166,7 +166,7 @@ var locale_de = {
     shutdown: {
         menutab: {
             title : 'VDR-Shutdown w&auml;hlen',
-            tabtip : 'Wechseln Sie zwischen verschiedenen Shutdown-Mothoden',
+            tabtip : 'Wechseln Sie zwischen verschiedenen Shutdown-Methoden',
             panel_title : 'VDR-Shutdown'
         },
         label: 'Gew&uuml;nschte Methode',
@@ -187,9 +187,9 @@ var locale_de = {
     },
     upload: {
         menutab: {
-            title : 'VDR-Konfig-Upload',
+            title : 'VDR-Konfig.-Upload',
             tabtip : 'Laden Sie existierende VDR-Konfigurationsdateien hoch',
-            panel_title : 'VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei-Version)'
+            panel_title : 'VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei)'
         },
         button_label: 'Datei hochladen',
         submit: {
@@ -200,32 +200,32 @@ var locale_de = {
     },
     system: {
         menutab: {
-            title : 'System',
+            title : 'Wartung',
             tabtip : 'Starten Sie den VDR oder den Rechner neu',
-            panel_title : 'System-Kommandos'
+            panel_title : 'Wartungs-Befehle'
         },
         vdr_restart : {
-            label: 'VDR Backend neu starten',
+            label: 'VDR Backend Neustarten!',
             submit: {
-                waitmsg: 'Das Signal zum Neustarten des VDR wird abgesetzt.',
-                success: 'Der VDR wird nun neu gestartet.',
-                failure: 'Problem beim Absetzen des Signals. Bitte noch einmal versuchen.'
+                waitmsg: 'Das Signal zum Neustarten des VDR wird gesendet.',
+                success: 'Der VDR wird jetzt neu gestartet.',
+                failure: 'Problem beim Senden des Signals. Bitte erneut versuchen.'
             }
         },
         kill_xbmc : {
-            label: 'Eingefrorenes XBMC abwürgen',
+            label: 'XBMC-Beendung erzwingen',
             submit: {
-                waitmsg: 'Das Signal zum Abwürgen von XBMC wird abgesetzt.',
-                success: 'XBMC wird nun gestoppt.',
-                failure: 'Problem beim Absetzen des Signals. Bitte noch einmal versuchen.'
+                waitmsg: 'Das Signal zum Beenden von XBMC wird gesendet.',
+                success: 'XBMC wird jetzt beendet.',
+                failure: 'Problem beim Senden des Signals. Bitte erneut versuchen.'
             }
         },
         system_restart : {
-            label: 'Rechner neu starten (Vorsicht: Keine Sicherheitsabfrage!)',
+            label: 'Rechner sofort neu starten! (Keine weitere Warnung)',
             submit: {
-                waitmsg: 'Das Signal zum Neu-Start wird abgesetzt.',
-                success: 'Der Rechner wird nun neu gestartet.',
-                failure: 'Problem beim Absetzen des Signals. Bitte noch einmal versuchen.'
+                waitmsg: 'Das Signal zum Neustart wird gesendet.',
+                success: 'Der Rechner wird jetzt neu gestartet.',
+                failure: 'Problem beim Senden des Signals. Bitte erneut versuchen.'
             }
         }
     },
@@ -233,13 +233,13 @@ var locale_de = {
         menutab: {
             title : 'Netzwerk',
             tabtip : 'Verwalten des Netzwerks',
-            panel_title : 'Netzwerk-Konfiguration'
+            panel_title : 'Netzwerkkonfiguration'
         },
         nfs: {
-	    help: 'Hier können NFS Freigaben von anderen Rechnern eingebunden werden. Die Verzeichnisse müssen in der Form "server:/pfad" angegeben werden. Der Button "Übernehmen" trägt sie tatsächlich in die lokale Konfiguration ein. Beim nächsten Neustart des VDR stehen sie dann zur Verfügung.',
+	    help: 'Hier können NFS Freigaben von anderen Hosts eingebunden werden. Die Verzeichnisse müssen in der Form "host:/ein/verzeichnis" eingegeben werden. Der Knopf "Übernehmen" trägt die Verzeichnisse in die lokale Konfiguration ein. Sie müssen den VDR Neustarten (Menü "System", Punkt "Wartung"), um die Änderungen zu aktivieren!',
             menutab: {
                 title : 'NFS',
-                tabtip : 'Verwalten der NFS Mounts und Freigaben'
+                tabtip : 'Verwalten der NFS-Mounts und -Freigaben'
             },
             labels: {
                 newDir : 'Entferntes Verzeichnis',
@@ -252,7 +252,7 @@ var locale_de = {
 	samba: {
 	    menutab: {
 		title : 'Samba',
-		tabtip : 'Verwalten der Samba Freigaben'
+		tabtip : 'Verwalten der Samba-Freigaben'
 	    }
 	}
     },
@@ -260,27 +260,27 @@ var locale_de = {
         menutab: {
             title : 'Nvidia',
             tabtip : 'Nvidia-Einstellungen pflegen',
-            panel_title : 'Nvidia Konfiguration'
+            panel_title : 'Nvidia-Konfiguration'
         },
-        overscan_slider_label : 'Nvidia-Overscan Kompensation',
+        overscan_slider_label : 'Nvidia Overscan-Kompensation',
         button_label : 'Wert anwenden',
         submit: {
-            waitmsg : 'Der Nvidia-Overscan-Wert wird aktualisiert.',
+            waitmsg : 'Der Nvidia Overscan-Wert wird aktualisiert.',
             success : 'Erfolg.',
             failure : 'Fehler.'
         }
     },
     webfrontend: {
         menutab: {
-            title : 'Web Frontend',
+            title : 'Web-Frontend',
             tabtip : 'Das Erscheinungsbild des Web-Frontends anpassen.',
             panel_title : 'Web Frontend Einstellungen'
         },
         label: 'Wählen Sie die Sprache des Web Frontends',
-        button_label:  'Anwenden',
+        button_label:  'Übernehmen',
         submit: {
-            waitmsg : 'Die Spracheinstellungen für das Web Frontend werden aktualisiert.',
-            success : 'Die Spracheinstellungen für das Web Frontend wurden erfolgreich aktualisiert. Möchten Sie das Web-Frontend nun mit den neuen Spracheinstellungen laden?',
+            waitmsg : 'Die Spracheinstellungen für das Web-Frontend werden aktualisiert.',
+            success : 'Die Spracheinstellungen für das Web-Frontend wurden erfolgreich aktualisiert. Möchten Sie das Web-Frontend nun mit den neuen Spracheinstellungen neu laden?',
             failure : 'Fehler.'
         }
     },
@@ -288,15 +288,15 @@ var locale_de = {
         toolbar : {
             button : {
                 refresh: 'Aktualisieren',
-                refresh_tooltip: 'Klicken Sie auf diesen Button, um den Inhalt des Panels zu aktualisieren.',
+                refresh_tooltip: 'Klicken Sie hier, um den Inhalt der Seite zu aktualisieren.',
                 jumpdown: 'Ans Ende springen',
-                jumpdown_tooltip: 'Klicken Sie auf diesen Button, um an das Endes des Inhalts dieses Panels zu springen.'
+                jumpdown_tooltip: 'Klicken Sie hier, um an das Endes des Inhalts dieser Seite zu springen.'
             }
         },
         section : {
             system_info: {
                 title : 'System-Informationen', 
-                description : 'Netzwerk-Status, Auslastung und Prozesse, Dateisystem-Belegung, Kernel',
+                description : 'Netzwerk-Status, Auslastung, Prozesse, Dateisystem-Belegung und Kernel',
                 ifconfig : 'Netzwerkstatus',
                 top: 'Systemauslastung',
                 dmesg: 'Kernel',
@@ -307,8 +307,8 @@ var locale_de = {
                 description : 'Wichtige System-Logfiles'
             },
             xbmc: {
-                title : 'XBMC-Crashes',
-                description : 'Finden Sie die Ursache von XBMC-Crashes oder andere XBMC-Problemen'
+                title : 'XBMC-Abstürze',
+                description : 'Finden Sie die Ursache für XBMC-Abstürze oder XBMC-Probleme'
             },
             lirc: {
                 title : 'LIRC-Konfiguration',
@@ -324,7 +324,7 @@ var locale_de = {
             },
             sound: {
                 title : 'Sound (ALSA)',
-                description : 'Digitalsound-Problemdiagnose (digital/analog-Ausgabe)'
+                description : 'Digitalsound-Problemdiagnose (Digital-/Analog-Ausgabe)'
             },
             packages: {
                 title : 'Pakete',
@@ -332,7 +332,7 @@ var locale_de = {
             },            
             yavdr: {
                 title : 'yaVDR-Utils',
-                description : 'yaVDR-Web-Frontend Diagnose (Datenbank + Web-Server)'
+                description : 'yaVDR-Web-Frontend Diagnose (Datenbank + Webserver)'
             }
         }
     },
@@ -382,7 +382,7 @@ var locale_de = {
             failure : 'Fehler.'
         },
         dualhead: {
-            label: '2-Bildschirmbetrieb',
+            label: 'Zwei-Bildschirm Betrieb',
             boxlabel: 'aktiviert',
             boxlabelunavailable: 'deaktiviert (< 2 Bildschirme gefunden)',
             switch_label: 'Wechsel des VDR-Frontends auf 2. Bildschirm'
@@ -398,26 +398,26 @@ var locale_de = {
     },
     sound: {
         menutab: {
-            title : 'Sound',
-            tabtip : 'Sound settings',
-            panel_title : 'Sound'
+            title : 'Ton',
+            tabtip : 'Ton-Konfiguration',
+            panel_title : 'Ton'
         },
-        button_label:  'Setze Soundeinstellungen',
+        button_label:  'Setze Ton-Einstellungen',
         submit: {
             waitmsg : 'Einstellungen werden aktualisiert.',    
             success : 'Erfolg.',
             failure : 'Fehler.'
         },
-        label: 'Soundeinstellungen'
+        label: 'Ton-Konfiguration'
     },
     lifeguard: {
-        help: 'VDR-Lifeguard prüft vor dem Shutdown ob diverse Prozesse aktiv sind. Sollen die Prozesse nicht unterbrochen werden, wird der Shutdown verschoben. Aktivieren Sie hier die Prozesse welche den Shutdown verhindern sollen. Nichts markiert ist gleich VDR-Lifeguard deaktiviert',
+        help: 'VDR-Lifeguard kann vor dem Ausschalten prüfen ob bestimmte Prozesse aktiv sind. Soll ein Prozess nicht unterbrochen werden, wird das Ausschalten verschoben. Fügen Sie hier Prozesse hinzu, die das Ausschalten verhindern sollen. Nicht markiert bedeutet: VDR-Lifeguard ist deaktiviert',
         menutab: {
             title : 'VDR-Lifeguard',
             tabtip : 'Lifeguard settings',
             panel_title : 'VDR-Lifeguard'
         },
-        button_label:  'Setze Lifeguard Einstellungen',
+        button_label:  'Setze Lifeguard-Einstellungen',
         submit: {
             waitmsg : 'Einstellungen werden aktualisiert.',    
             success : 'Erfolg.',
