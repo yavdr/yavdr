@@ -1,12 +1,54 @@
 <%pre>
 #include <stdio.h>
 #include <string>
+#include <fstream>
+
+//#define _BSD_COMPAT 1
+//#include <sys/file.h>
+
+#include <fcntl.h> // for open()
+#include <cerrno> // for errno
+#include <cstdio> // for perror()
+
+//(12:44:13) gda:      In C++, the function name flock collides with the structure name flock      (which is declared in <sys/fcntl.h> and included in <sys/file.h> ).  When      using flock() in C++, one must define _BSD_COMPAT before including      sys/file.h
+//(12:53:34) gda: v_r: gelesen?
 
 using namespace std;
 </%pre><%args>
 command;
 package;
-</%args><%cpp>
+</%args><%shared>
+
+bool isFileLocked(const std::string& fileName)
+{
+  int fd;
+  fd=open(fileName.c_str(), O_RDWR | O_CREAT | O_NOFOLLOW, 0640);
+  printf("test\n");
+  if (fd < 0)
+  {
+	close(fd);
+    return true;
+  }
+
+  // Aquire a write lock
+  struct flock fl;
+  fl.l_type = F_WRLCK;
+  fl.l_whence = SEEK_SET;
+  fl.l_start = 0;
+  fl.l_len = 0;
+  if (fcntl(fd, F_SETLK, &fl) == -1)
+  {
+    close(fd);
+	printf(" -> 3\n");
+	return true;
+  }
+  // if we got here, we own the lock
+  close(fd);
+  printf(" -> 4\n");
+  return false;
+}
+
+</%shared><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 
 //restrict commands
@@ -16,23 +58,29 @@ if (command == "install" ||
         command == "autoremove")
 {
     string cmd = "";
+    bool lockNeeded = true;
     if (command == "install")
        cmd = "apt-get -y install "+ package;
     else if (command == "update")
+    {
         cmd = "apt-get update";
+        lockNeeded = false;
+    }
     else if (command == "autoremove")
         cmd = "apt-get -y autoremove";
 
     cmd += " 2>&1";
 
-    if (FILE *stream = popen(cmd.c_str(), "r"))
-    {
-		reply.setDirectMode(200, "OK");
+    reply.setDirectMode(200, "OK");
 
-        reply.out() << "<html><head>"
-        		<< "<link rel=\"stylesheet\" type=\"text/css\" href=\"static/dpkg.css\" />"
-        		<< "<body>\n";
-        reply.out().flush();
+    reply.out() << "<html><head>"
+    		<< "<link rel=\"stylesheet\" type=\"text/css\" href=\"static/dpkg.css\" />"
+    		<< "<body>\n";
+    reply.out().flush();
+
+    if (!lockNeeded || !isFileLocked("/var/cache/apt/archives/lock")) {
+      if (FILE *stream = popen(cmd.c_str(), "r"))
+      {
         char buffer[1024];
         while (!feof(stream))
         {
@@ -44,9 +92,18 @@ if (command == "install" ||
           }
         }
         pclose(stream); 
-        reply.out() << "</body></html>\n";
-        reply.out().flush();
+      }
     }
+    else
+    {
+      reply.out() << "can't get lock.";
+    }
+    reply.out() << "</body></html>\n";
+    reply.out().flush();
+}
+else if (command == "locked")
+{
+
 }
 else
     reply.out() << "Illegal command.";
