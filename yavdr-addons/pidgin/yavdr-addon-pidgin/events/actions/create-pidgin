@@ -1,6 +1,7 @@
 #!/bin/bash
 
 process-template /etc/init/pidgin.conf
+process-template /etc/fbpanel/yavdr
 rm -f /usr/bin/start-pidgin
 
 
