@@ -1,0 +1,5 @@
+        button {
+            image = /usr/share/yavdr/images/performous_icon.png
+            tooltip = Terminal
+            action = /usr/share/vdr/menuorg-appswitcher standalone=yes app=performous
+        }
