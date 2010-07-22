@@ -40,33 +40,35 @@ void process_template(char *dir)
   {
     for (n = 0; n < numtemps; n++)
     {
-      if (asprintf(&file, "%s/%s", dir, namelist[n]->d_name) > 0)
+      if (strcmp(namelist[n]->d_name, ".") != 0 && strcmp(namelist[n]->d_name, "..") != 0 )
       {
-        if (stat(file, &statrec))
+        if (asprintf(&file, "%s/%s", dir, namelist[n]->d_name) > 0)
         {
-          syslog(LOG_ERR, "ERROR: stat %m: %s", file);
-          continue;
-        }
-        if (S_ISDIR(statrec.st_mode))
-        {
-          if (strcmp(file, ".") != 0 && strcmp(file, "..") != 0 )
-        	process_template(file);
-        }
-        else
-        {
-          char *templatepath = &file[initialpathlen];
-
-          if (asprintf(&command, PROCESSTEMPLATE " %s", templatepath) > 0)
+          if (stat(file, &statrec))
           {
-            syslog(LOG_INFO, "processing template %s", templatepath);
-            if (system(command) == -1)
-            {
-              syslog(LOG_ERR, "ERROR: error processing template %s", templatepath);
-            }
-            free(command);
+            syslog(LOG_ERR, "ERROR: stat %m: %s", file);
+            continue;
           }
+          if (S_ISDIR(statrec.st_mode))
+          {
+            process_template(file);
+          }
+          else
+          {
+            char *templatepath = &file[initialpathlen];
+
+            if (asprintf(&command, PROCESSTEMPLATE " %s", templatepath) > 0)
+            {
+              syslog(LOG_INFO, "processing template %s", templatepath);
+              if (system(command) == -1)
+              {
+                syslog(LOG_ERR, "ERROR: error processing template %s", templatepath);
+              }
+              free(command);
+            }
+          }
+          free(file);
         }
-        free(file);
       }
       free(namelist[n]);
     }
