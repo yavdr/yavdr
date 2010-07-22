@@ -105,6 +105,15 @@ function getPackagesForm(){
                 },
                 
                 html: 'Please select a package to see additional details.'
+            },{
+                id: 'help',
+                region: 'center',
+                bodyStyle: {
+                    background: '#ffffff',
+                    padding: '7px'
+                },
+                
+                html: 'dblclick on red icon to install package.....<br/> vdr-plugins can be dis- & enabled...'
             }]
     });
     
@@ -160,13 +169,13 @@ function getPackagesForm(){
 
 function renderState(state) {
     switch(state) {
-        case 1:
+        case 2:
             return '<img src="/static/images/green.png" border="0">';
             break;
         case 0:
             return '<img src="/static/images/red.png" border="0">';
             break;
-        case -1:
+        case 1:
             return '<img src="/static/images/yellow.png" border="0">';
             break;
     }

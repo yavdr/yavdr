@@ -126,7 +126,13 @@ for (int findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
 			{
 				if (json.isValidIndex(next) && json[next].isMember("Package")) {
 					json[next]["id"] = next;
-					json[next]["installed"] = ((installed[json[next]["Package"].asString()].isBool()) && installed[json[next]["Package"].asString()].asBool()?1:0);
+					if ((installed[json[next]["Package"].asString()].isBool()) && installed[json[next]["Package"].asString()].asBool())
+					{
+					  json[next]["installed"] = 2;
+					}
+					else
+					  json[next]["installed"] = 0;
+
 					next++;
 				}
 			}

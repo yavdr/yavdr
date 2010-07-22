@@ -3,15 +3,9 @@
 #include <string>
 #include <fstream>
 
-//#define _BSD_COMPAT 1
-//#include <sys/file.h>
-
 #include <fcntl.h> // for open()
 #include <cerrno> // for errno
 #include <cstdio> // for perror()
-
-//(12:44:13) gda:      In C++, the function name flock collides with the structure name flock      (which is declared in <sys/fcntl.h> and included in <sys/file.h> ).  When      using flock() in C++, one must define _BSD_COMPAT before including      sys/file.h
-//(12:53:34) gda: v_r: gelesen?
 
 using namespace std;
 </%pre><%args>
@@ -23,7 +17,6 @@ bool isFileLocked(const std::string& fileName)
 {
   int fd;
   fd=open(fileName.c_str(), O_RDWR | O_CREAT | O_NOFOLLOW, 0640);
-  printf("test\n");
   if (fd < 0)
   {
 	close(fd);
@@ -39,12 +32,10 @@ bool isFileLocked(const std::string& fileName)
   if (fcntl(fd, F_SETLK, &fl) == -1)
   {
     close(fd);
-	printf(" -> 3\n");
 	return true;
   }
   // if we got here, we own the lock
   close(fd);
-  printf(" -> 4\n");
   return false;
 }
 
