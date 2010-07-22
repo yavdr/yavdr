@@ -1,5 +1,5 @@
         button {
-            image = /usr/share/yavdr/images/youtube_icon.png
+            image = /usr/share/yavdr/images/youtube_icon.jpg
             tooltip = Youtube
             action = /usr/bin/start-youtube
         }
