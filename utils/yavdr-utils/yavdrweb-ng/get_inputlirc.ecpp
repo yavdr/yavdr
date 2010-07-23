@@ -77,33 +77,35 @@ using namespace std;
 
     			Dir = opendir("/dev/input/by-id/");
 
-    			string pathById = "";
-    			while(DirEntry = readdir(Dir))
+    			if (Dir != NULL)
     			{
-    				if ( DirEntry->d_type == DT_LNK )
-    				{
-    					char filename[256];
-    					char buffer[256];
-    					sprintf(filename, "/dev/input/by-id/%s", DirEntry->d_name);
-    					int len = readlink(filename, buffer, 256);
-    					if (len >= 0) {
-    						buffer[len] = 0;
-    						string symLink = string(buffer);
-    						symLink = symLink.substr( symLink.size() - event.size());
+					string pathById = "";
+					while(DirEntry = readdir(Dir))
+					{
+						if ( DirEntry->d_type == DT_LNK )
+						{
+							char filename[256];
+							char buffer[256];
+							sprintf(filename, "/dev/input/by-id/%s", DirEntry->d_name);
+							int len = readlink(filename, buffer, 256);
+							if (len >= 0) {
+								buffer[len] = 0;
+								string symLink = string(buffer);
+								symLink = symLink.substr( symLink.size() - event.size());
 
-    						if (symLink == event) {
-    							pathById = string(filename);
-    							break;
-    						}
-    					}
-    				}
+								if (symLink == event) {
+									pathById = string(filename);
+									break;
+								}
+							}
+						}
+					}
+					if (pathById != "") {
+						list[next][0u] = pathById;
+						list[next][1u] = name;
+						next++;
+					}
     			}
-    			if (pathById != "") {
-    				list[next][0u] = pathById;
-    				list[next][1u] = name;
-                    next++;
-    			}
-
                 event = "";
                 name = "";
             }
