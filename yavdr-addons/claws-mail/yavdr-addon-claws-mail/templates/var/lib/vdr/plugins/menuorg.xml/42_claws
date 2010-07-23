@@ -1,1 +1,1 @@
-        <command name="Mail" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=no app=claws-mail' | at now" />
+        <command name="Mail" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=no app=claws' | at now" />
