@@ -1,0 +1,8 @@
+#!/usr/bin/make -f
+# debian/rules for the yavdr-addon-performous package.
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+
+
+

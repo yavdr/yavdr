@@ -1,0 +1,13 @@
+Source: yavdr-addon-claws-mail
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-addon-claws-mail
+Architecture: all
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, claws-mail
+Description: yavdr-addon-claws-mail 
+  yavdr-addon-claws-mail

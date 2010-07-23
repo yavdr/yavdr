@@ -1,0 +1,5 @@
+        button {
+            image = /usr/share/yavdr/images/claws-mail.png
+            tooltip = Mail
+            action = /usr/share/vdr/menuorg-appswitcher standalone=no app=claws-mail
+        }
