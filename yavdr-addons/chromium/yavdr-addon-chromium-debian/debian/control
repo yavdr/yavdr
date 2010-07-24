@@ -8,6 +8,6 @@ Build-Depends: debhelper (>= 7), cdbs
 
 Package: yavdr-addon-chromium
 Architecture: all
-Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, claws-mail
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, chromium
 Description: yavdr-addon-chromium 
  yavdr-addon-chromium
