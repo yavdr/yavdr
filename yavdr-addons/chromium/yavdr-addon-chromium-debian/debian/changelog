@@ -1,4 +1,4 @@
-yavdr-addon-claws-mail (0.2.1.1536-1yavdr1) lucid; urgency=low
+yavdr-addon-chromium (0.2.1.1536-1yavdr1) lucid; urgency=low
 
   * build 
   * Switch to dpkg-source 3.0 (quilt) format
