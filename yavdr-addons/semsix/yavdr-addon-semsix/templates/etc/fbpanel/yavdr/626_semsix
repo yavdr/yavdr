@@ -1,5 +1,5 @@
         button {
-            image = /usr/share/yavdr/images/chromium.png
-            tooltip = Semsis-Youtube
+            image = /usr/share/yavdr/images/semsix.png
+            tooltip = Semsix
             action = /usr/share/vdr/menuorg-appswitcher standalone=yes app=semsix
         }

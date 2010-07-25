@@ -1,4 +1,4 @@
-description     "semsix"
+description     "youtube"
 author          "Steffen Barszus <steffenbpunkt@gmail.com>"
 
 pre-start script
@@ -14,5 +14,5 @@ post-stop script
 /sbin/initctl emit --no-wait vdr-frontend-restart
 end script
 
-exec su -c "chromium-browser --start-maximized --app=http://www.semsix.com/app/semsix.html" vdr
+exec su -c "chromium-browser --start-maximized --app=http://www.youtube.com/xl" vdr
 

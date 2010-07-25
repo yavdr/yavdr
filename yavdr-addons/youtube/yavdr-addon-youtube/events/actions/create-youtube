@@ -1,0 +1,8 @@
+#!/bin/bash
+
+process-template /etc/init/youtube.conf
+process-template /etc/fbpanel/yavdr
+restart launcher
+
+
+
