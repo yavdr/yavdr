@@ -41,7 +41,7 @@
 </placement>
 
 <theme>
-  <name>Clearlooks</name>
+  <name>OB_Dust</name>
   <titleLayout>NLIMC</titleLayout>
   <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -54,7 +54,7 @@
       D: omnipresent (on all desktops).
   -->
   <keepBorder>no</keepBorder>
-  <animateIconify>yes</animateIconify>
+  <animateIconify>no</animateIconify>
   <font place="ActiveWindow">
     <name>sans</name>
     <size>8</size>
@@ -718,12 +718,14 @@
      <decor>no</decor>
     <maximized>true</maximized>
     <skip_pager>yes</skip_pager>
+    <skip_taskbar>yes</skip_taskbar>
  </application>
 
    <application name="xine*">
      <decor>no</decor>
     <maximized>true</maximized>
     <skip_pager>yes</skip_pager>
+    <skip_taskbar>yes</skip_taskbar>
  </application>
 
 </applications>
