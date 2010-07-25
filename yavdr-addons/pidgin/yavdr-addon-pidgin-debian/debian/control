@@ -8,6 +8,6 @@ Build-Depends: debhelper (>= 7), cdbs
 
 Package: yavdr-addon-pidgin
 Architecture: all
-Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, pidgin
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, pidgin, pidgin-libnotify, notify-osd, notify-osd-icons, libnotify-bin, libnotify1
 Description: yavdr-addon-pidgin adds Pidgin to vdr-externalplayer
   yavdr-addon-pidgin adds Pidgin Instant Messenger to vdr-externalplayer
