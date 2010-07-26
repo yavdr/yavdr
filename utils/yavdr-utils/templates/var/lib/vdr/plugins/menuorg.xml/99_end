@@ -1,9 +1,1 @@
-    <menu name="System">
-         <system name="Commands" title="Befehle" />
-         <system name="Setup" />
-         <plugin name="femon" />
-         <plugin name="avolctl" />
-         <plugin name="suspendoutput" />
-         <plugin name="recstatus" />
-    </menu>
 </menus>
