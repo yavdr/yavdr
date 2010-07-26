@@ -1,0 +1,7 @@
+
+pre-start script
+  if [ -z $NOBOOT ]; then
+    DELAY=$(dbget system.vdr.start_delay)
+    [ -n "$DELAY" ] && [ $DELAY -gt 0 ] && sleep $DELAY
+  fi
+end script
