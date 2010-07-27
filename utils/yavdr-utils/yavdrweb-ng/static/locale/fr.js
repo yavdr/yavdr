@@ -1,4 +1,4 @@
-﻿var locale_fr = {
+﻿﻿var locale_fr = {
     meta_lang: {
         local : 'Francais',
         int : 'French',
@@ -399,7 +399,7 @@
             failure : 'Echec.'
         },
         label: 'Paramètres audio'
-    }
+    },
     lifeguard: {
         menutab: {
             title : 'VDR-Lifeguard',
@@ -415,4 +415,3 @@
         label: 'VDR-Lifeguard Paramètres'
     }
 };
-  
