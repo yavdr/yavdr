@@ -159,14 +159,6 @@ Ext.TaskMgr.start({
                 addGroupPanelTab({
                     section: "shutdown",
                     items:   getVDRShutdownForm
-                }),
-                addGroupPanelTab({
-                    section: "lifeguard",
-                    items:   getVDRLifeguardForm
-                }), 
-               addGroupPanelTab({
-                    section: "packages",
-                    items:   getPackagesForm
                 })
             ]
         },
@@ -234,17 +226,24 @@ Ext.TaskMgr.start({
     /*
      *  Should we render the DEVELOPMENT MODULE? (only if devmode is "1")
      */
-    /*if (yavdrwebGlobalInfo.devmode == "1"){
+    if (yavdrwebGlobalInfo.devmode == "1"){
         groupPanelItems[groupPanelItems.length] = {
             expanded: false,
             items: [
                 addGroupPanelSection({
                     section: "development"
                 }),
-                ...
+                addGroupPanelTab({
+                    section: "lifeguard",
+                    items:   getVDRLifeguardForm
+                }), 
+               addGroupPanelTab({
+                    section: "packages",
+                    items:   getPackagesForm
+                })
             ]
         };
-    }*/
+    }
 
     var viewport = new Ext.Viewport({
     layout:'fit',
