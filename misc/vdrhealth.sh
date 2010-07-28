@@ -26,13 +26,30 @@ HOSTNAME="`hostname`"
 TIMESTAMP="`date +%s`"
 #current day of the current month (= today)
 DATE_MONTHDAY="`date +"%b %d"`"
-#trying to match any day of the current month
-DATE_MONTHDAY="`date +"%b"` .+"
+
+#use this if you are trying to match any day of the current month
+DATE_MONTHDAY="`date +"%b"` [[:digit:]]+"
+
+#use this if you are trying to match any day of any month
+DATE_MONTHDAY="... [[:digit:]]+"
+
+
 TRIGGERSTRING=""
-#echo Hostname is $HOSTNAME / $DATE_MONTHDAY
+
+#HOURS MINUTES SECONDS (=HMS)
+HMS="..:..:.."
 
 #useful example setting
-LOGLEVEL=64+32+8+16+2
+LOGLEVEL_VDR=127
+LOGLEVEL_KERNEL=2
+LOGLEVEL_DVB=3
+LOGLEVEL_VDRSXFE=1
+
+LOGLEVEL_VDR=31
+LOGLEVEL_KERNEL=3
+LOGLEVEL_DVB=1
+LOGLEVEL_VDRSXFE=0
+
 
 function createRegex {
 
@@ -40,66 +57,101 @@ function createRegex {
     REGEX_KERNEL=""
     REGEX_DVB=""
     REGEX_VDRSXFE=""
+    REGEX_EXTRAS=""
 
-    echo "Loglevel: $LOGLEVEL"
+    echo "Loglevel: $LOGLEVEL_VDR"
 
-    if [ $(( $LOGLEVEL & 1 )) == 1 ]; then
-        REGEX_VDR=".*?exiting, exit code|.*?PANIC:|"
+    #################################################################
+    # VDR
+    #################################################################
+
+    if [ $(( $LOGLEVEL_VDR & 1 )) == 1 ]; then
+        REGEX_VDR=".*?exiting, exit code|.*?PANIC:"
         echo "  1 = Showing abnormal VDR shutdowns (bad exit codes, Watchdog PANIC)"
     fi
 
-    if [ $(( $LOGLEVEL & 2 )) == 2 ]; then
+    if [ $(( $LOGLEVEL_VDR & 2 )) == 2 ]; then
         REGEX_VDR="VDR version|$REGEX_VDR"
         echo "  2 = Showing VDR start messages"
     fi
 
-    if [ $(( $LOGLEVEL & 4 )) == 4 ]; then
-        REGEX_VDR=".*?shutdown|$REGEX_VDR"
+    if [ $(( $LOGLEVEL_VDR & 4 )) == 4 ]; then
+        REGEX_VDR=".*?shutdown|.*?Netwatcher thread ended|$REGEX_VDR"
+        REGEX_EXTRAS="init: vdr main process (.*?) killed|$SEARCHSTRING"
         echo "  4 = Showing VDR shutdown messages"
     fi
 
-    if [ $(( $LOGLEVEL & 8 )) == 8 ]; then
+    if [ $(( $LOGLEVEL_VDR & 8 )) == 8 ]; then
         REGEX_VDR="found .+ DVB device|$REGEX_VDR"
         echo "  8 = Showing number of DVB devices found by VDR on start"
     fi
 
-    if [ $(( $LOGLEVEL & 16 )) == 16 ]; then
+    if [ $(( $LOGLEVEL_VDR & 16 )) == 16 ]; then
         REGEX_VDR="frontend .+ provides|$REGEX_VDR"
         echo " 16 = Showing details about DVB devices found"
     fi
 
-    if [ $(( $LOGLEVEL & 32 )) == 32 ]; then
-        REGEX_KERNEL_ONBOOT="kernel: imklog .*? log source \= \/proc\/kmsg started\."
-        REGEX_KERNEL_ONSHUTDOWN="kernel: Kernel logging \(proc\) stopped\."
-        REGEX_KERNEL="($REGEX_KERNEL_ONSHUTDOWN)|($REGEX_KERNEL_ONBOOT)"
-        echo " 32 = Showing indications when machine was starting up / shutting down"
+    if [ $(( $LOGLEVEL_VDR & 32 )) == 32 ]; then
+        REGEX_VDR="frontend .*? timed out while tuning to channel|$REGEX_VDR"
+        echo " 32 = Showing details about frontend timeouts"
     fi
 
-    if [ $(( $LOGLEVEL & 64 )) == 64 ]; then
+    if [ $(( $LOGLEVEL_VDR & 64 )) == 64 ]; then
+        REGEX_VDR=".*?recording|$REGEX_VDR"
+        echo " 64 = Showing details about recordings"
+    fi
+
+    #################################################################
+    # KERNEL (Boot/Shutdown)
+    #################################################################
+
+    if [ $(( $LOGLEVEL_KERNEL & 1 )) == 1 ]; then
+        REGEX_KERNEL="(kernel: imklog .*? log source .*? started\.)|$REGEX_KERNEL"
+        echo "  1 = Showing indications when machine was starting up"
+    fi
+
+    if [ $(( $LOGLEVEL_KERNEL & 2 )) == 2 ]; then
+        REGEX_KERNEL="(kernel: Kernel logging \(proc\) stopped\.)|$REGEX_KERNEL"
+        echo "  2 = Showing indications when machine was shutting down"
+    fi
+
+    #################################################################
+    # DVB
+    #################################################################
+
+    if [ $(( $LOGLEVEL_DVB & 1 )) == 1 ]; then
         REGEX_DVB="kernel: \[.*?\] (DVB: registering|input: Sundtek)|$REGEX_DVB"
-        echo " 64 = Showing registered DVB adapters (found by kernel)"
+        echo "  1 = Showing registered DVB adapters (found by kernel)"
     fi
 
-    if [ $(( $LOGLEVEL & 128 )) == 128 ]; then
+    if [ $(( $LOGLEVEL_DVB & 2 )) == 2 ]; then
         REGEX_DVB="kernel: \[.*?\] (dvb|.*?pctv|.*?stb(6100|0899))|$REGEX_DVB"
-        echo "128 = Showing detailed messages regarding DVB devices found by kernel"
+        echo "  2 = Showing detailed messages regarding DVB devices found by kernel"
     fi
 
-    if [ $(( $LOGLEVEL & 256 )) == 256 ]; then
-        REGEX_VDRSXFE="(vdr-sxfe\[.+\]: \[.+\] .*?(failed|error|warning))"
-        echo "256 = Showing problems with vdr-sxfe frontend"
+    #################################################################
+    # VDRSXFE
+    #################################################################
+
+    if [ $(( $LOGLEVEL_VDRSXFE & 1 )) == 1 ]; then
+        REGEX_VDRSXFE="(vdr-sxfe\[.+\]: \[.+\] .*?(failed|error|warning|wait_stream_sync:))"
+        echo "  1 = Showing problems with vdr-sxfe frontend"
     fi
+
+    #################################################################
+    # BUILD SEARCHSTRING
+    #################################################################
 
     SEARCHSTRING=""
 
     if [ -n "${REGEX_VDR}" ]; then
         PID="\[[[:digit:]]+\]"
         #cut off last occurence of | (right trim) and wrap in wrapper
-        SEARCHSTRING="(vdr: $PID (${REGEX_VDR%|}))|$SEARCHSTRING"
+        SEARCHSTRING="vdr: $PID (${REGEX_VDR%|})|$SEARCHSTRING"
     fi
 
     if [ -n "${REGEX_KERNEL}" ]; then
-        SEARCHSTRING="$REGEX_KERNEL|$SEARCHSTRING"
+        SEARCHSTRING="${REGEX_KERNEL%|}|$SEARCHSTRING"
     fi
 
     if [ -n "${REGEX_DVB}" ]; then
@@ -108,6 +160,10 @@ function createRegex {
 
     if [ -n "${REGEX_VDRSXFE}" ]; then
         SEARCHSTRING="${REGEX_VDRSXFE%|}|$SEARCHSTRING"
+    fi
+
+    if [ -n "${REGEX_EXTRAS}" ]; then
+        SEARCHSTRING="${REGEX_EXTRAS%|}|$SEARCHSTRING"
     fi
 
 
@@ -119,7 +175,15 @@ function createRegex {
     #todo: still to be implemented
     #REGEX_VDR="(vdr: $PID recording )|(vdr-addon-acpiwakeup: Setting ACPI alarm time to:)|(vdr-shutdown: Shutdown aborted)|)"
 
-    EGREPSTRING="$DATE_MONTHDAY ..:..:.. $HOSTNAME $SEARCHSTRING"
+#    SEARCHSTRING=""
+#HMS="21:(1[4-6]|[4-5][0-9]):.."
+#HMS="21:18:.."
+
+#DATE_MONTHDAY="Jul 23"
+#HMS="2.:..:.."
+
+
+    EGREPSTRING="$DATE_MONTHDAY $HMS $HOSTNAME ($SEARCHSTRING)"
     echo GrepString: "$EGREPSTRING"
     echo -------------------------------------------------------------
 }
@@ -156,3 +220,5 @@ grepIt "/var/log/syslog.2.gz"
 grepIt "/var/log/syslog.1"
 grepIt "/var/log/syslog"
 echo "*****************************************************************"
+
+
