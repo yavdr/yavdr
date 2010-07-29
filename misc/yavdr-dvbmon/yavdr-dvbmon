@@ -74,16 +74,15 @@ old_device_cnt=0
 
 while [ 1 ]; do
   device_cnt=0
-  i=0
-  while [ $i -lt $max_dvb_devices ]; do
+  for i in $(seq 0 $(($max_dvb_devices-1))); do
     creation_time=$(stat --printf="%Z" /dev/dvb/adapter$i/frontend0 2>/dev/null)
     if [ $? -eq 0 ]; then
       device_cnt=$(($device_cnt+1))
       delay=$(($creation_time-$start_time))
     fi
-    i=$(($i+1))
   done
   if [ $vdr_started -eq 0 -a $device_cnt -gt 0 -a $device_cnt -ge $prev_device_cnt ]; then
+    echo $device_cnt
     trap "" ALRM
     logger -i -s "$0 - previous device count reached"
     start_vdr
@@ -100,9 +99,7 @@ while [ 1 ]; do
     old_start_delay=$delay 
   fi
     
-  i=$interval
-  while [ $i -gt 0 ]; do
-    i=$(($i-1))
+  for i in $(seq $interval); do
     sleep 1
   done
 done
