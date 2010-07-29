@@ -6,6 +6,9 @@
 # 2  warn
 # 3  info
 debug=`dbget system.log.level`
+if [ -z "$debug" ]; then
+  debug=0
+fi
 
 function loginfo()
 {
