@@ -76,7 +76,7 @@ while [ 1 ]; do
   device_cnt=0
   i=0
   while [ $i -lt $max_dvb_devices ]; do
-    creation_time=$(stat --printf="%Z" /tmp/dev/dvb/adapter$i/frontend0 2>/dev/null)
+    creation_time=$(stat --printf="%Z" /dev/dvb/adapter$i/frontend0 2>/dev/null)
     if [ $? -eq 0 ]; then
       device_cnt=$(($device_cnt+1))
       delay=$(($creation_time-$start_time))
