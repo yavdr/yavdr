@@ -33,18 +33,18 @@ if [ -z $max_dvb_devices ]; then
   max_dvb_devices=10
   dbset "system.vdr.dvbmon.max_dvb_devices=$max_dvb_devices"
 fi
-interval=$(dbget "system.vdr.dvbmon.check_interval")
-if [ -z $interval ]; then
-  interval=5
-  dbset "system.vdr.dvbmon.check_interval=$interval"
+check_interval=$(dbget "system.vdr.dvbmon.check_interval")
+if [ -z $check_interval ]; then
+  check_interval=5
+  dbset "system.vdr.dvbmon.check_interval=$check_interval"
 fi
-prev_device_cnt=$(dbget "system.vdr.dvbmon.device_cnt")
-if [ -z $prev_device_cnt ]; then
-  prev_device_cnt=0
+prerun_device_cnt=$(dbget "system.vdr.dvbmon.device_cnt")
+if [ -z $prerun_device_cnt ]; then
+  prerun_device_cnt=0
 fi
-prev_start_delay=$(dbget "system.vdr.dvbmon.start_delay")
-if [ -z $prev_start_delay ]; then
-  prev_start_delay=0
+prerun_start_delay=$(dbget "system.vdr.dvbmon.start_delay")
+if [ -z $prerun_start_delay ]; then
+  prerun_start_delay=0
 fi
 
 
@@ -63,14 +63,14 @@ handle_timer() {
   start_vdr
 }
 
-if [ $prev_start_delay -gt 0 ]; then
-  set_timer $prev_start_delay
+if [ $prerun_start_delay -gt 0 ]; then
+  set_timer $prerun_start_delay
 fi
 
 delay=0
-old_start_delay=0
+last_start_delay=0
 vdr_started=0
-old_device_cnt=0
+last_device_cnt=0
 
 while [ 1 ]; do
   device_cnt=0
@@ -81,24 +81,24 @@ while [ 1 ]; do
       delay=$(($creation_time-$start_time))
     fi
   done
-  if [ $vdr_started -eq 0 -a $device_cnt -gt 0 -a $device_cnt -ge $prev_device_cnt ]; then
+  if [ $vdr_started -eq 0 -a $device_cnt -gt 0 -a $device_cnt -ge $prerun_device_cnt ]; then
     trap "" ALRM
     logger -i -s "$0 - previous device count reached"
     start_vdr
     vdr_started=1
   fi
-  if [ $device_cnt -gt 0 -a $device_cnt -ne $old_device_cnt ]; then
+  if [ $device_cnt -gt 0 -a $device_cnt -ne $last_device_cnt ]; then
     dbset "system.vdr.dvbmon.device_cnt=$device_cnt"
     logger -i -s "$0 - device count changed: detected $device_cnt device(s)"
-    old_device_cnt=$device_cnt
+    last_device_cnt=$device_cnt
   fi
-  if [ $delay -gt 0 -a $delay -ne $old_start_delay ]; then
+  if [ $delay -gt 0 -a $delay -ne $last_start_delay ]; then
     dbset "system.vdr.dvbmon.start_delay=$delay"
     logger -i -s "$0 - device detected $delay seconds after start"
-    old_start_delay=$delay 
+    last_start_delay=$delay 
   fi
     
-  for i in $(seq $interval); do
+  for i in $(seq $check_interval); do
     sleep 1
   done
 done
