@@ -81,7 +81,7 @@ while [ 1 ]; do
       delay=$(($creation_time-$start_time))
     fi
   done
-  if [ $vdr_started -eq 0 -a $device_cnt -gt 0 -a $device_cnt -ge $prerun_device_cnt ]; then
+  if [ $vdr_started -eq 0 -a $prerun_device_cnt -gt 0 -a $device_cnt -ge $prerun_device_cnt ]; then
     trap "" ALRM
     logger -i -s "$0 - previous device count reached"
     start_vdr
