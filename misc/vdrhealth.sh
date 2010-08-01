@@ -25,7 +25,7 @@
 function init {
 
     #filename of output file
-    OUTPUTFILE="healthreport.txt"
+    OUTPUTFILE="healthreport-`date --rfc-3339=seconds`.txt"
 
     #hostname of the host the script runs on, is part of every line of the syslog
     HOSTNAME="`hostname`"
@@ -51,7 +51,7 @@ function init {
 
     let VDR_FATAL_EXIT=$COUNT
     VDR_DESCR[ $VDR_FATAL_EXIT ]="Show abnormal VDR shutdowns (bad exit codes, Watchdog PANIC)"
-    VDR_REGEX[ $VDR_FATAL_EXIT ]=".*?exiting, exit code|.*?PANIC:"
+    VDR_REGEX[ $VDR_FATAL_EXIT ]=".*?exiting, exit code [12]|.*?PANIC:"
 
     let COUNT=$COUNT*2
 
@@ -63,7 +63,7 @@ function init {
 
     let VDR_STOP=$COUNT
     VDR_DESCR[ $VDR_STOP ]="Show VDR shutdown messages"
-    VDR_REGEX[ $VDR_STOP ]=".*?shutdown|.*?Netwatcher thread ended"
+    VDR_REGEX[ $VDR_STOP ]=".*?shutdown|.*?Netwatcher thread ended|.*?exiting, exit code 0"
 
     let COUNT=$COUNT*2
 
@@ -99,6 +99,12 @@ function init {
     LOGLEVEL_KERNEL=3
     LOGLEVEL_DVB=1
     LOGLEVEL_VDRSXFE=0
+
+    ##only detect vdr crashes
+    #let LOGLEVEL_VDR=$VDR_FATAL_EXIT
+    #LOGLEVEL_KERNEL=0
+    #LOGLEVEL_DVB=0
+    #LOGLEVEL_VDRSXFE=0
 }
 
 function createRegex {
@@ -179,8 +185,6 @@ function createRegex {
     # EXTRAS
     #################################################################
 
-    #todo        
-    #add this as a shutdown indicator for a manual vdr stop on command line
     FLAG=" "
     if [ $(( $LOGLEVEL_VDR & $VDR_STOP )) == $VDR_STOP ]; then
         REGEX_EXTRAS="(init: vdr main process (.*?) killed)|"
@@ -257,7 +261,7 @@ function grepIt {
 #    echo Examining file: $LOGFILE $TIMESPAN
 #    echo -------------------------------------------------------------
 
-     $GREPCMD -i "$EGREPSTRING" $LOGFILE >> $OUTPUTFILE
+     $GREPCMD -i "$EGREPSTRING" $LOGFILE >> "$OUTPUTFILE"
 #    $GREPCMD -iHn "$EGREPSTRING" $LOGFILE
 }
 
