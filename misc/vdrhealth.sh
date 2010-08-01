@@ -24,6 +24,9 @@
 
 function init {
 
+    #filename of output file
+    OUTPUTFILE="healthreport.txt"
+
     #hostname of the host the script runs on, is part of every line of the syslog
     HOSTNAME="`hostname`"
 
@@ -31,10 +34,10 @@ function init {
     TIMESTAMP="`date +%s`"
 
     #current day of the current month (= today)
-    DATE_MONTHDAY="`date +"%b %d"`"
+    #DATE_MONTHDAY="`date +"%b %d"`"
 
     #use this if you are trying to match any day of the current month
-    DATE_MONTHDAY="`date +"%b"` [[:digit:]]+"
+    #DATE_MONTHDAY="`date +"%b"` [[:digit:]]+"
 
     #use this if you are trying to match any day of any month
     DATE_MONTHDAY="... [[:digit:]]+"
@@ -88,7 +91,7 @@ function init {
 
     let MAX_VDR_ID=$COUNT
 
-    #example: Maximum Loglevel including all stuff
+    #example: Maximum Loglevel including all stuff, this line should contain ALL options available
     let LOGLEVEL_VDR_MAX=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + $VDR_DVB_DEVICE_DETAILS + $VDR_FRONTEND_TIMEOUTS + $VDR_RECORDINGS)
 
     #useful example setting
@@ -96,7 +99,6 @@ function init {
     LOGLEVEL_KERNEL=3
     LOGLEVEL_DVB=1
     LOGLEVEL_VDRSXFE=0
-
 }
 
 function createRegex {
@@ -171,7 +173,21 @@ function createRegex {
         REGEX_VDRSXFE="(vdr-sxfe\[.+\]: \[.+\] .*?(failed|error|warning|wait_stream_sync:))"
         FLAG="X"
     fi
-    echo "SXFE: [$FLAG] Showing problems with vdr-sxfe frontend (1)"
+    echo "SXFE: [$FLAG] Show problems with vdr-sxfe frontend (1)"
+
+    #################################################################
+    # EXTRAS
+    #################################################################
+
+    #todo        
+    #add this as a shutdown indicator for a manual vdr stop on command line
+    FLAG=" "
+    if [ $(( $LOGLEVEL_VDR & $VDR_STOP )) == $VDR_STOP ]; then
+        REGEX_EXTRAS="(init: vdr main process (.*?) killed)|"
+        FLAG="X"
+    fi
+    echo "MISC: [$FLAG] Show when VDR process was killed by a signal (TERM/KILL)"
+
 
     #################################################################
     # BUILD SEARCHSTRING
@@ -210,8 +226,6 @@ function createRegex {
     #todo: still to be implemented
     #REGEX_VDR="(vdr: $PID recording )|(vdr-addon-acpiwakeup: Setting ACPI alarm time to:)|(vdr-shutdown: Shutdown aborted)|)"
 
-    #todo        REGEX_EXTRAS="init: vdr main process (.*?) killed|"
-    #add this as a shutdown indicator for a manual vdr stop on command line
 
     #DEBUG STUFF
     #    SEARCHSTRING=""
@@ -222,16 +236,15 @@ function createRegex {
 
     EGREPSTRING="$DATE_MONTHDAY $HMS $HOSTNAME ($SEARCHSTRING)"
 
-    #echo "GrepString: $EGREPSTRING"
-    #echo "Loglevels: VDR=$LOGLEVEL_VDR KRNL=$LOGLEVEL_KERNEL DVB=$LOGLEVEL_DVB SXFE=$LOGLEVEL_VDRSXFE"
+#    echo "GrepString: $EGREPSTRING"
+#    echo "Loglevels: VDR=$LOGLEVEL_VDR KRNL=$LOGLEVEL_KERNEL DVB=$LOGLEVEL_DVB SXFE=$LOGLEVEL_VDRSXFE"
     #echo -------------------------------------------------------------
 }
 
 function grepIt {
     LOGFILE=$1
-    #echo Extension: \"${LOGFILE:(-3)}\"
     if [ ".gz" == "${LOGFILE:(-3)}" ]; then
-        #echo "Detected gz file, using zegrep."
+        #Detected gz file, using zegrep.
         GREPCMD="zegrep"
         TIMESPAN=""
     else
@@ -244,26 +257,47 @@ function grepIt {
 #    echo Examining file: $LOGFILE $TIMESPAN
 #    echo -------------------------------------------------------------
 
-    $GREPCMD -i "$EGREPSTRING" $LOGFILE
+     $GREPCMD -i "$EGREPSTRING" $LOGFILE >> $OUTPUTFILE
+#    $GREPCMD -iHn "$EGREPSTRING" $LOGFILE
 }
 
 function main {
 
     echo "*****************************************************************"
+    echo "VDRHealth - This script is part of the yaVDR project"
+    echo "*****************************************************************"
+    echo "Current configuration:"
     init
     createRegex
     echo "*****************************************************************"
+    echo "Output file: $OUTPUTFILE"
+    echo "*****************************************************************"
+    echo "Please wait..."
     #exit
-    #grepIt "/var/log/syslog.7.gz"
-    #grepIt "/var/log/syslog.6.gz"
-    #grepIt "/var/log/syslog.5.gz"
-    #grepIt "/var/log/syslog.4.gz"
-    #grepIt "/var/log/syslog.3.gz"
-    #grepIt "/var/log/syslog.2.gz"
-    grepIt "/var/log/syslog.1"
+    if [ -e /var/log/syslog.7.gz ]; then
+        grepIt "/var/log/syslog.7.gz"
+    fi
+    if [ -e /var/log/syslog.6.gz ]; then
+        grepIt "/var/log/syslog.6.gz"
+    fi
+    if [ -e /var/log/syslog.5.gz ]; then
+        grepIt "/var/log/syslog.5.gz"
+    fi
+    if [ -e /var/log/syslog.4.gz ]; then
+        grepIt "/var/log/syslog.4.gz"
+    fi
+    if [ -e /var/log/syslog.3.gz ]; then
+        grepIt "/var/log/syslog.3.gz"
+    fi
+    if [ -e /var/log/syslog.2.gz ]; then
+        grepIt "/var/log/syslog.2.gz"
+    fi
+    if [ -e /var/log/syslog.1 ]; then
+        grepIt "/var/log/syslog.1"
+    fi
     grepIt "/var/log/syslog"
     echo "*****************************************************************"
-
+    echo "You will find the output of this script in the file $OUTPUTFILE in the current folder."
 }
 
 main
