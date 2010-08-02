@@ -7,6 +7,8 @@
 #include <getopt.h>
 #include <pwd.h>
 #include <grp.h>
+#include <libintl.h>
+#include <locale.h>
 #include <ClearSilver/ClearSilver.h>
 
 #include "common.h"
@@ -284,6 +286,10 @@ int main(int argc, char *argv[])
   struct stat orig_stat;
   int gid;
   int uid;
+
+  setlocale(LC_ALL, "");
+  bindtextdomain("yaVDR", LOCDIR);
+  textdomain("yaVDR");
 
   while (1)
   {
