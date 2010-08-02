@@ -1,0 +1,13 @@
+Source: yavdr-addon-asunder
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-addon-asunder
+Architecture: all
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, asunder, lame, flac
+Description: yavdr-addon-asunder cd-ripper
+  yavdr-addon-asunder cd-ripper
