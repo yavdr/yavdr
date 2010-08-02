@@ -14,6 +14,7 @@ LANG=C /sbin/status openbox | grep -q process && /sbin/initctl emit vdr-frontend
 end script
 
 kill timeout 5
+normal exit 0
 
 script
 # load default values and overrides from /etc/default/vdr 
