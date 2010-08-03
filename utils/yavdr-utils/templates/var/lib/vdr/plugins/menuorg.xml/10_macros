@@ -1,0 +1,1 @@
+<?cs def:quote(string) ?>"<?cs var:string ?>"<?cs /def ?>

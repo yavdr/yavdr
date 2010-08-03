@@ -1,1 +1,1 @@
-    <menu name="<?cs var:_("Applications") ?>">
+    <menu name=<?cs call:quote(_("Applications")) ?>>

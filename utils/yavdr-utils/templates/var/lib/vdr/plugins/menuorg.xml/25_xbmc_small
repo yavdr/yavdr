@@ -1,1 +1,1 @@
-<?cs if:vdr.plugin.graphtft.enabled == "1" ?>       <command name="<?cs var:_("XBMC on graphtft Display") ?>" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=yes app=xbmc display=1.1' | at now" /> <?cs /if ?>
+<?cs if:vdr.plugin.graphtft.enabled == "1" ?>       <command name=<?cs call:quote(_("XBMC on graphtft Display")) ?> execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=yes app=xbmc display=1.1' | at now" /> <?cs /if ?>
