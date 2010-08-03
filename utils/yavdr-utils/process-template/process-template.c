@@ -286,10 +286,7 @@ int main(int argc, char *argv[])
   struct stat orig_stat;
   int gid;
   int uid;
-
-  setlocale(LC_ALL, "");
-  bindtextdomain("yaVDR", LOCDIR);
-  textdomain("yaVDR");
+  char *domain = "yaVDR";
 
   while (1)
   {
@@ -302,6 +299,7 @@ int main(int argc, char *argv[])
       {"output", 1, 0, 0},
       {"data", 1, 0, 0},
       {"database", 1, 0, 0},
+      {"gettext-domain", 1, 0, 0},
       {0, 0, 0, 0}
     };
  
@@ -341,11 +339,19 @@ int main(int argc, char *argv[])
       {
         database = optarg;
       }
+      else if (!strcmp(longopts[longindex].name, "gettext-domain"))
+      {
+        domain = optarg;
+      }
       break;
      }
   }
   if (optind < argc)
   {
+    setlocale(LC_ALL, "");
+    bindtextdomain(domain, LOCDIR);
+    textdomain(domain);
+
     if (!output)
     {
       output = argv[optind];
