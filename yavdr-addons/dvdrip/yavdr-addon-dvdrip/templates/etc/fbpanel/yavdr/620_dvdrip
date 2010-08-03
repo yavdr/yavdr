@@ -1,0 +1,5 @@
+        button {
+            image = /usr/share/yavdr/images/dvdrip.png
+            tooltip = DVD-Ripper
+            action = /usr/share/vdr/menuorg-appswitcher standalone=no app=dvdrip
+        }

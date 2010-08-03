@@ -1,0 +1,1 @@
+        <command name="DVD-Rip" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=no app=dvdrip' | at now" />

@@ -1,0 +1,13 @@
+Source: yavdr-addon-dvdrip
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-addon-dvdrip
+Architecture: all
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, dvdrip, mjpegtools
+Description: yavdr-addon-dvdrip dvd-ripper
+  yavdr-addon-dvdrip dvd-ripper
