@@ -23,6 +23,6 @@ task
 
 script
   /bin/sleep 20
-  /usr/bin/touch /var/lib/video/.update
+  /usr/bin/touch /srv/vdr/video.00/.update
 end script
 
