@@ -51,6 +51,7 @@ fi
 start_vdr() {
   if mkdir /var/lock/.dvbmon.start_vdr_lock 2>/dev/null; then
     logger -i -s "$0 - trigger vdr start"
+    start vdr
   else
     logger -i -s "$0 - vdr already started"
   fi
