@@ -22,6 +22,8 @@
 #
 #
 
+logger -i -s "$0 - started"
+
 start_time=$(date +%s)
 
 trap handle_timer ALRM
@@ -41,10 +43,14 @@ fi
 prerun_device_cnt=$(dbget "system.vdr.dvbmon.device_cnt")
 if [ -z $prerun_device_cnt ]; then
   prerun_device_cnt=0
+else
+  logger -i -s "$0 - previous device count: $prerun_device_cnt"
 fi
 prerun_start_delay=$(dbget "system.vdr.dvbmon.start_delay")
 if [ -z $prerun_start_delay ]; then
   prerun_start_delay=0
+else
+  logger -i -s "$0 - detection time of previous latest dvb device: $prerun_start_delay seconds"
 fi
 
 
