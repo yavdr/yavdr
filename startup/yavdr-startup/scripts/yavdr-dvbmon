@@ -24,21 +24,10 @@
 
 logger -i -s "$0 - started"
 
-start_time=$(date +%s)
-
-trap handle_timer ALRM
-
-rm -rf /var/lock/.dvbmon.start_vdr_lock
-
 max_dvb_devices=$(dbget "system.vdr.dvbmon.max_dvb_devices")
 if [ -z $max_dvb_devices ]; then
   max_dvb_devices=10
   dbset "system.vdr.dvbmon.max_dvb_devices=$max_dvb_devices"
-fi
-check_interval=$(dbget "system.vdr.dvbmon.check_interval")
-if [ -z $check_interval ]; then
-  check_interval=5
-  dbset "system.vdr.dvbmon.check_interval=$check_interval"
 fi
 prerun_device_cnt=$(dbget "system.vdr.dvbmon.device_cnt")
 if [ -z $prerun_device_cnt ]; then
@@ -46,38 +35,16 @@ if [ -z $prerun_device_cnt ]; then
 else
   logger -i -s "$0 - previous device count: $prerun_device_cnt"
 fi
-prerun_start_delay=$(dbget "system.vdr.dvbmon.start_delay")
-if [ -z $prerun_start_delay ]; then
-  prerun_start_delay=0
-else
-  logger -i -s "$0 - detection time of previous latest dvb device: $prerun_start_delay seconds"
-fi
-
 
 start_vdr() {
-  if mkdir /var/lock/.dvbmon.start_vdr_lock 2>/dev/null; then
-    logger -i -s "$0 - trigger vdr start"
-    start vdr
-  else
-    logger -i -s "$0 - vdr already started"
-  fi
+  logger -i -s "$0 - trigger vdr start"
+  start vdr
 }
 
-set_timer() { (sleep $1; kill -ALRM $$)& }
-
-handle_timer() {
-  logger -i -s "$0 - detection time of previous latest dvb device reached"
-  start_vdr
-}
-
-#if [ $prerun_start_delay -gt 0 ]; then
-#  set_timer $prerun_start_delay
-#fi
-
-delay=0
-last_start_delay=0
 vdr_started=0
 last_device_cnt=0
+loop_cnt=0
+check_interval=1
 
 while [ 1 ]; do
   device_cnt=0
@@ -85,11 +52,9 @@ while [ 1 ]; do
     creation_time=$(stat --printf="%Z" /dev/dvb/adapter$i/frontend0 2>/dev/null)
     if [ $? -eq 0 ]; then
       device_cnt=$(($device_cnt+1))
-      delay=$(($creation_time-$start_time))
     fi
   done
   if [ $vdr_started -eq 0 -a $prerun_device_cnt -gt 0 -a $device_cnt -ge $prerun_device_cnt ]; then
-    trap "" ALRM
     logger -i -s "$0 - previous device count reached"
     start_vdr
     vdr_started=1
@@ -99,13 +64,11 @@ while [ 1 ]; do
     logger -i -s "$0 - device count changed: detected $device_cnt device(s)"
     last_device_cnt=$device_cnt
   fi
-  if [ $delay -gt 0 -a $delay -ne $last_start_delay ]; then
-    dbset "system.vdr.dvbmon.start_delay=$delay"
-    logger -i -s "$0 - device detected $delay seconds after start"
-    last_start_delay=$delay 
-  fi
     
-  for i in $(seq $check_interval); do
-    sleep 1
-  done
+  sleep $check_interval
+  if [ loop_cnt -lt 60 ]; then
+    loop_cnt=$(($loop_cnt+1))
+  else
+    check_interval=10;
+  fi
 done
