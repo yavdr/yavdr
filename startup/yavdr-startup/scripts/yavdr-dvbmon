@@ -70,9 +70,9 @@ handle_timer() {
   start_vdr
 }
 
-if [ $prerun_start_delay -gt 0 ]; then
-  set_timer $prerun_start_delay
-fi
+#if [ $prerun_start_delay -gt 0 ]; then
+#  set_timer $prerun_start_delay
+#fi
 
 delay=0
 last_start_delay=0
