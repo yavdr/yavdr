@@ -91,3 +91,4 @@ border_size	10
 # Each button must be defined with this syntax:
 # (tooltip)  (image)  (command)
 [column]
+(XBMC)	(xbmc_icon.png)	(/usr/share/vdr/menuorg-appswitcher standalone=yes app=xbmc)
