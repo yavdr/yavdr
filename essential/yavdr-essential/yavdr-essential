@@ -6,9 +6,7 @@ at
 autofs
 build-essential
 cpufrequtils
-devilspie
 ethtool
-fbpanel
 firefox
 graphtft-fe
 irserver
@@ -34,6 +32,7 @@ samba-common
 samba-common-bin
 smbclient
 ssh
+tint2
 unclutter
 update-manager-core
 ureadahead
@@ -64,6 +63,7 @@ vdr-tft-standard
 vdr-xpmlogos
 w-scan
 wget
+wmdrawer
 x11-utils
 x11-xserver-utils
 xbmc
