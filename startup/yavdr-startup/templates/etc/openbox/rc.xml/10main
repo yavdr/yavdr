@@ -154,19 +154,19 @@
 </margins>
 
 <dock>
-  <position>TopLeft</position>
+  <position>Left</position>
   <!-- (Top|Bottom)(Left|Right|)|Top|Bottom|Left|Right|Floating -->
   <floatingX>0</floatingX>
   <floatingY>0</floatingY>
-  <noStrut>no</noStrut>
+  <noStrut>yes</noStrut>
   <stacking>Above</stacking>
   <!-- 'Above', 'Normal', or 'Below' -->
   <direction>Vertical</direction>
   <!-- 'Vertical' or 'Horizontal' -->
-  <autoHide>no</autoHide>
-  <hideDelay>300</hideDelay>
+  <autoHide>yes</autoHide>
+  <hideDelay>4000</hideDelay>
   <!-- in milliseconds (1000 = 1 second) -->
-  <showDelay>300</showDelay>
+  <showDelay>0</showDelay>
   <!-- in milliseconds (1000 = 1 second) -->
   <moveButton>Middle</moveButton>
   <!-- 'Left', 'Middle', 'Right' -->
