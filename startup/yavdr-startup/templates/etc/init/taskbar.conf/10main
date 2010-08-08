@@ -1,0 +1,8 @@
+description     "a simple taskbar"
+author          "Holger Reichelt <holgerr@yavdr.de>"
+
+script
+export PATH=/usr/local/bin:/usr/bin:/bin
+export HOME=/var/lib/vdr
+exec su -c "DISPLAY=:1 /usr/bin/tint2 -c /etc/tint2/yavdr" vdr
+end script
