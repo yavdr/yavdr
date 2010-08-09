@@ -1,5 +1,0 @@
-        button {
-            image = /usr/share/yavdr/images/xterm_icon.png
-            tooltip = Terminal
-            action = /sbin/initctl start --no-wait xterm
-        }

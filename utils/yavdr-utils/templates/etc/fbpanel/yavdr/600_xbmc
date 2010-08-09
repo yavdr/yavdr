@@ -1,5 +1,0 @@
-        button {
-            image = /usr/share/yavdr/images/xbmc_icon.png
-            tooltip = Xbox Media Center
-            action = /usr/share/vdr/menuorg-appswitcher standalone=yes app=xbmc
-        }

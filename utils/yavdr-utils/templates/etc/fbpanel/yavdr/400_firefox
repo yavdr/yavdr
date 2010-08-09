@@ -1,5 +1,0 @@
-        button {
-            icon = mozilla-firefox
-            tooltip = Firefox web browser
-            action = /usr/share/vdr/menuorg-appswitcher standalone=no app=firefox
-        }

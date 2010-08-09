@@ -1,5 +1,0 @@
-        button {
-            image = /usr/share/yavdr/images/yavdr_logo_small.png          
-            tooltip = TV on/off
-            action = /sbin/initctl start --no-wait toggle JOBNAME=vdr-frontend
-        }
