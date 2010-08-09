@@ -3,8 +3,6 @@ scripts/yavdr-dvbmon	usr/bin/
 images/yavdr_logo.png	usr/share/yavdr/images/
 images/*.gif		usr/share/yavdr/images/
 images/xbmc_icon.png	usr/share/yavdr/images/
-images/youtube_icon.jpg	usr/share/yavdr/images/
-images/xterm_icon.png	usr/share/yavdr/images/
 images/noSignal4x3.mpg	var/lib/vdr/plugins/xine/
 images/noSignal16x9.mpg	var/lib/vdr/plugins/xine/
 images/nosignal.mpg	usr/share/libxine1-xvdr/			
