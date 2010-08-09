@@ -5,12 +5,12 @@
 #---------------------------------------------
 # BACKGROUND AND BORDER
 #---------------------------------------------
-rounded = 0
+rounded = 5
 border_width = 0
 background_color = #000000 100
 border_color = #ffffff 100
 
-rounded = 0
+rounded = 5
 border_width = 2
 background_color = #111111 100
 border_color = #404040 100
@@ -30,7 +30,7 @@ border_color = #404040 100
 #---------------------------------------------
 panel_monitor = all
 panel_position = bottom center
-panel_size = 100% 70
+panel_size = 100% 40
 panel_margin = 0 0
 panel_padding = 10 1 5
 panel_layer = Bottom
