@@ -203,7 +203,7 @@ set disable_joystick false
 #
 # If true, then audio in the game is completely disabled.
 #
-set no_audio true
+set no_audio false
 
 # sound_enabled
 #
@@ -237,7 +237,7 @@ set music_volume 127
 #   1: 22050 Hz
 #   2: 44100 Hz
 #
-set audio_freq_mode 1
+set audio_freq_mode 2
 
 # audio_format_mode
 #
@@ -522,4 +522,4 @@ set ui_language "de_DE"
 # Set this to true disable the autodetection
 # for available video modes.
 #
-set disable_videomode_autodetection true
+set disable_videomode_autodetection false
