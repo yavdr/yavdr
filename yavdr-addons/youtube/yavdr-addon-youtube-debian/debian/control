@@ -8,6 +8,6 @@ Build-Depends: debhelper (>= 7), cdbs
 
 Package: yavdr-addon-youtube
 Architecture: all
-Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, chromium-browser
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, chromium-browser, flashplugin-installer
 Description: yavdr-addon-youtube 
  yavdr-addon-youtube
