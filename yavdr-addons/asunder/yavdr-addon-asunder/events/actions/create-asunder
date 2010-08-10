@@ -2,7 +2,7 @@
 
 process-template /etc/init/asunder.conf
 process-template /etc/wmdrawer/tools
-restart launcher
+
 
 
 

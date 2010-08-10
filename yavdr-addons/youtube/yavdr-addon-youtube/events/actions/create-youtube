@@ -2,7 +2,7 @@
 
 process-template /etc/init/youtube.conf
 process-template /etc/wmdrawer/media
-restart launcher
+
 
 
 

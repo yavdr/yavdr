@@ -2,7 +2,7 @@
 
 process-template /etc/init/claws.conf
 process-template /etc/wmdrawer/web
-restart launcher
+
 
 
 

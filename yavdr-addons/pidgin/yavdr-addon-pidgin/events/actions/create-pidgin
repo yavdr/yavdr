@@ -2,7 +2,6 @@
 
 process-template /etc/init/pidgin.conf
 process-template /etc/wmdrawer/web
-restart launcher
 rm -f /usr/bin/start-pidgin
 
 

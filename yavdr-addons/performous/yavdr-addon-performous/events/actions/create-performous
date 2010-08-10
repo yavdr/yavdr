@@ -3,6 +3,5 @@
 process-template /etc/init/performous.conf
 process-template --owner=vdr --group=vdr /var/lib/vdr/.config/performous/config.xml
 process-template /etc/wmdrawer/games
-restart launcher
 rm -f /usr/bin/start-performous
 
