@@ -1,5 +1,5 @@
          <menu name="Befehle">
                <command name="System herunterfahren" execute="echo '/usr/bin/svdrpsend hitk power' | at now" />
                <command name="Aufnahmen-Liste aktualisieren" execute="echo '/usr/bin/touch /srv/vdr/video.00/.update' | at now" />
-               <system name="Commands" title="Sonstige Befehle" />
+               <command name="USB Massenspeicher sicher entfernen" execute="HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &amp;> /dev/null" />
          </menu>
