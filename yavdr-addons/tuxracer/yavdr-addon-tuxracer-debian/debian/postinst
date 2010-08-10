@@ -4,6 +4,7 @@ case "$1" in
     configure)
 
         chmod +x /usr/share/yavdr/events/actions/*
+        mkdir -p /var/lib/vdr/.etracer
 	chown -R vdr:vdr /var/lib/vdr/.etracer/	
         /usr/bin/dpkg-trigger yavdr-addons-update
         
