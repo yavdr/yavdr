@@ -1,0 +1,169 @@
+#!/bin/bash
+
+VERSION="0.2.1."
+
+####  SVN wird beim argument repo=stable automatisch angepasst auf branches/yavdr-0.2 sonst ist der download aus dem trunk
+
+SVN="trunk"
+
+#####################################################################################################	
+###     AUFRUF :   ./yavdr-upload paket=utils(oder startup/essential) repo=testing (oder unstable  ##
+###     Beispiel : ./yavdr-upload paket=utils repo=unstable                                        ## 
+###     lädt das aktuelle utils nach unstable-yavdr                                                ## 
+###												   ##	
+###     2010-08-10 NEU : addon upload ist jetzt auch möglich. stable wurde (nur für addons)        ##
+###                      deaktiviert. aufruf wie oben aber anstatt paket=xxx ist es addon=xxx      ##
+###     Beispiel : ./yavdr-upload addon=pidgin repo=unstable                                       ##
+###     lädt das aktuelle pidgin-addon nach unstable-yavdr                                         ##  ###												   ##
+##################################################################################################### 
+
+export DEBEMAIL="hotzenplotz5@gmx.de"
+export DEBFULLNAME="Holger Schvestka"
+
+#####################################################################################################	
+#########   DEBFULLNAME und DEBEMAIL müssen angepasst sein                                   ########
+#########   alternativ kann man im homeverzeichnis in der .bashrc                            ########
+#########   export DEBEMAIL="deinemail@xxx.xx"                                               ########
+#########   export DEBFULLNAME="Dein Name"  setzen                                           ########   
+##################################################################################################### 
+
+
+for ARG in $@ ; do
+   KEY="${ARG/=*}"
+   VALUE="${ARG/*=}"
+
+   case $KEY in
+        paket)
+                 PAKET=$VALUE 
+                 ;;
+        addon)
+                 ADDON=$VALUE
+                 ;;
+        repo)
+                 REPO=$VALUE
+                 ;;
+        *)
+                 echo "unknown argument: $KEY"
+                 ;;
+    esac
+done
+
+# minimum required arguments
+if [ -z "$PAKET" ] && [ -z "$ADDON" ] || [ -z "$REPO" ]; then
+        echo "minimum required argument (paket/addon, app) not given, exit now ..."
+        exit 0
+fi
+
+if [ "x$REPO" = "xstable" ] && [ -n $ADDON ]; then
+	echo "bitte (noch) nicht die addons aus stable aktualisieren"
+	exit 0
+fi
+
+if [ "x$REPO" = "xunstable" ]; then
+    REPOSITORY="ppa:yavdr/unstable-yavdr" 
+elif [ "x$REPO" = "xtesting" ]; then
+    REPOSITORY="ppa:yavdr/testing-yavdr"
+elif [ "x$REPO" = "xstable" ]; then 
+    REPOSITORY="ppa:yavdr/stable-yavdr"
+    SVN="branches/yavdr-0.2"
+fi
+
+
+######## version_id = aktuelle revision
+
+VERSION_ID=$(svn info https://svn.origo.ethz.ch/yavdr/ | sed -n 's/^Revision: //p')
+
+######## download aus dem svn  
+
+if [ -n "$PAKET" ]; then
+echo Downloading yavdr-"$PAKET"-"$VERSION""$VERSION_ID" from svn ....
+svn export -q https://svn.origo.ethz.ch/yavdr/"$SVN"/"$PAKET"/
+fi
+
+if [ -n "$ADDON" ]; then
+echo Downloading yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID" from svn ....
+svn export -q https://svn.origo.ethz.ch/yavdr/"$SVN"/yavdr-addons/"$ADDON"/
+fi
+
+######## umbenennen der version
+
+if [ -n "$PAKET" ]; then
+cd "$PAKET"
+mv yavdr-"$PAKET" yavdr-"$PAKET"-"$VERSION""$VERSION_ID"
+fi
+
+if [ -n "$ADDON" ]; then
+cd "$ADDON"
+mv yavdr-addon-"$ADDON" yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"
+fi
+
+
+####### orig.tar.gz erstellen
+
+if [ -n "$PAKET" ]; then
+echo erstelle yavdr-"$PAKET"_"$VERSION""$VERSION_ID".orig.tar.gz
+tar czf yavdr-"$PAKET"_"$VERSION""$VERSION_ID".orig.tar.gz yavdr-"$PAKET"-"$VERSION""$VERSION_ID"
+fi
+
+if [ -n "$ADDON" ]; then
+echo erstelle yavdr-addon-"$ADDON"_"$VERSION""$VERSION_ID".orig.tar.gz
+tar czf yavdr-addon-"$ADDON"_"$VERSION""$VERSION_ID".orig.tar.gz yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"
+fi
+
+####### !! erst nach dem erstellen der orig.tar.gz !!  das debian verzeichnis kopieren in das paket-verzeichnis
+
+if [ -n "$PAKET" ]; then
+echo kopiere yavdr-"$PAKET"-debian/debian nach yavdr-"$PAKET"-"$VERSION""$VERSION_ID"/debian 
+cp -R yavdr-"$PAKET"-debian/debian yavdr-"$PAKET"-"$VERSION""$VERSION_ID"/debian
+rm -fr yavdr-"$PAKET"-debian
+fi
+
+if [ -n "$ADDON" ]; then
+echo kopiere yavdr-addon-"$ADDON"-debian/debian nach yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"/debian 
+cp -R yavdr-addon-"$ADDON"-debian/debian yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"/debian
+rm -fr yavdr-addon-"$ADDON"-debian
+fi
+
+#####################################################################################################	
+#########  neuen changelog eintrag erstellen DEBFULLNAME und DEBEMAIL müssen angepasst sein #########
+##################################################################################################### 
+
+echo Update debian/changelog
+
+if [ -n "$PAKET" ]; then
+cd yavdr-"$PAKET"-"$VERSION""$VERSION_ID"
+dch -v "$VERSION$VERSION_ID-1yavdr1" "New Upstream Snapshot"
+fi
+
+if [ -n "$ADDON" ]; then
+cd yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"
+dch -v "$VERSION$VERSION_ID-1yavdr1" "New Upstream Snapshot"
+fi
+
+
+#######  paket-sourcen vorbereiten für den upload
+
+echo debuild
+debuild -S -sa > /dev/null 
+
+######  upload
+
+cd ..
+
+echo upload nach $REPOSITORY
+
+dput "$REPOSITORY" *source.changes
+
+###### den ganzen kram wieder löschen
+cd ..
+rm -fr "$PAKET"
+rm -fr "$ADDON"
+
+echo "done"
+
+
+
+
+ 
+
+
