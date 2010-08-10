@@ -1,0 +1,9 @@
+#!/bin/bash
+
+process-template --owner=vdr --group=vdr /var/lib/vdr/.etracer/options
+process-template /etc/init/tuxracer.conf
+process-template /etc/wmdrawer/games
+restart launcher
+
+
+
