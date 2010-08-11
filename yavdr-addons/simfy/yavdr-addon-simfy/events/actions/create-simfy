@@ -1,0 +1,8 @@
+#!/bin/bash
+
+process-template /etc/init/simfy.conf
+process-template /etc/wmdrawer/media
+
+
+
+

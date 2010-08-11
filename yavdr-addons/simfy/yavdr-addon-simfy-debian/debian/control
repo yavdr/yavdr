@@ -1,0 +1,13 @@
+Source: yavdr-addon-simfy
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-addon-simfy
+Architecture: all
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, chromium-browser, flashplugin-installer|adobe-flashplugin
+Description: yavdr-addon-simfy 
+ yavdr-addon-simfy
