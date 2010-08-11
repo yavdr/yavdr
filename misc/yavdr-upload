@@ -6,26 +6,26 @@ VERSION="0.2.1."
 
 SVN="trunk"
 
-#####################################################################################################	
+#####################################################################################################
 ###     AUFRUF :   ./yavdr-upload paket=utils(oder startup/essential) repo=testing (oder unstable  ##
-###     Beispiel : ./yavdr-upload paket=utils repo=unstable                                        ## 
-###     lädt das aktuelle utils nach unstable-yavdr                                                ## 
-###												   ##	
+###     Beispiel : ./yavdr-upload paket=utils repo=unstable                                        ##
+###     lädt das aktuelle utils nach unstable-yavdr                                                ##
+###												   ##
 ###     2010-08-10 NEU : addon upload ist jetzt auch möglich. stable wurde (nur für addons)        ##
 ###                      deaktiviert. aufruf wie oben aber anstatt paket=xxx ist es addon=xxx      ##
 ###     Beispiel : ./yavdr-upload addon=pidgin repo=unstable                                       ##
-###     lädt das aktuelle pidgin-addon nach unstable-yavdr                                         ##  ###												   ##
-##################################################################################################### 
+###     lädt das aktuelle pidgin-addon nach unstable-yavdr                                         ##
+#####################################################################################################
 
 export DEBEMAIL="hotzenplotz5@gmx.de"
 export DEBFULLNAME="Holger Schvestka"
 
-#####################################################################################################	
+#####################################################################################################
 #########   DEBFULLNAME und DEBEMAIL müssen angepasst sein                                   ########
 #########   alternativ kann man im homeverzeichnis in der .bashrc                            ########
 #########   export DEBEMAIL="deinemail@xxx.xx"                                               ########
-#########   export DEBFULLNAME="Dein Name"  setzen                                           ########   
-##################################################################################################### 
+#########   export DEBFULLNAME="Dein Name"  setzen                                           ########
+#####################################################################################################
 
 
 for ARG in $@ ; do
@@ -34,7 +34,7 @@ for ARG in $@ ; do
 
    case $KEY in
         paket)
-                 PAKET=$VALUE 
+                 PAKET=$VALUE
                  ;;
         addon)
                  ADDON=$VALUE
@@ -60,10 +60,10 @@ if [ "x$REPO" = "xstable" ] && [ -n $ADDON ]; then
 fi
 
 if [ "x$REPO" = "xunstable" ]; then
-    REPOSITORY="ppa:yavdr/unstable-yavdr" 
+    REPOSITORY="ppa:yavdr/unstable-yavdr"
 elif [ "x$REPO" = "xtesting" ]; then
     REPOSITORY="ppa:yavdr/testing-yavdr"
-elif [ "x$REPO" = "xstable" ]; then 
+elif [ "x$REPO" = "xstable" ]; then
     REPOSITORY="ppa:yavdr/stable-yavdr"
     SVN="branches/yavdr-0.2"
 fi
@@ -73,7 +73,7 @@ fi
 
 VERSION_ID=$(svn info https://svn.origo.ethz.ch/yavdr/ | sed -n 's/^Revision: //p')
 
-######## download aus dem svn  
+######## download aus dem svn
 
 if [ -n "$PAKET" ]; then
 echo Downloading yavdr-"$PAKET"-"$VERSION""$VERSION_ID" from svn ....
@@ -113,20 +113,20 @@ fi
 ####### !! erst nach dem erstellen der orig.tar.gz !!  das debian verzeichnis kopieren in das paket-verzeichnis
 
 if [ -n "$PAKET" ]; then
-echo kopiere yavdr-"$PAKET"-debian/debian nach yavdr-"$PAKET"-"$VERSION""$VERSION_ID"/debian 
+echo kopiere yavdr-"$PAKET"-debian/debian nach yavdr-"$PAKET"-"$VERSION""$VERSION_ID"/debian
 cp -R yavdr-"$PAKET"-debian/debian yavdr-"$PAKET"-"$VERSION""$VERSION_ID"/debian
 rm -fr yavdr-"$PAKET"-debian
 fi
 
 if [ -n "$ADDON" ]; then
-echo kopiere yavdr-addon-"$ADDON"-debian/debian nach yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"/debian 
+echo kopiere yavdr-addon-"$ADDON"-debian/debian nach yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"/debian
 cp -R yavdr-addon-"$ADDON"-debian/debian yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"/debian
 rm -fr yavdr-addon-"$ADDON"-debian
 fi
 
-#####################################################################################################	
+#####################################################################################################
 #########  neuen changelog eintrag erstellen DEBFULLNAME und DEBEMAIL müssen angepasst sein #########
-##################################################################################################### 
+#####################################################################################################
 
 echo Update debian/changelog
 
@@ -144,7 +144,7 @@ fi
 #######  paket-sourcen vorbereiten für den upload
 
 echo debuild
-debuild -S -sa > /dev/null 
+debuild -S -sa > /dev/null
 
 ######  upload
 
@@ -160,10 +160,4 @@ rm -fr "$PAKET"
 rm -fr "$ADDON"
 
 echo "done"
-
-
-
-
- 
-
 
