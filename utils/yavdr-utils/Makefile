@@ -5,7 +5,7 @@ ALL = $(addsuffix -all,$(SUBDIRS))
 INSTALL = $(addsuffix -install,$(SUBDIRS))
 CLEAN = $(addsuffix -clean,$(SUBDIRS))
 
-all: $(ALL)
+all: $(ALL) i18n
 install: $(INSTALL)
 clean: $(CLEAN)
 
@@ -24,4 +24,16 @@ $(INSTALL):
 
 $(CLEAN):
 	$(MAKE) -C $(@:-clean=) clean
+
+
+### Internationalization (I18N):
+
+PODIR     = po
+I18Npot   = $(PODIR)/yavdr.pot
+
+$(I18Npot): $(wildcard templates/var/lib/vdr/plugins/menuorg.xml/*)
+	@xgettext -C -cTRANSLATORS --no-wrap --no-location -k_ -o $@ $^
+
+.PHONY: i18n
+i18n: $(I18Npot)
 
