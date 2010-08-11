@@ -47,7 +47,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/yavdr-i18n.
-	$(MAKE) DESTDIR=$(CURDIR)/debian/yavdr-i18n
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp
 
 
 # Build architecture-independent files here.
