@@ -27,7 +27,6 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE)
 
 	touch $@
 
@@ -47,8 +46,8 @@ install: build
 	dh_prep  
 	dh_installdirs
 
-	# Add here commands to install the package into debian/yavdr-utils.
-	$(MAKE) DESTDIR=$(CURDIR)/debian/yavdr-utils install
+	# Add here commands to install the package into debian/yavdr-i18n.
+	$(MAKE) DESTDIR=$(CURDIR)/debian/yavdr-i18n
 
 
 # Build architecture-independent files here.
@@ -93,7 +92,7 @@ binary: binary-indep binary-arch
 VERSION_ID = $(shell echo $(DEB_UPSTREAM_VERSION) | sed 's/\+svn.*//')+svn$(shell date --utc +%0Y%0m%0d.%0k%0M)
 get-orig-source::
 	echo Downloading $(DEB_SOURCE_PACKAGE) $(VERSION_ID) from svn...
-	svn export -q https://svn.origo.ethz.ch/yavdr/trunk/utils/yavdr-utils $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
+	svn export -q https://svn.origo.ethz.ch/yavdr/trunk/i18n/yavdr-i18n $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
 	tar czf ../$(DEB_SOURCE_PACKAGE)_$(VERSION_ID).orig.tar.gz $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
 	rm -rf $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
 	dch -v "$(VERSION_ID)-1yavdr1" "New Upstream Snapshot" 
