@@ -5,6 +5,6 @@
 PODIR     = ./yavdr-i18n
 I18Npot   = $(PODIR)/yavdr.pot
 
-$(I18Npot): $(wildcard ../*/*/templates/var/lib/vdr/plugins/menuorg.xml/*)
+$(I18Npot): $(wildcard ../*/*/templates/var/lib/vdr/plugins/menuorg.xml/*) $(wildcard ../*/*/*/templates/var/lib/vdr/plugins/menuorg.xml/*)
 	@xgettext -C -cTRANSLATORS --no-wrap --no-location -k_ -o $@ $^
 
