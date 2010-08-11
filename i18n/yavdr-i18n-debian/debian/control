@@ -1,0 +1,13 @@
+Source: yavdr-i18n
+Section: misc
+Priority: extra
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Build-Depends: debhelper (>= 7), gettext
+Standards-Version: 3.8.0
+Homepage: http://yavdr.origo.ethz.ch/
+
+Package: yavdr-i18n
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: i18n support for yaVDR
+ i18n support for yaVDR
