@@ -1,14 +1,7 @@
+<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
 post-start script
-sleep 2
-if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
-    # set overscan compensation if set
-    COMP=`dbget system.hardware.nvidia.overscan`
-
-    if [ ! -z "$COMP" ]; then
-         [ -e /usr/bin/nvidia-settings ] && DISPLAY=:1 /usr/bin/nvidia-settings -a OverscanCompensation=$COMP
-    fi
-fi
+sleep 3
 DISPLAY=:1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
 LANG=C /sbin/status vdr | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 end script
-
+<?cs /if ?>
