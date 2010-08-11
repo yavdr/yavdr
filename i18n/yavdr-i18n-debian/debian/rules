@@ -66,14 +66,12 @@ binary-arch: install
 #	dh_installdebconf
 #	dh_installlogrotate
 #	dh_installemacsen
-	dh_installpam --name=yavdr
 #	dh_installmime
 #	dh_python
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
 	dh_installman
-	dh_installyavdr
 	dh_link
 	dh_strip
 	dh_compress
