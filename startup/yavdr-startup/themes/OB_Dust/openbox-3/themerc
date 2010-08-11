@@ -33,17 +33,17 @@ window.active.label.text.color: #ffffff
 window.inactive.label.bg: parentrelative
 window.inactive.label.text.color: #ffffff
 
-window.active.button.unpressed.bg: parentrelative
+window.active.button.unpressed.bg: raised gradient diagonal
 window.active.button.unpressed.image.color: #ffffff
-window.inactive.button.unpressed.bg: parentrelative
+window.inactive.button.unpressed.bg: raised gradient diagonal
 window.inactive.button.unpressed.image.color: #000000
 
-window.active.button.pressed.bg: parentrelative
-window.inactive.button.pressed.bg: parentrelative
+window.active.button.pressed.bg: raised gradient diagonal
+window.inactive.button.pressed.bg: raised gradient diagonal
 
-window.active.button.disabled.bg: parentrelative
+window.active.button.disabled.bg: raised gradient diagonal
 window.active.button.disabled.image.color: #2C2C2C
-window.inactive.button.disabled.bg: parentrelative
+window.inactive.button.disabled.bg: raised gradient diagonal
 window.inactive.button.disabled.image.color: #000000
 
 window.frame.focus: flat solid
