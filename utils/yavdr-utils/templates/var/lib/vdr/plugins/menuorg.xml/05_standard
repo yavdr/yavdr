@@ -1,12 +1,12 @@
     <system name="Schedule" />
     <system name="Channels" />
-    <menu name="Timer">
+    <menu name=<?cs call:quote(_("Timer")) ?>>
         <system name="Timers" />
         <plugin name="epgsearchonly" />
         <plugin name="quickepgsearch" />
         <plugin name="conflictcheckonly" />
     </menu>
-    <menu name="Video">
+    <menu name=<?cs call:quote(_("Video")) ?>>
         <system name="Recordings" />
         <plugin name="burn" />
         <plugin name="dvdswitch" />

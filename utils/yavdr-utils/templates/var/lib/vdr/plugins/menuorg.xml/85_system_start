@@ -1,1 +1,1 @@
-    <menu name="System">
+    <menu name=<?cs call:quote(_("System")) ?>>

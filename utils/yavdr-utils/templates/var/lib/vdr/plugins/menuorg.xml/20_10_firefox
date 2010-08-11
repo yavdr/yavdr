@@ -1,1 +1,1 @@
-        <command name="Internet" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=no app=firefox'|at now" />
+        <command name=<?cs call:quote(_("Internet")) ?> execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=no app=firefox'|at now" />
