@@ -1,7 +1,7 @@
          <menu name="Befehle">
-               <command name=<?cs call:quote(_("USB Massenspeicher sicher entfernen")) ?> execute="HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &amp;> /dev/null" />
-               <command name=<?cs call:quote(_("Aufnahmen-Liste aktualisieren")) ?> execute="echo '/usr/bin/touch /srv/vdr/video.00/.update' | at now" />
-	       <command name=<?cs call:quote(_("VDR neu starten?")) ?> execute="restart vdr" />
-               <command name=<?cs call:quote(_("Rechner Neu starten")) ?> execute="sudo reboot" />
-               <command name=<?cs call:quote(_("System herunterfahren")) ?> execute="echo '/usr/bin/svdrpsend hitk power' | at now" />
+               <command name=<?cs call:quote(_("Safely remove usb mass storage")) ?> execute="HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &amp;> /dev/null" />
+               <command name=<?cs call:quote(_("Update vdr recordings list")) ?> execute="echo '/usr/bin/touch /srv/vdr/video.00/.update' | at now" />
+	       <command name=<?cs call:quote(_("Restart vdr")) ?> execute="restart vdr" />
+               <command name=<?cs call:quote(_("Reboot system")) ?> execute="sudo reboot" />
+               <command name=<?cs call:quote(_("Shutdown system")) ?> execute="echo '/usr/bin/svdrpsend hitk power' | at now" />
          </menu>
