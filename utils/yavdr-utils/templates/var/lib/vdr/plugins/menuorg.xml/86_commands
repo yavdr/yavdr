@@ -1,4 +1,4 @@
-         <menu name="Befehle">
+         <menu name=<?cs call:quote(_("Commands")) ?>>
                <command name=<?cs call:quote(_("Safely remove usb mass storage")) ?> execute="HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &amp;> /dev/null" />
                <command name=<?cs call:quote(_("Update vdr recordings list")) ?> execute="echo '/usr/bin/touch /srv/vdr/video.00/.update' | at now" />
 	       <command name=<?cs call:quote(_("Restart vdr")) ?> execute="restart vdr" />
