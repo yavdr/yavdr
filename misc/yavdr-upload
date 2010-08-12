@@ -54,7 +54,6 @@ if [ -z "$PAKET" ] && [ -z "$ADDON" ] || [ -z "$REPO" ]; then
         exit 0
 fi
 
-if [ "x$REPO" = "xstable" ] && [ -n $ADDON ]; then
 if  [ -n "$ADDON" ]  &&  [ "x$REPO" = "xstable" ]; then
 	echo "bitte (noch) nicht die addons aus stable aktualisieren"
 	exit 0
