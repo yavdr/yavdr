@@ -1,7 +1,1 @@
-<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
-post-start script
-sleep 3
-DISPLAY=:1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
-LANG=C /sbin/status vdr | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
-end script
-<?cs /if ?>
+post-start exec sleep 2
