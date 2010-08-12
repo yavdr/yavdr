@@ -1,27 +1,30 @@
-# German translations for PACKAGE package
-# German messages for PACKAGE.
-# Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Gerald Dachs <gda@dachsweb.de>, 2010.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: yavdr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-11 10:35+0200\n"
-"PO-Revision-Date: 2010-08-11 10:59+0200\n"
-"Last-Translator: Gerald Dachs <gda@dachsweb.de>\n"
-"Language-Team: German\n"
+"POT-Creation-Date: 2010-08-12 18:55+0200\n"
+"PO-Revision-Date: 2010-08-12 18:55+0200\n"
+"Last-Translator: Holger Schvestka <hotzenplotz5@gmx.de>\n"
+"Language-Team: yavdr <bugs@yavdr.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Timer"
+msgstr "Timer"
+
+msgid "Video"
+msgstr "Video"
 
 msgid "Applications"
 msgstr "Applikationen"
 
 msgid "Web"
 msgstr "Web"
+
+msgid "Internet"
+msgstr "Internet"
 
 msgid "Media"
 msgstr "Medien"
@@ -34,3 +37,28 @@ msgstr "Spiele"
 
 msgid "Tools"
 msgstr "Dienstprogramme"
+
+msgid "Xterm"
+msgstr "Xterm"
+
+msgid "System"
+msgstr "System"
+
+msgid "Commands"
+msgstr "Befehle"
+
+msgid "Safely remove usb mass storage"
+msgstr "USB Massenspeicher sicher entfernen"
+
+msgid "Update vdr recordings list"
+msgstr "Aufnahmen-Liste aktualisieren"
+
+msgid "Restart vdr"
+msgstr "VDR neu starten"
+
+msgid "Reboot system"
+msgstr "Rechner Neu starten"
+
+msgid "Shutdown system"
+msgstr "System herunterfahren"
+

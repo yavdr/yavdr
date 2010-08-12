@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-11 18:22+0200\n"
+"POT-Creation-Date: 2010-08-12 18:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Timer"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
 msgid "Applications"
 msgstr ""
 
 msgid "Web"
+msgstr ""
+
+msgid "Internet"
 msgstr ""
 
 msgid "Media"
@@ -32,4 +41,28 @@ msgid "Games"
 msgstr ""
 
 msgid "Tools"
+msgstr ""
+
+msgid "Xterm"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "Commands"
+msgstr ""
+
+msgid "Safely remove usb mass storage"
+msgstr ""
+
+msgid "Update vdr recordings list"
+msgstr ""
+
+msgid "Restart vdr"
+msgstr ""
+
+msgid "Reboot system"
+msgstr ""
+
+msgid "Shutdown system"
 msgstr ""
