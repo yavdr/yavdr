@@ -1,7 +1,7 @@
          <menu name=<?cs call:quote(_("Commands")) ?>>
                <command name=<?cs call:quote(_("Safely remove usb mass storage")) ?> execute="HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &amp;> /dev/null" />
-               <command name=<?cs call:quote(_("Update vdr recordings list")) ?> execute="echo '/usr/bin/touch /srv/vdr/video.00/.update' | at now" />
+               <command name=<?cs call:quote(_("Update vdr recordings list")) ?> execute="/usr/bin/touch /srv/vdr/video.00/.update &amp;> /dev/null " />
 	       <command name=<?cs call:quote(_("Restart vdr")) ?> execute="restart vdr" />
                <command name=<?cs call:quote(_("Reboot system")) ?> execute="sudo reboot" />
-               <command name=<?cs call:quote(_("Shutdown system")) ?> execute="echo '/usr/bin/svdrpsend hitk power' | at now" />
+               <command name=<?cs call:quote(_("Shutdown system")) ?> execute="/usr/bin/svdrpsend hitk power &amp;> /dev/null " />
          </menu>
