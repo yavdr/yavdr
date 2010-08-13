@@ -1,1 +1,1 @@
-        <command name="You-Tube" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=yes app=youtube' | at now" />
+        <command name="You-Tube" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=youtube &amp;> /dev/null " />

@@ -1,1 +1,1 @@
-        <command name="Chromium 2D-Shooter" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=yes app=chromium' | at now" />
+        <command name="Chromium 2D-Shooter" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=chromium &amp;> /dev/null " />

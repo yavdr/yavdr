@@ -1,1 +1,1 @@
-        <command name="Pidgin" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=no app=pidgin' | at now" />
+        <command name="Pidgin" execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=pidgin &amp;> /dev/null " />

@@ -1,1 +1,1 @@
-        <command name="CD-Ripper Asunder" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=no app=asunder' | at now" />
+        <command name="CD-Ripper Asunder" execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=asunder &amp;> /dev/null " />

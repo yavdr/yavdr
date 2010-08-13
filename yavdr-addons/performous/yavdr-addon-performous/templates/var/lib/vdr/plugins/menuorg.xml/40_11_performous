@@ -1,1 +1,1 @@
-        <command name="Performous" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=yes app=performous' | at now" />
+        <command name="Performous" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=performous &amp;> /dev/null " />

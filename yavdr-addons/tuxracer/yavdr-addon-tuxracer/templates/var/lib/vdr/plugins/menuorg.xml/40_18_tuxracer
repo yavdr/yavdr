@@ -1,1 +1,1 @@
-        <command name="Extreme Tuxracer" execute="echo '/usr/share/vdr/menuorg-appswitcher standalone=yes app=tuxracer' | at now" />
+        <command name="Extreme Tuxracer" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=tuxracer &amp;> /dev/null " />
