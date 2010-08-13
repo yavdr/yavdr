@@ -23,7 +23,7 @@ pcm.!default {
 type plug
 slave {
 pcm "both"
-{
+}
 }
 
 pcm.both {
@@ -45,7 +45,7 @@ pcm "tv"
 channels 2
 }
 slaves.b {
-pcm "reciever"
+pcm "receiver"
 channels 2
 }
 bindings.0.slave a
