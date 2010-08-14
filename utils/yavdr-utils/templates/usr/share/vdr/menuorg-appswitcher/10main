@@ -42,9 +42,9 @@ fi
 
 if [ "x$STANDALONE" = "xyes" ]; then
     $STOP vdr-frontend
-    /sbin/initctl start --no-wait toggle JOBNAME=$APP $OPTIONS STANDALONE=yes
+    /sbin/initctl start --no-wait toggle JOBNAME=$APP OPTIONS=$OPTIONS STANDALONE=yes
 else
-    /sbin/initctl start --no-wait toggle JOBNAME=$APP $OPTIONS
+    /sbin/initctl start --no-wait toggle JOBNAME=$APP OPTIONS=$OPTIONS
 fi
 
 
