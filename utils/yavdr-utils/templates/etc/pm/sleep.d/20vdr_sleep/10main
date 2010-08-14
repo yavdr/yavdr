@@ -1,4 +1,4 @@
-
+<?cs if:system.sleep.module == "kernel" ?>
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
@@ -16,3 +16,17 @@ case $1 in
      *)  echo "Irgendwer ruft mich total falsch auf."
          ;;
 esac
+<?cs /if ?>
+<?cs if:system.sleep.module == "uswsusp" ?>
+case $1 in
+     hibernate|suspend)
+         echo "vdr is going to sleep"
+         ;;
+     thaw|resume)
+         start dvb-driver-reload
+         for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
+         ;;
+     *)  echo "Irgendwer ruft mich total falsch auf."
+         ;;
+esac
+<?cs /if ?>
