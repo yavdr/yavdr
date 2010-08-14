@@ -1,0 +1,638 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: yavdr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-12 18:55+0200\n"
+"PO-Revision-Date: 2010-08-14 22:06+0200\n"
+"Last-Translator: Volker Richert <richert@addmore.de>\n"
+"Language-Team: zh <translate@yavdr.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "web.meta_lang.local"
+msgstr "Chinese"
+
+msgid "web.meta_lang.int"
+msgstr "中文"
+
+msgid "web.meta_lang.key"
+msgstr "zh_CN"
+
+msgid "web.menutabs.vdr.title"
+msgstr "我的 VDR"
+
+msgid "web.menutabs.vdr.tabtip"
+msgstr "yaVDR的基本设置"
+
+msgid "web.menutabs.vdr.content"
+msgstr "欢迎到yaVDR网络前端！"
+
+msgid "web.menutabs.system.title"
+msgstr "系统"
+
+msgid "web.menutabs.system.tabtip"
+msgstr "系统的基本配置"
+
+msgid "web.menutabs.system.content"
+msgstr "欢迎到yaVDR网络前端！"
+
+msgid "web.menutabs.demos.title"
+msgstr "演示"
+
+msgid "web.menutabs.demos.tabtip"
+msgstr "概念验证，可能的新功能演示，用于测试目的"
+
+msgid "web.menutabs.demos.content"
+msgstr "概念验证，可能的新功能演示，用于测试目的"
+
+msgid "web.menutabs.development.title"
+msgstr "发展"
+
+msgid "web.menutabs.development.tabtip"
+msgstr "新功能，正在兴建中，不要使用它们。他们还不能正常工作"
+
+msgid "web.menutabs.development.content"
+msgstr "新功能，正在兴建中，不要使用它们。他们还不能正常工作"
+
+msgid "web.menutabs.diagnose.title"
+msgstr "诊断"
+
+msgid "web.menutabs.diagnose.tabtip"
+msgstr "随时了解您的系统状态，跟踪问题"
+
+msgid "web.menutabs.diagnose.content"
+msgstr "访问重要日志文件和配置文件"
+
+msgid "web.standardform.button.save"
+msgstr "保存"
+
+msgid "web.standardform.messagebox_caption.message"
+msgstr "消息"
+
+msgid "web.standardform.messagebox_caption.error"
+msgstr "错误"
+
+msgid "web.standardform.messagebox_caption.wait"
+msgstr "请稍等..."
+
+msgid "web.remote.menutab.title"
+msgstr "遥控设置"
+
+msgid "web.remote.menutab.tabtip"
+msgstr "遥控接收设置（远程控制接收器）"
+
+msgid "web.remote.menutab.panel_title"
+msgstr "遥控接收头"
+
+msgid "web.remote.help"
+msgstr "在目前，有3种不同的LIRC服务支持，请给你的设备选择一个适合的 <br /><h1>LIRC</h1><br /><br />这里支持大多数的设备，查找你的设备型号，你必须为您的设备选择正确的驱动程序，如果是一个自制串行端口设备（Attric, self-build and other similar devices自制和其他类似设备），你需要选择正确的串口。<br /><br /><h1>Input Lirc</h1><br /><br />一些DVB卡，包括一个遥控器和接收器。他们中的大多数以及一些USB设备作出所谓的输入设备，你只需要从下拉菜单中选择正确的设备。<br /><br /><h1>Irserver</h1><br /><br />一些HTPC（例如OrigenAE）包括遥控接收器，只能用于irserver，你只需要启用它 并事后保存"
+
+msgid "web.lirc.menutab.title"
+msgstr "LIRC"
+
+msgid "web.lirc.menutab.tabtip"
+msgstr "LIRC的设置（遥控接收器）"
+
+msgid "web.lirc.menutab.panel_title"
+msgstr "遥控接收器（LIRC）"
+
+msgid "web.lirc.help"
+msgstr "当您按下“保存”按钮，VDR将重新启动，通知VDR重新设置LIRC。如果你没有指定遥控器设置（通过remote.conf），VDR将提供OSD对话框，一步一步配置遥控器上的按钮。如果没有按下遥控器的按键，这个对话框在几秒钟后消失。你可以重新启动OSD对话框，只需再次按下“保存”按钮"
+
+msgid "web.lirc.combobox.tooltip.driver"
+msgstr "Driver"
+
+msgid "web.lirc.combobox.tooltip.lirc_driver"
+msgstr "LIRC Driver"
+
+msgid "web.lirc.combobox.emptytext"
+msgstr "请选择你的遥控器型号..."
+
+msgid "web.lirc.combobox.label"
+msgstr "接收器"
+
+msgid "web.lirc.serial_radiogroup.label"
+msgstr "Serial 接口"
+
+msgid "web.lirc.serial_radiogroup.boxlabel_none"
+msgstr "none"
+
+msgid "web.lirc.submit.waitmsg"
+msgstr "LIRC的接收器的设置被保存。"
+
+msgid "web.lirc.submit.success"
+msgstr "该设置被成功地保存。"
+
+msgid "web.lirc.submit.failure"
+msgstr "设置保存错误。请再试一次。"
+
+msgid "web.lirc.error.json_decode"
+msgstr "无法解码JSON接收列表。"
+
+msgid "web.inputlirc.menutab.title"
+msgstr "Inputlirc"
+
+msgid "web.inputlirc.menutab.tabtip"
+msgstr "Inputlirc--设置（远程控制接收器）"
+
+msgid "web.inputlirc.menutab.panel_title"
+msgstr "遥控接收器（LIRC）"
+
+msgid "web.inputlirc.help"
+msgstr "请从上面的列表中选择你的遥控接收器，当您按下“保存”按钮，VDR将重新启动，通知VDR的Inputlirc改变接收器设置。"
+
+msgid "web.inputlirc.combobox.tooltip.driver"
+msgstr "驱动程序"
+
+msgid "web.inputlirc.combobox.tooltip.lirc_driver"
+msgstr "Inputlirc驱动程序"
+
+msgid "web.inputlirc.combobox.emptytext"
+msgstr "请选择你的遥控器型号..."
+
+msgid "web.inputlirc.combobox.label"
+msgstr "接收器"
+
+msgid "web.inputlirc.submit.waitmsg"
+msgstr "Inputlirc接收器的设置被保存。"
+
+msgid "web.inputlirc.submit.success"
+msgstr "该设置成功保存。"
+
+msgid "web.inputlirc.submit.failure"
+msgstr "设置上的错误。请再试一次。"
+
+msgid "web.inputlirc.error.json_decode"
+msgstr "无法解码JSON的接收列表"
+
+msgid "web.irserver.menutab.title"
+msgstr "IRServer"
+
+msgid "web.irserver.menutab.tabtip"
+msgstr "IRServer -设置（远程控制接收器）"
+
+msgid "web.irserver.menutab.panel_title"
+msgstr "远程控制接收器 (IRServer)"
+
+msgid "web.irserver.help"
+msgstr "当您按下“保存”按钮，VDR将重新启动，通知VDR的 IRServer改变接收器设置。"
+
+msgid "web.irserver.combobox.tooltip.driver"
+msgstr "驱动程序"
+
+msgid "web.irserver.combobox.tooltip.lirc_driver"
+msgstr "IRDriver驱动程序"
+
+msgid "web.irserver.combobox.emptytext"
+msgstr "请为您的遥控器接收器..."
+
+msgid "web.irserver.combobox.label"
+msgstr "接收器"
+
+msgid "web.irserver.submit.waitmsg"
+msgstr "IRServer 接收器的设置被保存。"
+
+msgid "web.irserver.submit.success"
+msgstr "该设置成功保存。"
+
+msgid "web.irserver.submit.failure"
+msgstr "设置上的错误。请再试一次。"
+
+msgid "web.irserver.error.json_decode"
+msgstr "无法解码JSON的接收列表"
+
+msgid "web.channels.menutab.title"
+msgstr "频道列表 (SVDRP)"
+
+msgid "web.channels.menutab.tabtip"
+msgstr "频道设置（维护和排序电台和电视频道）"
+
+msgid "web.channels.menutab.panel_title"
+msgstr ""
+
+msgid "web.channels.grid_header.cid"
+msgstr "序号"
+
+msgid "web.channels.grid_header.cname"
+msgstr "频 道 名 称"
+
+msgid "web.channels.grid_header.cstr"
+msgstr "频 道 参 数"
+
+msgid "web.channels.grid_title"
+msgstr "频道列表（所有电台和电视频道）"
+
+msgid "web.frontend.menutab.title"
+msgstr "VDR 前端"
+
+msgid "web.frontend.menutab.tabtip"
+msgstr "在xine和xineliboutput前端之间切换"
+
+msgid "web.frontend.menutab.panel_title"
+msgstr "VDR 前端"
+
+msgid "web.frontend.label"
+msgstr "选择前端"
+
+msgid "web.frontend.button_label"
+msgstr "应用前端设置"
+
+msgid "web.frontend.submit.waitmsg"
+msgstr "更改“前端”设置."
+
+msgid "web.frontend.submit.success"
+msgstr "成功."
+
+msgid "web.frontend.submit.failure"
+msgstr "失败."
+
+msgid "web.shutdown.menutab.title"
+msgstr "关机方式"
+
+msgid "web.shutdown.menutab.tabtip"
+msgstr "在不同的关机方式中切换"
+
+msgid "web.shutdown.menutab.panel_title"
+msgstr "VDR 关机方式"
+
+msgid "web.shutdown.label"
+msgstr "选择关机方式"
+
+msgid "web.shutdown.button_label"
+msgstr "应用关机方式设置"
+
+msgid "web.shutdown.submit.waitmsg"
+msgstr "更改关机方式设置."
+
+msgid "web.shutdown.submit.success"
+msgstr "成功."
+
+msgid "web.shutdown.submit.failure"
+msgstr "失败."
+
+msgid "web.shutdown.items.s3"
+msgstr "挂起到内存"
+
+msgid "web.shutdown.items.s3unavailable"
+msgstr "挂起到内存（不可用）"
+
+msgid "web.shutdown.items.s4"
+msgstr "挂起到硬盘"
+
+msgid "web.shutdown.items.s4unavailable"
+msgstr "挂起到硬盘（不可用）"
+
+msgid "web.shutdown.items.s5"
+msgstr "关闭电脑"
+
+msgid "web.shutdown.items.reboot"
+msgstr "重启内核\"PowerOff\""
+
+msgid "web.upload.menutab.title"
+msgstr "上传VDR 配置"
+
+msgid "web.upload.menutab.tabtip"
+msgstr "上传您现有VDR的配置"
+
+msgid "web.upload.menutab.panel_title"
+msgstr "VDR的配置上传（上传的版本将覆盖现有的版本）"
+
+msgid "web.upload.button_label"
+msgstr "上传"
+
+msgid "web.upload.submit.waitmsg"
+msgstr "文件开始上传."
+
+msgid "web.upload.submit.success"
+msgstr "文件上传成功."
+
+msgid "web.upload.submit.failure"
+msgstr "文件上传出现问题."
+
+msgid "web.system.menutab.title"
+msgstr "系统重启"
+
+msgid "web.system.menutab.tabtip"
+msgstr "重启VDR或整个系统"
+
+msgid "web.system.menutab.panel_title"
+msgstr "系统命令"
+
+msgid "web.system.vdr_restart.label"
+msgstr "重启VDR后台"
+
+msgid "web.system.vdr_restart.submit.waitmsg"
+msgstr "发送VDR重启信号."
+
+msgid "web.system.vdr_restart.submit.success"
+msgstr "VDR 正在重启."
+
+msgid "web.system.vdr_restart.submit.failure"
+msgstr "重启信号发送失败，请再试一次."
+
+msgid "web.system.kill_xbmc.label"
+msgstr "关闭 XBMC （如果冻结）"
+
+msgid "web.system.kill_xbmc.submit.waitmsg"
+msgstr "停止XBMC的信号正在发送."
+
+msgid "web.system.kill_xbmc.submit.success"
+msgstr "XBMC 停止."
+
+msgid "web.system.kill_xbmc.submit.failure"
+msgstr "发送信号失败. 请再试一次."
+
+msgid "web.system.system_restart.label"
+msgstr "重新启动机器（注意：不请求确认！）"
+
+msgid "web.system.system_restart.submit.waitmsg"
+msgstr "重启信号正在发送."
+
+msgid "web.system.system_restart.submit.success"
+msgstr "机器正在重启."
+
+msgid "web.system.system_restart.submit.failure"
+msgstr "发送信号失败. 请再试一次.."
+
+msgid "web.network.menutab.title"
+msgstr "网络配置"
+
+msgid "web.network.menutab.tabtip"
+msgstr "网络维护"
+
+msgid "web.network.menutab.panel_title"
+msgstr "网络配置"
+
+msgid "web.network.nfs.help"
+msgstr "定义从其他主机使用VDR的NFS共享。目录要像\"server:/path\"。“应用”按钮实际上更改您的本地配置。 Define the nfs shares from other hosts that should be used from VDR. Directories have to be qualified like \"server:/path\". The button \"Apply\" actually submits the changes to your local configuration. VDR uses them after next restart."
+
+msgid "web.network.nfs.menutab.title"
+msgstr "NFS"
+
+msgid "web.network.nfs.menutab.tabtip"
+msgstr "维护 NFS 的挂载和共享"
+
+msgid "web.network.nfs.labels.newDir"
+msgstr "挂载目录"
+
+msgid "web.network.nfs.labels.add"
+msgstr "增加"
+
+msgid "web.network.nfs.labels.edit"
+msgstr "编辑"
+
+msgid "web.network.nfs.labels._delete"
+msgstr "删除"
+
+msgid "web.network.nfs.labels.apply"
+msgstr "应用"
+
+msgid "web.network.samba.menutab.title"
+msgstr "Samba"
+
+msgid "web.network.samba.menutab.tabtip"
+msgstr "samba共享维护"
+
+msgid "web.nvidia.menutab.title"
+msgstr "Nvidia设置"
+
+msgid "web.nvidia.menutab.tabtip"
+msgstr "保存 Nvidia 设置"
+
+msgid "web.nvidia.menutab.panel_title"
+msgstr "Nvidia 配置"
+
+msgid "web.nvidia.overscan_slider_label"
+msgstr "Nvidia的画面放大补偿"
+
+msgid "web.nvidia.button_label"
+msgstr "应用值"
+
+msgid "web.nvidia.submit.waitmsg"
+msgstr "Nvidia的画面放大补偿上传."
+
+msgid "web.nvidia.submit.success"
+msgstr "成功."
+
+msgid "web.nvidia.submit.failure"
+msgstr "失败."
+
+msgid "web.webfrontend.menutab.title"
+msgstr "Web 前端设置"
+
+msgid "web.webfrontend.menutab.tabtip"
+msgstr "配置“Web前端”的外观"
+
+msgid "web.webfrontend.menutab.panel_title"
+msgstr "Web 前端设置"
+
+msgid "web.webfrontend.label"
+msgstr "修改Wed前端的语言"
+
+msgid "web.webfrontend.button_label"
+msgstr "语言设置"
+
+msgid "web.webfrontend.submit.waitmsg"
+msgstr "Web 前端语言设置."
+
+msgid "web.webfrontend.submit.success"
+msgstr "成功. 请按“F5”键刷新设置."
+
+msgid "web.webfrontend.submit.failure"
+msgstr "失败."
+
+msgid "web.diagnose.toolbar.button.refresh"
+msgstr "刷新"
+
+msgid "web.diagnose.toolbar.button.refresh_tooltip"
+msgstr "请按一下这个按钮来刷新本面板的内容."
+
+msgid "web.diagnose.toolbar.button.jumpdown"
+msgstr "跳转到面板底部"
+
+msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
+msgstr "请按一下此按钮，跳转到该面板结束."
+
+msgid "web.diagnose.section.system_info.title"
+msgstr "系统信息"
+
+msgid "web.diagnose.section.system_info.description"
+msgstr "网络状态、系统负载、文件系统、内核"
+
+msgid "web.diagnose.section.system_info.ifconfig"
+msgstr "网络状态"
+
+msgid "web.diagnose.section.system_info.top"
+msgstr "系统负载"
+
+msgid "web.diagnose.section.system_info.dmesg"
+msgstr "内核"
+
+msgid "web.diagnose.section.system_info.df"
+msgstr "文件系统"
+
+msgid "web.diagnose.section.system_logs.title"
+msgstr "系统日志文件"
+
+msgid "web.diagnose.section.system_logs.description"
+msgstr "重要的系统日志文件"
+
+msgid "web.diagnose.section.xbmc.title"
+msgstr "XBMC 日志文件"
+
+msgid "web.diagnose.section.xbmc.description"
+msgstr "寻找XBMC崩溃或其他的XBMC问题"
+
+msgid "web.diagnose.section.lirc.title"
+msgstr "LIRC 配置文件"
+
+msgid "web.diagnose.section.lirc.description"
+msgstr "检查LIRC的当前配置"
+
+msgid "web.diagnose.section.vdr.title"
+msgstr "VDR 配置文件"
+
+msgid "web.diagnose.section.vdr.description"
+msgstr "检查VDR的当前配置"
+
+msgid "web.diagnose.section.xorg.title"
+msgstr "X-Server配置文件"
+
+msgid "web.diagnose.section.xorg.description"
+msgstr "检查 X 环境的当前配置"
+
+msgid "web.diagnose.section.sound.title"
+msgstr "声卡 （ALSA）配置文件"
+
+msgid "web.diagnose.section.sound.description"
+msgstr "解决声音问题 （数字 / 模拟）"
+
+msgid "web.diagnose.section.packages.title"
+msgstr "已安装的软件包"
+
+msgid "web.diagnose.section.packages.description"
+msgstr "检查软件包的版本和安装的软件包"
+
+msgid "web.diagnose.section.yavdr.title"
+msgstr "yaVDR-Utils配置文件"
+
+msgid "web.diagnose.section.yavdr.description"
+msgstr "解决yaVDR网络前端问题（数据库服务器）"
+
+msgid "web.timeout.menutab.title"
+msgstr "GRUB 退出时间"
+
+msgid "web.timeout.menutab.tabtip"
+msgstr "设置 GRUB 退出时间"
+
+msgid "web.timeout.menutab.panel_title"
+msgstr "GRUB 退出时间"
+
+msgid "web.timeout.label"
+msgstr "更改退出时间"
+
+msgid "web.timeout.button_label"
+msgstr "应用“退出时间”设置"
+
+msgid "web.timeout.submit.waitmsg"
+msgstr "设置更新."
+
+msgid "web.timeout.submit.success"
+msgstr "成功."
+
+msgid "web.timeout.submit.failure"
+msgstr "失败."
+
+msgid "web.timeout.maxText"
+msgstr "该字段最大值是 {0}"
+
+msgid "web.timeout.minText"
+msgstr "该字段最小值是 {0}"
+
+msgid "web.x11.menutab.title"
+msgstr "显示设置"
+
+msgid "web.x11.menutab.tabtip"
+msgstr "显示设置"
+
+msgid "web.x11.menutab.panel_title"
+msgstr "显示设置"
+
+msgid "web.x11.graphtft.label"
+msgstr "graphTFT"
+
+msgid "web.x11.graphtft.boxlabel"
+msgstr "激活"
+
+msgid "web.x11.button_label"
+msgstr "应该显示设置"
+
+msgid "web.x11.submit.waitmsg"
+msgstr "显示设置上传."
+
+msgid "web.x11.submit.success"
+msgstr "成功."
+
+msgid "web.x11.submit.failure"
+msgstr "失败."
+
+msgid "web.x11.dualhead.label"
+msgstr "双显示模式"
+
+msgid "web.x11.dualhead.boxlabel"
+msgstr "激活"
+
+msgid "web.x11.dualhead.boxlabelunavailable"
+msgstr "禁用 (< 2 screens found)"
+
+msgid "web.x11.dualhead.switch_label"
+msgstr "切换VDR前端输出头"
+
+msgid "web.x11.primary"
+msgstr "主要的"
+
+msgid "web.x11.secondary"
+msgstr "次要的"
+
+msgid "web.x11.modeline"
+msgstr "当前模式"
+
+msgid "web.x11.device"
+msgstr "device"
+
+msgid "web.x11.resolution"
+msgstr "resolution"
+
+msgid "web.x11.select_res"
+msgstr "select resolution"
+
+msgid "web.x11.enabled"
+msgstr "允许"
+
+msgid "web.x11.disabled"
+msgstr "禁止"
+
+msgid "web.sound.menutab.title"
+msgstr "声音输出方式"
+
+msgid "web.sound.menutab.tabtip"
+msgstr "声音输出方式"
+
+msgid "web.sound.menutab.panel_title"
+msgstr "声音输出方式"
+
+msgid "web.sound.button_label"
+msgstr "应用声音输出方式"
+
+msgid "web.sound.submit.waitmsg"
+msgstr "声音输出方式设置上传."
+
+msgid "web.sound.submit.success"
+msgstr "成功."
+
+msgid "web.sound.submit.failure"
+msgstr "失败."
+
+msgid "web.sound.label"
+msgstr "声音输出方式"

@@ -1,0 +1,356 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: yavdr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-12 18:55+0200\n"
+"PO-Revision-Date: 2010-08-14 22:06+0200\n"
+"Last-Translator: Volker Richert <richert@addmore.de>\n"
+"Language-Team: nl <translate@yavdr.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "web.meta_lang.local"
+msgstr "Nederlands"
+
+msgid "web.meta_lang.int"
+msgstr "Dutch"
+
+msgid "web.meta_lang.key"
+msgstr "nl"
+
+msgid "web.menutabs.vdr.title"
+msgstr "Your VDR"
+
+msgid "web.menutabs.vdr.tabtip"
+msgstr "Configuration of basic settings of your VDR"
+
+msgid "web.menutabs.vdr.content"
+msgstr "Welkom in het yaVDR Web-Frontend!"
+
+msgid "web.menutabs.system.title"
+msgstr "System"
+
+msgid "web.menutabs.system.tabtip"
+msgstr "Configuration of basic settings of the system"
+
+msgid "web.menutabs.system.content"
+msgstr "Welkom in het yaVDR Web-Frontend!"
+
+msgid "web.menutabs.diagnose.title"
+msgstr "Diagnose"
+
+msgid "web.menutabs.diagnose.tabtip"
+msgstr "Blijf ge-informeert over de toestand van Uw systeem of vindt eventuele problemen"
+
+msgid "web.menutabs.diagnose.content"
+msgstr "Bekijken van belangrijke Logfiles en Configuratie bestanden"
+
+msgid "web.standardform.button.save"
+msgstr "Opslaan"
+
+msgid "web.standardform.messagebox_caption.message"
+msgstr "Bericht"
+
+msgid "web.standardform.messagebox_caption.error"
+msgstr "Fout"
+
+msgid "web.standardform.messagebox_caption.wait"
+msgstr "Even wachten AUB..."
+
+msgid "web.lirc.menutab.title"
+msgstr "LIRC"
+
+msgid "web.lirc.menutab.tabtip"
+msgstr "Lirc instellingen (Infrarood ontvanger)"
+
+msgid "web.lirc.menutab.panel_title"
+msgstr "Infrarood ontvanger (LIRC)"
+
+msgid "web.lirc.help"
+msgstr "Als U op de knop \"Bewaar\" klikt wordt VDR opnieuw gestart om de veranderingen die U in de LIRC infrarood-ontvanger instellingen heeft gemaakt toe te passen. Als U geen knoppen van uw afstandsbediening (via remote.conf) heeft toegewezen zal VDR een stap-voor-stap instruktie geven via de OSD om de knoppen op uw afstandsbediening toe te wijzen aan de juiste commando 's (bijv. kanaal omhoog/omlaag enz.). Dit is de zgn \"leer-funktie\". Deze instrukties verdwijnt als U na een paar seconden geen knop op uw afstandsbediening heeft ingedrukt. U kunt deze \"Stap voor Stap\" instrukties opnieuw oproepen als U weer op \"Bewaar\" klikt."
+
+msgid "web.lirc.combobox.tooltip.driver"
+msgstr "Driver"
+
+msgid "web.lirc.combobox.tooltip.lirc_driver"
+msgstr "LIRC Driver"
+
+msgid "web.lirc.combobox.emptytext"
+msgstr "Kies Uw Infrarood ontvanger voor U afstands bediening..."
+
+msgid "web.lirc.combobox.label"
+msgstr "Ontvanger"
+
+msgid "web.lirc.serial_radiogroup.label"
+msgstr "Serieele Poort"
+
+msgid "web.lirc.serial_radiogroup.boxlabel_none"
+msgstr "geen"
+
+msgid "web.lirc.submit.waitmsg"
+msgstr "De instellingen voor U afstands bediening worden opgeslagen."
+
+msgid "web.lirc.submit.success"
+msgstr "Uw instellingen zijn succesvol opgeslagen."
+
+msgid "web.lirc.submit.failure"
+msgstr "Er is een fout opgetreden bij het opslaan van Uw instellingen. Probeert U het nog eens."
+
+msgid "web.lirc.error.json_decode"
+msgstr "Kan JSON Ontvangerlijst niet decoderen"
+
+msgid "web.channels.menutab.title"
+msgstr "Kanaal lijst"
+
+msgid "web.channels.menutab.tabtip"
+msgstr "Kanaal instellingen (Radio en TV kanalen onderhouden en sorteren)"
+
+msgid "web.channels.menutab.panel_title"
+msgstr ""
+
+msgid "web.channels.grid_header.cid"
+msgstr "Nr."
+
+msgid "web.channels.grid_header.cname"
+msgstr "Kanaal naam"
+
+msgid "web.channels.grid_header.cstr"
+msgstr "Komplete Kanaal string"
+
+msgid "web.channels.grid_title"
+msgstr "Kanaal lijst (alle Radio en TV Kanalen)"
+
+msgid "web.frontend.menutab.title"
+msgstr " Kies VDR-Frontend "
+
+msgid "web.frontend.menutab.tabtip"
+msgstr "Maak Uw keuze tussen Xine of Xineliboutput"
+
+msgid "web.frontend.menutab.panel_title"
+msgstr "VDR-Frontend"
+
+msgid "web.frontend.label"
+msgstr "Kies Uw Frontend"
+
+msgid "web.frontend.button_label"
+msgstr "Frontend instellingen activeren"
+
+msgid "web.frontend.submit.waitmsg"
+msgstr "Frontend instellingen worden ge-actualiseert."
+
+msgid "web.frontend.submit.success"
+msgstr "OK."
+
+msgid "web.frontend.submit.failure"
+msgstr "Fout."
+
+msgid "web.upload.menutab.title"
+msgstr "VDR Configuratie uploaden"
+
+msgid "web.upload.menutab.tabtip"
+msgstr "Sla U eigen aangepaste VDR Configuratie bestand op"
+
+msgid "web.upload.menutab.panel_title"
+msgstr "VDR Configuratie Upload (de Upload overschrijft de bestaande Bestands-Versie)"
+
+msgid "web.upload.button_label"
+msgstr "Bestand uploaden"
+
+msgid "web.upload.submit.waitmsg"
+msgstr "Configuratie-bestand wordt opgeslagen."
+
+msgid "web.upload.submit.success"
+msgstr "Bestand is succesvol opgeslagen."
+
+msgid "web.upload.submit.failure"
+msgstr "Er is een probleem opgetreden bij het opslaan van het bestand."
+
+msgid "web.system.menutab.title"
+msgstr "Systeem"
+
+msgid "web.system.menutab.tabtip"
+msgstr "Herstarten van VDR of de Computer"
+
+msgid "web.system.menutab.panel_title"
+msgstr "Systeem-Commando"
+
+msgid "web.system.vdr_restart.label"
+msgstr "VDR Backend herstarten"
+
+msgid "web.system.vdr_restart.submit.waitmsg"
+msgstr "Het signaal om VDR te herstarten is verstuurd."
+
+msgid "web.system.vdr_restart.submit.success"
+msgstr "VDR wordt opnieuw gestart."
+
+msgid "web.system.vdr_restart.submit.failure"
+msgstr "Probleem bij het sturen van het herstart signaal. Probeert U het nog eens."
+
+msgid "web.system.kill_xbmc.label"
+msgstr "Vastgelopen XBMC \"killen\" "
+
+msgid "web.system.kill_xbmc.submit.waitmsg"
+msgstr "Het \"Kill\" signaal voor XBMC is verstuurd."
+
+msgid "web.system.kill_xbmc.submit.success"
+msgstr "XBMC wordt nu gestopt."
+
+msgid "web.system.kill_xbmc.submit.failure"
+msgstr "Probleem bij het versturen v.h \"Kill\" signaal.Probeert U het nog eens."
+
+msgid "web.system.system_restart.label"
+msgstr "Computer opnieuw starten (Let op: Geen bevestigingen !)"
+
+msgid "web.system.system_restart.submit.waitmsg"
+msgstr "Het signaal om de Computer te herstarten is verstuurd."
+
+msgid "web.system.system_restart.submit.success"
+msgstr "Computer wordt opnieuw gestart."
+
+msgid "web.system.system_restart.submit.failure"
+msgstr "Probleem bij het versturen v.h signaal.Probeert U het nog eens."
+
+msgid "web.network.menutab.title"
+msgstr "Network"
+
+msgid "web.network.menutab.tabtip"
+msgstr "Maintain network"
+
+msgid "web.network.menutab.panel_title"
+msgstr "Network configuration"
+
+msgid "web.network.nfs.menutab.title"
+msgstr "NFS"
+
+msgid "web.network.nfs.menutab.tabtip"
+msgstr "Onderhoud NFS mounts en shares"
+
+msgid "web.network.nfs.menutab.panel_title"
+msgstr "NFS-Configuratie"
+
+msgid "web.network.nfs.labels.newDir"
+msgstr "Remote directory"
+
+msgid "web.network.nfs.labels.add"
+msgstr "Add"
+
+msgid "web.network.nfs.labels.edit"
+msgstr "Edit"
+
+msgid "web.network.nfs.labels._delete"
+msgstr "Remove"
+
+msgid "web.network.nfs.labels.apply"
+msgstr "Apply"
+
+msgid "web.nvidia.menutab.title"
+msgstr "Nvidia"
+
+msgid "web.nvidia.menutab.tabtip"
+msgstr "Onderhoud Nvidia instellingen"
+
+msgid "web.nvidia.menutab.panel_title"
+msgstr "Nvidia configuratie"
+
+msgid "web.webfrontend.menutab.title"
+msgstr "Web Frontend"
+
+msgid "web.webfrontend.menutab.tabtip"
+msgstr "Het uiterlijk van Web-Frontend aanpassen."
+
+msgid "web.webfrontend.menutab.panel_title"
+msgstr "Web Frontend Instellingen"
+
+msgid "web.webfrontend.label"
+msgstr "Kies Uw taal voor Web Frontend"
+
+msgid "web.webfrontend.button_label"
+msgstr "Toepassen"
+
+msgid "web.webfrontend.submit.waitmsg"
+msgstr "De taal instellingen voor Web Frontend wordt ge-actualiseert."
+
+msgid "web.webfrontend.submit.success"
+msgstr "De taal instellingen voor Web Frontend is succesvol ge-actualiseert. Druk op F5 om Web-Frontend opnieuw te laden."
+
+msgid "web.webfrontend.submit.failure"
+msgstr "Fout."
+
+msgid "web.diagnose.toolbar.button.refresh"
+msgstr "Actualiseren"
+
+msgid "web.diagnose.toolbar.button.refresh_tooltip"
+msgstr "Druk op deze knop om de inhoud van de informatie-box te verversen."
+
+msgid "web.diagnose.toolbar.button.jumpdown"
+msgstr "Naar laatste regel gaan"
+
+msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
+msgstr "Druk op deze knop om naar de laatste regel te gaan van de informatie-box."
+
+msgid "web.diagnose.section.system_info.title"
+msgstr "Systeem informatie"
+
+msgid "web.diagnose.section.system_info.description"
+msgstr "Netwerk status, Systeem belasting en Processen, verbruik bestand systeem, Kernel"
+
+msgid "web.diagnose.section.system_info.ifconfig"
+msgstr "Netwerk status"
+
+msgid "web.diagnose.section.system_info.top"
+msgstr "Systeem belasting"
+
+msgid "web.diagnose.section.system_info.dmesg"
+msgstr "Kernel"
+
+msgid "web.diagnose.section.system_info.df"
+msgstr "Bestand systeem verbruik"
+
+msgid "web.diagnose.section.system_logs.title"
+msgstr "Systeem logfiles"
+
+msgid "web.diagnose.section.system_logs.description"
+msgstr "Belangrijke Systeem logfiles"
+
+msgid "web.diagnose.section.xbmc.title"
+msgstr "XBMC-Crashes"
+
+msgid "web.diagnose.section.xbmc.description"
+msgstr "Vindt de oorzaak van XBMC-Crashes of andere XBMC problemen"
+
+msgid "web.diagnose.section.lirc.title"
+msgstr "LIRC configuratie"
+
+msgid "web.diagnose.section.lirc.description"
+msgstr "Informatie over de huidige LIRC configuratie"
+
+msgid "web.diagnose.section.vdr.title"
+msgstr "VDR configuratie"
+
+msgid "web.diagnose.section.vdr.description"
+msgstr "Informatie over de huidige VDR configuratie"
+
+msgid "web.diagnose.section.xorg.title"
+msgstr "X-Server"
+
+msgid "web.diagnose.section.xorg.description"
+msgstr "Informatie over de huidige X-Server configuratie"
+
+msgid "web.diagnose.section.sound.title"
+msgstr "Geluid (ALSA)"
+
+msgid "web.diagnose.section.sound.description"
+msgstr "Digitalsound Probleem-diagnose (digitale/analoge uitvoer)"
+
+msgid "web.diagnose.section.packages.title"
+msgstr "Pakketten"
+
+msgid "web.diagnose.section.packages.description"
+msgstr "Controleer welke pakketten en pakket versies ge-installeerd zijn"
+
+msgid "web.diagnose.section.yavdr.title"
+msgstr "yaVDR Utilities"
+
+msgid "web.diagnose.section.yavdr.description"
+msgstr "yaVDR-Web-Frontend Diagnose (Databank  Web-Server)"
