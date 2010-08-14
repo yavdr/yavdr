@@ -270,7 +270,7 @@
         button_label:  'Appliquer les paramètres du langage',
         submit: {
             waitmsg : 'La langue de l\'interface Web à été mise à jour.',
-            success : 'Succès. S\'il vous plaît pressez F5 pour recharger l\interface web avec la nouvelle langue.',
+            success : 'Succès. S\'il vous plaît pressez F5 pour recharger l\'interface web avec la nouvelle langue.',
             failure : 'Echec.'
         }
     },
