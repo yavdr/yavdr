@@ -1,7 +1,7 @@
 #!/bin/bash 
 
-if [ -x /usr/bin/s2ram ]; then
-   if [ /usr/bin/s2ram ]; then
+if [ -x /usr/sbin/s2ram ]; then
+   if /usr/sbin/s2ram ; then
       dbset system.sleep.module="uswsusp"
       dbset system.sleep.options=""
    else 
