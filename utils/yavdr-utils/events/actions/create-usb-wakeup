@@ -1,0 +1,4 @@
+#!/bin/bash
+
+process-template --mode=750 /usr/bin/usb-wakeup-enable
+
