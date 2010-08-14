@@ -2,14 +2,14 @@
 
 if [ -x /usr/bin/s2ram ]; then
    if [ /usr/bin/s2ram ]; then
-      dbset system.sleep.module "uswsusp"
-      dbset system.sleep.options ""
+      dbset system.sleep.module="uswsusp"
+      dbset system.sleep.options=""
    else 
-      dbset system.sleep.module "uswsusp"
-      dbset system.sleep.module "-f"
+      dbset system.sleep.module="uswsusp"
+      dbset system.sleep.module="-f"
    fi
 else 
-   dbset system.sleep.module "kernel"
+   dbset system.sleep.module="kernel"
 fi
 
 process-template /etc/pm/config.d/00module
