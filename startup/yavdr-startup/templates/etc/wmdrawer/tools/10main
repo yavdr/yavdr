@@ -91,4 +91,4 @@ border_size	10
 # Each button must be defined with this syntax:
 # (tooltip)  (image)  (command)
 [column]
-(Terminal)	(yavdr_terminal.gif)	(/sbin/initctl start --no-wait xterm)
+(Terminal)	(yavdr_terminal.gif)	(/usr/share/vdr/menuorg-appswitcher standalone=no app=xterm)
