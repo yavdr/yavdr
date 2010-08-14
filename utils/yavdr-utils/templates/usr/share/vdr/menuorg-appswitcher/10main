@@ -24,7 +24,6 @@ done
 
 # finished parsing arguments
 
-START="/sbin/initctl start --no-wait"
 STOP="/sbin/initctl stop --no-wait"
 
 # minimum required arguments
@@ -43,9 +42,9 @@ fi
 
 if [ "x$STANDALONE" = "xyes" ]; then
     $STOP vdr-frontend
-    $START $APP $OPTIONS STANDALONE=yes
+    /sbin/initctl start --no-wait toggle JOBNAME=$APP $OPTIONS STANDALONE=yes
 else
-    $START $APP $OPTIONS
+    /sbin/initctl start --no-wait toggle JOBNAME=$APP $OPTIONS
 fi
 
 
