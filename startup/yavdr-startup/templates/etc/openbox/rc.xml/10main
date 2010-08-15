@@ -728,6 +728,13 @@
     <skip_taskbar>yes</skip_taskbar>
  </application>
 
+   <application name="dclock">
+     <decor>no</decor>   
+    <maximized>false</maximized>
+    <skip_pager>yes</skip_pager>
+    <skip_taskbar>yes</skip_taskbar>
+ </application>
+
 </applications>
 
 </openbox_config>
