@@ -342,7 +342,7 @@ msgid "web.shutdown.items.reboot"
 msgstr "reboot PowerOff-kernel"
 
 msgid "web.upload.menutab.title"
-msgstr "VDR-Konfig.-Upload"
+msgstr "VDR-Konfig-Upload"
 
 msgid "web.upload.menutab.tabtip"
 msgstr "Laden Sie existierende VDR-Konfigurationsdateien hoch"

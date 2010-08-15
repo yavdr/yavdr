@@ -187,7 +187,7 @@ var locale_de = {
     },
     upload: {
         menutab: {
-            title : 'VDR-Konfig.-Upload',
+            title : 'VDR-Konfig-Upload',
             tabtip : 'Laden Sie existierende VDR-Konfigurationsdateien hoch',
             panel_title : 'VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei)'
         },

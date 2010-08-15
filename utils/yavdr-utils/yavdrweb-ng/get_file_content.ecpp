@@ -22,20 +22,25 @@ const char *files[] = {
     
     "/var/lib/vdr/.xbmc/temp/xbmc.log",
     "/var/lib/vdr/.xbmc/temp/xbmc.old.log",
+    "/var/lib/vdr/.xbmc/userdata/Lircmap.xml",
     "/var/lib/vdr/remote.conf",
+    "/var/lib/vdr/channels.conf",
     "/var/lib/yavdrdb.hdf",
     
     "/etc/X11/xorg.conf.yavdr",
     "/etc/X11/Xsession.vdr",
+
     "/etc/lirc/hardware.conf",
     "/etc/lirc/lircd.conf",
+
     "/etc/vdr/setup.conf",
     "/etc/vdr/remote.conf",
     "/etc/vdr/channels.conf",
+    "/etc/vdr/diseqc.conf",
+
     "/etc/asound.conf",
     
     "/proc/acpi/sleep"
-
 };
 
 int findex = 0;
@@ -61,7 +66,7 @@ else{
     if (validFileName)
     {
         //sanitize puretext param
-        if (puretext != "true") puretext == "false";
+        if (puretext != "true") puretext = "false";
         
         string mode;
         if (file.substr(0,9) == "/var/log/")
