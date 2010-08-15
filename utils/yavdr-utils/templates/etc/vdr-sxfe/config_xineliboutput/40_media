@@ -168,15 +168,3 @@
 # Fast (low-quality) OSD scaling
 # bool, default: 0
 #media.xvdr.fast_osd_scaling:0
-
-# number of buffers for HD content
-# numeric, default: 2500
-#media.xvdr.num_buffers_hd:2500
-
-# SRC tuning step
-# numeric, default: 5000
-media.xvdr.scr_tuning_step:50
-
-# Smoother SRC tuning
-# bool, default: 0
-#media.xvdr.smooth_scr_tuning:0
