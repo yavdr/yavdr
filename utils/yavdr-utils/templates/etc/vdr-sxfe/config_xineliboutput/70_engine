@@ -28,7 +28,7 @@ engine.buffers.video_num_buffers:1000
 
 # Standardanzahl von Videobildern
 # numeric, default: 15
-engine.buffers.video_num_frames:50
+engine.buffers.video_num_frames:22
 
 # Priorität für Dekoder a/52
 # numeric, default: 0
