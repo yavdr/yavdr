@@ -17,7 +17,7 @@ video.output.vdpau_enable_inverse_telecine:0
 
 # vdpau: restrict enabling video properties for SD video only
 # { none  noise  sharpness  noise+sharpness }, default: 0
-#video.output.vdpau_sd_only_properties:none
+video.output.vdpau_sd_only_properties:noise+sharpness
 
 # vdpau: SD deinterlace method
 # { bob  half temporal  half temporal_spatial  temporal  temporal_spatial }, default: 3

@@ -16,15 +16,15 @@
 
 # Choose speed over specification compliance
 # bool, default: 0
-video.processing.ffmpeg_choose_speed_over_accuracy:1
+# video.processing.ffmpeg_choose_speed_over_accuracy:0
 
 # Qualität der MPEG-4 Nachbearbeitungsstufe
 # [0..6], default: 3
-video.processing.ffmpeg_pp_quality:0
+# video.processing.ffmpeg_pp_quality:3
 
 # Skip loop filter
 # { default  none  nonref  bidir  nonkey  all }, default: 0
-video.processing.ffmpeg_skip_loop_filter:all
+# video.processing.ffmpeg_skip_loop_filter:all
 
 # FFmpeg video decoding thread count
 # numeric, default: 1
