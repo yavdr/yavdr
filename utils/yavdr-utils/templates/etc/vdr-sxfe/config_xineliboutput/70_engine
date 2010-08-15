@@ -1,6 +1,6 @@
 # number of buffers for HD content
 # numeric, default: 2500
-media.xvdr.num_buffers_hd:5000
+# media.xvdr.num_buffers_hd:2500
 
 # SCR-Treshold for HD-Playback (%)
 # numeric, default: 40
