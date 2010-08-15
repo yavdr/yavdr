@@ -30,7 +30,7 @@ audio.device.alsa_mixer_name:PCM
 
 # Soundkarte unterstützt mmap 
 # bool, default: 0
-audio.device.alsa_mmap_enable:1
+# audio.device.alsa_mmap_enable:0
 
 # Gerät für 5.1-Kanalausgabe
 # string, default: iec958:AES0=0x6,AES1=0x82,AES2=0x0,AES3=0x2
