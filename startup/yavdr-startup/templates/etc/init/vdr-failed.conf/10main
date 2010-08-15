@@ -1,4 +1,4 @@
-start on vdr stopped failed EXIT_STATUS=2
+start on vdr stopped RESULT=failed EXIT_STATUS=2
 
 task
 

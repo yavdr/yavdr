@@ -1,11 +1,14 @@
 description     "Reload driver on vdr exist status 1"
 author          "Steffen Barszus <steffenbpunkt@gmail.com"
 
-start on stopped vdr failed EXIT_STATUS=1
+start on stopped vdr RESULT=failed EXIT_STATUS=1
 
 task
 
 script
+# make sure vdr is stopped else we wait forever
+stop vdr || /bin/true
+
 # assumption: we only have 3 levels of dependency (?!)
 
 # getting the first and second level
