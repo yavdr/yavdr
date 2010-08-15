@@ -1,0 +1,16 @@
+Source: yavdr-installer-sundtek
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-installer-sundtek
+architecture: all
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, wget
+Description: yavdr-sundtek-installer dummy package to install sundtek-driver for yavdr
+ yavdr-sundtek-installer dummy package to install sundtek-driver for yavdr
+ 
+
+
