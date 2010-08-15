@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# BEWARE - don call this manually, this is called by udev. Don't edit here, its created by yavdr templates
+
+echo 1 > $1/power/persist

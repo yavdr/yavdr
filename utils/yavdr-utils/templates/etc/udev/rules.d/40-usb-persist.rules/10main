@@ -1,0 +1,4 @@
+# echo 1 > $1/power/persist
+SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Sundtek" , RUN+="/usr/bin/yavdr-persist %p"
+SUBSYSTEM=="usb" , DRIVER=="ftdi_sio", RUN +="/usr/bin/yavdr-persist %p" 
+
