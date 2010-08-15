@@ -33,38 +33,70 @@ function getPackagesForm(){
                 if ("installed" == grid.getColumnModel().getDataIndex(col)) {
                     rec = grid.getStore().getAt(row);
                     package = rec.id;
-                    // Show a dialog using config options:
-                    Ext.Msg.show({
-                       title:'Install package?',
-                       msg: 'Would you like to install package "' + package + '"?',
-                       buttons: Ext.Msg.YESNO,
-                       fn: function( buttonId, text, opt) {
-                           if (buttonId == "yes") {
-                               var win = new Ext.Window({
-                                   layout: 'fit',
-                                   id: 'installer',
-                                   title: 'yaVDR Paket Installer',
-                                   width:600,
-                                   height:450,
-                                   items: [{
-                                       html: '<iframe src="/dpkg?command=install&package='+package+'&ts='+jetzt.getTime()+'" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
-                                   }],
-                                   resizable:false,
-                                   closable: false,
-                                   modal: true
-                               });
-                               
-                               win.addButton({
-                                   id: 'closeinstaller',
-                                   disabled:true,
-                                   text: 'Close'
-                               }, function() { grid.getStore().load(); win.close(); } );
-                               win.show(this);
-                           }
-                       },
-                       animEl: 'elId',
-                       icon: Ext.MessageBox.QUESTION
-                    });
+                    
+                    if (rec.data.installed == 0) {
+                        // Show a dialog using config options:
+                        Ext.Msg.show({
+                           title:'Install package?',
+                           msg: 'Would you like to install package "' + package + '"?',
+                           buttons: Ext.Msg.YESNO,
+                           fn: function( buttonId, text, opt) {
+                               if (buttonId == "yes") {
+                                   var jetzt = new Date();
+                                   var win = new Ext.Window({
+                                       layout: 'fit',
+                                       id: 'installer',
+                                       title: 'yaVDR Paket Installer',
+                                       width:600,
+                                       height:450,
+                                       items: [{
+                                           html: '<iframe src="/dpkg?command=install&package='+package+'&ts='+jetzt.getTime()+'" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
+                                       }],
+                                       resizable:false,
+                                       closable: false,
+                                       modal: true
+                                   });
+                                   
+                                   win.addButton({
+                                       id: 'closeinstaller',
+                                       disabled:true,
+                                       text: 'Close'
+                                   }, function() { grid.getStore().load(); win.close(); } );
+                                   win.show(this);
+                               }
+                           },
+                           animEl: 'elId',
+                           icon: Ext.MessageBox.QUESTION
+                        });
+                    } else if (package.substr(0,11) == "vdr-plugin-") {
+                      if (rec.data.installed == 2) {
+                        // Show a dialog using config options:
+                        Ext.Msg.show({
+                          title:'disable plugin?',
+                          msg: 'Would you like to disable "' + package + '"?',
+                          buttons: Ext.Msg.YESNO,
+                          fn: function( buttonId, text, opt) {
+                              if (buttonId == "yes") {
+                              }
+                          },
+                          animEl: 'elId',
+                          icon: Ext.MessageBox.QUESTION
+                        });
+                      } else {
+                        // Show a dialog using config options:
+                        Ext.Msg.show({
+                          title:'enable plugin?',
+                          msg: 'Would you like to enable "' + package + '"?',
+                          buttons: Ext.Msg.YESNO,
+                          fn: function( buttonId, text, opt) {
+                              if (buttonId == "yes") {
+                              }
+                          },
+                          animEl: 'elId',
+                          icon: Ext.MessageBox.QUESTION
+                        });
+                      }
+                    }
                 }
             } 
         }
@@ -118,6 +150,7 @@ function getPackagesForm(){
     });
     
     myform.addButton('apt-get update', function() {
+        var jetzt = new Date();
         var win = new Ext.Window({
             layout: 'fit',
             id: 'installer',
@@ -141,6 +174,7 @@ function getPackagesForm(){
     });
 
     myform.addButton('apt-get autoremove', function() {
+        var jetzt = new Date();
         var win = new Ext.Window({
             layout: 'fit',
             id: 'installer',
