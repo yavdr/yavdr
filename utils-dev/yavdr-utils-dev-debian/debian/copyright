@@ -1,0 +1,20 @@
+This package was debianized by Gerald Dachs <gda@dachsweb.de> on
+Sun, 13 Sep 2009 14:00:36 +0200.
+
+It was downloaded from http://yavdr.origo.ethz.ch
+
+Upstream Author(s):
+
+    Gerald Dachs <gda@dachsweb.de>
+
+Copyright:
+
+    Gerald Dachs <gda@dachsweb.de>
+
+License:
+
+The Debian packaging is copyright 2009, Gerald Dachs <gda@dachsweb.de> and
+is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
+
+# Please also look if there are files or directories which have a
+# different copyright/license attached and list them here.
