@@ -25,7 +25,6 @@ script
 
 # extract and prepare all commands
 . /usr/lib/vdr/commands-loader
-mergecommands "commands"
 mergecommands "reccmds"
 
 # Set shutdown command
