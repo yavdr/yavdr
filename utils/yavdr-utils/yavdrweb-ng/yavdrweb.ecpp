@@ -33,12 +33,12 @@ if (lang == "")
         <meta name="lang" content="<$lang$>" />
         <meta name="author" content="yaVDR Team" />
         
-        <link rel="stylesheet" type="text/css" href="ext/resources/css/ext-all.css" />
+        <link rel="stylesheet" type="text/css" href="/ext/resources/css/ext-all.css" />
         <!-- overrides to base library -->
-        <link rel="stylesheet" type="text/css" href="ext-ux/css/Portal.css" />
-        <link rel="stylesheet" type="text/css" href="ext-ux/css/GroupTab.css" />
-        <link rel="stylesheet" type="text/css" href="ext-ux/css/Spinner.css" />
-        <link rel="stylesheet" type="text/css" href="static/yavdr.css" />
+        <link rel="stylesheet" type="text/css" href="/ext-ux/css/Portal.css" />
+        <link rel="stylesheet" type="text/css" href="/ext-ux/css/GroupTab.css" />
+        <link rel="stylesheet" type="text/css" href="/ext-ux/css/Spinner.css" />
+        <link rel="stylesheet" type="text/css" href="/static/yavdr.css" />
         
         <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
@@ -47,12 +47,12 @@ if (lang == "")
 				overflow: auto !important;
 			}
 		</style>
-        <script type="text/javascript" src="ext/adapter/ext/ext-base.js"></script>
-        <script type="text/javascript" src="ext/ext-all<? devmode != "0" ? "-debug" ?>.js"></script>
+        <script type="text/javascript" src="/ext/adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="/ext/ext-all<? devmode != "0" ? "-debug" ?>.js"></script>
         <!-- TODO: only use those parts of ext that a really used by this application. saves a lot of http traffic -->
         
         <script>
-            Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
+            Ext.BLANK_IMAGE_URL = '/ext/resources/images/default/s.gif';
             var yavdrwebGlobalInfo = { 
                 user : "<$request.getUsername()$>",
                 lang : "<$lang$>",
@@ -60,38 +60,38 @@ if (lang == "")
             };
         </script>
 
-        <script type="text/javascript" src="ext-ux/GroupTabPanel.js"></script>
-        <script type="text/javascript" src="ext-ux/GroupTab.js"></script>
-        <script type="text/javascript" src="ext-ux/Portal.js"></script>
-        <script type="text/javascript" src="ext-ux/PortalColumn.js"></script>
-        <script type="text/javascript" src="ext-ux/Portlet.js"></script>
-        <script type="text/javascript" src="ext-ux/Spinner.js"></script>
-        <script type="text/javascript" src="ext-ux/SpinnerField.js"></script>
-        <script type="text/javascript" src="static/ux/miframe<? devmode != "0" ? "-debug" ?>.js"></script>
+        <script type="text/javascript" src="/ext-ux/GroupTabPanel.js"></script>
+        <script type="text/javascript" src="/ext-ux/GroupTab.js"></script>
+        <script type="text/javascript" src="/ext-ux/Portal.js"></script>
+        <script type="text/javascript" src="/ext-ux/PortalColumn.js"></script>
+        <script type="text/javascript" src="/ext-ux/Portlet.js"></script>
+        <script type="text/javascript" src="/ext-ux/Spinner.js"></script>
+        <script type="text/javascript" src="/ext-ux/SpinnerField.js"></script>
+        <script type="text/javascript" src="/static/ux/miframe<? devmode != "0" ? "-debug" ?>.js"></script>
 
-        <script type="text/javascript" src="static/locale/en.js"></script>
+        <script type="text/javascript" src="/static/locale/en.js"></script>
 <{ if (lang != "en") reply.out() << "        <script type=\"text/javascript\" src=\"static/locale/" << lang << ".js\"></script>\n"; }>
-        <script type="text/javascript" src="static/config_tabs/remote.js"></script>
-        <script type="text/javascript" src="static/config_tabs/lirc.js"></script>
-        <script type="text/javascript" src="static/config_tabs/inputlirc.js"></script>
-        <script type="text/javascript" src="static/config_tabs/irserver.js"></script>
-        <script type="text/javascript" src="static/config_tabs/channels.js"></script>
-        <script type="text/javascript" src="static/config_tabs/diagnose.js"></script>
-        <script type="text/javascript" src="static/config_tabs/system.js"></script>
-        <script type="text/javascript" src="static/config_tabs/network.js"></script>
-        <script type="text/javascript" src="static/config_tabs/nvidia.js"></script>
-        <script type="text/javascript" src="static/config_tabs/vdr-frontend.js"></script>
-        <script type="text/javascript" src="static/config_tabs/web-frontend.js"></script>
-        <script type="text/javascript" src="static/config_tabs/vdr-upload-config.js"></script>
-        <script type="text/javascript" src="static/config_tabs/shutdown.js"></script>
-        <script type="text/javascript" src="static/config_tabs/shutdown.js"></script>
-        <script type="text/javascript" src="static/config_tabs/timeout.js"></script>
-        <script type="text/javascript" src="static/config_tabs/x11.js"></script>
-        <script type="text/javascript" src="static/config_tabs/sound.js"></script>
-        <script type="text/javascript" src="static/config_tabs/lifeguard.js"></script>
-	<script type="text/javascript" src="static/config_tabs/packages.js"></script>
-        <script type="text/javascript" src="static/language-handling.js"></script>
-        <script type="text/javascript" src="static/grouptabs.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/remote.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/lirc.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/inputlirc.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/irserver.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/channels.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/diagnose.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/system.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/network.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/nvidia.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/vdr-frontend.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/web-frontend.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/vdr-upload-config.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/shutdown.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/shutdown.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/timeout.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/x11.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/sound.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/lifeguard.js"></script>
+        <script type="text/javascript" src="/static/config_tabs/packages.js"></script>
+        <script type="text/javascript" src="/static/language-handling.js"></script>
+        <script type="text/javascript" src="/static/grouptabs.js"></script>
     </head>
-    <body style="background-color: #4E78B1;"></body>
+    <body></body>
 </html>
