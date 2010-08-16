@@ -1,0 +1,14 @@
+
+PLUGIN="$(dbget webfrontend.plugin.sundtek)"
+
+if [ "$PLUGIN" = "1" ]; then
+  if [ "$1" = "ATTACH" ]; then
+    dbset "system.sundtek.adapter=$2"
+    MODE="$(dbget system.sundtek.mode)"
+    if [ -n "$MODE" ]; then
+      /opt/bin/mediaclient -d /dev/dvb/adapter$2/frontend0 -D $MODE
+    fi
+  elif [ "$1" = "DETACH" ]; then
+    dbset "system.sundtek.adapter="
+  fi
+fi

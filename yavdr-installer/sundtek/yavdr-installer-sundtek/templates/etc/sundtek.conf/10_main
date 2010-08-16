@@ -1,0 +1,2 @@
+device_attach=/usr/bin/sundtek.bash ATTACH DEVID
+device_detach=/usr/bin/sundtek.bash DETACH DEVID
