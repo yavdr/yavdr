@@ -24,7 +24,7 @@ function getVDRShutdownForm(){
 
     var submit = myform.addButton({
         text: getLL("shutdown.button_label"),
-        icon: 'ext/resources/images/default/grid/refresh.gif',
+        icon: '/ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
         handler: function() {

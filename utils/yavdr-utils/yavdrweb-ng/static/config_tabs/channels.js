@@ -39,7 +39,7 @@ function getChannelsForm(){
             loadMask: gridLoadMask,
             tbar: [{
                 text: 'Refresh', //TODO use getLL here!
-                icon: 'ext/resources/images/default/grid/refresh.gif',
+                icon: '/ext/resources/images/default/grid/refresh.gif',
                 tooltip: 'Click this button to refresh channel list.',
                 handler: function(){
                     channellist_store.reload();

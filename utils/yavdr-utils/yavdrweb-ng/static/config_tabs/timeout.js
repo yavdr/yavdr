@@ -22,7 +22,7 @@ function getGRUBTimeoutForm(){
 
     var submit = myform.addButton({
         text: getLL("timeout.button_label"),
-        icon: 'ext/resources/images/default/grid/refresh.gif',
+        icon: '/ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
         handler: function() {

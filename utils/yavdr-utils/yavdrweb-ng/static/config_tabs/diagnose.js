@@ -9,7 +9,7 @@ function addDiagnosePanel(info, cmd, file){
         autoScroll: true,
         tbar: [{
             text: getLL("diagnose.toolbar.button.refresh"),
-            icon: 'ext/resources/images/default/grid/refresh.gif',
+            icon: '/ext/resources/images/default/grid/refresh.gif',
             tooltip: getLL("diagnose.toolbar.button.refresh_tooltip"),
             handler: function(){
                 var thisObj = Ext.getCmp('diagnose_panel_'+file).getUpdater();
@@ -17,7 +17,7 @@ function addDiagnosePanel(info, cmd, file){
             }
         },'-',{
             text: getLL("diagnose.toolbar.button.jumpdown"),
-            icon: 'ext/resources/images/default/layout/ns-expand.gif',
+            icon: '/ext/resources/images/default/layout/ns-expand.gif',
             tooltip: getLL("diagnose.toolbar.button.jumpdown_tooltip"),
             handler: function(){
                 var d = Ext.getCmp('diagnose_panel_wrapper_'+file).body.dom;

@@ -24,7 +24,7 @@ function getVDRFrontendForm(){
 
     var submit = myform.addButton({
         text: getLL("frontend.button_label"),
-        icon: 'ext/resources/images/default/grid/refresh.gif',
+        icon: '/ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
         handler: function() {
@@ -47,7 +47,7 @@ function getVDRFrontendForm(){
     
     var submit = myform.addButton({
         text: getLL("x11.dualhead.switch_label"),
-        icon: 'ext/resources/images/default/grid/refresh.gif',
+        icon: '/ext/resources/images/default/grid/refresh.gif',
         id: 'switch_display',
         disabled: true && (yavdrwebGlobalInfo.devmode != "1"),
         //formBind: true,

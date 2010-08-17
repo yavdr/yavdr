@@ -74,7 +74,7 @@ function getVDRConfigUploadForm(){
             name: 'content'/*, fixme: textarea doesn't have a toolbar!!!
             tbar: [{
                 text: 'Refresh',
-                icon: 'ext/resources/images/default/grid/refresh.gif',
+                icon: '/ext/resources/images/default/grid/refresh.gif',
                 tooltip: 'Click this button to refresh file content from hard disk.',
                 handler: function(){
                     var thisObj = Ext.getCmp('file_upload_textarea').getUpdater();

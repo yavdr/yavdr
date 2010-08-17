@@ -126,7 +126,7 @@ function getX11Form(){
 
     var submit = myform.addButton({
         text: getLL("x11.button_label"),
-        icon: 'ext/resources/images/default/grid/refresh.gif',
+        icon: '/ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
         handler: function() {
