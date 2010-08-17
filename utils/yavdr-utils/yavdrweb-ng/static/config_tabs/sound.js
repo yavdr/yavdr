@@ -25,7 +25,7 @@ function getSoundForm(){
 
     var submit = myform.addButton({
         text: getLL("sound.button_label"),
-        icon: 'ext/resources/images/default/grid/refresh.gif',
+        icon: '/ext/resources/images/default/grid/refresh.gif',
         //formBind: true,
         //scope: this,
         handler: function() {
