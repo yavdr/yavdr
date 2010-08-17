@@ -1,0 +1,3 @@
+# check if we are finished with devices
+KERNEL=="dvb?.frontend?", ACTION=="add", RUN+="/usr/bin/dvbmon"
+

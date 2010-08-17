@@ -1,0 +1,17 @@
+#!/bin/bash
+
+MAX="`dbget system.vdr.dvbmon.device_cnt`"
+CURRENT="`ls /dev/dvb/adapter?/frontend? -1 | wc -l`"
+
+if [ -n "$MAX" ]; then
+  if [ "$CURRENT" = "$MAX" ]; then
+     /sbin/initctl emit --no-wait dvb-devices-complete
+  fi
+
+  if [ "$CURRENT" -gt "$MAX" ]; then
+    /sbin/initctl start --no-wait dvb-last
+    /sbin/initctl restart --no-wait vdr
+  fi
+fi
+
+
