@@ -3,8 +3,8 @@ YAVDRWEBDIR=../../../../utils/yavdr-utils/yavdrweb-ng/
 all: sundtek.so
 
 test: all
-	cp -f sundtek.so ${YAVDRWEBDIR}
-	#${TNTNET} -c ${YAVDRWEBDIR}tntnet.localtest.conf
+#	cp -f sundtek.so ${YAVDRWEBDIR}
+#	#${TNTNET} -c ${YAVDRWEBDIR}tntnet.localtest.conf
 
 sundtek.so: get_dvb.o set_dvb.o
 	${CXX} -o $@ $^ ${LDFLAGS}
@@ -36,8 +36,8 @@ clean:
 	@rm -f *.o *.so *.cpp
 
 install:
-	@install -d $(DESTDIR)/usr/lib/yavdrweb
+#	@install -d $(DESTDIR)/usr/lib/yavdrweb
 	@install sundtek.so $(DESTDIR)/usr/lib/yavdrweb/
-	@install -d $(DESTDIR)/etc/tntnet.d
-	@cp -pr static $(DESTDIR)/usr/lib/yavdrweb/static/sundtek
+#	@install -d $(DESTDIR)/etc/tntnet.d
+#	@cp -pr static $(DESTDIR)/usr/lib/yavdrweb/static/sundtek
 
