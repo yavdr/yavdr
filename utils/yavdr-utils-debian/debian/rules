@@ -76,6 +76,7 @@ binary-arch: install
 #	dh_installinfo
 	dh_installman
 	dh_installyavdr
+	dh_install -pyavdr-utils-dev
 	dh_link
 	dh_strip
 	dh_compress
