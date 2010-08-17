@@ -13,3 +13,10 @@ Suggests: lirc
 Description: Utilities and WEB front end for yaVDR
  Utilities and WEB front end for yaVDR (yet another VDR) a VDR distribution
  ready to run with near zero configuration effort.
+
+Package: yavdr-utils-dev
+Architecture: any
+Section: libdevel
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: yavdr-utils development headers
+ yavdr-utils development headers
