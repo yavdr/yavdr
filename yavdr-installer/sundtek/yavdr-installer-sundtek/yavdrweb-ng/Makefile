@@ -15,7 +15,7 @@ ECPPC=env ${EXTRA_ENV} ecppc -v
 TNTNET=env ${EXTRA_ENV} tntnet
 CXXFLAGS+=-I/usr/include -I/usr/include/yavdr/yavdrweb-ng -I/usr/include/ClearSilver -fPIC -O2
 CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl -fPIC -O2
-LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lpam -lXNVCtrl -lX11 -lXext -ljson
+LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl
 
 .ecpp.cpp:
 	${ECPPC} ${ECPPFLAGS} ${ECPPFLAGS_CPP} $<
