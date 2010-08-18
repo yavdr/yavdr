@@ -15,8 +15,14 @@ stop vdr || /bin/true
 MODULES0="`lsmod | grep -oe "^dvb_[[:alpha:]]*"`"
 MODULES1=`lsmod | grep "^dvb" | awk '// {  print $4}' | grep -v "^$" | sed -e 's/,/ /g' `
 
+if [ -z "$MODULES1" -a -z "$MODULES0" ]; then 
+# we dont have local dvb cards
+exit 0 
+
+else
+
 # get third level (modules which depend on second level) - and stuff everything into one list
-for MODULE in $MODULES1 $MODULES0; do
+for MODULE in "$MODULES1 $MODULES0" ; do
     RESULT=`lsmod | grep "^$MODULE" | awk '// {  print $4}' | grep -v "^$" | sed -e 's/,/ /g' `
     MODULES="$MODULES $MODULE `lsmod | grep "^$MODULE" | awk '{  print $4}' | grep -v "^$" | sed -e 's/,/ /g'`"
 done
@@ -25,19 +31,21 @@ MODULES="`echo $MODULES | sort | uniq`"
 
 while [ "`lsmod | grep "^dvb" | awk '// {  print $4}' | grep -v "^$" | sed -e 's/,/ /g' `" != "" ]; do
     for MODULE in $MODULES ; do
-        rmmod $MODULE >/dev/null 2>&1 || /bin/true
+        rmmod "$MODULE" >/dev/null 2>&1 || /bin/true
     done
 done
 
 # should be dvb_core or dvb_usb left
 for MODULE in $MODULES0 ; do
-    rmmod $MODULE >/dev/null 2>&1 || /bin/true
+    rmmod "$MODULE" >/dev/null 2>&1 || /bin/true
 done
 
 wait `pidof rmmod`
 
 # load the modules in one shot
-modprobe -a $MODULES >/dev/null 2>&1 || /bin/true
+modprobe -a "$MODULES" >/dev/null 2>&1 || /bin/true
 udevadm settle
+
+fi 
 end script
 
