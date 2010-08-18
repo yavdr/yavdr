@@ -23,7 +23,8 @@ case $1 in
          echo "vdr is going to sleep"
          ;;
      thaw|resume)
-         start dvb-driver-reload
+         # reload dvb-driver at resume
+         start vdr-exit-1
          for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."
