@@ -1,1 +1,3 @@
-events/ usr/share/yavdr/events/actions/
+events/* 		usr/share/yavdr/events/actions/
+templates/*		usr/share/yavdr/templates/
+
