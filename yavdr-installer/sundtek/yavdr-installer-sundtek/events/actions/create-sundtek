@@ -1,6 +1,6 @@
 #!/bin/bash
 
-process-template /etc/init/sundtek.conf
+process-template /etc/sundtek.conf
 process-template --mode 755 /usr/bin/sundtek.bash
 restart tntnet
 
