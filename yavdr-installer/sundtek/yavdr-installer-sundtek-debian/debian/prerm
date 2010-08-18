@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ "$1" = "remove" ]; then 
+
+killall -9 mediasrv
+/usr/share/doc/yavdr-installer-sundtek/sundtek_installer_development.sh -u
+rm -f /usr/share/doc/yavdr-installer-sundtek/sundtek_installer_development.sh
+
+fi  
+
+#DEBHELPER#
+
