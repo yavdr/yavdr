@@ -65,7 +65,7 @@ if (command == "install" ||
     reply.setDirectMode(200, "OK");
 
     reply.out() << "<html><head>"
-    		<< "<link rel=\"stylesheet\" type=\"text/css\" href=\"static/dpkg.css\" />"
+    		<< "<link rel=\"stylesheet\" type=\"text/css\" href=\"/static/dpkg.css\" />"
     		<< "<body>\n";
     reply.out().flush();
 
