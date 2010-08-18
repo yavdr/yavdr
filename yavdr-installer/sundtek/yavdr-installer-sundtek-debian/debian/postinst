@@ -2,15 +2,7 @@
 
 case "$1" in
     configure)
-
-	cd /tmp        
-	wget http://www.sundtek.de/media/sundtek_installer_development.sh
- 	chmod +x sundtek_installer_development.sh
-        ./sundtek_installer_development.sh
-	rm -f /etc/udev/rules.d/80-remote-eeti.rules
-	rm -f /lib/udev/rules.d/80-remote-eeti.rules
-	/opt/bin/lirc.sh REMOVE
-	signal-event change-remote-hardware
+	signal-event sundtek-installer
        ;;
 
 
