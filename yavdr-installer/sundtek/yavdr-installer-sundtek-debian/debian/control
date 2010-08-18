@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Gerald Dachs <gda@dachsweb.de>
 Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
 Standards-Version: 3.8.4
-Build-Depends: cdbs, debhelper (>= 7), yavdr-utils-dev
+Build-Depends: cdbs, debhelper (>= 7), yavdr-utils-dev, libtntnet-dev, clearsilver-dev, flex, yavdr-dev
 
 Package: yavdr-installer-sundtek
 architecture: all
