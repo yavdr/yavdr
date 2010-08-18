@@ -27,8 +27,7 @@ else
 fi
 
 #For Imon-Antec-Veris
-
-if [ $(dbget system.lirchw.lircd_conf) = $"imon/lircd.conf.imon-antec-veris" ]; then
+if [ "$(dbget system.lirchw.lircd_conf)" = "imon/lircd.conf.imon-antec-veris" ]; then
     process-template --owner=vdr --group=vdr /var/lib/vdr/remote.conf
 fi
  

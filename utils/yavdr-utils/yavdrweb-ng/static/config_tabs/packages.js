@@ -158,7 +158,7 @@ function getPackagesForm(){
             width:600,
             height:450,
             items: [{
-                html: '<iframe src="/dpkg?command=update&ts='+jetzt.getTime()+'" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
+                html: '<iframe src="dpkg?command=update&ts='+jetzt.getTime()+'" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
             }],
             resizable:false,
             closable: false,
@@ -182,7 +182,7 @@ function getPackagesForm(){
             width:600,
             height:450,
             items: [{
-                html: '<iframe src="/dpkg?command=autoremove&ts='+jetzt.getTime()+'" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
+                html: '<iframe src="dpkg?command=autoremove&ts='+jetzt.getTime()+'" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
             }],
             resizable:false,
             closable: false,
