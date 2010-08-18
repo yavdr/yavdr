@@ -18,3 +18,7 @@ rm -f /etc/init/cleanTTY.conf
 rm -f /etc/init/logo.conf
 rm -f /etc/cron.d/vdr
 rm -f /etc/init/devilspie.conf
+rm -f /etc/init/dvb-device.conf
+rm -f /etc/init/dvb-driver-reload.conf
+rm -f /etc/init/vdr-failed.conf
+rm -f /etc/init/vdr-log-crashes.conf
