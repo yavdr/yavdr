@@ -12,17 +12,17 @@ stop vdr || /bin/true
 # assumption: we only have 3 levels of dependency (?!)
 
 # getting the first and second level
-MODULES0="`lsmod | grep -oe "^dvb_[[:alpha:]]*"`"
-MODULES1=`lsmod | grep "^dvb" | awk '// {  print $4}' | grep -v "^$" | sed -e 's/,/ /g' `
+MODULES0="`lsmod | grep -oe "^dvb_[[:alpha:]]*"`" || /bin/true
+MODULES1="`lsmod | grep "^dvb" | awk '// {  print $4}' | grep -v "^$" | sed -e 's/,/ /g' `" || /bin/true
 
-if [ -z "$MODULES1" -a -z "$MODULES0" ]; then 
+if [ -z "$MODULES1" -a -z "$MODULES0" ]; then
 # we dont have local dvb cards
-exit 0 
+exit 0
 
 else
 
 # get third level (modules which depend on second level) - and stuff everything into one list
-for MODULE in "$MODULES1 $MODULES0" ; do
+for MODULE in $MODULES1 $MODULES0; do
     RESULT=`lsmod | grep "^$MODULE" | awk '// {  print $4}' | grep -v "^$" | sed -e 's/,/ /g' `
     MODULES="$MODULES $MODULE `lsmod | grep "^$MODULE" | awk '{  print $4}' | grep -v "^$" | sed -e 's/,/ /g'`"
 done
@@ -40,12 +40,11 @@ for MODULE in $MODULES0 ; do
     rmmod "$MODULE" >/dev/null 2>&1 || /bin/true
 done
 
-wait `pidof rmmod`
+wait `pidof rmmod` || /bin/true
 
 # load the modules in one shot
-modprobe -a "$MODULES" >/dev/null 2>&1 || /bin/true
+modprobe -a $MODULES >/dev/null 2>&1 || /bin/true
 udevadm settle
 
-fi 
+fi
 end script
-
