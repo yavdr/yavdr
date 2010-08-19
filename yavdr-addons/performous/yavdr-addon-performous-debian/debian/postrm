@@ -2,6 +2,7 @@
                                                                                                                         
 if [ remove = "$1" ]; then 
   /usr/bin/dpkg-trigger yavdr-addons-update
+  rm -f /etc/init/performous.conf
 fi
 
 #DEBHELPER#

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ remove = "$1" ]; then 
-rm -f /etc/init/sundtek.conf
+rm -f /etc/sundtek.conf
 rm -f /usr/bin/sundtek.bash
 fi 
 
