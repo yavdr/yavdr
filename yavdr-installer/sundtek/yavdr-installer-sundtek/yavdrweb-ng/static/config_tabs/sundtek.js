@@ -43,6 +43,25 @@ function getVDRSundtekForm(){
             })
         }
     });
+
+    var submit_vdr_restart = myform.addButton({
+        text: getLL("system.vdr_restart.label"),
+        icon: '/ext/resources/images/default/grid/refresh.gif',
+        handler: function() {
+            myform.form.submit({
+                url: 'set_signal?signal=restart-vdr',
+                waitMsg: getLL("system.vdr_restart.submit.waitmsg"),
+                waitTitle: getLL("standardform.messagebox_caption.wait"),
+                scope:this,
+                success: function (form, action) {
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("system.vdr_restart.submit.success") );
+                },
+                failure:function(form, action) {
+                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("system.vdr_restart.submit.failure") );
+                }
+            })
+        }
+    });
     
     Ext.Ajax.request({
         url: 'get_dvb',
