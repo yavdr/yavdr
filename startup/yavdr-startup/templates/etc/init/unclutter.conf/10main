@@ -4,8 +4,12 @@ author          "Steffen Barszus <steffenbpunkt@gmail.com>"
 env DISPLAY=:1
 export DISPLAY
 
-start on starting vdr-frontend
+start on started vdr-frontend
 stop on stopping vdr-frontend
 
-exec /usr/bin/unclutter -idle 1 -root -visible -grab
+script
 
+sleep 3
+/usr/bin/unclutter -idle 1 -root -visible -grab
+
+end script
