@@ -7,6 +7,9 @@
 .ext-ie7 .irserver,
 .ext-ie7 .irserver { height:177px; }
 
+.x-viewport, .x-viewport body {
+    overflow: auto !important;
+}
 
 .x-grouptabs-panel {
     background-color: #4E78B1;
