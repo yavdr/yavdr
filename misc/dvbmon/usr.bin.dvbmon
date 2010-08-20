@@ -6,11 +6,15 @@ CURRENT="`ls /dev/dvb/adapter?/frontend? -1 | wc -l`"
 if [ -n "$MAX" ]; then
   if [ "$CURRENT" = "$MAX" ]; then
      /sbin/initctl emit --no-wait dvb-devices-complete
+     if [ -z "$JOB" ]; then
+        touch /tmp/.dvb-devices-complete
+     else
+        touch /tmp/.dvb-first
+     fi
   fi
 
   if [ "$CURRENT" -gt "$MAX" ]; then
-    /sbin/initctl start --no-wait dvb-last
-    /sbin/initctl restart --no-wait vdr
+    /sbin/initctl start --no-wait dvb-last DVBMON=1
   fi
 fi
 
