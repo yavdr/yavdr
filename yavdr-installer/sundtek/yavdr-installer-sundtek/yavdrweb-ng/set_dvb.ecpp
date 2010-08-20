@@ -40,8 +40,6 @@ if (signal == "change-sundtek-device" )
             hdf_destroy(&hdf);
         }
     }
-    string cmd = "/usr/bin/signal-event " + signal;
-    int ret = system( cmd.c_str());
     success = "true"; //TODO: use ret to find out if we were successful.
 }
 
