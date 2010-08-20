@@ -71,3 +71,11 @@ function getVDRSundtekForm(){
     
     return myform;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "system"})
+            .addGroupPanelTab({
+                section: "sundtek",
+                items:   getVDRSundtekForm});
+});
