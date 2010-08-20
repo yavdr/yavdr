@@ -15,6 +15,32 @@ using namespace std;
 
 string success = "false";
 
+if (signal == "change-sundtek-device" )
+    {
+        if ((value == "DVBC") || (value == "DVBT"))
+        {
+            NEOERR *err;
+            HDF *hdf = NULL;
+            if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+            {
+              nerr_log_error(err);
+            }
+            err = hdf_set_valuef(hdf, "system.sundtek.mode=%s", value.c_str());
+            /*if (err != STATUS_OK){
+            }*/
+            err = hdf_write_file(hdf, YAVDRDB);
+            if (err != STATUS_OK)
+            {
+              nerr_log_error(err);
+            }
+            hdf_destroy(&hdf);
+        }
+    }
+    string cmd = "/usr/bin/signal-event " + signal;
+    int ret = system( cmd.c_str());
+    success = "true"; //TODO: use ret to find out if we were successful.
+}
+
 </%cpp>{
     success: <$success$>
 }
