@@ -9,7 +9,8 @@ stop on stopping vdr-frontend
 
 script
 
-sleep 3
+<?cs if:(!?vdr.frontend) ?>while  ! netcat -z localhost 37890; do sleep 0.1; done;<?cs /if ?><?cs if:(vdr.frontend == "xineliboutput") ?>while  ! netcat -z localhost 37890; do sleep 0.1; done;<?cs /if ?><?cs if:(vdr.frontend == "xine") ?>while [ ! -e /tmp/vdr-xine/stream ] ; do sleep 0.1 ; done<?cs /if ?>
+sleep 2
 /usr/bin/unclutter -idle 1 -root -visible -grab
 
 end script
