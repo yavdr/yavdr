@@ -13,8 +13,10 @@ find_templates () {
 
 if [ -f $TEMPLATELIST ]; then
   for LINE in $(diff $TEMPLATELIST /tmp/template-list.$$ | grep "<" | cut -d " " -f 2); do
-    logger -i -s "$0 - remove stale templated file $LINE"
-    rm -f $LINE
+    if [ -f $LINE ]; then
+      logger -i -s "$0 - remove stale templated file $LINE"
+      rm -f $LINE
+    fi
   done
 fi
 
