@@ -11,6 +11,10 @@ extern "C" {
 
 using namespace std;
 </%pre><& authenticate@yavdrweb ><%args>
+  signal;
+  value;
+  value2;
+  string values[];
 </%args><%cpp>
 
 string success = "false";
