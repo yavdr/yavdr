@@ -9,7 +9,7 @@ function getVDRSundtekForm(){
         buttonAlign: 'left',
         items: [{
             id: 'sundtek_radio_group',
-            name: 'sundtek',
+            name: 'mode',
             xtype: 'checkboxgroup',
             fieldLabel: getLL("sundtek.label"),
             columns: 2,
@@ -29,7 +29,7 @@ function getVDRSundtekForm(){
         //scope: this,
         handler: function() {
             myform.form.submit({
-                url: 'set_dvb?signal=change-sundtek-device',
+                url: '/sundtek/set_dvb',
                 timeout: 30, //wait 30 seconds before telling it failed
                 waitMsg: getLL("sundtek.submit.waitmsg"),
                 waitTitle: getLL("standardform.messagebox_caption.wait"),
@@ -46,7 +46,7 @@ function getVDRSundtekForm(){
 
 
     Ext.Ajax.request({
-        url: 'get_dvb',
+        url: '/sundtek/get_dvb',
         timeout: 3000,
         method: 'GET',
         scope: myform,
@@ -60,7 +60,7 @@ function getVDRSundtekForm(){
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current sound setting.');
             }
             if (currentSundtek == "DVBC" || currentSundtek == "DVBT"){
-                var rButton = this.getComponent('Sundtek_radio_group');
+                var rButton = this.getComponent('sundtek_radio_group');
                 if (rButton)
                     rButton.setValue( currentSundtek );
                 else
