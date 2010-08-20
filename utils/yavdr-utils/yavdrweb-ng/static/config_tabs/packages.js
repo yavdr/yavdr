@@ -215,3 +215,12 @@ function renderState(state) {
     }
 }
 
+Ext.onReady(function() {
+    if (yavdrwebGlobalInfo.devmode == "1"){
+        YaVDRMenuManager
+            .addGroupPanelSection({section: "development"})
+                .addGroupPanelTab({
+                    section: "packages",
+                    items:   getPackagesForm});
+    }
+});

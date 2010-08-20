@@ -81,3 +81,11 @@ function getWebFrontendForm(){
     
     return myform;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "system"})
+            .addGroupPanelTab({
+                section: "webfrontend",
+                items:   getWebFrontendForm});
+});

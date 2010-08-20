@@ -86,3 +86,11 @@ function getSystemForm(){
     });
     return myform;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "system"})
+            .addGroupPanelTab({
+                section: "system",
+                items:   getSystemForm});
+});

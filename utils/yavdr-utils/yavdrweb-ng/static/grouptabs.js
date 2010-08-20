@@ -132,126 +132,24 @@ Ext.TaskMgr.start({
         };
         
         if (config.layout == "vbox")
-        tabpanel.layoutConfig = {
-            align : 'stretch'
-            //pack  : 'start'
-        };
+            tabpanel.layoutConfig = {
+                align : 'stretch'
+                //pack  : 'start'
+            };
         
         return tabpanel;
     };
 
-    var groupPanelItems = new Array(
-        {
-            //BASICS MODULE
-            items: [
-                addGroupPanelSection({
-                    section: "vdr"
-                }),
-                addGroupPanelTab({
-                    section: "frontend",
-                    items:   getVDRFrontendForm
-                }),
-                addGroupPanelTab({
-                    section: "upload",
-                    layout: "fit",
-                    items:   getVDRConfigUploadForm
-                }),
-                addGroupPanelTab({
-                    section: "shutdown",
-                    items:   getVDRShutdownForm
-                })
-            ]
-        },
-        {
-            //SYSTEM MODULE
-            expanded: false,
-            items: [
-                addGroupPanelSection({
-                    section: "system"
-                }),
-                addGroupPanelTab({
-                    section: "remote",
-                    items:   getRemoteForm
-                }),
-                addGroupPanelTab({
-                    section: "sound",
-                    items:   getSoundForm
-                }),
-                addGroupPanelTab({
-                    section: "timeout",
-                    items:   getGRUBTimeoutForm
-                }),
-                addGroupPanelTab({
-                    section: "x11",
-                    items:   getX11Form
-                }),
-                addGroupPanelTab({
-                    section: "system",
-                    items:   getSystemForm
-                }),
-                addGroupPanelTab({
-                    layout: 'fit',
-                    section: "network",
-                    items:   getNetworkForm
-                }),
-                addGroupPanelTab({
-                    section: "webfrontend",
-                    items:   getWebFrontendForm
-                })
-            ]
-        },
-        {
-            //DEMO MODULE
-            expanded: false,
-            items: [
-                addGroupPanelSection({
-                    section: "demos"
-                }),
-                addGroupPanelTab({
-                    section: "channels",
-                    layout: "fit",
-                    border: false,
-                    frame: false,
-                    items:   getChannelsForm
-                })
-            ]
-        },
-        { 
-            //DIAGNOSE MODULE
-            expanded: false,
-            items: [getDiagnoseItems()]
-        }
-    );
-    
-    /*
-     *  Should we render the DEVELOPMENT MODULE? (only if devmode is "1")
-     */
-    if (yavdrwebGlobalInfo.devmode == "1"){
-        groupPanelItems[groupPanelItems.length] = {
-            expanded: false,
-            items: [
-                addGroupPanelSection({
-                    section: "development"
-                }),
-                addGroupPanelTab({
-                    section: "lifeguard",
-                    items:   getVDRLifeguardForm
-                }), 
-               addGroupPanelTab({
-                    section: "packages",
-                    items:   getPackagesForm
-                })
-            ]
-        };
-    }
-
     var viewport = new Ext.Viewport({
-    layout:'fit',
-        items:[{
-            xtype: 'grouptabpanel',
-            tabWidth: 190,
-            activeGroup: 0,
-            items: groupPanelItems
-        }]//viewport items
+        layout:'fit',
+        items:[
+            Ext.create({
+                xtype: 'grouptabpanel',
+                tabWidth: 190,
+                activeGroup: 0,
+                items: YaVDRMenuManager.getMenu()
+                //items: groupPanelItems
+            })
+        ] //viewport items
     });//viewport
 });//extonready

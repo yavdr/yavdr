@@ -285,44 +285,62 @@ var locale_pt = {
         },
         section : {
             system_info: {
-                title : 'Informação do Sistema', 
-                description : 'Estado da rede, carga do sistema, uso de ficheiros do sistema e do kernel',
+                menutab: {
+                    title : 'Informação do Sistema', 
+                    tabtip : 'Estado da rede, carga do sistema, uso de ficheiros do sistema e do kernel'
+                },
                 ifconfig : 'Estado da Rede',
                 top: 'Carga do Sitema',
                 dmesg: 'Kernel',
                 df: 'Uso de ficheiros do sistema'
             },
             system_logs: {
-                title :'Ficheiros de depuração',
-                description : 'Ficheiros de depuração importantes'
+                menutab: {
+                    title :'Ficheiros de depuração',
+                    tabtip : 'Ficheiros de depuração importantes'
+                }
             },
             xbmc: {
-                title : 'Ficheiros de depuração do XBMC',
-                description : 'Descubra a razão para problemas do XBMC'
+                menutab: {
+                    title : 'Ficheiros de depuração do XBMC',
+                    tabtip : 'Descubra a razão para problemas do XBMC'
+                }
             },
             lirc: {
-                title : 'Configuração do LIRC',
-                description : 'Verifique a configuração actual do LIRC'
+                menutab: {
+                    title : 'Configuração do LIRC',
+                    tabtip : 'Verifique a configuração actual do LIRC'
+                }
             },
             vdr: {
-                title : 'Configuração do VDR',
-                description : 'Verifique a configuração actual do VDR'
+                menutab: {
+                    title : 'Configuração do VDR',
+                    tabtip : 'Verifique a configuração actual do VDR'
+                }
             },
             xorg: {
-                title : 'Servidor X',
-                description : 'Verifique a configuração actual do X'
+                menutab: {
+                    title : 'Servidor X',
+                    tabtip : 'Verifique a configuração actual do X'
+                }
             },
             sound: {
-                title : 'Som (ALSA)',
-                description : 'Solucione problemas de som (digital/analógico)'
+                menutab: {
+                    title : 'Som (ALSA)',
+                    tabtip : 'Solucione problemas de som (digital/analógico)'
+                }
             },
             packages: {
-                title : 'Pacotes',
-                description : 'Verifique que pacotes e suas versões estão instalados'
+                menutab: {
+                    title : 'Pacotes',
+                    tabtip : 'Verifique que pacotes e suas versões estão instalados'
+                }
             },
             yavdr: {
-                title : 'yaVDR-Utils',
-                description : 'Solucione problemas com o frontend do yaVDR (base de dados + servidor web)'
+                menutab: {
+                    title : 'yaVDR-Utils',
+                    tabtip : 'Solucione problemas com o frontend do yaVDR (base de dados + servidor web)'
+                }
             }
         }
     },

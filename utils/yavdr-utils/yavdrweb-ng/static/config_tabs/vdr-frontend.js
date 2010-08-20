@@ -101,3 +101,11 @@ function getVDRFrontendForm(){
     
     return myform;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "vdr", expanded: true})
+            .addGroupPanelTab({
+                section: "frontend",
+                items:   getVDRFrontendForm});
+});

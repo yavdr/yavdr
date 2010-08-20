@@ -100,3 +100,11 @@ function getRemoteForm() {
     });
     return panel;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "system"})
+            .addGroupPanelTab({
+                section: "remote",
+                items:   getRemoteForm});
+});

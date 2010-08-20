@@ -67,3 +67,11 @@ function getGRUBTimeoutForm(){
     
     return myform;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "system"})
+            .addGroupPanelTab({
+                section: "timeout",
+                items:   getGRUBTimeoutForm});
+});

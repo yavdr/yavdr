@@ -104,3 +104,13 @@ function getVDRConfigUploadForm(){
 
     return myform;
 }
+
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "vdr", expanded: true})
+            .addGroupPanelTab({
+                section: "upload",
+                layout: "fit",
+                items:   getVDRConfigUploadForm});
+});

@@ -295,44 +295,62 @@ var locale_de = {
         },
         section : {
             system_info: {
-                title : 'System-Informationen', 
-                description : 'Netzwerk-Status, Auslastung, Prozesse, Dateisystem-Belegung und Kernel',
+                menutab: {
+                    title : 'System-Informationen', 
+                    tabtip : 'Netzwerk-Status, Auslastung, Prozesse, Dateisystem-Belegung und Kernel'
+                },
                 ifconfig : 'Netzwerkstatus',
                 top: 'Systemauslastung',
                 dmesg: 'Kernel',
                 df: 'Dateisystem-Belegung'
             },
             system_logs: {
-                title :'System-Logfiles',
-                description : 'Wichtige System-Logfiles'
+                menutab: {
+                    title :'System-Logfiles',
+                    tabtip : 'Wichtige System-Logfiles'
+                }
             },
             xbmc: {
-                title : 'XBMC-Abstürze',
-                description : 'Finden Sie die Ursache für XBMC-Abstürze oder XBMC-Probleme'
+                menutab: {
+                    title : 'XBMC-Abstürze',
+                    tabtip : 'Finden Sie die Ursache für XBMC-Abstürze oder XBMC-Probleme'
+                }
             },
             lirc: {
-                title : 'LIRC-Konfiguration',
-                description : 'Informieren Sie sich über die aktuelle LIRC-Konfiguration'
+                menutab: {
+                    title : 'LIRC-Konfiguration',
+                    tabtip : 'Informieren Sie sich über die aktuelle LIRC-Konfiguration'
+                }
             },
             vdr: {
-                title : 'VDR-Konfiguration',
-                description : 'Informieren Sie sich über die aktuelle VDR-Konfiguration'
+                menutab: {
+                    title : 'VDR-Konfiguration',
+                    tabtip : 'Informieren Sie sich über die aktuelle VDR-Konfiguration'
+                }
             },
             xorg: {
-                title : 'X-Server',
-                description : 'Informieren Sie sich über die aktuelle X-Konfiguration'
+                menutab: {
+                    title : 'X-Server',
+                    tabtip : 'Informieren Sie sich über die aktuelle X-Konfiguration'
+                }
             },
             sound: {
-                title : 'Sound (ALSA)',
-                description : 'Digitalsound-Problemdiagnose (Digital-/Analog-Ausgabe)'
+                menutab: {
+                    title : 'Sound (ALSA)',
+                    tabtip : 'Digitalsound-Problemdiagnose (Digital-/Analog-Ausgabe)'
+                }
             },
             packages: {
-                title : 'Pakete',
-                description : 'Überprüfen Sie, welche Pakete und Paketversionen installiert sind'
+                menutab: {
+                    title : 'Pakete',
+                    tabtip : 'Überprüfen Sie, welche Pakete und Paketversionen installiert sind'
+                }
             },            
             yavdr: {
-                title : 'yaVDR-Utils',
-                description : 'yaVDR-Web-Frontend Diagnose (Datenbank + Webserver)'
+                menutab: {
+                    title : 'yaVDR-Utils',
+                    tabtip : 'yaVDR-Web-Frontend Diagnose (Datenbank + Webserver)'
+                }
             }
         }
     },

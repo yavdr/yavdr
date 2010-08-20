@@ -352,3 +352,11 @@ function getX11Form(){
     
     return myform;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "system"})
+            .addGroupPanelTab({
+                section: "x11",
+                items:   getX11Form});
+});

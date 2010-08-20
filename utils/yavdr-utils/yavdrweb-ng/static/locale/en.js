@@ -285,44 +285,62 @@ var locale_en = {
         },
         section : {
             system_info: {
-                title : 'System information', 
-                description : 'Network status, system load, file system usage, kernel',
+                menutab: {
+                    title : 'System information', 
+                    tabtip: 'Network status, system load, file system usage, kernel'
+                },
                 ifconfig : 'Network Status',
                 top: 'System Load',
                 dmesg: 'Kernel',
                 df: 'File System Usage'
             },
             system_logs: {
-                title :'System Logfiles',
-                description : 'Important system Logfiles'
+                menutab: {
+                    title :'System Logfiles',
+                    tabtip: 'Important system Logfiles'
+                }
             },
             xbmc: {
-                title : 'XBMC log files',
-                description : 'Find the reason for XBMC crashes or other XBMC problems'
+                menutab: {
+                    title : 'XBMC log files',
+                    tabtip : 'Find the reason for XBMC crashes or other XBMC problems'
+                }
             },
             lirc: {
-                title : 'LIRC Configuration',
-                description : 'Check the current configuration of LIRC'
+                menutab: {
+                    title : 'LIRC Configuration',
+                    tabtip : 'Check the current configuration of LIRC'
+                }
             },
             vdr: {
-                title : 'VDR Configuration',
-                description : 'Check the current configuration of VDR'
+                menutab: {
+                    title : 'VDR Configuration',
+                    tabtip : 'Check the current configuration of VDR'
+                }
             },
             xorg: {
-                title : 'X-Server',
-                description : 'Check the current configuration of X'
+                menutab: {
+                    title : 'X-Server',
+                    tabtip : 'Check the current configuration of X'
+                }
             },
             sound: {
-                title : 'Sound (ALSA)',
-                description : 'Troubleshoot sound problems (digital / analog output)'
+                menutab: {
+                    title : 'Sound (ALSA)',
+                    tabtip : 'Troubleshoot sound problems (digital / analog output)'
+                }
             },
             packages: {
-                title : 'Packages',
-                description : 'Check which packages and package versions are installed'
+                menutab: {
+                    title : 'Packages',
+                    tabtip : 'Check which packages and package versions are installed'
+                }
             },
             yavdr: {
-                title : 'yaVDR-Utils',
-                description : 'Troubleshoot problems with the yaVDR web frontend (database + web server)'
+                menutab: {
+                    title : 'yaVDR-Utils',
+                    tabtip : 'Troubleshoot problems with the yaVDR web frontend (database + web server)'
+                }
             }
         }
     },

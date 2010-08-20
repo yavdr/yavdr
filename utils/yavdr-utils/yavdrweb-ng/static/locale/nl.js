@@ -183,44 +183,62 @@ var locale_nl = {
         },
         section : {
             system_info: {
-                title : 'Systeem informatie',
-                description : 'Netwerk status, Systeem belasting en Processen, verbruik bestand systeem, Kernel',
+                menutab: {
+                    title : 'Systeem informatie',
+                    tabtip : 'Netwerk status, Systeem belasting en Processen, verbruik bestand systeem, Kernel'
+                },
                 ifconfig : 'Netwerk status',
                 top: 'Systeem belasting',
                 dmesg: 'Kernel',
                 df: 'Bestand systeem verbruik'
             },
             system_logs: {
-                title :'Systeem logfiles',
-                description : 'Belangrijke Systeem logfiles'
+                menutab: {
+                    title :'Systeem logfiles',
+                    tabtip : 'Belangrijke Systeem logfiles'
+                }
             },
             xbmc: {
-                title : 'XBMC-Crashes',
-                description : 'Vindt de oorzaak van XBMC-Crashes of andere XBMC problemen'
+                menutab: {
+                    title : 'XBMC-Crashes',
+                    tabtip : 'Vindt de oorzaak van XBMC-Crashes of andere XBMC problemen'
+                }
             },
             lirc: {
-                title : 'LIRC configuratie',
-                description : 'Informatie over de huidige LIRC configuratie'
+                menutab: {
+                    title : 'LIRC configuratie',
+                    tabtip : 'Informatie over de huidige LIRC configuratie'
+                }
             },
             vdr: {
-                title : 'VDR configuratie',
-                description : 'Informatie over de huidige VDR configuratie'
+                menutab: {
+                    title : 'VDR configuratie',
+                    tabtip : 'Informatie over de huidige VDR configuratie'
+                }
             },
             xorg: {
-                title : 'X-Server',
-                description : 'Informatie over de huidige X-Server configuratie'
+                menutab: {
+                    title : 'X-Server',
+                    tabtip : 'Informatie over de huidige X-Server configuratie'
+                }
             },
             sound: {
-                title : 'Geluid (ALSA)',
-                description : 'Digitalsound Probleem-diagnose (digitale/analoge uitvoer)'
+                menutab: {
+                    title : 'Geluid (ALSA)',
+                    tabtip : 'Digitalsound Probleem-diagnose (digitale/analoge uitvoer)'
+                }
             },
             packages: {
-                title : 'Pakketten',
-                description : 'Controleer welke pakketten en pakket versies ge-installeerd zijn'
+                menutab: {
+                    title : 'Pakketten',
+                    tabtip : 'Controleer welke pakketten en pakket versies ge-installeerd zijn'
+                }
             },
             yavdr: {
-                title : 'yaVDR Utilities',
-                description : 'yaVDR-Web-Frontend Diagnose (Databank + Web-Server)'
+                menutab: {
+                    title : 'yaVDR Utilities',
+                    tabtip : 'yaVDR-Web-Frontend Diagnose (Databank + Web-Server)'
+                }
             }
         }
     }

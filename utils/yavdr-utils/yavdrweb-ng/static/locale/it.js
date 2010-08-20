@@ -285,44 +285,62 @@ var locale_it = {
         },
         section : {
             system_info: {
-                title : 'Informazioni di sistema',
-                description : 'Stato rete, utilizzo sistema, utilizzo file system, kernel',
+                menutab: {
+                    title : 'Informazioni di sistema',
+                    tabtip : 'Stato rete, utilizzo sistema, utilizzo file system, kernel'
+                },
                 ifconfig : 'Stato rete',
                 top: 'Utilizzo sistema',
                 dmesg: 'Kernel',
                 df: 'Utilizzo file System'
             },
             system_logs: {
-                title :'File log di sistema',
-                description : 'File log di sistema importanti'
+                menutab: {
+                    title :'File log di sistema',
+                    tabtip : 'File log di sistema importanti'
+                }
             },
             xbmc: {
-                title : 'Blocchi XBMC',
-                description : 'Trova il motivo dei blocchi di XBMC o altri problemi di XBMC'
+                menutab: {
+                    title : 'Blocchi XBMC',
+                    tabtip : 'Trova il motivo dei blocchi di XBMC o altri problemi di XBMC'
+                }
             },
             lirc: {
-                title : 'Configurazione LIRC',
-                description : 'Verifica la configurazione attuale di LIRC'
+                menutab: {
+                    title : 'Configurazione LIRC',
+                    tabtip : 'Verifica la configurazione attuale di LIRC'
+                }
             },
             vdr: {
-                title : 'Configurazione VDR',
-                description : 'Verifica la configurazione attuale di VDR'
+                menutab: {
+                    title : 'Configurazione VDR',
+                    tabtip : 'Verifica la configurazione attuale di VDR'
+                }
             },
             xorg: {
-                title : 'Server X',
-                description : 'Verifica la configurazione attuale del server X'
+                menutab: {
+                    title : 'Server X',
+                    tabtip : 'Verifica la configurazione attuale del server X'
+                }
             },
             sound: {
-                title : 'Suono (ALSA)',
-                description : 'Risolvi i problemi sonori (uscita digitale / analogica)'
+                menutab: {
+                    title : 'Suono (ALSA)',
+                    tabtip : 'Risolvi i problemi sonori (uscita digitale / analogica)'
+                }
             },
             packages: {
-                title : 'Pacchetti',
-                description : 'Verifica quali pacchetti e versioni dei pacchetti sono installati'
+                menutab: {
+                    title : 'Pacchetti',
+                    tabtip : 'Verifica quali pacchetti e versioni dei pacchetti sono installati'
+                }
             },
             yavdr: {
-                title : 'Strumenti yaVDR',
-                description : 'Risolvi i problemi con l\'interfaccia web di yaVDR (database e server web)'
+                menutab: {
+                    title : 'Strumenti yaVDR',
+                    tabtip : 'Risolvi i problemi con l\'interfaccia web di yaVDR (database e server web)'
+                }
             }
         }
     },

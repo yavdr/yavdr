@@ -135,3 +135,12 @@ function getNetworkForm(){
 
     return panel;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "system"})
+            .addGroupPanelTab({
+                layout: 'fit',
+                section: "network",
+                items:   getNetworkForm});
+});

@@ -284,44 +284,62 @@ var locale_zh = {
         },
         section : {
             system_info: {
-                title : '系统信息', 
-                description : '网络状态、系统负载、文件系统、内核',
+                menutab: {
+                    title : '系统信息', 
+                    tabtip : '网络状态、系统负载、文件系统、内核'
+                },
                 ifconfig : '网络状态',
                 top: '系统负载',
                 dmesg: '内核',
                 df: '文件系统'
             },
             system_logs: {
-                title :'系统日志文件',
-                description : '重要的系统日志文件'
+                menutab: {
+                    title :'系统日志文件',
+                    tabtip : '重要的系统日志文件'
+                }
             },
             xbmc: {
-                title : 'XBMC 日志文件',
-                description : '寻找XBMC崩溃或其他的XBMC问题'
+                menutab: {
+                    title : 'XBMC 日志文件',
+                    tabtip : '寻找XBMC崩溃或其他的XBMC问题'
+                }
             },
             lirc: {
-                title : 'LIRC 配置文件',
-                description : '检查LIRC的当前配置'
+                menutab: {
+                    title : 'LIRC 配置文件',
+                    tabtip : '检查LIRC的当前配置'
+                }
             },
             vdr: {
-                title : 'VDR 配置文件',
-                description : '检查VDR的当前配置'
+                menutab: {
+                    title : 'VDR 配置文件',
+                    tabtip : '检查VDR的当前配置'
+                }
             },
             xorg: {
-                title : 'X-Server配置文件',
-                description : '检查 X 环境的当前配置'
+                menutab: {
+                    title : 'X-Server配置文件',
+                    tabtip : '检查 X 环境的当前配置'
+                }
             },
             sound: {
-                title : '声卡 （ALSA）配置文件',
-                description : '解决声音问题 （数字 / 模拟）'
+                menutab: {
+                    title : '声卡 （ALSA）配置文件',
+                    tabtip : '解决声音问题 （数字 / 模拟）'
+                }
             },
             packages: {
-                title : '已安装的软件包',
-                description : '检查软件包的版本和安装的软件包'
+                menutab: {
+                    title : '已安装的软件包',
+                    tabtip : '检查软件包的版本和安装的软件包'
+                }
             },
             yavdr: {
-                title : 'yaVDR-Utils配置文件',
-                description : '解决yaVDR网络前端问题（数据库+服务器）'
+                menutab: {
+                    title : 'yaVDR-Utils配置文件',
+                    tabtip : '解决yaVDR网络前端问题（数据库+服务器）'
+                }
             }
         }
     },

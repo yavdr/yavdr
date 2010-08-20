@@ -285,44 +285,62 @@
         },
         section : {
             system_info: {
-                title : 'Information Systeme', 
-                description : 'L\'état du réseau, la charge du système, l\'utilisation des fichiers système, le kernel',
+                menutab: {
+                    title : 'Information Systeme', 
+                    tabtip : 'L\'état du réseau, la charge du système, l\'utilisation des fichiers système, le kernel'
+                },
                 ifconfig : 'L\'état du réseau',
                 top: 'La charge du système',
                 dmesg: 'Kernel',
                 df: 'L\'utilisation des fichiers système'
             },
             system_logs: {
-                title :'Logs des Fichiers Systeme',
-                description : 'Les fichiers des logs importants'
+                menutab: {
+                    title :'Logs des Fichiers Systeme',
+                    tabtip : 'Les fichiers des logs importants'
+                }
             },
             xbmc: {
-                title : 'Logs des Fichiers d\'XBMC',
-                description : 'Trouver la cause des plantages d\'XBMC ou autres problèmes'
+                menutab: {
+                    title : 'Logs des Fichiers d\'XBMC',
+                    tabtip : 'Trouver la cause des plantages d\'XBMC ou autres problèmes'
+                }
             },
             lirc: {
-                title : 'LIRC Configuration',
-                description : 'Vérifiez la configuration actuelle de LIRC'
+                menutab: {
+                    title : 'LIRC Configuration',
+                    tabtip : 'Vérifiez la configuration actuelle de LIRC'
+                }
             },
             vdr: {
-                title : 'VDR Configuration',
-                description : 'Vérifiez la configuration actuelle de VDR'
+                menutab: {
+                    title : 'VDR Configuration',
+                    tabtip : 'Vérifiez la configuration actuelle de VDR'
+                }
             },
             xorg: {
-                title : 'X-Serveur',
-                description : 'Vérifiez la configuration actuelle de X'
+                menutab: {
+                    title : 'X-Serveur',
+                    tabtip : 'Vérifiez la configuration actuelle de X'
+                }
             },
             sound: {
-                title : 'Son (ALSA)',
-                description : 'Résoudre les problèmes de son (numérique / sortie analogique)'
+                menutab: {
+                    title : 'Son (ALSA)',
+                    tabtip : 'Résoudre les problèmes de son (numérique / sortie analogique)'
+                }
             },
             packages: {
-                title : 'Paquets',
-                description : 'Vérifier quels paquets et versions sont installés'
+                menutab: {
+                    title : 'Paquets',
+                    tabtip : 'Vérifier quels paquets et versions sont installés'
+                }
             },
             yavdr: {
-                title : 'yaVDR-Utils',
-                description : 'Résoudre les problèmes de l\'interface web yaVDR (base de données + serveur web)'
+                menutab: {
+                    title : 'yaVDR-Utils',
+                    tabtip : 'Résoudre les problèmes de l\'interface web yaVDR (base de données + serveur web)'
+                }
             }
         }
     },

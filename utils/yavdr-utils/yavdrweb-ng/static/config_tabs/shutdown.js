@@ -88,3 +88,12 @@ function getVDRShutdownForm(){
     
     return myform;
 }
+
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "vdr", expanded: true})
+            .addGroupPanelTab({
+                section: "shutdown",
+                items:   getVDRShutdownForm});
+});

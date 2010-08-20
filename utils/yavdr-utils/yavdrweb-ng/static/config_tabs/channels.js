@@ -143,3 +143,14 @@ function getChannelsForm(){
 */
     return myform;
 }
+
+Ext.onReady(function() {
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "demos"})
+            .addGroupPanelTab({
+                section: "channels",
+                layout: "fit",
+                border: false,
+                frame: false,
+                items:   getChannelsForm});
+});

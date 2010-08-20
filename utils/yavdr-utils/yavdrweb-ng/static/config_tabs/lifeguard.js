@@ -79,3 +79,13 @@ function getVDRLifeguardForm(){
     
     return myform;
 }
+
+Ext.onReady(function() {
+    if (yavdrwebGlobalInfo.devmode == "1"){
+        YaVDRMenuManager
+            .addGroupPanelSection({section: "development"})
+                .addGroupPanelTab({
+                    section: "lifeguard",
+                    items:   getVDRLifeguardForm});
+    }
+});
