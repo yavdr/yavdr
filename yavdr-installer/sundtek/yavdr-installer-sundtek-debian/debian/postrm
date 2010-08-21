@@ -3,6 +3,8 @@
 if [ remove = "$1" ]; then 
 rm -f /etc/sundtek.conf
 rm -f /usr/bin/sundtek.bash
+process-template /usr/lib/yavdrweb/static/index.cs
+restart tntnet
 fi 
 
 #DEBHELPER#
