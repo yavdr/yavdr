@@ -3,9 +3,9 @@
 #apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9A6F2FD5
 
 cat <<EOF >/etc/apt/sources.list.d/yavdr.list 
-deb http://ppa.launchpad.net/yavdr/stable-vdr/ubuntu lucid main
-deb http://ppa.launchpad.net/yavdr/stable-xbmc/ubuntu lucid main
-deb http://ppa.launchpad.net/yavdr/stable-yavdr/ubuntu lucid main
+deb http://ppa.launchpad.net/yavdr/testing-vdr/ubuntu lucid main
+deb http://ppa.launchpad.net/yavdr/testing-xbmc/ubuntu lucid main
+deb http://ppa.launchpad.net/yavdr/testing-yavdr/ubuntu lucid main
 EOF
 cat <<EOF | apt-key add -
 -----BEGIN PGP PUBLIC KEY BLOCK-----
