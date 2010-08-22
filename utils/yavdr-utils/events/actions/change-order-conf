@@ -2,7 +2,7 @@
 ORDER_CONF=/etc/vdr/plugins/order.conf
 #ORDER_CONF=order.conf
 
-PLUGIN=`echo $2 | cut -f3 -d- -`
+PLUGIN=`echo $3 | cut -f3 -d- -`
 
 append_plugin () {
   echo $1 >> $ORDER_CONF
@@ -24,12 +24,12 @@ disable_plugin () {
   fi
 }
 
-if [ "$1" = "enable" ]; then
+if [ "$2" = "enable" ]; then
   enable_plugin $PLUGIN
-elif [ "$1" = "enable" ]; then
+elif [ "$2" = "disable" ]; then
   disable_plugin $PLUGIN
   
-  if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" -a "$PLUGIN" = "graphtft"]; then
+  if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" -a "$PLUGIN" = "graphtft" ]; then
     dbset "vdr.plugin.graphtft.enabled=0"
   fi
 fi

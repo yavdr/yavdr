@@ -21,7 +21,7 @@ using namespace std;
 </%args><%cpp>
 
 string success = "false";
-reply.out() << signal << " -> " << signal_params;
+
 if (
         (signal == "reboot") || 
         (signal == "change-frontend") || 
@@ -38,7 +38,7 @@ if (
         (signal == "change-plugin")
     )
 {
-	reply.out() << signal << " -> " << signal_params;
+
     if (signal == "change-frontend" )
     {
         if ((value == "xine") || (value == "xineliboutput") || (value == "xbmc") || (value == "headless"))
@@ -199,7 +199,8 @@ if (
     if (signal_params != "") {
     	cmd += " " + signal_params;
     }
-    printf(" -> %s", cmd.c_str());
+
+    //reply.out() << " -> " << cmd.c_str();
     int ret = system( cmd.c_str());
     success = "true"; //TODO: use ret to find out if we were successful.
 }

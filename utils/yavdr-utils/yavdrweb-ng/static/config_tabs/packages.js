@@ -34,7 +34,7 @@ function getPackagesForm(){
                     rec = grid.getStore().getAt(row);
                     package = rec.id;
                     
-                    if (rec.data.installed < 0) {
+                    if (rec.data.installed == 0) {
                         // Show a dialog using config options:
                         Ext.Msg.show({
                            title:'Install package?',
@@ -78,7 +78,7 @@ function getPackagesForm(){
                             fn: function( buttonId, text, opt) {
                                 if (buttonId == "yes") {
                                     Ext.Ajax.request({
-                                        url: 'set_signal?signal=change-plugin&signal_param=disable '+package,
+                                        url: 'set_signal?signal=change-plugin&signal_params=disable '+package,
                                         waitMsg: getLL("nvidia.submit.waitmsg"),
                                         timeout: 3000,
                                         method: 'GET',
@@ -99,7 +99,7 @@ function getPackagesForm(){
                             fn: function( buttonId, text, opt) {
                                 if (buttonId == "yes") {
                                     Ext.Ajax.request({
-                                        url: 'set_signal?signal=change-plugin&signal_param=enable '+package,
+                                        url: 'set_signal?signal=change-plugin&signal_params=enable '+package,
                                         waitMsg: getLL("nvidia.submit.waitmsg"),
                                         timeout: 3000,
                                         method: 'GET',

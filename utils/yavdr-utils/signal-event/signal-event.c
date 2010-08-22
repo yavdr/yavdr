@@ -169,6 +169,7 @@ int main(int argc, char *argv[])
                  strcat(actioncmd, argv[i]);
               }
             }
+            printf("running : %s\n", actioncmd);
             if (actioncmd != NULL)
             {
               syslog(LOG_INFO, "processing action %s", actioncmd);
