@@ -1,16 +1,16 @@
 
 applyLL(locale_de,{
     sundtek: {
-        label: 'sundtek DVB mode',
+        label: 'Sundtek DVB Modus',
         menutab: {
-            title: '',
-            tabtip: '',
-            panel_title: ''
+            title: 'Sundtek',
+            tabtip: 'Sundtek DVB Modus Konfiguaration',
+            panel_title: 'Sundtek'
         },
-        button_label: '',
+        button_label: 'Setze Sundtek Einstellungen',
         submit: {
-            waitmsg: '',
-            success: ''
+            waitmsg: 'Einstellungen werden aktualisiert.',
+            success: 'Erfolg.'
         },
         help: ''
     }

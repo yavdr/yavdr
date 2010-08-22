@@ -3,15 +3,15 @@ applyLL(locale_en,{
     sundtek: {
         label: 'Sundtek DVB mode',
         menutab: {
-            title: '',
-            tabtip: '',
-            panel_title: ''
+            title: 'Sundtek',
+            tabtip: 'Sundtek DVB Settings',
+            panel_title: 'Sundtek'
         },
-        button_label: '',
+        button_label: 'Apply Sundtek settings',
         submit: {
-            waitmsg: '',
-            success: ''
+            waitmsg: 'Sundtek settings are updated.',
+            success: 'Success.'
         },
-        help: 'Hilfe'
+        help: ''
     }
 })
