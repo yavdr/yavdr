@@ -3,7 +3,7 @@
 description     "VDR upstart script"
 author          "Steffen Barszus <steffenbpunkt@gmail.com"
 
-start on (stopped udevtrigger or \
+start on (stopped dvb-devices-complete or \
           stopped vdr-exit-1 RESULT=ok or \
           stopped vdr-exit-other RESULT=ok )
 
