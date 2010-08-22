@@ -5,6 +5,7 @@ if [ "$1" = "ATTACH" ]; then
     if [ -n "$MODE" ]; then
       /opt/bin/mediaclient -d /dev/dvb/adapter$2/frontend0 -D $MODE
     fi
+    /lib/udev/dvbmon_helper
 elif [ "$1" = "DETACH" ]; then
     dbset "system.hardware.sundtek.adapter=removed"
 fi
