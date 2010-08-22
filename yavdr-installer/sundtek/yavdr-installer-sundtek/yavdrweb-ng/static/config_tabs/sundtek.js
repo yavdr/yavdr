@@ -14,8 +14,8 @@ function getVDRSundtekForm(){
             fieldLabel: getLL("sundtek.label"),
             columns: 2,
             items: [
-                {id: 'dvbc', boxLabel: 'DVB-C', name: 'values', inputValue: 'DVBC'},
-                {id: 'dvbt', boxLabel: 'DVB-T', name: 'values', inputValue: 'DVBT'}
+                {id: 'dvbc', boxLabel: 'DVB-C', name: 'mode', inputValue: 'DVBC'},
+                {id: 'dvbt', boxLabel: 'DVB-T', name: 'mode', inputValue: 'DVBT'}
             ]
         },{
             html: '<br/><br/>' + getLL("sundtek.help")
