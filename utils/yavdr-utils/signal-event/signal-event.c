@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
           {
             for (i = 2; i < argc; i++)
             {
-              if ((actioncmd = realloc(actioncmd, strlen(actioncmd) + strlen(argv[2]) + 2)) == NULL)
+              if ((actioncmd = realloc(actioncmd, strlen(actioncmd) + strlen(argv[i]) + 2)) == NULL)
               {
                 syslog(LOG_ERR, "ERROR: realloc %m");
                 ret = -7;
