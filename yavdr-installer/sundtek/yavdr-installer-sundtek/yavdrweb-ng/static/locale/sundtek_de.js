@@ -1,7 +1,7 @@
 
-applyLL(locale_en,{
+applyLL(locale_de,{
     sundtek: {
-        label: 'Sundtek DVB mode',
+        label: 'sundtek DVB mode',
         menutab: {
             title: '',
             tabtip: '',
@@ -12,6 +12,6 @@ applyLL(locale_en,{
             waitmsg: '',
             success: ''
         },
-        help: 'Hilfe'
+        help: ''
     }
 })

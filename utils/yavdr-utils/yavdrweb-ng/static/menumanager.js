@@ -95,9 +95,6 @@ function groupPanelTab(config){
                 this.config.border = true;
             if (typeof this.config.frame == "undefined")
                 this.config.frame = true;
-            
-            var contentType = typeof this.config.items;
-            var contentPanel;
         
             var contentPanel = new Ext.Panel({
                 layout: this.config.layout,
@@ -105,10 +102,11 @@ function groupPanelTab(config){
                 frame: this.config.frame,
                 plain: false,
                 border: this.config.border,
-                items: this.config.items()
             });
             
             tabpanel = {
+                content: config.items,
+                contentPanel: contentPanel,
                 layout: 'fit',
                 iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
                 title: getLL( locale_prefix + ".menutab.title" ),
@@ -117,9 +115,8 @@ function groupPanelTab(config){
                 items:[ contentPanel ],
                 listeners: {
                     beforerender: function( panel ) {
-                        //var content = config.items();
-                        //contentPanel.add( content );
-                        this.doLayout();
+                        this.contentPanel.add( this.content() );
+                        this.contentPanel.doLayout();
                     }
                 }
             };

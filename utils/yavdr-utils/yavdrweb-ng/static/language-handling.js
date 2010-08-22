@@ -33,7 +33,7 @@ function getLL( param ){
     return label;
 }
 
-function applyLL(o, l) {
+function applyLL(o, c) {
     if(o && c && typeof c == 'object'){
         for(var p in c){
             o[p] = c[p];

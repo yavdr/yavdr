@@ -116,6 +116,8 @@ Ext.TaskMgr.start({
         });
     
         var tabpanel = {
+            content: config.items,
+            contentPanel: contentPanel,
             layout: 'fit',
             iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
             title: getLL( config.section + ".menutab.title" ),
@@ -124,9 +126,8 @@ Ext.TaskMgr.start({
             items:[ contentPanel ],
             listeners: {
                 beforerender: function( panel ) {
-                var content = config.items();
-                contentPanel.add( content );
-                contentPanel.doLayout();
+                    this.contentPanel.add( this.content() );
+                    this.contentPanel.doLayout();
                 }
             }
         };
