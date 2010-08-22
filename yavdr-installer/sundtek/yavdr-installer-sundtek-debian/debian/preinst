@@ -9,6 +9,7 @@ if [ install = "$1" -o upgrade = "$1" ]; then
 	rm -f /lib/udev/rules.d/80-remote-eeti.rules
 	/opt/bin/lirc.sh REMOVE
 	signal-event change-remote-hardware
+	echo "configure your digital TV mode in yavdr-webfrontend (DVB-C, DVB-T)"
 fi  
 
 #DEBHELPER#
