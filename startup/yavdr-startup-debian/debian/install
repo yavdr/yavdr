@@ -1,5 +1,4 @@
 scripts/mount-loader	usr/lib/vdr/
-scripts/yavdr-dvbmon	usr/bin/
 images/yavdr_logo.png	usr/share/yavdr/images/
 images/*.gif		usr/share/yavdr/images/
 images/xbmc_icon.png	usr/share/yavdr/images/

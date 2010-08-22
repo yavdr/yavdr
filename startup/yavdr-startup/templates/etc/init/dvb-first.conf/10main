@@ -1,0 +1,5 @@
+start on local-filesystems
+
+task
+
+exec /lib/udev/dvbmon_helper

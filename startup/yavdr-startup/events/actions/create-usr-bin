@@ -7,4 +7,4 @@ process-template --mode 755 /usr/bin/start-xineliboutput
 
 USER=$(getent passwd 1000|cut -d ":" -f1)
 process-template --data "user=$USER" /etc/init/xterm.conf
-
+process-template --mode 755 /lib/udev/dvbmon_helper

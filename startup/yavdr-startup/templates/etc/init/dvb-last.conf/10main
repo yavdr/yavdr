@@ -1,0 +1,28 @@
+start on stopped udev-finish
+
+task
+emits dvb-devices-complete
+
+script
+DEVCNT="`ls /dev/dvb/adapter?/frontend? -1 | wc -l`" || /bin/true
+logger -t "dvbmon" "Saving number of devices ($DEVCNT) after boot" || /bin/true
+dbset system.vdr.dvbmon.device_cnt="$DEVCNT" || /bin/true
+
+if [ "$DVBMON" = "1" ]; then
+   logger -t "dvbmon" "Saving new number of devices ($DEVCNT)" || /bin/true
+fi
+
+env > /tmp/dvb-last
+ls -la /tmp/ >> /tmp/dvb-last
+
+if [ -e /tmp/.dvb-devices-complete ]; then
+   logger -t "dvbmon" "vdr started by udev allready" || /bin/true
+   rm -f /tmp/.dvb-devices-complete
+fi
+
+if [ -e /tmp/.dvb-first ]; then
+   logger -t "dvbmon" "vdr started by dvb-first directly after mount" || /bin/true
+   rm -f /tmp/.dvb-first
+fi
+end script
+
