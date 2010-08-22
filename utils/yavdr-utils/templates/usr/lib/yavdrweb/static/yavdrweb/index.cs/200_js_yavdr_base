@@ -1,4 +1,4 @@
-
+<!-- yavdrweb js -->
 <script type="text/javascript" src="/static/menumanager.js"></script>
 
 <!-- help -->
@@ -29,3 +29,6 @@
 <!-- dev -->
 <script type="text/javascript" src="/static/config_tabs/lifeguard.js"></script>
 <script type="text/javascript" src="/static/config_tabs/packages.js"></script>
+
+<!-- /yavdrweb js -->
+
