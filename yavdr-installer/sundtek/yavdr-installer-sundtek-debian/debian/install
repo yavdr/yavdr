@@ -1,4 +1,4 @@
 events/* 		usr/share/yavdr/events/
 templates/*		usr/share/yavdr/templates/
 yavdrweb-ng/static/config_tabs/*.js	usr/lib/yavdrweb/static/config_tabs/
-yavdrweb-ng/static/config_tabs/static/locale/*.js	usr/lib/yavdrweb/static/config_tabs/locale/
+yavdrweb-ng/static/locale/*.js	usr/lib/yavdrweb/static/config_tabs/locale/
