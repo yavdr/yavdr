@@ -2,7 +2,6 @@
 
 process-template /etc/sundtek.conf
 process-template --mode 755 /usr/bin/sundtek.bash
-process-template /usr/lib/yavdrweb/static/index.cs
 restart tntnet
 
 
