@@ -7,7 +7,7 @@ Standards-Version: 3.8.4
 Build-Depends: cdbs, debhelper (>= 7.0.50~), yavdr-utils-dev, libtntnet-dev, clearsilver-dev, flex
 
 Package: yavdr-installer-sundtek
-architecture: all
+architecture: any
 Depends: ${misc:Depends}, yavdr-utils, wget
 Description: yavdr-sundtek-installer dummy package to install sundtek-driver for yavdr
  yavdr-sundtek-installer dummy package to install sundtek-driver for yavdr
