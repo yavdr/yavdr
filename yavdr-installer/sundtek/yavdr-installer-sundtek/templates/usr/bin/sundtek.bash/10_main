@@ -1,6 +1,6 @@
 
 if [ "$1" = "ATTACH" ]; then
-    dbset "system.sundtek.adapter=$2"
+    dbset "system.hardware.sundtek.adapter=$2"
     MODE="$(dbget system.hardware.sundtek.mode)"
     if [ -n "$MODE" ]; then
       /opt/bin/mediaclient -d /dev/dvb/adapter$2/frontend0 -D $MODE
