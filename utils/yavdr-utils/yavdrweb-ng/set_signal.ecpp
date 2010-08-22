@@ -14,13 +14,14 @@ using namespace std;
   //Default type of args is string and we should leave it like this
   //For more robustness, avoid to define integer vars in here, better cast string to int later!!!
   signal;
+  signal_params = "";
   value;
   value2;
   string values[];
 </%args><%cpp>
 
 string success = "false";
-
+reply.out() << signal << " -> " << signal_params;
 if (
         (signal == "reboot") || 
         (signal == "change-frontend") || 
@@ -33,10 +34,11 @@ if (
         (signal == "change-timeout") ||
         (signal == "change-sound") ||
         (signal == "graphtft-state-change") ||
-        (signal == "change-display")
+        (signal == "change-display") ||
+        (signal == "change-plugin")
     )
 {
-    
+	reply.out() << signal << " -> " << signal_params;
     if (signal == "change-frontend" )
     {
         if ((value == "xine") || (value == "xineliboutput") || (value == "xbmc") || (value == "headless"))
@@ -194,6 +196,10 @@ if (
 	}
 
     string cmd = "/usr/bin/signal-event " + signal;
+    if (signal_params != "") {
+    	cmd += " " + signal_params;
+    }
+    printf(" -> %s", cmd.c_str());
     int ret = system( cmd.c_str());
     success = "true"; //TODO: use ret to find out if we were successful.
 }

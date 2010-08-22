@@ -2,6 +2,7 @@
 ORDER_CONF=/etc/vdr/plugins/order.conf
 #ORDER_CONF=order.conf
 
+PLUGIN=`echo $2 | cut -f3 -d- -`
 
 append_plugin () {
   echo $1 >> $ORDER_CONF
@@ -10,6 +11,8 @@ append_plugin () {
 enable_plugin () {
   if grep -q "$1\$" $ORDER_CONF; then
     sed -i -e "s/.*$1\$/$1/" $ORDER_CONF
+  else
+    append_plugin "$1"
   fi
 }
 
@@ -21,61 +24,12 @@ disable_plugin () {
   fi
 }
 
-if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
-  enable_plugin "xineliboutput"
-  disable_plugin "xine"
-  enable_plugin "iptv"
-  enable_plugin "text2skin"
-  enable_plugin "menuorg"
-  enable_plugin "yaepghd"
-  enable_plugin "extrecmenu"
-  enable_plugin "suspendoutput"
-  enable_plugin "imonlcd"
-  enable_plugin "lcdproc"
-  disable_plugin "dummydevice"
-elif [ "$(dbget vdr.frontend)" = "xine" ]; then
-  enable_plugin "xine"
-  disable_plugin "xineliboutput"
-  enable_plugin "iptv"
-  enable_plugin "text2skin"
-  enable_plugin "menuorg"
-  enable_plugin "yaepghd"
-  enable_plugin "extrecmenu"
-  enable_plugin "suspendoutput"
-  enable_plugin "imonlcd"
-  enable_plugin "lcdproc"
-  disable_plugin "dummydevice"
-elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
-  enable_plugin "dummydevice"
-#  disable_plugin "xine"
-  enable_plugin "xine"
-  disable_plugin "xineliboutput"
-  disable_plugin "lcdproc"
-  disable_plugin "imonlcd"
-  disable_plugin "iptv"
-#  disable_plugin "text2skin"
-  enable_plugin "text2skin"
-  enable_plugin "menuorg"
-  disable_plugin "yaepghd"
-  disable_plugin "extrecmenu"
-  disable_plugin "suspendoutput"
-elif [ "$(dbget vdr.frontend)" = "headless" ]; then
-  enable_plugin "dummydevice"
-  disable_plugin "xine"
-#  enable_plugin "xine"
-  disable_plugin "xineliboutput"
-  disable_plugin "lcdproc"
-  disable_plugin "imonlcd"
-  disable_plugin "iptv"
-  disable_plugin "text2skin"
-#  enable_plugin "text2skin"
-  enable_plugin "menuorg"
-  disable_plugin "yaepghd"
-  disable_plugin "extrecmenu"
-  disable_plugin "suspendoutput"
-fi
-if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" ]; then
-  enable_plugin "graphtft"
-else
-  disable_plugin "graphtft"
+if [ "$1" = "enable" ]; then
+  enable_plugin $PLUGIN
+elif [ "$1" = "enable" ]; then
+  disable_plugin $PLUGIN
+  
+  if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" -a "$PLUGIN" = "graphtft"]; then
+    dbset "vdr.plugin.graphtft.enabled=0"
+  fi
 fi

@@ -34,7 +34,7 @@ function getPackagesForm(){
                     rec = grid.getStore().getAt(row);
                     package = rec.id;
                     
-                    if (rec.data.installed == 0) {
+                    if (rec.data.installed < 0) {
                         // Show a dialog using config options:
                         Ext.Msg.show({
                            title:'Install package?',
@@ -72,28 +72,44 @@ function getPackagesForm(){
                       if (rec.data.installed == 2) {
                         // Show a dialog using config options:
                         Ext.Msg.show({
-                          title:'disable plugin?',
-                          msg: 'Would you like to disable "' + package + '"?',
-                          buttons: Ext.Msg.YESNO,
-                          fn: function( buttonId, text, opt) {
-                              if (buttonId == "yes") {
-                              }
-                          },
-                          animEl: 'elId',
-                          icon: Ext.MessageBox.QUESTION
+                            title:'disable plugin?',
+                            msg: 'Would you like to disable "' + package + '"?',
+                            buttons: Ext.Msg.YESNO,
+                            fn: function( buttonId, text, opt) {
+                                if (buttonId == "yes") {
+                                    Ext.Ajax.request({
+                                        url: 'set_signal?signal=change-plugin&signal_param=disable '+package,
+                                        waitMsg: getLL("nvidia.submit.waitmsg"),
+                                        timeout: 3000,
+                                        method: 'GET',
+                                        success: function(xhr) {
+                                        }
+                                    });
+                                }
+                            },
+                            animEl: 'elId',
+                            icon: Ext.MessageBox.QUESTION
                         });
                       } else {
                         // Show a dialog using config options:
                         Ext.Msg.show({
-                          title:'enable plugin?',
-                          msg: 'Would you like to enable "' + package + '"?',
-                          buttons: Ext.Msg.YESNO,
-                          fn: function( buttonId, text, opt) {
-                              if (buttonId == "yes") {
-                              }
-                          },
-                          animEl: 'elId',
-                          icon: Ext.MessageBox.QUESTION
+                            title:'enable plugin?',
+                            msg: 'Would you like to enable "' + package + '"?',
+                            buttons: Ext.Msg.YESNO,
+                            fn: function( buttonId, text, opt) {
+                                if (buttonId == "yes") {
+                                    Ext.Ajax.request({
+                                        url: 'set_signal?signal=change-plugin&signal_param=enable '+package,
+                                        waitMsg: getLL("nvidia.submit.waitmsg"),
+                                        timeout: 3000,
+                                        method: 'GET',
+                                        success: function(xhr) {
+                                        }
+                                    });
+                                }
+                            },
+                            animEl: 'elId',
+                            icon: Ext.MessageBox.QUESTION
                         });
                       }
                     }
@@ -220,6 +236,7 @@ Ext.onReady(function() {
         YaVDRMenuManager
             .addGroupPanelSection({section: "development"})
                 .addGroupPanelTab({
+                    layout: 'fit',
                     section: "packages",
                     items:   getPackagesForm});
     }
