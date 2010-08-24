@@ -22,7 +22,7 @@ $(INSTALL):
 	install -m 700 yavdr-upgrade $(DESTDIR)/usr/sbin
 	install -m 700 change-vdr-uid $(DESTDIR)/usr/sbin
 	install -m 700 create-initial-database $(DESTDIR)/usr/sbin
-	install -m 700 yavdr-post-postinstall $(DESTDIR)/usr/sbin
+	install -m 700 yavdr-post-install $(DESTDIR)/usr/sbin
 
 $(CLEAN):
 	$(MAKE) -C $(@:-clean=) clean
