@@ -90,7 +90,6 @@ if (FILE *stream = popen(cmd.c_str(), "r"))
     pclose(stream);
 }
 
-
 Json::Value disabled;
 
 if (FILE *stream = fopen("/etc/vdr/plugins/order.conf", "r"))
@@ -103,16 +102,16 @@ if (FILE *stream = fopen("/etc/vdr/plugins/order.conf", "r"))
     	  vector<string> parts;
 
     	  string line = string(buffer);
-    	  string plugin = line.substr(0,line.length()-1);
-
+    	  line = line.substr(0,line.length()-1);
     	  if (line[0] == '-') {
-    		  disabled["vdr-plugin-"+plugin] = true;
+    		  string plugin = "vdr-plugin-"+line.substr(1);
+    		  disabled[plugin] = true;
     	  }
+    	  printf("\n");
       }
     }
     pclose(stream);
 }
-//reply.out() << installed;
 
 Json::Value json;
 
@@ -150,7 +149,7 @@ for (int findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
 				if (json.isValidIndex(next) && json[next].isMember("Package")) {
 					json[next]["id"] = next;
 					string package = json[next]["Package"].asString();
-					if ((installed[package].isBool()) && installed[package].asBool())
+					if ((installed[package].isBool()) && installed[json[next]["Package"].asString()].asBool())
 					{
 						if (disabled[package].isBool() && disabled[package].asBool()) {
 							json[next]["installed"] = 1;
@@ -158,9 +157,9 @@ for (int findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
 							json[next]["installed"] = 2;
 						}
 					}
-					else
+					else {
 						json[next]["installed"] = 0;
-
+					}
 					next++;
 				}
 			}

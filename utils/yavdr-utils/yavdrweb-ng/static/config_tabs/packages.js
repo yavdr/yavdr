@@ -83,6 +83,7 @@ function getPackagesForm(){
                                         timeout: 3000,
                                         method: 'GET',
                                         success: function(xhr) {
+                                            grid.getStore().load();
                                         }
                                     });
                                 }
@@ -104,6 +105,7 @@ function getPackagesForm(){
                                         timeout: 3000,
                                         method: 'GET',
                                         success: function(xhr) {
+                                            grid.getStore().load();
                                         }
                                     });
                                 }

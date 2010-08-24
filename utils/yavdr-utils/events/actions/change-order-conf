@@ -2,7 +2,7 @@
 ORDER_CONF=/etc/vdr/plugins/order.conf
 #ORDER_CONF=order.conf
 
-PLUGIN=`echo $3 | cut -f3 -d- -`
+PLUGIN=`echo $3 | cut -f3- -d- -`
 
 append_plugin () {
   echo $1 >> $ORDER_CONF
