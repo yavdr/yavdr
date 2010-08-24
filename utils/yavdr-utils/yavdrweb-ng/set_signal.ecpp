@@ -200,7 +200,6 @@ if (
     	cmd += " " + signal_params;
     }
 
-    //reply.out() << " -> " << cmd.c_str();
     int ret = system( cmd.c_str());
     success = "true"; //TODO: use ret to find out if we were successful.
 }
