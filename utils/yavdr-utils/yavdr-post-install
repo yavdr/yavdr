@@ -1,4 +1,4 @@
 #!/bin/bash
 
 /usr/sbin/create-initial-database
-/usr/sbin/signal-event post-install
+/usr/bin/signal-event post-install
