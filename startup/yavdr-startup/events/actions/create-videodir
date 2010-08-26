@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir -p /srv/vdr/video.00
+chown -R vdr:vdr /srv/vdr
