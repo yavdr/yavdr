@@ -1,0 +1,14 @@
+#!/bin/bash
+
+process-template /etc/init/mediathek-ard.conf
+process-template /etc/init/mediathek-zdf.conf
+process-template /etc/init/mediathek-dmax.conf
+process-template /etc/init/mediathek-sat1.conf
+process-template /etc/init/mediathek-golem.conf
+process-template /etc/init/mediathek-gametrailers.conf
+process-template /etc/init/launcher.conf
+process-template /etc/wmdrawer/mediathek
+
+
+
+
