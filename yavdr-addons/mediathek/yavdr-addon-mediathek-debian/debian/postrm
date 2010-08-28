@@ -2,6 +2,7 @@
                                                                                                                         
 if [ remove = "$1" ]; then 
   /usr/bin/dpkg-trigger yavdr-addons-update
+  killall -9 wmdrawer
   process-template /etc/init/launcher.conf
   rm -f /etc/wmdrawer/mediathek
   rm -f /etc/init/mediathek-ard.conf
@@ -10,7 +11,7 @@ if [ remove = "$1" ]; then
   rm -f /etc/init/mediathek-sat1.conf
   rm -f /etc/init/mediathek-golem.conf
   rm -f /etc/init/mediathek-gametrailers.conf
-
+  start launcher
 fi
 
 #DEBHELPER#

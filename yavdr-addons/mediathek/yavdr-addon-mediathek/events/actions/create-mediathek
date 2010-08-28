@@ -6,9 +6,10 @@ process-template /etc/init/mediathek-dmax.conf
 process-template /etc/init/mediathek-sat1.conf
 process-template /etc/init/mediathek-golem.conf
 process-template /etc/init/mediathek-gametrailers.conf
+killall -9 wmdrawer
 process-template /etc/init/launcher.conf
 process-template /etc/wmdrawer/mediathek
-
+start launcher
 
 
 
