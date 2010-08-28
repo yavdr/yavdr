@@ -4,6 +4,13 @@ if [ remove = "$1" ]; then
   /usr/bin/dpkg-trigger yavdr-addons-update
   process-template /etc/init/launcher.conf
   rm -f /etc/wmdrawer/mediathek
+  rm -f /etc/init/mediathek-ard.conf
+  rm -f /etc/init/mediathek-zdf.conf
+  rm -f /etc/init/mediathek-dmax.conf
+  rm -f /etc/init/mediathek-sat1.conf
+  rm -f /etc/init/mediathek-golem.conf
+  rm -f /etc/init/mediathek-gametrailers.conf
+
 fi
 
 #DEBHELPER#
