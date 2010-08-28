@@ -1,0 +1,1 @@
+(for X in $CATEGORIES ; do (su -c "DISPLAY=:1 wmdrawer -c /etc/wmdrawer/$X &" vdr) ; sleep $DELAY ; done) &

@@ -9,7 +9,4 @@ export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/var/lib/vdr
 
 DELAY=.75
-CATEGORIES='system web media games tools'
-(for X in $CATEGORIES ; do (su -c "DISPLAY=:1 wmdrawer -c /etc/wmdrawer/$X &" vdr) ; sleep $DELAY ; done) &
-end script
 
