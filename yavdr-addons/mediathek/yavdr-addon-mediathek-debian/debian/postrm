@@ -3,7 +3,7 @@
 if [ remove = "$1" ]; then 
   /usr/bin/dpkg-trigger yavdr-addons-update
   process-template /etc/init/launcher.conf
-  /etc/wmdrawer/mediathek
+  rm -f /etc/wmdrawer/mediathek
 fi
 
 #DEBHELPER#
