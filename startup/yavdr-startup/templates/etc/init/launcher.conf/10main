@@ -1,7 +1,7 @@
 description     "Launcher for external applications"
 author          "Holger Reichelt <holgerr@yavdr.de>"
 
-start on started openbox
+start on openbox-started
 stop on stopping openbox
 
 script

@@ -4,7 +4,7 @@
 description     "yavdr-frontend"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
-start on ((started vdr and started openbox) or vdr-frontend-restart)
+start on ((started vdr and openbox-started) or vdr-frontend-restart)
 stop on (stopping vdr or stopping openbox)
 
 <?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>respawn<?cs /if ?>

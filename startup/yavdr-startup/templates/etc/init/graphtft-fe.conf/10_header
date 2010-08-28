@@ -1,7 +1,7 @@
 
 description     "YaVDR Configuration webinterface"
 
-start on ((started vdr and started openbox) or vdr-frontend-restart)
+start on ((started vdr and openbox-started) or vdr-frontend-restart)
 stop on (stopping vdr or stopping openbox)
 
 respawn
