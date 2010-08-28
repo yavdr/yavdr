@@ -1,10 +1,16 @@
 #!/bin/sh
 
-COMP=`dbget system.hardware.nvidia.overscan`
+COMP=`dbget system.x11.display.0.overscan` 
 
 if [ ! -z "$COMP" ]; then 
-DISPLAY=:1 nvidia-settings --config /etc/yavdr/nvidia-settings -a OverscanCompensation=$COMP
-DISPLAY=:1 nvidia-settings --config /etc/yavdr/nvidia-settings -r
+DISPLAY=:1.0 nvidia-settings --config /etc/yavdr/nvidia-settings -a OverscanCompensation=$COMP
 fi 
 
+COMP=`dbget system.x11.display.1.overscan` 
+
+if [ ! -z "$COMP" ]; then
+DISPLAY=:1.1 nvidia-settings --config /etc/yavdr/nvidia-settings -a OverscanCompensation=$COMP
+fi
+
+DISPLAY=:1 nvidia-settings --config /etc/yavdr/nvidia-settings -r
 exit 0
