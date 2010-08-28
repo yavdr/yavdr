@@ -6,6 +6,8 @@ script
 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
 LANG=C /sbin/status vdr | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
-/usr/bin/nvidia-settings --load-config-only
+   if [ -e /etc/yavdr/nvidia-settings ]; then 
+      /usr/bin/nvidia-settings --config /etc/yavdr/nvidia-settings --load-config-only
+   fi
 fi
 end scrip
