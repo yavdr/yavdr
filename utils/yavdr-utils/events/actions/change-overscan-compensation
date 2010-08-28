@@ -3,7 +3,8 @@
 COMP=`dbget system.hardware.nvidia.overscan`
 
 if [ ! -z "$COMP" ]; then 
-DISPLAY=:1 nvidia-settings -a OverscanCompensation=$COMP
+DISPLAY=:1 nvidia-settings --config /etc/yavdr/nvidia-settings -a OverscanCompensation=$COMP
+DISPLAY=:1 nvidia-settings --config /etc/yavdr/nvidia-settings -r
 fi 
 
 exit 0
