@@ -82,65 +82,6 @@ Ext.TaskMgr.start({
     
     Ext.QuickTips.init();
 
-    function addGroupPanelSection( config ){
-        return tabpanel = {
-            xtype: 'portal',
-            layout: 'fit',
-            title: getLL(  "menutabs." + config.section + ".title" ),
-            tabTip: getLL(  "menutabs." + config.section + ".tabtip"),
-            style: 'padding: 20px 30px 20px 30px;',
-            items:[ new Ext.Panel({
-                layout: 'fit',
-                frame: false,
-                plain: false,
-                border: false,
-                html: '<h1 style="font-family: sans-serif;">' + getLL("menutabs." + config.section + ".content") + '</h1>'
-            })]
-        };
-    };
-
-    function addGroupPanelTab( config ){
-        if (!config.layout)
-            config.layout = "auto"; //"auto" doesn't blow up forms to full height, "fit" does
-        if (typeof config.border == "undefined")
-            config.border = true;
-        if (typeof config.frame == "undefined")
-            config.frame = true;
-        
-        var contentPanel = new Ext.Panel({
-            layout: config.layout,
-            title: getLL( config.section + ".menutab.panel_title"),
-            frame: config.frame,
-            plain: false,
-            border: config.border
-        });
-    
-        var tabpanel = {
-            content: config.items,
-            contentPanel: contentPanel,
-            layout: 'fit',
-            iconCls: 'x-icon-tickets', //icon does not exist currently, but this property is used as a spacer
-            title: getLL( config.section + ".menutab.title" ),
-            tabTip: getLL( config.section + ".menutab.tabtip"),
-            style: 'padding: 20px 30px 20px 30px;',
-            items:[ contentPanel ],
-            listeners: {
-                beforerender: function( panel ) {
-                    this.contentPanel.add( this.content() );
-                    this.contentPanel.doLayout();
-                }
-            }
-        };
-        
-        if (config.layout == "vbox")
-            tabpanel.layoutConfig = {
-                align : 'stretch'
-                //pack  : 'start'
-            };
-        
-        return tabpanel;
-    };
-
     var viewport = new Ext.Viewport({
         layout:'fit',
         items:[
@@ -149,7 +90,6 @@ Ext.TaskMgr.start({
                 tabWidth: 190,
                 activeGroup: 0,
                 items: YaVDRMenuManager.getMenu()
-                //items: groupPanelItems
             })
         ] //viewport items
     });//viewport

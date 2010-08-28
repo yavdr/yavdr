@@ -107,7 +107,6 @@ if (FILE *stream = fopen("/etc/vdr/plugins/order.conf", "r"))
     		  string plugin = "vdr-plugin-"+line.substr(1);
     		  disabled[plugin] = true;
     	  }
-    	  printf("\n");
       }
     }
     pclose(stream);

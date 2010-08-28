@@ -25,7 +25,7 @@ function getPackagesForm(){
         viewConfig: {
             forceFit: true
         },
-        height:210,
+        height:300,
         split: true,
         region: 'north',
         listeners: {
@@ -142,7 +142,8 @@ function getPackagesForm(){
         labelWidth: 150,
         //defaultType: 'textfield',
         buttonAlign: 'left',
-        //height: 500,
+        autoHeight: true,
+        height: 'auto',
         layout: 'fit',
         items: [
             grid,
@@ -157,7 +158,7 @@ function getPackagesForm(){
                 html: 'Please select a package to see additional details.'
             },{
                 id: 'help',
-                region: 'center',
+                height: 'auto',
                 bodyStyle: {
                     background: '#ffffff',
                     padding: '7px'
@@ -234,12 +235,10 @@ function renderState(state) {
 }
 
 Ext.onReady(function() {
-    if (yavdrwebGlobalInfo.devmode == "1"){
-        YaVDRMenuManager
-            .addGroupPanelSection({section: "development"})
-                .addGroupPanelTab({
-                    layout: 'fit',
-                    section: "packages",
-                    items:   getPackagesForm});
-    }
+    YaVDRMenuManager
+        .addGroupPanelSection({section: "vdr"})
+            .addGroupPanelTab({
+                layout: 'fit',
+                section: "packages",
+                items:   getPackagesForm});
 });
