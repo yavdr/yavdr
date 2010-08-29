@@ -2,6 +2,9 @@ start on openbox-started
 
 task
 
+env DISPLAY=:1
+export DISPLAY
+
 script
 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
 LANG=C /sbin/status vdr | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
