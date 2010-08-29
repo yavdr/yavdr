@@ -87,4 +87,6 @@ fi
 
 if [ "$(dbget vdr.frontend)" = "headless" ]; then
   stop openbox
+else 
+  start openbox || /bin/true
 fi
