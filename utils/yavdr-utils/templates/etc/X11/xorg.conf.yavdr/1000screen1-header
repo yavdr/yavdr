@@ -1,2 +1,2 @@
-<?cs if:system.x11.dualhead.enabled ?>Section "Screen"
+<?cs if:(system.x11.dualhead.enabled == "1") ?>Section "Screen"
 

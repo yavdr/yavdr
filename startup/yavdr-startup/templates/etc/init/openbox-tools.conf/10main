@@ -7,6 +7,9 @@ export DISPLAY
 
 script
 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
+<?cs if:(system.x11.dualhead.enabled == "1") ?>
+DISPLAY=:1.1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
+<?cs /if>
 LANG=C /sbin/status vdr | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
    if [ -e /etc/yavdr/nvidia-settings ]; then 
