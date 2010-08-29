@@ -1,4 +1,0 @@
-events/* 		usr/share/yavdr/events/
-templates/*		usr/share/yavdr/templates/
-yavdrweb-ng/static/config_tabs/*.js	usr/lib/yavdrweb/static/config_tabs/
-yavdrweb-ng/static/locale/sundtek/*.js	usr/lib/yavdrweb/static/locale/sundtek
