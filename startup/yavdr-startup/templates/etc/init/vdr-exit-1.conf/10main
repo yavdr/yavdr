@@ -17,6 +17,7 @@ MODULES1="`lsmod | grep "^dvb" | awk '// {  print $4}' | grep -v "^$" | sed -e '
 
 if [ -z "$MODULES1" -a -z "$MODULES0" ]; then
 # we dont have local dvb cards
+/lib/udev/dvbmon_helper || /bin/true
 exit 0
 
 else
