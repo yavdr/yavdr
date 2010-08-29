@@ -85,6 +85,6 @@ else
   disable_plugin "graphtft"
 fi
 
-if [ "x$(dbget vdr.frontend)" = "headless" ]; then
+if [ "$(dbget vdr.frontend)" = "headless" ]; then
   stop openbox
 fi
