@@ -9,5 +9,5 @@ Build-Depends: debhelper (>= 7), cdbs
 Package: yavdr-addon-mediathek
 Architecture: all
 Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, chromium-browser, flashplugin-installer|adobe-flashplugin
-Description: yavdr-addon-youtube 
- yavdr-addon-youtube
+Description: yavdr-addon-mediathek 
+ yavdr-addon-mediathek
