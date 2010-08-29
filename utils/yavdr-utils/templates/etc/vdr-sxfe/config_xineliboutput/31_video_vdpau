@@ -33,5 +33,5 @@ video.output.vdpau_skip_chroma_deinterlace:1
 
 # default length of display queue
 # numeric, default: 2
-video.output.vdpau_display_queue_length:8
+video.output.vdpau_display_queue_length:4
 
