@@ -9,7 +9,7 @@ service autofs reload
 if [ -e /etc/auto.net.yavdr ]; then
     find $VIDEO_DIR/net -type l -exec rm {} \;
     for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`; do
-        ln -s /net.yavdr/$d $VIDEO_DIR/net/$d
+        ln -s /net.yavdr/$d $VIDEO_DIR/net
     done
 fi
 touch $VIDEO_DIR/.update
