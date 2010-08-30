@@ -1,6 +1,6 @@
-               <command name=<?cs call:quote(_("Safely remove usb mass storage")) ?> execute="HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &amp;> /dev/null" />
+               <command name=<?cs call:quote(_("Safely remove usb mass storage")) ?> confirm="yes" execute="HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &amp;> /dev/null" />
                <command name=<?cs call:quote(_("Update vdr recordings list")) ?> execute="/usr/bin/touch /srv/vdr/video.00/.update &amp;> /dev/null " />
-               <command name=<?cs call:quote(_("Restart vdr")) ?> execute="restart vdr" />
-               <command name=<?cs call:quote(_("Reboot system")) ?> execute="sudo reboot" />
+               <command name=<?cs call:quote(_("Restart vdr")) ?> confirm="yes" execute="restart vdr" />
+               <command name=<?cs call:quote(_("Reboot system")) ?> confirm="yes" execute="sudo reboot" />
                <command name=<?cs call:quote(_("Shutdown system")) ?> execute="/usr/bin/svdrpsend hitk power" />
 
