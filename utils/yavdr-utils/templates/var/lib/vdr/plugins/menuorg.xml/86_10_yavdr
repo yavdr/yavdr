@@ -2,5 +2,5 @@
                <command name=<?cs call:quote(_("Update vdr recordings list")) ?> execute="/usr/bin/touch /srv/vdr/video.00/.update &amp;> /dev/null " />
                <command name=<?cs call:quote(_("Restart vdr")) ?> execute="restart vdr" />
                <command name=<?cs call:quote(_("Reboot system")) ?> execute="sudo reboot" />
-               <command name=<?cs call:quote(_("Shutdown system")) ?> execute="/usr/bin/svdrpsend hitk power &amp;> /dev/null " />
+               <command name=<?cs call:quote(_("Shutdown system")) ?> execute="/usr/bin/svdrpsend hitk power" />
 
