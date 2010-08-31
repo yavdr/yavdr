@@ -2,18 +2,29 @@
 MAX="`dbget system.vdr.dvbmon.device_cnt`"
 CURRENT="`ls /dev/dvb/adapter?/frontend? -1 | wc -l`"
 
+logger -t "dvbmon" "We got $CURRENT devices. We need $MAX ."
+
+# if empty, then first start and we wait for udev to finish
+# to count devices
 if [ -n "$MAX" ]; then
+
+# if the current number of devices matches the saved
+# value, start vdr
   if [ "$CURRENT" = "$MAX" ]; then
      /sbin/initctl emit --no-wait dvb-devices-complete
      if [ -z "$JOB" ]; then
+        # if JOB is empty, we get not started by upstart
         touch /tmp/.dvb-devices-complete
+        logger -t "dvbmon" "Starting vdr by UDEV."
      else
         touch /tmp/.dvb-first
+        logger -t "dvbmon" "Starting vdr by dvb-first."
      fi
   fi
 
   if [ "$CURRENT" -gt "$MAX" ]; then
     /sbin/initctl start --no-wait dvb-last DVBMON=1
+    logger -t "dvbmon" "We got a new device (New now $CURRENT)" 
   fi
 fi
 
