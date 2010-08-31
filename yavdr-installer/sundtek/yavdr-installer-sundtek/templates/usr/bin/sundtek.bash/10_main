@@ -1,11 +1,16 @@
 
 if [ "$1" = "ATTACH" ]; then
+    logger sundtek attached adapter $2 started
     dbset "system.hardware.sundtek.adapter=$2"
     MODE="$(dbget system.hardware.sundtek.mode)"
     if [ -n "$MODE" ]; then
+      logger sundtek set mode $MODE
       /opt/bin/mediaclient -d /dev/dvb/adapter$2/frontend0 -D $MODE
     fi
+    logger sundtek call devmon helper
     /lib/udev/dvbmon_helper
+    logger sundtek attached adapter $2 finished
 elif [ "$1" = "DETACH" ]; then
+    logger sundtek detached adapter $2
     dbset "system.hardware.sundtek.adapter=removed"
 fi

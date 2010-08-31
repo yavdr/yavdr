@@ -85,9 +85,10 @@
    /* Hide cursor */
 -  if(this->window_id <= 0)
 -    set_cursor(this->display, this->window[1], 0);
-+  //if(this->window_id <= 0)
++  if(this->window_id <= 0) {
 +  //  set_cursor(this->display, this->window[1], 0);
-+  set_cursor(this->display, this->window[this->fullscreen ? 1 : 0], 0);
++    set_cursor(this->display, this->window[this->fullscreen ? 1 : 0], 0);
++  }
  
    /* No screen saver */
    /* #warning TODO: suspend --> activate blank screen saver / DPMS display off ? */
