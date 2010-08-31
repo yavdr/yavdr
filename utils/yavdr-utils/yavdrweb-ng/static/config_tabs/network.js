@@ -22,7 +22,7 @@ function getNFSForm(){
   var newDir = new Ext.form.TextField({
 	  fieldLabel: getLL("network.nfs.labels.newDir"),
 	  name: 'remote',
-	  width: 200
+	  width: 500
       });
 
   var mounttable = new Ext.grid.GridPanel({
@@ -76,7 +76,7 @@ function getNFSForm(){
 			       this);
 		      Ext.Ajax.request({
 			      url: 'set_autofs_config',
-				  timeout: 3000,
+				  timeout: 10000,
 				  method:  'GET',
 				  params: { 'cmd' : 'mounts',
 				      'mounts' : mounts },
@@ -92,7 +92,7 @@ function getNFSForm(){
 		  }
 	      }],
 	  // config options for stateful behavior
-	  columns: [{dataIndex: 'netspec'}],
+	  columns: [{width: 800, dataIndex: 'netspec'}],
 	  listeners: {
 	      cellclick: function(grid, rowIndex, columnIndex, e) {
 		  var record = grid.getStore().getAt(rowIndex);
