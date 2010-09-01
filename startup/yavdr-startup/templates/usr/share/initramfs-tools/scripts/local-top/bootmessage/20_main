@@ -1,2 +1,2 @@
-echo starting yet another VDR
+echo yaVDR
 echo -e '\033[?17;0;8c'
