@@ -1,3 +1,0 @@
-# Änderungen an Hardwaremixer melden
-# bool, default: 1
-#audio.alsa_hw_mixer:1

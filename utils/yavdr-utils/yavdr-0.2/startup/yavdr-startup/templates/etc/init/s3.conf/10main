@@ -1,8 +1,0 @@
-# Sends PC to sleep
-
-start on init-s3
-stop on runlevel [016]
-
-script
-/etc/acpi/sleep.sh &
-end script

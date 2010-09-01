@@ -1,9 +1,0 @@
-# Default settings for halevt
-# set this to yes if you want the halevt init-script to start a system-wide daemon
-START_DAEMON=yes
-
-# this must be configured in order to start halevt
-USER=vdr
-GROUP=plugdev
-HOME=/var/lib/vdr
-

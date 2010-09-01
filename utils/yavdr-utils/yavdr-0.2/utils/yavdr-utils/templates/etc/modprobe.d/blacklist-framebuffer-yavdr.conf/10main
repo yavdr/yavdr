@@ -1,6 +1,0 @@
-blacklist fbcon
-blacklist tileblit
-blacklist font
-blacklist bitblit
-blacklist vga16fb
-blacklist vgastate

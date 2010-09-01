@@ -1,3 +1,0 @@
-#!/bin/sh
-
-rm -f /usr/share/vdr/shutdown-hooks/S90.suspend2ram

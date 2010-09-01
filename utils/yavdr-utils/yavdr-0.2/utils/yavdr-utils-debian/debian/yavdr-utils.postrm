@@ -1,6 +1,0 @@
-#!/bin/sh
-
-if [ remove = "$1" ]; then 
-   dpkg-divert --package yavdr-startup --remove --rename \
-      --divert /etc/firefox/profile/prefs.js.dontremove /etc/firefox/profile/prefs.js
-fi 

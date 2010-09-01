@@ -1,1 +1,0 @@
-USB Massenspeicher sicher entfernen?:HOME=/var/lib/vdr /usr/bin/halevt-umount -ra &> /dev/null

@@ -1,8 +1,0 @@
-description  "enable USB Ports to wakeup machine"
-
-script
-
-WAKEUP_DEVICE=Platzhalter
-grep -q "$WAKEUP_DEVICE.*enabled" < /proc/acpi/wakeup >/dev/null || echo $WAKEUP_DEVICE  > /proc/acpi/wakeup
-
-end script

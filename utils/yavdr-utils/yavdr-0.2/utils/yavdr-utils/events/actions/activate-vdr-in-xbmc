@@ -1,5 +1,0 @@
-#!/bin/bash
-
-chown -R vdr:vdr /var/lib/vdr/.xbmc
-
-

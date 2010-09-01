@@ -1,2 +1,0 @@
-start on local-filesystems  #mounted MOUNTPOINT=/ reicht nicht
-stop on runlevel [016]

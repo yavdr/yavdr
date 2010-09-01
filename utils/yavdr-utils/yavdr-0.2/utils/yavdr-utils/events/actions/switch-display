@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [ "x$(dbget vdr.tempdisplay)" = "x" ]; then
-  dbset "vdr.tempdisplay=.1"
-else
-  dbset "vdr.tempdisplay="
-fi
