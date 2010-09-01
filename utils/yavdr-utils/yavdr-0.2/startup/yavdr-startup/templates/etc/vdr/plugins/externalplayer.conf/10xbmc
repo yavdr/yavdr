@@ -1,0 +1,7 @@
+{
+  MenuEntry        = "XBMC";
+  Command          = "/usr/bin/start-xbmc";
+  OutputMode       = none;
+  InputMode        = deactivateRemotes;
+}
+

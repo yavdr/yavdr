@@ -1,0 +1,13 @@
+MultiSpeedMode = 1
+OSDAspect = 1,000000
+OSDWidth = 1280
+OSDHeight = 720
+OSDWidthP = 1,000000
+OSDHeightP = 1,000000
+OSDTop = 0
+OSDTopP = 0,000000
+OSDLeft = 0
+OSDLeftP = 0,000000
+OSDMessageTime = 1
+OSDSkin = PearlHD
+OSDTheme = default

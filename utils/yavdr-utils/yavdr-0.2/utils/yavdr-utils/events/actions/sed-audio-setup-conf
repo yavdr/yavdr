@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "x$(dbget system.sound.type)" = "xhdmi" ] || \
+   [ "x$(dbget system.sound.type)" = "xanalog" ] || \
+   [ "x$(dbget system.sound.type)" = "x" ] ; then
+sed -i '/xineliboutput.Audio.Speakers =/ s/Pass Through/Stereo 2.0/g' /var/lib/vdr/setup.conf
+elif [ "x$(dbget system.sound.type)" = "xpassthrough" ] || \
+     [ "x$(dbget system.sound.type)" = "xspdif" ] ; then
+sed -i '/xineliboutput.Audio.Speakers =/ s/Stereo 2.0/Pass Through/g' /var/lib/vdr/setup.conf
+fi
+

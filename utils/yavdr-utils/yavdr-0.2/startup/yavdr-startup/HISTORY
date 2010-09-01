@@ -1,0 +1,43 @@
+yaVDR-startup release history
+---------------------------------------
+
+
+- update to ubuntu lucid
+-----------------
+Version 0.2.0 (02.May.2010)
+-----------------
+NEW
+- hard shutdown with double press on power button
+- fsck on shutdown
+FIX
+- xterm starts now as system owner
+-----------------
+Version 0.1.1 (18.Feb.2010)
+-----------------
+startup with more flexible network interface name 
+cpufrequtils didn't get enabled,
+start-xine bugfix (547),
+added missing autofs dependency
+added usb-wakeup.conf without usb for wol
+added hack to solve live tv problem with xbmc
+alsa-utils didn't get startet
+-----------------
+4.Feb.2010
+-----------------
+fixed min cpu freq for k8
+NEW lirc upstart 
+NEW setserial-minimal upstart (for lirc)
+FIX lirc - serial configuration, several bugfixes
+FIX lirc - blacklist for ati-remote works now
+NEW lirc - changes are effective immediatly now
+FIX unclutter reseting cursor position
+added gpl 2 licence
+NEW openbox as windowmanager
+NEW autoconfig. graphtft
+NEW added xterm to applications
+NEW vdpauinfo check, now yavdr is usable without vdpau
+-----------------
+15.Jan.2010 
+-----------------
+initial release
+

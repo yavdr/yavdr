@@ -1,0 +1,7 @@
+
+/sbin/stop vdr-frontend
+/usr/bin/openbox &
+firefox
+killall openbox
+/sbin/start vdr-frontend
+

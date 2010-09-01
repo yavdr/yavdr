@@ -18,58 +18,50 @@ reply.setHeader ("Cache-Control", "no-cache", false);
 string success = "false";
 
 if( cmd == "mounts" )
-  {
-    HDF *hdf = NULL;
-    NEOERR *err;
+{
+  HDF *hdf = NULL;
+  NEOERR *err;
 
-    if( ( STATUS_OK != ( err = hdf_init( &hdf ) ) )
+  if( ( STATUS_OK != ( err = hdf_init( &hdf ) ) )
 	||( STATUS_OK != ( err = hdf_read_file( hdf, YAVDRDB ) ) ) )
-      {
+  {
 	nerr_log_error( err );
-      }
-    else
-      {
-	const char *apx[] = { "00", "01", "02", "03", "04",
-			      "05", "06", "07", "08", "09" };
-	string base = "system.net.media.video.";
-	mounts_type::const_iterator it = mounts.begin();
-	for( int idx = 0;
-	     idx < ( sizeof( apx ) / sizeof( apx[0] ) );
-	     ++idx )
-	  {
-	    string path = base + apx[idx];
-	    if( it != mounts.end() )
-	      {
-		log_info( path );
-		log_info( *it );
-		err = hdf_set_valuef( hdf,
-				      "%s=%s",
-				      path.c_str(),
-				      it->c_str() );
-		++it;
-	      }
-	    else
-	      {
-		err = hdf_remove_tree( hdf, path.c_str() );
-	      }
-	    if( STATUS_OK != err ) { break; }
-	  }
-
-        err = hdf_write_file(hdf, YAVDRDB);
-        if( STATUS_OK != err )
-	  {
-	    nerr_log_error(err);
-	  }
-        hdf_destroy(&hdf);
-
-	if( STATUS_OK == err )
-	  {
-	    int ret = system( "/usr/bin/signal-event change-auto-net-yavdr" );
-
-	    if( 0 == ret )  success = "true";
-	  }
-      }
   }
+  else
+  {
+    const char * base = "system.net.media.video";
+    mounts_type::const_iterator it = mounts.begin();
+    hdf_remove_tree( hdf, base );
+    for( int idx = 0; idx < 999; ++idx )
+    {
+      if( it != mounts.end() )
+      {
+        log_info( *it );
+        err = hdf_set_valuef( hdf,
+                              "%s.%.3d=%s",
+                              base,
+                              idx,
+                              it->c_str() );
+        ++it;
+      }
+      if( STATUS_OK != err ) { break; }
+    }
+
+    err = hdf_write_file(hdf, YAVDRDB);
+    if( STATUS_OK != err )
+    {
+      nerr_log_error(err);
+    }
+    hdf_destroy(&hdf);
+
+    if( STATUS_OK == err )
+    {
+      int ret = system( "/usr/bin/signal-event change-auto-net-yavdr" );
+
+      if( 0 == ret )  success = "true";
+    }
+  }
+}
 </%cpp>
 {
     success: <$success$>

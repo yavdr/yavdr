@@ -1,0 +1,36 @@
+
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+log_action_begin_msg "check filesystems ..."
+
+for dev in $(grep -e "^[:blank:]*[^#].*[12][:blank:]*$" /etc/fstab |\
+             tr -s '[:blank:]' | cut -f 1 | cut -d ' ' -f 1); do
+	RunFsck="false"
+	MountCount=`/sbin/tune2fs -l $dev | grep "Mount count" | cut -c 27-`
+	log_action_msg "checkin $dev"
+	MaxMountCount=`tune2fs -l $dev | grep "Maximum mount count" | cut -c 27-`
+	log_action_msg "Mount count = $MountCount. Maximum mount count = $MaxMountCount."
+	let MountCountZahl=$MountCount+1
+	if [ $MountCountZahl -ge $MaxMountCount ]; then
+		RunFsck="true"
+		log_action_msg "Running fsck is needed!"
+		if [ $RunFsck == "true" ]; 	then
+			touch /etc/mtab
+			if [ $? -eq 0 ]; then
+				log_daemon_msg "File system is still mounted, skipping run of fsck!"
+				log_end_msg 1
+			else
+			        # HIER KÖNNTE ETWAS AUF DEM DISPLAY ANGEZEIGT WERDEN...
+				log_daemon_msg "Now starting fsck..."
+				STPID=$!
+				fsck -C0 -y -f $dev
+                log_end_msg $?
+			fi
+		fi
+	else
+		log_daemon_msg "No need to run fsck."
+		log_end_msg 0
+	fi
+done

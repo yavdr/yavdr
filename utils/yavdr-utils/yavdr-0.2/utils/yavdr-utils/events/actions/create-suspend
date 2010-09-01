@@ -1,0 +1,4 @@
+#!/bin/bash
+
+process-template --owner=vdr --group=vdr --mode 755 /usr/share/vdr/shutdown-hooks/S90.shutdown
+

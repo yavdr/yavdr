@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -f /lib/udev/rules.d/85-lirc.rules
+
+ln -sf /bin/bash /bin/sh

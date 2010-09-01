@@ -1,0 +1,62 @@
+#!/usr/bin/make -f
+# debian/rules for the yavdr-essential package.
+
+
+
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+# Use debhelper v4 features.
+export DH_COMPAT=4
+
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+build:
+# Nothing to do
+
+clean:
+	dh_testdir
+	dh_testroot
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	printf > debian/yavdr-essential.substvars "yavdr-essential=%s\n" \
+         "`grep -v "^#" yavdr-essential|tr '\n' ', '`"
+
+# Build architecture-independent files here.
+binary-indep: build install
+# Nothing to do
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+
+	dh_installdocs
+	dh_installchangelogs
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean svnclean binary-indep binary-arch binary install
+
+VERSION_ID = $(shell echo $(DEB_UPSTREAM_VERSION) | sed 's/\+svn.*//')+svn$(shell date --utc +%0Y%0m%0d.%0k%0M)
+get-orig-source::
+	echo Downloading $(DEB_SOURCE_PACKAGE) $(VERSION_ID) from svn...
+	svn export -q https://svn.origo.ethz.ch/yavdr/trunk/essential/yavdr-essential $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
+	tar czf ../$(DEB_SOURCE_PACKAGE)_$(VERSION_ID).orig.tar.gz $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
+	rm -rf $(DEB_SOURCE_PACKAGE)-$(VERSION_ID)
+	dch -v "$(VERSION_ID)-1yavdr1" "New Upstream Snapshot"
+
+

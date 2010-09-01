@@ -1,0 +1,21 @@
+#!/bin/bash
+
+rm -f /etc/init.d/S19autofs
+
+# load default values and overrides from /etc/default/vdr
+. /usr/lib/vdr/config-loader
+
+if [ ! -d $VIDEO_DIR/net ]; then
+   mkdir -p $VIDEO_DIR/net
+   chown -R vdr.vdr $VIDEO_DIR
+fi
+if [ ! -d /net.yavdr ]; then
+   mkdir -p /net.yavdr
+fi
+if [ -e /etc/auto.net.yavdr ]; then
+    find $VIDEO_DIR/net -type l -exec rm {} \;
+    for d in `cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`; do
+        ln -s /net.yavdr/$d $VIDEO_DIR/net
+    done
+fi
+

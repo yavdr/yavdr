@@ -1,0 +1,10 @@
+
+description     "YaVDR Configuration webinterface"
+
+start on started vdr
+stop on stopping vdr
+
+respawn
+normal exit 0
+
+

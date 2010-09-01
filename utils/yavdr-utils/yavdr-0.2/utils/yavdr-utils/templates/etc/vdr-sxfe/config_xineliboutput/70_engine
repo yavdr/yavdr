@@ -1,0 +1,187 @@
+# Anzahl der Audiopuffer
+# numeric, default: 230
+engine.buffers.audio_num_buffers:2300
+
+# Anzahl der Videopuffer
+# numeric, default: 500
+engine.buffers.video_num_buffers:5000
+
+# Standardanzahl von Videobildern
+# numeric, default: 15
+engine.buffers.video_num_frames:22
+
+# Priorität für Dekoder a/52
+# numeric, default: 0
+#engine.decoder_priorities.a/52:0
+
+# Priorität für Dekoder bitplane
+# numeric, default: 0
+#engine.decoder_priorities.bitplane:0
+
+# Priorität für Dekoder dts
+# numeric, default: 0
+#engine.decoder_priorities.dts:0
+
+# Priorität für Dekoder dvaudio
+# numeric, default: 0
+#engine.decoder_priorities.dvaudio:0
+
+# Priorität für Dekoder dxr3-mpeg2
+# numeric, default: 0
+#engine.decoder_priorities.dxr3-mpeg2:0
+
+# Priorität für Dekoder dxr3-spudec
+# numeric, default: 0
+#engine.decoder_priorities.dxr3-spudec:0
+
+# Priorität für Dekoder faad
+# numeric, default: 0
+#engine.decoder_priorities.faad:0
+
+# Priorität für Dekoder ffmpeg-wmv8
+# numeric, default: 0
+#engine.decoder_priorities.ffmpeg-wmv8:0
+
+# Priorität für Dekoder ffmpeg-wmv9
+# numeric, default: 0
+#engine.decoder_priorities.ffmpeg-wmv9:0
+
+# Priorität für Dekoder ffmpegaudio
+# numeric, default: 0
+#engine.decoder_priorities.ffmpegaudio:0
+
+# Priorität für Dekoder ffmpegvideo
+# numeric, default: 0
+#engine.decoder_priorities.ffmpegvideo:0
+
+# Priorität für Dekoder gdkpixbuf
+# numeric, default: 0
+#engine.decoder_priorities.gdkpixbuf:0
+
+# Priorität für Dekoder gsm610
+# numeric, default: 0
+#engine.decoder_priorities.gsm610:0
+
+# Priorität für Dekoder image
+# numeric, default: 0
+#engine.decoder_priorities.image:0
+
+# Priorität für Dekoder mad
+# numeric, default: 0
+#engine.decoder_priorities.mad:0
+
+# Priorität für Dekoder mpc
+# numeric, default: 0
+#engine.decoder_priorities.mpc:0
+
+# Priorität für Dekoder mpeg2
+# numeric, default: 0
+#engine.decoder_priorities.mpeg2:0
+
+# Priorität für Dekoder nsfdec
+# numeric, default: 0
+#engine.decoder_priorities.nsfdec:0
+
+# Priorität für Dekoder pcm
+# numeric, default: 0
+#engine.decoder_priorities.pcm:0
+
+# Priorität für Dekoder qta
+# numeric, default: 0
+#engine.decoder_priorities.qta:0
+
+# Priorität für Dekoder qtv
+# numeric, default: 0
+#engine.decoder_priorities.qtv:0
+
+# Priorität für Dekoder realadec
+# numeric, default: 0
+#engine.decoder_priorities.realadec:0
+
+# Priorität für Dekoder realvdec
+# numeric, default: 0
+#engine.decoder_priorities.realvdec:0
+
+# Priorität für Dekoder rgb
+# numeric, default: 0
+#engine.decoder_priorities.rgb:0
+
+# Priorität für Dekoder speex
+# numeric, default: 0
+#engine.decoder_priorities.speex:0
+
+# Priorität für Dekoder spucc
+# numeric, default: 0
+#engine.decoder_priorities.spucc:0
+
+# Priorität für Dekoder spucmml
+# numeric, default: 0
+#engine.decoder_priorities.spucmml:0
+
+# Priorität für Dekoder spudec
+# numeric, default: 0
+#engine.decoder_priorities.spudec:0
+
+# Priorität für Dekoder spudvb
+# numeric, default: 0
+#engine.decoder_priorities.spudvb:0
+
+# Priorität für Dekoder spuhdmv
+# numeric, default: 0
+#engine.decoder_priorities.spuhdmv:0
+
+# Priorität für Dekoder sputext
+# numeric, default: 0
+#engine.decoder_priorities.sputext:0
+
+# Priorität für Dekoder theora
+# numeric, default: 0
+#engine.decoder_priorities.theora:0
+
+# Priorität für Dekoder vdpau_h264
+# numeric, default: 0
+#engine.decoder_priorities.vdpau_h264:0
+
+# Priorität für Dekoder vdpau_mpeg12
+# numeric, default: 0
+#engine.decoder_priorities.vdpau_mpeg12:0
+
+# Priorität für Dekoder vdpau_vc1
+# numeric, default: 0
+#engine.decoder_priorities.vdpau_vc1:0
+
+# Priorität für Dekoder vorbis
+# numeric, default: 0
+#engine.decoder_priorities.vorbis:0
+
+# Priorität für Dekoder wavpackdec
+# numeric, default: 0
+#engine.decoder_priorities.wavpackdec:0
+
+# Priorität für Dekoder win32a
+# numeric, default: 0
+#engine.decoder_priorities.win32a:0
+
+# Priorität für Dekoder win32v
+# numeric, default: 0
+#engine.decoder_priorities.win32v:0
+
+# Priorität für Dekoder yuv
+# numeric, default: 0
+#engine.decoder_priorities.yuv:0
+
+# Medienformaterkennungsstrategie
+# { default  reverse  content  extension }, default: 0
+#engine.demux.strategy:default
+
+# xines Methode zum Kopieren von Speicher
+# { probe  libc  kernel  mmx  mmxext  sse }, default: 0
+engine.performance.memcpy_method:probe
+
+# Erlaubter Prozentsatz für verworfene Frames
+# numeric, default: 10
+engine.performance.warn_discarded_threshold:100
+
+# Erlaubter Prozentsatz für übersprungene Frames
+# numeric, default: 10
+engine.performance.warn_skipped_threshold:100

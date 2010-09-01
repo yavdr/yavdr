@@ -1,0 +1,2 @@
+echo starting yet another VDR
+echo -e '\033[?17;0;8c'

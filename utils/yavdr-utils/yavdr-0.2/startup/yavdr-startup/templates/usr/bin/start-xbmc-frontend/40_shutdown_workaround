@@ -1,0 +1,8 @@
+
+# ugly hack because xbmc doesn't
+# handle the shutdown of the vdr
+
+/usr/bin/svdrpsend HITK power
+
+/usr/bin/start-xine
+

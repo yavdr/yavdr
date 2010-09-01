@@ -1,0 +1,112 @@
+#!/bin/bash
+
+# Some defaults
+set_force=0
+old_uid=`cat /etc/passwd | awk -F":" '/VDR user/ {print $3}'`
+old_gid=`cat /etc/passwd | awk -F":" '/VDR user/ {print $4}'`
+new_uid=2000
+new_gid=2000
+find_opts='/etc/ /usr/ /var/ /srv/ -ignore_readdir_race'
+
+print_usage()
+{
+    echo ""
+    echo "Usage: change_vdr_uid.sh [options]"
+    echo "          -f           force execution, no test mode"
+    echo "          -g group id  new group id; default is $new_gid"
+    echo "          -u user id   new user id; default is $new_gid"
+    echo "          -h           just this"
+    echo ""
+}
+
+process_parameters()
+{
+    while [ "$#" != 0 ]; do
+        case $1 in
+            -f) set_force=1
+                shift
+                ;;
+            -g) new_gid=$2
+                shift 2
+                ;;
+            -u) new_uid=$2
+                shift 2
+                ;;
+            -h) print_usage
+                exit
+                ;;
+            *)  echo "unknown option: $1"
+                print_usage
+                exit
+                ;;
+        esac
+    done
+}
+
+change_passwd()
+{
+    cat /etc/passwd | awk 'BEGIN { FS=":" }
+        { if ( $1 != "vdr" )
+             { print }
+          else
+             { print $1 ":" $2 ":" '$new_uid' ":" '$new_gid' ":VDR user,,,:/var/lib/vdr:/bin/bash" } }' > /tmp/passwd
+    if [ $? != 0 ]; then
+        echo "Adjusting user id failed"
+        exit 1
+    fi
+}
+
+change_group()
+{
+    cat /etc/group | awk 'BEGIN { FS=":" }
+        { if ( $1 != "vdr" )
+             { print }
+          else
+             { print $1 ":" $2 ":" '$new_gid' ":" $4 } }' > /tmp/group
+    if [ $? != 0 ]; then
+        echo "Adjusting group id failed"
+        exit 1
+    fi
+}
+
+#
+# Real processing starts here
+#
+
+process_parameters $@
+
+# Remember files that have set setuid bit
+suid_files=`find $find_opts -gid $old_gid -perm -4000`
+
+change_passwd
+change_group
+
+if [ $set_force != 1 ]; then
+    # Test mode; only report changes
+    print_usage
+    echo
+    echo "Test mode: uid $old_uid -> $new_uid, gid $old_gid -> $new_gid"
+    echo
+    echo "Temporary changes in /tmp/passwd and /tmp/group"
+    echo
+    exit 0
+fi
+
+echo "Changing IDs: uid $old_uid -> $new_uid, gid $old_gid -> $new_gid"
+
+mv /etc/passwd /etc/passwd.orig
+mv /etc/group /etc/group.orig
+mv /tmp/passwd /etc/passwd
+mv /tmp/group /etc/group
+
+# Adjust files
+find $find_opts -gid $old_gid -exec chgrp vdr {} \;
+find $find_opts -uid $old_uid -exec chown vdr {} \;
+find $find_opts -type l -gid $old_gid -exec chgrp -h vdr {} \;
+find $find_opts -type l -uid $old_uid -exec chown -h vdr {} \;
+
+# Restoring setuid bits
+for f in $suid_files; do
+    echo "Adjusting setuid bit of $f"
+    chmod 6750 $f
+done

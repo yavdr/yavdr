@@ -1,0 +1,5 @@
+<?cs if:(vdr.plugin.graphtft.enabled == "1") ?>
+post-stop script 
+DISPLAY=:1.1 /usr/bin/hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
+end script
+<?cs /if ?>

@@ -1,0 +1,4 @@
+#!/bin/bash 
+
+process-template --mode 755 /usr/bin/vdr-mounter
+

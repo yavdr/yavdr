@@ -1,0 +1,4 @@
+#!/bin/bash
+
+process-template --mode 755 /etc/X11/Xsession.vdr
+

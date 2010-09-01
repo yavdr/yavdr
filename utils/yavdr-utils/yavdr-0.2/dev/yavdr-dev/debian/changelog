@@ -1,0 +1,18 @@
+yavdr-dev (0.2.0-1yavdr1) lucid; urgency=low
+
+  * wrong destination
+
+ -- Gerald Dachs <gda@dachsweb.de>  Thu, 20 May 2010 15:04:16 +0200
+
+yavdr-dev (0.1.1-2yavdr1) jaunty; urgency=low
+
+  * some bugfixes
+
+ -- Gerald Dachs <gda@dachsweb.de>  Thu, 20 May 2010 14:28:25 +0200
+
+yavdr-dev (0.1.1-1yavdr1) lucid; urgency=low
+
+  * initial release
+
+ -- Gerald Dachs <gda@dachsweb.de>  Wed, 20 May 2010 09:27:29 +0100
+

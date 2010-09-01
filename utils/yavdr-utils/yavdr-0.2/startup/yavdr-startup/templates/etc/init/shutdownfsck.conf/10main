@@ -1,0 +1,34 @@
+# forced fsck, if  MountCount +1 = MaxMountCount
+# the checked partitions are extracted from fstab,
+# where column <pass> not 0)
+
+description     "forced fsck on shutdown"
+author          "Volker Richert <email@.... ??> "
+
+start on stopped umountfs
+
+task
+
+script
+# get all drives to be checked
+for dev in $(/bin/grep -e "^[:blank:]*[^#].*[12][:blank:]*$" /etc/fstab |\
+             /usr/bin/tr -s '[:blank:]' | cut -d ' ' -f 1); do
+
+# get number of mounts
+MountCount=`/sbin/tune2fs -l $dev | grep "Mount count" | cut -c 27-`
+
+# get max mounts
+MaxMountCount=`/sbin/tune2fs -l $dev | grep "Maximum mount count" | cut -c 27-`
+
+# check if next mount would run fsck
+let MountCount=$MountCount+1
+if [ $MountCount -ge $MaxMountCount ]; then
+	touch /etc/mtab
+	if [ ! $? -eq 0 ]; then
+		STPID=$!
+		/sbin/fsck -C0 -y -f $dev
+	fi
+fi
+
+done # end iterating
+end script

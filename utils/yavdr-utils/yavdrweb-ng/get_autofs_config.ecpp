@@ -15,40 +15,35 @@ cmd;
 reply.setHeader ("Cache-Control", "no-cache", false);
 
 if( cmd == "mounts" )
+{
+  HDF *hdf = NULL;
+  NEOERR *err;
+
+  if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
   {
-    HDF *hdf = NULL;
-    NEOERR *err;
-
-    if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
-      {
-	nerr_log_error(err);
-      }
-    else
-      {
-	const char *apx[] = { "00", "01", "02", "03", "04",
-			      "05", "06", "07", "08", "09" };
-	string base = "system.net.media.video.";
-	int idx = 0;
-	reply.out() << "[";
-	while( idx < ( sizeof( apx ) / sizeof( apx[0] ) ) )
-	  {
-	    string path = base + apx[idx];
-	    string netmount = hdf_get_value( hdf, path.c_str(), "" );
-	    if( netmount.length() )
-	      {
-		log_info( netmount );  
-		++idx;
-
-		reply.out() << "[\'";
-		reply.sout() << netmount;
-		reply.out() << "\'],";
-	      }
-	    else
-	      {
-		break;
-	      }
-	  }
-	reply.out() << "]";
-      }
+    nerr_log_error(err);
   }
+  else
+  {
+    const char * base = "system.net.media.video";
+    HDF * node = hdf_get_obj( hdf, base );
+
+	if( node )
+	{
+      HDF * child = node->child;
+      reply.out() << "[";
+      while( child && child->value )
+      {
+        log_info( child->value );  
+
+        reply.out() << "[\'";
+        reply.sout() << child->value;
+        reply.out() << "\'],";
+
+        child = child->next;
+      }
+    }
+    reply.out() << "]";
+  }
+}
 </%cpp>

@@ -1,0 +1,7 @@
+#
+# xine config file
+#
+.version:2
+
+# Entries which are still set to their default values are commented out.
+# Remove the '#' at the beginning of the line, if you want to change them.

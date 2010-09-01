@@ -1,0 +1,13 @@
+Source: yavdr-startup
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-startup
+Architecture: any
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, vdpauinfo, openbox, autofs
+Description: scripts for startup, shutdown and s3
+  scripts for startup, shutdown and s3 for yaVDR

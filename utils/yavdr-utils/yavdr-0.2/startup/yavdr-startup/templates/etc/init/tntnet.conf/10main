@@ -1,0 +1,30 @@
+
+description     "YaVDR Configuration webinterface"
+
+start on stopped networking
+stop on runlevel [016]
+
+respawn
+normal exit 0
+
+env DISPLAY=:1.0
+export DISPLAY
+
+script
+
+if [ -f /etc/default/tntnet ] ; then
+        . /etc/default/tntnet
+fi
+
+if [ ! -x /usr/bin/tntnet ]; then
+   exit 0
+fi
+
+if netstat -ln --tcp | grep -q ':80 ' > /dev/null ; then
+   logger -t tntnet "Port allready in use!"
+   exit 0
+fi
+
+exec /usr/bin/tntnet $DAEMON_OPTS
+end script
+

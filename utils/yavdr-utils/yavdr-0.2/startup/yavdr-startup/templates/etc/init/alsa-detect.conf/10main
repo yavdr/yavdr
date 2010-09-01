@@ -1,0 +1,7 @@
+description  "execute something on boot"
+
+start on stopped udev-finish
+
+script
+  signal-event on-boot
+end script

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+LOCAL_REPOSITORY=/var/cache/yavdr/local-repository
+SOURCE_CONF=/etc/apt/sources.list.d/yavdr-local-repository.conf
+
+if [ -d $LOCAL_REPOSITORY ]; then
+  pushd $LOCAL_REPOSITORY >/dev/null
+
+  dpkg-scanpackages . /dev/null | gzip -c -9 > Packages.gz
+
+  if [ ! -f $SOURCE_CONF ]; then
+    echo "deb file://$LOCAL_REPOSITORY /" >$SOURCE_CONF
+  fi
+
+  apt-get update
+
+  popd >/dev/null
+fi

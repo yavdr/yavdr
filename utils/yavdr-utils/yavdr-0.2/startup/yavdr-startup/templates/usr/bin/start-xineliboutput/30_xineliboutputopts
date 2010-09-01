@@ -1,0 +1,3 @@
+
+XINELIBOUTPUTOPTS="--post tvtime:method=use_vo_driver --reconnect --fullscreen --audio=alsa --syslog --tcp --config /etc/vdr-sxfe/config_xineliboutput"
+

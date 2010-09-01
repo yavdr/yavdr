@@ -1,0 +1,7 @@
+#!/bin/bash
+
+process-template --mode 755 /etc/pm/config.d/10vdr_module
+process-template --mode 755 /etc/pm/sleep.d/20vdr_sleep
+process-template --mode 755 /etc/pm/sleep.d/30force-reload
+
+

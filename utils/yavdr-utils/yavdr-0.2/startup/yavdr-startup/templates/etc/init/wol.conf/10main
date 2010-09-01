@@ -1,0 +1,7 @@
+start on net-device-up IFACE=*[0123456789]
+
+#enable wake on lan for eth0...
+
+script
+ethtool -s eth0 wol g
+end script

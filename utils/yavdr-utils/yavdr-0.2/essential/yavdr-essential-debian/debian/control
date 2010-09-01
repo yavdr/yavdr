@@ -1,0 +1,15 @@
+Source: yavdr-essential
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Gerald Dachs <gda@dachsweb.de>
+Standards-Version: 3.8.4
+Vcs-Svn: https://svn.origo.ethz.ch/yavdr/trunk
+Vcs-Browser: http://svn.origo.ethz.ch/wsvn/yavdr/trunk
+Build-Depends: debhelper (>= 7)
+
+Package: yavdr-essential
+Architecture: any
+Depends: ${yavdr-essential}
+Description: Informational list of build-essential packages
+  Metapackage for yaVDR

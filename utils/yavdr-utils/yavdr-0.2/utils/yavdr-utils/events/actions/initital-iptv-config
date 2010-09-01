@@ -1,0 +1,11 @@
+#!/bin/bash
+
+process-template --mode 755 --owner=vdr --group=vdr /var/lib/vdr/plugins/iptv/vlc2iptv
+
+cat <<EOF >/var/lib/vdr/channels.conf
+THE_VOICE;IPTV:1:S=0|P=0|F=EXT|U=vlc2iptv|A=1:I:0:4:5:0:0:1:0:0:0
+3Sat;IPTV:2:S=0|P=0|F=EXT|U=vlc2iptv|A=2:I:0:2:3:0:0:7:0:0:0
+NASA;IPTV:3:S=0|P=0|F=EXT|U=vlc2iptv|A=3:I:0:5:6:0:0:1:0:0:0
+EOF
+
+chown vdr:vdr /var/lib/vdr/channels.conf

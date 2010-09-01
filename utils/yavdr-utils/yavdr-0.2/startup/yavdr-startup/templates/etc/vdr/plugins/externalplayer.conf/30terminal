@@ -1,0 +1,7 @@
+{
+  MenuEntry        = "Terminal";
+  Command          = "/usr/bin/start-xterm";
+  OutputMode       = none;
+  InputMode        = deactivateRemotes;
+}
+

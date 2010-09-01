@@ -1,0 +1,33 @@
+# halevt - hardware abstraction layer event daemon
+#
+
+description     "hardware abstraction layer"
+
+start on started hal
+stop on stopping hal
+
+
+respawn
+normal exit 0
+
+pre-start script
+[ -e /var/lib/halevt/dev_tab ] && rm -f /var/lib/halevt/dev_tab || /bin/true
+[ ! -e /var/run/halevt/ ] && mkdir -p /var/run/halevt/ || /bin/true
+end script
+
+script
+if [ -e /etc/default/halevt ]; then
+. /etc/default/halevt
+else
+  exit 0
+fi
+
+if [ "x$START_DAEMON" != "xyes" ]; then
+  exit 0
+fi
+
+sleep 3
+export HOME
+exec /usr/bin/halevt -f -u $USER -g $GROUP -p /var/run/halevt/halevt.pid
+end script
+
