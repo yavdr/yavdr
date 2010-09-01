@@ -85,8 +85,10 @@ else
   disable_plugin "graphtft"
 fi
 
-if [ "$(dbget vdr.frontend)" = "headless" ]; then
-  stop openbox
-else 
-  start openbox || /bin/true
+if [ "$1" != "post-install" ]; then
+  if [ "$(dbget vdr.frontend)" = "headless" ]; then
+    stop openbox
+  else 
+    start openbox || /bin/true
+  fi
 fi
