@@ -20,7 +20,7 @@ if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)
 }
 else
 {
-	string value = hdf_get_value(hdf, "system.sundtek.mode", "");
+	string value = hdf_get_value(hdf, "system.hardware.sundtek.mode", "");
 	reply.out() << value;
 
 	hdf_destroy(&hdf);
