@@ -47,5 +47,8 @@ wait `pidof rmmod` || /bin/true
 modprobe -a $MODULES >/dev/null 2>&1 || /bin/true
 udevadm settle
 
+# call helper to be sure event is called
+/lib/udev/dvbmon_helper || /bin/true
+
 fi
 end script
