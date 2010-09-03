@@ -1,2 +1,2 @@
-echo yaVDR
+echo starting yaVDR 0.3
 echo -e '\033[?17;0;8c'
