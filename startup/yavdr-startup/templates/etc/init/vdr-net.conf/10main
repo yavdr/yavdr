@@ -10,19 +10,23 @@
 #                                                                               #
 #                                                                               #
 #################################################################################
-# dkms_autoinstaller - Builds all DKMS modules for current kernel if necessary
 #
-# Run DKMS prior to GDM/KDM/Friends
 
-description	"DKMS Automatic Build & Installation Service"
-author          "Mario Limonciello <Mario_Limonciello@Dell.com>"
+description	"Delayed notifaction service of net mounted dirs"
+author          "Arno Esser <arno.esser@gmx.de>"
 
 start on (started vdr)
 
 task
 
 script
-  /bin/sleep 20
-  /usr/bin/touch /srv/vdr/video.00/.update
+    if [ -e /etc/auto.net.yavdr ]; then
+        mountpoint=`cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}' | head -n 1`
+        logger "mountpoint found: $mountpoint"
+        if [ "X$mountpoint" != "X" ]; then
+            logger "mountpoint established"
+            /usr/bin/touch /srv/vdr/video.00/.update
+        fi
+    fi
 end script
 
