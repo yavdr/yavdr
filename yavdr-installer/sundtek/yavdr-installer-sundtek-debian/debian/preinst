@@ -2,7 +2,7 @@
 
 if [ install = "$1" -o upgrade = "$1" ]; then 
 	cd /tmp        
-	wget http://www.sundtek.de/media/sundtek_installer_development.sh
+	wget http://www.sundtek.de/media/sundtek_installer_100506.sh
  	chmod +x sundtek_installer_development.sh
         yes | ./sundtek_installer_development.sh
 	rm -f /etc/udev/rules.d/80-remote-eeti.rules
