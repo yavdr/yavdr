@@ -1,16 +1,16 @@
---- vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330/xine_sxfe_frontend.c	2010-08-19 21:37:12.000000000 +0200
-+++ /tmp/xine_sxfe_frontend.c	2010-08-29 16:18:05.468327751 +0200
-@@ -17,6 +17,9 @@
+diff -urNad vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330~/xine_sxfe_frontend.c vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330/xine_sxfe_frontend.c
+--- vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330~/xine_sxfe_frontend.c	2010-08-19 21:37:12.000000000 +0200
++++ vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330/xine_sxfe_frontend.c	2010-09-03 10:04:11.343075961 +0200
+@@ -16,6 +16,8 @@
+ #include <sys/shm.h>
  #include <math.h>
  #include <float.h>  /* DBL_MIN */
- 
 +#include <signal.h>
 +#include <unistd.h>
-+
+ 
  /* X11 */
  #include <X11/Xlib.h>
- #include <X11/Xatom.h>
-@@ -460,6 +463,51 @@
+@@ -460,6 +462,51 @@
    }
  }
  
@@ -34,7 +34,7 @@
 +    struct itimerspec ts, ots;
 +
 +    if (tid == 0)
-+    {  
++    {
 +      memset(&se, 0, sizeof (se));
 +      se.sigev_notify = SIGEV_THREAD;
 +      se.sigev_notify_function = handle;
@@ -62,7 +62,7 @@
  static void update_xinerama_info(sxfe_t *this)
  {
  #ifdef HAVE_XINERAMA
-@@ -1346,13 +1394,14 @@
+@@ -1346,13 +1393,14 @@
                  ExposureMask |
                  KeyPressMask |
                  ButtonPressMask | ButtonReleaseMask | ButtonMotionMask |
@@ -79,7 +79,7 @@
  
    /* Map current window */
    XMapRaised (this->display, this->window[this->fullscreen ? 1 : 0]);
-@@ -1365,8 +1414,9 @@
+@@ -1365,8 +1413,10 @@
    XSetWMProtocols(this->display, this->window[this->fullscreen ? 1 : 0], &(this->xa_WM_DELETE_WINDOW), 1);
  
    /* Hide cursor */
@@ -92,12 +92,10 @@
  
    /* No screen saver */
    /* #warning TODO: suspend --> activate blank screen saver / DPMS display off ? */
-@@ -1774,6 +1824,8 @@
+@@ -1774,6 +1824,7 @@
          break;
  
        case MotionNotify:
 +        set_cursor_hide_delay(this, 2);
-+
          XMotionEvent_handler(this, (XMotionEvent *) &event);
          break;
- 
