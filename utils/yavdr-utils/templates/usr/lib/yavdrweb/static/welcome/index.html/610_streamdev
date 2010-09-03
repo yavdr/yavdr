@@ -1,0 +1,4 @@
+            <li>
+                <a href=:3000 onmouseover="focus();" onmouseout="blur();">HTTP Streaming (vdr-plugin-streamdev-server on port 3000) </a>
+            </li>
+
