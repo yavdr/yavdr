@@ -1,5 +1,5 @@
 #!/bin/bash
 
-process-template /etc/sundtek.conf
 process-template --mode 755 /usr/bin/sundtek.bash
+process-template --mode 755 /etc/yavdr/init/dvb-last.d/sundtek
 restart tntnet

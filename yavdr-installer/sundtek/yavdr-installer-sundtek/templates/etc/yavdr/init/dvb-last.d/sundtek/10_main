@@ -1,0 +1,8 @@
+while [ "`dbget system.hardware.sundtek.adapter`" = "present" ]; do
+  logger -t "sundtek" waiting to be available
+  sleep 1
+done
+
+logger -t "sundtek" ready
+
+exit 0

@@ -6,6 +6,11 @@ script
 # wait politely to let really all hardware finish
 sleep 30
 
+# check for special handling. e.g. sundtek
+if [ -d /etc/yavdr/init/dvb-last.d ]; then
+    run-parts -v /etc/yavdr/dvb-last.d
+fi
+
 # now fire the vdr start as last fall back 
 /sbin/initctl emit --no-wait dvb-devices-complete
 
