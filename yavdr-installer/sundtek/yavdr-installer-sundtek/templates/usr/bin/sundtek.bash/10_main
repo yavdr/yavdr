@@ -1,6 +1,10 @@
 
 if [ "$1" = "ATTACH" ]; then
     logger -t "sundtek" attached adapter $2 started
+    
+    # holgerr: sundtek needs additional time to start up
+    sleep 2
+    
     dbset "system.hardware.sundtek.adapter=$2"
     MODE="$(dbget system.hardware.sundtek.mode)"
     if [ -n "$MODE" ]; then
