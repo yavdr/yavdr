@@ -3,9 +3,8 @@
 
 description     "hardware abstraction layer"
 
-start on started hal
-stop on stopping hal
-
+start on usb-storage-added
+stop on (stopping dbus or stopping udev)
 
 respawn
 normal exit 0
