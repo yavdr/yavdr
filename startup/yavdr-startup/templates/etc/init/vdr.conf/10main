@@ -6,7 +6,7 @@ author          "Steffen Barszus <steffenbpunkt@gmail.com"
 start on (dvb-devices-complete or \
           stopped vdr-exit-other RESULT=ok )
 
-stop on runlevel [016]
+stop on (starting rc RUNLEVEL=0 or starting rc RUNLEVEL=1 or starting rc RUNLEVEL=6) 
 
 post-start script 
 LANG=C /sbin/status openbox | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
