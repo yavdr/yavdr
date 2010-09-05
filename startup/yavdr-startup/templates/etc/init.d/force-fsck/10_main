@@ -17,7 +17,7 @@ for dev in $(grep -e "^[:blank:]*[^#].*[12][:blank:]*$" /etc/fstab |\
 		RunFsck="true"
 		log_action_msg "Running fsck is needed!"
 		if [ $RunFsck == "true" ]; 	then
-			touch /etc/mtab
+			touch /etc/mtab 2> /dev/null
 			if [ $? -eq 0 ]; then
 				log_daemon_msg "File system is still mounted, skipping run of fsck!"
 				log_end_msg 1
