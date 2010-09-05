@@ -3,8 +3,8 @@
 if [ "$1" = "remove" ]; then 
 
 killall -9 mediasrv
-/usr/share/doc/yavdr-installer-sundtek/sundtek_installer_100506.sh -u
-rm -f /usr/share/doc/yavdr-installer-sundtek/sundtek_installer_100506.sh
+/usr/share/doc/yavdr-installer-sundtek/sundtek_installer_development.sh
+rm -f /usr/share/doc/yavdr-installer-sundtek/sundtek_installer_development.sh
 
 fi  
 

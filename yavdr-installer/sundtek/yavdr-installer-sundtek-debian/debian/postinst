@@ -3,8 +3,8 @@
 case "$1" in
     configure)
 	signal-event sundtek-installer
-	cp /tmp/sundtek_installer_100506.sh /usr/share/doc/yavdr-installer-sundtek
-	rm -f /tmp/sundtek_installer_100506.sh
+	cp /tmp/sundtek_installer_development.sh /usr/share/doc/yavdr-installer-sundtek
+	rm -f /tmp/sundtek_installer_development.sh
        ;;
 
 
