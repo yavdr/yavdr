@@ -10,7 +10,7 @@ function getVDRSundtekForm(){
         items: [{
             id: 'sundtek_radio_group',
             name: 'mode',
-            xtype: 'checkboxgroup',
+            xtype: 'radiogroup',
             fieldLabel: getLL("sundtek.label"),
             columns: 2,
             items: [
