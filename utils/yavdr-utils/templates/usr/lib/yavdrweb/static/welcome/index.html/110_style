@@ -1,0 +1,48 @@
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="lang" content="de" />
+        <meta name="author" content="yaVDR Team" />
+        <link rel="shortcut icon" href="/static/images/favicon.ico">
+        <style>
+            body{
+                text-align: center; 
+                color: white; 
+                font-family: Arial, sans-serif; 
+                font-size: 14px; 
+                background-color: #4E78B1;
+                padding: 0px;
+                margin: 0px;
+            }
+            a{
+                display: block;
+                border: 2px solid gray; 
+                -moz-border-radius: 10px; 
+                border-radius: 10px; 
+                background-color: white;
+                color: #4E78B1;
+                width: 600px;
+                padding: 20px;
+                margin: 10px auto 10px auto;
+                text-decoration: none;
+                opacity: 0.8;
+                filter: Alpha(opacity=80);
+                font-size: 14px;
+            }
+            a:focus{
+                opacity: 1;
+                filter: Alpha(opacity=100);
+                border: 2px solid orange;
+            }
+            a:active{
+                background-color: orange;
+            }
+            img{
+                border: none;
+            }
+            ul{
+                list-style-type: none;
+                padding: 0px;
+                margin: 0px;
+            }
+            
+        </style>
