@@ -1,7 +1,10 @@
 start on startup
-stop on starting vdr-frontend
+stop on started openbox
 
-exec zgv -j /usr/share/yavdr/images/yavdr_logo.png
+exec zgv -j -p /usr/share/yavdr/images/yavdr_logo.png
 
-post-stop killall zgv
+post-stop script
+  sleep 10
+  killall black
+end script
 
