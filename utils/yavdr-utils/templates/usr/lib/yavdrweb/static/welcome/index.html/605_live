@@ -1,5 +1,5 @@
             <li>
-                <a href=:8008 onmouseover="focus();" onmouseout="blur();"><img src="/static/images/vdr_live_logo.png" style="width: 175px; height: 70px;"/>
+                <a href="javascript:document.location = 'http://' + document.location.hostname + ':8008/';" onmouseover="focus();" onmouseout="blur();"><img src="/static/images/vdr_live_logo.png" style="width: 175px; height: 70px;"/>
                 <br/><br/>LIVE Interactive VDR Environment (vdr-plugin-live on port 8008)</a>
-                </li>
+            </li>
 
