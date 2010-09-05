@@ -1,10 +1,23 @@
 start on startup
 stop on started openbox
 
-exec zgv -j -p /usr/share/yavdr/images/yavdr_logo.png
+script
+  if [ -f /forcefsck ]; then 
+     exit 0
+  fi 
 
-post-stop script
-  sleep 10
-  killall black
+  setterm -foreground black -store >/dev/tty1
+  setterm -foreground black -store >/dev/tty7
+  setterm -foreground black -store >/dev/tty9
+  setterm -cursor off -store >/dev/tty1
+  setterm -cursor off -store >/dev/tty7
+  setterm -cursor off -store >/dev/tty9
+end script
+
+post-start script
+  if [ -f /forcefsck ]; then
+     exit 0
+  fi
+sleep 30
 end script
 
