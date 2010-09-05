@@ -1,4 +1,4 @@
             <li>
-                <a href="/yavdrweb/" onmouseover="focus();" onmouseout="blur();"><img src="/static/images/yavdr_web_frontend.png" style="width: 400px; height: 232px;"/>
+                <a href="/admin/" onmouseover="focus();" onmouseout="blur();"><img src="/static/images/yavdr_web_frontend.png" style="width: 400px; height: 232px;"/>
                 <br/><br/>yaVDR Web Configuration Frontend</a>
             </li>
