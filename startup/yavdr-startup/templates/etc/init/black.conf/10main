@@ -1,5 +1,6 @@
 start on startup
-stop on started openbox
+
+task
 
 script
   if [ -f /forcefsck ]; then 
