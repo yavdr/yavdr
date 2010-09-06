@@ -1,0 +1,95 @@
+#!/bin/bash
+
+
+
+mkdir -p /var/lib/vdr/.xbmc/userdata/addon_data/pvr.vdr.vnsi
+mkdir -p /var/lib/vdr/.xbmc/userdata/Thumbnails
+mkdir -p /var/lib/vdr/.xbmc/userdata/playlists
+mkdir -p /var/lib/vdr/.xbmc/userdata/keymaps
+mkdir -p /var/lib/vdr/.xbmc/userdata/Database/CDDB
+mkdir -p /var/lib/vdr/.xbmc/addons/packages
+mkdir -p /var/lib/vdr/.xbmc/media
+mkdir -p /var/lib/vdr/.xbmc/sounds
+mkdir -p /var/lib/vdr/.xbmc/system
+mkdir -p /var/lib/vdr/.xbmc/temp/temp
+mkdir -p /var/lib/vdr/.xbmc/temp/weather
+
+
+cat <<-! > /var/lib/vdr/.xbmc/userdata/addon_data/pvr.vdr.vnsi/settings.xml
+<settings>
+    <setting id="convertchar" value="true" />
+    <setting id="handlemessages" value="true" />
+    <setting id="host" value="127.0.0.1" />
+    <setting id="port" value="34890" />
+    <setting id="priority" value="0" />
+    <setting id="recordingdir" value="/srv/vdr/video.00/" />
+    <setting id="timeout" value="3" />
+    <setting id="usedirectory" value="true" />
+</settings>
+!
+
+cat <<-! > /var/lib/vdr/.xbmc/userdata/guisettings.xml
+<settings>
+    <pvrepg>
+        <epgscan>5</epgscan>
+        <epgupdate>120</epgupdate>
+        <ignoredbforclient>false</ignoredbforclient>
+        <resetepg></resetepg>
+    </pvrepg>
+    <pvrmanager>
+        <channelmanager></channelmanager>
+        <channelscan></channelscan>
+        <enabled>true</enabled>
+        <resetdb></resetdb>
+    </pvrmanager>
+    <pvrmenu>
+        <daystodisplay>2</daystodisplay>
+        <defaultguideview>0</defaultguideview>
+        <hidevideolength>true</hidevideolength>
+        <iconpath></iconpath>
+        <infoswitch>true</infoswitch>
+        <infotime>5</infotime>
+        <infotimeout>true</infotimeout>
+        <lingertime>0</lingertime>
+        <searchicons></searchicons>
+    </pvrmenu>
+    <pvrplayback>
+        <channelentrytimeout>0</channelentrytimeout>
+        <playminimized>true</playminimized>
+        <scantime>15</scantime>
+        <signalquality>true</signalquality>
+        <startlast>0</startlast>
+        <switchautoclose>true</switchautoclose>
+    </pvrplayback>
+    <pvrrecord>
+        <defaultlifetime>99</defaultlifetime>
+        <defaultpriority>50</defaultpriority>
+        <instantrecordtime>180</instantrecordtime>
+        <marginstart>2</marginstart>
+        <marginstop>10</marginstop>
+    </pvrrecord>
+</settings>
+!
+
+sqlite3  /var/lib/vdr/.xbmc/userdata/Database/Addons2.db<<EOF
+PRAGMA foreign_keys=OFF; BEGIN TRANSACTION; CREATE TABLE version (idVersion integer, iCompressCount integer); INSERT INTO "version" VALUES (12,0);
+CREATE TABLE addon (id integer primary key, type text,name text, summary text, description text, stars integer,path text, addonID text, icon text, version text, changelog text, fanart text, author text);
+CREATE TABLE addonextra (id integer, key text, value text);
+CREATE TABLE repo (id integer primary key, addonID text,checksum text, lastcheck text);
+CREATE TABLE addonlinkrepo (idRepo integer, idAddon integer);
+CREATE TABLE disabled (id integer primary key, addonID text);
+CREATE TABLE pvrenabled (id integer primary key, addonID text);
+CREATE TABLE broken (id integer primary key, addonID text, reason text);
+CREATE INDEX idxAddon ON addon(addonID);
+CREATE INDEX idxAddonExtra ON addonextra(id);
+CREATE UNIQUE INDEX ix_addonlinkrepo_1 ON addonlinkrepo ( idAddon, idRepo );
+CREATE UNIQUE INDEX ix_addonlinkrepo_2 ON addonlinkrepo ( idRepo, idAddon );
+CREATE UNIQUE INDEX idxDisabled ON disabled(addonID);
+CREATE UNIQUE INDEX idxPVREnabled ON pvrenabled(addonID);
+CREATE UNIQUE INDEX idxBroken ON broken(addonID);
+COMMIT;
+INSERT INTO "pvrenabled" VALUES(1,'pvr.vdr.vnsi');
+EOF
+
+chown -R vdr:vdr /var/lib/vdr/.xbmc
+
