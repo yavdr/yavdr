@@ -13,7 +13,7 @@ stop on runlevel [016]
 respawn
 
 script
-[ -r /etc/default/inputlirc] && . /etc/default/inputlirc
+[ -r /etc/default/inputlirc ] && . /etc/default/inputlirc
 test -f /usr/sbin/inputlircd || exit 0
 
 exec /usr/sbin/inputlircd -f $OPTIONS $EVENTS <?cs var:system.inputlirc.path ?>
