@@ -20,7 +20,7 @@ TIMEOUT=0
 #
 # BROWSE_MODE - maps are browsable by default.
 #
-BROWSE_MODE="no"
+BROWSE_MODE="yes"
 #
 # MOUNT_NFS_DEFAULT_PROTOCOL - specify the default protocol used by
 #                              mount.nfs(8). Since we can't identify
