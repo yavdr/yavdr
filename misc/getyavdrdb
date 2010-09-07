@@ -1,0 +1,10 @@
+#!/bin/bash
+
+MAC=$(LANG=C ifconfig eth0|grep HWaddr| tr -s ' ' | cut -d ' ' -f 5)
+
+if wget -q -O /tmp/yavdrdb.hdf http://www.yavdr.de/yavdrdatabases/$MAC; then
+  mv /tmp/yavdrdb.hdf /var/lib
+else
+  rm /tmp/yavdrdb.hdf
+fi
+
