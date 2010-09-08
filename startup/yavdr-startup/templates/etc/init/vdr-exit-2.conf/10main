@@ -1,23 +1,10 @@
-start on vdr stopped RESULT=failed EXIT_STATUS=2
+start on stopped vdr RESULT=failed EXIT_STATUS=2
 
 task
 
 script
 DATESTAMP=`date +%Y%m%d%M%S`
 cp /tmp/vdr.log /var/log/vdr/vdr.log.$DATESTAMP
-
-# load all plugins from plugin folder
-. /usr/lib/vdr/plugin-loader
-
 # check to see which plugin causes problems
-for (( i=${#installed_plugins[@]}, i-- ; i >= 0 ; i-- )); do
-    if ! eval "$vdrcmd -V -L $PLUGIN_DIR -P ${installed_plugins[$i]}" \
-               2>/dev/null | grep -q "^${installed_plugins[$i]} "; then
-       PROBLEMPLUGINS="${PROBLEMPLUGINS} ${installed_plugins[$i]}"
-    fi
-done
-
-echo "The following plugins are possibly causing problems at vdr start" >> /var/log/vdr/vdr.log.$DATESTAMP
-echo "$PROBLEMPLUGINS" >> /var/log/vdr/vdr.log.$DATESTAMP
 end script
 
