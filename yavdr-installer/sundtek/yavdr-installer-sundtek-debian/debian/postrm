@@ -1,9 +1,10 @@
 #!/bin/sh
 
 if [ remove = "$1" ]; then 
-rm -f /etc/sundtek.conf
-rm -f /usr/bin/sundtek.bash
-restart tntnet
+    rm -f /etc/sundtek.conf
+    rm -f /usr/bin/sundtek.bash
+    rm -f /etc/yavdr/init/dvb-last.d/sundtek
+    restart tntnet
 fi 
 
 #DEBHELPER#
