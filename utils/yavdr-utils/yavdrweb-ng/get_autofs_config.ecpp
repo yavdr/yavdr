@@ -28,10 +28,10 @@ if( cmd == "mounts" )
     const char * base = "system.net.media.video";
     HDF * node = hdf_get_obj( hdf, base );
 
+    reply.out() << "[";
 	if( node )
 	{
       HDF * child = node->child;
-      reply.out() << "[";
       while( child && child->value )
       {
         log_info( child->value );  
