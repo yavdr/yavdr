@@ -4,5 +4,5 @@ author          "Steffen Barszus <steffenbpunkt@gmail.com>"
 script
 export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/var/lib/vdr
-exec su -c "/usr/bin/firefox" vdr
+exec su -c "/usr/bin/firefox" <?cs var:user ?>
 end script
