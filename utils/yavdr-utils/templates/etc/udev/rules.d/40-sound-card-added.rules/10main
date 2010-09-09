@@ -1,0 +1,1 @@
+SUBSYSTEM=="sound" , ACTION=="change", ENV{SOUND_INITIALIZED}="1", RUN+="/sbin/initctl emit --no-wait sound-card-added CARD=%p"
