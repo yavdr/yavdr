@@ -72,6 +72,13 @@ if (command == "LSTC") // || command == "NEWC")
                  string::size_type end_of_channel_name;
                  
                  string provider = "";
+                 string channel = "";
+                 string channel_name = "";
+                 string source = ""; //cable, satellite, etc.
+                 string modulation = "";
+                 string frequency = "";
+                 string symbolrate = "";
+                 
                  if (first_semicolon != string::npos && first_doppelpunkt != string::npos){
                      if( first_semicolon > first_doppelpunkt){
                          //after channel name there is no transponder info
@@ -82,15 +89,12 @@ if (command == "LSTC") // || command == "NEWC")
                          
                      }
                  }
-                 
                  if (first_semicolon != string::npos)
                      end_of_channel_name = first_semicolon + 3;
                  else
                      end_of_channel_name = first_doppelpunkt + 3;
                  
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
-                 string channel = "";
-                 string channel_name = "";
                  
                  //check if we have got a channel group label
                  if (channel_nr != 0)
@@ -100,6 +104,23 @@ if (command == "LSTC") // || command == "NEWC")
                          channel_name = sBuffer.substr(begin_of_channel_name + 1, end_of_channel_name - begin_of_channel_name );
                      else
                          channel_name = "unknown";
+                     
+                     int start = first_doppelpunkt + 5;
+                     string::size_type doppelpunkt2 = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     frequency = sBuffer.substr(start, doppelpunkt2 );
+
+                     start += doppelpunkt2 + 1;
+                     string::size_type doppelpunkt3 = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     modulation = sBuffer.substr( start, doppelpunkt3 );
+
+                     start += doppelpunkt3 + 1;
+                     string::size_type doppelpunkt4 = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     source = sBuffer.substr( start, doppelpunkt4 );
+                     
+                     start += doppelpunkt4 + 1;
+                     string::size_type doppelpunkt5 = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     symbolrate = sBuffer.substr( start, doppelpunkt5 );
+                     
                      counter ++;
                  }
                  else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
@@ -115,6 +136,10 @@ if (command == "LSTC") // || command == "NEWC")
                  json_channels[counter]["cnumber"] = channel_nr;
                  json_channels[counter]["cname"]   = channel_name;
                  json_channels[counter]["cprovider"] = provider;
+                 json_channels[counter]["frequency"] = frequency;
+                 json_channels[counter]["modulation"] = modulation;
+                 json_channels[counter]["source"] = source;
+                 json_channels[counter]["symbolrate"] = symbolrate;
                  json_channels[counter]["cstr"]    = channel;
              }
           }
