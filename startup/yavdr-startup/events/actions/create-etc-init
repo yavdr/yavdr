@@ -3,8 +3,9 @@
 if [ ! -d /net.yavdr ]; then
    mkdir -p /net.yavdr
 fi
+USER=$(getent passwd 1000|cut -d ":" -f1)
 
-process-template /etc/init/firefox.conf
+process-template --data "user=$USER" /etc/init/firefox.conf
 process-template /etc/init/xbmc.conf
 process-template /etc/init/openbox.conf
 process-template /etc/init/taskbar.conf
