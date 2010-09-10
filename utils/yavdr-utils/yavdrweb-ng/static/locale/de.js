@@ -157,7 +157,8 @@ var locale_de = {
             csid : 'SID',
             cnid : 'NID',
             ctid : 'TID',
-            crid : 'RID'
+            crid : 'RID',
+            cgroup : 'Gruppe'
         },
         grid_title : 'Kanal-Liste (alle Radio- und TV-Kanäle)' 
     },

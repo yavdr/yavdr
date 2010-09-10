@@ -55,7 +55,7 @@ if (command == "LSTC") // || command == "NEWC")
         char buffer[1024];
         int counter = 0;
         int groupcounter = 0;
-        string groupname = "";
+        string groupname = "default";
         Json::Value json_channels;
         while (!feof(stream))
         {
@@ -162,36 +162,38 @@ if (command == "LSTC") // || command == "NEWC")
                      doppelpunkt = channel_length - start - 1; //last item, not : following
                      rid = sBuffer.substr( start, doppelpunkt );
 
+                     int big_channel_id = groupcounter * 10000 + channel_nr;
+
+                     char groupcountstring[120]; 
+                     sprintf( groupcountstring ,"(%03d) %s", groupcounter, groupname.c_str() );
+                     
+                     json_channels[counter]["cid"]   = big_channel_id;
+                     json_channels[counter]["cnum"]  = channel_nr;
+                     json_channels[counter]["cname"] = channel_name;
+                     json_channels[counter]["cprov"] = provider;
+                     json_channels[counter]["cfreq"] = frequency;
+                     json_channels[counter]["cmod"]  = modulation;
+                     json_channels[counter]["csrc"]  = source;
+                     json_channels[counter]["csymb"] = symbolrate;
+                     json_channels[counter]["cvpid"] = vpid;
+                     json_channels[counter]["capid"] = apid;
+                     json_channels[counter]["ctpid"] = tpid;
+                     json_channels[counter]["ccaid"] = caid;
+                     json_channels[counter]["csid"]  = sid;
+                     json_channels[counter]["cnid"]  = nid;
+                     json_channels[counter]["ctid"]  = tid;
+                     json_channels[counter]["crid"]  = rid;
+                     json_channels[counter]["cgroup"]= groupcountstring;
+                     //json_channels[counter]["cstr"]  = channel;
+                     
                      counter ++;
                  }
                  else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
                  {
                      groupname = sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
-                     channel_name = "GROUP: " + groupname;
                      groupcounter++;
                      
                  }
-                 
-                 int big_channel_id = groupcounter * 10000 + channel_nr;
-                 
-                 json_channels[counter]["cid"]   = big_channel_id;
-                 json_channels[counter]["cnum"]  = channel_nr;
-                 json_channels[counter]["cname"] = channel_name;
-                 json_channels[counter]["cprov"] = provider;
-                 json_channels[counter]["cfreq"] = frequency;
-                 json_channels[counter]["cmod"]  = modulation;
-                 json_channels[counter]["csrc"]  = source;
-                 json_channels[counter]["csymb"] = symbolrate;
-                 json_channels[counter]["cvpid"] = vpid;
-                 json_channels[counter]["capid"] = apid;
-                 json_channels[counter]["ctpid"] = tpid;
-                 json_channels[counter]["ccaid"] = caid;
-                 json_channels[counter]["csid"]  = sid;
-                 json_channels[counter]["cnid"]  = nid;
-                 json_channels[counter]["ctid"]  = tid;
-                 json_channels[counter]["crid"]  = rid;
-                 json_channels[counter]["cgroup"]= groupname;
-                 //json_channels[counter]["cstr"]  = channel;
              }
           }
         }

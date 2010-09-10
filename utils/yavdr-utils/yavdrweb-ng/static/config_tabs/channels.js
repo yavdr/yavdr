@@ -1,35 +1,41 @@
 function getChannelsForm(){
 
+    var channellist_reader = new Ext.data.JsonReader({
+        idProperty: 'cid',
+        remoteSort: false,
+        root: 'channelList',
+        totalProperty: 'totalCount',
+        fields: [
+                 'cid'  , {name:'cid',   type: 'string'},
+                 'cnum' , {name:'cnum',  type: 'int'},
+                 'cname', {name:'cname', type: 'string'},
+                 'cprov', {name:'cprov', type: 'string'},
+                 'csrc' , {name:'csrc',  type: 'string'},
+                 'cfreq', {name:'cfreq', type: 'int'},
+                 'cmod' , {name:'cmod',  type: 'string'},
+                 'csymb', {name:'csymb', type: 'int'},
+                 'cvpid' , {name:'cvpid',  type: 'string'},
+                 'capid' , {name:'capid',  type: 'string'},
+                 'ctpid' , {name:'ctpid',  type: 'string'},
+                 'ccaid' , {name:'ccaid',  type: 'string'},
+                 'csid' , {name:'csid',  type: 'string'},
+                 'cnid' , {name:'cnid',  type: 'string'},
+                 'ctid' , {name:'ctid',  type: 'string'},
+                 'crid' , {name:'crid',  type: 'string'},
+                 'cgroup' , {name:'cgroup',  type: 'string'}
+                 //,'cstr' , {name:'cstr',  type: 'string'}
+             ]
+        
+    });
     
-    var channellist_store = new Ext.data.JsonStore({
+    
+    var channellist_store = new Ext.data.GroupingStore({
         autoDestroy: true,
         autoLoad: false,
         url: 'get_svdrp_response?command=LSTC',
         storeId: 'channellist_store',
-        // reader configs
-        root: 'channelList',
-        idProperty: 'cid',
-        remoteSort: false,
-        totalProperty: 'totalCount',
-        fields: [
-             'cid'  , {name:'cid',   type: 'string'},
-             'cnum' , {name:'cnum',  type: 'int'},
-             'cname', {name:'cname', type: 'string'},
-             'cprov', {name:'cprov', type: 'string'},
-             'csrc' , {name:'csrc',  type: 'string'},
-             'cfreq', {name:'cfreq', type: 'int'},
-             'cmod' , {name:'cmod',  type: 'string'},
-             'csymb', {name:'csymb', type: 'int'},
-             'cvpid' , {name:'cvpid',  type: 'string'},
-             'capid' , {name:'capid',  type: 'string'},
-             'ctpid' , {name:'ctpid',  type: 'string'},
-             'ccaid' , {name:'ccaid',  type: 'string'},
-             'csid' , {name:'csid',  type: 'string'},
-             'cnid' , {name:'cnid',  type: 'string'},
-             'ctid' , {name:'ctid',  type: 'string'},
-             'crid' , {name:'crid',  type: 'string'}
-             //,'cstr' , {name:'cstr',  type: 'string'}
-         ]
+        groupField: 'cgroup',
+        reader: channellist_reader
     });
 
     var gridLoadMask = new Ext.LoadMask(Ext.getBody(), {
@@ -55,9 +61,14 @@ function getChannelsForm(){
                 {header: getLL("channels.grid_header.csid"),  align: 'right', width: 40, dataIndex: 'csid', sortable: true},
                 {header: getLL("channels.grid_header.cnid"),  align: 'right', width: 40, dataIndex: 'cnid', sortable: true},
                 {header: getLL("channels.grid_header.ctid"),  align: 'right', width: 40, dataIndex: 'ctid', sortable: true},
-                {header: getLL("channels.grid_header.crid"),  align: 'right', width: 40, dataIndex: 'crid', sortable: true}
+                {header: getLL("channels.grid_header.crid"),  align: 'right', width: 40, dataIndex: 'crid', sortable: true},
+                {header: getLL("channels.grid_header.cgroup"),  align: 'left', width: 150, dataIndex: 'cgroup', sortable: true}
                 //,{header: getLL("channels.grid_header.cstr"),  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
             ],
+            view: new Ext.grid.GroupingView({
+                forceFit:true,
+                groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
+            }),
             title: getLL("channels.grid_title"),
             frame: true,
             loadMask: gridLoadMask,

@@ -147,7 +147,8 @@ var locale_en = {
             csid : 'SID',
             cnid : 'NID',
             ctid : 'TID',
-            crid : 'RID'
+            crid : 'RID',
+            cgroup : 'Gruppe'
         },
         grid_title : 'Channel List (all radio and TV channels)' 
     },
