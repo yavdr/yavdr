@@ -1,0 +1,82 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## hide-cursor.dpatch by  <gda@master>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330~/xine_sxfe_frontend.c vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330/xine_sxfe_frontend.c
+--- vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330~/xine_sxfe_frontend.c	2010-09-10 19:47:10.990259447 +0200
++++ vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330/xine_sxfe_frontend.c	2010-09-10 19:51:12.670258969 +0200
+@@ -185,6 +185,8 @@
+ #define HUD_MAX_WIDTH      1920
+ #define HUD_MAX_HEIGHT     1080
+ 
++#define MOUSECURSOR_TIMEOUT (2000 / 50) // 2 seconds / 50 ms from poll timeout
++
+ static void sxfe_dest_size_cb (void *data,
+                                int video_width, int video_height, double video_pixel_aspect,
+                                int *dest_width, int *dest_height, double *dest_pixel_aspect)
+@@ -1346,13 +1348,14 @@
+                 ExposureMask |
+                 KeyPressMask |
+                 ButtonPressMask | ButtonReleaseMask | ButtonMotionMask |
+-                FocusChangeMask);
++                FocusChangeMask | PointerMotionMask);
+   XSelectInput (this->display, this->window[1],
+                 StructureNotifyMask |
+                 ExposureMask |
+                 KeyPressMask |
+                 ButtonPressMask |
+-                FocusChangeMask);
++                FocusChangeMask |
++                PointerMotionMask);
+ 
+   /* Map current window */
+   XMapRaised (this->display, this->window[this->fullscreen ? 1 : 0]);
+@@ -1365,8 +1368,10 @@
+   XSetWMProtocols(this->display, this->window[this->fullscreen ? 1 : 0], &(this->xa_WM_DELETE_WINDOW), 1);
+ 
+   /* Hide cursor */
+-  if(this->window_id <= 0)
+-    set_cursor(this->display, this->window[1], 0);
++  if(this->window_id <= 0) {
++  //  set_cursor(this->display, this->window[1], 0);
++    set_cursor(this->display, this->window[this->fullscreen ? 1 : 0], 0);
++  }
+ 
+   /* No screen saver */
+   /* #warning TODO: suspend --> activate blank screen saver / DPMS display off ? */
+@@ -1727,6 +1732,7 @@
+  */
+ static int sxfe_run(frontend_t *this_gen) 
+ {
++  static int mousecursor_timeout = 0;
+   sxfe_t *this = (sxfe_t*)this_gen;
+ 
+   /* poll X server (connection socket).
+@@ -1740,6 +1746,11 @@
+       .events = POLLIN,
+     };
+     if (poll(&pfd, 1, 50) < 1 || !(pfd.revents & POLLIN)) {
++      // timeout expired?
++      if ((mousecursor_timeout > 0) && (--mousecursor_timeout == 0))
++        // hide Cursor
++       set_cursor(this->display, this->window[this->fullscreen ? 1 : 0], 0);
++
+       return !this->x.fe.xine_is_finished((frontend_t*)this, 0);
+     }
+   }
+@@ -1774,6 +1785,12 @@
+         break;
+ 
+       case MotionNotify:
++        // make mouse cursor visible
++        set_cursor(this->display, this->window[this->fullscreen ? 1 : 0], 1);
++
++        // start timeout
++        mousecursor_timeout = MOUSECURSOR_TIMEOUT;
++
+         XMotionEvent_handler(this, (XMotionEvent *) &event);
+         break;
+ 
