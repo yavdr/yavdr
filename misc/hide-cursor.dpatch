@@ -72,7 +72,7 @@ diff -urNad vdr-plugin-xineliboutput-1.0.6+cvs20100823.1330~/xine_sxfe_frontend.
  
        case MotionNotify:
 +        // make mouse cursor visible
-+        set_cursor(this->display, this->window[this->fullscreen ? 1 : 0], 1);
++        if (mousecursor_timeout == 0) set_cursor(this->display, this->window[this->fullscreen ? 1 : 0], 1);
 +
 +        // start timeout
 +        mousecursor_timeout = MOUSECURSOR_TIMEOUT;
