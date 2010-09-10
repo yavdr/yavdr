@@ -170,7 +170,7 @@ function getChannelsForm(){
 
 Ext.onReady(function() {
     YaVDRMenuManager
-        .addGroupPanelSection({section: "demos"})
+        .addGroupPanelSection({section: "vdr"})
             .addGroupPanelTab({
                 section: "channels",
                 layout: "fit",

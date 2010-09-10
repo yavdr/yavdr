@@ -158,7 +158,6 @@ Ext.onReady(function() {
     // predefine menu structure
     YaVDRMenuManager.addGroupPanelSection({section: "vdr"});
     YaVDRMenuManager.addGroupPanelSection({section: "system"});
-    YaVDRMenuManager.addGroupPanelSection({section: "demos"});
     YaVDRMenuManager.addGroupPanelSection({section: "diagnose"});
     if (yavdrwebGlobalInfo.devmode == "1") {
         YaVDRMenuManager.addGroupPanelSection({section: "development"});
