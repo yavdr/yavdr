@@ -127,7 +127,7 @@ var locale_en = {
     },
     channels: {
         menutab: {
-            title : 'Channel List (SVDRP)',
+            title : 'Channels',
             tabtip : 'Channel settings (Maintain and sort radio and TV channels)',
             panel_title : '' //unused
         },
@@ -135,7 +135,19 @@ var locale_en = {
             cnumber : 'No',
             cname : 'Channel Name',
             cprovider : 'Provider',
-            cstr : 'Complete Channel String'
+            cstr : 'Complete Channel String',
+            cfrequency : 'Frequency',
+            cmodulation : 'Modulation',
+            csource : 'Source',
+            csymbolrate : 'Symbolrate',
+            cvpid : 'VPID',
+            capid : 'APID',
+            ctpid : 'TPID',
+            ccaid : 'CAID',
+            csid : 'SID',
+            cnid : 'NID',
+            ctid : 'TID',
+            crid : 'RID'
         },
         grid_title : 'Channel List (all radio and TV channels)' 
     },

@@ -55,6 +55,7 @@ if (command == "LSTC") // || command == "NEWC")
         char buffer[1024];
         int counter = 0;
         int groupcounter = 0;
+        string groupname = "";
         Json::Value json_channels;
         while (!feof(stream))
         {
@@ -65,10 +66,10 @@ if (command == "LSTC") // || command == "NEWC")
              {
                  string sBuffer = string(buffer);
                  string::size_type bof = 0;
-                 int channel_length = strlen(buffer);
+                 int channel_length = strlen(buffer) -1;
                  string::size_type begin_of_channel_name  = sBuffer.substr(4, channel_length -4 ).find_first_of(" ", bof) + 4;
                  string::size_type first_semicolon = sBuffer.substr(4, channel_length -4 ).find_first_of(";", bof);
-                 string::size_type first_doppelpunkt = sBuffer.substr(4, channel_length -4 ).find_first_of(":", bof);
+                 string::size_type doppelpunkt = sBuffer.substr(4, channel_length -4 ).find_first_of(":", bof);
                  string::size_type end_of_channel_name;
                  
                  string provider = "";
@@ -78,21 +79,29 @@ if (command == "LSTC") // || command == "NEWC")
                  string modulation = "";
                  string frequency = "";
                  string symbolrate = "";
+                 string vpid = "";
+                 string apid = "";
+                 string tpid = "";
+                 string caid = "";
+                 string sid = "";
+                 string nid = "";
+                 string tid = "";
+                 string rid = "";
                  
-                 if (first_semicolon != string::npos && first_doppelpunkt != string::npos){
-                     if( first_semicolon > first_doppelpunkt){
+                 if (first_semicolon != string::npos && doppelpunkt != string::npos){
+                     if( first_semicolon > doppelpunkt){
                          //after channel name there is no transponder info
-                         first_semicolon = first_doppelpunkt;
+                         first_semicolon = doppelpunkt;
                      }
                      else{
-                         provider = sBuffer.substr(first_semicolon + 5, first_doppelpunkt - 1 - first_semicolon );
+                         provider = sBuffer.substr(first_semicolon + 5, doppelpunkt - 1 - first_semicolon );
                          
                      }
                  }
                  if (first_semicolon != string::npos)
                      end_of_channel_name = first_semicolon + 3;
                  else
-                     end_of_channel_name = first_doppelpunkt + 3;
+                     end_of_channel_name = doppelpunkt + 3;
                  
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
                  
@@ -105,42 +114,84 @@ if (command == "LSTC") // || command == "NEWC")
                      else
                          channel_name = "unknown";
                      
-                     int start = first_doppelpunkt + 5;
-                     string::size_type doppelpunkt2 = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     frequency = sBuffer.substr(start, doppelpunkt2 );
+                     int start = doppelpunkt + 5;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     frequency = sBuffer.substr(start, doppelpunkt );
 
-                     start += doppelpunkt2 + 1;
-                     string::size_type doppelpunkt3 = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     modulation = sBuffer.substr( start, doppelpunkt3 );
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     modulation = sBuffer.substr( start, doppelpunkt );
 
-                     start += doppelpunkt3 + 1;
-                     string::size_type doppelpunkt4 = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     source = sBuffer.substr( start, doppelpunkt4 );
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     source = sBuffer.substr( start, doppelpunkt );
                      
-                     start += doppelpunkt4 + 1;
-                     string::size_type doppelpunkt5 = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     symbolrate = sBuffer.substr( start, doppelpunkt5 );
-                     
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     symbolrate = sBuffer.substr( start, doppelpunkt );
+
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     vpid = sBuffer.substr( start, doppelpunkt );
+
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     apid = sBuffer.substr( start, doppelpunkt );
+
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     tpid = sBuffer.substr( start, doppelpunkt );
+
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     caid = sBuffer.substr( start, doppelpunkt );
+
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     sid = sBuffer.substr( start, doppelpunkt );
+
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     nid = sBuffer.substr( start, doppelpunkt );
+
+                     start += doppelpunkt + 1;
+                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+                     tid = sBuffer.substr( start, doppelpunkt );
+
+                     start += doppelpunkt + 1;
+                     doppelpunkt = channel_length - start - 1; //last item, not : following
+                     rid = sBuffer.substr( start, doppelpunkt );
+
                      counter ++;
                  }
                  else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
                  {
-                     channel_name = "GROUP: " + sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
+                     groupname = sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
+                     channel_name = "GROUP: " + groupname;
                      groupcounter++;
                      
                  }
                  
                  int big_channel_id = groupcounter * 10000 + channel_nr;
                  
-                 json_channels[counter]["cid"]     = big_channel_id;
-                 json_channels[counter]["cnumber"] = channel_nr;
-                 json_channels[counter]["cname"]   = channel_name;
-                 json_channels[counter]["cprovider"] = provider;
-                 json_channels[counter]["frequency"] = frequency;
-                 json_channels[counter]["modulation"] = modulation;
-                 json_channels[counter]["source"] = source;
-                 json_channels[counter]["symbolrate"] = symbolrate;
-                 json_channels[counter]["cstr"]    = channel;
+                 json_channels[counter]["cid"]   = big_channel_id;
+                 json_channels[counter]["cnum"]  = channel_nr;
+                 json_channels[counter]["cname"] = channel_name;
+                 json_channels[counter]["cprov"] = provider;
+                 json_channels[counter]["cfreq"] = frequency;
+                 json_channels[counter]["cmod"]  = modulation;
+                 json_channels[counter]["csrc"]  = source;
+                 json_channels[counter]["csymb"] = symbolrate;
+                 json_channels[counter]["cvpid"] = vpid;
+                 json_channels[counter]["capid"] = apid;
+                 json_channels[counter]["ctpid"] = tpid;
+                 json_channels[counter]["ccaid"] = caid;
+                 json_channels[counter]["csid"]  = sid;
+                 json_channels[counter]["cnid"]  = nid;
+                 json_channels[counter]["ctid"]  = tid;
+                 json_channels[counter]["crid"]  = rid;
+                 json_channels[counter]["cgroup"]= groupname;
+                 //json_channels[counter]["cstr"]  = channel;
              }
           }
         }

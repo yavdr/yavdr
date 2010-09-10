@@ -137,15 +137,27 @@ var locale_de = {
     },
     channels: {
         menutab: {
-            title : 'Kanal-Liste (SVDRP)',
+            title : 'Kanäle',
             tabtip : 'Kanal-Einstellungen (Radio- und Fernsehkanäle pflegen und sortieren)',
             panel_title : '' //unused
         },
         grid_header : { 
-            cid : 'Nr.',
-            cname : 'Kanal-Name',
+            cnumber : 'Nr.',
+            cname : 'Name',
             cprovider : 'Anbieter',
-            cstr : 'Kompletter Kanal-String'
+            cstr : 'Kompletter Kanal-String',
+            cfrequency : 'Frequenz',
+            cmodulation : 'Modulation',
+            csource : 'Quelle',
+            csymbolrate : 'Symbolrate',
+            cvpid : 'VPID',
+            capid : 'APID',
+            ctpid : 'TPID',
+            ccaid : 'CAID',
+            csid : 'SID',
+            cnid : 'NID',
+            ctid : 'TID',
+            crid : 'RID'
         },
         grid_title : 'Kanal-Liste (alle Radio- und TV-Kanäle)' 
     },

@@ -12,11 +12,23 @@ function getChannelsForm(){
         remoteSort: false,
         totalProperty: 'totalCount',
         fields: [
-             'cid', {name:'cid', type: 'string'},
-             'cnumber', {name:'cnumber', type: 'int'},
+             'cid'  , {name:'cid',   type: 'string'},
+             'cnum' , {name:'cnum',  type: 'int'},
              'cname', {name:'cname', type: 'string'},
-             'cprovider', {name:'cprovider', type: 'string'},
-             'cstr', {name:'cstr', type: 'string'}
+             'cprov', {name:'cprov', type: 'string'},
+             'csrc' , {name:'csrc',  type: 'string'},
+             'cfreq', {name:'cfreq', type: 'int'},
+             'cmod' , {name:'cmod',  type: 'string'},
+             'csymb', {name:'csymb', type: 'int'},
+             'cvpid' , {name:'cvpid',  type: 'string'},
+             'capid' , {name:'capid',  type: 'string'},
+             'ctpid' , {name:'ctpid',  type: 'string'},
+             'ccaid' , {name:'ccaid',  type: 'string'},
+             'csid' , {name:'csid',  type: 'string'},
+             'cnid' , {name:'cnid',  type: 'string'},
+             'ctid' , {name:'ctid',  type: 'string'},
+             'crid' , {name:'crid',  type: 'string'}
+             //,'cstr' , {name:'cstr',  type: 'string'}
          ]
     });
 
@@ -29,10 +41,22 @@ function getChannelsForm(){
         var grid = new Ext.grid.GridPanel({
             store: channellist_store,
             columns: [
-                {header: getLL("channels.grid_header.cnumber"),  align: 'right', width: 50, dataIndex: 'cnumber', sortable: true},
-                {header: getLL("channels.grid_header.cname"),  align: 'left', width: 200, dataIndex: 'cname', sortable: true},
-                {header: getLL("channels.grid_header.cprovider"),  align: 'left', width: 100, dataIndex: 'cprovider', sortable: true},
-                {header: getLL("channels.grid_header.cstr"),  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
+                {header: getLL("channels.grid_header.cnumber"),  align: 'right', width: 30, dataIndex: 'cnum', sortable: true},
+                {header: getLL("channels.grid_header.cname"),  align: 'left', width: 160, dataIndex: 'cname', sortable: true},
+                {header: getLL("channels.grid_header.cprovider"),  align: 'left', width: 90, dataIndex: 'cprov', sortable: true},
+                {header: getLL("channels.grid_header.csource"),  align: 'left', width: 50, dataIndex: 'csrc', sortable: true},
+                {header: getLL("channels.grid_header.cfrequency"),  align: 'right', width: 70, dataIndex: 'cfreq', sortable: true},
+                {header: getLL("channels.grid_header.cmodulation"),  align: 'left', width: 90, dataIndex: 'cmod', sortable: true},
+                {header: getLL("channels.grid_header.csymbolrate"),  align: 'right', width: 70, dataIndex: 'csymb', sortable: true},
+                {header: getLL("channels.grid_header.cvpid"),  align: 'left', width: 90, dataIndex: 'cvpid', sortable: true},
+                {header: getLL("channels.grid_header.capid"),  align: 'left', width: 220, dataIndex: 'capid', sortable: true},
+                {header: getLL("channels.grid_header.ctpid"),  align: 'right', width: 40, dataIndex: 'ctpid', sortable: true},
+                {header: getLL("channels.grid_header.ccaid"),  align: 'left', width: 70, dataIndex: 'ccaid', sortable: true},
+                {header: getLL("channels.grid_header.csid"),  align: 'right', width: 40, dataIndex: 'csid', sortable: true},
+                {header: getLL("channels.grid_header.cnid"),  align: 'right', width: 40, dataIndex: 'cnid', sortable: true},
+                {header: getLL("channels.grid_header.ctid"),  align: 'right', width: 40, dataIndex: 'ctid', sortable: true},
+                {header: getLL("channels.grid_header.crid"),  align: 'right', width: 40, dataIndex: 'crid', sortable: true}
+                //,{header: getLL("channels.grid_header.cstr"),  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
             ],
             title: getLL("channels.grid_title"),
             frame: true,
