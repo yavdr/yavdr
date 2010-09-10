@@ -8,4 +8,4 @@
 #/misc	/etc/auto.misc --timeout=60
 #/smb	/etc/auto.smb
 #/misc	/etc/auto.misc
-/net.yavdr	/etc/auto.net.yavdr
+/net.yavdr	/etc/auto.net.yavdr  --timeout=0 --negative-timeout=10

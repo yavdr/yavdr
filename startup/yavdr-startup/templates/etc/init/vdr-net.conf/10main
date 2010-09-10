@@ -21,12 +21,13 @@ task
 
 script
     if [ -e /etc/auto.net.yavdr ]; then
-        mountpoint=`cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}' | head -n 1`
-        logger "mountpoint found: $mountpoint"
-        if [ "X$mountpoint" != "X" ]; then
-            logger "mountpoint established"
-            /usr/bin/touch /srv/vdr/video.00/.update
-        fi
+        mountpoints=`cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`
+        logger "mountpoints found: $mountpoints"
+        for mountpoint in $mountpoints; do
+            cd /net.yavdr/$mountpoint
+            logger "mount $mountpoint established"
+        done
+        /usr/bin/touch /srv/vdr/video.00/.update
     fi
 end script
 
