@@ -19,6 +19,7 @@ const char *files[] = {
     "/var/log/syslog", 
     "/var/log/Xorg.1.log",
     "/var/log/tntnet/tntnet.log",
+    "/var/log/apt/history.log",
     
     "/var/lib/vdr/.xbmc/temp/xbmc.log",
     "/var/lib/vdr/.xbmc/temp/xbmc.old.log",

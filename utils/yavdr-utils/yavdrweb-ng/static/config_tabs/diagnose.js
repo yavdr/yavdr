@@ -105,7 +105,8 @@ Ext.onReady(function() {
                     section: "packages",
                     locale_prefix: 'diagnose.section',
                     items:   [
-                        addDiagnosePanelShellResponse('Installierte Packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)', 'dpkg')
+                        addDiagnosePanelShellResponse('Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)', 'dpkg'),
+                        addDiagnosePanelFileContent('Apt history of recently installed packages', '/var/log/apt/history.log')
                     ]})
              .addGroupPanelTab({
                     section: "yavdr",

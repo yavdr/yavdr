@@ -1,12 +1,11 @@
 function getChannelsForm(){
 
     var channellist_reader = new Ext.data.JsonReader({
-        idProperty: 'cid',
+        idProperty: 'cnum',
         remoteSort: false,
         root: 'channelList',
         totalProperty: 'totalCount',
         fields: [
-                 'cid'  , {name:'cid',   type: 'string'},
                  'cnum' , {name:'cnum',  type: 'int'},
                  'cname', {name:'cname', type: 'string'},
                  'cprov', {name:'cprov', type: 'string'},

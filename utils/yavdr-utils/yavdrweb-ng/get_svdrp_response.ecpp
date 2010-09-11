@@ -8,8 +8,11 @@ using namespace std;
 command;
 </%args><%shared>
 
-void convertSingleRawChannelDataToJSON( char * buffer, Json::Value & json_channels, int & counter, int channel_nr, string::size_type begin_of_channel_name, int groupcounter, string groupname){
+Json::Value convertSingleRawChannelDataToJSON( char * buffer, 
+        int channel_nr, string::size_type begin_of_channel_name, 
+        char *  prefixed_groupname){
 
+    Json::Value json_channel;
     string sBuffer = string(buffer);
     string::size_type bof = 0;
     int channel_length = strlen(buffer) -1;
@@ -85,8 +88,6 @@ void convertSingleRawChannelDataToJSON( char * buffer, Json::Value & json_channe
     marker = channel_length - start - 1; //last item, not : following
     int rid = atoi( sBuffer.substr( start, marker ).c_str() );
 
-    int big_channel_id = groupcounter * 10000 + channel_nr;
-
     string friendly_type = (vpid == "0") ? "Radio" : "TV";
     string friendly_scrambled = (caid == "0") ? "FTA" : "scrambled";
 
@@ -97,67 +98,33 @@ void convertSingleRawChannelDataToJSON( char * buffer, Json::Value & json_channe
     char friendly_transp[120];
     sprintf( friendly_transp ,"%s %d %d", source.c_str(), frequency, symbolrate );
     
-    char groupcountstring[120]; 
-    sprintf( groupcountstring ,"%03d %s", groupcounter, groupname.c_str() );
-    
-    json_channels[counter]["cid"]   = big_channel_id;
-    json_channels[counter]["cnum"]  = channel_nr;
-    json_channels[counter]["cname"] = channel_name;
-    json_channels[counter]["cprov"] = provider;
-    json_channels[counter]["cfreq"] = frequency;
-    json_channels[counter]["cmod"]  = modulation;
-    json_channels[counter]["csrc"]  = source;
-    json_channels[counter]["csymb"] = symbolrate;
-    json_channels[counter]["cvpid"] = vpid;
-    json_channels[counter]["capid"] = apid;
-    json_channels[counter]["ctpid"] = tpid;
-    json_channels[counter]["ccaid"] = caid;
-    json_channels[counter]["csid"]  = sid;
-    json_channels[counter]["cnid"]  = nid;
-    json_channels[counter]["ctid"]  = tid;
-    json_channels[counter]["crid"]  = rid;
-    json_channels[counter]["cgroup"]= groupcountstring;
-    json_channels[counter]["c_friendly_type"]  = friendly_type;
-    json_channels[counter]["c_friendly_scrambled"]= friendly_scrambled;
-    json_channels[counter]["c_friendly_lang"]= friendly_language;
-    json_channels[counter]["c_friendly_transp"]= friendly_transp;
+    json_channel["cnum"]  = channel_nr;
+    json_channel["cname"] = channel_name;
+    json_channel["cprov"] = provider;
+    json_channel["cfreq"] = frequency;
+    json_channel["cmod"]  = modulation;
+    json_channel["csrc"]  = source;
+    json_channel["csymb"] = symbolrate;
+    json_channel["cvpid"] = vpid;
+    json_channel["capid"] = apid;
+    json_channel["ctpid"] = tpid;
+    json_channel["ccaid"] = caid;
+    json_channel["csid"]  = sid;
+    json_channel["cnid"]  = nid;
+    json_channel["ctid"]  = tid;
+    json_channel["crid"]  = rid;
+    json_channel["cgroup"]= prefixed_groupname;
+    json_channel["c_friendly_type"]  = friendly_type;
+    json_channel["c_friendly_scrambled"]= friendly_scrambled;
+    json_channel["c_friendly_lang"]= friendly_language;
+    json_channel["c_friendly_transp"]= friendly_transp;
 
-    //json_channels[counter]["cstr"]  = channel;
+    //json_channel["cstr"]  = channel;
+    return json_channel;
 }
 </%shared><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 reply.setHeader ("Content-Type", "application/json", false);
-
-/*
-  DELC Delete Channel
-  LSTC List Channel(s)
-  MOVC Move Channel
-  NEWC New Channel
-  
-  214-This is VDR version 1.7.10
-  214-Topics:
-  214-    CHAN      CLRE      DELC      DELR      DELT      
-  214-    EDIT      GRAB      HELP      HITK      LSTC      
-  214-    LSTE      LSTR      LSTT      MESG      MODC      
-  214-    MODT      MOVC      MOVT      NEWC      NEWT      
-  214-    NEXT      PLAY      PLUG      PUTE      REMO      
-  214-    RENR      SCAN      STAT      UPDT      VOLU      
-  214-    QUIT      
-  214-Plugin epgsearch v0.9.25.beta15 - Suche im EPG nach Wiederholungen und anderem
-  214-    LSTS      NEWS      DELS      EDIS      MODS      
-  214-    UPDS      UPDD      SETS      FIND      QRYS      
-  214-    QRYF      LSRD      LSTC      NEWC      EDIC      
-  214-    DELC      RENC      LSTB      NEWB      DELB      
-  214-    EDIB      LSTE      SETP      LSTT      NEWT      
-  214-    DELT      EDIT      DEFT      LSCC      MENU      
-  214-Plugin xineliboutput v1.0.90-cvs - X11/xine-lib Ausgabe-Plugin
-  214-    PMDA      PDVD      PMSC      PIMG      QMSC      
-  214-Plugin text2skin v1.3 - Lader für textbasierte Skins
-  214-    FLUS      
-  214-To report bugs in the implementation send email to
-  214-    vdr-bugs@tvdr.de
-  214 End of HELP info
-*/  
 
 //TODO: check if charset conversion is needed, we assume UTF-8
 
@@ -174,7 +141,9 @@ if (command == "LSTC") // || command == "NEWC")
         int counter = 0;
         int groupcounter = 0;
         string groupname = "default";
+        char prefixed_groupname[120] = "000 default";
         Json::Value json_channels;
+        
         while (!feof(stream))
         {
           if (fgets(buffer, sizeof(buffer), stream) != NULL)
@@ -188,15 +157,17 @@ if (command == "LSTC") // || command == "NEWC")
                  string::size_type begin_of_channel_name  = sBuffer.substr(4, channel_length -4 ).find_first_of(" ", bof) + 4;
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
                  
-                 //check if we have got a channel group label
+                 //check if we have got a channel group label which always has channel_nr 0
                  if (channel_nr != 0)
                  {
-                     convertSingleRawChannelDataToJSON( buffer, json_channels, counter, channel_nr, begin_of_channel_name, groupcounter, groupname);
+                     json_channels[counter] = convertSingleRawChannelDataToJSON( buffer, channel_nr, begin_of_channel_name, prefixed_groupname);
                      counter ++;
                  }
                  else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
                  {
                      groupname = sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
+                     sprintf( prefixed_groupname ,"%03d %s", groupcounter, groupname.c_str() );
+                     
                      groupcounter++;
                      
                  }
