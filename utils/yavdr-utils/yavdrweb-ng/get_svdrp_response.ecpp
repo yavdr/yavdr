@@ -6,7 +6,125 @@
 using namespace std;
 </%pre><& authenticate ><%args>
 command;
-</%args><%cpp>
+</%args><%shared>
+
+void convertSingleRawChannelDataToJSON( char * buffer, Json::Value & json_channels, int & counter, int channel_nr, string::size_type begin_of_channel_name, int groupcounter, string groupname){
+
+    string sBuffer = string(buffer);
+    string::size_type bof = 0;
+    int channel_length = strlen(buffer) -1;
+    string::size_type first_semicolon = sBuffer.substr(4, channel_length -4 ).find_first_of(";", bof);
+    string::size_type marker = sBuffer.substr(4, channel_length -4 ).find_first_of(":", bof);
+    string::size_type end_of_channel_name;
+    
+    string provider = "";
+    if (first_semicolon != string::npos && marker != string::npos){
+        if( first_semicolon > marker){
+            //after channel name there is no transponder info
+            first_semicolon = marker;
+        }
+        else{
+            provider = sBuffer.substr(first_semicolon + 5, marker - 1 - first_semicolon );
+            
+        }
+    }
+    if (first_semicolon != string::npos)
+        end_of_channel_name = first_semicolon + 3;
+    else
+        end_of_channel_name = marker + 3;
+    
+    string channel_name = "unknown";
+    if (end_of_channel_name > 0 && begin_of_channel_name > 0)
+        channel_name = sBuffer.substr(begin_of_channel_name + 1, end_of_channel_name - begin_of_channel_name );
+    
+    int start = marker + 5;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    int frequency = atoi( sBuffer.substr(start, marker ).c_str());
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    string modulation = sBuffer.substr( start, marker );
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    string source = sBuffer.substr( start, marker );
+    
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    int symbolrate = atoi( sBuffer.substr( start, marker ).c_str() );
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    string vpid = sBuffer.substr( start, marker );
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    string apid = sBuffer.substr( start, marker );
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    string tpid = sBuffer.substr( start, marker );
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    string caid = sBuffer.substr( start, marker );
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    int sid = atoi( sBuffer.substr( start, marker ).c_str() );
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    int nid = atoi( sBuffer.substr( start, marker ).c_str());
+
+    start += marker + 1;
+    marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
+    string tid = sBuffer.substr( start, marker );
+
+    start += marker + 1;
+    marker = channel_length - start - 1; //last item, not : following
+    int rid = atoi( sBuffer.substr( start, marker ).c_str() );
+
+    int big_channel_id = groupcounter * 10000 + channel_nr;
+
+    string friendly_type = (vpid == "0") ? "Radio" : "TV";
+    string friendly_scrambled = (caid == "0") ? "FTA" : "scrambled";
+
+    string::size_type lang_marker_begin = apid.find_first_of("=", bof);
+    string::size_type lang_marker_end = apid.find_first_of("@", bof);
+    string friendly_language = apid.substr(lang_marker_begin + 1, lang_marker_end - lang_marker_begin -1);
+    
+    char friendly_transp[120];
+    sprintf( friendly_transp ,"%s %d %d", source.c_str(), frequency, symbolrate );
+    
+    char groupcountstring[120]; 
+    sprintf( groupcountstring ,"%03d %s", groupcounter, groupname.c_str() );
+    
+    json_channels[counter]["cid"]   = big_channel_id;
+    json_channels[counter]["cnum"]  = channel_nr;
+    json_channels[counter]["cname"] = channel_name;
+    json_channels[counter]["cprov"] = provider;
+    json_channels[counter]["cfreq"] = frequency;
+    json_channels[counter]["cmod"]  = modulation;
+    json_channels[counter]["csrc"]  = source;
+    json_channels[counter]["csymb"] = symbolrate;
+    json_channels[counter]["cvpid"] = vpid;
+    json_channels[counter]["capid"] = apid;
+    json_channels[counter]["ctpid"] = tpid;
+    json_channels[counter]["ccaid"] = caid;
+    json_channels[counter]["csid"]  = sid;
+    json_channels[counter]["cnid"]  = nid;
+    json_channels[counter]["ctid"]  = tid;
+    json_channels[counter]["crid"]  = rid;
+    json_channels[counter]["cgroup"]= groupcountstring;
+    json_channels[counter]["c_friendly_type"]  = friendly_type;
+    json_channels[counter]["c_friendly_scrambled"]= friendly_scrambled;
+    json_channels[counter]["c_friendly_lang"]= friendly_language;
+    json_channels[counter]["c_friendly_transp"]= friendly_transp;
+
+    //json_channels[counter]["cstr"]  = channel;
+}
+</%shared><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 reply.setHeader ("Content-Type", "application/json", false);
 
@@ -68,138 +186,12 @@ if (command == "LSTC") // || command == "NEWC")
                  string::size_type bof = 0;
                  int channel_length = strlen(buffer) -1;
                  string::size_type begin_of_channel_name  = sBuffer.substr(4, channel_length -4 ).find_first_of(" ", bof) + 4;
-                 string::size_type first_semicolon = sBuffer.substr(4, channel_length -4 ).find_first_of(";", bof);
-                 string::size_type doppelpunkt = sBuffer.substr(4, channel_length -4 ).find_first_of(":", bof);
-                 string::size_type end_of_channel_name;
-                 
-                 string provider = "";
-                 string channel = "";
-                 string channel_name = "";
-                 string source = ""; //cable, satellite, etc.
-                 string modulation = "";
-                 int    frequency = 0;
-                 int    symbolrate = 0;
-                 string vpid = "";
-                 string apid = "";
-                 string tpid = "";
-                 string caid = "";
-                 int    sid = 0;
-                 int    nid = 0;
-                 string tid = "";
-                 int    rid = 0;
-                 string friendly_type = "";
-                 string friendly_scrambled = "";
-                 string friendly_language = "";
-                 
-                 if (first_semicolon != string::npos && doppelpunkt != string::npos){
-                     if( first_semicolon > doppelpunkt){
-                         //after channel name there is no transponder info
-                         first_semicolon = doppelpunkt;
-                     }
-                     else{
-                         provider = sBuffer.substr(first_semicolon + 5, doppelpunkt - 1 - first_semicolon );
-                         
-                     }
-                 }
-                 if (first_semicolon != string::npos)
-                     end_of_channel_name = first_semicolon + 3;
-                 else
-                     end_of_channel_name = doppelpunkt + 3;
-                 
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
                  
                  //check if we have got a channel group label
                  if (channel_nr != 0)
                  {
-                     channel = sBuffer.substr(begin_of_channel_name + 1, strlen(buffer) - 3 - begin_of_channel_name );
-                     if (end_of_channel_name > 0 && begin_of_channel_name > 0)
-                         channel_name = sBuffer.substr(begin_of_channel_name + 1, end_of_channel_name - begin_of_channel_name );
-                     else
-                         channel_name = "unknown";
-                     
-                     int start = doppelpunkt + 5;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     frequency = atoi( sBuffer.substr(start, doppelpunkt ).c_str());
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     modulation = sBuffer.substr( start, doppelpunkt );
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     source = sBuffer.substr( start, doppelpunkt );
-                     
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     symbolrate = atoi( sBuffer.substr( start, doppelpunkt ).c_str() );
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     vpid = sBuffer.substr( start, doppelpunkt );
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     apid = sBuffer.substr( start, doppelpunkt );
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     tpid = sBuffer.substr( start, doppelpunkt );
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     caid = sBuffer.substr( start, doppelpunkt );
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     sid = atoi( sBuffer.substr( start, doppelpunkt ).c_str() );
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     nid = atoi( sBuffer.substr( start, doppelpunkt ).c_str());
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     tid = sBuffer.substr( start, doppelpunkt );
-
-                     start += doppelpunkt + 1;
-                     doppelpunkt = channel_length - start - 1; //last item, not : following
-                     rid = atoi( sBuffer.substr( start, doppelpunkt ).c_str() );
-
-                     int big_channel_id = groupcounter * 10000 + channel_nr;
-
-                     friendly_type = (vpid == "0") ? "Radio" : "TV";
-                     friendly_scrambled = (caid == "0") ? "FTA" : "scrambled";
-
-                     string::size_type lang_marker_begin = apid.find_first_of("=", bof);
-                     string::size_type lang_marker_end = apid.find_first_of("@", bof);
-                     friendly_language = apid.substr(lang_marker_begin + 1, lang_marker_end - lang_marker_begin -1);
-                     
-                     char groupcountstring[120]; 
-                     sprintf( groupcountstring ,"%03d %s", groupcounter, groupname.c_str() );
-                     
-                     json_channels[counter]["cid"]   = big_channel_id;
-                     json_channels[counter]["cnum"]  = channel_nr;
-                     json_channels[counter]["cname"] = channel_name;
-                     json_channels[counter]["cprov"] = provider;
-                     json_channels[counter]["cfreq"] = frequency;
-                     json_channels[counter]["cmod"]  = modulation;
-                     json_channels[counter]["csrc"]  = source;
-                     json_channels[counter]["csymb"] = symbolrate;
-                     json_channels[counter]["cvpid"] = vpid;
-                     json_channels[counter]["capid"] = apid;
-                     json_channels[counter]["ctpid"] = tpid;
-                     json_channels[counter]["ccaid"] = caid;
-                     json_channels[counter]["csid"]  = sid;
-                     json_channels[counter]["cnid"]  = nid;
-                     json_channels[counter]["ctid"]  = tid;
-                     json_channels[counter]["crid"]  = rid;
-                     json_channels[counter]["cgroup"]= groupcountstring;
-                     json_channels[counter]["c_friendly_type"]  = friendly_type;
-                     json_channels[counter]["c_friendly_scrambled"]= friendly_scrambled;
-                     json_channels[counter]["c_friendly_lang"]= friendly_language;
-
-                     //json_channels[counter]["cstr"]  = channel;
-                     
+                     convertSingleRawChannelDataToJSON( buffer, json_channels, counter, channel_nr, begin_of_channel_name, groupcounter, groupname);
                      counter ++;
                  }
                  else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
