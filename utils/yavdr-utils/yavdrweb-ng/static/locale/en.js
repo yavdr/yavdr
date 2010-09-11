@@ -148,7 +148,10 @@ var locale_en = {
             cnid : 'NID',
             ctid : 'TID',
             crid : 'RID',
-            cgroup : 'Gruppe'
+            cgroup : 'Gruppe',
+            c_friendly_lang: 'Language',
+            c_friendly_type: 'TV/Radio',
+            c_friendly_scrambled : 'FTA/scrambled'
         },
         grid_title : 'Channel List (all radio and TV channels)' 
     },

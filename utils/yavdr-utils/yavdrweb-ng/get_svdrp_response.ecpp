@@ -77,16 +77,19 @@ if (command == "LSTC") // || command == "NEWC")
                  string channel_name = "";
                  string source = ""; //cable, satellite, etc.
                  string modulation = "";
-                 string frequency = "";
-                 string symbolrate = "";
+                 int    frequency = 0;
+                 int    symbolrate = 0;
                  string vpid = "";
                  string apid = "";
                  string tpid = "";
                  string caid = "";
-                 string sid = "";
-                 string nid = "";
+                 int    sid = 0;
+                 int    nid = 0;
                  string tid = "";
-                 string rid = "";
+                 int    rid = 0;
+                 string friendly_type = "";
+                 string friendly_scrambled = "";
+                 string friendly_language = "";
                  
                  if (first_semicolon != string::npos && doppelpunkt != string::npos){
                      if( first_semicolon > doppelpunkt){
@@ -116,7 +119,7 @@ if (command == "LSTC") // || command == "NEWC")
                      
                      int start = doppelpunkt + 5;
                      doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     frequency = sBuffer.substr(start, doppelpunkt );
+                     frequency = atoi( sBuffer.substr(start, doppelpunkt ).c_str());
 
                      start += doppelpunkt + 1;
                      doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
@@ -128,7 +131,7 @@ if (command == "LSTC") // || command == "NEWC")
                      
                      start += doppelpunkt + 1;
                      doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     symbolrate = sBuffer.substr( start, doppelpunkt );
+                     symbolrate = atoi( sBuffer.substr( start, doppelpunkt ).c_str() );
 
                      start += doppelpunkt + 1;
                      doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
@@ -148,11 +151,11 @@ if (command == "LSTC") // || command == "NEWC")
 
                      start += doppelpunkt + 1;
                      doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     sid = sBuffer.substr( start, doppelpunkt );
+                     sid = atoi( sBuffer.substr( start, doppelpunkt ).c_str() );
 
                      start += doppelpunkt + 1;
                      doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-                     nid = sBuffer.substr( start, doppelpunkt );
+                     nid = atoi( sBuffer.substr( start, doppelpunkt ).c_str());
 
                      start += doppelpunkt + 1;
                      doppelpunkt = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
@@ -160,12 +163,19 @@ if (command == "LSTC") // || command == "NEWC")
 
                      start += doppelpunkt + 1;
                      doppelpunkt = channel_length - start - 1; //last item, not : following
-                     rid = sBuffer.substr( start, doppelpunkt );
+                     rid = atoi( sBuffer.substr( start, doppelpunkt ).c_str() );
 
                      int big_channel_id = groupcounter * 10000 + channel_nr;
 
+                     friendly_type = (vpid == "0") ? "Radio" : "TV";
+                     friendly_scrambled = (caid == "0") ? "FTA" : "scrambled";
+
+                     string::size_type lang_marker_begin = apid.find_first_of("=", bof);
+                     string::size_type lang_marker_end = apid.find_first_of("@", bof);
+                     friendly_language = apid.substr(lang_marker_begin + 1, lang_marker_end - lang_marker_begin -1);
+                     
                      char groupcountstring[120]; 
-                     sprintf( groupcountstring ,"(%03d) %s", groupcounter, groupname.c_str() );
+                     sprintf( groupcountstring ,"%03d %s", groupcounter, groupname.c_str() );
                      
                      json_channels[counter]["cid"]   = big_channel_id;
                      json_channels[counter]["cnum"]  = channel_nr;
@@ -184,6 +194,10 @@ if (command == "LSTC") // || command == "NEWC")
                      json_channels[counter]["ctid"]  = tid;
                      json_channels[counter]["crid"]  = rid;
                      json_channels[counter]["cgroup"]= groupcountstring;
+                     json_channels[counter]["c_friendly_type"]  = friendly_type;
+                     json_channels[counter]["c_friendly_scrambled"]= friendly_scrambled;
+                     json_channels[counter]["c_friendly_lang"]= friendly_language;
+
                      //json_channels[counter]["cstr"]  = channel;
                      
                      counter ++;

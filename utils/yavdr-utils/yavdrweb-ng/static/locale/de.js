@@ -158,7 +158,10 @@ var locale_de = {
             cnid : 'NID',
             ctid : 'TID',
             crid : 'RID',
-            cgroup : 'Gruppe'
+            cgroup : 'Gruppe',
+            c_friendly_lang: 'Sprache',
+            c_friendly_type: 'TV/Radio',
+            c_friendly_scrambled : 'FTA/verschlüsselt'
         },
         grid_title : 'Kanal-Liste (alle Radio- und TV-Kanäle)' 
     },
