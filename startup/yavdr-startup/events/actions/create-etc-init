@@ -9,6 +9,7 @@ process-template --data "user=$USER" /etc/init/firefox.conf
 process-template /etc/init/xbmc.conf
 process-template /etc/init/openbox.conf
 process-template /etc/init/taskbar.conf
+process-template /etc/init/rsyslog-delay.conf
 process-template --mode 755 /usr/lib/vdr/config-loader
 process-template --mode 755 /usr/lib/vdr/plugin-loader
 process-template --mode 755 /usr/lib/vdr/commands-loader
