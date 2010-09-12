@@ -43,7 +43,6 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json) {
 			hdfwalk(hdf, child->child, &dummy);
 			(*json)[child->name] = dummy;
 		} else {
-			printf("%s = %s\n", child->name, child->value);
 			(*json)[child->name] = child->value;
 		}
 		child = child->next;
