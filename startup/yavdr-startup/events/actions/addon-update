@@ -1,4 +1,8 @@
 #!/bin/bash
 
+if [ -e /etc/default/locale ]; then 
+. /etc/default/locale
+fi 
+
 process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 
