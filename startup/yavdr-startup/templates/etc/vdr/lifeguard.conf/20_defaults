@@ -1,0 +1,9 @@
+# defaults entries
+cmd     aptitude        <?cs var:_("Aptitude\ is\ still\ running.") ?>
+cmd     xbmc.bin        <?cs var:_("XBMC\ is\ still\ running.") ?>
+
+tcp     nfs             <?cs var:_("NFS\ Mount is still active") ?>
+tcp     ssh             <?cs var:_("SSH\ Connection\ still\ open.") ?>
+tcp     ftp             <?cs var:_("FTP\ Connection\ still\ open.") ?>
+
+smb     locks           <?cs var:_("Files\ open\ on\ SMB\ share.") ?>
