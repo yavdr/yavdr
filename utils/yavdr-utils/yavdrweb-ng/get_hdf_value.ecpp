@@ -55,12 +55,12 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json) {
   const char *valid_hdf_requests[] = {
     "webfrontend.language",
     "vdr.frontend",
-    "vdr.lifeguard.enable",
     "system.shutdown",
     "system.sound.type",
     "system.hardware.nvidia.overscan",
     "system.grub.timeout",
     "vdr.plugin.graphtft.enabled",
+    "vdr.plugin.lifeguard.enable",
     "system.x11.dualhead.enabled"
   };
   

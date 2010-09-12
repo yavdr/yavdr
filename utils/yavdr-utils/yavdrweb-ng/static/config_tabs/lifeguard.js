@@ -49,7 +49,7 @@ function getVDRLifeguardForm(){
     });
     
     Ext.Ajax.request({
-        url: 'get_hdf_value?hdftree=vdr.lifeguard.enable',
+        url: 'get_hdf_value?hdftree=vdr.plugin.lifeguard.enable',
         timeout: 3000,
         method: 'GET',
         scope: myform,

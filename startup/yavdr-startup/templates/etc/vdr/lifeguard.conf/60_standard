@@ -1,2 +1,2 @@
-<?cs each:item = vdr.lifeguard.enable ?>
+<?cs each:item = vdr.plugin.lifeguard.enable ?>
 <?cs if:item == "aptitude" ?>cmd     aptitude        <?cs var:_("Aptitude\ is\ still\ running.") ?><?cs /if ?><?cs if:item == "xbmc" ?>cmd     xbmc.bin        <?cs var:_("XBMC\ is\ still\ running.") ?><?cs /if ?><?cs if:item == "nfs" ?>tcp     nfs             <?cs var:_("NFS\ Mount is still active") ?><?cs /if ?><?cs if:item == "ssh" ?>tcp     ssh             <?cs var:_("SSH\ Connection\ still\ open.") ?><?cs /if ?><?cs if:item == "ftp" ?>tcp     ftp             <?cs var:_("FTP\ Connection\ still\ open.") ?><?cs /if ?><?cs if:item == "smb" ?>smb     locks           <?cs var:_("Files\ open\ on\ SMB\ share.") ?><?cs /if ?><?cs /each ?>

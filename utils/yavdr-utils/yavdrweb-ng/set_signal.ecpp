@@ -175,7 +175,7 @@ if (
 		{
 			nerr_log_error(err);
 		}
-		err = hdf_remove_tree(hdf, "vdr.lifeguard.enable");
+		err = hdf_remove_tree(hdf, "vdr.plugin.lifeguard.enable");
 		if (values.size() > 0) {
 			for (int i = 0; i < values.size(); i++)
 			{
@@ -183,13 +183,13 @@ if (
 						(values[i] == "nfs") || (values[i] == "ftp") ||
 						(values[i] == "xbmc") || (values[i] == "smb"))
 				{
-					err = hdf_set_valuef(hdf, "vdr.lifeguard.enable.%i=%s", i, values[i].c_str());
+					err = hdf_set_valuef(hdf, "vdr.plugin.lifeguard.enable.%i=%s", i, values[i].c_str());
 					/*if (err != STATUS_OK){
 					 }*/
 				}
 			}
 		} else {
-			err = hdf_set_value(hdf, "vdr.lifeguard.enable", "false");
+			err = hdf_set_value(hdf, "vdr.plugin.lifeguard.enable", "false");
 		}
 		err = hdf_write_file(hdf, YAVDRDB);
 		if (err != STATUS_OK)
