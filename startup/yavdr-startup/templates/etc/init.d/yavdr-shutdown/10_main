@@ -7,7 +7,7 @@ case "$1" in
   stop)
         log_begin_msg "Stopping $DESC: $NAME"
         # wait for vdr to finish
-	while ! pgrep vdr ; do sleep 1 ; done
+	while pgrep vdr &> /dev/null ; do sleep 1 ; done
         # finally stop rsyslogd (stop disabled to get vdr stop log=
 	kill -TERM $(pgrep rsyslogd)
         log_end_msg $?

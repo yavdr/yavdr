@@ -12,7 +12,7 @@ post-start script
 LANG=C /sbin/status openbox | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 end script
 
-kill timeout 5
+kill timeout 15
 normal exit 0
 
 script
