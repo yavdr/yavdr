@@ -1,3 +1,5 @@
+. /lib/lsb/init-functions
+
 case "$1" in
   start)
 	/bin/true
@@ -11,7 +13,6 @@ case "$1" in
         # finally stop rsyslogd (stop disabled to get vdr stop log=
 	kill -TERM $(pidof rsyslogd)
         log_end_msg $?
-        restart_xprint
         ;;
   *)
         N=/etc/init.d/${0##*/}
