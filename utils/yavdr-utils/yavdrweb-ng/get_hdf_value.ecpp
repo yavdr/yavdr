@@ -12,6 +12,7 @@ using namespace std;
 //Default type of args is string and we should leave it like this
 //For more robustness, avoid to define integer vars in here, better cast string to int later!!!
 hdfpath;
+hdftree;
 string hdfpaths[];
 </%args><%shared>
 void Tokenize(const string& str,
@@ -34,6 +35,20 @@ void Tokenize(const string& str,
 		pos = str.find_first_of(delimiters, lastPos);
 	}
 }
+
+void hdfwalk(HDF *hdf, HDF *child, Json::Value *json) {
+	while (child != NULL) {
+		if (child->child != NULL) {
+			Json::Value dummy;
+			hdfwalk(hdf, child->child, &dummy);
+			(*json)[child->name] = dummy;
+		} else {
+			printf("%s = %s\n", child->name, child->value);
+			(*json)[child->name] = child->value;
+		}
+		child = child->next;
+	}
+}
 </%shared><%cpp>
   reply.setHeader ("Cache-Control", "no-cache", false);
   string value = "";
@@ -53,7 +68,7 @@ void Tokenize(const string& str,
   if (hdfpaths.size() == 0) {
 	  for (int findex = 0; (findex < (sizeof(valid_hdf_requests) / sizeof(valid_hdf_requests[0]))) && !validRequest; findex++)
 	  {
-		  if (hdfpath == valid_hdf_requests[findex])
+		  if (hdfpath == valid_hdf_requests[findex] || hdftree == valid_hdf_requests[findex])
 			  validRequest = true;
 	  }
   } else {
@@ -79,8 +94,16 @@ void Tokenize(const string& str,
       else
       {
     	  if (hdfpaths.size() == 0) {
-			  value = hdf_get_value(hdf, hdfpath.c_str(), "");
-			  reply.out() << value;
+    		  if (hdfpath.size() > 0) {
+    			  value = hdf_get_value(hdf, hdfpath.c_str(), "");
+    			  reply.out() << value;
+    		  } else {
+    			  reply.setHeader ("Content-Type", "application/json", false);
+
+        		  Json::Value json;
+        		  hdfwalk(hdf, hdf_get_child(hdf, hdftree.c_str()), &json);
+        		  reply.out() << json;
+    		  }
     	  } else {
     		  reply.setHeader ("Content-Type", "application/json", false);
 
