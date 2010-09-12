@@ -83,6 +83,7 @@ Ext.TaskMgr.start({
     Ext.QuickTips.init();
 
     var viewport = new Ext.Viewport({
+    	id: 'webfrontend',
         layout:'fit',
         items:[
             Ext.create({

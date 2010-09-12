@@ -65,7 +65,7 @@ void process_template(char *dir)
             free(command);
           }
         }
-      free(file);
+        free(file);
       }
      
       free(namelist[n]);

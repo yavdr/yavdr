@@ -1,0 +1,27 @@
+<script>
+var taskRunner = null;
+check = function() {
+    Ext.Ajax.request({
+        url: 'get_time',
+        timeout: 1000,
+        method: 'GET',
+        success: function(xhr) {
+    		//alert('Response is "' + xhr.responseText + '"');
+    		var data = Ext.util.JSON.decode( xhr.responseText );
+        },
+        failure: function(xhr) {
+        	Ext.TaskMgr.stop(taskRunner);
+        	Ext.getCmp('webfrontend').disable();
+        	alert("VDR seams to be switched off or webserver is stopped");
+        }
+    });
+} 
+
+Ext.onReady(function() {
+    // equivalent using TaskMgr
+	taskRunner = Ext.TaskMgr.start({
+        run: check,
+        interval: 5000
+    });
+});
+</script>

@@ -1,0 +1,26 @@
+<%pre>
+#include <stdio.h>
+#include <time.h>
+#include <string>
+#include <jsoncpp/json.h>
+
+using namespace std;
+</%pre><& authenticate ><%cpp>
+	reply.setHeader ("Cache-Control", "no-cache", false);
+	reply.setHeader ("Content-Type", "application/json", false);
+
+	Json::Value json;
+	char *dummy = NULL;
+
+	time_t seconds;
+	seconds = time(NULL);
+	if (asprintf(&dummy, "%li", (long int) seconds) > 0) {
+		json["timestamp"] = dummy;
+		json["uptime"]  = "";
+
+		free(dummy);
+	}
+
+	reply.out() << json;
+
+</%cpp>
