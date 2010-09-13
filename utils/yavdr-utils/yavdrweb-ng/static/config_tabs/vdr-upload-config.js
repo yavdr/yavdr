@@ -54,11 +54,14 @@ function getVDRConfigUploadForm(){
                             var ta = this.getComponent('file_upload_textarea');
                             if (ta) {
                                 ta.setValue(xhr.responseText);
+                                ta.setDisabled( false );
                             }
                             form.enable();
                         },
                         failure: function(xhr) {
                             form.enable();
+                            var ta = this.getComponent('file_upload_textarea');
+                            if (ta) ta.setDisabled( false );
                         }
                     })
                 }
@@ -70,6 +73,7 @@ function getVDRConfigUploadForm(){
             maxLength : 1024*1022, // 1MB Upload Limit - 2 KB for Header
             //value: 'test test test',
             style: 'font-family: monospace; white-space: pre; font-size: 12px;',
+            disabled: true,
             //fieldLabel: 'Datei-Inhalt',
             name: 'content'/*, fixme: textarea doesn't have a toolbar!!!
             tbar: [{

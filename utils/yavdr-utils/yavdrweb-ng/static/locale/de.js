@@ -159,6 +159,7 @@ var locale_de = {
             ctid : 'TID',
             crid : 'RID',
             cgroup : 'Gruppe',
+            c_friendly_transp: 'Transponder',
             c_friendly_lang: 'Sprache',
             c_friendly_type: 'TV/Radio',
             c_friendly_scrambled : 'FTA/verschlüsselt'
@@ -203,9 +204,9 @@ var locale_de = {
     },
     upload: {
         menutab: {
-            title : 'VDR-Konfig-Upload',
-            tabtip : 'Laden Sie existierende VDR-Konfigurationsdateien hoch',
-            panel_title : 'VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei)'
+            title : 'Editor für VDR Konfigurations Dateien',
+            tabtip : 'Bearbeiten Sie den Inhalt von einigen zentralen VDR-Konfigurationsdateien direkt, fügen Sie Inhalte aus früheren VDR-Installationen ein, welche Sie übernehmen möchten.',
+            panel_title : 'VDR Konfigurations-Editor'
         },
         button_label: 'Datei hochladen',
         submit: {

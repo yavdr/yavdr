@@ -149,6 +149,7 @@ var locale_en = {
             ctid : 'TID',
             crid : 'RID',
             cgroup : 'Gruppe',
+            c_friendly_transp: 'Transponder',
             c_friendly_lang: 'Language',
             c_friendly_type: 'TV/Radio',
             c_friendly_scrambled : 'FTA/scrambled'
@@ -193,9 +194,9 @@ var locale_en = {
     },
     upload: {
         menutab: {
-            title : 'VDR Config Upload',
-            tabtip : 'Upload your existing VDR configuration',
-            panel_title : 'VDR Config Upload (the uploaded version overwrites the existing version)'
+            title : 'VDR Config Editor',
+            tabtip : 'Edit some plaintext VDR configuration files, upload your pre-existing config files',
+            panel_title : 'VDR plaintext config editor'
         },
         button_label: 'Upload',
         submit: {
