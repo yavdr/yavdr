@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
 			} while (wait == 1);
 		}
 	} else {
-		fprintf(stderr, "no forntend is given!\n");
+		fprintf(stderr, "no frontend is given!\n");
 	}
 
 	return ret;
