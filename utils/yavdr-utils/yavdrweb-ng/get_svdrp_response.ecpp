@@ -21,10 +21,10 @@ Json::Value convertSingleRawChannelDataToJSON( char * buffer,
     string::size_type end_of_channel_name;
 
     //channel group
-    json_channel["group"]= prefixed_groupname;
+    json_channel["_group"]= prefixed_groupname;
     
     //channel number
-    json_channel["num"]  = channel_nr;
+    json_channel["_num"]  = channel_nr;
     
     //channel provider
     json_channel["prov"] = "";
@@ -147,6 +147,52 @@ Json::Value convertSingleRawChannelDataToJSON( char * buffer,
 
     return json_channel;
 }
+
+Json::Value filterJSONSingleChannelData( Json::Value json_channel){ 
+
+    //channel group
+    //json_channel.removeMember("_group");
+    //channel number
+    //json_channel.removeMember("_num");
+    //channel provider
+    //json_channel.removeMember("prov"); 
+    //channel name
+    //json_channel.removeMember("name");
+    //frequency
+    json_channel.removeMember("freq");
+    //modulation
+    //json_channel.removeMember("mod");
+    //source
+    json_channel.removeMember("src");
+    //symbolrate
+    json_channel.removeMember("symb");
+    //human readable combined transponder infos
+    //json_channel.removeMember("_friendly_transp");
+    //vpid
+    json_channel.removeMember("vpid");
+    //human readable channel type (radio / tv)
+    //json_channel.removeMember("_friendly_type");
+    //apid
+    json_channel.removeMember("apid");
+    //human readable primary language
+    //json_channel.removeMember("_friendly_lang");
+    //tpid
+    json_channel.removeMember("tpid");
+    //caid 
+    json_channel.removeMember("caid");
+    //human readable encryption status
+    //json_channel.removeMember("_friendly_scrambled");
+    //sid
+    json_channel.removeMember("sid");
+    //nid
+    json_channel.removeMember("nid");
+    //tid
+    json_channel.removeMember("tid"); 
+    //rid
+    json_channel.removeMember("rid");
+    return json_channel;
+}
+
 </%shared><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 reply.setHeader ("Content-Type", "application/json", false);
@@ -185,7 +231,9 @@ if (command == "LSTC") // || command == "NEWC")
                  //check if we have got a channel group label which always has channel_nr 0
                  if (channel_nr != 0)
                  {
-                     json_channels[counter] = convertSingleRawChannelDataToJSON( buffer, channel_nr, begin_of_channel_name, prefixed_groupname);
+                     json_channels[counter] = filterJSONSingleChannelData(
+                         convertSingleRawChannelDataToJSON( buffer, channel_nr, begin_of_channel_name, prefixed_groupname)
+                     );
                      counter ++;
                  }
                  else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")

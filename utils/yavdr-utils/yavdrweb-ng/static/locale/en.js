@@ -132,7 +132,7 @@ var locale_en = {
             panel_title : '' //unused
         },
         grid_header : { 
-            number : 'No',
+            _num : 'No',
             name : 'Channel Name',
             provider : 'Provider',
             str : 'Complete Channel String',
@@ -148,7 +148,7 @@ var locale_en = {
             nid : 'NID',
             tid : 'TID',
             rid : 'RID',
-            group : 'Gruppe',
+            _group : 'Gruppe',
             _friendly_transp: 'Transponder',
             _friendly_lang: 'Language',
             _friendly_type: 'TV/Radio',

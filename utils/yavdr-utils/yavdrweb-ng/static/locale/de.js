@@ -142,7 +142,7 @@ var locale_de = {
             panel_title : '' //unused
         },
         grid_header : { 
-            number : 'Nr.',
+            _num : 'Nr.',
             name : 'Name',
             provider : 'Anbieter',
             str : 'Kompletter Kanal-String',
@@ -158,7 +158,7 @@ var locale_de = {
             nid : 'NID',
             tid : 'TID',
             rid : 'RID',
-            group : 'Gruppe',
+            _group : 'Gruppe',
             _friendly_transp: 'Transponder',
             _friendly_lang: 'Sprache',
             _friendly_type: 'TV/Radio',
