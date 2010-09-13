@@ -1,32 +1,31 @@
 function getChannelsForm(){
 
     var channellist_reader = new Ext.data.JsonReader({
-        idProperty: 'cnum',
+        idProperty: 'num',
         remoteSort: false,
         root: 'channelList',
         totalProperty: 'totalCount',
         fields: [
-                 'cnum' , {name:'cnum',  type: 'int'},
-                 'cname', {name:'cname', type: 'string'},
-                 'cprov', {name:'cprov', type: 'string'},
-                 'csrc' , {name:'csrc',  type: 'string'},
-                 'c_friendly_type' , {name:'c_friendly_type',  type: 'string'},
-                 'c_friendly_scrambled' , {name:'c_friendly_scrambled',  type: 'string'},
-                 'c_friendly_lang' , {name:'c_friendly_lang',  type: 'string'},
-                 'c_friendly_transp' , {name:'c_friendly_transp',  type: 'string'},
-                 'cfreq', {name:'cfreq', type: 'int'},
-                 'cmod' , {name:'cmod',  type: 'string'},
-                 'csymb', {name:'csymb', type: 'int'},
-                 'cvpid' , {name:'cvpid',  type: 'string'},
-                 'capid' , {name:'capid',  type: 'string'},
-                 'ctpid' , {name:'ctpid',  type: 'string'},
-                 'ccaid' , {name:'ccaid',  type: 'string'},
-                 'csid' , {name:'csid',  type: 'string'},
-                 'cnid' , {name:'cnid',  type: 'string'},
-                 'ctid' , {name:'ctid',  type: 'string'},
-                 'crid' , {name:'crid',  type: 'string'},
-                 'cgroup' , {name:'cgroup',  type: 'string'}
-                 //,'cstr' , {name:'cstr',  type: 'string'}
+                 'num' , {name:'num',  type: 'int'},
+                 'name', {name:'name', type: 'string'},
+                 'prov', {name:'prov', type: 'string'},
+                 'src' , {name:'src',  type: 'string'},
+                 '_friendly_type' , {name:'_friendly_type',  type: 'string'},
+                 '_friendly_scrambled' , {name:'_friendly_scrambled',  type: 'string'},
+                 '_friendly_lang' , {name:'_friendly_lang',  type: 'string'},
+                 '_friendly_transp' , {name:'_friendly_transp',  type: 'string'},
+                 'freq' , {name:'freq', type: 'int'},
+                 'mod'  , {name:'mod',  type: 'string'},
+                 'symb' , {name:'symb', type: 'int'},
+                 'vpid' , {name:'vpid',  type: 'string'},
+                 'apid' , {name:'apid',  type: 'string'},
+                 'tpid' , {name:'tpid',  type: 'string'},
+                 'caid' , {name:'caid',  type: 'string'},
+                 'sid'  , {name:'sid',  type: 'string'},
+                 'nid'  , {name:'nid',  type: 'string'},
+                 'tid'  , {name:'tid',  type: 'string'},
+                 'rid'  , {name:'rid',  type: 'string'},
+                 'group', {name:'group',  type: 'string'}
              ]
         
     });
@@ -37,7 +36,7 @@ function getChannelsForm(){
         autoLoad: false,
         url: 'get_svdrp_response?command=LSTC',
         storeId: 'channellist_store',
-        groupField: 'cgroup',
+        groupField: 'group',
         reader: channellist_reader
     });
 
@@ -50,27 +49,26 @@ function getChannelsForm(){
         var grid = new Ext.grid.GridPanel({
             store: channellist_store,
             columns: [
-                {header: getLL("channels.grid_header.cnumber"),  align: 'right', width: 30, dataIndex: 'cnum', sortable: true},
-                {header: getLL("channels.grid_header.cname"),  align: 'left', width: 160, dataIndex: 'cname', sortable: true},
-                {header: getLL("channels.grid_header.cprovider"),  align: 'left', width: 90, dataIndex: 'cprov', sortable: true},
-                {header: getLL("channels.grid_header.c_friendly_type"),  align: 'center', width: 50, dataIndex: 'c_friendly_type', sortable: true},
-                {header: getLL("channels.grid_header.c_friendly_scrambled"),  align: 'center', width: 70, dataIndex: 'c_friendly_scrambled', sortable: true},
-                {header: getLL("channels.grid_header.c_friendly_lang"),  align: 'center', width: 70, dataIndex: 'c_friendly_lang', sortable: true},
-                {header: getLL("channels.grid_header.c_friendly_transp"),  align: 'left', width: 140, dataIndex: 'c_friendly_transp', sortable: true},
-                {header: getLL("channels.grid_header.cmodulation"),  align: 'left', width: 90, dataIndex: 'cmod', sortable: true},
-                {header: getLL("channels.grid_header.csource"),  align: 'left', width: 50, dataIndex: 'csrc', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.cfrequency"),  align: 'right', width: 70, dataIndex: 'cfreq', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.csymbolrate"),  align: 'right', width: 70, dataIndex: 'csymb', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.cvpid"),  align: 'left', width: 90, dataIndex: 'cvpid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.capid"),  align: 'left', width: 220, dataIndex: 'capid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.ctpid"),  align: 'right', width: 40, dataIndex: 'ctpid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.ccaid"),  align: 'left', width: 70, dataIndex: 'ccaid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.csid"),  align: 'right', width: 40, dataIndex: 'csid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.cnid"),  align: 'right', width: 40, dataIndex: 'cnid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.ctid"),  align: 'right', width: 40, dataIndex: 'ctid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.crid"),  align: 'right', width: 40, dataIndex: 'crid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header.cgroup"),  align: 'left', width: 150, dataIndex: 'cgroup', sortable: true, hidden: true}
-                //,{header: getLL("channels.grid_header.cstr"),  align: 'left', width: 800, dataIndex: 'cstr', sortable: false}
+                {header: getLL("channels.grid_header.number"),  align: 'right', width: 30, dataIndex: 'num', sortable: true},
+                {header: getLL("channels.grid_header.name"),  align: 'left', width: 160, dataIndex: 'name', sortable: true},
+                {header: getLL("channels.grid_header.provider"),  align: 'left', width: 90, dataIndex: 'prov', sortable: true},
+                {header: getLL("channels.grid_header._friendly_type"),  align: 'center', width: 50, dataIndex: '_friendly_type', sortable: true},
+                {header: getLL("channels.grid_header._friendly_scrambled"),  align: 'center', width: 70, dataIndex: '_friendly_scrambled', sortable: true},
+                {header: getLL("channels.grid_header._friendly_lang"),  align: 'center', width: 70, dataIndex: '_friendly_lang', sortable: true},
+                {header: getLL("channels.grid_header._friendly_transp"),  align: 'left', width: 140, dataIndex: '_friendly_transp', sortable: true},
+                {header: getLL("channels.grid_header.modulation"),  align: 'left', width: 90, dataIndex: 'mod', sortable: true},
+                {header: getLL("channels.grid_header.source"),  align: 'left', width: 50, dataIndex: 'src', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.frequency"),  align: 'right', width: 70, dataIndex: 'freq', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.symbolrate"),  align: 'right', width: 70, dataIndex: 'symb', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.vpid"),  align: 'left', width: 90, dataIndex: 'vpid', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.apid"),  align: 'left', width: 220, dataIndex: 'apid', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.tpid"),  align: 'right', width: 40, dataIndex: 'tpid', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.caid"),  align: 'left', width: 70, dataIndex: 'caid', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.sid"),  align: 'right', width: 40, dataIndex: 'sid', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.nid"),  align: 'right', width: 40, dataIndex: 'nid', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.tid"),  align: 'right', width: 40, dataIndex: 'tid', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.rid"),  align: 'right', width: 40, dataIndex: 'rid', sortable: true, hidden: true},
+                {header: getLL("channels.grid_header.group"),  align: 'left', width: 150, dataIndex: 'group', sortable: true, hidden: true}
             ],
             view: new Ext.grid.GroupingView({
                 forceFit:true,
