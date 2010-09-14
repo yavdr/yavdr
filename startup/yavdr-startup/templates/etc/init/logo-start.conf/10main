@@ -10,11 +10,13 @@ export HOME=/var/lib/vdr
 script
 DELAY=.5
 PICTURES='/usr/share/yavdr/images/intro*'
+xsetroot -cursor /usr/share/yavdr/images/nocursor /usr/share/yavdr/images/nocursor
 while true ; do for X in $PICTURES ; do hsetroot -center $X ; sleep $DELAY ; done ; done
 end script
 
 post-stop script
 sleep 5
+xsetroot -cursor_name left_ptr
 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
 end script
 
