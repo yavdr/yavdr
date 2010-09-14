@@ -1,0 +1,20 @@
+start on openbox-started
+stop on started vdr-frontend
+
+
+env DISPLAY=:1
+export DISPLAY
+export PATH=/usr/local/bin:/usr/bin:/bin
+export HOME=/var/lib/vdr
+
+script
+DELAY=.5
+PICTURES='/usr/share/yavdr/images/intro*'
+while true ; do for X in $PICTURES ; do hsetroot -center $X ; sleep $DELAY ; done ; done
+end script
+
+post-stop script
+sleep 5
+hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
+end script
+

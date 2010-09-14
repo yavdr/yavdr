@@ -24,6 +24,7 @@ case $1 in
          ;;
      thaw|resume)
          # reload dvb-driver at resume
+         start logo-start
          start vdr-exit-1
          for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
          ;;
