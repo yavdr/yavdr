@@ -6,7 +6,6 @@ env DISPLAY=:1
 export DISPLAY
 
 script
-hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
 <?cs if:(system.x11.dualhead.enabled == "1") ?>
 DISPLAY=:1.1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
 <?cs /if ?>
