@@ -2,7 +2,9 @@
                                                                                                                         
 if [ remove = "$1" ]; then 
   /usr/bin/dpkg-trigger yavdr-addons-update
+  killall -9 wmdrawer
   rm -f /etc/init/tuxracer.conf
+  start launcher
 fi
 
 #DEBHELPER#
