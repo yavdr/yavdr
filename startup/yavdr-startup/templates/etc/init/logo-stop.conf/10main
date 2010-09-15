@@ -1,5 +1,5 @@
 start on stopping vdr
-stop on (starting logo-start or started vdr)
+stop on (started vdr-exit-1 or started vdr)
 
 
 env DISPLAY=:1
