@@ -1,4 +1,5 @@
 start on openbox-started
+stop on starting vdr-frontend
 
 
 env DISPLAY=:1
@@ -6,13 +7,11 @@ export DISPLAY
 export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/var/lib/vdr
 
-task 
-
 script
 DELAY=.5
 PICTURES='/usr/share/yavdr/images/intro*'
 xsetroot -cursor /usr/share/yavdr/images/nocursor /usr/share/yavdr/images/nocursor
-until status vdr-frontend | grep -q running ; do 
+while true ; do 
    for X in $PICTURES ; do 
        hsetroot -center $X 
        sleep $DELAY 
