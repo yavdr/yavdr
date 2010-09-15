@@ -1,4 +1,4 @@
-start on openbox-started
+start on (openbox-started and starting vdr-frontend)
 stop on started vdr-frontend
 
 
