@@ -20,6 +20,7 @@ esac
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
+         stop logo-stop
          ;;
      thaw|resume)
          # reload dvb-driver at resume
