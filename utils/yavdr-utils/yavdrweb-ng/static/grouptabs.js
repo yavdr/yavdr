@@ -83,10 +83,11 @@ Ext.TaskMgr.start({
     Ext.QuickTips.init();
 
     var viewport = new Ext.Viewport({
-    	id: 'webfrontend',
+    	
         layout:'fit',
         items:[
             Ext.create({
+            	id: 'webfrontend',
                 xtype: 'grouptabpanel',
                 tabWidth: 190,
                 activeGroup: 0,
