@@ -14,12 +14,12 @@ function getVDRLifeguardForm(){
             fieldLabel: getLL("lifeguard.label"),
             columns: 2,
             items: [
-                {id: 'aptitude', boxLabel: 'Aptitude', name: 'values', inputValue: 'aptitude'},
-                {id: 'ssh', boxLabel: 'SSH', name: 'values', inputValue: 'ssh'},
-                {id: 'nfs', boxLabel: 'NFS', name: 'values', inputValue: 'nfs'},
-		        {id: 'ftp', boxLabel: 'FTP', name: 'values', inputValue: 'ftp'},
-                {id: 'smb', boxLabel: 'SMB', name: 'values', inputValue: 'smb'},		
-                {id: 'xbmc', boxLabel: 'XBMC', name: 'values', inputValue: 'xbmc'}
+                {id: 'lifeguard_aptitude', boxLabel: 'Aptitude', name: 'values', inputValue: 'aptitude'},
+                {id: 'lifeguard_ssh', boxLabel: 'SSH', name: 'values', inputValue: 'ssh'},
+                {id: 'lifeguard_nfs', boxLabel: 'NFS', name: 'values', inputValue: 'nfs'},
+		        {id: 'lifeguard_ftp', boxLabel: 'FTP', name: 'values', inputValue: 'ftp'},
+                {id: 'lifeguard_smb', boxLabel: 'SMB', name: 'values', inputValue: 'smb'},		
+                {id: 'lifeguard_xbmc', boxLabel: 'XBMC', name: 'values', inputValue: 'xbmc'}
             ]
         },{
             html: '<br/><br/>' + getLL("lifeguard.help")
@@ -55,25 +55,20 @@ function getVDRLifeguardForm(){
         scope: myform,
         success: function(xhr) {
             //alert('Response is "' + xhr.responseText + '"');
-            var currentLifeguard = "";
             try {
-                currentLifeguard = xhr.responseText;
+            	var currentLifeguard = Ext.util.JSON.decode( xhr.responseText );
+            	for(var i=0; i < currentLifeguard.length; i++) {
+                	var rButton = Ext.getCmp('lifeguard_'+currentLifeguard[i]);
+                    if (rButton)
+                        rButton.setValue( true );
+                    else
+                        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find lifeguard radiobutton group.');
+                }
             }
             catch (err) {
                 Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current sound setting.');
             }
-            if (currentLifeguard == "aptitude" 
-                || currentLifeguard == "ssh" 
-                || currentLifeguard == "nfs" 
-		        || currentLifeguard == "ftp"
-                || currentLifeguard == "smb"
-                || currentLifeguard == "xbmc"){
-                var rButton = this.getComponent('lifeguard_radio_group');
-                if (rButton)
-                    rButton.setValue( currentLifeguard );
-                else
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find lifeguard radiobutton group.');
-            }
+
         }
     });
     

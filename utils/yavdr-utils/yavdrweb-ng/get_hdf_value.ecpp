@@ -37,6 +37,7 @@ void Tokenize(const string& str,
 }
 
 void hdfwalk(HDF *hdf, HDF *child, Json::Value *json) {
+	int length = 0;
 	while (child != NULL) {
 		if (child->child != NULL) {
 			Json::Value dummy;
@@ -45,8 +46,10 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json) {
 		} else {
 			(*json)[child->name] = child->value;
 		}
+		length ++;
 		child = child->next;
 	}
+	(*json)["length"] = length;
 }
 </%shared><%cpp>
   reply.setHeader ("Cache-Control", "no-cache", false);
