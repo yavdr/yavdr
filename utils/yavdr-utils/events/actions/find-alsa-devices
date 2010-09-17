@@ -1,16 +1,15 @@
 #!/bin/bash
 
-LANG=C aplay -l | grep card |\
-while read SINK ; do 
+for INTERFACE in hdmi digital analog ; do
+if [ $(LANG=C aplay -l | grep -i $INTERFACE | wc -l) -eq 1 ]; then
+  SINK="$(LANG=C aplay -l | grep -i $INTERFACE)"
   # get the index id's
   CARD=${SINK//card } ; CARD=${CARD%%:*}
   DEVICE=${SINK//*device }; DEVICE=${DEVICE%%:*}
 
   # put them into db
-  for INTERFACE in hdmi digital analog ; do 
-    if echo $SINK | grep -qi $INTERFACE ; then
-      dbset system.hardware.alsa.${INTERFACE}.card=$CARD
-      dbset system.hardware.alsa.${INTERFACE}.device=$DEVICE
-    fi 
-  done
-done 
+  dbset system.hardware.alsa.${INTERFACE}.card=$CARD
+  dbset system.hardware.alsa.${INTERFACE}.device=$DEVICE
+fi
+done
+
