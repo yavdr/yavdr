@@ -5,6 +5,33 @@ if [ "$1" = "ATTACH" ]; then
     # holgerr: sundtek needs additional time to start up
     sleep 2
     
+    #!/bin/bash
+
+
+DEVID=0
+FRONTEND=1
+
+FOUND_DEV=0
+while IFS=: read first rest; do
+  if [ $FOUND_DEV -eq 1 ]; then
+    if [ "x${first:0:6}" == "xdevice" ]; then
+      break;
+    fi
+    if [ "x$first" == "xFRONTEND" ]; then
+      RESULT=$(echo $rest |\
+       sed -e "s/\/dev\/dvb\/adapter\([0-9]\)\/frontend$FRONTEND/\\1/" |\
+       sed -e "s/^[^0-9].*//")
+
+      if [ -n $RESULT ]; then
+        echo $RESULT
+      fi
+    fi
+  fi
+  if [ "x$first" == "xdevice $DEVID" ]; then
+    FOUND_DEV=1
+  fi
+done
+
     dbset "system.hardware.sundtek.adapter=$2"
     MODE="$(dbget system.hardware.sundtek.mode)"
     if [ -n "$MODE" ]; then

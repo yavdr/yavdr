@@ -4,4 +4,4 @@
 # See manpage for vdr-addon-lifeguard (`man vdr-addon-lifeguard`)
 #
 
-<?cs if:(!?vdr.plugin.lifeguard.enable.0) ?>
+<?cs if:(!?vdr.plugin.lifeguard.enable && !?vdr.plugin.lifeguard.enable.0) ?>
