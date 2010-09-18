@@ -25,11 +25,10 @@ if [ -e /etc/auto.net.yavdr ]; then
    logger "mountpoints found: $mountpoints"
    if [ -n "$mountpoints" ]; then 
       until status autofs | grep -q process ; do sleep 1 ; done
-         for mountpoint in $mountpoints; do
-             logger "mount $mountpoint tested"
-             touch /net.yavdr/$mountpoint
-             logger "mount $mountpoint established"
-         done
+      for mountpoint in $mountpoints; do
+         logger "mount $mountpoint tested"
+         touch /net.yavdr/$mountpoint
+         logger "mount $mountpoint established"
       done
    fi 
 fi
