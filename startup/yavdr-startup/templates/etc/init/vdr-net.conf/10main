@@ -11,26 +11,28 @@
 #                                                                               #
 #################################################################################
 #
-
-description	"Delayed notifaction service of net mounted dirs"
+description     "Delayed notifaction service of net mounted dirs"
 author          "Arno Esser <arno.esser@gmx.de>"
 
-start on starting vdr 
+start on starting vdr
 
 task
 
 script
 if [ -e /etc/auto.net.yavdr ]; then
    mountpoints=`cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`
-   logger "mountpoints found: $mountpoints"
-   if [ -n "$mountpoints" ]; then 
+   logger -t "vdr-net" "mountpoints found: $mountpoints"
+   if [ -n "$mountpoints" ]; then
       until status autofs | grep -q process ; do sleep 1 ; done
-      for mountpoint in $mountpoints; do
-         logger "mount $mountpoint tested"
-         touch /net.yavdr/$mountpoint
-         logger "mount $mountpoint established"
+         for mountpoint in $mountpoints; do
+             logger -t "vdr-net" "mount $mountpoint tested"
+             touch /net.yavdr/$mountpoint/. &> /dev/null || /bin/true
+             if mount | grep -q /net.yavdr/$mountpoint/ ; then
+                logger -t "vdr-net" "mount $mountpoint established"
+             else
+                logger -t "vdr-net" "mount $mountpoint not established"
+             fi
       done
-   fi 
+   fi
 fi
 end script
-
