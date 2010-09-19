@@ -10,7 +10,9 @@
 <script type="text/javascript" src="/static/config_tabs/vdr-frontend.js"></script>
 <script type="text/javascript" src="/static/config_tabs/vdr-upload-config.js"></script>
 <script type="text/javascript" src="/static/config_tabs/shutdown.js"></script>
+<script type="text/javascript" src="/static/config_tabs/lifeguard.js"></script>
 <script type="text/javascript" src="/static/config_tabs/packages.js"></script>
+<script type="text/javascript" src="/static/config_tabs/channels.js"></script>
 
 <!-- system -->
 <script type="text/javascript" src="/static/config_tabs/remote.js"></script>
@@ -22,13 +24,12 @@
 <script type="text/javascript" src="/static/config_tabs/web-frontend.js"></script>
 
 <!-- demo -->
-<script type="text/javascript" src="/static/config_tabs/channels.js"></script>
 
 <!-- diagnose -->
 <script type="text/javascript" src="/static/config_tabs/diagnose.js"></script>
 
 <!-- dev -->
-<script type="text/javascript" src="/static/config_tabs/lifeguard.js"></script>
+
 
 <!-- /yavdrweb js -->
 

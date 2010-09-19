@@ -114,12 +114,10 @@ function getVDRLifeguardForm() {
 }
 
 Ext.onReady(function() {
-	if (yavdrwebGlobalInfo.devmode == "1") {
-		YaVDRMenuManager.addGroupPanelSection( {
-			section : "development"
-		}).addGroupPanelTab( {
-			section : "lifeguard",
-			items : getVDRLifeguardForm
-		});
-	}
+	YaVDRMenuManager.addGroupPanelSection({
+		section : "vdr"
+	}).addGroupPanelTab( {
+		section : "lifeguard",
+		items : getVDRLifeguardForm
+	});
 });
