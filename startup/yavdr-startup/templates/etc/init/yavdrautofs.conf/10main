@@ -1,9 +1,0 @@
-start on starting autofs
-
-task
-
-script
-
-sleep 20
-
-end script
