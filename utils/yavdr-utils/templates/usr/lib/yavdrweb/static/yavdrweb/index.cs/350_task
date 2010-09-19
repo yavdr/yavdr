@@ -3,7 +3,7 @@ var taskRunner = null;
 check = function() {
     Ext.Ajax.request({
         url: 'get_time',
-        timeout: 1000,
+        timeout: 5000,
         method: 'GET',
         offline: false,
         success: function(xhr) {
@@ -15,12 +15,17 @@ check = function() {
         	}
         },
         failure: function(xhr) {
-        	//Ext.TaskMgr.stop(taskRunner);
-        	if (!taskRunner.offline) {
-            	taskRunner.interval = 15000;
-        		taskRunner.offline = true;
-        		alert('VDR seams to be switched off or webserver is stopped.');
-        		Ext.getCmp('webfrontend').disable();
+        	alert(xhr.status);
+        	switch (xhr.status) {
+        	case -1: // timeout -> ignore
+        		break;
+        	default:
+	        	if (!taskRunner.offline) {
+	            	taskRunner.interval = 30000;
+	        		taskRunner.offline = true;
+	        		alert('VDR seams to be switched off or webserver is stopped.');
+	        		Ext.getCmp('webfrontend').disable();
+	        	}
         	}
         }
     });
