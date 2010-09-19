@@ -19,7 +19,7 @@ start on started autofs
 task
 
 script
-sleep 5
+sleep 20
 if [ -e /etc/auto.net.yavdr ]; then
    mountpoints=`cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`
    if [ -n "$mountpoints" ]; then
