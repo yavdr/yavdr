@@ -8,6 +8,7 @@ export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/var/lib/vdr
 
 script
+if  status vdr-frontend | grep -q process ; then exit 0 ; fi
 DELAY=.5
 PICTURES='/usr/share/yavdr/images/intro*'
 xsetroot -cursor /usr/share/yavdr/images/nocursor /usr/share/yavdr/images/nocursor
