@@ -14,11 +14,12 @@
 description     "Delayed notifaction service of net mounted dirs"
 author          "Arno Esser <arno.esser@gmx.de>"
 
-start on started vdr
+start on started autofs
 
 task
 
 script
+sleep 5
 if [ -e /etc/auto.net.yavdr ]; then
    mountpoints=`cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`
    if [ -n "$mountpoints" ]; then
