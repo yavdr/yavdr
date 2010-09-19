@@ -5,7 +5,6 @@ check = function() {
         url: 'get_time',
         timeout: 5000,
         method: 'GET',
-        offline: false,
         success: function(xhr) {
     		var data = Ext.util.JSON.decode( xhr.responseText );
     		if (taskRunner.offline) {
@@ -15,7 +14,6 @@ check = function() {
         	}
         },
         failure: function(xhr) {
-        	alert(xhr.status);
         	switch (xhr.status) {
         	case -1: // timeout -> ignore
         		break;
