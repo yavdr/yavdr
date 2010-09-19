@@ -21,6 +21,6 @@ end script
 
 post-stop script
 xsetroot -cursor_name left_ptr
-hsetroot -center /usr/share/yavdr/images/yavdr_logo.png;
+hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
 end script
 
