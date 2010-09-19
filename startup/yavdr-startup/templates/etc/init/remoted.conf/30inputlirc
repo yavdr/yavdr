@@ -16,6 +16,7 @@ script
 [ -r /etc/default/inputlirc ] && . /etc/default/inputlirc
 test -f /usr/sbin/inputlircd || exit 0
 
+<?cs if:(?system.inputlirc.path) ?>until [ -e <?cs var:system.inputlirc.path ?> ] ; do sleep 1 ; done <?cs /if ?>
 exec /usr/sbin/inputlircd -f $OPTIONS $EVENTS <?cs var:system.inputlirc.path ?>
 end script
 <?cs /if ?>
