@@ -14,7 +14,7 @@
 description     "Delayed notifaction service of net mounted dirs"
 author          "Arno Esser <arno.esser@gmx.de>"
 
-start on started autofs
+start on started autofs and started vdr
 
 task
 
