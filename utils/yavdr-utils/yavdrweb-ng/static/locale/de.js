@@ -271,7 +271,12 @@ var locale_de = {
 		title : 'Samba',
 		tabtip : 'Verwalten der Samba-Freigaben'
 	    }
-	}
+	},
+        submit: {
+            waitmsg : 'Konfiguration wird übernommen.',    
+            success : 'Mounttabelle wurde erfolgreich geändert.',
+            failure : 'Ein Problem beim Ändern der Mounttabelle ist aufgetreten.'
+        }
     },
     nvidia: {
         menutab: {

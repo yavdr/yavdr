@@ -261,7 +261,12 @@ var locale_en = {
                 title : 'Samba',
                 tabtip : 'Maintain samba shares'
             }
-	   }
+	},
+        submit: {
+            waitmsg : 'Konfiguration changing',    
+            success : 'Mounttable successfully changed.',
+            failure : 'A problem has occured during change of mounttable.'
+        }
     },
     nvidia: {
         menutab: {

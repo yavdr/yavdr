@@ -69,6 +69,7 @@ function getNFSForm(){
 		  text: getLL("network.nfs.labels.apply"),
 		  handler: function() {
 		      var mounts = [];
+		      mounttable.disable();
 		      selectedRow = -1;
 		      Ext.each(store.getRange(), // complete
 			       function(k, v){
@@ -83,10 +84,12 @@ function getNFSForm(){
 				  waitMsg: 'wait',
 				  waitTitle: getLL("standardform.messagebox_caption.wait"),
 				  success: function(xhr) {
-				  Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("upload.submit.success") );
+				  Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("network.submit.success") );
+				  mounttable.enable();
 			      },
 				  failure:function(form, action) {
-				  Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("upload.submit.failure") );
+				  Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("network.submit.failure") );
+				  mounttable.enable();
 			      }
 			  })
 		  }
