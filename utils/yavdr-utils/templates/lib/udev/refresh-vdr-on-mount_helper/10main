@@ -3,6 +3,7 @@ mountpoints=`cat /etc/auto.net.yavdr | awk '!/^#/ && /fstype/ {print $1}'`
 for mountpoint in $mountpoints; do
   if cat /proc/mounts | grep -q /net.yavdr/$mountpoint ; then
      su -c "touch /srv/vdr/video.00/.update" vdr
+     chown vdr:vdr /srv/vdr/video.00/.update
   fi
 done
 fi

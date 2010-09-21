@@ -13,4 +13,4 @@ if [ -e /etc/auto.net.yavdr ]; then
     done
 fi
 touch $VIDEO_DIR/.update
-
+chown vdr:vdr $VIDEO_DIR/.update
