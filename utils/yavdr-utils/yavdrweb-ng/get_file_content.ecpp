@@ -96,13 +96,13 @@ else{
                          //we must escape special chars via sout (xss) and cut off LF
                      else
                          reply.sout() << string(buffer).substr(0, bufferlength );// << "[MISSING NL]";
-                         //we must escape special chars via sout (xss) and cut off LF                     
+                         //we must escape special chars via sout (xss) and cut off LF
                      reply.out() << "<br/>";
                  }
                  else
                  {
-                     reply.sout() << string(buffer).substr(0, bufferlength ); 
-                     //we must escape special chars via sout (xss), LF stay like they are
+                     reply.out() << string(buffer).substr(0, bufferlength ); 
+                     //we deliberately don't escape special chars here because puretext is true!, LF stay like they are
                  }
               }
             }
