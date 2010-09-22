@@ -1,4 +1,4 @@
-yavdr-addon-semsix (0.2.1.1550-1yavdr1) lucid; urgency=low
+yavdr-addon-semsix (0.3.0.1966-1yavdr1) lucid; urgency=low
 
   * build 
   * Switch to dpkg-source 3.0 (quilt) format

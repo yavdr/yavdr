@@ -2,6 +2,48 @@ yaVDR-utils release history
 ---------------------------------------
 
 -----------------
+Version 0.3.0 (xx.xxx.2010)
+-----------------
+
+- bugfix fsck on shutdown
+- bugfix inputlirc (thx to kris)
+- bugfix nvidia-overscan
+- extended channellist in webfrontend
+- fixed headless mode (new : vdr-plugin-control in headless mode)
+
+NEW
+
+- autogenerate custom EDID
+- disabled webfrontend if vdr is disappeared
+- changed pvr-client in xbmc to vnsi (default enabled)
+- plugable webfrontend
+- hidecursor-patch in sxfe (replaces unclutter)
+- yavdrpackage installer (install yavdr-addons and vdr-plugins over webfrontend)
+- configurable lifeguard in webfrontend
+- extended file upload over webfrontend (new: lircd.conf, lircmap.xml)
+- changed s3 to uswsusp (s2ram)
+- added autodetection usb-wakeup for remotes
+- default vdr-skin : anthra (thx tomas @ vdrportal)
+- added remove-marks (noad)
+- fixed commands.conf
+- yavdr-installer-sundtek (driver install, and configurable in yavdr-webfrontend)
+- yavdr-addons :
+  * pidgin
+  * chromium 
+  * claws-mail
+  * dvdrip
+  * asunder
+  * mediathek
+  * performous
+  * semsix
+  * simfy
+  * tuxracer
+  * vlc
+  * youtube
+- yavdr launcher + taskbar (start/stop addons)
+
+
+-----------------
 Version 0.2.0 (xx.xxx.2010)
 -----------------
 

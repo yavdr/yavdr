@@ -1,6 +1,6 @@
-yavdr-startup (0.2.1.1792-1yavdr1) lucid; urgency=low
+yavdr-startup (0.3.0.1966-1yavdr1) lucid; urgency=low
 
   * build 
   * Switch to dpkg-source 3.0 (quilt) format
 
- -- Holger Schvestka <hotzenplotz5@gmx.de>  Mon, 03 May 2010 12:19:06 +0200
+ -- Holger Schvestka <hotzenplotz5@gmx.de> Sun, 22 Sep 2010 19:24:29 +0100
