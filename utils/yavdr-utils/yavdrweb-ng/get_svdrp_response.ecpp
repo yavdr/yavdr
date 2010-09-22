@@ -6,6 +6,8 @@
 using namespace std;
 </%pre><& authenticate ><%args>
 command;
+param1;
+param2;
 </%args><%shared>
 
 Json::Value convertSingleRawChannelDataToJSON( char * buffer, 
@@ -57,8 +59,9 @@ Json::Value convertSingleRawChannelDataToJSON( char * buffer,
     //modulation
     start += marker + 1;
     marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
-    json_channel["mod"] = sBuffer.substr( start, marker );
-
+    string modulation = sBuffer.substr( start, marker );
+    json_channel["mod"] = modulation;
+    
     //source
     start += marker + 1;
     marker = sBuffer.substr( start, channel_length - start ).find_first_of(":", bof);
@@ -71,6 +74,51 @@ Json::Value convertSingleRawChannelDataToJSON( char * buffer,
     int symbol = atoi( sBuffer.substr( start, marker ).c_str() );
     json_channel["symb"] = symbol;
 
+    //modulation details
+    bool isDVB_S = false;
+    string firstChar = modulation.substr( 0, 1 );
+    json_channel["dvb_s2"] = false;
+    json_channel["dvb_sat"] = false;
+    string modPrefix = "";
+    if (firstChar == "H" || firstChar == "V" || firstChar == "R" || firstChar == "L"){
+        json_channel["dvb_sat"] = true;
+        json_channel["dvb_sat_polarisation"] = firstChar;
+        json_channel["_friendly_dvb_sat_band"] = "";
+        if (firstChar == "H" || firstChar == "V" ){
+            char friendly_band[120];
+            string polarBand = "Horizontal";
+            if (firstChar == "V")
+                polarBand = "Vertical";
+            string hilow = "undefined";
+            if (frequency >= 11700 && frequency <= 12750)
+                hilow = "High-Band";
+            else if (frequency >= 10700 && frequency < 11700)
+                hilow = "Low-Band";
+            sprintf( friendly_band ,"%s: %s %s", source.c_str(), polarBand.c_str(), hilow.c_str());
+            json_channel["_friendly_dvb_sat_band"] = friendly_band;
+        }
+        bool isDVB_S2 = modulation.find("S1", bof) != string::npos;
+        if (isDVB_S2 == true){
+            json_channel["dvb-s2"] = true;
+            modPrefix = "DVB-S2:";
+        }
+        else{
+            json_channel["mod"] = modulation;
+            modPrefix = "DVB-S:";
+        }
+    }
+    else if (source == "C"){
+        modPrefix = "DVB-C:";
+    }
+    else if (source == "T"){
+        modPrefix = "DVB-T:";
+    }
+    
+    char friendly_mod[120];
+    sprintf( friendly_mod ,"%s %s", modPrefix.c_str(), modulation.c_str());
+    json_channel["_friendly_mod"] = friendly_mod;
+    json_channel["mod"] = friendly_mod; //debug
+    
     //human readable combined transponder infos
     char friendly_transp[120];
     sprintf( friendly_transp ,"%s / %d / %d", source.c_str(), frequency, symbol );
@@ -190,6 +238,11 @@ Json::Value filterJSONSingleChannelData( Json::Value json_channel){
     json_channel.removeMember("tid"); 
     //rid
     json_channel.removeMember("rid");
+    //json_channel.removeMember("_friendly_dvb_sat_band");
+    json_channel.removeMember("dvb_s2");
+    json_channel.removeMember("dvb_sat");
+    json_channel.removeMember("dvb_sat_polarisation");
+    
     return json_channel;
 }
 
@@ -199,16 +252,17 @@ reply.setHeader ("Content-Type", "application/json", false);
 
 //TODO: check if charset conversion is needed, we assume UTF-8
 
-//restrict commands
-//string svdrpcmd = "/usr/bin/svdrpsend " + command;
+string svdrpCmdString = "/usr/bin/svdrpsend";
+
+char svdrpcmd[120];
+char buffer[1024];
 
 if (command == "LSTC") // || command == "NEWC")
 {
-    string svdrpcmd = "/usr/bin/svdrpsend LSTC :groups";
+    sprintf( svdrpcmd, "%s LSTC :groups", svdrpCmdString.c_str() );
 
-    if (FILE *stream = popen(svdrpcmd.c_str(), "r"))
+    if (FILE *stream = popen(svdrpcmd, "r"))
     {
-        char buffer[1024];
         int counter = 0;
         int groupcounter = 0;
         string groupname = "default";
@@ -255,7 +309,25 @@ if (command == "LSTC") // || command == "NEWC")
         json_channellist["totalCount"]  = counter;
         reply.out() << json_channellist;
     }
+}/*
+else if (command == "CHAN"){
+    int channel = atoi(param1.c_str());
+    if ( channel > 0){  
+        sprintf( svdrpcmd ,"%s CHAN %d", svdrpCmdString.c_str(), channel );
+        if (FILE *stream = popen(svdrpcmd, "r")){
+            while (!feof(stream)){
+                if (fgets(buffer, sizeof(buffer), stream) != NULL){
+                    reply.out() << buffer;
+                }
+            }
+        }
+    }
 }
+else if (command == "MOVC"){
+    int channel_from = atoi( param1.c_str() );
+    int channel_to = atoi( param2.c_str() );
+    //....
+}*/
 else
     reply.out() << "Illegal command.";
 

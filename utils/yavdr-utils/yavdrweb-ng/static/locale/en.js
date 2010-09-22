@@ -152,7 +152,8 @@ var locale_en = {
             _friendly_transp: 'Transponder',
             _friendly_lang: 'Language',
             _friendly_type: 'TV/Radio',
-            _friendly_scrambled : 'FTA/scrambled'
+            _friendly_scrambled : 'FTA/scrambled',
+            _friendly_dvb_sat_band : "Sat Signal Band"
         },
         grid_title : 'Channel List (all radio and TV channels)' 
     },

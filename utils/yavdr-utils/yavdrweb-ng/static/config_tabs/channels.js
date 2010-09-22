@@ -15,6 +15,7 @@ function getChannelsForm(){
                  '_friendly_transp' , {name:'_friendly_transp',  type: 'string'},
                  'mod'  , {name:'mod',  type: 'string'},
                  '_group', {name:'_group',  type: 'string'},
+                 '_friendly_dvb_sat_band' , {name:'_friendly_dvb_sat_band',  type: 'string'}
                  //'src' , {name:'src',  type: 'string'},
                  //'freq' , {name:'freq', type: 'int'},
                  //'symb' , {name:'symb', type: 'int'},
@@ -45,6 +46,17 @@ function getChannelsForm(){
         store: channellist_store
     });
     
+    /*only for debug
+    function captureEvents(observable) {
+        Ext.util.Observable.capture(
+            observable,
+            function(eventName) {
+                console.info(eventName);
+            },
+            this
+        );      
+    }*/
+     
     function createChannelGrid(){
         var grid = new Ext.grid.GridPanel({
             store: channellist_store,
@@ -56,7 +68,8 @@ function getChannelsForm(){
                 {header: getLL("channels.grid_header._friendly_scrambled"),  align: 'center', width: 70, dataIndex: '_friendly_scrambled', sortable: true},
                 {header: getLL("channels.grid_header._friendly_lang"),  align: 'center', width: 70, dataIndex: '_friendly_lang', sortable: true},
                 {header: getLL("channels.grid_header._friendly_transp"),  align: 'left', width: 140, dataIndex: '_friendly_transp', sortable: true},
-                {header: getLL("channels.grid_header.modulation"),  align: 'left', width: 90, dataIndex: 'mod', sortable: true},
+                {header: getLL("channels.grid_header.modulation"),  align: 'left', width: 120, dataIndex: 'mod', sortable: true},
+                {header: getLL("channels.grid_header._friendly_dvb_sat_band"),  align: 'left', width: 160, dataIndex: '_friendly_dvb_sat_band', sortable: true, hidden: true},
                 //{header: getLL("channels.grid_header.source"),  align: 'left', width: 50, dataIndex: 'src', sortable: true, hidden: true},
                 //{header: getLL("channels.grid_header.frequency"),  align: 'right', width: 70, dataIndex: 'freq', sortable: true, hidden: true},
                 //{header: getLL("channels.grid_header.symbolrate"),  align: 'right', width: 70, dataIndex: 'symb', sortable: true, hidden: true},
@@ -71,22 +84,80 @@ function getChannelsForm(){
                 {header: getLL("channels.grid_header._group"),  align: 'left', width: 150, dataIndex: '_group', sortable: true, hidden: true}
             ],
             view: new Ext.grid.GroupingView({
-                forceFit:true,
+                forceFit: false,
                 groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
             }),
             title: getLL("channels.grid_title"),
             frame: true,
             loadMask: gridLoadMask,
-            tbar: [{
-                text: 'Refresh', //TODO use getLL here!
-                icon: '/ext/resources/images/default/grid/refresh.gif',
-                tooltip: 'Click this button to refresh channel list.',
-                handler: function(){
-                    channellist_store.reload();
+            tbar: [
+                {
+                    text: 'Refresh', //TODO use getLL here!
+                    icon: '/ext/resources/images/default/grid/refresh.gif',
+                    tooltip: 'Click this button to refresh channel list.',
+                    handler: function(){
+                        channellist_store.reload();
+                    }
+                },
+                {
+                    text: 'Switch to channel',
+                    id: 'zap_button',
+                    //icon: '/ext/resources/images/default/grid/refresh.gif',
+                    tooltip: 'Click this button to display this channel on VDR Frontend. This does not if you use XBMC as a frontend (I guess...).',
+                    disabled: true,
+                    handler: function(){
+                        //get selection Model
+                        var selectionModel = grid.getSelectionModel();
+                        //get the selected record
+                        var record = selectionModel.getSelected();
+                        //get the index of selected record
+                        var idx = grid.store.indexOf(record);
+                        alert(idx);/*
+                        Ext.Ajax.request({
+                            url: 'get_svdrp_response?command=CHAN 2',
+                            timeout: 3000,
+                            method: 'GET',
+                            scope: this,
+                            success: function(xhr) {
+                                alert('Response is "' + xhr.responseText + '"');
+                                /
+                                var lircData = 0;
+                                try {
+                                    lircData = Ext.util.JSON.decode( xhr.responseText );
+                                    //Ext.MessageBox.alert('Success', 'Decode of lircdata OK: ' + lircData.current_receiver);
+                                }
+                                catch (err) {
+                                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.error.json_decode"));
+                                }            
+                                this.lircData = lircData;
+                                /
+                            }
+                        });*/
+                    }
                 }
-            }],
+            ],
             viewConfig: {
                 forceFit: false
+            },
+            listeners: {
+                rowclick:function(grid, rowIndex, e) {
+                    grid.getComponent('zap_button').setDisabled(false);
+//                    e.stopEvent();
+                    var index = this.grid.getView().findRowIndex(t);
+                    var record = this.grid.store.getAt(index);
+                    
+                    //get selection Model
+                    var selectionModel = grid.getSelectionModel();
+                    //get the selected record
+                    var record = selectionModel.getSelected();
+                    //get the index of selected record
+                    var idx = grid.store.indexOf(record);
+                    alert(record + " / " + idx);
+                    
+                    
+//                    record.set(this.dataIndex, !record.data[this.dataIndex]);
+//                    this.fireEvent('click', this, e, record)            
+                }
             }
         });
         grid.on({
@@ -96,27 +167,9 @@ function getChannelsForm(){
                     //load store after the grid is done rendering
                     channellist_store.load();
                 }
-            }/*,
-            cellclick:{
-                scope: this,
-                fn: function(grid, rowIndex, columnIndex, e) {
-                    var record = grid.getStore().getAt(rowIndex);  // Get the Record
-                    var package = record.get('package_name');  // Get the package name
-                    var fieldName = grid.getColumnModel().getDataIndex(columnIndex); // Get column field name
-                    var data = record.get(fieldName); // get the package version
-                    if (data !== ''){
-                        //alert('cellClick: ' + package +  ' / '   + record + ' / ' + fieldName + ' / ' + data );
-                        // create the window on the first click and reuse on subsequent clicks
-                        singlePackageWindow.setTitle(package +  ' / '   + record + ' / ' + fieldName + ' / ' + data);
-                        //singlePackageWindowElement.update( package +  ' / '   + record + ' / ' + fieldName + ' / ' + data);
-                        singlePackageWindow.show(this);
-                    }
-                    else
-                        alert('cellClick: Package does not exist.');
-                }
-
-            }*/
+            }
         });
+        //captureEvents(grid);
         return grid;
     }
     

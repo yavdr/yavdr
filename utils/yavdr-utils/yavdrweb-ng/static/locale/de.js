@@ -162,7 +162,8 @@ var locale_de = {
             _friendly_transp: 'Transponder',
             _friendly_lang: 'Sprache',
             _friendly_type: 'TV/Radio',
-            _friendly_scrambled : 'FTA/verschlüsselt'
+            _friendly_scrambled : 'FTA/verschlüsselt',
+            _friendly_dvb_sat_band : "Sat-Empfangsbereich"
         },
         grid_title : 'Kanal-Liste (alle Radio- und TV-Kanäle)' 
     },
