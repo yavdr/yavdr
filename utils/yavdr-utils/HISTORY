@@ -41,6 +41,9 @@ NEW
   * vlc
   * youtube
 - yavdr launcher + taskbar (start/stop addons)
+- remove externalplayer-plugin (redundant)
+- start/stop applications over menuorg-plugin
+- dvbmon (dvbmon_helper : use udev and upstart to detect when all devices are loaded)
 
 
 -----------------
