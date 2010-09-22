@@ -44,6 +44,7 @@ NEW
 - remove externalplayer-plugin (redundant)
 - start/stop applications over menuorg-plugin
 - dvbmon (dvbmon_helper : use udev and upstart to detect when all devices are loaded)
+- process-template is now i18n aware - menuorg.xml will be generated in local language (if available)
 
 
 -----------------
@@ -80,7 +81,6 @@ Webfrontend:
 - add fr, nl and it to web frontend
 - add Input-LIRC and IR-Server to Webfrontend
 - rearrange Tabs
-- 
 
 -----------------
 Version 0.1.1 (18.Feb.2010)
