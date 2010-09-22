@@ -9,6 +9,7 @@ Version 0.3.0 (xx.xxx.2010)
 - bugfix inputlirc (thx to kris)
 - bugfix nvidia-overscan
 - extended channellist in webfrontend
+- nfs, some bugfixes
 - fixed headless mode (new : vdr-plugin-control in headless mode)
 
 NEW
