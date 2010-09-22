@@ -138,7 +138,7 @@ function getChannelsForm(){
             ],
             viewConfig: {
                 forceFit: false
-            },
+            }/*,
             listeners: {
                 rowclick:function(grid, rowIndex, e) {
 //                    grid.getComponent('zap_button').setDisabled(false);
@@ -158,7 +158,7 @@ function getChannelsForm(){
 //                    record.set(this.dataIndex, !record.data[this.dataIndex]);
 //                    this.fireEvent('click', this, e, record)            
                 }
-            }
+            }*/
         });
         grid.on({
             render:{
