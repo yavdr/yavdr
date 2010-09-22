@@ -82,39 +82,41 @@ function getVDRLifeguardForm() {
 		scope : myform,
 		success : function(xhr) {
 			// alert('Response is "' + xhr.responseText + '"');
-		try {
-			var currentLifeguard = Ext.util.JSON.decode(xhr.responseText);
-			if (currentLifeguard.length > 0) {
-				for ( var i = 0; i < currentLifeguard.length; i++) {
-					var rButton = Ext
-							.getCmp('lifeguard_' + currentLifeguard[i]);
-					if (rButton)
-						rButton.setValue(true);
-					else
-						Ext.MessageBox.alert(
-								getLL("standardform.messagebox_caption.error"),
-								'Could not find lifeguard radiobutton group.');
+			try {
+				var currentLifeguard = Ext.util.JSON.decode(xhr.responseText);
+				if (currentLifeguard != null) {
+					if (typeof(currentLifeguard.enable) == "object") {
+						for (var i = 0; i < currentLifeguard.enable.length; i++) {
+							var rButton = Ext
+									.getCmp('lifeguard_' + currentLifeguard.enable[i]);
+							if (rButton)
+								rButton.setValue(true);
+							else
+								Ext.MessageBox.alert(
+										getLL("standardform.messagebox_caption.error"),
+										'Could not find lifeguard radiobutton group.');
+						}
+					}
+				} else {
+					var group = this.getComponent('lifeguard_radio_group');
+					Ext.each(group.items.items, function(e, index) {
+						e.setValue(true);
+					});
 				}
-			} else {
-				var group = this.getComponent('lifeguard_radio_group');
-				Ext.each(group.items.items, function(e, index) {
-					e.setValue(true);
-				});
+			} catch (err) {
+				Ext.MessageBox.alert(
+						getLL("standardform.messagebox_caption.error"),
+						'Could not recognize current lifeguard setting.');
 			}
-		} catch (err) {
-			Ext.MessageBox.alert(
-					getLL("standardform.messagebox_caption.error"),
-					'Could not recognize current sound setting.');
+	
 		}
-
-	}
 	});
 
 	return myform;
 }
 
 Ext.onReady(function() {
-	YaVDRMenuManager.addGroupPanelSection({
+	YaVDRMenuManager.addGroupPanelSection( {
 		section : "vdr"
 	}).addGroupPanelTab( {
 		section : "lifeguard",

@@ -29,12 +29,14 @@ check = function() {
     });
 } 
 
-Ext.onReady(function() {
-    // equivalent using TaskMgr
-	taskRunner = Ext.TaskMgr.start({
-        run: check,
-        interval: 5000,
-        offline: false
-    });
-});
+if (yavdrwebGlobalInfo.devmode != "1") {
+	Ext.onReady(function() {
+	    // equivalent using TaskMgr
+		taskRunner = Ext.TaskMgr.start({
+	        run: check,
+	        interval: 5000,
+	        offline: false
+	    });
+	});
+}
 </script>

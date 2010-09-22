@@ -36,12 +36,12 @@ void Tokenize(const string& str,
 	}
 }
 
-void hdfwalk(HDF *hdf, HDF *child, Json::Value *json) {
+void hdfwalk(HDF *hdf, HDF *child, Json::Value *json, bool includeLength) {
 	int length = 0;
 	while (child != NULL) {
 		if (child->child != NULL) {
 			Json::Value dummy;
-			hdfwalk(hdf, child->child, &dummy);
+			hdfwalk(hdf, child->child, &dummy, true);
 			(*json)[child->name] = dummy;
 		} else {
 			(*json)[child->name] = child->value;
@@ -49,7 +49,9 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json) {
 		length ++;
 		child = child->next;
 	}
-	(*json)["length"] = length;
+	if (includeLength) {
+		(*json)["length"] = length;
+	}
 }
 </%shared><%cpp>
   reply.setHeader ("Cache-Control", "no-cache", false);
@@ -103,7 +105,10 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json) {
     			  reply.setHeader ("Content-Type", "application/json", false);
 
         		  Json::Value json;
-        		  hdfwalk(hdf, hdf_get_child(hdf, hdftree.c_str()), &json);
+        		  HDF *start = hdf_get_obj(hdf, hdftree.c_str());
+        		  if (start != NULL) {
+        			  hdfwalk(hdf, start, &json, false);
+        		  }
         		  reply.out() << json;
     		  }
     	  } else {
