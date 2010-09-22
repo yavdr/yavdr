@@ -98,7 +98,7 @@ function getChannelsForm(){
                     handler: function(){
                         channellist_store.reload();
                     }
-                },
+                }/*,
                 {
                     text: 'Switch to channel',
                     id: 'zap_button',
@@ -112,7 +112,7 @@ function getChannelsForm(){
                         var record = selectionModel.getSelected();
                         //get the index of selected record
                         var idx = grid.store.indexOf(record);
-                        alert(idx);/*
+                        alert(idx);
                         Ext.Ajax.request({
                             url: 'get_svdrp_response?command=CHAN 2',
                             timeout: 3000,
@@ -120,7 +120,7 @@ function getChannelsForm(){
                             scope: this,
                             success: function(xhr) {
                                 alert('Response is "' + xhr.responseText + '"');
-                                /
+                                / / / 
                                 var lircData = 0;
                                 try {
                                     lircData = Ext.util.JSON.decode( xhr.responseText );
@@ -130,18 +130,18 @@ function getChannelsForm(){
                                     Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.error.json_decode"));
                                 }            
                                 this.lircData = lircData;
-                                /
+                                / / / 
                             }
-                        });*/
+                        });
                     }
-                }
+                }*/
             ],
             viewConfig: {
                 forceFit: false
             },
             listeners: {
                 rowclick:function(grid, rowIndex, e) {
-                    grid.getComponent('zap_button').setDisabled(false);
+//                    grid.getComponent('zap_button').setDisabled(false);
 //                    e.stopEvent();
                     var index = this.grid.getView().findRowIndex(t);
                     var record = this.grid.store.getAt(index);
