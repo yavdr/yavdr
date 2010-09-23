@@ -1,20 +1,29 @@
 yaVDR-essential release history
 ---------------------------------------
 
+
+-----------------
+Version 0.3.0 (xx.xxx.2010)
+-----------------
 added vnsiserver-plugin
 added xli
 added update-manager-core
+added vdr-plugin-console
+added vdr-skins-anthra
+added tint2
+added wmdrawer
+added uswsusp
+remove vdr-plugin-avolctl
+remove unclutter
+remove feh
+-----------------
+Version 0.2.0 (02.May.2010)
+-----------------
+update to ubuntu lucid
 added vdr-addon-lifeguard
 added halevt
 added hal
 remove nodm
-remove unclutter
-remove feh
-
-update to ubuntu lucid
------------------
-Version 0.2.0 (02.May.2010)
------------------
 added touchscreen driver
 added vdr-plugin-dummydevice
 remove suspendoutput

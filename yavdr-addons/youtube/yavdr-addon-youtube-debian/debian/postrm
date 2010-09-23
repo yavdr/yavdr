@@ -2,7 +2,7 @@
                                                                                                                         
 if [ remove = "$1" ]; then 
   /usr/bin/dpkg-trigger yavdr-addons-update
-  killall -9 wmdrawer
+  killall -9 wmdrawer > /dev/null 2>&1
   rm -f /etc/init/youtube.conf
   start launcher
 fi
