@@ -42,6 +42,7 @@ Json::Value convertSingleRawChannelDataToJSON( char * buffer,
     }
 
     //channel name
+    //TODO: replace | in channelname with :
     json_channel["name"] = "unknown";
     if (first_semicolon != string::npos)
         end_of_channel_name = first_semicolon + 3;
@@ -295,6 +296,19 @@ if (command == "LSTC") // || command == "NEWC")
                      if (groupcounter == 0) groupcounter =1 ; //if first group has a defined name it should not be group zero
                      //group zero only exists if no group exists (no group = default)
                      groupname = sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
+                     if ( groupname.substr(0, 1) == "@")
+                     {
+                         string::size_type first_blank = groupname.find_first_of(" ", bof);
+                         if ( first_blank != string::npos && first_blank < strlen(groupname.c_str()) )
+                         {
+                             string startwithnumber = groupname.substr(1, first_blank -1);
+                             groupname = groupname.substr( first_blank +1, strlen(groupname.c_str()) - first_blank -1);
+                             groupname += " (@";
+                             groupname += startwithnumber;
+                             groupname += ")";
+                         }
+                     }
+                     
                      sprintf( prefixed_groupname ,"%03d %s", groupcounter, groupname.c_str() );
                      
                      groupcounter++;
@@ -309,20 +323,25 @@ if (command == "LSTC") // || command == "NEWC")
         json_channellist["totalCount"]  = counter;
         reply.out() << json_channellist;
     }
-}/*
+}
 else if (command == "CHAN"){
     int channel = atoi(param1.c_str());
     if ( channel > 0){  
+        Json::Value jresponse;
         sprintf( svdrpcmd ,"%s CHAN %d", svdrpCmdString.c_str(), channel );
         if (FILE *stream = popen(svdrpcmd, "r")){
+            int line = 0;
             while (!feof(stream)){
                 if (fgets(buffer, sizeof(buffer), stream) != NULL){
-                    reply.out() << buffer;
+                    if (line == 1)
+                        jresponse["response"] = buffer;
+                    line++;
                 }
             }
+            reply.out() << jresponse;
         }
     }
-}
+}/*
 else if (command == "MOVC"){
     int channel_from = atoi( param1.c_str() );
     int channel_to = atoi( param2.c_str() );
