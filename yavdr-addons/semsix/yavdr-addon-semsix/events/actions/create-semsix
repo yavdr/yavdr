@@ -2,7 +2,7 @@
 
 process-template /etc/init/semsix.conf
 process-template /etc/wmdrawer/media
-
+process-template /etc/vdr/lifeguard.conf
 
 
 

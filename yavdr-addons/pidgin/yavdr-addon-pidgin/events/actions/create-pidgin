@@ -2,6 +2,5 @@
 
 process-template /etc/init/pidgin.conf
 process-template /etc/wmdrawer/web
+process-template /etc/vdr/lifeguard.conf
 rm -f /usr/bin/start-pidgin
-
-

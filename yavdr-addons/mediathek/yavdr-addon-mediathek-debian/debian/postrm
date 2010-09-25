@@ -11,6 +11,7 @@ if [ remove = "$1" ]; then
   rm -f /etc/init/mediathek-sat1.conf
   rm -f /etc/init/mediathek-golem.conf
   rm -f /etc/init/mediathek-gametrailers.conf
+  process-template /etc/vdr/lifeguard.conf
   start launcher
 fi
 
