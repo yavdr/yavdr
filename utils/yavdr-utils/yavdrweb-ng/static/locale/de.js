@@ -205,7 +205,7 @@ var locale_de = {
     },
     upload: {
         menutab: {
-            title : 'Editor für VDR Konfigurations Dateien',
+            title : 'VDR Konfigurations-Editor',
             tabtip : 'Bearbeiten Sie den Inhalt von einigen zentralen VDR-Konfigurationsdateien direkt, fügen Sie Inhalte aus früheren VDR-Installationen ein, welche Sie übernehmen möchten.',
             panel_title : 'VDR Konfigurations-Editor'
         },
