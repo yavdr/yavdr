@@ -2,7 +2,4 @@
 
 process-template /etc/init/claws.conf
 process-template /etc/wmdrawer/web
-
-
-
-
+process-template /etc/vdr/lifeguard.conf

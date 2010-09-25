@@ -2,7 +2,7 @@
 
 process-template /etc/init/dvdrip.conf
 process-template /etc/wmdrawer/tools
-
+process-template /etc/vdr/lifeguard.conf
 
 
 

@@ -5,6 +5,7 @@ if [ remove = "$1" ]; then
   killall -9 wmdrawer > /dev/null 2>&1
   rm -f /etc/init/asunder.conf
   start launcher
+  process-template /etc/vdr/lifeguard.conf
 fi
 
 #DEBHELPER#
