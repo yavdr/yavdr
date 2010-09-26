@@ -1,4 +1,4 @@
-start on openbox-started
+start on (openbox-started or starting vdr)
 stop on starting vdr-frontend
 
 
@@ -9,13 +9,11 @@ export HOME=/var/lib/vdr
 
 script
 if  status vdr-frontend | grep -q process ; then exit 0 ; fi
-DELAY=.5
-PICTURES='/usr/share/yavdr/images/intro*'
+PICTURES='/usr/share/yavdr/images/animation/intro*'
 xsetroot -cursor /usr/share/yavdr/images/nocursor /usr/share/yavdr/images/nocursor
 while true ; do 
    for X in $PICTURES ; do 
        hsetroot -center $X 
-       sleep $DELAY 
    done 
 done
 end script

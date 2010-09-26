@@ -1,5 +1,5 @@
 start on stopping vdr
-stop on (runlevel [016] or started vdr)
+stop on (runlevel [016] or starting logo-start)
 
 
 env DISPLAY=:1
@@ -8,14 +8,9 @@ export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/var/lib/vdr
 
 script
-DELAY=.5
-PICTURES='/usr/share/yavdr/images/extro*'
+PICTURES='/usr/share/yavdr/images/animation/extro*'
 xsetroot -cursor /usr/share/yavdr/images/nocursor /usr/share/yavdr/images/nocursor
-while true ; do for X in $PICTURES ; do hsetroot -center $X ; sleep $DELAY ; done ; done
+while true ; do for X in $PICTURES ; do hsetroot -center $X ; done ; done
 end script
 
-post-stop script
-xsetroot -cursor_name left_ptr
-hsetroot -center /usr/share/yavdr/images/yavdr_logo.png
-end script
 

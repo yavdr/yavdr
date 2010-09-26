@@ -1,4 +1,5 @@
 scripts/mount-loader	usr/lib/vdr/
+images/animation/*.png	usr/share/yavdr/images/animation/
 images/*.png		usr/share/yavdr/images/
 images/*.gif		usr/share/yavdr/images/
 images/nocursor		usr/share/yavdr/images/
