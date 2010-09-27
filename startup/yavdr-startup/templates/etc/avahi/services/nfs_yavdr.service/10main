@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+<name replace-wildcards="yes">Videos on %h</name> ## Name
+<service>
+       <type>_nfs._yavdr._tcp</type>
+       <port>2049</port>
+       <txt-record>path=/srv/vdr/video.00</txt-record> ## path to shared Folder
+</service>
+</service-group>
+

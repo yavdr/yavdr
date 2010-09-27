@@ -4,6 +4,8 @@ alsa-utils
 anacron
 at
 autofs
+avahi-daemon
+avahi-discover
 build-essential
 cpufrequtils
 ethtool
@@ -12,6 +14,8 @@ graphtft-fe
 irserver
 inputlirc
 irserver
+libavahi-compat-libdnssd-dev
+libnss-mdns
 lirc
 libxine1-xvdr
 linux-firmware
@@ -24,6 +28,9 @@ libvdpau1
 nct677x-dkms
 ntfs-3g
 nvram-wakeup
+ruby
+ruby-dev
+rubygems
 smbfs
 samba
 samba-common
