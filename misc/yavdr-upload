@@ -1,10 +1,7 @@
 #!/bin/bash
 
-VERSION="0.2.1."
+VERSION="0.3.0."
 
-####  SVN wird beim argument repo=stable automatisch angepasst auf branches/yavdr-0.2 sonst ist der download aus dem trunk
-
-SVN="trunk"
 
 #####################################################################################################
 ###     AUFRUF :   ./yavdr-upload paket=utils(oder startup/essential) repo=testing (oder unstable  ##
@@ -61,11 +58,13 @@ fi
 
 if [ "x$REPO" = "xunstable" ]; then
     REPOSITORY="ppa:yavdr/unstable-yavdr"
+    SVN="trunk"
 elif [ "x$REPO" = "xtesting" ]; then
     REPOSITORY="ppa:yavdr/testing-yavdr"
+    SVN="branches/yavdr-0.3"
 elif [ "x$REPO" = "xstable" ]; then
     REPOSITORY="ppa:yavdr/stable-yavdr"
-    SVN="branches/yavdr-0.2"
+    SVN="branches/yavdr-0.3"
 fi
 
 
