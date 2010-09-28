@@ -12,8 +12,13 @@ post-start script
 LANG=C /sbin/status openbox | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 end script
 
+post-stop script
+/sbin/initctl --quiet emit --no-wait vdr-stopped
+end script
+
 kill timeout 15
 normal exit 0
+nice -10
 
 script
 # load default values and overrides from /etc/default/vdr 

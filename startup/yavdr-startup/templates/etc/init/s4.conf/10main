@@ -1,6 +1,6 @@
 # Sends PC to hibernate
 
-start on init-s4
+start on (init-s4 and vdr-stopped)
 stop on runlevel [016]
 
 script

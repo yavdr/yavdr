@@ -1,6 +1,6 @@
 # Sends PC to sleep
 
-start on init-s3
+start on (init-s3 and vdr-stopped)
 stop on runlevel [016]
 
 script

@@ -1,4 +1,4 @@
-start on local-filesystems
+start on net-device-up IFACE!=lo
 
 task
 

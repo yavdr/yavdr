@@ -6,6 +6,7 @@ author          "Gerald Dachs <gda@dachsweb.de>"
 
 start on ((started vdr and openbox-started and sound-card-added) or vdr-frontend-restart)
 stop on (stopping vdr or stopping openbox)
+nice -10
 
 <?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>respawn<?cs /if ?>
 
