@@ -28,6 +28,7 @@ libvdpau1
 nct677x-dkms
 ntfs-3g
 nvram-wakeup
+python-software-properties
 ruby
 ruby-dev
 rubygems
