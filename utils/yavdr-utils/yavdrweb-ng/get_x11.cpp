@@ -1,4 +1,25 @@
-<%pre>
+////////////////////////////////////////////////////////////////////////
+// get_x11.cpp
+// generated with ecppc
+// date: Sat Oct  2 19:43:49 2010
+//
+
+#include <tnt/ecpp.h>
+#include <tnt/convert.h>
+#include <tnt/httprequest.h>
+#include <tnt/httpreply.h>
+#include <tnt/httpheader.h>
+#include <tnt/http.h>
+#include <tnt/data.h>
+#include <tnt/componentfactory.h>
+#include <cxxtools/log.h>
+#include <stdexcept>
+
+log_define("component.get_x11")
+
+// <%pre>
+#line 1 "get_x11.ecpp"
+
 #include <algorithm>
 #include <string>
 #include <sstream>
@@ -16,9 +37,32 @@ extern "C" {
 }
 
 using namespace std;
-</%pre><& authenticate ><%args>
-display;
-</%args><%shared>
+
+// </%pre>
+
+namespace
+{
+template <typename T> inline void use(const T&) { }
+
+class _component_get_x11 : public tnt::EcppComponent
+{
+    _component_get_x11& main()  { return *this; }
+
+  protected:
+    ~_component_get_x11();
+
+  public:
+    _component_get_x11(const tnt::Compident& ci, const tnt::Urlmapper& um, tnt::Comploader& cl);
+
+    unsigned operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam);
+};
+
+static tnt::ComponentFactoryImpl<_component_get_x11> get_x11Factory("get_x11");
+
+static const char* rawData = "\004\000\000\000";
+
+// <%shared>
+
 void Tokenize(const string& str,
 		vector<string>& tokens,
 		const string& delimiters = " ")
@@ -122,7 +166,47 @@ string urlencode(const string &c)
 	return escaped;
 }
 
-</%shared><%cpp>
+// </%shared>
+
+// <%config>
+// </%config>
+
+#define SET_LANG(lang) \
+     do \
+     { \
+       request.setLang(lang); \
+       reply.setLocale(request.getLocale()); \
+     } while (false)
+
+_component_get_x11::_component_get_x11(const tnt::Compident& ci, const tnt::Urlmapper& um, tnt::Comploader& cl)
+  : EcppComponent(ci, um, cl)
+{
+  // <%init>
+  // </%init>
+}
+
+_component_get_x11::~_component_get_x11()
+{
+  // <%cleanup>
+  // </%cleanup>
+}
+
+unsigned _component_get_x11::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
+{
+
+  // <%args>
+std::string display = qparam.param("display");
+  // </%args>
+
+  // <%cpp>
+  // <& authenticate ...
+#line 19 "get_x11.ecpp"
+  tnt::QueryParams _tnt_cq0(qparam, false);
+#line 19 "get_x11.ecpp"
+  callComp(tnt::Compident(std::string(), "authenticate"), request, reply, _tnt_cq0);
+  // &>
+#line 125 "get_x11.ecpp"
+
 reply.setHeader ("Cache-Control", "no-cache", false);
 reply.setHeader ("Content-Type", "application/json", false);
 
@@ -324,13 +408,11 @@ else
 												modeline["modeline"] = trim(parts[parts.size()-1].substr(tokens[0].length()+1));
 												modeline["x"] = tokens[2];
 												modeline["y"] = tokens[6];
-												modeline["interlace"] = interlace;
-												modeline["doublescan"] = doublescan;
 												//clock h_active h_sync h_sync_end h_blank_end v_active v_sync v_sync_end v_blanking OPTIONEN
 												for(int l=1; l < tokens.size() && l < 10; l++) {
 													modeline["clock"][l-1] = atof(tokens[l].c_str());
 												}
-												modeline["hz"] = floor(0.5 + atof(tokens[1].c_str()) * pow(10,6) / (atof(tokens[5].c_str()) * atof(tokens[9].c_str())));
+												modeline["hz"] = floor(0.5 + atof(tokens[1].c_str()) * pow(10,6) / (atof(tokens[5].c_str()) * atof(tokens[9].c_str())) * (interlace?2:1) / (doublescan?2:1));
 												modelines[pos]["hz"][freq] = modeline;
 											}
 											start = &str[k+1];
@@ -355,9 +437,7 @@ else
 									modeline["clock"][6u] = 581;
 									modeline["clock"][7u] = 586;
 									modeline["clock"][8u] = 625;
-									modeline["interlace"] = true;
-									modeline["doublescan"] = false;
-									modeline["hz"] = 25;
+									modeline["hz"] = 50;
 
 									modelines[next]["id"] = "VGA2Scart_16_9";
 									modelines[next]["hz"]["50i"] = modeline;
@@ -376,9 +456,7 @@ else
 									modeline["clock"][6u] = 580;
 									modeline["clock"][7u] = 586;
 									modeline["clock"][8u] = 625;
-									modeline["interlace"] = true;
-									modeline["doublescan"] = false;
-									modeline["hz"] = 25;
+									modeline["hz"] = 50;
 
 									modelines[next]["id"] = "VGA2Scart_4_3";
 									modelines[next]["hz"]["50i"] = modeline;
@@ -579,4 +657,10 @@ else
 
 reply.out() << json;
 
-</%cpp>
+
+  // <%/cpp>
+  return HTTP_OK;
+}
+
+} // namespace
+

@@ -153,7 +153,7 @@ function getX11Form(){
         scope: myform,
         success: function(xhr) {
             //alert('Response is "' + xhr.responseText + '"');
-            try {
+            //try {
                 var displayData = Ext.util.JSON.decode( xhr.responseText );
                 var rButton = this.getComponent('x11_dualhead');
                 if (typeof displayData.system.x11.displays != "undefined") {
@@ -161,6 +161,14 @@ function getX11Form(){
                         var hiddenmodeline = new Ext.form.Hidden({
                             name: 'display'+index,
                             value: item.current_modeline.modeline
+                        });
+                        
+                        var frequencies = new Ext.form.CheckboxGroup({
+                        	name: 'freq'+index,
+                            xtype: 'checkboxgroup',
+                            fieldLabel: 'Fequenzen',
+                            hidden: true,
+                            items: []
                         });
                         
                         newitems = [{
@@ -176,9 +184,9 @@ function getX11Form(){
                             }),
                             new Ext.form.ComboBox({ 
                                id : 'modeline_' + index,
+                               index: index,
                                tpl: '<tpl for="."><div ext:qtip="modeline' +
-                                         ': &quot;{id}&quot; {modeline}<br/'+'>' + 
-                                         getLL('x11.resolution')+':{x}x{y}" class="x-combo-list-item">{id}</div></tpl>',
+                                         ': &quot;{id}&quot;" class="x-combo-list-item">{id}</div></tpl>',
                                //name: ... used in POST request
                                hiddenName: 'display' + index,  //key, defined in set_lirchw.ecpp, used in POST request
                                //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
@@ -197,19 +205,55 @@ function getX11Form(){
                                     idIndex: 0,
                                     fields: [
                                              "id",
-                                             "modeline",
-                                             "x",
-                                             "y"
+                                             "hz"
                                              ],
                                     data : item.modelines
                                 }),
                                 value: item.current_modeline.id,
                                 hiddenValue: item.current_modeline.id,
                                 listeners:{
-                                    scope: hiddenmodeline,
-                                    'select' : function( combo, record, index){
-                                            this.setValue(record.data.modeline);
-                                            //this.adjustSerialSettings( record.data.lirc_driver, record.data.driver );
+                            		scope: this,
+                                    'select' : function( combo, record, index) {
+                            			var displaygroup = this.getComponent('displaygroup'+combo.index);
+                            			if (displaygroup) {
+                            				var items = [];
+                            				for (hz in record.data.hz) {
+                            					items[items.length] = {xtype:'checkbox', boxLabel: hz+'&nbsp;Hz', name: 'freq'+combo.index, inputValue: record.data.hz[hz].id, freq: record.data.hz[hz].hz};
+	                            			}
+                            				
+                            				items.sort(function(a,b) {
+                            					return b.freq - a.freq;
+                            				});
+                            				
+                            				if (items.length > 1) {
+                            					items[items.length] = {xtype:'checkbox', boxLabel: 'alle', name: 'freq'+combo.index, inputValue: "all",
+                            						listeners: {
+                            							'check': function(allCheckbox, checked) {
+                            								allCheckbox.findParentByType('checkboxgroup').items.each(function(item, index, allitems) {
+	                        									item.setValue(checked);
+	                        								});
+                            							}
+                            						}
+                            					};
+                            				}
+                            				
+	                            			var cbgroup = displaygroup.getComponent('freqgroup'+combo.index);
+	                            			if (cbgroup) { // unable to change group on the fly -> remove old one
+	                            				displaygroup.remove(cbgroup);
+	                            			}
+                            				cbgroup = new Ext.form.CheckboxGroup({
+                            				    id:'freqgroup'+combo.index,
+                            				    xtype: 'checkboxgroup',
+                            				    fieldLabel: 'mögliche Frequenzen',
+                            				    itemCls: 'x-check-group-alt',
+                            				    // Put all controls in a single column with width 100%
+                            				    columns: 3,
+                            				    items: items
+                            				});
+                            				displaygroup.insert(5, cbgroup);
+                            			
+	                            			displaygroup.doLayout();
+                            			}
                                     }
                                 }
                                 //disabled: (index > 0 && !displayData.system.x11.dualhead.enabled)
@@ -274,6 +318,7 @@ function getX11Form(){
                         this.insert(index+1, {
                             xtype:'fieldset',
                             checkboxToggle:false,
+                            id: 'displaygroup'+index,
                             title: 'DISPLAY ' + ((typeof item.displaynumber != 'undefined')?':'+item.displaynumber+'.' + item.screen + ' (' + item.name:item.name+' disabled') + ')',
                             autoHeight:true,
                             defaults: {width: 210},
@@ -343,10 +388,10 @@ function getX11Form(){
                     else
                         Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find SD-Interlacer combo.');
                 }
-            }
-            catch (err) {
-                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current display settings.' );
-            }
+            //}
+            //catch (err) {
+            //    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current display settings.' );
+            //}
         }
     });
     
