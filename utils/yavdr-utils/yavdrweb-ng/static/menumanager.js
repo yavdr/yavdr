@@ -101,7 +101,7 @@ function groupPanelTab(config){
                 title: getLL( locale_prefix + ".menutab.panel_title"),
                 frame: this.config.frame,
                 plain: false,
-                border: this.config.border,
+                border: this.config.border
             });
             
             tabpanel = {
