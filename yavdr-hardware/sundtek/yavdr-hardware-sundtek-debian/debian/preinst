@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ install = "$1" -o upgrade = "$1" ]; then 
+#	cd /tmp        
+#	wget http://www.sundtek.de/media/sundtek_installer_development.sh
+# 	chmod +x sundtek_installer_development.sh
+#    yes | ./sundtek_installer_development.sh
+#	rm -f /etc/udev/rules.d/80-remote-eeti.rules
+#	rm -f /lib/udev/rules.d/80-remote-eeti.rules
+#	/opt/bin/lirc.sh REMOVE
+#	signal-event change-remote-hardware
+#	echo "configure your digital TV mode in yavdr-webfrontend (DVB-C, DVB-T)"
+fi
+
+#DEBHELPER#
+

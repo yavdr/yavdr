@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ "$1" = "remove" ]; then 
+
+/opt/bin/mediaclient --shutdown
+#/usr/share/doc/yavdr-installer-sundtek/sundtek_installer_development.sh
+
+#rm -f /usr/share/doc/yavdr-installer-sundtek/sundtek_installer_development.sh
+
+fi  
+
+#DEBHELPER#
+
