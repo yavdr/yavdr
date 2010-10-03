@@ -4,8 +4,9 @@ if [ remove = "$1" ]; then
   /usr/bin/dpkg-trigger yavdr-addons-update
   killall -9 wmdrawer > /dev/null 2>&1
   rm -f /etc/init/simfy.conf
-  start launcher
+  process-template /etc/wmdrawer/media
   process-template /etc/vdr/lifeguard.conf
+  start launcher
 fi
 
 #DEBHELPER#

@@ -4,8 +4,9 @@ if [ remove = "$1" ]; then
   /usr/bin/dpkg-trigger yavdr-addons-update
   killall -9 wmdrawer > /dev/null 2>&1
   rm -f /etc/init/chromium.conf
+  process-template /etc/wmdrawer/games
+  process-template /etc/vdr/lifeguard.conf
   start launcher
-  process-template /etc/vdr/lifeguard.conf  
 fi
 
 #DEBHELPER#

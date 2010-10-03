@@ -4,6 +4,7 @@ if [ remove = "$1" ]; then
   /usr/bin/dpkg-trigger yavdr-addons-update
   killall -9 wmdrawer > /dev/null 2>&1
   rm -f /etc/init/vlc.conf
+  process-template /etc/wmdrawer/media
   start launcher
 fi
 
