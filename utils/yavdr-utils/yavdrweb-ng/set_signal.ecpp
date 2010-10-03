@@ -30,7 +30,6 @@ if (
 		(signal == "kill-xbmc") ||
 		(signal == "restart-vdr") ||
 		(signal == "change-auto-net-yavdr") ||
-		(signal == "change-overscan-compensation") ||
 		(signal == "change-timeout") ||
 		(signal == "change-sound") ||
 		(signal == "graphtft-state-change") ||
@@ -71,28 +70,6 @@ if (
 				nerr_log_error(err);
 			}
 			err = hdf_set_valuef(hdf, "system.shutdown=%s", value.c_str());
-			/*if (err != STATUS_OK){
-			 }*/
-			err = hdf_write_file(hdf, YAVDRDB);
-			if (err != STATUS_OK)
-			{
-				nerr_log_error(err);
-			}
-			hdf_destroy(&hdf);
-		}
-	}
-	else if (signal == "change-overscan-compensation" )
-	{
-		int overscanval = atoi(value.c_str());
-		if (overscanval >= 0 && overscanval < 256)
-		{
-			NEOERR *err;
-			HDF *hdf = NULL;
-			if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
-			{
-				nerr_log_error(err);
-			}
-			err = hdf_set_valuef(hdf, "system.hardware.nvidia.overscan=%i", overscanval);
 			/*if (err != STATUS_OK){
 			 }*/
 			err = hdf_write_file(hdf, YAVDRDB);
