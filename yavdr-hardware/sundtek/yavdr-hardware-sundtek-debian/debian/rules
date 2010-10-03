@@ -36,7 +36,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/yavdr-utils.
-	$(MAKE) DESTDIR=$(CURDIR)/debian/yavdr-installer-sundtek install
+	$(MAKE) DESTDIR=$(CURDIR)/debian/yavdr-hardware-sundtek install
 
 
 # Build architecture-independent files here.
@@ -65,4 +65,4 @@ binary: binary-indep binary-arch
 
 override_dh_fixperms:
 			dh_fixperms
-			chmod +x debian/yavdr-installer-sundtek//usr/share/yavdr/events/actions/*
+			chmod +x debian/yavdr-hardware-sundtek//usr/share/yavdr/events/actions/*
