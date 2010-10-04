@@ -6,5 +6,9 @@ process-template --owner=vdr --group=vdr /var/lib/vdr/.config/performous/config.
 process-template /etc/wmdrawer/games
 process-template /etc/vdr/lifeguard.conf
 rm -f /usr/bin/start-performous
+if [ -e /etc/default/locale ]; then 
+. /etc/default/locale
+fi 
+process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 start launcher
 

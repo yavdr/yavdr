@@ -4,6 +4,10 @@ killall -9 wmdrawer > /dev/null 2>&1
 process-template /etc/init/semsix.conf
 process-template /etc/wmdrawer/media
 process-template /etc/vdr/lifeguard.conf
+if [ -e /etc/default/locale ]; then 
+. /etc/default/locale
+fi 
+process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 start launcher
 
 

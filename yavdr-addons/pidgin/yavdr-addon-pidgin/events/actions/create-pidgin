@@ -5,4 +5,8 @@ process-template /etc/init/pidgin.conf
 process-template /etc/wmdrawer/web
 process-template /etc/vdr/lifeguard.conf
 rm -f /usr/bin/start-pidgin
+if [ -e /etc/default/locale ]; then 
+. /etc/default/locale
+fi 
+process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 start launcher

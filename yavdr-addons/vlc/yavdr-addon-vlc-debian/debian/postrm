@@ -6,6 +6,10 @@ if [ remove = "$1" ]; then
   rm -f /etc/init/vlc.conf
   process-template /etc/wmdrawer/media
   start launcher
+  if [ -e /etc/default/locale ]; then 
+  . /etc/default/locale
+  fi 
+  process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 fi
 
 #DEBHELPER#

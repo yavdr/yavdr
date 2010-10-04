@@ -7,6 +7,10 @@ if [ remove = "$1" ]; then
   process-template /etc/wmdrawer/games
   process-template /etc/vdr/lifeguard.conf
   start launcher
+  if [ -e /etc/default/locale ]; then 
+  . /etc/default/locale
+  fi 
+  process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 fi
 
 #DEBHELPER#

@@ -5,5 +5,9 @@ process-template --owner=vdr --group=vdr /var/lib/vdr/.chromium-bsu
 process-template /etc/init/chromium.conf
 process-template /etc/wmdrawer/games
 process-template /etc/vdr/lifeguard.conf
+if [ -e /etc/default/locale ]; then 
+. /etc/default/locale
+fi 
+process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 start launcher
 
