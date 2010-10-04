@@ -1,8 +1,8 @@
 #!/bin/bash
 
+killall -9 wmdrawer > /dev/null 2>&1
 process-template /etc/init/vlc.conf
 process-template /etc/wmdrawer/media
-
-
+start launcher
 
 

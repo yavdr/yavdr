@@ -1,8 +1,9 @@
 #!/bin/bash
 
+killall -9 wmdrawer > /dev/null 2>&1
 process-template /etc/init/youtube.conf
 process-template /etc/wmdrawer/media
 process-template /etc/vdr/lifeguard.conf
-
+start launcher
 
 

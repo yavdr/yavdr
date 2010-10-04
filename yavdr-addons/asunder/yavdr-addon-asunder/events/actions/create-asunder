@@ -1,8 +1,10 @@
 #!/bin/bash
 
+killall -9 wmdrawer > /dev/null 2>&1
 process-template /etc/init/asunder.conf
 process-template /etc/wmdrawer/tools
 process-template /etc/vdr/lifeguard.conf
+start launcher
 
 
 
