@@ -1,7 +1,7 @@
 #!/bin/sh                                                                                                               
                                                                                                                         
 if [ remove = "$1" ]; then 
-  /usr/bin/dpkg-trigger yavdr-addons-update
+#  /usr/bin/dpkg-trigger yavdr-addons-update
   killall -9 wmdrawer > /dev/null 2>&1
   rm -f /etc/init/youtube.conf
   process-template /etc/wmdrawer/media
