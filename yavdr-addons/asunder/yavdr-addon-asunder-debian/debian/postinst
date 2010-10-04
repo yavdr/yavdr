@@ -5,12 +5,8 @@ case "$1" in
 
         chmod +x /usr/share/yavdr/events/actions/*
 
-#        /usr/bin/dpkg-trigger yavdr-addons-update
-if [ -e /etc/default/locale ]; then 
-. /etc/default/locale
-fi 
+        /usr/bin/dpkg-trigger yavdr-addons-update
 
-process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 
         
         ;;
