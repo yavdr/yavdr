@@ -61,14 +61,14 @@ function getChannelsForm(){
         var grid = new Ext.grid.GridPanel({
             store: channellist_store,
             columns: [
-                {header: getLL("channels.grid_header._num"),  align: 'right', width: 30, dataIndex: '_num', sortable: true},
+                {header: getLL("channels.grid_header._num"),  align: 'right', width: 40, dataIndex: '_num', sortable: true},
                 {header: getLL("channels.grid_header.name"),  align: 'left', width: 160, dataIndex: 'name', sortable: true},
-                {header: getLL("channels.grid_header.provider"),  align: 'left', width: 90, dataIndex: 'prov', sortable: true},
+                {header: getLL("channels.grid_header.provider"),  align: 'left', width: 100, dataIndex: 'prov', sortable: true},
                 {header: getLL("channels.grid_header._friendly_type"),  align: 'center', width: 50, dataIndex: '_friendly_type', sortable: true},
                 {header: getLL("channels.grid_header._friendly_scrambled"),  align: 'center', width: 70, dataIndex: '_friendly_scrambled', sortable: true},
                 {header: getLL("channels.grid_header._friendly_lang"),  align: 'center', width: 70, dataIndex: '_friendly_lang', sortable: true},
                 {header: getLL("channels.grid_header._friendly_transp"),  align: 'left', width: 140, dataIndex: '_friendly_transp', sortable: true},
-                {header: getLL("channels.grid_header.modulation"),  align: 'left', width: 120, dataIndex: 'mod', sortable: true},
+                {header: getLL("channels.grid_header.modulation"),  align: 'left', width: 140, dataIndex: 'mod', sortable: true},
                 {header: getLL("channels.grid_header._friendly_dvb_sat_band"),  align: 'left', width: 160, dataIndex: '_friendly_dvb_sat_band', sortable: true, hidden: true},
                 //{header: getLL("channels.grid_header.source"),  align: 'left', width: 50, dataIndex: 'src', sortable: true, hidden: true},
                 //{header: getLL("channels.grid_header.frequency"),  align: 'right', width: 70, dataIndex: 'freq', sortable: true, hidden: true},
@@ -81,10 +81,14 @@ function getChannelsForm(){
                 //{header: getLL("channels.grid_header.nid"),  align: 'right', width: 40, dataIndex: 'nid', sortable: true, hidden: true},
                 //{header: getLL("channels.grid_header.tid"),  align: 'right', width: 40, dataIndex: 'tid', sortable: true, hidden: true},
                 //{header: getLL("channels.grid_header.rid"),  align: 'right', width: 40, dataIndex: 'rid', sortable: true, hidden: true},
-                {header: getLL("channels.grid_header._group"),  align: 'left', width: 150, dataIndex: '_group', sortable: true, hidden: true}
+                {header: getLL("channels.grid_header._group"),  align: 'left', width: 150, dataIndex: '_group', sortable: true}
             ],
             view: new Ext.grid.GroupingView({
                 forceFit: false,
+                autoFill :true,
+                hideGroupedColumn: true,
+                showGroupName: false,
+                startCollapsed: true,
                 groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
             }),
             title: getLL("channels.grid_title"),
@@ -100,7 +104,31 @@ function getChannelsForm(){
                     }
                 },
                 {
-                    text: 'Switch to channel',
+                    text: 'Collapse all groups', //TODO use getLL here!
+                    //icon: '/ext/resources/images/default/grid/refresh.gif',
+                    tooltip: 'Click this button to collapse all open groups.',
+                    handler: function(){
+                        grid.view.collapseAllGroups();
+                    }
+                },
+                {
+                    text: 'Expand all groups', //TODO use getLL here!
+                    //icon: '/ext/resources/images/default/grid/refresh.gif',
+                    tooltip: 'Click this button to expand all closed groups.',
+                    handler: function(){
+                        grid.view.expandAllGroups();
+                    }
+                },/* too dangerous: performance killer!
+                {
+                    text: 'Clear grouping', //TODO use getLL here!
+                    //icon: '/ext/resources/images/default/grid/refresh.gif',
+                    tooltip: 'Click this button to remove the current grouping.',
+                    handler: function(){
+                        channellist_store.clearGrouping();
+                    }
+                },*/
+                {
+                    text: 'Switch to selected channel',
                     id: 'zap_button',
                     //icon: '/ext/resources/images/default/grid/refresh.gif',
                     tooltip: 'Click this button to display this channel on VDR Frontend. This does not if you use XBMC as a frontend (I guess...).',
