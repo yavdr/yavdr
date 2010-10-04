@@ -17,6 +17,7 @@ require 'pathname'
 require 'fileutils'
 require 'daemons'
 require 'logger'
+require 'socket'
 
 class NetworkShareMountDaemon
   include Daemonize
@@ -61,7 +62,7 @@ class NetworkShareMountDaemon
       server_path = nfs_mount.split()[0]
       unless server_path.nil?
         (server, path) = server_path.split(':') 
-        mounts.push(Mount.new(server, Mount::UNKNOWN_PORT, path))
+        mounts.push(Mount.new(server, Mount::UNKNOWN_NAME, Mount::UNKNOWN_PORT, path))
       end
     end
     
@@ -69,7 +70,7 @@ class NetworkShareMountDaemon
   end
   private :get_active_mounts
 
-  def discover_nfs 
+  def discover_nfs
     @service = DNSSD.browse(NFS_SERVICE) do |browse_reply|
       # Found a NFS service, resolve it.
       DNSSD.resolve(browse_reply.name, 
@@ -77,19 +78,26 @@ class NetworkShareMountDaemon
                     browse_reply.domain,
                     0,
                     browse_reply.interface) do |resolve_reply|
-        
-        mount = Mount.new(resolve_reply.target, resolve_reply.port, resolve_reply.text_record['path'])
-        if !@active_mounts.include?(mount)
-          # TODO: probe if directory could be created!!.
+
+        if resolve_reply.target != Socket.gethostname
+          mount = Mount.new(resolve_reply.target,
+                            browse_reply.name,
+                            resolve_reply.port,
+                            resolve_reply.text_record['path'])
+          if !@active_mounts.include?(mount)
+            # TODO: probe if directory could be created!!.
           
-          if FileUtils.mkdir(mount.mount_point)
-            if system("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
-              @active_mounts.push(mount)
-              mount.notify
-              $log.info("Succesfully mounted dicovered NFS service "+mount.to_s)
+            if FileUtils.mkdir(mount.mount_point)
+              if system("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
+                @active_mounts.push(mount)
+                mount.notify
+                $log.info("Succesfully mounted dicovered NFS service "+mount.to_s)
+              else
+                $log.error("Failed to mount discovered NFS service: #{mount.to_s}. Error code #{$?}.")
+                FileUtils.rmdir(mount.mount_point)
+              end
             else
-              $log.error("Failed to mount discovered NFS service: #{mount.to_s}. Error code #{$?}.")
-              FileUtils.rmdir(mount.mount_point)
+              $log.error("mkdir failed: "+mount.mount_point)
             end
           end
         end
@@ -109,13 +117,16 @@ class Mount
   MOUNT_POINT_NET = MOUNT_POINT_ROOT+SEP+'net'
   MOUNT_NOTIFY = MOUNT_POINT_ROOT+SEP+'.update'
   UNKNOWN_PORT = -1
+  UNKNOWN_NAME = -1
   
   attr_reader :server
+  attr_reader :name
   attr_reader :port
   attr_reader :path
   
-  def initialize(server, port, path)
+  def initialize(server, name, port, path)
     @server = server.chomp('.')
+    @name = name
     @port = port
     @path = path
     @mount_point = nil
@@ -130,21 +141,8 @@ class Mount
     if @mount_point.nil?
       i=1
       
-      mount_point = Pathname.new(MOUNT_POINT_NET)
-      mount_point += @path.split(File::SEPARATOR).last
-      new_mount_point = mount_point
-      
-      # Add an ever increasing number to the mount_point when the path already exists.
-      while File.exists?(new_mount_point)
-        new_mount_point = Pathname.new(mount_point.to_s + i.to_s)
-        i+=1
-        
-        # When we had to count up to 50 and still did not find a valid path, something is really wrong.
-        if i>50
-          $log.error("Could not find a not existing mount point.")
-          return
-        end
-      end
+      new_mount_point = Pathname.new(MOUNT_POINT_NET+SEP+@name+"_on_"+@server)
+      $log.info("mount_point is "+new_mount_point)
       
       @mount_point = new_mount_point
     end	   
