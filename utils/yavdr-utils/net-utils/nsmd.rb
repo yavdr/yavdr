@@ -28,6 +28,7 @@ class NetworkShareMountDaemon
   LOG_FILE_LOCATION = '/tmp'
   
   def initialize()
+    Mount.clean
   end
 
   def main
@@ -71,6 +72,7 @@ class NetworkShareMountDaemon
   private :get_active_mounts
 
   def discover_nfs
+    $log.info("start discover_nfs")
     @service = DNSSD.browse(NFS_SERVICE) do |browse_reply|
       # Found a NFS service, resolve it.
       DNSSD.resolve(browse_reply.name, 
@@ -79,19 +81,26 @@ class NetworkShareMountDaemon
                     0,
                     browse_reply.interface) do |resolve_reply|
 
+        $log.info("something found")
+        # $log.info("subtype "+browse_reply.subtype)
+        # $log.info("subtype "+resolve_reply.subtype)
         if resolve_reply.target != Socket.gethostname
+          $log.info("trying mount of "+browse_reply.name)
           mount = Mount.new(resolve_reply.target,
                             browse_reply.name,
                             resolve_reply.port,
                             resolve_reply.text_record['path'])
+          $log.info("mount created ")
           if !@active_mounts.include?(mount)
             # TODO: probe if directory could be created!!.
           
+            $log.info("making dir")
             if FileUtils.mkdir(mount.mount_point)
+              $log.info("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
               if system("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
                 @active_mounts.push(mount)
                 mount.notify
-                $log.info("Succesfully mounted dicovered NFS service "+mount.to_s)
+                $log.info("Succesfully mounted discovered NFS service "+mount.to_s)
               else
                 $log.error("Failed to mount discovered NFS service: #{mount.to_s}. Error code #{$?}.")
                 FileUtils.rmdir(mount.mount_point)
@@ -99,6 +108,8 @@ class NetworkShareMountDaemon
             else
               $log.error("mkdir failed: "+mount.mount_point)
             end
+          else
+            $log.info("target is "+Socket.gethostname)
           end
         end
       end
@@ -114,7 +125,7 @@ class Mount
   
   SEP = File::SEPARATOR
   MOUNT_POINT_ROOT = SEP+'srv'+SEP+'vdr'+SEP+'video.00'
-  MOUNT_POINT_NET = MOUNT_POINT_ROOT+SEP+'net'
+  MOUNT_POINT_NET = MOUNT_POINT_ROOT+SEP+'net'+SEP
   MOUNT_NOTIFY = MOUNT_POINT_ROOT+SEP+'.update'
   UNKNOWN_PORT = -1
   UNKNOWN_NAME = -1
@@ -131,9 +142,15 @@ class Mount
     @path = path
     @mount_point = nil
   end
-  
+
+  def self.clean
+   FileUtils.rmdir Dir.glob(MOUNT_POINT_NET+'*')
+  end
+
   def ==(other_mount)
     # NOTE: Port not checked for equality.
+    $log.info("comparing: "+@server+"=="+other_mount.server)
+    $log.info("comparing: "+@path+"=="+other_mount.path)
     @server == other_mount.server and @path == other_mount.path
   end
   
@@ -141,7 +158,7 @@ class Mount
     if @mount_point.nil?
       i=1
       
-      new_mount_point = Pathname.new(MOUNT_POINT_NET+SEP+@name+"_on_"+@server)
+      new_mount_point = Pathname.new(MOUNT_POINT_NET+@name+"_on_"+@server)
       $log.info("mount_point is "+new_mount_point)
       
       @mount_point = new_mount_point
