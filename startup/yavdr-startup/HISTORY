@@ -28,7 +28,7 @@ NEW
 - default vdr-skin : anthra (thx tomas @ vdrportal)
 - added remove-marks (noad)
 - fixed commands.conf
-- yavdr-installer-sundtek (driver install, and configurable in yavdr-webfrontend)
+- yavdr-hardware-sundtek (driver install, and configurable in yavdr-webfrontend)
 - yavdr-addons :
   * pidgin
   * chromium 
