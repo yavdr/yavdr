@@ -23,7 +23,7 @@ case "$1" in
 	            signal-event post-upgrade
                     ;;
                 yavdr-addons-update)
-	            signal-event yavdr-addons-update
+	            signal-event addons-update
                     ;;
             esac
         done
