@@ -6,8 +6,6 @@ case "$1" in
         chmod +x /usr/share/yavdr/events/actions/*
 
         /usr/bin/signal-event addons-update
-
-
         
         ;;
 
