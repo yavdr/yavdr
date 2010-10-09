@@ -47,7 +47,7 @@ var locale_it = {
             tabtip :'Impostazioni telecomando (ricevitore telecomando)',
             panel_title : 'Ricevitore telecomando'
         },
-        help: 'Al momento esistono 3 diversi server LIRC compatibili che sono supportati. Scegli quello che meglio si adatta al tuo dispositivo. <br /><h1>LIRC</h1><br /><br /> Supporta la maggior parte dei dispositivi. Informati sul driver supportato. Devi scegliere il driver corretto per il dispositivo e nel caso si tratti di una porta seriale autocostruita (Attric, autocostruito e dispositivi simili) devi scegliere la porta seriale corretta.<br /><br /><h1>Ingresso LIRC</h1><br /><br /> Alcune schede DVB includono un ricevitore del telecomando. Alcuni di essi, come i dispositivi USB vengono resi disponibili come i cosiddetti dispositivi di ingresso. Devi soltanto scegliere il dispositivo corretto dal menu a tendina.<br /><br /><h1>Irserver</h1><br /><br /> Alcuni HTPC (per esempio OrigenAE) hanno incluso un ricevitore del telecomando, che può essere usato solo con irserver. Devi soltanto abilitarlo e salvare le impostazioni.'
+        help: 'Al momento esistono 3 diversi server LIRC compatibili che sono supportati. Scegli quello che meglio si adatta al tuo dispositivo. <br /><h1>LIRC</h1><br /><br /> Supporta la maggior parte dei dispositivi. Informati sul driver supportato. Devi scegliere il driver corretto del dispositivo e nel caso si tratti di una porta seriale autocostruita (Attric, autocostruito e dispositivi simili) devi scegliere la porta seriale corretta.<br /><br /><h1>Ingresso LIRC</h1><br /><br /> Alcune schede DVB includono un ricevitore del telecomando. Alcuni di essi, come i dispositivi USB vengono resi disponibili come i cosiddetti dispositivi di ingresso. Devi soltanto scegliere il dispositivo corretto dal menu a tendina.<br /><br /><h1>Irserver</h1><br /><br /> Alcuni HTPC (per esempio OrigenAE) hanno incluso un ricevitore del telecomando, che può essere usato solo con irserver. Devi soltanto abilitarlo e salvare le impostazioni.'
     },
     lirc: {
         menutab: {
@@ -136,6 +136,24 @@ var locale_it = {
             cname : 'Nome canale',
             cprovider : 'Emittente',
             cstr : 'Stringa completa canale'
+            frequency : 'Frequenza',
+            modulation : 'Modulazione',
+            source : 'Sorgente',
+            symbolrate : 'SymbolRate',
+            vpid : 'PID Video',
+            apid : 'PID Audio',
+            tpid : 'PID Teletext',
+            caid : 'CAID',
+            sid : 'SID',
+            nid : 'NID',
+            tid : 'TID',
+            rid : 'RID',
+            _group : 'Gruppo',
+            _friendly_transp: 'Transponder',
+            _friendly_lang: 'Lingua',
+            _friendly_type: 'TV/Radio',
+            _friendly_scrambled : 'FTA/Codificato',
+            _friendly_dvb_sat_band : "Banda passante"
         },
         grid_title : 'Lista canali (tutti i canali radio e TV)'
     },
@@ -156,7 +174,7 @@ var locale_it = {
     shutdown: {
         menutab: {
             title : 'Spegnimento',
-            tabtip : 'Seleziona tra diversi metodi di spegnimento',
+            tabtip : 'Seleziona tra i diversi metodi di spegnimento',
             panel_title : 'Spegnimento VDR'
         },
         label: 'Seleziona spegnimento',
@@ -242,9 +260,14 @@ var locale_it = {
         samba: {
             menutab: {
                 title : 'Samba',
-                tabtip : 'Maintieni condivisioni Samba'
+                tabtip : 'Mantieni condivisioni Samba'
             }
-       }
+    },
+        submit: {
+            waitmsg : 'Modifica configurazione',    
+            success : 'Tabella di mount salvata con successo.',
+            failure : 'Impossibile salvare le modifiche della tabella di mount.'
+        }
     },
     nvidia: {
         menutab: {
@@ -417,5 +440,20 @@ var locale_it = {
             failure : 'Fallito.'
         },
         label: 'Impostazioni audio'
+    },
+    lifeguard: {
+        help: 'Controlla se VDR dovrebbe spegnere il sistema. Esegue diverse verifiche specificate dall\'utente quando VDR vuole spegnere il sistema. Lo spegnimento viene posticipato se ognuna delle verifiche indicano che esistono altri processi che non dovrebbero essere interrotti. Abilita qui i processi che VDR non dovrebbe interrompere. Nessuna selezione corrisponde a disattivare soccorso VDR',
+        menutab: {
+            title : 'Soccorso VDR',
+            tabtip : 'Impostazioni soccorso',
+            panel_title : 'Impostazioni soccorso'
+        },
+        button_label:  'Applica impostazioni soccorso',
+        submit: {
+            waitmsg : 'Impostazioni soccorso aggiornate.',    
+            success : 'Riuscito.',
+            failure : 'Fallito.'
+        },
+        label: 'Impostazioni soccorso VDR'
     }
 };

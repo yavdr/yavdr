@@ -1,641 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: yavdr\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-12 18:55+0200\n"
-"PO-Revision-Date: 2010-08-14 22:06+0200\n"
-"Last-Translator: Volker Richert <richert@addmore.de>\n"
-"Language-Team: pt <translate@yavdr.com>\n"
+"PO-Revision-Date: 2010-10-04 14:50-0000\n"
+"Last-Translator: hudo <hudokkow@gmail.com>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: PORTUGAL\n"
 
-msgid "web.meta_lang.local"
-msgstr "Português"
+msgid "Timer"
+msgstr "Temporizador"
 
-msgid "web.meta_lang.int"
-msgstr "Portuguese"
+msgid "Video"
+msgstr "Vídeo"
 
-msgid "web.meta_lang.key"
-msgstr "pt"
+msgid "Applications"
+msgstr "Aplicações"
 
-msgid "web.menutabs.vdr.title"
-msgstr "O seu VDR"
+msgid "Web"
+msgstr "Web"
 
-msgid "web.menutabs.vdr.tabtip"
-msgstr "Configuração de opções básicas do seu VDR"
+msgid "Internet"
+msgstr "Internet"
 
-msgid "web.menutabs.vdr.content"
-msgstr "Ben-vindo à página web do yaVDR!"
+msgid "Media"
+msgstr "Média"
 
-msgid "web.menutabs.system.title"
+msgid "XBMC on graphtft Display"
+msgstr "XBMC no ecrã do graphtft"
+
+msgid "Games"
+msgstr "Jogos"
+
+msgid "Tools"
+msgstr "Ferramentas"
+
+msgid "Xterm"
+msgstr "XTerm"
+
+msgid "System"
 msgstr "Sistema"
 
-msgid "web.menutabs.system.tabtip"
-msgstr "Configuração de opções básicas do seu VDR"
+msgid "Commands"
+msgstr "Comandos"
 
-msgid "web.menutabs.system.content"
-msgstr "Ben-vindo à página web do yaVDR!"
+msgid "Safely remove usb mass storage"
+msgstr "Remover de forma segura o dispositivo USB"
 
-msgid "web.menutabs.demos.title"
-msgstr "Demonstração"
+msgid "Update vdr recordings list"
+msgstr "Actualizar lista de gravações do VDR"
 
-msgid "web.menutabs.demos.tabtip"
-msgstr "Provas de conceito e demonstração de futuras funcionalidades. Pode ser usado para testes."
+msgid "Restart vdr"
+msgstr "Reiniciar VDR"
 
-msgid "web.menutabs.demos.content"
-msgstr "Provas de conceito e demonstração de futuras funcionalidades. Pode ser usado para testes."
+msgid "Reboot system"
+msgstr "Reiniciar sistema"
 
-msgid "web.menutabs.development.title"
-msgstr "Desenvolvimento"
-
-msgid "web.menutabs.development.tabtip"
-msgstr "Novas funcionalidades em desenvolvimento. Não usar. Ainda não funcionam devidamente."
-
-msgid "web.menutabs.development.content"
-msgstr "Novas funcionalidades em desenvolvimento. Não usar. Ainda não funcionam devidamente."
-
-msgid "web.menutabs.diagnose.title"
-msgstr "Diagnóstico"
-
-msgid "web.menutabs.diagnose.tabtip"
-msgstr "Mantenha-se informado sobre o seu sistema e analise possíveis problemas."
-
-msgid "web.menutabs.diagnose.content"
-msgstr "Acesso a ficheiros de log importantes e ficheiros de configuração."
-
-msgid "web.standardform.button.save"
-msgstr "Guardar"
-
-msgid "web.standardform.messagebox_caption.message"
-msgstr "Menssagem"
-
-msgid "web.standardform.messagebox_caption.error"
-msgstr "Erro"
-
-msgid "web.standardform.messagebox_caption.wait"
-msgstr "Aguarde, por favor..."
-
-msgid "web.remote.menutab.title"
-msgstr "Comando à distância"
-
-msgid "web.remote.menutab.tabtip"
-msgstr "Opções do comando à distância (Receptor do comando à distância)"
-
-msgid "web.remote.menutab.panel_title"
-msgstr "Receptor do comando à distância"
-
-msgid "web.remote.help"
-msgstr "Três servidores compatíveis com LIRC suportados meste momento. Por favor escolha o que melhor corresponde ao seu dispositivo. <br /><h1>LIRC</h1><br /><br /> Este suporta o maior número de dispositivos. Informe-se sobre a driver que suporta o seu dispositivo. Escolha o driver correcto e, no caso de ser um sensor de porta série caseiro (Attric ou semelhante), tem de escolher a porta série correcta.<br /><br /><h1>Input Lirc</h1><br /><br /> Algumas placas de TV incluem um comando à distância. A maioria, bem como alguns dispositivos USB, são disponiblizados com dispositivos de entrada. Apenas tem de escolher o dispositivo correcto do menu.<br /><br /><h1>Irserver</h1><br /><br /> Algumas caixas HTPC (OrigenAE por exemplo) possuêm um sensor IR de origem, que pode ser usado com o irserver. Apenas necessita de o ligar e guardar."
-
-msgid "web.lirc.menutab.title"
-msgstr "LIRC"
-
-msgid "web.lirc.menutab.tabtip"
-msgstr "Opções do LIRC (Receptor do comando à distância)"
-
-msgid "web.lirc.menutab.panel_title"
-msgstr "Receptor do comando à distância (LIRC)"
-
-msgid "web.lirc.help"
-msgstr "Quando pressionar o botão \"Guardar\", o VDR será reiniciado para garantir a selecção do novo receptor configurado no LIRC. Se não configurou os botões do seu comando à distância (via remote.conf), o VDR vai oferecer-se para aprender, passo a passo, e configurar o comando à distância por si. Esta opção desaparece ao fim de alguns segundos se nenhum botão for pressionado. Pode reiniciar este procedimento simplesmente pressionando \"Guardar\" novamente."
-
-msgid "web.lirc.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.lirc.combobox.tooltip.lirc_driver"
-msgstr "Driver do LIRC"
-
-msgid "web.lirc.combobox.emptytext"
-msgstr "Escolha um receptor para o seu comando à distância, por favor..."
-
-msgid "web.lirc.combobox.label"
-msgstr "Receptor"
-
-msgid "web.lirc.serial_radiogroup.label"
-msgstr "Dispositivo série"
-
-msgid "web.lirc.serial_radiogroup.boxlabel_none"
-msgstr "nenhum"
-
-msgid "web.lirc.submit.waitmsg"
-msgstr "Opções do receptor do LIRC a serem guardadas."
-
-msgid "web.lirc.submit.success"
-msgstr "As opções foram guardadas com sucesso."
-
-msgid "web.lirc.submit.failure"
-msgstr "Erro a guardar opções. Tente de novo, por favor."
-
-msgid "web.lirc.error.json_decode"
-msgstr "Impossível descodificar a lista de receptores JSON"
-
-msgid "web.inputlirc.menutab.title"
-msgstr "Inputlirc"
-
-msgid "web.inputlirc.menutab.tabtip"
-msgstr "Opções do Inputlirc (Receptor do comando à distância)"
-
-msgid "web.inputlirc.menutab.panel_title"
-msgstr "Receptor do comando à distância (LIRC)"
-
-msgid "web.inputlirc.help"
-msgstr "Por favor escolha o seu receptor do comando à distância na lista acima. Quando pressionar o botão \"Guardar\", o VDR será reiniciado para garantir a selecção do novo receptor configurado no inputlirc."
-
-msgid "web.inputlirc.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.inputlirc.combobox.tooltip.lirc_driver"
-msgstr "Driver do Inputlirc"
-
-msgid "web.inputlirc.combobox.emptytext"
-msgstr "Escolha um receptor para o seu comando à distância, por favor..."
-
-msgid "web.inputlirc.combobox.label"
-msgstr "Receptor"
-
-msgid "web.inputlirc.submit.waitmsg"
-msgstr "Opções do receptor do Inputlirc a serem guardadas."
-
-msgid "web.inputlirc.submit.success"
-msgstr "As opções foram guardadas com sucesso."
-
-msgid "web.inputlirc.submit.failure"
-msgstr "Erro a guardar opções. Tente de novo, por favor."
-
-msgid "web.inputlirc.error.json_decode"
-msgstr "Impossível descodificar a lista de receptores JSON"
-
-msgid "web.irserver.menutab.title"
-msgstr "IRServer"
-
-msgid "web.irserver.menutab.tabtip"
-msgstr "Opções do IRServer (Receptor do comando à distância)"
-
-msgid "web.irserver.menutab.panel_title"
-msgstr "Receptor do comando à distância (IRServer)"
-
-msgid "web.irserver.help"
-msgstr "Quando pressionar o botão \"Guardar\", o VDR será reiniciado para garantir a selecção do novo receptor configurado no IRServer."
-
-msgid "web.irserver.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.irserver.combobox.tooltip.lirc_driver"
-msgstr "Driver do IRDriver"
-
-msgid "web.irserver.combobox.emptytext"
-msgstr "Escolha um receptor para o seu comando à distância, por favor..."
-
-msgid "web.irserver.combobox.label"
-msgstr "Receptor"
-
-msgid "web.irserver.submit.waitmsg"
-msgstr "Opções do receptor do IRServer a serem guardadas."
-
-msgid "web.irserver.submit.success"
-msgstr "As opções foram guardadas com sucesso."
-
-msgid "web.irserver.submit.failure"
-msgstr "Erro a guardar opções. Tente de novo, por favor."
-
-msgid "web.irserver.error.json_decode"
-msgstr "Impossível descodificar a lista de receptores JSON"
-
-msgid "web.channels.menutab.title"
-msgstr "Lista de Canais (SVDRP)"
-
-msgid "web.channels.menutab.tabtip"
-msgstr "Opções da Lista de Canais (Organizar Lista de Canais de Rádio e TV)"
-
-msgid "web.channels.menutab.panel_title"
-msgstr ""
-
-msgid "web.channels.grid_header.cid"
-msgstr "Não"
-
-msgid "web.channels.grid_header.cname"
-msgstr "Nome do Canal"
-
-msgid "web.channels.grid_header.cprovider"
-msgstr "Provedor"
-
-msgid "web.channels.grid_header.cstr"
-msgstr "Nome completo do Canal"
-
-msgid "web.channels.grid_title"
-msgstr "Lista de Canais (Todos os canais de Rádio e TV)"
-
-msgid "web.frontend.menutab.title"
-msgstr "Frontend do VDR"
-
-msgid "web.frontend.menutab.tabtip"
-msgstr "Mudar entre xine e xineliboutput"
-
-msgid "web.frontend.menutab.panel_title"
-msgstr "Frontend do VDR"
-
-msgid "web.frontend.label"
-msgstr "Escolha frontend"
-
-msgid "web.frontend.button_label"
-msgstr "Aplicar opções do frontend"
-
-msgid "web.frontend.submit.waitmsg"
-msgstr "Opções do frontend actualizadas."
-
-msgid "web.frontend.submit.success"
-msgstr "Sucesso."
-
-msgid "web.frontend.submit.failure"
-msgstr "Falhou."
-
-msgid "web.shutdown.menutab.title"
-msgstr "Desligar"
-
-msgid "web.shutdown.menutab.tabtip"
-msgstr "Mudar modo de desligar"
-
-msgid "web.shutdown.menutab.panel_title"
-msgstr "Desligar VDR"
-
-msgid "web.shutdown.label"
-msgstr "Escolha modo de desligar"
-
-msgid "web.shutdown.button_label"
-msgstr "Aplicar modo de desligar"
-
-msgid "web.shutdown.submit.waitmsg"
-msgstr "Opções do modo de desligar actualizadas."
-
-msgid "web.shutdown.submit.success"
-msgstr "Sucesso."
-
-msgid "web.shutdown.submit.failure"
-msgstr "Falhou."
-
-msgid "web.shutdown.items.s3"
-msgstr "Suspender para a RAM"
-
-msgid "web.shutdown.items.s3unavailable"
-msgstr "Suspender para a RAM (indisponível)"
-
-msgid "web.shutdown.items.s4"
-msgstr "Suspender para o disco"
-
-msgid "web.shutdown.items.s4unavailable"
-msgstr "Suspender para o disco (indisponível)"
-
-msgid "web.shutdown.items.s5"
-msgstr "Desligar"
-
-msgid "web.shutdown.items.reboot"
-msgstr "Reiniciar kernel"
-
-msgid "web.upload.menutab.title"
-msgstr "Envio de configurações do VDR"
-
-msgid "web.upload.menutab.tabtip"
-msgstr "Envio da sua configuração guardada do VDR"
-
-msgid "web.upload.menutab.panel_title"
-msgstr "Envio da configuração do VDR (a configuração enviada sobrescreve a configuração existente)"
-
-msgid "web.upload.button_label"
-msgstr "Envio"
-
-msgid "web.upload.submit.waitmsg"
-msgstr "O ficheiro está a ser enviado."
-
-msgid "web.upload.submit.success"
-msgstr "Ficheiro enviado com sucesso."
-
-msgid "web.upload.submit.failure"
-msgstr "Houve um problema durante o envio do ficheiro."
-
-msgid "web.system.menutab.title"
-msgstr "Sistema"
-
-msgid "web.system.menutab.tabtip"
-msgstr "Reiniciar o VDR ou todo o Sistema"
-
-msgid "web.system.menutab.panel_title"
-msgstr "Comandos do Sistema"
-
-msgid "web.system.vdr_restart.label"
-msgstr "Reiniciar o backend do VDR"
-
-msgid "web.system.vdr_restart.submit.waitmsg"
-msgstr "O comando para reiniciar o VDR está a ser enviado."
-
-msgid "web.system.vdr_restart.submit.success"
-msgstr "O VDR vai reiniciar agora."
-
-msgid "web.system.vdr_restart.submit.failure"
-msgstr "Problema a enviar comando. Tente de novo, por favor."
-
-msgid "web.system.kill_xbmc.label"
-msgstr "Parar XBMC (se congelado)"
-
-msgid "web.system.kill_xbmc.submit.waitmsg"
-msgstr "O comando para parar o XBMC está a ser enviado."
-
-msgid "web.system.kill_xbmc.submit.success"
-msgstr "O XBMC foi parado."
-
-msgid "web.system.kill_xbmc.submit.failure"
-msgstr "Problema a enviar comando. Tente de novo, por favor."
-
-msgid "web.system.system_restart.label"
-msgstr "Reiniciar o sistema (Atenção: Não pede confirmação!)"
-
-msgid "web.system.system_restart.submit.waitmsg"
-msgstr "O comando para reiniciar está a ser enviado."
-
-msgid "web.system.system_restart.submit.success"
-msgstr "O sistema vai reiniciar agora."
-
-msgid "web.system.system_restart.submit.failure"
-msgstr "Problema a enviar comando. Tente de novo, por favor."
-
-msgid "web.network.menutab.title"
-msgstr "Rede Local"
-
-msgid "web.network.menutab.tabtip"
-msgstr "Opções de Rede"
-
-msgid "web.network.menutab.panel_title"
-msgstr "Configuração da Rede"
-
-msgid "web.network.nfs.help"
-msgstr "Defina as partilhas NFS de outros sistemas que devem ser usados pelo VDR. As directorias devem começar com \"server:/path\". O botão \"Aplicar\" guarda as mudanças nas configurações locais. O VDR usará as novas configurações após da próxima vez que reiniciar."
-
-msgid "web.network.nfs.menutab.title"
-msgstr "NFS"
-
-msgid "web.network.nfs.menutab.tabtip"
-msgstr "Opções de partilhas NFS"
-
-msgid "web.network.nfs.labels.newDir"
-msgstr "Directoria remota"
-
-msgid "web.network.nfs.labels.add"
-msgstr "Adicionar"
-
-msgid "web.network.nfs.labels.edit"
-msgstr "Editar"
-
-msgid "web.network.nfs.labels._delete"
-msgstr "Remover"
-
-msgid "web.network.nfs.labels.apply"
-msgstr "Aplicar"
-
-msgid "web.network.samba.menutab.title"
-msgstr "Samba"
-
-msgid "web.network.samba.menutab.tabtip"
-msgstr "Opções de partilhas Samba"
-
-msgid "web.nvidia.menutab.title"
-msgstr "Nvidia"
-
-msgid "web.nvidia.menutab.tabtip"
-msgstr "Opções de drivers Nvidia"
-
-msgid "web.nvidia.menutab.panel_title"
-msgstr "Configuração Nvidia"
-
-msgid "web.nvidia.overscan_slider_label"
-msgstr "Compensação de Overscan Nvidia"
-
-msgid "web.nvidia.button_label"
-msgstr "Aplicar valor"
-
-msgid "web.nvidia.submit.waitmsg"
-msgstr "Opções de Overscan Nvidia actualizadas."
-
-msgid "web.nvidia.submit.success"
-msgstr "Sucesso."
-
-msgid "web.nvidia.submit.failure"
-msgstr "Falhou."
-
-msgid "web.webfrontend.menutab.title"
-msgstr "Frontend Web"
-
-msgid "web.webfrontend.menutab.tabtip"
-msgstr "Configurar aparência do frontend Web"
-
-msgid "web.webfrontend.menutab.panel_title"
-msgstr "Opções do frontend Web"
-
-msgid "web.webfrontend.label"
-msgstr "Escolha a linguagem do frontend Web"
-
-msgid "web.webfrontend.button_label"
-msgstr "Aplicar configuração da linguagem"
-
-msgid "web.webfrontend.submit.waitmsg"
-msgstr "Opções de linguagem do frontend Web actualizadas."
-
-msgid "web.webfrontend.submit.success"
-msgstr "Sucesso. Pressione F5 para actualizar o frontend Web com a nova linguagem, por favor."
-
-msgid "web.webfrontend.submit.failure"
-msgstr "Falhou."
-
-msgid "web.diagnose.toolbar.button.refresh"
-msgstr "Refrescar"
-
-msgid "web.diagnose.toolbar.button.refresh_tooltip"
-msgstr "Carregue neste botão para refrescar o conteúdo deste painel."
-
-msgid "web.diagnose.toolbar.button.jumpdown"
-msgstr "Saltar para o fim do painel"
-
-msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
-msgstr "Carregue neste botão para saltar para o fim deste painel, por favor."
-
-msgid "web.diagnose.section.system_info.title"
-msgstr "Informação do Sistema"
-
-msgid "web.diagnose.section.system_info.description"
-msgstr "Estado da rede, carga do sistema, uso de ficheiros do sistema e do kernel"
-
-msgid "web.diagnose.section.system_info.ifconfig"
-msgstr "Estado da Rede"
-
-msgid "web.diagnose.section.system_info.top"
-msgstr "Carga do Sitema"
-
-msgid "web.diagnose.section.system_info.dmesg"
-msgstr "Kernel"
-
-msgid "web.diagnose.section.system_info.df"
-msgstr "Uso de ficheiros do sistema"
-
-msgid "web.diagnose.section.system_logs.title"
-msgstr "Ficheiros de depuração"
-
-msgid "web.diagnose.section.system_logs.description"
-msgstr "Ficheiros de depuração importantes"
-
-msgid "web.diagnose.section.xbmc.title"
-msgstr "Ficheiros de depuração do XBMC"
-
-msgid "web.diagnose.section.xbmc.description"
-msgstr "Descubra a razão para problemas do XBMC"
-
-msgid "web.diagnose.section.lirc.title"
-msgstr "Configuração do LIRC"
-
-msgid "web.diagnose.section.lirc.description"
-msgstr "Verifique a configuração actual do LIRC"
-
-msgid "web.diagnose.section.vdr.title"
-msgstr "Configuração do VDR"
-
-msgid "web.diagnose.section.vdr.description"
-msgstr "Verifique a configuração actual do VDR"
-
-msgid "web.diagnose.section.xorg.title"
-msgstr "Servidor X"
-
-msgid "web.diagnose.section.xorg.description"
-msgstr "Verifique a configuração actual do X"
-
-msgid "web.diagnose.section.sound.title"
-msgstr "Som (ALSA)"
-
-msgid "web.diagnose.section.sound.description"
-msgstr "Solucione problemas de som (digital/analógico)"
-
-msgid "web.diagnose.section.packages.title"
-msgstr "Pacotes"
-
-msgid "web.diagnose.section.packages.description"
-msgstr "Verifique que pacotes e suas versões estão instalados"
-
-msgid "web.diagnose.section.yavdr.title"
-msgstr "yaVDR-Utils"
-
-msgid "web.diagnose.section.yavdr.description"
-msgstr "Solucione problemas com o frontend do yaVDR (base de dados  servidor web)"
-
-msgid "web.timeout.menutab.title"
-msgstr "Temporização do GRUB"
-
-msgid "web.timeout.menutab.tabtip"
-msgstr "Escolha a temporização do GRUB"
-
-msgid "web.timeout.menutab.panel_title"
-msgstr "Temporização do GRUB"
-
-msgid "web.timeout.label"
-msgstr "Escolha temporização"
-
-msgid "web.timeout.button_label"
-msgstr "Aplicar opções de temporização"
-
-msgid "web.timeout.submit.waitmsg"
-msgstr "Opções de temporização actualizadas."
-
-msgid "web.timeout.submit.success"
-msgstr "Sucesso."
-
-msgid "web.timeout.submit.failure"
-msgstr "Falhou."
-
-msgid "web.timeout.maxText"
-msgstr "O valor máximo para este campo é {0}"
-
-msgid "web.timeout.minText"
-msgstr "O valor mínimo para este campo é {0}"
-
-msgid "web.x11.menutab.title"
-msgstr "Opções do ecrã"
-
-msgid "web.x11.menutab.tabtip"
-msgstr "Opções do ecrã"
-
-msgid "web.x11.menutab.panel_title"
-msgstr "Opções do ecrã"
-
-msgid "web.x11.graphtft.label"
-msgstr "graphTFT"
-
-msgid "web.x11.graphtft.boxlabel"
-msgstr "Activado"
-
-msgid "web.x11.button_label"
-msgstr "Aplicar opções do ecrã"
-
-msgid "web.x11.submit.waitmsg"
-msgstr "Opções do ecrã actualizadas."
-
-msgid "web.x11.submit.success"
-msgstr "Sucesso."
-
-msgid "web.x11.submit.failure"
-msgstr "Falhou."
-
-msgid "web.x11.dualhead.label"
-msgstr "dual head"
-
-msgid "web.x11.dualhead.boxlabel"
-msgstr "Activado"
-
-msgid "web.x11.dualhead.boxlabelunavailable"
-msgstr "Desligado (menos de 2 ecrãs encontrados)"
-
-msgid "web.x11.dualhead.switch_label"
-msgstr "Mudar ecrã do frontend do VDR"
-
-msgid "web.x11.primary"
-msgstr "Primário"
-
-msgid "web.x11.secondary"
-msgstr "Secundário"
-
-msgid "web.x11.modeline"
-msgstr "Modelo actual"
-
-msgid "web.x11.device"
-msgstr "Dispositivo"
-
-msgid "web.x11.resolution"
-msgstr "Resolução"
-
-msgid "web.x11.select_res"
-msgstr "Escolha resolução"
-
-msgid "web.x11.enabled"
-msgstr "Ligado"
-
-msgid "web.x11.disabled"
-msgstr "Desligado"
-
-msgid "web.sound.menutab.title"
-msgstr "Configurações de som"
-
-msgid "web.sound.menutab.tabtip"
-msgstr "Configurações de som"
-
-msgid "web.sound.menutab.panel_title"
-msgstr "Configurações de som"
-
-msgid "web.sound.button_label"
-msgstr "Aplicar configurações de som"
-
-msgid "web.sound.submit.waitmsg"
-msgstr "Configurações de som actualizadas."
-
-msgid "web.sound.submit.success"
-msgstr "Sucesso."
-
-msgid "web.sound.submit.failure"
-msgstr "Falhou."
-
-msgid "web.sound.label"
-msgstr "Configuração de som"
+msgid "Shutdown system"
+msgstr "Desligar sistema"

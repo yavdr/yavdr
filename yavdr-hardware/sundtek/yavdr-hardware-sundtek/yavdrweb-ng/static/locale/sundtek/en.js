@@ -14,4 +14,4 @@ applyLL(locale_en,{
         },
         help: ''
     }
-})
+});

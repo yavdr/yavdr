@@ -8,12 +8,12 @@ var locale_pt = {
         vdr : {
             title: 'O seu VDR',
             tabtip: 'Configuração de opções básicas do seu VDR',
-            content: 'Ben-vindo à página web do yaVDR!'
+            content: 'Bem-vindo à página de configuração do yaVDR!'
         },
         system : {
             title: 'Sistema',
-            tabtip: 'Configuração de opções básicas do seu VDR',
-            content: 'Ben-vindo à página web do yaVDR!'
+            tabtip: 'Configuração de opções básicas do seu sistema',
+            content: 'Bem-vindo à página de configuração do yaVDR!'
         },
         demos : {
             title: 'Demonstração',
@@ -22,13 +22,13 @@ var locale_pt = {
         },
         development : {
             title: 'Desenvolvimento',
-            tabtip: 'Novas funcionalidades em desenvolvimento. Não usar. Ainda não funcionam devidamente.',
-            content: 'Novas funcionalidades em desenvolvimento. Não usar. Ainda não funcionam devidamente.'
+            tabtip: 'Novas funcionalidades em desenvolvimento. Não usar. Ainda não testadas devidamente.',
+            content: 'Novas funcionalidades em desenvolvimento. Não usar. Ainda não testadas devidamente.'
         },
         diagnose : {
             title: 'Diagnóstico',
             tabtip: 'Mantenha-se informado sobre o seu sistema e analise possíveis problemas.',
-            content: 'Acesso a ficheiros de log importantes e ficheiros de configuração.'
+            content: 'Acesso a ficheiros de depuração importantes e ficheiros de configuração.'
         }
     },
     standardform: {
@@ -36,7 +36,7 @@ var locale_pt = {
             save: 'Guardar'
         },
         messagebox_caption: {
-            message: 'Menssagem',
+            message: 'Mensagem',
             error: 'Erro',
             wait: 'Aguarde, por favor...'
         }
@@ -47,7 +47,7 @@ var locale_pt = {
             tabtip :'Opções do comando à distância (Receptor do comando à distância)',
             panel_title : 'Receptor do comando à distância'
         },
-        help: 'Três servidores compatíveis com LIRC suportados meste momento. Por favor escolha o que melhor corresponde ao seu dispositivo. <br /><h1>LIRC</h1><br /><br /> Este suporta o maior número de dispositivos. Informe-se sobre a driver que suporta o seu dispositivo. Escolha o driver correcto e, no caso de ser um sensor de porta série caseiro (Attric ou semelhante), tem de escolher a porta série correcta.<br /><br /><h1>Input Lirc</h1><br /><br /> Algumas placas de TV incluem um comando à distância. A maioria, bem como alguns dispositivos USB, são disponiblizados com dispositivos de entrada. Apenas tem de escolher o dispositivo correcto do menu.<br /><br /><h1>Irserver</h1><br /><br /> Algumas caixas HTPC (OrigenAE por exemplo) possuêm um sensor IR de origem, que pode ser usado com o irserver. Apenas necessita de o ligar e guardar.' 
+        help: 'Há três servidores compatíveis com LIRC suportados neste momento. Por favor escolha o que melhor corresponde ao seu dispositivo. <br /><h1>LIRC</h1><br /><br /> Este suporta o maior número de dispositivos. Informe-se sobre a driver que suporta o seu dispositivo. Escolha o driver correcto e, no caso de ser um sensor de porta série caseiro (Attric ou semelhante), tem de escolher a porta série correcta.<br /><br /><h1>Input Lirc</h1><br /><br /> Algumas placas de TV incluem um comando à distância. A maioria, bem como alguns dispositivos USB, são disponiblizados com dispositivos de entrada. Apenas tem de escolher o dispositivo correcto do menu.<br /><br /><h1>Irserver</h1><br /><br /> Algumas caixas HTPC (OrigenAE por exemplo) possuêm um sensor IR de origem, que pode ser usado com o irserver. Apenas necessita de o ligar e guardar.'
     },
     lirc: {
         menutab: {
@@ -69,7 +69,7 @@ var locale_pt = {
              boxlabel_none : 'nenhum'
         },
         submit: {
-            waitmsg : 'Opções do receptor do LIRC a serem guardadas.',    
+            waitmsg : 'Opções do receptor do LIRC a serem guardadas.',
             success : 'As opções foram guardadas com sucesso.',
             failure : 'Erro a guardar opções. Tente de novo, por favor.'
         },
@@ -91,9 +91,9 @@ var locale_pt = {
              },
              emptytext: 'Escolha um receptor para o seu comando à distância, por favor...',
              label: 'Receptor'
-        },
+         },
         submit: {
-            waitmsg : 'Opções do receptor do Inputlirc a serem guardadas.',    
+            waitmsg : 'Opções do receptor do Inputlirc a serem guardadas.',
             success : 'As opções foram guardadas com sucesso.',
             failure : 'Erro a guardar opções. Tente de novo, por favor.'
         },
@@ -117,7 +117,7 @@ var locale_pt = {
              label: 'Receptor'
         },
         submit: {
-            waitmsg : 'Opções do receptor do IRServer a serem guardadas.',    
+            waitmsg : 'Opções do receptor do IRServer a serem guardadas.',
             success : 'As opções foram guardadas com sucesso.',
             failure : 'Erro a guardar opções. Tente de novo, por favor.'
         },
@@ -131,13 +131,31 @@ var locale_pt = {
             tabtip : 'Opções da Lista de Canais (Organizar Lista de Canais de Rádio e TV)',
             panel_title : '' //unused
         },
-        grid_header : { 
-            cid : 'Não',
-            cname : 'Nome do Canal',
-            cprovider : 'Provedor',
-            cstr : 'Nome completo do Canal'
+        grid_header : {
+            _num : 'Não',
+            name : 'Nome do Canal',
+            provider : 'Provedor',
+            str : 'Nome completo do Canal'
+            frequency : 'Frequência',
+            modulation : 'Modulação',
+            source : 'Fonte',
+            symbolrate : 'Symbolrate',
+            vpid : 'VPID',
+            apid : 'APID',
+            tpid : 'TPID',
+            caid : 'CAID',
+            sid : 'SID',
+            nid : 'NID',
+            tid : 'TID',
+            rid : 'RID',
+            _group : 'Grupo',
+            _friendly_transp: 'Transponder',
+            _friendly_lang: 'Língua',
+            _friendly_type: 'TV/Rádio',
+            _friendly_scrambled : 'FTA/codificado',
+            _friendly_dvb_sat_band : "Banda de sinal do satélite"
         },
-        grid_title : 'Lista de Canais (Todos os canais de Rádio e TV)' 
+        grid_title : 'Lista de Canais (Todos os canais de Rádio e TV)'
     },
     frontend: {
         menutab: {
@@ -148,7 +166,7 @@ var locale_pt = {
         label: 'Escolha frontend',
         button_label:  'Aplicar opções do frontend',
         submit: {
-            waitmsg : 'Opções do frontend actualizadas.',    
+            waitmsg : 'Opções do frontend actualizadas.',
             success : 'Sucesso.',
             failure : 'Falhou.'
         }
@@ -162,7 +180,7 @@ var locale_pt = {
         label: 'Escolha modo de desligar',
         button_label:  'Aplicar modo de desligar',
         submit: {
-            waitmsg : 'Opções do modo de desligar actualizadas.',    
+            waitmsg : 'Opções do modo de desligar actualizadas.',
             success : 'Sucesso.',
             failure : 'Falhou.'
         },
@@ -178,12 +196,12 @@ var locale_pt = {
     upload: {
         menutab: {
             title : 'Envio de configurações do VDR',
-            tabtip : 'Envio da sua configuração guardada do VDR',
-            panel_title : 'Envio da configuração do VDR (a configuração enviada sobrescreve a configuração existente)'
+            tabtip : 'Editar ficheiros de configuração do VDR, enviar a sua configuração guardada do VDR',
+            panel_title : 'Editor de configurações do VDR'
         },
         button_label: 'Envio',
         submit: {
-            waitmsg : 'O ficheiro está a ser enviado.',    
+            waitmsg : 'O ficheiro está a ser enviado.',
             success : 'Ficheiro enviado com sucesso.',
             failure : 'Houve um problema durante o envio do ficheiro.'
         }
@@ -191,7 +209,7 @@ var locale_pt = {
     system: {
         menutab: {
             title : 'Sistema',
-            tabtip : 'Reiniciar o VDR ou todo o Sistema',
+            tabtip : 'Reiniciar o VDR ou todo o sistema',
             panel_title : 'Comandos do Sistema'
         },
         vdr_restart : {
@@ -209,7 +227,7 @@ var locale_pt = {
                 success: 'O XBMC foi parado.',
                 failure: 'Problema a enviar comando. Tente de novo, por favor.'
             }
-        },        
+        },
         system_restart : {
             label: 'Reiniciar o sistema (Atenção: Não pede confirmação!)',
             submit: {
@@ -226,7 +244,7 @@ var locale_pt = {
             panel_title : 'Configuração da Rede'
         },
         nfs: {
-            help: 'Defina as partilhas NFS de outros sistemas que devem ser usados pelo VDR. As directorias devem começar com "server:/path". O botão "Aplicar" guarda as mudanças nas configurações locais. O VDR usará as novas configurações após da próxima vez que reiniciar.',
+            help: 'Defina as partilhas NFS de outros sistemas que podem ser usadas pelo VDR. As directorias devem começar com "server:/path". O botão "Aplicar" guarda as mudanças nas configurações locais. O VDR usará as novas configurações da próxima vez que reiniciar.',
             menutab: {
                 title : 'NFS',
                 tabtip : 'Opções de partilhas NFS'
@@ -244,7 +262,12 @@ var locale_pt = {
                 title : 'Samba',
                 tabtip : 'Opções de partilhas Samba'
             }
-       }
+        },
+        submit: {
+            waitmsg : 'A actualizar configuração',
+            success : 'Configuração alterado com exito.',
+            failure : 'Ocorreu um problema a alterar a configuração.'
+        }
     },
     nvidia: {
         menutab: {
@@ -267,7 +290,7 @@ var locale_pt = {
             panel_title : 'Opções do frontend Web'
         },
         label: 'Escolha a linguagem do frontend Web',
-        button_label:  'Aplicar configuração da linguagem',
+        button_label: 'Aplicar configuração da linguagem',
         submit: {
             waitmsg : 'Opções de linguagem do frontend Web actualizadas.',
             success : 'Sucesso. Pressione F5 para actualizar o frontend Web com a nova linguagem, por favor.',
@@ -286,7 +309,7 @@ var locale_pt = {
         section : {
             system_info: {
                 menutab: {
-                    title : 'Informação do Sistema', 
+                    title : 'Informação do Sistema',
                     tabtip : 'Estado da rede, carga do sistema, uso de ficheiros do sistema e do kernel'
                 },
                 ifconfig : 'Estado da Rede',
@@ -303,7 +326,7 @@ var locale_pt = {
             xbmc: {
                 menutab: {
                     title : 'Ficheiros de depuração do XBMC',
-                    tabtip : 'Descubra a razão para problemas do XBMC'
+                    tabtip : 'Descubra a razão de problemas do XBMC'
                 }
             },
             lirc: {
@@ -344,6 +367,13 @@ var locale_pt = {
             }
         }
     },
+    packages: {
+        menutab: {
+            title : 'Pacotes yaVDR',
+            tabtip : 'Verifique que pacotes e suas versões estão instalados',
+            panel_title : 'Pacotes yaVDR'
+        }
+    },
     timeout: {
         menutab: {
             title : 'Temporização do GRUB',
@@ -353,7 +383,7 @@ var locale_pt = {
         label: 'Escolha temporização',
         button_label:  'Aplicar opções de temporização',
         submit: {
-            waitmsg : 'Opções de temporização actualizadas.',    
+            waitmsg : 'Opções de temporização actualizadas.',
             success : 'Sucesso.',
             failure : 'Falhou.'
         },
@@ -370,9 +400,15 @@ var locale_pt = {
             label: 'graphTFT',
             boxlabel: 'Activado'
         },
+       deinterlacer_hd: {
+            label: 'Xine-HD-Deinterlacer (bob por defeito)'
+        },
+       deinterlacer_sd: {
+            label: 'Xine-SD-Deinterlacer (temporal por defeito)'
+        },
         button_label:  'Aplicar opções do ecrã',
         submit: {
-            waitmsg : 'Opções do ecrã actualizadas.',    
+            waitmsg : 'Opções do ecrã actualizadas.',
             success : 'Sucesso.',
             failure : 'Falhou.'
         },
@@ -384,7 +420,7 @@ var locale_pt = {
         },
         primary: 'Primário',
         secondary: 'Secundário',
-        modeline: 'Modelo actual',
+        modeline: 'Modo actual',
         device: 'Dispositivo',
         resolution: 'Resolução',
         select_res: 'Escolha resolução',
@@ -399,10 +435,25 @@ var locale_pt = {
         },
         button_label:  'Aplicar configurações de som',
         submit: {
-            waitmsg : 'Configurações de som actualizadas.',    
+            waitmsg : 'Configurações de som actualizadas.',
             success : 'Sucesso.',
             failure : 'Falhou.'
         },
         label: 'Configuração de som'
+    },
+    lifeguard: {
+        help: 'Verificar se o VDR deve encerrar o sistema. Executar testes especificados pelo utilizador quando o VDR deseja desligar a máquina. O encerramento é adiado se os testes indicarem que existe algum processo que não deve ser interrompido. Ligue aqui os processos que o VDR não deve interromper. Sem não selecionar nada, o funcionamento é semelhante a desligar o VDR-Lifeguard.',
+        menutab: {
+            title : 'VDR-Lifeguard',
+            tabtip : 'Opções do Lifeguard',
+            panel_title : 'Opções do Lifeguard'
+        },
+        button_label:  'Aplicar opções do Lifeguard',
+        submit: {
+            waitmsg : 'Configurações do Lifeguard actualizadas.',
+            success : 'Sucesso.',
+            failure : 'Falhou.'
+        },
+        label: 'Opções do VDR-Lifeguard'
     }
 };
