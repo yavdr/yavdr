@@ -1,16 +1,7 @@
 #!/bin/sh                                                                                                               
                                                                                                                         
 if [ remove = "$1" ]; then 
-#  /usr/bin/dpkg-trigger yavdr-addons-update
-  killall -9 wmdrawer > /dev/null 2>&1
-  rm -f /etc/init/dvdrip.conf
-  process-template /etc/wmdrawer/tools
-  process-template /etc/vdr/lifeguard.conf
-  start launcher
-  if [ -e /etc/default/locale ]; then 
-  . /etc/default/locale
-  fi 
-  process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
+/usr/bin/signal-event addons-update
 fi
 
 #DEBHELPER#

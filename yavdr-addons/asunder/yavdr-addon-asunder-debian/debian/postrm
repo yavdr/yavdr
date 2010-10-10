@@ -1,22 +1,7 @@
 #!/bin/sh                                                                                                               
                                                                                                                         
 if [ remove = "$1" ]; then 
-#  /usr/bin/dpkg-trigger yavdr-addons-update
-if [ -e /etc/default/locale ]; then 
-. /etc/default/locale
-fi 
-
-process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
-
-  killall -9 wmdrawer > /dev/null 2>&1
-  rm -f /etc/init/asunder.conf
-  process-template /etc/wmdrawer/tools
-  process-template /etc/vdr/lifeguard.conf 
-  if [ -e /etc/default/locale ]; then 
-  . /etc/default/locale
-  fi 
-  process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
-  start launcher
+/usr/bin/signal-event addons-update
 fi
 
 #DEBHELPER#

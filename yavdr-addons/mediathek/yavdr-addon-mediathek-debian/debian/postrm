@@ -1,18 +1,7 @@
 #!/bin/sh                                                                                                               
                                                                                                                         
 if [ remove = "$1" ]; then 
-  /usr/bin/signal-event addons-update
-  killall -9 wmdrawer > /dev/null 2>&1
-  process-template /etc/init/launcher.conf
-  rm -f /etc/wmdrawer/mediathek
-  rm -f /etc/init/mediathek-ard.conf
-  rm -f /etc/init/mediathek-zdf.conf
-  rm -f /etc/init/mediathek-dmax.conf
-  rm -f /etc/init/mediathek-sat1.conf
-  rm -f /etc/init/mediathek-golem.conf
-  rm -f /etc/init/mediathek-gametrailers.conf
-  process-template /etc/vdr/lifeguard.conf
-  start launcher
+/usr/bin/signal-event addons-update
 fi
 
 #DEBHELPER#
