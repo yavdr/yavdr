@@ -269,6 +269,12 @@ else
 								modelines[next]["hz"]["0"]["y"] = 0;
 								next++;
 
+								modelines[next]["id"] = "nvidia-auto-select";
+								modelines[next]["hz"]["auto"]["modeline"] = "nvidia-auto-select";
+								modelines[next]["hz"]["auto"]["x"] = 0;
+								modelines[next]["hz"]["auto"]["y"] = 0;
+								next++;
+
 								ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
 										NV_CTRL_BINARY_DATA_MODELINES,
 										(unsigned char **) &str, &len);
@@ -305,8 +311,9 @@ else
 													interlace = true;
 												}
 											}
+											int frequency = floor(0.5 + atof(tokens[1].c_str()) * pow(10,6) / (atof(tokens[5].c_str()) * atof(tokens[9].c_str())) * (interlace?2:1) / (doublescan?2:1));
 											std::stringstream ss;
-											ss << floor(0.5 + atof(tokens[1].c_str()) * pow(10,6) / (atof(tokens[5].c_str()) * atof(tokens[9].c_str())) * (interlace?2:1) / (doublescan?2:1));
+											ss << frequency;
 											string freq = ss.str() + (interlace?"i":"") + (doublescan?"d":"");
 
 											int pos;
@@ -330,7 +337,7 @@ else
 												for(int l=1; l < tokens.size() && l < 10; l++) {
 													modeline["clock"][l-1] = atof(tokens[l].c_str());
 												}
-												modeline["hz"] = floor(0.5 + atof(tokens[1].c_str()) * pow(10,6) / (atof(tokens[5].c_str()) * atof(tokens[9].c_str())));
+												modeline["hz"] = frequency;
 												modelines[pos]["hz"][freq] = modeline;
 											}
 											start = &str[k+1];
@@ -443,12 +450,22 @@ else
 
 								XFree(str);
 
+								Json::Value known;
 								Json::Value modelines;
 
-								modelines[0u]["id"] = "disabled";
-								modelines[0u]["modeline"] = "";
-								modelines[0u]["x"] = 0;
-								modelines[0u]["y"] = 0;
+								int next = 0;
+
+								modelines[next]["id"] = "disabled";
+								modelines[next]["hz"]["0"]["modeline"] = "";
+								modelines[next]["hz"]["0"]["x"] = 0;
+								modelines[next]["hz"]["0"]["y"] = 0;
+								next++;
+
+								modelines[next]["id"] = "nvidia-auto-select";
+								modelines[next]["hz"]["auto"]["modeline"] = "nvidia-auto-select";
+								modelines[next]["hz"]["auto"]["x"] = 0;
+								modelines[next]["hz"]["auto"]["y"] = 0;
+								next++;
 
 								ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
 										NV_CTRL_BINARY_DATA_MODELINES,
@@ -462,78 +479,114 @@ else
 									 *
 									 * so walk from one "\0" to the next to print each ModeLine.
 									 */
-									int next = 1;
 									start = str;
 									for (int k = 0; k < len; k++) {
 										if (str[k] == '\0' && start[0] != '\0') {
-
 											_s = string(start);
 											vector<string> tokens;
 											vector<string> parts;
 											Tokenize(_s, parts, ":");
 											Tokenize(parts[parts.size()-1], tokens);
 
-											modelines[next]["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
-											modelines[next]["modeline"] = trim(parts[parts.size()-1].substr(tokens[0].length()+1));
-											modelines[next]["x"] = tokens[2];
-											modelines[next]["y"] = tokens[6];
-											//clock h_active h_sync h_sync_end h_blank_end v_active v_sync v_sync_end v_blanking OPTIONEN
-											for(int l=1; l < tokens.size() && l < 10; l++) {
-												modelines[next]["clock"][l-1] = atof(tokens[l].c_str());
-											}
-											modelines[next]["hz"] = floor(0.5 + atof(tokens[1].c_str()) * pow(10,6) / (atof(tokens[5].c_str()) * atof(tokens[9].c_str())));
+											string resolution = tokens[2]+"x"+tokens[6];
 
+											bool interlace = false;
+											bool doublescan = false;
+
+											for(int i=10; i<tokens.size();i++) {
+
+												std::transform(tokens[i].begin(), tokens[i].end(),
+														tokens[i].begin(), ::tolower);
+												if (tokens[i] == "doublescan") {
+													doublescan = true;
+												} else if (tokens[i] == "interlace") {
+													interlace = true;
+												}
+											}
+											int frequency = floor(0.5 + atof(tokens[1].c_str()) * pow(10,6) / (atof(tokens[5].c_str()) * atof(tokens[9].c_str())) * (interlace?2:1) / (doublescan?2:1));
+											std::stringstream ss;
+											ss << frequency;
+											string freq = ss.str() + (interlace?"i":"") + (doublescan?"d":"");
+
+											int pos;
+											if (!known.isMember(resolution)) {
+												known[resolution] = next;
+												modelines[next]["id"] = resolution;
+												pos = next++;
+											} else {
+												pos = known[resolution].asInt();
+											}
+
+											if (!modelines[pos].isMember("hz") || !modelines[pos]["hz"].isMember(freq)) {
+												Json::Value modeline;
+												modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
+												modeline["modeline"] = trim(parts[parts.size()-1].substr(tokens[0].length()+1));
+												modeline["x"] = tokens[2];
+												modeline["y"] = tokens[6];
+												modeline["interlace"] = interlace;
+												modeline["doublescan"] = doublescan;
+												//clock h_active h_sync h_sync_end h_blank_end v_active v_sync v_sync_end v_blanking OPTIONEN
+												for(int l=1; l < tokens.size() && l < 10; l++) {
+													modeline["clock"][l-1] = atof(tokens[l].c_str());
+												}
+												modeline["hz"] = frequency;
+												modelines[pos]["hz"][freq] = modeline;
+											}
 											start = &str[k+1];
-											next++;
 										}
 									}
-
-									modelines[next]["id"] = "enabled";
-									modelines[next]["modeline"] = "X11 restart required";
-									modelines[next]["x"] = 0;
-									modelines[next]["y"] = 0;
 
 									XFree(str);
 
 									if ((displayDeviceName.substr(0,3) == "CRT" && name == displayDeviceName) || devmode == "1") {
-										next++;
+										Json::Value modeline;
+										modeline["id"] = "VGA2Scart_16_9";
+										modeline["modeline"] = "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
+										modeline["x"] = 1024;
+										modeline["y"] = 576;
+										modeline["clock"][0u] = 19;
+										modeline["clock"][1u] = 1024;
+										modeline["clock"][2u] = 1032;
+										modeline["clock"][3u] = 1120;
+										modeline["clock"][4u] = 1216;
+										modeline["clock"][5u] = 576;
+										modeline["clock"][6u] = 581;
+										modeline["clock"][7u] = 586;
+										modeline["clock"][8u] = 625;
+										modeline["interlace"] = true;
+										modeline["doublescan"] = false;
+										modeline["hz"] = 25;
+
 										modelines[next]["id"] = "VGA2Scart_16_9";
-										modelines[next]["modeline"] = "19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace";
-										modelines[next]["x"] = 1024;
-										modelines[next]["y"] = 576;
-										modelines[next]["clock"][0u] = 19;
-										modelines[next]["clock"][1u] = 1024;
-										modelines[next]["clock"][2u] = 1032;
-										modelines[next]["clock"][3u] = 1120;
-										modelines[next]["clock"][4u] = 1216;
-										modelines[next]["clock"][5u] = 576;
-										modelines[next]["clock"][6u] = 581;
-										modelines[next]["clock"][7u] = 586;
-										modelines[next]["clock"][8u] = 625;
-										modelines[next]["hz"] = 19.0 * pow(10,6) / (1216 * 625);
+										modelines[next]["hz"]["50i"] = modeline;
 
 										next++;
+										modeline["id"] = "VGA2Scart_4_3";
+										modeline["modeline"] = "13.875 720 744 808 888 576 580 585 625 -HSync -Vsync interlace";
+										modeline["x"] = 720;
+										modeline["y"] = 576;
+										modeline["clock"][0u] = 13.875;
+										modeline["clock"][1u] = 720;
+										modeline["clock"][2u] = 744;
+										modeline["clock"][3u] = 808;
+										modeline["clock"][4u] = 888;
+										modeline["clock"][5u] = 576;
+										modeline["clock"][6u] = 580;
+										modeline["clock"][7u] = 586;
+										modeline["clock"][8u] = 625;
+										modeline["interlace"] = true;
+										modeline["doublescan"] = false;
+										modeline["hz"] = 25;
+
 										modelines[next]["id"] = "VGA2Scart_4_3";
-										modelines[next]["modeline"] = "13.875 720 744 808 888 576 580 585 625 -HSync -Vsync interlace";
-										modelines[next]["x"] = 720;
-										modelines[next]["y"] = 576;
-										modelines[next]["clock"][0u] = 13.875;
-										modelines[next]["clock"][1u] = 720;
-										modelines[next]["clock"][2u] = 744;
-										modelines[next]["clock"][3u] = 808;
-										modelines[next]["clock"][4u] = 888;
-										modelines[next]["clock"][5u] = 576;
-										modelines[next]["clock"][6u] = 580;
-										modelines[next]["clock"][7u] = 586;
-										modelines[next]["clock"][8u] = 625;
-										modelines[next]["hz"] = 13.875 * pow(10,6) / (888 * 625);
+										modelines[next]["hz"]["50i"] = modeline;
 									}
-								} else {
-									int next = modelines.size();
+								}
+								if (next == 1) {  // wi didn't found any modelines...
 									modelines[next]["id"] = "enabled";
-									modelines[next]["modeline"] = "X11 restart required";
-									modelines[next]["x"] = 0;
-									modelines[next]["y"] = 0;
+									modelines[next]["hz"]["0"]["modeline"] = "";
+									modelines[next]["hz"]["0"]["x"] = 0;
+									modelines[next]["hz"]["0"]["y"] = 0;
 								}
 
 								displays[nDisplayDevice]["modelines"] = modelines;

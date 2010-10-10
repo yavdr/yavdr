@@ -116,12 +116,35 @@ function getX11Form(){
                 ]
             }),
             valueField: 'item',
-            displayField: 'item',
-            handler: function(checkbox, checked) {
-                var e = Ext.getCmp("deinterlacer_hd");
-
-            }
-        }]
+            displayField: 'item'
+        },{ 
+     	   xtype: 'combo',
+           id : 'defaultfreq',
+           hiddenName: 'defaultfreq' ,
+           emptyText: 'bitte wählen',
+           fieldLabel: 'Standardfrequenz',
+           //typeAhead: true,
+           //forceSelection: true,
+           //selectOnFocus: true,
+           mode: 'local',
+           triggerAction: 'all',
+           store: new Ext.data.ArrayStore({
+               id: 0,
+               fields: [
+                   'id', 'test'
+               ],
+               data: [
+                   ['bob',1], 
+                   ['half temporal',2], 
+                   ['half temporal_spatial',3], 
+                   ['temporal',4], 
+                   ['temporal_spatial',5]
+               ]
+           }),
+           valueField: 'id',
+           displayField: 'id'
+			
+		}]
     });
 
     var submit = myform.addButton({
@@ -158,11 +181,7 @@ function getX11Form(){
                 var rButton = this.getComponent('x11_dualhead');
                 if (typeof displayData.system.x11.displays != "undefined") {
                     Ext.each(displayData.system.x11.displays, function(item, index, allitems) {
-                        var hiddenmodeline = new Ext.form.Hidden({
-                            name: 'display'+index,
-                            value: item.current_modeline.modeline
-                        });
-                        
+
                         var frequencies = new Ext.form.CheckboxGroup({
                         	name: 'freq'+index,
                             xtype: 'checkboxgroup',
@@ -173,10 +192,7 @@ function getX11Form(){
                         
                         newitems = [{
                                 xtype: 'label',
-                                html: getLL('x11.device')+': ' + item.devicename + '<br />'
-                            }, {
-                                xtype: 'label',
-                                html: getLL('x11.modeline')+': ' + item.current_modeline.id + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
+                                html: getLL('x11.device')+': ' + item.devicename + ', ' + getLL('x11.modeline')+': ' + item.current_modeline.id + ' ' + item.current_modeline.x + 'x' + item.current_modeline.y + '<br />'
                             },
                             new Ext.form.Hidden({
                                 name: 'display'+index,
@@ -188,7 +204,7 @@ function getX11Form(){
                                tpl: '<tpl for="."><div ext:qtip="modeline' +
                                          ': &quot;{id}&quot;" class="x-combo-list-item">{id}</div></tpl>',
                                //name: ... used in POST request
-                               hiddenName: 'display' + index,  //key, defined in set_lirchw.ecpp, used in POST request
+                               hiddenName: 'modeline' + index,  //key, defined in set_lirchw.ecpp, used in POST request
                                //set per method hiddenValue: lircData.current_receiver,  //initial value, used in POST request
                                valueField: 'id', //value column, used in POST request
                                displayField: 'id',
@@ -217,8 +233,57 @@ function getX11Form(){
                             			var displaygroup = this.getComponent('displaygroup'+combo.index);
                             			if (displaygroup) {
                             				var items = [];
+
+	                            			var freq = displaygroup.getComponent('defaultfreq'+combo.index);
+	                            			if (freq) { // unable to change group on the fly -> remove old one
+	                            				displaygroup.remove(freq);
+	                            			}
+	                            			freq = new Ext.form.ComboBox({ 
+	                                            id : 'defaultfreq' + combo.index,
+	                                            hiddenName: 'defaultfreq' + combo.index,
+	                                            emptyText: 'bitte wählen',
+	                                            fieldLabel: 'Standardfrequenz',
+	                                            valueField: 'id', //value column, used in POST request
+	                                            displayField: 'name',
+	                                            typeAhead: true,
+	                                            forceSelection: true,
+	                                            selectOnFocus: true,
+	                                            mode: 'local',
+	                                            triggerAction: 'all',
+	                                            //disabled: true,
+	                                            store: new Ext.data.ArrayStore({
+	                            					storeId : 'arraystore_'+combo.index,
+	                                            	idIndex: 0,
+	                            					autoDestroy: true,
+	                            				    fields: ['id', 'name', 'freq']
+	                            				})
+                            				});
+	                            			
                             				for (hz in record.data.hz) {
-                            					items[items.length] = {xtype:'checkbox', boxLabel: hz+'&nbsp;Hz', name: 'freq'+combo.index, inputValue: record.data.hz[hz].id, freq: record.data.hz[hz].hz};
+                            					var value = '000' + record.data.hz[hz].hz;
+                            					var iLen = String(value).length
+                            				    value = String(value).substring(iLen - 3, iLen) + record.data.hz[hz].id;
+
+                            					items[items.length] = {
+                            						xtype:'checkbox', 
+                            						boxLabel: hz+'&nbsp;Hz', 
+                            						name: 'freq'+combo.index, 
+                            						inputValue: value, 
+                            						freq: record.data.hz[hz].hz,
+                            						store: freq.store,
+                            						listeners: {
+	                            						'check': function(checkbox, checked) {
+                            								var rec = new checkbox.store.recordType({ 'id': checkbox.inputValue, 'name': checkbox.inputValue, 'freq': checkbox.freq}, checkbox.inputValue);
+	                            							if (checked) {
+	                            								checkbox.store.add(rec);
+	                            							} else {
+	                            								checkbox.store.remove(rec);
+	                            							}
+	                            							//freq.doLayout();
+	                            							//displaygroup.doLayout();
+                            							}
+                            						}
+                            					};
 	                            			}
                             				
                             				items.sort(function(a,b) {
@@ -226,7 +291,7 @@ function getX11Form(){
                             				});
                             				
                             				if (items.length > 1) {
-                            					items[items.length] = {xtype:'checkbox', boxLabel: 'alle', name: 'freq'+combo.index, inputValue: "all",
+                            					items[items.length] = {xtype:'checkbox', boxLabel: 'alle', name: 'freq'+combo.index, inputValue: 'all',
                             						listeners: {
                             							'check': function(allCheckbox, checked) {
                             								allCheckbox.findParentByType('checkboxgroup').items.each(function(item, index, allitems) {
@@ -248,17 +313,21 @@ function getX11Form(){
                             				    itemCls: 'x-check-group-alt',
                             				    // Put all controls in a single column with width 100%
                             				    columns: 3,
-                            				    items: items
+                            				    items: items,
+                            				    freq: freq,
+                            				    listeners: {
+                            						'check': function(allCheckbox, checked) {
+                            						}
+                            					}
                             				});
-                            				displaygroup.insert(5, cbgroup);
-                            			
+                            				displaygroup.insert(3, cbgroup);
+                            				displaygroup.insert(4, freq);
 	                            			displaygroup.doLayout();
                             			}
                                     }
                                 }
                                 //disabled: (index > 0 && !displayData.system.x11.dualhead.enabled)
                            }),
-                           hiddenmodeline,
                            new Ext.form.Radio({
                                 id: 'primary_' + index,
                                 _index: index,
