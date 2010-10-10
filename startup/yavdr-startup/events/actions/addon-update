@@ -4,5 +4,16 @@ if [ -e /etc/default/locale ]; then
 . /etc/default/locale
 fi 
 
+for i in $(seq 1..5) ; do 
+	killall -9 wmdrawer > /dev/null 2>&1
+done
+
+process-template /etc/wmdrawer/media
+process-template /etc/wmdrawer/games
+process-template /etc/wmdrawer/tools
+process-template /etc/wmdrawer/web
+process-template /etc/wmdrawer/system
+process-template /etc/vdr/lifeguard.conf
+
 process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 
