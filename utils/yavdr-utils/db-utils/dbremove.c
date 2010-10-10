@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 				ret = -3;
 			} else {
 				// ignore error. If not found -> is removed
-				hdf_remove_tree()(hdf, argv[1]);
+				hdf_remove_tree(hdf, argv[1]);
 			}
 			flock(fd, LOCK_UN);
 			close(fd);
