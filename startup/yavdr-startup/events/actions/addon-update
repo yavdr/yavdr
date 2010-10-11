@@ -4,7 +4,7 @@ if [ -e /etc/default/locale ]; then
 . /etc/default/locale
 fi 
 
-for i in $(seq 1..5) ; do 
+for i in $(seq 1 5) ; do 
 	killall -9 wmdrawer > /dev/null 2>&1
 done
 
