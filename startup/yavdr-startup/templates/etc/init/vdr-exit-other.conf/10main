@@ -1,4 +1,5 @@
-start on stopped vdr RESULT=failed EXIT_STATUS!=[012]
+start on ( stopped vdr RESULT=failed EXIT_SIGNAL=?* or \
+           stopped vdr RESULT=failed EXIT_STATUS!=[012] )
 
 task
 
