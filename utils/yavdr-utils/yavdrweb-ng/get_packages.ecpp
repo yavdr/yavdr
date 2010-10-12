@@ -6,6 +6,7 @@
 #include <ClearSilver.h>
 #include "../common.h"
 #include <jsoncpp/json.h>
+#include <boost/regex.hpp>
 
 using namespace std;
 </%pre><& authenticate ><%args>
@@ -65,6 +66,8 @@ const char *files[] = {
 	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-yavdr_ubuntu_dists_lucid_main_binary-i386_Packages"
 };
 
+const char *whitelist = "/etc/yavdr/package-whitelist.list";
+
 Json::Value installed;
 
 // read installation status
@@ -72,50 +75,71 @@ string cmd = "dpkg-query -W -f '${Status;1}:${Package}\n'";
 
 if (FILE *stream = popen(cmd.c_str(), "r"))
 {
-    char buffer[1024];
-    while (!feof(stream))
-    {
-      if (fgets(buffer, sizeof(buffer), stream) != NULL)
-      {
-    	  vector<string> parts;
+	char buffer[1024];
+	while (!feof(stream))
+	{
+		if (fgets(buffer, sizeof(buffer), stream) != NULL)
+		{
+			vector<string> parts;
 
-    	  string line = string(buffer);
-    	  line = line.substr(0,line.length()-1);
-    	  Tokenize(line, parts, ":");
-    	  if (parts[0] == "i") {
-    		  installed[parts[1]] = true;
-    	  }
-      }
-    }
-    pclose(stream);
+			string line = string(buffer);
+			line = line.substr(0,line.length()-1);
+			Tokenize(line, parts, ":");
+			if (parts[0] == "i") {
+				installed[parts[1]] = true;
+			}
+		}
+	}
+	pclose(stream);
 }
 
 Json::Value disabled;
 
 if (FILE *stream = fopen("/etc/vdr/plugins/order.conf", "r"))
 {
-    char buffer[1024];
-    while (!feof(stream))
-    {
-      if (fgets(buffer, sizeof(buffer), stream) != NULL)
-      {
-    	  vector<string> parts;
+	char buffer[1024];
+	while (!feof(stream))
+	{
+		if (fgets(buffer, sizeof(buffer), stream) != NULL)
+		{
+			vector<string> parts;
 
-    	  string line = string(buffer);
-    	  line = line.substr(0,line.length()-1);
-    	  if (line[0] == '-') {
-    		  string plugin = "vdr-plugin-"+line.substr(1);
-    		  disabled[plugin] = true;
-    	  }
-      }
-    }
-    pclose(stream);
+			string line = string(buffer);
+			line = line.substr(0,line.length()-1);
+			if (line[0] == '-') {
+				string plugin = "vdr-plugin-"+line.substr(1);
+				disabled[plugin] = true;
+			}
+		}
+	}
+	pclose(stream);
 }
 
 Json::Value json;
 
 int next = 0;
 string line = "", key = "", value = "";
+
+vector<boost::regex> validName;
+
+if (FILE *stream = fopen(whitelist, "r"))
+{
+	char buffer[1024];
+	int pos = 0;
+	while (!feof(stream))
+	{
+		if (fgets(buffer, sizeof(buffer), stream) != NULL)
+		{
+			string line = trim(trim(string(buffer)), "\t");
+			if (line[0] != '#' && line[0] != '\n') {
+				validName.push_back(boost::regex(line));
+			}
+		}
+	}
+	fclose(stream);
+}
+
+bool skip = false;
 
 for (int findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
 {
@@ -124,43 +148,63 @@ for (int findex = 0; findex < (sizeof(files) / sizeof(files[0])); findex++)
 	if (f.good()) {
 		while (!f.eof())
 		{
-			getline(f, line);        // Lese eine Zeile
+			getline(f, line); // Lese eine Zeile
 			if (line != "") {
-				vector<string> parts;
-				Tokenize(line, parts, ":");
-				if (parts.size() > 1 && parts[0].substr(0,1) != " ") {
-					key = parts[0];
-					value = "";
-					for(int i = 1;i < parts.size(); i++) {
-						value += parts[i];
+				if (!skip) {
+					vector<string> parts;
+					Tokenize(line, parts, ":");
+					if (parts.size() > 1 && parts[0].substr(0,1) != " ") {
+						key = parts[0];
+						value = "";
+						for(int i = 1;i < parts.size(); i++) {
+							value += parts[i];
+						}
+						value = trim(value);
+
+						if (key == "Package") {  // test if is whitelist
+							skip = true;
+							for(int i = 0; i < (int) validName.size(); i++) {
+								boost::smatch matches;
+								if (boost::regex_match(value+"\n", matches, validName[i])) {
+									skip = false;
+								}
+							}
+						}
+						if (!skip) {
+							json[next][key] = value;
+						}
+					} else { // continue
+						value = json[next][key].asString() + "\n";
+						for(int i = 0;i < parts.size(); i++) {
+							value += parts[i];
+						}
+						json[next][key] = value;
 					}
-					json[next][key] = value.substr(1);
-				} else { // continue
-					value = json[next][key].asString() + "\n";
-					for(int i = 0;i < parts.size(); i++) {
-						value += parts[i];
-					}
-					json[next][key] = value;
 				}
 			}
 			else
 			{
-				if (json.isValidIndex(next) && json[next].isMember("Package")) {
-					json[next]["id"] = next;
-					string package = json[next]["Package"].asString();
-					if ((installed[package].isBool()) && installed[json[next]["Package"].asString()].asBool())
-					{
-						if (disabled[package].isBool() && disabled[package].asBool()) {
-							json[next]["installed"] = 1;
-						} else {
-							json[next]["installed"] = 2;
+				if (!skip) {
+					if (json.isValidIndex(next) && json[next].isMember("Package")) {
+						string package = json[next]["Package"].asString();
+						json[next]["id"] = next;
+						boost::smatch matches;
+						if ((installed[package].isBool()) && installed[json[next]["Package"].asString()].asBool())
+						{
+							if (disabled[package].isBool() && disabled[package].asBool()) {
+								json[next]["installed"] = 1;
+							} else {
+								json[next]["installed"] = 2;
+							}
+
 						}
+						else {
+							json[next]["installed"] = 0;
+						}
+						next++;
 					}
-					else {
-						json[next]["installed"] = 0;
-					}
-					next++;
 				}
+				skip = false;
 			}
 		}
 	}
