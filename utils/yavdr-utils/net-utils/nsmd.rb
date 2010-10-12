@@ -18,6 +18,9 @@ require 'fileutils'
 require 'daemons'
 require 'logger'
 require 'socket'
+require 'thread'
+
+$lock = Mutex.new
 
 class NetworkShareMountDaemon
   include Daemonize
@@ -45,7 +48,9 @@ class NetworkShareMountDaemon
       sleep(MAIN_LOOP_DELAY)
       
       if i<=0
-        @active_mounts = get_active_mounts
+        $lock.synchronize do
+          @active_mounts = get_active_mounts
+        end
         i = SKIP_MOUNT_RETRIEVAL_COUNT
       end
       
@@ -91,29 +96,30 @@ class NetworkShareMountDaemon
                             resolve_reply.port,
                             resolve_reply.text_record['path'])
           $log.info("mount created ")
-          if !@active_mounts.include?(mount)
-            # TODO: probe if directory could be created!!.
-          
-            $log.info("making dir")
-            if FileUtils.mkdir(mount.mount_point)
-              $log.info("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
-              if system("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
-                @active_mounts.push(mount)
-                mount.notify
-                $log.info("Succesfully mounted discovered NFS service "+mount.to_s)
+          $lock.synchronize do
+            if !@active_mounts.include?(mount)
+              $log.info("making dir")
+              if FileUtils.mkdir(mount.mount_point)
+                $log.info("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
+                if system("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
+                  @active_mounts.push(mount)
+                  mount.notify
+                  $log.info("Succesfully mounted discovered NFS service "+mount.to_s)
+                else
+                  $log.error("Failed to mount discovered NFS service: #{mount.to_s}. Error code #{$?}.")
+                  FileUtils.rmdir(mount.mount_point)
+                end
               else
-                $log.error("Failed to mount discovered NFS service: #{mount.to_s}. Error code #{$?}.")
-                FileUtils.rmdir(mount.mount_point)
+                $log.error("mkdir failed: "+mount.mount_point)
               end
             else
-              $log.error("mkdir failed: "+mount.mount_point)
+              $log.info("target is "+Socket.gethostname)
             end
-          else
-            $log.info("target is "+Socket.gethostname)
           end
         end
+        resolve_reply.stop
       end
-      
+      browse_reply.stop
     end
     
   end
