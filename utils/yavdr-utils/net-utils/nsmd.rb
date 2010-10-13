@@ -117,17 +117,20 @@ class NetworkShareMountDaemon
             end
           end
         end
+        $log.info("end of compare target")
         resolve_reply.stop
       end
+      $log.info("end of resolve")
       browse_reply.stop
     end
-    
+    $log.info("end of browse")
   end
   private :discover_nfs
   
 end
 
 class Mount
+
   
   SEP = File::SEPARATOR
   MOUNT_POINT_ROOT = SEP+'srv'+SEP+'vdr'+SEP+'video.00'
@@ -147,10 +150,6 @@ class Mount
     @port = port
     @path = path
     @mount_point = nil
-  end
-
-  def self.clean
-   FileUtils.rmdir Dir.glob(MOUNT_POINT_NET+'*')
   end
 
   def ==(other_mount)
@@ -180,6 +179,30 @@ class Mount
   def to_s
     "nfs://#{server}:#{@port}#{@path} at #{@mount_point}"
   end
+
+  def self.clean
+    mounts = Array.new
+    nfs_mounts = %x[mount -t nfs].split("\n")
+    for nfs_mount in nfs_mounts do
+      local_path = nfs_mount.split(' ')[2]
+      $log.info("checking #{local_path}")
+      $log.info("against #{MOUNT_POINT_NET}")
+      unless local_path.index(MOUNT_POINT_NET) == nil 
+        $log.info("adding: #{local_path}")
+        mounts.push(local_path)
+      end
+    end
+
+    $log.info("mounts :"+mounts.to_s)
+    dirs = Dir.glob(MOUNT_POINT_NET+'*') - mounts
+    for dir in dirs do
+      $log.info("dir: "+dir)
+      FileUtils.rmdir dir
+    end
+
+    mounts
+  end
+
 end
 
 #------------------------------------------------------------------------------#
