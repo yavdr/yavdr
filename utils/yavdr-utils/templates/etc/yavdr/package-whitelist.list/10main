@@ -128,3 +128,6 @@ vdr-plugin-zappilot
 vdr-plugin-yaepghd
 ^yavdr-addon-.*
 yavdr-hardware-sundtek
+libxine-atmo-plugin
+vdr-tft-.*
+vdr-skin.*
