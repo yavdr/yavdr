@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# BEWARE - don call this manually, this is called by udev. Don't edit here, its created by yavdr templates
-
-DEV=`echo $1 | cut -d"/" -f4`
-grep ".*disable.*$DEV" /proc/acpi/wakeup | cut -d" " -f1 > /proc/acpi/wakeup
-echo -1 >/sys/module/usbcore/parameters/autosuspend

@@ -1,8 +1,12 @@
-description  "enable USB Ports to wakeup machine"
+start on stopped udev-finished
+
+task
 
 script
+for DEV in $(find /dev/input/wake-up/*) ; do 
+    WAKEUP=$(basename $DEV | sed -e 's/-usb.*//g')
+    grep ".*disable.*WAKEUP" /proc/acpi/wakeup | cut -d" " -f1 > /proc/acpi/wakeup
+done
 
-WAKEUP_DEVICE=Platzhalter
-grep -q "$WAKEUP_DEVICE.*enabled" < /proc/acpi/wakeup >/dev/null || echo $WAKEUP_DEVICE  > /proc/acpi/wakeup
-
+echo -1 >/sys/module/usbcore/parameters/autosuspend
 end script

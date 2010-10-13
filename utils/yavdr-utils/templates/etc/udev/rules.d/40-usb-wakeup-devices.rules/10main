@@ -1,3 +1,5 @@
 # enable usb wakeup for matching devices
-KERNEL=="hiddev?|lirc?", ACTION=="add", KERNELS=="usb?",  RUN+="/usr/bin/usb-wakeup-enable %p"
+# by-path
+SUBSYSTEMS=="usb", IMPORT{program}="path_id %p"
+KERNEL=="hiddev?|lirc?", ACTION=="add", KERNELS=="usb?",  SYMLINK+="input/wake-up/$env{ID_PATH}"
 
