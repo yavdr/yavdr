@@ -7,3 +7,4 @@ process-template /etc/init/mediathek-sat1.conf
 process-template /etc/init/mediathek-golem.conf
 process-template /etc/init/mediathek-gametrailers.conf
 process-template /etc/wmdrawer/mediathek
+process-template /etc/init/launcher.conf
