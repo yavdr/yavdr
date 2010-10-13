@@ -126,4 +126,5 @@ vdr-plugin-weather
 vdr-plugin-wapd
 vdr-plugin-zappilot
 vdr-plugin-yaepghd
-^yavdr-addon-*
+^yavdr-addon-.*
+yavdr-hardware-sundtek
