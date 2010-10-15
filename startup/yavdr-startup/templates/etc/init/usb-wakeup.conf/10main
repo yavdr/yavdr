@@ -3,9 +3,9 @@ start on stopped udev-finished
 task
 
 script
-for DEV in $(find /dev/input/wake-up/*) ; do 
-    WAKEUP=$(basename $DEV | sed -e 's/-usb.*//g')
-    grep ".*disable.*WAKEUP" /proc/acpi/wakeup | cut -d" " -f1 > /proc/acpi/wakeup
+for DEV in $(find /dev/input/wake-up/*) ; do
+    WAKEUP=$(basename $DEV | sed -e 's/-usb.*//g' | sed -e 's/-/:/g')
+    grep ".*disable.*$WAKEUP" /proc/acpi/wakeup | cut -d" " -f1 > /proc/acpi/wakeup
 done
 
 echo -1 >/sys/module/usbcore/parameters/autosuspend
