@@ -9,4 +9,5 @@ if [ "x$MB_TYPE" = "xAMCP7AION-HT" ]; then
   dbset "system.lirchw.driver=lirc_wb677"
   dbset "system.lirchw.lirc_driver=lirc_dev lirc_wb677"
   dbset "system.lirchw.lircd_conf=lirc_wb677/lircd.conf.wb677"
+  dbset "system.remoted=lircd"
 fi
