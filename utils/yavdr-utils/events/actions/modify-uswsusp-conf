@@ -2,7 +2,7 @@
 
 CONFIG=/etc/uswsusp.conf
 RESUME_DEVICE=$(grep "/dev" /proc/swaps | sort -k3 -|head -n 1|cut -d ' ' -f 1)
-if grep -c "resume device=" $CONFIG 2>/dev/null >/dev/null; then
+if grep -q "resume device=" $CONFIG 2>/dev/null; then
   sed -i "s#\(resume device=\).*#\1$RESUME_DEVICE#" $CONFIG
 else
   echo "resume device=$RESUME_DEVICE" >>$CONFIG
