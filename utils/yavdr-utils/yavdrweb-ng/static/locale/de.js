@@ -43,7 +43,7 @@ var locale_de = {
     },
     remote: {
         menutab: {
-            title : 'Fernbedienungen',
+            title : 'Fernbedienung',
             tabtip :'Einstellungen für Fernbedienungen (Remote Control Receiver)',
             panel_title : 'Einstellungen für Fernbedienungen'
         },

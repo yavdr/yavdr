@@ -57,7 +57,7 @@ msgid "Restart vdr"
 msgstr "VDR neu starten"
 
 msgid "Reboot system"
-msgstr "Rechner Neu starten"
+msgstr "Rechner neu starten"
 
 msgid "Shutdown system"
 msgstr "System herunterfahren"
