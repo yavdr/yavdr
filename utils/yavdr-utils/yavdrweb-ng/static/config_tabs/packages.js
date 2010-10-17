@@ -14,6 +14,8 @@ function getPackagesForm(){
     // create the grid
     var grid = new Ext.grid.GridPanel({
         store: store,
+	style: 'border: 1px solid #99BBE8',
+	margins: '0 0 5 0',
         columns: [
             {header: "",width: 22, dataIndex: 'installed', sortable: true, renderer: renderState},
             {header: "Package", width: 180, dataIndex: 'Package', sortable: true},
@@ -25,9 +27,9 @@ function getPackagesForm(){
         viewConfig: {
             forceFit: true
         },
-        height:300,
-        split: true,
-        region: 'north',
+//        height:300,
+        region: 'center',
+//        region: 'north',
         listeners: {
             celldblclick: function(grid, row, col, event ) {
                 if ("installed" == grid.getColumnModel().getDataIndex(col)) {
@@ -138,34 +140,41 @@ function getPackagesForm(){
         frame: false,
         plain: false,
         border: false,
-        bodyStyle:'padding:5px 5px 0',
+//        bodyStyle:'padding:5px 5px 0',
         labelWidth: 150,
         //defaultType: 'textfield',
         buttonAlign: 'left',
-        autoHeight: true,
-        height: 'auto',
-        layout: 'fit',
-        items: [
-            grid,
-            {
-                id: 'detailPanel',
-                region: 'center',
-                bodyStyle: {
-                    background: '#ffffff',
-                    padding: '7px'
-                },
-                
-                html: 'Please select a package to see additional details.'
-            },{
-                id: 'help',
-                height: 'auto',
-                bodyStyle: {
-                    background: '#ffffff',
-                    padding: '7px'
-                },
-                
-                html: 'dblclick on red icon to install package.....<br/> vdr-plugins can be dis- & enabled...'
-            }]
+//        autoHeight: true,
+        //height: 'auto',
+        layout: 'border',
+//        layout: 'fit',
+
+items: [
+	grid,
+	{
+                region: 'south',
+		autoScroll: true,
+		style: 'border: 1px solid #99BBE8',
+		bodyStyle: {
+			background: '#ffffff',
+			padding: '7px'
+		},
+		height: 82,
+		items: [
+			{
+				id: 'detailPanel',
+				html: 'Please select a package to see additional details.'
+			},
+			{
+				id: 'help',
+				html: 'dblclick on red icon to install package.....<br/> vdr-plugins can be dis- & enabled...'
+			}
+		]
+	}
+]
+
+
+
     });
     
     myform.addButton('apt-get update', function() {
