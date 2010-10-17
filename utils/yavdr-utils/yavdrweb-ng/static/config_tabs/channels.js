@@ -102,9 +102,7 @@ function getChannelsForm(){
                     handler: function(){
                         channellist_store.reload();
                     }
-                }
-
-/*,
+                },
                 {
                     text: 'Collapse all groups', //TODO use getLL here!
                     //icon: '/ext/resources/images/default/grid/refresh.gif',
@@ -120,7 +118,7 @@ function getChannelsForm(){
                     handler: function(){
                         grid.view.expandAllGroups();
                     }
-                },
+                },/* too dangerous: performance killer!
                 {
                     text: 'Clear grouping', //TODO use getLL here!
                     //icon: '/ext/resources/images/default/grid/refresh.gif',
@@ -128,43 +126,42 @@ function getChannelsForm(){
                     handler: function(){
                         channellist_store.clearGrouping();
                     }
-                },
+                },*/
                 {
                     text: 'Switch to selected channel',
                     id: 'zap_button',
                     //icon: '/ext/resources/images/default/grid/refresh.gif',
                     tooltip: 'Click this button to display this channel on VDR Frontend. This does not if you use XBMC as a frontend (I guess...).',
-                    disabled: true,
+                    //disabled: true,
                     handler: function(){
-                        //get selection Model
                         var selectionModel = grid.getSelectionModel();
-                        //get the selected record
                         var record = selectionModel.getSelected();
-                        //get the index of selected record
-                        var idx = grid.store.indexOf(record);
-                        alert(idx);
-                        Ext.Ajax.request({
-                            url: 'get_svdrp_response?command=CHAN 2',
-                            timeout: 3000,
-                            method: 'GET',
-                            scope: this,
-                            success: function(xhr) {
-                                alert('Response is "' + xhr.responseText + '"');
-                                / / / 
-                                var lircData = 0;
-                                try {
-                                    lircData = Ext.util.JSON.decode( xhr.responseText );
-                                    //Ext.MessageBox.alert('Success', 'Decode of lircdata OK: ' + lircData.current_receiver);
+                        if (typeof(record) == "object" ){
+                            var channelNr = parseInt( record.get("_num"), 10);
+                            Ext.Ajax.request({
+                                url: 'get_svdrp_response?command=CHAN&param1='+channelNr,
+                                timeout: 3000,
+                                method: 'GET',
+                                scope: this,
+                                success: function(xhr) {
+                                    //alert('Response is "' + xhr.responseText + '"');
+                                     
+                                    var response = 0;
+                                    try {
+                                        response = Ext.util.JSON.decode( xhr.responseText );
+                                        Ext.MessageBox.alert('Response', response.response);
+                                    }
+                                    catch (err) {
+                                        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.error.json_decode"));
+                                    }
                                 }
-                                catch (err) {
-                                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.error.json_decode"));
-                                }            
-                                this.lircData = lircData;
-                                / / / 
-                            }
-                        });
+                            });
+                        }
+                        else{
+                            Ext.MessageBox.alert('Response', 'Did you select something? No channel is selected.' + record);
+                        }
                     }
-                }*/
+                }
             ],
             viewConfig: {
                 forceFit: false
