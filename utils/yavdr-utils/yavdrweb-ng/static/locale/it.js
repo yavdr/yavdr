@@ -135,7 +135,7 @@ var locale_it = {
             cid : 'N°',
             cname : 'Nome canale',
             cprovider : 'Emittente',
-            cstr : 'Stringa completa canale'
+            cstr : 'Stringa completa canale',
             frequency : 'Frequenza',
             modulation : 'Modulazione',
             source : 'Sorgente',
