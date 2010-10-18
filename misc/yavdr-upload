@@ -143,6 +143,7 @@ fi
 #######  paket-sourcen vorbereiten für den upload
 
 echo debuild
+debchange --distribution lucid
 debuild -S -sa > /dev/null
 
 ######  upload
