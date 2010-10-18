@@ -15,49 +15,54 @@ YaVDR.DpkgWindow = Ext.extend(Ext.Window, {
   title: 'yaVDR Paket Installer',
   width: 600,
   height: 450,
-  resizable:false,
+  resizable: true,
+  maximizable: true,
   closable: false,
   modal: true,
   layout: 'fit',
   id: 'dpkg',
   initComponent: function() {
+
+    
     // Todo Use MIFrame
     if (this.command == 'install') {
-      this.items = [
-        {
-          border: false,
-          html: '<iframe src="dpkg?command=install&package=' + this.package + '&ts=' + ((new Date()).getTime()) + '" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
-        }
-      ];
+      var url = 'dpkg?command=install&package=' + this.package + '&ts=' + ((new Date()).getTime());
     } else {
-      this.items = [
-        {
-          border: false,
-          html: '<iframe src="dpkg?command=' + this.command + '&ts=' + ((new Date()).getTime()) + '" style="width: 584px; height: 385px;" onload="Ext.getCmp(\'closeinstaller\').enable()"></iframe>'
-        }
-      ];
+      var url = 'dpkg?command=' + this.command + '&ts=' + ((new Date()).getTime());
     }
+    
+        
+    this.iframe = new Ext.ux.ManagedIFrame.Panel({
+      border: false,
+      defaultSrc : url
+    });
 
-    this.buttons = [
-      {
-        id: 'closeinstaller',
-        disabled:true,
-        scope: this,
-        text: 'Close',
-        handler: function() {
-          this.close();
-          if (typeof this.callback == 'function') {
-            if (this.scope) {
-              this.callback.call(this.scope);
-            } else {
-              this.callback();
-            }
+    this.items = [this.iframe];
+
+    this.closeButton = new Ext.Button({
+      disabled:true,
+      scope: this,
+      text: 'Close',
+      handler: function() {
+        this.close();
+        if (typeof this.callback == 'function') {
+          if (this.scope) {
+            this.callback.call(this.scope);
+          } else {
+            this.callback();
           }
         }
       }
-    ];
+    });
+    
+    this.buttons = [this.closeButton];
 
     YaVDR.DpkgWindow.superclass.initComponent.call(this);
+    
+    this.iframe.on('domready', this.activateCloseButton, this, { single: true });
+  },
+  activateCloseButton: function() {
+    this.closeButton.enable();
   }
 });
 
@@ -161,6 +166,7 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
       store: this.packagesStore,
       region: 'center',
       anchor: '100%',
+      loadMask: true,
       style: 'border: 1px solid #99BBE8',
       margins: '0 0 5 0',
       viewConfig: {
