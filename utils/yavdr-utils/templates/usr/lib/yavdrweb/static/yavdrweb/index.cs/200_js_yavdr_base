@@ -1,6 +1,9 @@
 <!-- yavdrweb js -->
 <script type="text/javascript" src="/static/menumanager.js"></script>
 
+<!-- miframe-->
+<script type="text/javascript" src="/static/miframe.js"></script>
+
 <!-- help -->
 <script type="text/javascript" src="/static/config_tabs/lirc.js"></script>
 <script type="text/javascript" src="/static/config_tabs/inputlirc.js"></script>
