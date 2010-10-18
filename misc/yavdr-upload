@@ -14,8 +14,8 @@ VERSION="0.3.0."
 ###     lädt das aktuelle pidgin-addon nach unstable-yavdr                                         ##
 #####################################################################################################
 
-export DEBEMAIL="hotzenplotz5@gmx.de"
-export DEBFULLNAME="Holger Schvestka"
+#export DEBEMAIL="hotzenplotz5@gmx.de"
+#export DEBFULLNAME="Holger Schvestka"
 
 #####################################################################################################
 #########   DEBFULLNAME und DEBEMAIL müssen angepasst sein                                   ########
