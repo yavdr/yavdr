@@ -10,6 +10,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Timer"
+msgstr "Programmation"
+
+msgid "Video"
+msgstr "Vidéo"
+
+msgid "Applications"
+msgstr "Applications"
+
+msgid "Web"
+msgstr "Web"
+
+msgid "Internet"
+msgstr "Internet"
+
+msgid "Media"
+msgstr "Média"
+
+msgid "XBMC on graphtft Display"
+msgstr "XBMC sur l'écran TFT "
+
+msgid "Games"
+msgstr "Jeux"
+
+msgid "Tools"
+msgstr "Outils"
+
+msgid "Xterm"
+msgstr "Terminal X"
+
+msgid "System"
+msgstr "Système"
+
+msgid "Commands"
+msgstr "Commandes"
+
+msgid "Safely remove usb mass storage"
+msgstr "Démonter les disques USB"
+
+msgid "Update vdr recordings list"
+msgstr "Rafraichir la liste des enregistrements"
+
+msgid "Restart vdr"
+msgstr "Redémarrer VDR"
+
+msgid "Reboot system"
+msgstr "Redémarrer le Système"
+
+msgid "Shutdown system"
+msgstr "Eteindre le Système"
+
 msgid "web.meta_lang.local"
 msgstr "Francais"
 
