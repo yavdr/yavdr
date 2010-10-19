@@ -19,6 +19,7 @@ require 'daemons'
 require 'logger'
 require 'socket'
 require 'thread'
+require 'file/find'
 
 $lock = Mutex.new
 
@@ -31,7 +32,7 @@ class NetworkShareMountDaemon
   LOG_FILE_LOCATION = '/tmp'
   
   def initialize()
-    Mount.clean
+    @active_mounts = Mount.clean
   end
 
   def main
@@ -48,9 +49,9 @@ class NetworkShareMountDaemon
       sleep(MAIN_LOOP_DELAY)
       
       if i<=0
-        $lock.synchronize do
-          @active_mounts = get_active_mounts
-        end
+        #$lock.synchronize do
+        #  @active_mounts = get_active_mounts
+        #end
         i = SKIP_MOUNT_RETRIEVAL_COUNT
       end
       
@@ -99,6 +100,7 @@ class NetworkShareMountDaemon
           $lock.synchronize do
             if !@active_mounts.include?(mount)
               $log.info("making dir")
+              FileUtils.rmdir(mount.mount_point) # optional cleanup
               if FileUtils.mkdir(mount.mount_point)
                 $log.info("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
                 if system("mount -t nfs -o,port=#{mount.port} #{mount.server}:#{mount.path} #{mount.mount_point}")
@@ -146,7 +148,7 @@ class Mount
   
   def initialize(server, name, port, path)
     @server = server.chomp('.')
-    @name = name
+    @name = name.split(' ')[0]
     @port = port
     @path = path
     @mount_point = nil
@@ -184,21 +186,32 @@ class Mount
     mounts = Array.new
     nfs_mounts = %x[mount -t nfs].split("\n")
     for nfs_mount in nfs_mounts do
-      local_path = nfs_mount.split(' ')[2]
+      (server_path, on, local_path) = nfs_mount.split(' ')
       $log.info("checking #{local_path}")
       $log.info("against #{MOUNT_POINT_NET}")
-      unless local_path.index(MOUNT_POINT_NET) == nil 
+      unless local_path.index(MOUNT_POINT_NET) == nil
+        (server, path) = server_path.split(':')
         $log.info("adding: #{local_path}")
-        mounts.push(local_path)
+        mounts.push(Mount.new(server,
+                              File.basename(local_path),
+                              Mount::UNKNOWN_PORT,
+                              path))
       end
     end
 
     $log.info("mounts :"+mounts.to_s)
-    dirs = Dir.glob(MOUNT_POINT_NET+'*') - mounts
-    for dir in dirs do
-      $log.info("dir: "+dir)
-      FileUtils.rmdir dir
-    end
+    #rule = File::Find.new( :maxdepth => 1,
+    #                       :ftype    => "directory",
+    #                       :path     => MOUNT_POINT_NET )
+    #rule.find{ |dir|
+    #  $log.info("dir: "+dir)
+    #  if mounts.index(dir) == nil
+    #    $log.info("delete it")
+    #    FileUtils.rmdir dir
+    #  else
+    #    $log.info("added to mounts")
+    #  end
+    #}
 
     mounts
   end
