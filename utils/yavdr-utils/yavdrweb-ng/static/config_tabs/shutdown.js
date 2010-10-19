@@ -80,7 +80,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
         
         shutdownGroup.items.each(function(item) {
           // Skip spezial options
-          if(item.itemId == 'reboot') { continue; }
+          if(item.itemId == 'reboot') { return; }
           if(allowed.indexOf(item.itemId.toUpperCase()) < 0) {
             // todo: add translation instead replace
             item.disable().setBoxLabel(getLL("shutdown.items." + item.itemId + "unavailable"));
