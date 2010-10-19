@@ -1,3 +1,119 @@
+YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
+  initComponent: function() {
+    
+    this.items = [
+      {
+        itemId: 'shutdown-group',
+        name: 'frontend',
+        xtype: 'radiogroup',
+        fieldLabel: getLL('shutdown.label'),
+        anchor: '100%',
+        columns: 1,
+        items: [
+          {
+            itemId: 's3',
+            boxLabel: getLL("shutdown.items.s3"),
+            name: 'value',
+            inputValue: 's3'
+          },
+          {
+            itemId: 's4',
+            boxLabel: getLL("shutdown.items.s4"),
+            name: 'value',
+            inputValue: 's4'
+          },
+          {
+            itemId: 's5',
+            boxLabel: getLL("shutdown.items.s5"),
+            name: 'value',
+            inputValue: 's5'
+          },
+          {
+            itemId: 'reboot',
+            boxLabel: getLL("shutdown.items.reboot"),
+            name: 'value',
+            inputValue: 'reboot'
+          }
+        ]
+      }
+    ]
+    
+    this.buttons = [
+      {
+        text: getLL("shutdown.button_label"),
+        icon: '/ext/resources/images/default/grid/refresh.gif',
+        scope: this,
+        handler: this.saveSelection
+      }
+    ];
+    
+    YaVDR.Shutdown.superclass.initComponent.call(this);
+    
+    this.on('render', this.loadSelection, this, { single: true });
+    this.on('render', this.disableUnavailables, this, { single: true });
+  },
+  saveSelection: function() {
+    this.getForm().subbmit({
+      url: 'set_signal?signal=change-shutdown',
+      timeout: 60, //wait 60 seconds before telling it failed
+      waitMsg: getLL("shutdown.submit.waitmsg"),
+      waitTitle: getLL("standardform.messagebox_caption.wait"),
+      scope: this,
+      success: function (form, action) {
+        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("shutdown.submit.success") );
+      },
+      failure:function(form, action) {
+        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("shutdown.submit.failure") );
+      }
+    });
+  },
+  disableUnavailables: function() {
+    Ext.Ajax.request({
+      url: 'get_file_content?file=/proc/acpi/sleep&puretext=true',
+      timeout: 3000,
+      method: 'GET',
+      scope: this,
+      success: function(xhr) {
+        // field references
+        var shutdownGroup = this.getComponent('shutdown-group');
+        var allowed = xhr.responseText;
+        
+        shutdownGroup.items.each(function(item) {
+          // Skip spezial options
+          if(item.itemId == 'reboot') { continue; }
+          if(allowed.indexOf(item.itemId.toUpperCase()) < 0) {
+            // todo: add translation instead replace
+            item.disable().setBoxLabel(getLL("shutdown.items." + item.itemId + "unavailable"));
+          }
+        }, this);
+      }
+    });
+  },
+  loadSelection: function() {
+    Ext.Ajax.request({
+      url: 'get_hdf_value?hdfpath=system.shutdown',
+      timeout: 3000,
+      method: 'GET',
+      scope: this,
+      success: function(xhr) {
+        // field references
+        var shutdownGroup = this.getComponent('shutdown-group');
+        
+        var currentShutdown = xhr.responseText;
+        if(currentShutdown == "s3" ||
+          currentShutdown == "s4" ||
+          currentShutdown == "s5" ||
+          currentShutdown == "poweroff" ||
+          currentShutdown == "reboot") {
+          shutdownGroup.setValue(currentShutdown);
+        } else {
+          Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not set shutdown selection.');
+        }
+      }
+    });
+  }
+});
+/*
 function getVDRShutdownForm(){
     var myform = new Ext.FormPanel({
         frame: false,
@@ -29,17 +145,7 @@ function getVDRShutdownForm(){
         //scope: this,
         handler: function() {
             myform.form.submit({
-                url: 'set_signal?signal=change-shutdown',
-                timeout: 60, //wait 60 seconds before telling it failed
-                waitMsg: getLL("shutdown.submit.waitmsg"),
-                waitTitle: getLL("standardform.messagebox_caption.wait"),
-                scope:this,
-                success: function (form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("shutdown.submit.success") );
-                },
-                failure:function(form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("shutdown.submit.failure") );
-                }
+
             })
         }
     });
@@ -89,11 +195,12 @@ function getVDRShutdownForm(){
     return myform;
 }
 
-
+*/
 Ext.onReady(function() {
     YaVDRMenuManager
         .addGroupPanelSection({section: "vdr", expanded: true})
             .addGroupPanelTab({
                 section: "shutdown",
-                items:   getVDRShutdownForm});
+                layout: 'fit',
+                items:   function() {return new YaVDR.Shutdown();}});
 });
