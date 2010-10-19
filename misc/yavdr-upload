@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION="0.3.0."
-
+DIST="lucid"
 
 #####################################################################################################
 ###     AUFRUF :   ./yavdr-upload paket=utils(oder startup/essential) repo=testing (oder unstable  ##
@@ -131,19 +131,18 @@ echo Update debian/changelog
 
 if [ -n "$PAKET" ]; then
 cd yavdr-"$PAKET"-"$VERSION""$VERSION_ID"
-dch -v "$VERSION$VERSION_ID-1yavdr1" "New Upstream Snapshot"
+dch -v "$VERSION$VERSION_ID-1yavdr1" "New Upstream Snapshot" --distribution="$DIST"
 fi
 
 if [ -n "$ADDON" ]; then
 cd yavdr-addon-"$ADDON"-"$VERSION""$VERSION_ID"
-dch -v "$VERSION$VERSION_ID-1yavdr1" "New Upstream Snapshot"
+dch -v "$VERSION$VERSION_ID-1yavdr1" "New Upstream Snapshot" --distribution="$DIST"
 fi
 
 
 #######  paket-sourcen vorbereiten für den upload
 
 echo debuild
-debchange --distribution lucid
 debuild -S -sa > /dev/null
 
 ######  upload
