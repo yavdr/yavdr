@@ -16,6 +16,9 @@ for ARG in $@ ; do
         app)
                  APP=$VALUE
                  ;;
+        display)
+                XDISPLAY=$VALUE
+                ;;
         *)
                  echo "unknown argument: $KEY"
                  ;;
