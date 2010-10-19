@@ -53,7 +53,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     this.on('render', this.disableUnavailables, this, { single: true });
   },
   saveSelection: function() {
-    this.getForm().subbmit({
+    this.getForm().submit({
       url: 'set_signal?signal=change-shutdown',
       timeout: 60, //wait 60 seconds before telling it failed
       waitMsg: getLL("shutdown.submit.waitmsg"),
