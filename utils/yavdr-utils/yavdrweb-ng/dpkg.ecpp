@@ -52,6 +52,8 @@ if (command == "install" ||
     bool lockNeeded = true;
     if (command == "install")
        cmd = "apt-get -y install "+ package;
+    else if (command == "remove")
+       cmd = "apt-get -y remove "+ package;
     else if (command == "update")
     {
         cmd = "apt-get update";
