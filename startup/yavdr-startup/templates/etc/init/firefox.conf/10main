@@ -6,3 +6,19 @@ export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/home/<?cs var:user ?>
 exec su -c "/usr/bin/firefox" <?cs var:user ?>
 end script
+
+pre-start script
+if [ ! -z $STANDALONE ] ; then
+/usr/bin/svdrpsend remo off || /bin/true
+  touch /tmp/.standalone || /bin/true
+fi
+end script
+
+post-stop script
+/bin/rm -f /tmp/.standalone || /bin/true
+if [ ! -z $STANDALONE ] ; then
+/usr/bin/svdrpsend remo on || /bin/true
+/sbin/initctl emit --no-wait vdr-frontend-restart
+fi
+end script
+
