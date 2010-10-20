@@ -46,6 +46,7 @@ reply.setHeader ("Cache-Control", "no-cache", false);
 
 if (command == "install" ||
         command == "update" ||
+        command == "remove" ||
         command == "autoremove")
 {
     string cmd = "";
