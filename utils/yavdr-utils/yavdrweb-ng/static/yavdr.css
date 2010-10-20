@@ -22,3 +22,7 @@
 body {
     background-color: #4E78B1;
 }
+
+.frame-panel-border {
+  border: 1px solid #99BBE8;
+}

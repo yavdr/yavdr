@@ -4,6 +4,9 @@
 <!-- miframe-->
 <script type="text/javascript" src="/static/miframe.js"></script>
 
+<!-- basic-->
+<script type="text/javascript" src="/static/dpkg.js"></script>
+
 <!-- help -->
 <script type="text/javascript" src="/static/config_tabs/lirc.js"></script>
 <script type="text/javascript" src="/static/config_tabs/inputlirc.js"></script>
