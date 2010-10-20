@@ -5,6 +5,7 @@
 <script type="text/javascript" src="/static/miframe.js"></script>
 
 <!-- basic-->
+<script type="text/javascript" src="/static/base.js"></script>
 <script type="text/javascript" src="/static/dpkg.js"></script>
 
 <!-- help -->
