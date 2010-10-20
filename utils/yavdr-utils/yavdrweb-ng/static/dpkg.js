@@ -1,5 +1,4 @@
- 
-// Installer Component
+ // Installer Component
 YaVDR.DPKG = Ext.extend(Ext.Window, {
   callback: null,
   store: null,
@@ -48,9 +47,9 @@ YaVDR.DPKG = Ext.extend(Ext.Window, {
 
     YaVDR.DPKG.superclass.initComponent.call(this);
     
-    this.iframe.on('domready', this.activateCloseButton, this, { single: true });
+    this.iframe.on('documentloaded', this.onCommandReady, this, { single: true });
   },
-  activateCloseButton: function() {
+  onCommandReady: function() {
     this.closeButton.enable();
   }
 });
