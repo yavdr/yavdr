@@ -1,7 +1,8 @@
-YaVDR.DpkgWindow = Ext.extend(Ext.Window, {
+// Installer Component
+YaVDR.DPKG = Ext.extend(Ext.Window, {
   callback: null,
   store: null,
-  command: 'install',
+  command: 'update',
   title: 'yaVDR Paket Installer',
   width: 600,
   height: 450,
@@ -13,14 +14,11 @@ YaVDR.DpkgWindow = Ext.extend(Ext.Window, {
   id: 'dpkg',
   initComponent: function() {
 
-    
-    // Todo Use MIFrame
-    if (this.command == 'install') {
-      var url = 'dpkg?command=install&package=' + this.package + '&ts=' + ((new Date()).getTime());
+    if (this.command == 'install' || this.command == 'remove') {
+      var url = 'dpkg?command=' + this.command + '&package=' + this.package + '&ts=' + ((new Date()).getTime());
     } else {
       var url = 'dpkg?command=' + this.command + '&ts=' + ((new Date()).getTime());
     }
-    
         
     this.iframe = new Ext.ux.ManagedIFrame.Panel({
       border: false,
@@ -47,12 +45,122 @@ YaVDR.DpkgWindow = Ext.extend(Ext.Window, {
     
     this.buttons = [this.closeButton];
 
-    YaVDR.DpkgWindow.superclass.initComponent.call(this);
+    YaVDR.DPKG.superclass.initComponent.call(this);
     
     this.iframe.on('domready', this.activateCloseButton, this, { single: true });
   },
   activateCloseButton: function() {
     this.closeButton.enable();
+  }
+});
+
+// Public API
+Ext.apply(YaVDR.DPKG, {
+  update: function(callback, scope) {
+    (new YaVDR.DPKG({
+      scope: scope,
+      command: 'update',
+      callback: callback
+    })).show();
+  },
+  autoremove: function(callback, scope) {
+    (new YaVDR.DPKG({
+      scope: scope,
+      command: 'autoremove',
+      callback: callback
+    })).show();
+  },
+  install: function(package, callback, scope) {
+    Ext.Msg.show({
+      title:'Install package?',
+      msg: 'Would you like to install package "' + Ext.util.Format.htmlEncode(package) + '"?',
+      buttons: Ext.Msg.YESNO,
+      animEl: 'elId',
+      scope: this,
+      icon: Ext.MessageBox.QUESTION,
+      fn: function(button) {
+        if (button == 'yes') {
+          (new YaVDR.DPKG({
+            scope: scope,
+            package: package,
+            command: 'install',
+            callback: callback
+          })).show();
+        }
+      }
+    });
+  },
+  remove: function(package, callback, scope) {
+    Ext.Msg.show({
+      title:'Install package?',
+      msg: 'Would you like to remove package "' + Ext.util.Format.htmlEncode(package) + '"?',
+      buttons: Ext.Msg.YESNO,
+      animEl: 'elId',
+      scope: this,
+      icon: Ext.MessageBox.QUESTION,
+      fn: function(button) {
+        if (button == 'yes') {
+          (new YaVDR.DPKG({
+            scope: scope,
+            package: package,
+            command: 'remove',
+            callback: callback
+          })).show();
+        }
+      }
+    });
+  },
+  enable: function(package, callback, scope) {
+    Ext.Msg.show({
+      title:'enable plugin?',
+      msg: 'Would you like to enable "' + Ext.util.Format.htmlEncode(package) + '"?',
+      buttons: Ext.Msg.YESNO,
+      fn: function(buttonId, text, opt) {
+        if (buttonId == "yes") {
+          Ext.Ajax.request({
+            url: 'set_signal?signal=change-plugin&signal_params=enable ' + package,
+            waitMsg: getLL("nvidia.submit.waitmsg"),
+            timeout: 3000,
+            method: 'GET',
+            success: function(xhr) {
+              callback.call(scope, true);
+            },
+            failure: function() {
+              alert('fatal error: disable plugin failed');
+              callback.call(scope, false);
+            }
+          });
+        }
+      },
+      animEl: 'elId',
+      icon: Ext.MessageBox.QUESTION
+    });
+  },
+  disable: function(package, callback, scope) {
+    Ext.Msg.show({
+      title:'disable plugin?',
+      msg: 'Would you like to disable "' + Ext.util.Format.htmlEncode(package) + '"?',
+      buttons: Ext.Msg.YESNO,
+      fn: function(button) {
+        if (button == "yes") {
+          Ext.Ajax.request({
+            url: 'set_signal?signal=change-plugin&signal_params=disable ' + package,
+            waitMsg: getLL("nvidia.submit.waitmsg"),
+            timeout: 3000,
+            method: 'GET',
+            success: function(xhr) {
+              callback.call(scope, true);
+            },
+            failure: function() {
+              alert('fatal error: disable plugin failed');
+              callback.call(scope, false);
+            }
+          });
+        }
+      },
+      animEl: 'elId',
+      icon: Ext.MessageBox.QUESTION
+    });
   }
 });
 
@@ -65,14 +173,16 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
     this.initDetailPanel();
 
     this.items = [this.gridPanel, this.detailPanel];
-    this.buttons = [
+    this.tbar = [
       {
         text: 'apt-get update',
+        icon: '/static/images/icons/dpkg_update.png',
         scope: this,
         handler: this.aptUpdate
       },
       {
         text: 'apt-get autoremove',
+        icon: '/static/images/icons/dpkg_autoremove.png',
         scope: this,
         handler: this.aptAutoRemove
       }
@@ -83,25 +193,66 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
     // init the events after initComponent
     this.initGridEvents();
   },
+  onGridRowContextMenu: function(grid, rowIndex, e) {
+    e.stopEvent();
+    
+    var record = this.gridPanel.store.getAt(rowIndex); 
+    var package = record.data.Package;
+    
+    var menu = new Ext.menu.Menu({
+      items: [
+        {
+          scope: this,
+          text: 'Installieren',
+          icon: '/static/images/icons/dpkg_remove.png',
+          disabled: (record.data.installed != 0),
+          handler: function() {
+            this.installPackage(package);
+          }
+        },
+        {
+          scope: this,
+          text: 'Deinstallieren',
+          icon: '/static/images/icons/dpkg_install.png',
+          disabled: (record.data.installed == 0),
+          handler: function() {
+            this.removePackage(package);
+          }
+        },
+        {
+          scope: this,
+          text: 'Aktivieren',
+          icon: '/static/images/icons/dpkg_enable.png',
+          disabled: (record.data.Package.substr(0, 11) != "vdr-plugin-" || record.data.installed == 2 || record.data.installed == 0),
+          handler: function() {
+            this.enablePackage(package);
+          }
+        },
+        {
+          scope: this,
+          text: 'Deaktivieren',
+          icon: '/static/images/icons/dpkg_disable.png',
+          disabled: (record.data.Package.substr(0, 11) != "vdr-plugin-" || record.data.installed != 2),
+          handler: function() {
+            this.disablePackage(package);
+          }
+        }
+      ]
+    });
+    menu.showAt(e.getXY());
+  },
   aptUpdate: function() {
-    (new YaVDR.DpkgWindow({
-      scope: this,
-      command: 'update',
-      callback: this.reloadPackages
-    })).show();
+    YaVDR.DPKG.update(this.reloadPackages, this);
   },
   aptAutoRemove: function() {
-    (new YaVDR.DpkgWindow({
-      scope: this,
-      command: 'autoremove',
-      callback: this.reloadPackages
-    })).show();
+    YaVDR.DPKG.autoremove(this.reloadPackages, this);
   },
   initGridEvents: function() {
     // load store only first time
     this.on('render', this.reloadPackages, this, { single: true });
     // change status on dblClick
     this.gridPanel.on('celldblclick', this.changeStatusEvent, this);
+    this.gridPanel.on('rowcontextmenu', this.onGridRowContextMenu, this);
     this.gridPanel.getSelectionModel().on('rowselect', this.updateDetail, this);
   },
   detailTemplate: function() {
@@ -139,7 +290,7 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
         background: '#ffffff',
         padding: '7px'
       },
-      height: 82,
+      height: 90,
       items: [
         {
           itemId: 'package-detail',
@@ -200,96 +351,41 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
       })
     });
   },
-  installPackage: function(package) {
-    (new YaVDR.DpkgWindow({
-      package: package,
-      scope: this,
-      callback: this.reloadPackages
-    })).show();
-  },
   changeStatusEvent: function(grid, row, col, event) {
     // correct column?
     if ('installed' == grid.getColumnModel().getDataIndex(col)) {
       var record = grid.getStore().getAt(row);
       var package = record.data.Package;
       if (record.data.installed == 0) {
-        Ext.Msg.show({
-          title:'Install package?',
-          msg: 'Would you like to install package "' + Ext.util.Format.htmlEncode(package) + '"?',
-          buttons: Ext.Msg.YESNO,
-          animEl: 'elId',
-          scope: this,
-          icon: Ext.MessageBox.QUESTION,
-          fn: function(button) {
-            if (button == 'yes') {
-              this.installPackage.call(this, package);
-            }
-          }
-        });
+        this.installPackage(package);
       } else if (record.data.Package.substr(0, 11) == "vdr-plugin-") {
         if (record.data.installed == 2) {
-          Ext.Msg.show({
-            title:'disable plugin?',
-            msg: 'Would you like to disable "' + Ext.util.Format.htmlEncode(package) + '"?',
-            buttons: Ext.Msg.YESNO,
-            scope: this,
-            fn: function(button) {
-              if (button == "yes") {
-                this.disablePackage.call(this, package);
-              }
-            },
-            animEl: 'elId',
-            icon: Ext.MessageBox.QUESTION
-          });
+          this.disablePackage(package);
         } else {
-          Ext.Msg.show({
-            title:'enable plugin?',
-            msg: 'Would you like to enable "' + Ext.util.Format.htmlEncode(package) + '"?',
-            buttons: Ext.Msg.YESNO,
-            scope: this,
-            fn: function(buttonId, text, opt) {
-              if (buttonId == "yes") {
-                this.enablePackage.call(this, package);
-              }
-            },
-            animEl: 'elId',
-            icon: Ext.MessageBox.QUESTION
-          });
+          this.enablePackage(package);
         }
       }
     }
   },
+  removePackage: function(package) {
+    YaVDR.DPKG.remove(package, function() {
+      this.packagesStore.reload();
+    }, this);
+  },
+  installPackage: function(package) {
+    YaVDR.DPKG.install(package, function() {
+      this.packagesStore.reload();
+    }, this);
+  },
   enablePackage: function(package) {
-    Ext.Ajax.request({
-      url: 'set_signal?signal=change-plugin&signal_params=enable ' + package,
-      waitMsg: getLL("nvidia.submit.waitmsg"),
-      timeout: 3000,
-      method: 'GET',
-      scope: this,
-      success: function(xhr) {
-        this.packagesStore.reload();
-      },
-      failure: function() {
-        alert('fatal error: disable plugin failed');
-        this.packagesStore.reload();
-      }
-    });
+    YaVDR.DPKG.enable(package, function() {
+      this.packagesStore.reload();
+    }, this);
   },
   disablePackage: function(package) {
-    Ext.Ajax.request({
-      url: 'set_signal?signal=change-plugin&signal_params=disable ' + package,
-      waitMsg: getLL("nvidia.submit.waitmsg"),
-      timeout: 3000,
-      method: 'GET',
-      scope: this,
-      success: function(xhr) {
-        this.packagesStore.reload();
-      },
-      failure: function() {
-        alert('fatal error: disable plugin failed');
-        this.packagesStore.reload();
-      }
-    });
+    YaVDR.DPKG.disable(package, function() {
+      this.packagesStore.reload();
+    }, this);
   },
   stateRenderer: function(state) {
     switch (state) {
