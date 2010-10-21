@@ -86,7 +86,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
             handler: this.activateSelection,
           },
           {
-            itemId: 'switch-sreen',
+            itemId: 'switch-screen',
             text: getLL("x11.dualhead.switch_label"),
             icon: '/static/images/icons/switch_screen.png',
             scope: this,
@@ -124,7 +124,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
         var data = Ext.util.JSON.decode( xhr.responseText );
         var currentFrontend = "";
         
-        var switchScreenButton = this.getComponent('frontend-selector').getTopToolbar().getComponent('switch-sreen');
+        var switchScreenButton = this.getComponent('frontend-selector').getTopToolbar().getComponent('switch-screen');
         
         try {
           currentFrontend = data.vdr.frontend;
