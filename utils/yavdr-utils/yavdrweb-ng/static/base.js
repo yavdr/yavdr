@@ -1,5 +1,20 @@
 Ext.ns('YaVDR');
 
+Ext.apply(YaVDR, {
+  getHdfValue: function(key, callback, scope) {
+    Ext.Ajax.request({
+      url: 'get_hdf_value?hdfpath=' + key,
+      timeout: 3000,
+      method: 'GET',
+      scope: scope,
+      success: function(xhr) {
+        var value = xhr.responseText;
+        callback.call(this, value);
+      }
+    });
+  }
+});
+
 // base panel for each page
 YaVDR.BasePanel = Ext.extend(Ext.Panel, {
   autoScroll: true,

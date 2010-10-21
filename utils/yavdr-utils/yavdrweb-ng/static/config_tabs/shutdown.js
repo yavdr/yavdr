@@ -62,16 +62,16 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     this.disableUsbWakeupField = new Ext.form.Checkbox({
       fieldLabel: 'Disable USB-Wakeup',
       boxLabel: 'USB-Wakeup deaktivieren, wenn Mainboard nicht kompatibel',
-      value: 'value2',
+      name: 'value2',
       inputValue: '1'
     });
     
     this.items = [
-      this.shutdownSelectionHidden,
       {
         anchor: '100%',
         layout: 'form',
         items: [
+          this.shutdownSelectionHidden,
           this.shutdownSelectiorView,
           this.disableUsbWakeupField
         ]
@@ -133,25 +133,22 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     });
   },
   loadSelection: function() {
-    Ext.Ajax.request({
-      url: 'get_hdf_value?hdfpath=system.shutdown',
-      timeout: 3000,
-      method: 'GET',
-      scope: this,
-      success: function(xhr) {
-        var currentShutdown = xhr.responseText;
-        if(currentShutdown == "s3" ||
-          currentShutdown == "s4" ||
-          currentShutdown == "s5" ||
-          currentShutdown == "poweroff" ||
-          currentShutdown == "reboot") {
-            
-          this.shutdownSelectiorView.select("shutdown-selection-" + currentShutdown);
+    YaVDR.getHdfValue('system.shutdown', function(value) {
+        if(value == "s3" ||
+          value == "s4" ||
+          value == "s5" ||
+          value == "poweroff" ||
+          value == "reboot") {
+          this.shutdownSelectiorView.select("shutdown-selection-" + value);
         } else {
           Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not set shutdown selection.');
         }
+    }, this);
+    YaVDR.getHdfValue('system.disable_usb_wackup', function(value) {
+      if(value == "1") {
+        this.disableUsbWakeupField.setValue(1);
       }
-    });
+    }, this);
   }
 });
 
