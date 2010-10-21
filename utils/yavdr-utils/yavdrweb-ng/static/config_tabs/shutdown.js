@@ -49,7 +49,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     
     this.shutdownSelectionHidden = new Ext.form.Hidden({
       name: 'value',
-      value: 'xineliboutput'
+      value: 's3'
     });
     
     this.shutdownSelectiorView = new YaVDR.SelectionList({
@@ -75,15 +75,9 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     }, this.disableUsbWakeupField);
     
     this.items = [
-      {
-        anchor: '100%',
-        layout: 'form',
-        items: [
-          this.shutdownSelectionHidden,
-          this.shutdownSelectiorView,
-          this.disableUsbWakeupField
-        ]
-      }
+      this.shutdownSelectionHidden,
+      this.shutdownSelectiorView,
+      this.disableUsbWakeupField
     ]
     
     this.tbar = [
@@ -127,7 +121,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
         
         this.store.each(function(record) {
           type = record.data.key
-          if(type == 'reboot') { return; }
+          if(type == 'reboot' || type == 'poweroff') { return; }
           
           if(allowed.indexOf(type.toUpperCase()) < 0) {
             record.data.title = getLL("shutdown.items." + record.data.key + "unavailable");
@@ -142,15 +136,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
   },
   loadSelection: function() {
     YaVDR.getHdfValue('system.shutdown', function(value) {
-        if(value == "s3" ||
-          value == "s4" ||
-          value == "s5" ||
-          value == "poweroff" ||
-          value == "reboot") {
-          this.shutdownSelectiorView.select("shutdown-selection-" + value);
-        } else {
-          Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not set shutdown selection.');
-        }
+      this.shutdownSelectiorView.select("shutdown-selection-" + value);
     }, this);
     YaVDR.getHdfValue('system.disable_usb_wackup', function(value) {
       if(value == "1") {

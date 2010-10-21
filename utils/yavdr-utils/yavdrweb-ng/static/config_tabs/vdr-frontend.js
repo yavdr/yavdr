@@ -48,23 +48,24 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
     );
     
     this.frontendTpl.compile();
-        this.tbar= [
-          {
-            itemId: 'activate',
-            text: 'Auswahl übernehmen',
-            icon: '/static/images/icons/save.png',
-            scope: this,
-            handler: this.activateSelection,
-          },
-          {
-            itemId: 'switch-screen',
-            text: getLL("x11.dualhead.switch_label"),
-            icon: '/static/images/icons/switch_screen.png',
-            scope: this,
-            disabled: true && (yavdrwebGlobalInfo.devmode != "1"),
-            handler: this.switchScreen,
-          }
-        ];
+    
+    this.tbar= [
+      {
+        itemId: 'activate',
+        text: 'Auswahl übernehmen',
+        icon: '/static/images/icons/save.png',
+        scope: this,
+        handler: this.activateSelection,
+      },
+      {
+        itemId: 'switch-screen',
+        text: getLL("x11.dualhead.switch_label"),
+        icon: '/static/images/icons/switch_screen.png',
+        scope: this,
+        disabled: true && (yavdrwebGlobalInfo.devmode != "1"),
+        handler: this.switchScreen,
+      }
+    ];
     
     this.frontendSelectionHidden = new Ext.form.Hidden({
         name: 'value',
@@ -80,13 +81,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
     
     this.items = [
       this.frontendSelectionHidden,
-      {
-        anchor: '100%',
-        layout: 'form',
-        items: [
-          this.frontendSelectiorView
-        ]
-      }
+      this.frontendSelectiorView
     ];
     
     YaVDR.VdrFrontend.superclass.initComponent.call(this);
@@ -113,15 +108,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
           return false; // Abort
         }
         
-        if(currentFrontend == "headless" ||
-          currentFrontend == "xine" ||
-          currentFrontend == "xineliboutput" ||
-          currentFrontend == "xbmc") {
-          
-          this.frontendSelectiorView.select("frontend-selection-" + currentFrontend);
-        } else {
-          Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not set frontend selection.');
-        }
+        this.frontendSelectiorView.select("frontend-selection-" + currentFrontend);
         
         if (data.system.x11.dualhead.enabled == "1" && data.vdr.plugin.graphtft.enabled != "1") {
           switchScreenButton.enable();

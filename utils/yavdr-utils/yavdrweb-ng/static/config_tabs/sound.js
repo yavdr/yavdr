@@ -1,85 +1,125 @@
-function getSoundForm(){
-    var myform = new Ext.FormPanel({
-        frame: false,
-        plain: false,
-        border: false,
-        bodyStyle:'padding:5px 5px 0',
-        labelWidth: 150,
-        //defaultType: 'textfield',
-        buttonAlign: 'left',
-        items: [{
-            id: 'sound_radio_group',
-            name: 'sound',
-            xtype: 'radiogroup',
-            fieldLabel: getLL("sound.label"),
-            columns: 1,
-            items: [
+YaVDR.SoundSettings = Ext.extend(YaVDR.BaseFormPanel, {
+  initComponent: function() {
+
+    /*
+     
                 {id: 'analog', boxLabel: 'Analog', name: 'value', inputValue: 'analog'},
                 {id: 'spdif', boxLabel: 'Digital (Toslink/SPDIF)', name: 'value', inputValue: 'spdif'},
                 {id: 'hdmi', boxLabel: 'HDMI Stereo', name: 'value', inputValue: 'hdmi'},
-		{id: 'hdmi+analog', boxLabel: 'HDMI-Analog', name: 'value', inputValue: 'hdmi+analog'},
+                {id: 'hdmi+analog', boxLabel: 'HDMI-Analog', name: 'value', inputValue: 'hdmi+analog'},
                 {id: 'passthrough', boxLabel: 'HDMI Pass Through', name: 'value', inputValue: 'passthrough'}
-            ]
-        }]
-    });
+     */
+    
+    this.store = new Ext.data.JsonStore({
+      fields: [
+        { name: 'key' },
+        { type: 'boolean', name: 'disabled' },
+        { name: 'title' },
+        { name: 'description' }
+      ],
+      data: [
+        {
+          key: 'analog',
+          title: 'Analog',
+          description: 'Tonausgabe erfolgt über Analog über die Klinkenbuchse.'
+        },
+        {
+          key: 'spdif',
+          title: 'Digital (Toslink/SPDIF)',
+          description: 'Tonausgabe erfolgt über digital über Toslink/SPDIF.'
+        },
+        {
+          key: 'hdmi',
+          title: 'HDMI Stereo',
+          description: 'Tonausgabe erfolgt über HDMI in PCM. Diese Variante ist für Receiver oder TVs die keinen keinen Suround verarbeiten können.'
+        },
+        {
+          key: 'hdmi+analog',
+          title: 'HDMI-Analog',
+          description: 'Tonausgabe erfolgt über HDMI und Analog zeitgleich.'
+        },
+        {
+          key: 'passthrough',
+          title: 'HDMI Pass Through',
+          description: 'Tonausgabe erfolgt über HDMI und liefert den orginalen Stream.'
+        }
+      ]
 
-    var submit = myform.addButton({
-        text: getLL("sound.button_label"),
-        icon: '/ext/resources/images/default/grid/refresh.gif',
-        //formBind: true,
-        //scope: this,
-        handler: function() {
-            myform.form.submit({
-                url: 'set_signal?signal=change-sound',
-                timeout: 30, //wait 30 seconds before telling it failed
-                waitMsg: getLL("sound.submit.waitmsg"),
-                waitTitle: getLL("standardform.messagebox_caption.wait"),
-                scope:this,
-                success: function (form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("sound.submit.success") );
-                },
-                failure:function(form, action) {
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("sound.submit.failure") );
-                }
-            })
-        }
     });
     
-    Ext.Ajax.request({
-        url: 'get_hdf_value?hdfpath=system.sound.type',
-        timeout: 3000,
-        method: 'GET',
-        scope: myform,
-        success: function(xhr) {
-            //alert('Response is "' + xhr.responseText + '"');
-            var currentSound = "";
-            try {
-                currentSound = xhr.responseText;
-            }
-            catch (err) {
-                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current sound setting.');
-            }
-            if (currentSound == "analog" 
-                || currentSound == "spdif" 
-                || currentSound == "hdmi" 
-		|| currentSound == "hdmi+analog"
-                || currentSound == "passthrough"){
-                var rButton = this.getComponent('sound_radio_group');
-                if (rButton)
-                    rButton.setValue( currentSound );
-                else
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find sound radiobutton group.');
-            }
-        }
+    this.soundTpl = new Ext.XTemplate(
+      '<tpl for=".">',
+         '<tpl if="disabled == true">',
+            '<div class="selection-wrap unselectable" id="sound-selection-{key}">',
+          '</tpl>',
+         '<tpl if="disabled == false">',
+            '<div class="selection-wrap selectable" id="sound-selection-{key}">',
+          '</tpl>',
+          '<div class="title">{title}</div>',
+          '<div class="description">{description}</div>',
+        '</div>',
+      '</tpl>'
+    );
+    
+    this.soundTpl.compile();
+        
+    this.soundSelectionHidden = new Ext.form.Hidden({
+      name: 'value',
+      value: 'analog'
     });
     
-    return myform;
-}
+    this.soundSelectiorView = new YaVDR.SelectionList({
+      fieldLabel: getLL('sound.label'),
+      hiddenField: this.soundSelectionHidden,
+      tpl: this.soundTpl,
+      store: this.store
+    });
+    
+    this.items = [
+      this.soundSelectionHidden,
+      this.soundSelectiorView
+    ]
+    
+    this.tbar = [
+      {
+        scope: this,
+        itemId: 'activate',
+        text: 'Auswahl übernehmen',
+        icon: '/static/images/icons/save.png',
+        handler: this.saveSelection
+      }
+    ];
+    
+    YaVDR.SoundSettings.superclass.initComponent.call(this);
+    this.on('render', this.loadSelection, this, { single: true });
+  },
+  saveSelection: function() {
+    this.getForm().submit({
+      url: 'set_signal?signal=change-sound',
+      timeout: 30, //wait 30 seconds before telling it failed
+      waitMsg: getLL("sound.submit.waitmsg"),
+      waitTitle: getLL("standardform.messagebox_caption.wait"),
+      scope:this,
+      success: function (form, action) {
+        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("sound.submit.success") );
+      },
+      failure:function(form, action) {
+        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("sound.submit.failure") );
+      }
+    })
+  },
+  loadSelection: function() {
+    YaVDR.getHdfValue('system.sound.type', function(value) {
+      this.soundSelectiorView.select("sound-selection-" + value);
+    }, this);
+  }
+});
 
 Ext.onReady(function() {
     YaVDRMenuManager
         .addGroupPanelSection({section: "system"})
             .addGroupPanelTab({
                 section: "sound",
-                items:   getSoundForm});
+                layout: 'fit',
+                items:   function() { return new YaVDR.SoundSettings() }});
 });
