@@ -99,7 +99,10 @@ class NetworkShareMountDaemon
           $log.info("mount created ")
           $lock.synchronize do
             if !@active_mounts.include?(mount)
-              mount.establish
+              if mount.establish
+                @active_mounts.push(mount)
+                $log.info("mount service registered")
+              end
             else
               $log.info("target is "+Socket.gethostname)
             end
@@ -181,22 +184,24 @@ class Mount
   end
 
   def establish
+    ret = false
     $log.info("remake dir #{@local_path}")
     FileUtils.rmdir(@local_path) # optional cleanup
-    $log.info("make dir #{@local_path}")
     if FileUtils.mkdir(@local_path)
-      $log.info("mount -t nfs -o,port=#{@port} #{@server}:#{@remote_path} #{@local_path}")
-      if system("mount -t nfs -o,port=#{@port} #{@server}:#{@remote_path} #{@local_path}")
-        @active_mounts.push(self)
+      %x[mount -t nfs -o,port=#{@port} #{@server}:#{@remote_path} #{@local_path}]
+      $log.info("mount -t nfs -o,port=#{@port} #{@server}:#{@remote_path} #{@local_path} => .#{$?}.")
+      if "#{$?}".eql?('0')
         notify
+        ret = true
         $log.info("Succesfully mounted discovered NFS service "+to_s)
       else
-        $log.error("Failed to mount discovered NFS service: #{mount.to_s}. Error code #{$?}.")
+        $log.error("Failed to mount discovered NFS service: #{to_s}. Error code #{$?}.")
         FileUtils.rmdir(@local_path)
       end
     else
       $log.error("mkdir failed: "+@local_path)
     end
+    ret
   end
 
   def notify
