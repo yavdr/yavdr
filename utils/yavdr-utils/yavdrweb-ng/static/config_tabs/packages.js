@@ -39,7 +39,7 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
         {
           scope: this,
           text: 'Installieren',
-          icon: '/static/images/icons/dpkg_remove.png',
+          icon: '/static/images/icons/dpkg_install.png',
           disabled: (record.data.installed != 0),
           handler: function() {
             this.installPackage(package);
@@ -48,7 +48,7 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
         {
           scope: this,
           text: 'Deinstallieren',
-          icon: '/static/images/icons/dpkg_install.png',
+          icon: '/static/images/icons/dpkg_remove.png',
           disabled: (record.data.installed == 0),
           handler: function() {
             this.removePackage(package);

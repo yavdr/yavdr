@@ -319,7 +319,8 @@ var locale_de = {
         section : {
             system_info: {
                 menutab: {
-                    title : 'System-Informationen', 
+                    title : 'System-Informationen',
+                    panel_title: 'System-Informationen',
                     tabtip : 'Netzwerk-Status, Auslastung, Prozesse, Dateisystem-Belegung und Kernel'
                 },
                 ifconfig : 'Netzwerkstatus',
@@ -330,48 +331,56 @@ var locale_de = {
             system_logs: {
                 menutab: {
                     title :'System-Logfiles',
+                    panel_title :'System-Logfiles',
                     tabtip : 'Wichtige System-Logfiles'
                 }
             },
             xbmc: {
                 menutab: {
                     title : 'XBMC-Abstürze',
+                    panel_title : 'XBMC-Abstürze',
                     tabtip : 'Finden Sie die Ursache für XBMC-Abstürze oder XBMC-Probleme'
                 }
             },
             lirc: {
                 menutab: {
                     title : 'LIRC-Konfiguration',
+                    panel_title : 'LIRC-Konfiguration',
                     tabtip : 'Informieren Sie sich über die aktuelle LIRC-Konfiguration'
                 }
             },
             vdr: {
                 menutab: {
                     title : 'VDR-Konfiguration',
+                    panel_title : 'VDR-Konfiguration',
                     tabtip : 'Informieren Sie sich über die aktuelle VDR-Konfiguration'
                 }
             },
             xorg: {
                 menutab: {
                     title : 'X-Server',
+                    panel_title : 'X-Server',
                     tabtip : 'Informieren Sie sich über die aktuelle X-Konfiguration'
                 }
             },
             sound: {
                 menutab: {
                     title : 'Sound (ALSA)',
+                    panel_title : 'Sound (ALSA)',
                     tabtip : 'Digitalsound-Problemdiagnose (Digital-/Analog-Ausgabe)'
                 }
             },
             packages: {
                 menutab: {
                     title : 'Pakete',
+                    panel_title : 'Pakete',
                     tabtip : 'Überprüfen Sie, welche Pakete und Paketversionen installiert sind'
                 }
             },            
             yavdr: {
                 menutab: {
                     title : 'yaVDR-Utils',
+                    panel_title : 'yaVDR-Utils',
                     tabtip : 'yaVDR-Web-Frontend Diagnose (Datenbank + Webserver)'
                 }
             }

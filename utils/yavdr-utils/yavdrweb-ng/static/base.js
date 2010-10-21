@@ -61,10 +61,17 @@ YaVDR.BaseFormPanel = Ext.extend(Ext.FormPanel, {
   autoScroll: true,
   bodyStyle: 'border: 1px solid #99BBE8;',
   padding: 5,
-  buttonAlign: 'left',
   labelWidth: 200,
   initComponent: function() {
     YaVDR.BaseFormPanel.superclass.initComponent.call(this);
+  }
+});
+
+YaVDR.BaseTabPanel = Ext.extend(Ext.TabPanel, {
+  plain: true,
+  activeItem: 0,
+  initComponent: function() {
+    YaVDR.BaseTabPanel.superclass.initComponent.call(this);
   }
 });
 
