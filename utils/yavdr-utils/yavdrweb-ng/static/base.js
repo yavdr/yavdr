@@ -1,6 +1,7 @@
 Ext.ns('YaVDR');
 
 Ext.apply(YaVDR, {
+  // Todo Error Handling
   getHdfValue: function(key, callback, scope) {
     Ext.Ajax.request({
       url: 'get_hdf_value?hdfpath=' + key,
@@ -12,6 +13,24 @@ Ext.apply(YaVDR, {
         callback.call(this, value);
       }
     });
+  },
+  // Todo Error Handling
+  getFileContent: function(file, callback, scope, options) {
+    if(typeof options != 'object') options = {};
+          
+    options = Ext.applyIf(options, {
+      puretext: true
+    });
+    
+    Ext.Ajax.request({
+      url: 'get_file_content?file='+file+'&puretext=' + (options.puretext ? 'true' : 'false'),
+      timeout: 3000,
+      method: 'GET',
+      scope: scope,
+      success: function(xhr) {
+        callback.call(this, xhr.responseText);
+      }
+    })
   }
 });
 
