@@ -78,7 +78,7 @@ if (
                                 nerr_log_error(err);
                         }
 
-                        err = hdf_set_valuef(hdf, "system.disable-usb-wackup=%s", (value == "1"?"1":"0"));
+                        err = hdf_set_valuef(hdf, "system.disable_usb_wackup=%s", (value == "1"?"1":"0"));
                         /*if (err != STATUS_OK){
                          }*/
                         err = hdf_write_file(hdf, YAVDRDB);
