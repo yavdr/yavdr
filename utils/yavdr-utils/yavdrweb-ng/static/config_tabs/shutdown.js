@@ -48,8 +48,8 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     );
     
     this.shutdownSelectionHidden = new Ext.form.Hidden({
-        name: 'value',
-        value: 'xineliboutput'
+      name: 'value',
+      value: 'xineliboutput'
     });
     
     this.shutdownSelectiorView = new YaVDR.SelectionList({
@@ -65,6 +65,14 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
       name: 'value2',
       inputValue: '1'
     });
+    
+    this.shutdownSelectionHidden.on('change', function(field, value) {
+      if(value == 's3' || value == 's4') {
+        this.enable();
+      } else {
+        this.disable().setValue(false);
+      }
+    }, this.disableUsbWakeupField);
     
     this.items = [
       {
