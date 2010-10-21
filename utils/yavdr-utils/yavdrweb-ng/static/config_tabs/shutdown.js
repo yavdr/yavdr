@@ -83,7 +83,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     this.tbar = [
       {
         scope: this,
-        itemId: 'activate',
+        itemId: 'save',
         text: 'Auswahl übernehmen',
         icon: '/static/images/icons/save.png',
         handler: this.saveSelection
@@ -138,7 +138,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     YaVDR.getHdfValue('system.shutdown', function(value) {
       this.shutdownSelectiorView.select("shutdown-selection-" + value);
     }, this);
-    YaVDR.getHdfValue('system.disable_usb_wackup', function(value) {
+    YaVDR.getHdfValue('system.disable_usb_wakeup', function(value) {
       if(value == "1") {
         this.disableUsbWakeupField.setValue(1);
       }

@@ -83,7 +83,7 @@ YaVDR.SoundSettings = Ext.extend(YaVDR.BaseFormPanel, {
     this.tbar = [
       {
         scope: this,
-        itemId: 'activate',
+        itemId: 'save',
         text: 'Auswahl übernehmen',
         icon: '/static/images/icons/save.png',
         handler: this.saveSelection

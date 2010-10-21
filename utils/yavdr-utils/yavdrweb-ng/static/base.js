@@ -15,6 +15,20 @@ Ext.apply(YaVDR, {
     });
   },
   // Todo Error Handling
+  getHdfTree: function(key, callback, scope) {
+    Ext.Ajax.request({
+      url: 'get_hdf_value?hdftree=' + key,
+      timeout: 3000,
+      method: 'GET',
+      scope: scope,
+      success: function(xhr) {
+        console.log(xhr.responseText);
+        var value = Ext.decode(xhr.responseText);
+        callback.call(this, value);
+      }
+    });
+  },
+  // Todo Error Handling
   getFileContent: function(file, callback, scope, options) {
     if(typeof options != 'object') options = {};
           
