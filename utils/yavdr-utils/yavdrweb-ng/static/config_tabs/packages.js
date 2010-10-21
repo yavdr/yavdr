@@ -1,5 +1,6 @@
 YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
   layout: 'border',
+  bodyStyle: 'border: none',
   buttonAlign: 'left',
   initComponent: function() {
     this.initPackagesStore();

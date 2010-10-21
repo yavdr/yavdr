@@ -1,55 +1,87 @@
 YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
   initComponent: function() {
     
+    this.store = new Ext.data.JsonStore({
+      fields: [
+        { name: 'key' },
+        { type: 'boolean', name: 'disabled' },
+        { name: 'title' },
+        { name: 'description' }
+      ],
+      data: [
+        {
+          key: 's3',
+          title: getLL("shutdown.items.s3"),
+          description: 'Diese Variante verwendet die xineliboutput-Ausgabe und ist die Standardauswahl für yaVDR'
+        },
+        {
+          key: 's4',
+          title: getLL("shutdown.items.s4"),
+          description: 'Eine alternatives Ausgabedevice und kann verwendet werden falls es Probleme mit xineliboutput gibt'
+        },
+        {
+          key: 's5',
+          title: getLL("shutdown.items.s5"),
+          description: 'Möchten Sie kein VDR-Frontend, sondern XBMC als Fernsehausgabe nutzen so wählen Sie diesen Punkt'
+        },
+        {
+          key: 'reboot',
+          title: getLL("shutdown.items.reboot"),
+          description: 'Diese Variate ist für Server gedacht die über keine Fernsehausgabe verfügen'
+        }
+      ]
+
+    });
+    
+    this.shutdownTpl = new Ext.XTemplate(
+      '<tpl for=".">',
+         '<tpl if="disabled == true">',
+            '<div class="selection-wrap unselectable" id="shutdown-selection-{key}">',
+          '</tpl>',
+         '<tpl if="disabled == false">',
+            '<div class="selection-wrap selectable" id="shutdown-selection-{key}">',
+          '</tpl>',
+          '<div class="title">{title}</div>',
+          '<div class="description">{description}</div>',
+        '</div>',
+      '</tpl>'
+    );
+    
+    this.shutdownSelectionHidden = new Ext.form.Hidden({
+        name: 'value',
+        value: 'xineliboutput'
+    });
+    
+    this.shutdownSelectiorView = new YaVDR.SelectionList({
+      hiddenField: this.shutdownSelectionHidden,
+      fieldLabel: getLL('shutdown.label'),
+      tpl: this.shutdownTpl,
+      store: this.store
+    });
+    
     this.items = [
+      this.shutdownSelectionHidden,
       {
-        itemId: 'shutdown-group',
-        name: 'frontend',
-        xtype: 'radiogroup',
-        fieldLabel: getLL('shutdown.label'),
         anchor: '100%',
-        columns: 1,
+        layout: 'form',
         items: [
-          {
-            itemId: 's3',
-            boxLabel: getLL("shutdown.items.s3"),
-            name: 'value',
-            inputValue: 's3'
-          },
-          {
-            itemId: 's4',
-            boxLabel: getLL("shutdown.items.s4"),
-            name: 'value',
-            inputValue: 's4'
-          },
-          {
-            itemId: 's5',
-            boxLabel: getLL("shutdown.items.s5"),
-            name: 'value',
-            inputValue: 's5'
-          },
-          {
-            itemId: 'reboot',
-            boxLabel: getLL("shutdown.items.reboot"),
-            name: 'value',
-            inputValue: 'reboot'
-          }
+          this.shutdownSelectiorView
         ]
       }
     ]
     
-    this.buttons = [
+    this.tbar = [
       {
-        text: getLL("shutdown.button_label"),
-        icon: '/ext/resources/images/default/grid/refresh.gif',
         scope: this,
+        itemId: 'activate',
+        text: 'Auswahl übernehmen',
+        icon: '/static/images/icons/save.png',
         handler: this.saveSelection
       }
     ];
     
     YaVDR.Shutdown.superclass.initComponent.call(this);
     
-    this.on('render', this.loadSelection, this, { single: true });
     this.on('render', this.disableUnavailables, this, { single: true });
   },
   saveSelection: function() {
@@ -75,17 +107,20 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
       scope: this,
       success: function(xhr) {
         // field references
-        var shutdownGroup = this.getComponent('shutdown-group');
         var allowed = xhr.responseText;
         
-        shutdownGroup.items.each(function(item) {
-          // Skip spezial options
-          if(item.itemId == 'reboot') { return; }
-          if(allowed.indexOf(item.itemId.toUpperCase()) < 0) {
-            // todo: add translation instead replace
-            item.disable().setBoxLabel(getLL("shutdown.items." + item.itemId + "unavailable"));
+        this.store.each(function(record) {
+          type = record.data.key
+          if(type == 'reboot') { return; }
+          
+          if(allowed.indexOf(type.toUpperCase()) < 0) {
+            record.data.title = getLL("shutdown.items." + record.data.key + "unavailable");
+            record.data.disabled = true;
           }
-        }, this);
+        });
+        
+        this.shutdownSelectiorView.refresh();
+        this.loadSelection.call(this);
       }
     });
   },
@@ -96,16 +131,14 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
       method: 'GET',
       scope: this,
       success: function(xhr) {
-        // field references
-        var shutdownGroup = this.getComponent('shutdown-group');
-        
         var currentShutdown = xhr.responseText;
         if(currentShutdown == "s3" ||
           currentShutdown == "s4" ||
           currentShutdown == "s5" ||
           currentShutdown == "poweroff" ||
           currentShutdown == "reboot") {
-          shutdownGroup.setValue(currentShutdown);
+            
+          this.shutdownSelectiorView.select("shutdown-selection-" + currentShutdown);
         } else {
           Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not set shutdown selection.');
         }
@@ -113,89 +146,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
     });
   }
 });
-/*
-function getVDRShutdownForm(){
-    var myform = new Ext.FormPanel({
-        frame: false,
-        plain: false,
-        border: false,
-        bodyStyle:'padding:5px 5px 0',
-        labelWidth: 150,
-        //defaultType: 'textfield',
-        buttonAlign: 'left',
-        items: [{
-            id: 'shutdown_radio_group',
-            name: 'shutdown',
-            xtype: 'radiogroup',
-            fieldLabel: getLL("shutdown.label"),
-            columns: 1,
-            items: [
-                {id: 'shutdown-s3', boxLabel: getLL("shutdown.items.s3"), name: 'value', inputValue: 's3'},
-                {id: 'shutdown-s4', boxLabel: getLL("shutdown.items.s4"), name: 'value', inputValue: 's4'},
-                {id: 'shutdown-s5', boxLabel: getLL("shutdown.items.s5"), name: 'value', inputValue: 's5'},
-                {id: 'shutdown-reboot', boxLabel: getLL("shutdown.items.reboot"), name: 'value', inputValue: 'reboot'}
-            ]
-        }]
-    });
 
-    var submit = myform.addButton({
-        text: getLL("shutdown.button_label"),
-        icon: '/ext/resources/images/default/grid/refresh.gif',
-        //formBind: true,
-        //scope: this,
-        handler: function() {
-            myform.form.submit({
-
-            })
-        }
-    });
-    
-    Ext.Ajax.request({
-        url: 'get_file_content?file=/proc/acpi/sleep&puretext=true',
-        timeout: 3000,
-        method: 'GET',
-        scope: myform,
-        success: function(xhr) {
-            //alert('Response is "' + xhr.responseText + '"');
-            var allowed = xhr.responseText;
-            if (allowed.indexOf("S3") < 0) {
-                Ext.getCmp('shutdown-s3').disable().setBoxLabel(getLL("shutdown.items.s3unavailable"));
-            }
-            if (allowed.indexOf("S4") < 0) {
-                Ext.getCmp('shutdown-s4').disable().setBoxLabel(getLL("shutdown.items.s4unavailable"));
-            }
-        }
-    });
-    
-    
-    Ext.Ajax.request({
-        url: 'get_hdf_value?hdfpath=system.shutdown',
-        timeout: 3000,
-        method: 'GET',
-        scope: myform,
-        success: function(xhr) {
-            //alert('Response is "' + xhr.responseText + '"');
-            var currentshutdown = "";
-            try {
-                currentshutdown = xhr.responseText;
-            }
-            catch (err) {
-                Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not recognize current shutdown.');
-            }
-            if (currentshutdown == "s3" || currentshutdown == "s4" || currentshutdown == "s5" || currentshutdown == "poweroff" || currentshutdown == "reboot"){
-                var rButton = this.getComponent('shutdown_radio_group');
-                if (rButton)
-                    rButton.setValue( currentshutdown );
-                else
-                    Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), 'Could not find shutdown radiobutton group.');
-            }
-        }
-    });
-    
-    return myform;
-}
-
-*/
 Ext.onReady(function() {
     YaVDRMenuManager
         .addGroupPanelSection({section: "vdr", expanded: true})

@@ -3,26 +3,21 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
     
     this.store = new Ext.data.JsonStore({
       fields: [
-        {
-          name: 'key'
-        },
-        {
-          name: 'title'
-        },
-        {
-          name: 'description'
-        }
+        { name: 'key' },
+        { type: 'boolean', name: 'disabled' },
+        { name: 'title' },
+        { name: 'description' }
       ],
       data: [
         {
-          key: 'xine',
-          title: 'xine@vdr-plugin-xine',
-          description: 'Diese Variante verwendet den XINE-Player und ist die Standardauswahl für yaVDR'
-        },
-        {
           key: 'xineliboutput',
           title: 'vdr-sxfe@vdr-plugin-xineliboutput',
-          description: 'Eine alternatives Ausgabedevice kann auch Xinelibput verwendet werden.'
+          description: 'Diese Variante verwendet die xineliboutput-Ausgabe und ist die Standardauswahl für yaVDR'
+        },
+        {
+          key: 'xine',
+          title: 'xine@vdr-plugin-xine',
+          description: 'Eine alternatives Ausgabedevice und kann verwendet werden falls es Probleme mit xineliboutput gibt'
         },
         {
           key: 'xbmc',
@@ -32,7 +27,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
         {
           key: 'headless',
           title: 'headless (yaVDR server)',
-          description: 'Diese Variate eignet sich am besten wenn man nur einen Aufnahmeserver benötigt...'
+          description: 'Diese Variate ist für Server gedacht die über keine Fernsehausgabe verfügen'
         }
       ]
 
@@ -40,44 +35,20 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
     
     this.frontendTpl = new Ext.XTemplate(
       '<tpl for=".">',
-        '<div class="selection-wrap" id="frontend-selection-{key}">',
+         '<tpl if="disabled == true">',
+            '<div class="selection-wrap unselectable" id="frontend-selection-{key}">',
+          '</tpl>',
+         '<tpl if="disabled == false">',
+            '<div class="selection-wrap selectable" id="frontend-selection-{key}">',
+          '</tpl>',
           '<div class="title">{title}</div>',
           '<div class="description">{description}</div>',
         '</div>',
       '</tpl>'
     );
+    
     this.frontendTpl.compile();
-
-    this.frontendSelectionHidden = new Ext.form.Hidden({
-        itemId: 'frontend-selection',
-        name: 'value',
-        value: 'bla'
-    });
-    
-    this.frontendSelectiorView = new Ext.DataView({
-      cls: 'frame-panel-border',
-      style: 'background-color: #FFF;',
-      anchor: '100%',
-      fieldLabel: getLL('frontend.label'),
-      tpl: this.frontendTpl,
-      autoHeight:true,
-      singleSelect: true,
-      overClass:'x-view-over',
-      itemSelector: 'div.selection-wrap',
-      store: this.store,
-      listeners: {
-        scope: this,
-        selectionchange: function(view, selection) {
-          this.frontendSelectionHidden.setValue(selection[0].id.substring(19));
-        }
-      }
-    });
-    
-    this.items = [
-      this.frontendSelectionHidden,
-      {
-        itemId: 'frontend-selector',
-        tbar: [
+        this.tbar= [
           {
             itemId: 'activate',
             text: 'Auswahl übernehmen',
@@ -93,19 +64,28 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
             disabled: true && (yavdrwebGlobalInfo.devmode != "1"),
             handler: this.switchScreen,
           }
-        ],
+        ];
+    
+    this.frontendSelectionHidden = new Ext.form.Hidden({
+        name: 'value',
+        value: 'xineliboutput'
+    });
+    
+    this.frontendSelectiorView = new YaVDR.SelectionList({
+      fieldLabel: getLL('frontend.label'),
+      hiddenField: this.frontendSelectionHidden,
+      tpl: this.frontendTpl,
+      store: this.store
+    });
+    
+    this.items = [
+      this.frontendSelectionHidden,
+      {
+        anchor: '100%',
+        layout: 'form',
         items: [
-          {
-            anchor: '100%',
-            cls: 'frame-panel-border',
-            padding: 5,
-            layout: 'form',
-            items: [
-              this.frontendSelectiorView
-            ]
-          }
+          this.frontendSelectiorView
         ]
-        
       }
     ];
     
@@ -124,7 +104,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
         var data = Ext.util.JSON.decode( xhr.responseText );
         var currentFrontend = "";
         
-        var switchScreenButton = this.getComponent('frontend-selector').getTopToolbar().getComponent('switch-screen');
+        var switchScreenButton = this.getTopToolbar().getComponent('switch-screen');
         
         try {
           currentFrontend = data.vdr.frontend;

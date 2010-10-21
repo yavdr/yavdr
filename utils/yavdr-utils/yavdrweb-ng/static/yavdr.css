@@ -36,12 +36,21 @@ body {
 .selection-wrap .title {
   font-weight: bold;
 }
+.selection-wrap.unselectable {
+  cursor: default;
+  opacity: .4;
+}
 
-.x-view-over{
+.selectable.x-view-over{
   border:1px solid #dddddd;
   background: #efefef url(/ext/resources/images/default/grid/row-over.gif) repeat-x left top;
   padding: 5px;
   padding-left: 29px;
+}
+
+.x-view-selected.x-view-over{
+  border:1px solid #99bbe8;
+  background: #eff5fb url(/static/images/icons/tick.png) no-repeat 5px center;
 }
 
 .x-view-selected{
