@@ -10,6 +10,7 @@ YaVDR.BasePanel = Ext.extend(Ext.Panel, {
 YaVDR.BaseFormPanel = Ext.extend(Ext.FormPanel, {
   autoScroll: true,
   buttonAlign: 'left',
+  labelWidth: 200,
   initComponent: function() {
     YaVDR.BaseFormPanel.superclass.initComponent.call(this);
   }

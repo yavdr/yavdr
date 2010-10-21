@@ -26,3 +26,27 @@ body {
 .frame-panel-border {
   border: 1px solid #99BBE8;
 }
+
+.selection-wrap{
+  cursor: pointer;
+  margin: 3px;
+  padding: 6px;
+  padding-left: 30px;
+}
+.selection-wrap .title {
+  font-weight: bold;
+}
+
+.x-view-over{
+  border:1px solid #dddddd;
+  background: #efefef url(/ext/resources/images/default/grid/row-over.gif) repeat-x left top;
+  padding: 5px;
+  padding-left: 29px;
+}
+
+.x-view-selected{
+  background: #eff5fb url(/static/images/icons/tick.png) no-repeat 5px center;
+  border:1px solid #99bbe8;
+  padding: 5px;
+  padding-left: 29px;
+}
