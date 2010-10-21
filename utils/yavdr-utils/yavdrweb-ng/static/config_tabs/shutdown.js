@@ -12,7 +12,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
         {
           key: 's3',
           title: getLL("shutdown.items.s3"),
-          description: 'Diese Variante verwendet die xineliboutput-Ausgabe und ist die Standardauswahl für yaVDR'
+          description: 'Fährt den Rechner in einen Stromspar-Modus wären der RAM weiterhin mit Strom versorgt wird.'
         },
         {
           key: 's4',
@@ -22,12 +22,12 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
         {
           key: 's5',
           title: getLL("shutdown.items.s5"),
-          description: 'Möchten Sie kein VDR-Frontend, sondern XBMC als Fernsehausgabe nutzen so wählen Sie diesen Punkt'
+          description: 'Hierbei wird der Rechner ganz klassich herunter gefahren.'
         },
         {
           key: 'reboot',
           title: getLL("shutdown.items.reboot"),
-          description: 'Diese Variate ist für Server gedacht die über keine Fernsehausgabe verfügen'
+          description: 'Manche Mainboard benötigen einen Trick damit diese automatisch wieder hochfahren.'
         }
       ]
 
@@ -59,13 +59,21 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
       store: this.store
     });
     
+    this.disableUsbWakeupField = new Ext.form.Checkbox({
+      fieldLabel: 'Disable USB-Wakeup',
+      boxLabel: 'USB-Wakeup deaktivieren, wenn Mainboard nicht kompatibel',
+      value: 'value2',
+      inputValue: '1'
+    });
+    
     this.items = [
       this.shutdownSelectionHidden,
       {
         anchor: '100%',
         layout: 'form',
         items: [
-          this.shutdownSelectiorView
+          this.shutdownSelectiorView,
+          this.disableUsbWakeupField
         ]
       }
     ]
