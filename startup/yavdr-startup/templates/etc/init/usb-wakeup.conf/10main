@@ -1,5 +1,9 @@
-start on stopped udev-finish
 
+description     "Enable USB Wakeup for devices in /dev/input/wakeup"
+author          "Steffen Barszus <steffenbpunkt@gmail.com"
+<?cs if:(!?system.disable_usb_wakeup || system.disable_usb_wakeup == "0") ?>
+start on stopped udev-finish
+<?cs /if ?>
 task
 
 script
