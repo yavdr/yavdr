@@ -24,7 +24,7 @@ YaVDR.SelectionList = Ext.extend(Ext.DataView, {
   scope: null,
   hiddenField: null,
   cls: 'frame-panel-border',
-  style: 'background-color: #FFF;',
+  style: 'background-color: #FFF; border-color: #B5B8C8;',
   anchor: '100%',
   autoHeight:true,
   singleSelect: true,
