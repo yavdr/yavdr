@@ -210,12 +210,12 @@ Ext.onReady(function() {
                         items: [
                           new YaVDR.DiagnoseItem({
                             title: 'Alsa Device List',
-                            cmd: 'get_file_content',
-                            file: '/etc/X11/xorg.conf.yavdr'
+                            cmd: 'get_shell_response',
+                            file: 'aplay'
                           }),
                           new YaVDR.DiagnoseItem({
                             title: 'Alsa Custom Sound Configuration',
-                            cmd: 'get_shell_response',
+                            cmd: 'get_file_content',
                             file: '/etc/asound.conf'
                           })
                         ]
@@ -235,7 +235,7 @@ Ext.onReady(function() {
                             file: 'dpkg'
                           }),
                           new YaVDR.DiagnoseItem({
-                            title: 'Alsa Custom Sound Configuration',
+                            title: 'Apt history of recently installed packages',
                             cmd: 'get_file_content',
                             file: '/var/log/apt/history.log'
                           })
