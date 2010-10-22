@@ -140,7 +140,14 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
         boxLabel: hz+'&nbsp;Hz', 
         name: 'freq'+index, 
         inputValue: value, 
-        freq: record.data.hz[hz].hz 
+        freq: record.data.hz[hz].hz,
+        listeners: {
+          scope: this,
+          check: function(cb, checked) {
+            var cbg = this.getComponent('frequencies');
+            
+          }
+        }
       });
     }
     
@@ -233,6 +240,9 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       data : item.modelines
     });
     
+    console.log(item.current_modeline);
+    console.log(item.modelines);
+    
     items.push(new YaVDR.EasyComboBox({
       itemId: 'modeline',
       index: index,
@@ -241,13 +251,18 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       emptyText: getLL('x11.select_res'),
       fieldLabel: getLL('x11.resolution'),
       hiddenName: 'modeline' + index,
-      value: item.current_modeline.id,
+       // hack: hier kommt id immer mit _50 zb an
+      //      value: item.current_modeline.id,
+      value: item.current_modeline.x + 'x' + item.current_modeline.y,
       listeners: {
         scope: this,
         select: this.onModelineSelect,
         render: function(combo) {
           var display = this.getComponent('display_' + combo.index);
-          this.buildFrequencies.call(this, display, combo.getStore().getById(combo.getValue()));
+          var record = combo.getStore().getById(combo.getValue());
+          if(record) {
+            this.buildFrequencies.call(this, display, record);
+          }
         }
       }
     }));
