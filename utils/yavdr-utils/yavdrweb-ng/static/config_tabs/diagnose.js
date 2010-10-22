@@ -11,6 +11,9 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
     this.formPanel = new Ext.FormPanel({
       border: false,
       padding: 10,
+      standardSubmit: true,
+      url: 'http://pastebin.com/api_public.php',
+      method: 'post',
       defaults: {
         xtype: 'textfield',
         anchor: '100%'
@@ -61,24 +64,20 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
     ];
     
     YaVDR.PasteBin.superclass.initComponent.call(this);
+    this.formPanel.on('render', function(panel) {
+      panel.form.el.dom.setAttribute('target', '_blank');
+    });
   },
   cancel: function() {
     this.close();
   },
   send: function() {
-    console.log(this.formPanel.getForm().getFieldValues());
-    Ext.Ajax.request({
-      url: 'http://pastebin.com/api_public.php',
-      timeout: 3000,
-      success: function(xhr) {
-        alert(xhr.responseText);
-      }
-    });
+    this.formPanel.getForm().submit();
   }
 });
 
 Ext.apply(YaVDR.PasteBin, {
-  paste: function(content, contentType) {
+  paste: function(content) {
     (new YaVDR.PasteBin({
       content: content
     })).show();
