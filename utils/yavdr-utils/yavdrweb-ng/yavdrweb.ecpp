@@ -24,6 +24,7 @@ int scandirfilter(const struct dirent *entry)
 }
 
 </%shared><%cpp>
+reply.setHeader ("Access-Control-Allow-Origin", "http://pastebin.com");
 
 string lang = "";
 string devmode = "0";
