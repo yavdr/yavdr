@@ -39,8 +39,11 @@ if (command == "ifconfig" ||
         {
           if (fgets(buffer, sizeof(buffer), stream) != NULL)
           {
-               reply.sout() << string(buffer).substr(0, strlen(buffer) - 1 ); //we must escape special chars via sout (xss)
-               reply.out() << "<br/>";
+               if (puretext != "true") {
+                   reply.sout() << string(buffer).substr(0, strlen(buffer) - 1 ); //we must escape special chars via sout (xss)
+            	   reply.out() << "<br/>";
+               } else
+                   reply.sout() << buffer;
           }
         }
         pclose(stream); 
