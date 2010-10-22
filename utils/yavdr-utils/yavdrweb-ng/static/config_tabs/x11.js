@@ -241,7 +241,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
     });
     
     console.log(item.current_modeline);
-    console.log(item.modelines);
+    //console.log(item.modelines);
     
     items.push(new YaVDR.EasyComboBox({
       itemId: 'modeline',
@@ -1054,13 +1054,13 @@ function getX11Form(){
     
     return myform;
 }
-
 Ext.onReady(function() {
+/*
     YaVDRMenuManager
         .addGroupPanelSection({section: "system"})
             .addGroupPanelTab({
                 section: "x11",
-                items:   getX11Form});
+                items:   getX11Form});*/
 YaVDRMenuManager
         .addGroupPanelSection({section: "system"})
             .addGroupPanelTab({
