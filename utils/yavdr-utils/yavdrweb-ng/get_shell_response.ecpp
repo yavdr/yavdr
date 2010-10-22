@@ -5,6 +5,7 @@
 using namespace std;
 </%pre><& authenticate ><%args>
 command;
+puretext;
 </%args><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 
@@ -29,7 +30,10 @@ if (command == "ifconfig" ||
 
     if (FILE *stream = popen(cmd.c_str(), "r"))
     {
-        reply.out() << "<pre>";
+        //sanitize puretext param
+        if (puretext != "true") puretext = "false";
+
+        if (puretext != "true") reply.out() << "<pre>";
         char buffer[1024];
         while (!feof(stream))
         {
@@ -40,7 +44,7 @@ if (command == "ifconfig" ||
           }
         }
         pclose(stream); 
-        reply.out() << "</pre>";
+        if (puretext != "true") reply.out() << "</pre>";
     }
 }
 else
