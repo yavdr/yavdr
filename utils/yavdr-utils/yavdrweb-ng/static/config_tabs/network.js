@@ -97,22 +97,26 @@ YaVDR.Network.Nfs = Ext.extend(Ext.grid.GridPanel, {
     Ext.each(this.store.getRange(), function(k) {
         mounts.push( k.data.netspec );
     }, this);
-                      
+    
+    params = { 'cmd' : 'mounts' }
+    if(mounts.length > 0) params.mounts = mounts
+    
     Ext.Ajax.request({
       scope: this,
       url: 'set_autofs_config',
       timeout: 10000,
       method:  'GET',
-      params: { 'cmd' : 'mounts', 'mounts' : mounts },
+      params: params,
       waitMsg: 'wait',
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       success: function(xhr) {
         Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("network.submit.success") );
-        this.loadMask.hide()
+        this.loadMask.hide();
+        this.store.reload();
       },
       failure:function(form, action) {
         Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("network.submit.failure") );
-        this.loadMask.hide()
+        this.loadMask.hide();
       }
     })              
   },
