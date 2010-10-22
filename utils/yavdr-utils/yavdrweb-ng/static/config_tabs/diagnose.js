@@ -1,3 +1,90 @@
+YaVDR.PasteBin = Ext.extend(Ext.Window, {
+  width: 500,
+  autoHeight: true,
+  content: null,
+  modal: true,
+  closable: true,
+  id: 'pastebin',
+  title: 'Sende an PasteBin',
+  initComponent: function() {
+    
+    this.formPanel = new Ext.FormPanel({
+      border: false,
+      padding: 10,
+      defaults: {
+        xtype: 'textfield',
+        anchor: '100%'
+      },
+      items: [
+        {
+          name: 'paste_name',
+          fieldLabel: 'Titel (optional)'
+        },
+        {
+          name: 'paste_email',
+          fieldLabel: 'E-Mail (optional)'
+        },
+        {
+          height: 200,
+          name: 'paste_code',
+          fieldLabel: 'Inhalt',
+          xtype: 'textarea',
+          value: this.content
+        },
+        {
+          xtype: 'hidden',
+          name: 'paste_private',
+          value: '1'
+        },
+        {
+          xtype: 'hidden',
+          name: 'paste_format',
+          value: 'text'
+        }
+      ]
+    });
+    
+    this.items = this.formPanel;
+    
+    this.buttons = [
+      {
+        icon: '/static/images/icons/cross.png',
+        text: 'Abbrechen',
+        scope: this,
+        handler: this.cancel
+      }, {
+        icon: '/static/images/icons/accept.png',
+        text: 'Senden',
+        scope: this,
+        handler: this.send
+      }
+    ];
+    
+    YaVDR.PasteBin.superclass.initComponent.call(this);
+  },
+  cancel: function() {
+    this.close();
+  },
+  send: function() {
+    console.log(this.formPanel.getForm().getFieldValues());
+    Ext.Ajax.request({
+      url: 'http://pastebin.com/api_public.php',
+      timeout: 3000,
+      success: function(xhr) {
+        alert(xhr.responseText);
+      }
+    });
+  }
+});
+
+Ext.apply(YaVDR.PasteBin, {
+  paste: function(content, contentType) {
+    (new YaVDR.PasteBin({
+      content: content
+    })).show();
+  }
+});
+
 YaVDR.Diagnose = Ext.extend(YaVDR.BaseTabPanel, {
   initComponent: function() {
     YaVDR.Diagnose.superclass.initComponent.call(this);
@@ -31,7 +118,7 @@ YaVDR.Diagnose.Item =  Ext.extend(Ext.Panel, {
       }
     ];
     
-    this.autoLoad = this.cmd + '?' + (this.cmd === 'get_file_content' ? 'file' : 'command') + '=' + this.file
+    this.autoLoad = this.cmd + '?puretext=true&' + (this.cmd === 'get_file_content' ? 'file' : 'command') + '=' + this.file
 
     YaVDR.Diagnose.Item.superclass.initComponent.call(this);
   },
@@ -42,7 +129,7 @@ YaVDR.Diagnose.Item =  Ext.extend(Ext.Panel, {
     this.body.dom.scrollTop = this.body.dom.scrollHeight - this.body.dom.offsetHeight;
   },
   sendPasteBin: function() {
-    alert('todo');
+    YaVDR.PasteBin.paste(this.body.dom.innerHTML);
   }
 });
 

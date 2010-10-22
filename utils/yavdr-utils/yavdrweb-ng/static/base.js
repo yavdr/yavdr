@@ -48,31 +48,41 @@ Ext.apply(YaVDR, {
   }
 });
 
+YaVDR.EasyComboBox = Ext.extend(Ext.form.ComboBox, {
+  editable: false,
+  forceSelection: true,
+  mode: 'local',
+  triggerAction: 'all',
+  valueField: 'id',
+  displayField: 'id',
+  initComponent: function() {
+    if(!this.store) {
+      this.store = new Ext.data.ArrayStore({
+        fields: [
+          'id'
+        ],
+        data: this.data
+      });
+    }
+  }
+});
+
 // base panel for each page
 YaVDR.BasePanel = Ext.extend(Ext.Panel, {
   autoScroll: true,
-  bodyStyle: 'border: 1px solid #99BBE8;',
-  initComponent: function() {
-    YaVDR.BasePanel.superclass.initComponent.call(this);
-  }
+  bodyStyle: 'border: 1px solid #99BBE8;'
 });
 
 YaVDR.BaseFormPanel = Ext.extend(Ext.FormPanel, {
   autoScroll: true,
   bodyStyle: 'border: 1px solid #99BBE8;',
   padding: 5,
-  labelWidth: 200,
-  initComponent: function() {
-    YaVDR.BaseFormPanel.superclass.initComponent.call(this);
-  }
+  labelWidth: 200
 });
 
 YaVDR.BaseTabPanel = Ext.extend(Ext.TabPanel, {
   plain: true,
-  activeItem: 0,
-  initComponent: function() {
-    YaVDR.BaseTabPanel.superclass.initComponent.call(this);
-  }
+  activeItem: 0
 });
 
 YaVDR.SelectionList = Ext.extend(Ext.DataView, {
