@@ -240,7 +240,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       data : item.modelines
     });
     
-    console.log(item.current_modeline);
+    //console.log(item.current_modeline);
     //console.log(item.modelines);
     
     items.push(new YaVDR.EasyComboBox({
