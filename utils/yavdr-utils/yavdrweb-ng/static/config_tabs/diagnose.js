@@ -1,4 +1,10 @@
-YaVDR.DiagnoseItem =  Ext.extend(Ext.Panel, {
+YaVDR.Diagnose = Ext.extend(YaVDR.BaseTabPanel, {
+  initComponent: function() {
+    YaVDR.Diagnose.superclass.initComponent.call(this);
+  }
+});
+
+YaVDR.Diagnose.Item =  Ext.extend(Ext.Panel, {
   file: null,
   cmd: null,
   autoScroll: true,
@@ -27,7 +33,7 @@ YaVDR.DiagnoseItem =  Ext.extend(Ext.Panel, {
     
     this.autoLoad = this.cmd + '?' + (this.cmd === 'get_file_content' ? 'file' : 'command') + '=' + this.file
 
-    YaVDR.DiagnoseItem.superclass.initComponent.call(this);
+    YaVDR.Diagnose.Item.superclass.initComponent.call(this);
   },
   reload: function () {
     this.getUpdater().refresh();
@@ -37,12 +43,6 @@ YaVDR.DiagnoseItem =  Ext.extend(Ext.Panel, {
   },
   sendPasteBin: function() {
     alert('todo');
-  }
-});
-
-YaVDR.Diagnose = Ext.extend(YaVDR.BaseTabPanel, {
-  initComponent: function() {
-    YaVDR.Diagnose.superclass.initComponent.call(this);
   }
 });
 
@@ -56,22 +56,22 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: getLL("diagnose.section.system_info.top"),
                             cmd: 'get_shell_response',
                             file: 'top'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: getLL("diagnose.section.system_info.ifconfig"),
                             cmd: 'get_shell_response',
                             file: 'ifconfig'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: getLL("diagnose.section.system_info.df"),
                             cmd: 'get_shell_response',
                             file: 'df'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: getLL("diagnose.section.system_info.dmesg"),
                             cmd: 'get_shell_response',
                             file: 'dmesg'
@@ -89,17 +89,17 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: '/var/log/messages',
                             cmd: 'get_file_content',
                             file: '/var/log/messages'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: '/var/log/user.log',
                             cmd: 'get_file_content',
                             file: '/var/log/user.log'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: '/var/log/syslog',
                             cmd: 'get_file_content',
                             file: '/var/log/syslog'
@@ -116,12 +116,12 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: '/var/lib/vdr/.xbmc/temp/xbmc.log',
                             cmd: 'get_file_content',
                             file: '/var/lib/vdr/.xbmc/temp/xbmc.log'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: '/var/lib/vdr/.xbmc/temp/xbmc.old.log',
                             cmd: 'get_file_content',
                             file: '/var/lib/vdr/.xbmc/temp/xbmc.old.log'
@@ -138,12 +138,12 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'LIRC Hardware Configuration',
                             cmd: 'get_file_content',
                             file: '/etc/lirc/hardware.conf'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'LIRCD Configuration',
                             cmd: 'get_file_content',
                             file: '/etc/lirc/lircd.conf'
@@ -159,12 +159,12 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'VDR Setup',
                             cmd: 'get_file_content',
                             file: '/etc/vdr/setup.conf'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'VDR Fernbedienung',
                             cmd: 'get_file_content',
                             file: '/etc/vdr/remote.conf'
@@ -181,17 +181,17 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'X-Server Configuration (only if NVIDIA VDPAU present)',
                             cmd: 'get_file_content',
                             file: '/etc/X11/xorg.conf.yavdr'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'XSession.vdr',
                             cmd: 'get_file_content',
                             file: '/etc/X11/Xsession.vdr'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'X-Server Logfile',
                             cmd: 'get_file_content',
                             file: '/var/log/Xorg.1.log'
@@ -208,12 +208,12 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'Alsa Device List',
                             cmd: 'get_shell_response',
                             file: 'aplay'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'Alsa Custom Sound Configuration',
                             cmd: 'get_file_content',
                             file: '/etc/asound.conf'
@@ -229,12 +229,12 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)',
                             cmd: 'get_shell_response',
                             file: 'dpkg'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'Apt history of recently installed packages',
                             cmd: 'get_file_content',
                             file: '/var/log/apt/history.log'
@@ -250,12 +250,12 @@ Ext.onReady(function() {
                     items: function() {
                       return new YaVDR.Diagnose({
                         items: [
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'yaVDR DB',
                             cmd: 'get_file_content',
                             file: '/var/lib/yavdrdb.hdf'
                           }),
-                          new YaVDR.DiagnoseItem({
+                          new YaVDR.Diagnose.Item({
                             title: 'Logfile Webserver',
                             cmd: 'get_file_content',
                             file: '/var/log/tntnet/tntnet.log'
