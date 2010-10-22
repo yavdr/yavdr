@@ -85,8 +85,6 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
   initGridEvents: function() {
     // load store only first time
     this.on('render', this.reloadPackages, this, { single: true });
-    // change status on dblClick
-    this.gridPanel.on('celldblclick', this.changeStatusEvent, this);
     this.gridPanel.on('rowcontextmenu', this.onGridRowContextMenu, this);
     this.gridPanel.getSelectionModel().on('rowselect', this.updateDetail, this);
   },
@@ -98,7 +96,7 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
     ]);
   },
   updateDetail: function(sm, index, row) {
-    this.detailTemplate().overwrite(this.detailPanel.getComponent('package-detail').body, row.data);
+    this.detailTemplate().overwrite(this.detailPanel.body, row.data);
   },
   reloadPackages: function() {
     this.packagesStore.reload();
@@ -125,16 +123,9 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
         background: '#ffffff',
         padding: '7px'
       },
-      height: 90,
-      items: [
-        {
-          itemId: 'package-detail',
-          html: 'Please select a package to see additional details.'
-        },
-        {
-          html: 'dblclick on red icon to install package.....<br/> vdr-plugins can be dis- & enabled...'
-        }
-      ]
+      height: 74,
+      itemId: 'package-detail',
+      html: 'Please select a package to see additional details.'
     });
   },
   initGridPanel: function() {
@@ -185,22 +176,6 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
         singleSelect: true
       })
     });
-  },
-  changeStatusEvent: function(grid, row, col, event) {
-    // correct column?
-    if ('installed' == grid.getColumnModel().getDataIndex(col)) {
-      var record = grid.getStore().getAt(row);
-      var package = record.data.Package;
-      if (record.data.installed == 0) {
-        this.installPackage(package);
-      } else if (record.data.Package.substr(0, 11) == "vdr-plugin-") {
-        if (record.data.installed == 2) {
-          this.disablePackage(package);
-        } else {
-          this.enablePackage(package);
-        }
-      }
-    }
   },
   removePackage: function(package) {
     YaVDR.DPKG.remove(package, function() {
