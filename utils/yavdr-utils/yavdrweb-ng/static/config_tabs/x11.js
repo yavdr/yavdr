@@ -144,6 +144,11 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       });
     }
     
+    // AutoSelect if only one
+    if(checkboxes.length == 1) {
+      checkboxes[0].checked = true;
+    }
+    
     display.insert(5, {
       name: 'freq'+index,
       xtype: 'checkboxgroup',
@@ -239,7 +244,11 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       value: item.current_modeline.id,
       listeners: {
         scope: this,
-        select: this.onModelineSelect
+        select: this.onModelineSelect,
+        render: function(combo) {
+          var display = this.getComponent('display_' + combo.index);
+          this.buildFrequencies.call(this, display, combo.getStore().getById(combo.getValue()));
+        }
       }
     }));
     
@@ -265,6 +274,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       title: 'DISPLAY ' + ((typeof item.displaynumber != 'undefined')?':'+item.displaynumber+'.' + item.screen + ' (' + item.name:item.name+' disabled') + ')',
       items: items
     });
+    
   },
   loadSettings: function() {
     Ext.Ajax.request({
@@ -281,8 +291,6 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
           // hack Dual Screen
           //displayData.system.x11.displays.push(displayData.system.x11.displays[0]);
           //displayData.system.x11.displays.push(displayData.system.x11.displays[0]);
-          
-          console.log(displayData);
           
           if (typeof displayData.system.x11.displays != "undefined") {
             Ext.each(displayData.system.x11.displays, function(item, index) {
