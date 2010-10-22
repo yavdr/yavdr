@@ -52,7 +52,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
     this.tbar= [
       {
         itemId: 'activate',
-        text: 'Auswahl übernehmen',
+        text: 'Speichern',
         icon: '/static/images/icons/save.png',
         scope: this,
         handler: this.activateSelection,

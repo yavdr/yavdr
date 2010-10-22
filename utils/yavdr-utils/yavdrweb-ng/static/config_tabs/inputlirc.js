@@ -1,3 +1,5 @@
+
+
 function populateInputlircForm( form, inputlircData ){
 
     var receiverStore = new Ext.data.ArrayStore({

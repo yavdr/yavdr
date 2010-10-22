@@ -96,7 +96,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       {
         scope: this,
         itemId: 'save',
-        text: 'Einstellungen speichern',
+        text: 'Speichern',
         icon: '/static/images/icons/save.png',
         handler: this.saveSettings
       }
