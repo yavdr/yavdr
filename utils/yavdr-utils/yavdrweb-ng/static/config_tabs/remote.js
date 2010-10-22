@@ -469,11 +469,11 @@ Ext.onReady(function() {
               //  items:   getRemoteForm
               
             });
-                YaVDRMenuManager
+             /*   YaVDRMenuManager
         .addGroupPanelSection({section: "system"})
             .addGroupPanelTab({
                 section: "remote",
                 items:   getRemoteForm
               
-            });
+            });*/
 });

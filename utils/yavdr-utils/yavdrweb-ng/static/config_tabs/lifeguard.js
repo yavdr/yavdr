@@ -47,7 +47,7 @@ YaVDR.VdrLiveGuard = Ext.extend(YaVDR.BaseFormPanel, {
       {
         scope: this,
         itemId: 'save',
-        text: 'Auswahl übernehmen',
+        text: 'Speichern',
         icon: '/static/images/icons/save.png',
         handler: this.saveSelection
       }
