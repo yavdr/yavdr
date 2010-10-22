@@ -1,42 +1,212 @@
 YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
+  data: {},
+  deferredRender: false,
   initComponent: function() {
+    this.initHelp();
+    this.initLirc();
+    this.initInputLirc();
+    this.initIrServer();
     
     this.items = [
-      new YaVDR.Remote.Help({itemId: 'help'}),
-      new YaVDR.Remote.Lirc({itemId: 'lirc'}),
-      new YaVDR.Remote.InputLirc({itemId: 'input_lirc'}),
-      new YaVDR.Remote.IrServer({itemId: 'ir_server'})
+      this.helpPanel,
+      this.lircPanel,
+      this.inputLircPanel,
+      this.irServerPabel
     ];
     
     YaVDR.Remote.superclass.initComponent.call(this);
-  }
-});
-
-YaVDR.Remote.Help = Ext.extend(Ext.Panel, {
-  title: 'Hilfe',
-  bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
-  initComponent: function() {
     
-    this.items = [
-      {
-        xtype: 'box',
-        html: '<p>' + getLL("remote.help") + '<br/>&nbsp;</p>' +
-                '<h2>Lirc</h2><p>' + getLL("lirc.help") + '<br/>&nbsp;</p>' +
-                '<h2>InputLirc</h2><p>' + getLL("inputlirc.help") + '<br/>&nbsp;</p>' +
-                '<h2>Irserver</h2><p>' + getLL("irserver.help") + '</p>'
+    this.lircDriver.on('enable', function(field) {
+      field.setValue(this.data.currentLircReceiver);
+    }, this);
+    this.lircDriver.on('disable', function(field) {
+      field.setValue('');
+    }, this);
+    this.lircSerialPort.on('enable', function(field) {
+      field.setValue(this.data.currentLircSerialPort);
+    }, this);
+    this.lircSerialPort.on('disable', function(field) {
+      field.setValue('');
+    }, this);
+    
+    this.on('render', this.loadData, this);
+    this.inputLircPanel.on('show', this.reloadInputLircReceiver, this, { signle: true })
+  },
+  loadData: function () {
+    Ext.Ajax.request({
+      url: 'get_lirchwdb',
+      timeout: 3000,
+      method: 'GET',
+      scope: this,
+      success: function(xhr) {
+        var data = Ext.decode(xhr.responseText);
+        this.data.lircReceiverList = data.receiverlist;
+        this.data.currentRemoted = data.current_remoted;
+        this.data.currentLircReceiver = data.current_receiver;
+        this.data.currentLircSerialPort = data.current_serial_port;
+
+        this.lircReceiverStore.loadData(this.data.lircReceiverList);
+        this.lircActive.setValue(this.data.currentRemoted == 'lircd');
+        this.inputLircActive.setValue(this.data.currentRemoted == 'inputlirc');
+        this.irServerActive.setValue(this.data.currentRemoted == 'irserver');
       }
-    ];
+    });
+  },
+  reloadInputLircReceiver: function() {
+    Ext.Ajax.request({
+      url: 'get_inputlirc',
+      timeout: 3000,
+      method: 'GET',
+      scope: this,
+      success: function(xhr) {
+        var data = Ext.decode(xhr.responseText);
+        this.data.currentInputLircReceiver = data.current_receiver;
+        this.data.inputLircReceiverList = data.receiverlist;
+        this.inputLircReceiverStore.loadData(this.data.inputLircReceiverList);
+        if(this.inputLircActive.getValue()) {
+          this.inputLircReceiver.setValue(this.data.currentInputLircReceiver);
+        }
+      }
+    })
+  },
+  initInputLirc: function() {
+    this.inputLircSave = new Ext.Button({
+      scope: this,
+      disabled: true,
+      itemId: 'save',
+      text: 'Speichern',
+      icon: '/static/images/icons/save.png',
+      handler: this.saveInputLircSettings
+    });
     
-    YaVDR.Remote.Help.superclass.initComponent.call(this);
-  }
-});
+    this.inputLircReload = new Ext.Button({
+      scope: this,    
+      disabled: true,
+      itemId: 'reload',
+      text: 'Empfänger neuladen',
+      icon: '/static/images/icons/refresh.png',
+      handler: this.reloadInputLircReceiver
+    });
+    
+    this.inputLircActive = new Ext.form.Radio({
+      name: 'active',
+      name: 'remotetype',
+      fieldLabel: 'Inputlirc aktivieren',
+      inputValue: 'inputlirc',
+      listeners: {
+        scope: this,
+        check: function(cb, checked) {
+          if(checked) {
+            this.lircActive.setValue(false);
+            this.irServerActive.setValue(false);
+            this.inputLircSave.enable();
+            this.inputLircReload.enable();
+            this.inputLircReceiver.enable();
+          } else {
+            this.inputLircSave.disable();
+            this.inputLircReload.disable();
+            this.inputLircReceiver.disable();
+          }
+        }
+      }
+    });
+    
+    this.inputLircReceiverStore= new Ext.data.ArrayStore({
+      fields: [
+        "path",
+        "description"
+      ],
+      sortInfo: {
+        field: 'description',
+        direction: 'ASC'
+      }
+    });
+    
+    this.inputLircReceiver = new Ext.form.ComboBox({
+      width: 400,
+      store: this.inputLircReceiverStore,
+      hiddenName: 'receiver_path',
+      valueField: 'path',
+      displayField:'description',
+      typeAhead: true,
+      forceSelection: true,
+      mode: "local",
+      triggerAction: 'all',
+      emptyText: getLL("inputlirc.combobox.emptytext"),
+      fieldLabel: getLL("inputlirc.combobox.label"),
+      selectOnFocus: true,
+      disabled: true
+    });
 
-YaVDR.Remote.Lirc = Ext.extend(Ext.FormPanel, {
-  title: 'LIRC',
-  labelWidth: 200,
-  bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
-  initComponent: function() {
-    this.driverStore = new Ext.data.ArrayStore({
+    this.inputLircPanel = new Ext.FormPanel({
+      itemId: 'inputlirc',
+      title: 'Inputlirc',
+      autoScroll: true,
+      labelWidth: 200,
+      bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
+      tbar: [
+        this.inputLircSave,
+        this.inputLircReload
+      ],
+      items: [
+        this.inputLircActive,
+        this.inputLircReceiver
+      ]
+    });
+  },
+  initIrServer: function() {
+    this.irServerSave = new Ext.Button({
+      scope: this,
+      disabled: true,
+      itemId: 'save',
+      text: 'Speichern',
+      icon: '/static/images/icons/save.png',
+      handler: this.saveIrServerSettings
+    });
+    
+    this.irServerActive = new Ext.form.Radio({
+      name: 'active',
+      name: 'remotetype',
+      fieldLabel: 'IRServer aktivieren',
+      inputValue: 'irserver',
+      listeners: {
+        scope: this,
+        check: function(cb, checked) {
+          if(checked) {
+            this.lircActive.setValue(false);
+            this.inputLircActive.setValue(false);
+            this.irServerSave.enable();
+          } else {
+            this.irServerSave.disable();
+          }
+        }
+      }
+    });
+
+    this.irServerPabel = new Ext.FormPanel({
+      itemId: 'irserver',
+      title: 'IRServer',
+      autoScroll: true,
+      labelWidth: 200,
+      bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
+      tbar: [this.irServerSave],
+      items: [this.irServerActive]
+    });
+  },
+  initHelp: function() {
+    this.helpPanel = new Ext.Panel({
+      autoScroll: true,
+      itemId: 'help',
+      title: 'Hilfe',
+      bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
+      html: '<p>' + getLL("remote.help") + '<br/>&nbsp;</p>' +
+        '<h2>Lirc</h2><p>' + getLL("lirc.help") + '<br/>&nbsp;</p>' +
+        '<h2>InputLirc</h2><p>' + getLL("inputlirc.help") + '<br/>&nbsp;</p>' +
+        '<h2>Irserver</h2><p>' + getLL("irserver.help") + '</p>'
+    });
+  },
+  initLirc: function() {
+    this.lircReceiverStore = new Ext.data.ArrayStore({
       fields: [
         "id",
         "description",
@@ -51,10 +221,9 @@ YaVDR.Remote.Lirc = Ext.extend(Ext.FormPanel, {
       }
     });
     
-    
-    this.driver = new Ext.form.ComboBox({
+    this.lircDriver = new Ext.form.ComboBox({
       itemId: 'driver',
-      tpl2: '<tpl for="."><div ext:qtip="' + 
+      tpl: '<tpl for="."><div ext:qtip="' + 
         getLL("lirc.combobox.tooltip.driver") + 
         ': {driver}<br/'+'>' + 
         getLL("lirc.combobox.tooltip.lirc_driver") + 
@@ -69,7 +238,7 @@ YaVDR.Remote.Lirc = Ext.extend(Ext.FormPanel, {
       typeAhead: true,
       forceSelection: true,
       mode: "local",
-      store: this.driverStore,
+      store: this.lircReceiverStore,
       triggerAction: 'all',
       emptyText: getLL("lirc.combobox.emptytext"),
       fieldLabel: getLL("lirc.combobox.label"),
@@ -77,89 +246,98 @@ YaVDR.Remote.Lirc = Ext.extend(Ext.FormPanel, {
       disabled: true
     });
     
-    this.serialPort = new Ext.form.RadioGroup({
-        itemId: 'serial_port',
-        name: 'serial_port',
-        columns: 1,
-        fieldLabel: getLL("lirc.serial_radiogroup.label"),
-        items: [
-            {boxLabel: getLL("lirc.serial_radiogroup.boxlabel_none"), name: 'serial_port', inputValue: ''},
-            {boxLabel: '/dev/ttyS0', name: 'serial_port', inputValue: '/dev/ttyS0'},
-            {boxLabel: '/dev/ttyS1', name: 'serial_port', inputValue: '/dev/ttyS1'}
-        ],
-        disabled: true
+        
+    this.lircSerialPort = new Ext.form.RadioGroup({
+      itemId: 'serial_port',
+      name: 'serial_port',
+      columns: 1,
+      fieldLabel: getLL("lirc.serial_radiogroup.label"),
+      items: [
+        {boxLabel: getLL("lirc.serial_radiogroup.boxlabel_none"), name: 'serial_port', inputValue: ''},
+        {boxLabel: '/dev/ttyS0', name: 'serial_port', inputValue: '/dev/ttyS0'},
+        {boxLabel: '/dev/ttyS1', name: 'serial_port', inputValue: '/dev/ttyS1'}
+      ],
+      disabled: true
     });
     
-    this.active = new Ext.form.Checkbox({
+    this.lircSave = new Ext.Button({
+      scope: this,
+      disabled: true,
+      itemId: 'save',
+      text: 'Speichern',
+      icon: '/static/images/icons/save.png',
+      handler: this.saveLircSettings
+    })
+    
+    this.lircActive = new Ext.form.Radio({
       name: 'active',
+      name: 'remotetype',
+      inputValue: 'lircd',
       fieldLabel: 'LIRC aktivieren',
       listeners: {
-          scope: this,
-          check: function(cb, checked) {
-            if(checked) {
-              this.driver.enable();
-              this.serialPort.enable();
-            } else {
-              this.serialPort.disable();
-              this.driver.disable();
-            }
+        scope: this,
+        check: function(cb, checked) {
+          if(checked) {
+            this.inputLircActive.setValue(false);
+            this.irServerActive.setValue(false);
+            this.lircSave.enable();
+            this.lircSerialPort.enable();
+            this.lircDriver.enable();
+          } else {
+            this.lircSave.disable();
+            this.lircSerialPort.disable();
+            this.lircDriver.disable();
           }
         }
+      }
     });
     
-    this.items = [
-      {
-        xtype: 'hidden',
-        name: 'remotetype',
-        value: 'lircd'
-      },
-      this.active,
-      this.driver,
-      this.serialPort
-    ];
-    
-    this.tbar = [
-      {
-        scope: this,
-        itemId: 'save',
-        text: 'Speichern',
-        icon: '/static/images/icons/save.png',
-        handler: this.saveSettings
-      }
-    ];
-    
-    YaVDR.Remote.Lirc.superclass.initComponent.call(this);
-    
-    this.driver.on('enable', function(field) {
-      field.setValue(this.lircData.current_receiver);
-    }, this);
-    this.driver.on('disable', function(field) {
-      field.setValue('');
-    }, this);
-    this.serialPort.on('enable', function(field) {
-      field.setValue(this.lircData.current_serial_port);
-    }, this);
-    this.serialPort.on('disable', function(field) {
-      field.setValue('');
-    }, this);
-    
-    this.on('render', this.loadData, this);
+    this.lircPanel = new Ext.FormPanel({
+      autoScroll: true,
+      title: 'LIRC',
+      labelWidth: 200,
+      bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
+      tbar: [this.lircSave],
+      items: [
+        this.lircActive,
+        this.lircDriver,
+        this.lircSerialPort
+      ]
+    });
   },
-  loadData: function () {
-    Ext.Ajax.request({
-      url: 'get_lirchwdb',
-      timeout: 3000,
-      method: 'GET',
+  
+  saveInputLircSettings: function() {
+    this.inputLircPanel.getForm().submit({
+      url: 'set_inputlirc',
+      waitMsg: getLL("inputlirc.submit.waitmsg"),
+      waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope: this,
-      success: function(xhr) {
-        this.lircData = Ext.decode(xhr.responseText);
-        this.driverStore.loadData(this.lircData.receiverlist);
-        this.active.setValue(this.lircData.current_receiver > 0);
+      success: function (form, action) {
+        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("inputlirc.submit.success"));
+      },
+      failure:function(form, action) {
+        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("inputlirc.submit.failure"));
       }
-    });
+    })
   },
-  saveSettings: function() {
-    this.getForm().submit({
+  
+  saveIrServerSettings: function() {
+    this.irServerPabel.getForm().submit({
+      url: 'set_irserver',
+      waitMsg: getLL("irserver.submit.waitmsg"),
+      waitTitle: getLL("standardform.messagebox_caption.wait"),
+      scope: this,
+      success: function (form, action) {
+        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("irserver.submit.success"));
+      },
+      failure:function(form, action) {
+        Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("irserver.submit.failure"));
+      }
+    })
+  },
+  
+  saveLircSettings: function() {
+    this.lircPanel.getForm().submit({
       url: 'set_lirchw',
       waitMsg: getLL("lirc.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
@@ -168,26 +346,9 @@ YaVDR.Remote.Lirc = Ext.extend(Ext.FormPanel, {
         Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("lirc.submit.success"));
       },
       failure:function(form, action) {
-        console.log(action);
         Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("lirc.submit.failure"));
       }
     })
-  }
-});
-
-YaVDR.Remote.InputLirc = Ext.extend(Ext.FormPanel, {
-  title: 'Inputlirc',
-  bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
-  initComponent: function() {
-    YaVDR.Remote.InputLirc.superclass.initComponent.call(this);
-  }
-});
-
-YaVDR.Remote.IrServer = Ext.extend(Ext.FormPanel, {
-  title: 'IRServer',
-  bodyStyle: 'background-color: #DFE8F6;',
-  initComponent: function() {
-    YaVDR.Remote.IrServer.superclass.initComponent.call(this);
   }
 });
 
