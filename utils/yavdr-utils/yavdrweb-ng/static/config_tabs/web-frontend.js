@@ -82,7 +82,7 @@ YaVDR.WebFrontend = Ext.extend(YaVDR.BaseFormPanel, {
   },
   saveSelection: function() {
     this.getForm().submit({
-      url: 'set_hdf_value?key=webfrontend.language',
+      url: '/admin/set_hdf_value?key=webfrontend.language',
       waitMsg: getLL("webfrontend.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope:this,

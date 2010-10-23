@@ -35,7 +35,7 @@ function getChannelsForm(){
     var channellist_store = new Ext.data.GroupingStore({
         autoDestroy: true,
         autoLoad: false,
-        url: 'get_svdrp_response?command=LSTC',
+        url: '/admin/get_svdrp_response?command=LSTC',
         storeId: 'channellist_store',
         groupField: '_group',
         reader: channellist_reader
@@ -139,7 +139,7 @@ function getChannelsForm(){
                         if (typeof(record) == "object" ){
                             var channelNr = parseInt( record.get("_num"), 10);
                             Ext.Ajax.request({
-                                url: 'get_svdrp_response?command=CHAN&param1='+channelNr,
+                                url: '/admin/get_svdrp_response?command=CHAN&param1='+channelNr,
                                 timeout: 3000,
                                 method: 'GET',
                                 scope: this,
@@ -241,7 +241,7 @@ function getChannelsForm(){
         //scope: this,
         handler: function() {
         myform.form.submit({
-            url: 'set_x11_resolution',
+            url: '/admin/set_x11_resolution',
             waitMsg:'Bildschirm-Settings werden gespeichert.',
             scope:this
             //success:this.onSuccess,

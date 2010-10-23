@@ -96,7 +96,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
   },
   saveSelection: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=change-shutdown',
+      url: '/admin/set_signal?signal=change-shutdown',
       timeout: 60, //wait 60 seconds before telling it failed
       waitMsg: getLL("shutdown.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
@@ -111,7 +111,7 @@ YaVDR.Shutdown = Ext.extend(YaVDR.BaseFormPanel, {
   },
   disableUnavailables: function() {
     Ext.Ajax.request({
-      url: 'get_file_content?file=/proc/acpi/sleep&puretext=true',
+      url: '/admin/get_file_content?file=/proc/acpi/sleep&puretext=true',
       timeout: 3000,
       method: 'GET',
       scope: this,

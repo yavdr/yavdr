@@ -117,7 +117,7 @@ YaVDR.Diagnose.Item =  Ext.extend(Ext.Panel, {
       }
     ];
     
-    this.autoLoad = this.cmd + '?puretext=true&' + (this.cmd === 'get_file_content' ? 'file' : 'command') + '=' + this.file
+    this.autoLoad = /admin/ + this.cmd + '?puretext=true&' + (this.cmd === 'get_file_content' ? 'file' : 'command') + '=' + this.file
 
     YaVDR.Diagnose.Item.superclass.initComponent.call(this);
   },

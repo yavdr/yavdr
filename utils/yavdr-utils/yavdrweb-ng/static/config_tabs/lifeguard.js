@@ -59,7 +59,7 @@ YaVDR.VdrLiveGuard = Ext.extend(YaVDR.BaseFormPanel, {
   },
   saveSelection: function() {
     this.getForm().submit({
-      url : 'set_signal?signal=change-lifeguard',
+      url : '/admin/set_signal?signal=change-lifeguard',
       timeout : 30, // wait 30 seconds before telling it failed
       waitMsg : getLL("lifeguard.submit.waitmsg"),
       waitTitle : getLL("standardform.messagebox_caption.wait"),
@@ -157,7 +157,7 @@ function getVDRLifeguardForm() {
 		// scope: this,
 		handler : function() {
 			myform.form.submit( {
-				url : 'set_signal?signal=change-lifeguard',
+				url : '/admin/set_signal?signal=change-lifeguard',
 				timeout : 30, // wait 30 seconds before telling it failed
 				waitMsg : getLL("lifeguard.submit.waitmsg"),
 				waitTitle : getLL("standardform.messagebox_caption.wait"),
@@ -177,7 +177,7 @@ function getVDRLifeguardForm() {
 	});
 
 	Ext.Ajax.request( {
-		url : 'get_hdf_value?hdftree=vdr.plugin.lifeguard.enable',
+		url : '/admin/get_hdf_value?hdftree=vdr.plugin.lifeguard.enable',
 		timeout : 3000,
 		method : 'GET',
 		scope : myform,

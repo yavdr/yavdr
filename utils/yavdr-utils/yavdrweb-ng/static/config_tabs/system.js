@@ -34,7 +34,7 @@ YaVDR.Commands = Ext.extend(YaVDR.BaseFormPanel, {
   },
   stopVdr: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=stop_vdr',
+      url: '/admin/set_signal?signal=stop_vdr',
       waitMsg:'Das Signal zum Stoppen des VDR wird abgesetzt.',
       scope: this,
       success: function (form, action) {
@@ -47,7 +47,7 @@ YaVDR.Commands = Ext.extend(YaVDR.BaseFormPanel, {
   },
   restartVdr: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=restart-vdr',
+      url: '/admin/set_signal?signal=restart-vdr',
       waitMsg: getLL("system.vdr_restart.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope: this,
@@ -61,7 +61,7 @@ YaVDR.Commands = Ext.extend(YaVDR.BaseFormPanel, {
   },
   killXBMC: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=kill-xbmc',
+      url: '/admin/set_signal?signal=kill-xbmc',
       waitMsg: getLL("system.kill_xbmc.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope: this,
@@ -75,7 +75,7 @@ YaVDR.Commands = Ext.extend(YaVDR.BaseFormPanel, {
   },
   restartSystem: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=reboot',
+      url: '/admin/set_signal?signal=reboot',
       waitMsg: getLL("system.system_restart.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope: this,

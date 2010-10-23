@@ -104,7 +104,7 @@ YaVDR.ConfigEditor = Ext.extend(YaVDR.BaseFormPanel, {
   },
   saveContent: function() {
     this.getForm().submit({
-      url: 'set_file_content?file=' + this.file,
+      url: '/admin/set_file_content?file=' + this.file,
       waitMsg: getLL("upload.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope: this,

@@ -103,7 +103,7 @@ YaVDR.Packages = Ext.extend(YaVDR.BasePanel, {
   },
   initPackagesStore: function() {
     this.packagesStore = new Ext.data.JsonStore({
-      url: 'get_packages',
+      url: '/admin/get_packages',
       idProperty: 'Package',
       fields: ['id', 'Package', 'Version', 'Description', 'Maintainer', 'installed' ],
       sortInfo: {

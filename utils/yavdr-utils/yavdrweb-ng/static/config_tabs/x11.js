@@ -86,7 +86,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
   },
   saveSettings: function() {
     this.getForm().submit({
-      url: 'set_x11',
+      url: '/admin/set_x11',
       timeout: 30, //wait 30 seconds before telling it failed
       waitMsg: getLL("x11.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
@@ -273,7 +273,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
   },
   loadSettings: function() {
     Ext.Ajax.request({
-        url: 'get_x11',
+        url: '/admin/get_x11',
         timeout: 3000,
         method: 'GET',
         scope: this,

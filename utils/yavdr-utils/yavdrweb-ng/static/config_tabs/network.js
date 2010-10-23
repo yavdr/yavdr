@@ -80,7 +80,7 @@ YaVDR.Network.Nfs = Ext.extend(Ext.grid.GridPanel, {
     ];
   
     this.store = new Ext.data.Store({
-      url: 'get_autofs_config?cmd=mounts',
+      url: '/admin/get_autofs_config?cmd=mounts',
       reader: new Ext.data.ArrayReader({}, Ext.data.Record.create([{name: 'netspec'}])) 
     });
     
@@ -103,7 +103,7 @@ YaVDR.Network.Nfs = Ext.extend(Ext.grid.GridPanel, {
     
     Ext.Ajax.request({
       scope: this,
-      url: 'set_autofs_config',
+      url: '/admin/set_autofs_config',
       timeout: 10000,
       method:  'GET',
       params: params,

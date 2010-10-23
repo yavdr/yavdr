@@ -1,6 +1,8 @@
 YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
   data: {},
   deferredRender: false,
+  autoScroll: true,
+  bodyStyle: 'background-color: #DFE8F6;',
   initComponent: function() {
     this.initHelp();
     this.initLirc();
@@ -34,7 +36,7 @@ YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
   },
   loadData: function () {
     Ext.Ajax.request({
-      url: 'get_lirchwdb',
+      url: '/admin/get_lirchwdb',
       timeout: 3000,
       method: 'GET',
       scope: this,
@@ -54,7 +56,7 @@ YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
   },
   reloadInputLircReceiver: function() {
     Ext.Ajax.request({
-      url: 'get_inputlirc',
+      url: '/admin/get_inputlirc',
       timeout: 3000,
       method: 'GET',
       scope: this,
@@ -141,7 +143,7 @@ YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
     this.inputLircPanel = new Ext.FormPanel({
       itemId: 'inputlirc',
       title: 'Inputlirc',
-      autoScroll: true,
+      autoHeight: true,
       labelWidth: 200,
       bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
       tbar: [
@@ -186,7 +188,7 @@ YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
     this.irServerPabel = new Ext.FormPanel({
       itemId: 'irserver',
       title: 'IRServer',
-      autoScroll: true,
+      autoHeight: true,
       labelWidth: 200,
       bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
       tbar: [this.irServerSave],
@@ -293,7 +295,7 @@ YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
     });
     
     this.lircPanel = new Ext.FormPanel({
-      autoScroll: true,
+      autoHeight: true,
       title: 'LIRC',
       labelWidth: 200,
       bodyStyle: 'background-color: #DFE8F6; padding: 10px;',
@@ -308,7 +310,7 @@ YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
   
   saveInputLircSettings: function() {
     this.inputLircPanel.getForm().submit({
-      url: 'set_inputlirc',
+      url: '/admin/set_inputlirc',
       waitMsg: getLL("inputlirc.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope: this,
@@ -323,7 +325,7 @@ YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
   
   saveIrServerSettings: function() {
     this.irServerPabel.getForm().submit({
-      url: 'set_irserver',
+      url: '/admin/set_irserver',
       waitMsg: getLL("irserver.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope: this,
@@ -338,7 +340,7 @@ YaVDR.Remote = Ext.extend(YaVDR.BaseTabPanel, {
   
   saveLircSettings: function() {
     this.lircPanel.getForm().submit({
-      url: 'set_lirchw',
+      url: '/admin/set_lirchw',
       waitMsg: getLL("lirc.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
       scope: this,

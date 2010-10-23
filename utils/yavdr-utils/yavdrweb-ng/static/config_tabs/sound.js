@@ -95,7 +95,7 @@ YaVDR.SoundSettings = Ext.extend(YaVDR.BaseFormPanel, {
   },
   saveSelection: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=change-sound',
+      url: '/admin/set_signal?signal=change-sound',
       timeout: 30, //wait 30 seconds before telling it failed
       waitMsg: getLL("sound.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),

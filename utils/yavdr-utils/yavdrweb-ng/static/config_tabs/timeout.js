@@ -32,7 +32,7 @@ YaVDR.Grub = Ext.extend(YaVDR.BaseFormPanel, {
   },
   saveData: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=change-timeout',
+      url: '/admin/set_signal?signal=change-timeout',
       timeout: 30, //wait 30 seconds before telling it failed
       waitMsg: getLL("timeout.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),

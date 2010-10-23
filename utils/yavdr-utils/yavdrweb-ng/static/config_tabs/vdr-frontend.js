@@ -91,7 +91,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
   },
   loadCurrentSelection: function() {
     Ext.Ajax.request({
-      url: 'get_hdf_value?hdfpaths=vdr.frontend&hdfpaths=system.x11.dualhead.enabled&hdfpaths=vdr.plugin.graphtft.enabled',
+      url: '/admin/get_hdf_value?hdfpaths=vdr.frontend&hdfpaths=system.x11.dualhead.enabled&hdfpaths=vdr.plugin.graphtft.enabled',
       timeout: 3000,
       method: 'GET',
       scope: this,
@@ -123,7 +123,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
   },
   switchScreen: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=change-display',
+      url: '/admin/set_signal?signal=change-display',
       timeout: 30, //wait 30 seconds before telling it failed
       waitMsg: getLL("x11.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),
@@ -138,7 +138,7 @@ YaVDR.VdrFrontend = Ext.extend(YaVDR.BaseFormPanel, {
   },
   activateSelection: function() {
     this.getForm().submit({
-      url: 'set_signal?signal=change-frontend',
+      url: '/admin/set_signal?signal=change-frontend',
       timeout: 30, //wait 30 seconds before telling it failed
       waitMsg: getLL("frontend.submit.waitmsg"),
       waitTitle: getLL("standardform.messagebox_caption.wait"),

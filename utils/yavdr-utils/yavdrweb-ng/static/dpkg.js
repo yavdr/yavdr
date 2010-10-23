@@ -15,9 +15,9 @@ YaVDR.DPKG = Ext.extend(Ext.Window, {
   initComponent: function() {
 
     if (this.command == 'install' || this.command == 'remove') {
-      var url = 'dpkg?command=' + this.command + '&package=' + this.package + '&ts=' + ((new Date()).getTime());
+      var url = '/admin/dpkg?command=' + this.command + '&package=' + this.package + '&ts=' + ((new Date()).getTime());
     } else {
-      var url = 'dpkg?command=' + this.command + '&ts=' + ((new Date()).getTime());
+      var url = '/admin/dpkg?command=' + this.command + '&ts=' + ((new Date()).getTime());
     }
         
     this.iframe = new Ext.ux.ManagedIFrame.Panel({
@@ -118,7 +118,7 @@ Ext.apply(YaVDR.DPKG, {
       fn: function(buttonId, text, opt) {
         if (buttonId == "yes") {
           Ext.Ajax.request({
-            url: 'set_signal?signal=change-plugin&signal_params=enable ' + package,
+            url: '/admin/set_signal?signal=change-plugin&signal_params=enable ' + package,
             waitMsg: getLL("nvidia.submit.waitmsg"),
             timeout: 3000,
             method: 'GET',
@@ -144,7 +144,7 @@ Ext.apply(YaVDR.DPKG, {
       fn: function(button) {
         if (button == "yes") {
           Ext.Ajax.request({
-            url: 'set_signal?signal=change-plugin&signal_params=disable ' + package,
+            url: '/admin/set_signal?signal=change-plugin&signal_params=disable ' + package,
             waitMsg: getLL("nvidia.submit.waitmsg"),
             timeout: 3000,
             method: 'GET',

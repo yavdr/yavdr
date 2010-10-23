@@ -4,7 +4,7 @@ Ext.apply(YaVDR, {
   // Todo Error Handling
   getHdfValue: function(key, callback, scope) {
     Ext.Ajax.request({
-      url: 'get_hdf_value?hdfpath=' + key,
+      url: '/admin/get_hdf_value?hdfpath=' + key,
       timeout: 3000,
       method: 'GET',
       scope: scope,
@@ -17,12 +17,11 @@ Ext.apply(YaVDR, {
   // Todo Error Handling
   getHdfTree: function(key, callback, scope) {
     Ext.Ajax.request({
-      url: 'get_hdf_value?hdftree=' + key,
+      url: '/admin/get_hdf_value?hdftree=' + key,
       timeout: 3000,
       method: 'GET',
       scope: scope,
       success: function(xhr) {
-        console.log(xhr.responseText);
         var value = Ext.decode(xhr.responseText);
         callback.call(this, value);
       }
@@ -37,7 +36,7 @@ Ext.apply(YaVDR, {
     });
     
     Ext.Ajax.request({
-      url: 'get_file_content?file='+file+'&puretext=' + (options.puretext ? 'true' : 'false'),
+      url: '/admin/get_file_content?file='+file+'&puretext=' + (options.puretext ? 'true' : 'false'),
       timeout: 3000,
       method: 'GET',
       scope: scope,
