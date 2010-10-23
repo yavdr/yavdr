@@ -53,6 +53,14 @@ YaVDR.ConfigEditor = Ext.extend(YaVDR.BaseFormPanel, {
         scope: this,
         text: 'Neuladen',
         handler: this.reloadContent
+      },
+      {
+        itemId: 'mask',
+        disabled: true,
+        icon: '/static/images/icons/selection.png',
+        scope: this,
+        text: 'Markiere Inhalt',
+        handler: this.maskContent
       }
     ];
     
@@ -71,6 +79,9 @@ YaVDR.ConfigEditor = Ext.extend(YaVDR.BaseFormPanel, {
     YaVDR.ConfigEditor.superclass.initComponent.call(this);
     this.loadMask = new Ext.LoadMask(Ext.getBody(), { msg:"Please wait..." });
   },
+  maskContent: function() {
+    this.getComponent('editor').selectText(0);
+  },
   showLoadMask: function() {
     this.loadMask.show();
   },
@@ -83,6 +94,7 @@ YaVDR.ConfigEditor = Ext.extend(YaVDR.BaseFormPanel, {
       this.getComponent('editor').setValue(content).enable();
       this.getTopToolbar().getComponent('save').enable();
       this.getTopToolbar().getComponent('reload').enable();
+      this.getTopToolbar().getComponent('mask').enable();
       this.hideLoadMask();
     }, this);
   },
