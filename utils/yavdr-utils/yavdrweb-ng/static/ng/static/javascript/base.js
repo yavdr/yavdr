@@ -34,10 +34,12 @@ Ext.apply(YaVDR, {
   registerComponent: function(component, section) {
     var tbar = Ext.getCmp('yavdr-body').getTopToolbar();
     var title = (new component).title;
+    var itemId = (new component).itemId;
     if (section) {
       var menu = tbar.getComponent(section).menu;
       menu.add({
         text: title,
+        itemId: itemId,
         scope: component,
         handler: function() {
           YaVDR.openComponent(this);
@@ -45,6 +47,7 @@ Ext.apply(YaVDR, {
       });
     } else {
       tbar.add({
+        itemId: itemId,
         text: ' ' + title + ' ',
         scope: component,
         handler: function() {
@@ -59,7 +62,8 @@ Ext.apply(YaVDR, {
   openComponent: function(component) {
     var panel = new component;
     Ext.getCmp('yavdr-content').add(panel);
-    Ext.getCmp('yavdr-content').activate(panel);
+    Ext.getCmp('yavdr-content').getLayout().setActiveItem(panel.itemId);
+//    Ext.getCmp('yavdr-content').activate(panel);
   }
 });
 
@@ -93,12 +97,15 @@ YaVDR.Body = Ext.extend(Ext.Panel, {
     ];
 
     this.items = [
-      new Ext.TabPanel({
+      //new Ext.TabPanel({
+      new Ext.Panel({
         id: 'yavdr-content',
         border: false,
-        activeTab: 0,
-        plugins: new Ext.ux.TabCloseMenu(),
-        enableTabScroll:true,
+        activeItem: 0,
+        // activeTab: 0,
+        layout: 'card',
+        //plugins: new Ext.ux.TabCloseMenu(),
+        //enableTabScroll:true,
         defaults: {
           autoScroll: true
         },
@@ -150,7 +157,8 @@ YaVDR.Component.Legacy = Ext.extend(YaVDR.Component, {
       panel.anchor = '100%'
     }
 
-    this.padding = 10;
+    this.header = false;
+    this.padding = 5;
     this.items = panel;
     YaVDR.Component.Legacy.superclass.initComponent.call(this);
   }

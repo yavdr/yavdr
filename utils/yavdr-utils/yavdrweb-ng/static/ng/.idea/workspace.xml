@@ -23,16 +23,48 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="base.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/javascript/base.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="101" selection-start="2724" selection-end="2724" vertical-scroll-proportion="0.35582823">
+            <state line="158" column="26" selection-start="3481" selection-end="3506" vertical-scroll-proportion="-19.2">
               <folding>
-                <marker date="1287866287000" expanded="true" signature="1499:1712" placeholder="{...}" />
-                <marker date="1287866287000" expanded="true" signature="1853:1945" placeholder="{...}" />
-                <marker date="1287866287000" expanded="true" signature="5831:5876" placeholder="{...}" />
-                <marker date="1287866287000" expanded="true" signature="5925:8036" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="35:1658" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="81:303" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="153:246" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="262:296" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="765:1413" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="921:1153" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="988:1145" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="1089:1137" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="1159:1409" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="1176:1345" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="1289:1337" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="1363:1401" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="1452:1656" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="2541:2579" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="2596:2647" placeholder="[...]" />
+                <marker date="1287873378000" expanded="true" signature="3650:3701" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="3755:3898" placeholder="{...}" />
+                <marker date="1287873378000" expanded="true" signature="3862:3896" placeholder="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lirc.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/lirc.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="24" selection-start="214" selection-end="214" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="system_infos.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/system_infos.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="24" selection-start="231" selection-end="231" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -40,34 +72,25 @@
       <file leaf-file-name="dpkg.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/dpkg.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="29" selection-start="0" selection-end="764" vertical-scroll-proportion="0.0">
+            <state line="5" column="31" selection-start="155" selection-end="202" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yavdr.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/yavdr.js">
+      <file leaf-file-name="system_logs.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/system_logs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="12" selection-start="666" selection-end="666" vertical-scroll-proportion="0.0">
+            <state line="7" column="24" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="recordings.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/javascript/component/recordings.js">
+      <file leaf-file-name="vdr.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/vdr.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="30" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="programm.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/javascript/component/programm.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="0" selection-end="204" vertical-scroll-proportion="0.0">
+            <state line="7" column="24" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -76,60 +99,35 @@
       <file leaf-file-name="x11.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/x11.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="55" selection-start="0" selection-end="969" vertical-scroll-proportion="0.0">
+            <state line="7" column="24" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lirc.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/lirc.js">
+      <file leaf-file-name="xbmc_logs.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/xbmc_logs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="31" selection-start="0" selection-end="795" vertical-scroll-proportion="0.0">
+            <state line="7" column="24" selection-start="218" selection-end="218" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/javascript/base.js">
+      <file leaf-file-name="yavdr.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/yavdr.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="148" column="68" selection-start="3204" selection-end="3204" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1287865442000" expanded="true" signature="35:1494" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="81:303" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="153:246" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="262:296" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="765:1324" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="880:1088" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="947:1080" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="1024:1072" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="1094:1320" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="1111:1256" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="1200:1248" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="1274:1312" placeholder="{...}" />
-                <marker date="1287865442000" expanded="true" signature="1363:1492" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shutdown.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/javascript/component/vdr/shutdown.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="67" selection-start="67" selection-end="67" vertical-scroll-proportion="0.0">
+            <state line="7" column="24" selection-start="209" selection-end="209" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="dashboard.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/javascript/component/dashboard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="16" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1287865261000" expanded="true" signature="620:1068" placeholder="{...}" />
-              </folding>
+            <state line="45" column="36" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.9004525">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -144,22 +142,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/static/javascript/component/system/network.js" />
         <option value="$PROJECT_DIR$/static/javascript/component/diagnose/system_logfiles.js" />
-        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/system_logs.js" />
         <option value="$PROJECT_DIR$/static/javascript/component/diagnose/system_informations.js" />
         <option value="$PROJECT_DIR$/static/javascript/component/diagnose/xbmc.js" />
-        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/lirc.js" />
-        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/system_infos.js" />
-        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/vdr.js" />
-        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/x11.js" />
-        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/dpkg.js" />
         <option value="$PROJECT_DIR$/static/javascript/component/vdr/shutdown.js" />
-        <option value="$PROJECT_DIR$/static/javascript/component/dashboard.js" />
-        <option value="$PROJECT_DIR$/static/javascript/base.js" />
-        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/yavdr.js" />
         <option value="$PROJECT_DIR$/static/javascript/component/recordings.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/static/javascript/base.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/dpkg.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/lirc.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/system_infos.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/system_logs.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/vdr.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/x11.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/xbmc_logs.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/diagnose/yavdr.js" />
+        <option value="$PROJECT_DIR$/static/javascript/component/dashboard.js" />
       </list>
     </option>
   </component>
@@ -361,6 +359,7 @@
     <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <configuration useDefault="true">$USER_HOME$/.subversion_IDEA</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="TaskManager">
@@ -373,13 +372,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="-3" width="1444" height="872" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -424,109 +423,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/system/network.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="16" selection-start="86" selection-end="86" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/system/config_editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="190" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/system_logs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="41" selection-start="0" selection-end="951" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/system_infos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="36" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/vdr.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="32" selection-start="722" selection-end="722" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/xbmc_logs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="38" selection-start="0" selection-end="850" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/lirc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="31" selection-start="0" selection-end="795" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/x11.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="55" selection-start="0" selection-end="969" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/dpkg.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="29" selection-start="0" selection-end="764" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/javascript/component/vdr/shutdown.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="67" selection-start="67" selection-end="67" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="16" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1287865261000" expanded="true" signature="620:1068" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/base.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="148" column="68" selection-start="3204" selection-end="3204" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1287865442000" expanded="true" signature="35:1494" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="81:303" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="153:246" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="262:296" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="765:1324" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="880:1088" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="947:1080" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="1024:1072" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="1094:1320" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="1111:1256" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="1200:1248" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="1274:1312" placeholder="{...}" />
-            <marker date="1287865442000" expanded="true" signature="1363:1492" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/yavdr.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="12" selection-start="666" selection-end="666" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -547,13 +446,109 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="101" selection-start="2724" selection-end="2724" vertical-scroll-proportion="0.35582823">
+        <state line="74" column="44" selection-start="3663" selection-end="3663" vertical-scroll-proportion="-18.416666">
           <folding>
             <marker date="1287866287000" expanded="true" signature="1499:1712" placeholder="{...}" />
             <marker date="1287866287000" expanded="true" signature="1853:1945" placeholder="{...}" />
             <marker date="1287866287000" expanded="true" signature="5831:5876" placeholder="{...}" />
             <marker date="1287866287000" expanded="true" signature="5925:8036" placeholder="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/system/grub.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="8" selection-start="75" selection-end="75" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/base.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="158" column="26" selection-start="3481" selection-end="3506" vertical-scroll-proportion="-19.2">
+          <folding>
+            <marker date="1287873378000" expanded="true" signature="35:1658" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="81:303" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="153:246" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="262:296" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="765:1413" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="921:1153" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="988:1145" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="1089:1137" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="1159:1409" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="1176:1345" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="1289:1337" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="1363:1401" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="1452:1656" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="2541:2579" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="2596:2647" placeholder="[...]" />
+            <marker date="1287873378000" expanded="true" signature="3650:3701" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="3755:3898" placeholder="{...}" />
+            <marker date="1287873378000" expanded="true" signature="3862:3896" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/dpkg.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="31" selection-start="155" selection-end="202" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/lirc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="214" selection-end="214" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/system_infos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="231" selection-end="231" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/system_logs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/vdr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/x11.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/xbmc_logs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="218" selection-end="218" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/diagnose/yavdr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="209" selection-end="209" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascript/component/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="36" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.9004525">
+          <folding />
         </state>
       </provider>
     </entry>

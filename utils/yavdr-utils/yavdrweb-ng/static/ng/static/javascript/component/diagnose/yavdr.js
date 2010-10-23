@@ -4,7 +4,8 @@ YaVDR.Component.Diagnose.YaVDR = Ext.extend(YaVDR.Component, {
   title: 'yaVDR-Utils',
   initComponent: function() {
 
-    this.padding = 10;
+    this.padding = 5;
+    this.header = false;
     this.items = new Ext.Panel({
       layout: 'fit',
       title: this.title,

@@ -4,7 +4,8 @@ YaVDR.Component.Diagnose.SystemInfos = Ext.extend(YaVDR.Component, {
   title: 'System-Informationen',
   initComponent: function() {
 
-    this.padding = 10;
+    this.padding = 5;
+    this.header = false;
     this.items = new Ext.Panel({
       layout: 'fit',
       title: this.title,
