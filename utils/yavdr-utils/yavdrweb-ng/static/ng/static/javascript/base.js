@@ -30,7 +30,8 @@ Ext.apply(YaVDR, {
   },
   registerComponent: function(component, section) {
     var tbar = Ext.getCmp('yavdr-menu');
-    var title = (new component).title;
+    var title = (new component).menuTitle;
+    if(!title) title = (new component).title;
     var itemId = (new component).itemId;
     var iconCls = (new component).iconCls;
     if (section) {
@@ -65,7 +66,7 @@ Ext.apply(YaVDR, {
 });
 
 YaVDR.Header = Ext.extend(Ext.Panel, {
-  height: 52,
+  height: 56,
   style: "background: #000 url('static/images/yavdr.gif') no-repeat right center;",
   region: 'north',
   border: false,
@@ -74,20 +75,25 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
   cls: 'yavdr-menu',
   baseCls:'x-plain',
   layoutConfig: {
-    padding:'10 5 0 5'
+    align: 'middle',
+    padding:'0 5 0 5'
   },
   defaults: {
     iconAlign: 'center',
-    scale: 'large',
     xtype:'button',
-    margins:'0 5 0 0'
+    margins:'5 5 0 0'
   },
   initComponent: function() {
 
 
     this.items = [
       {
-        icon: '/icons/tango/32x32/actions/gtk-home.png',
+        height: 50,
+        width: 50,
+        margins:'5 15 0 0',
+        cls: 'x-btn-menu',
+        scale: 'larger',
+        icon: 'static/images/menu_home.png',
         handler: function() {
           YaVDR.openComponent(YaVDR.Component.Dashboard)
         }
@@ -145,8 +151,7 @@ YaVDR.Viewport = Ext.extend(Ext.Viewport, {
 });
 
 YaVDR.Component = Ext.extend(Ext.Panel, {
-  border: false,
-  closable: true
+  border: false
 });
 
 Ext.ns('YaVDR.Component.VDR');
