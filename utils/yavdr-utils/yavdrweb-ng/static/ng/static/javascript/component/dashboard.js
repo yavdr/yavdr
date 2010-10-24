@@ -1,11 +1,14 @@
 YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
   itemId: 'dashboard',
   title: 'Dashboard',
+  iconCls: 'dashboard-icon',
   closable: false,
+  border: true,
+  frame: true,
   layout:'column',
   initComponent: function() {
 
-    this.padding = 5;
+    //this.padding = 5;
     this.items = [
 
       {

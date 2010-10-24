@@ -11,12 +11,13 @@ Ext.apply(YaVDR, {
     tbar.doLayout();
 
   },
-  registerCommand: function(title, func, section) {
+  registerCommand: function(title, func, section, iconCls) {
     var tbar = Ext.getCmp('yavdr-menu');
     if (section) {
       var menu = tbar.getComponent(section).menu;
       menu.add({
         text: title,
+        iconCls: iconCls,
         handler: func
       });
     } else {
@@ -31,10 +32,12 @@ Ext.apply(YaVDR, {
     var tbar = Ext.getCmp('yavdr-menu');
     var title = (new component).title;
     var itemId = (new component).itemId;
+    var iconCls = (new component).iconCls;
     if (section) {
       var menu = tbar.getComponent(section).menu;
       menu.add({
         text: title,
+        iconCls: iconCls,
         itemId: itemId,
         scope: component,
         handler: function() {
@@ -44,6 +47,7 @@ Ext.apply(YaVDR, {
     } else {
       tbar.add({
         itemId: itemId,
+        // iconCls: iconCls,
         text: title,
         scope: component,
         handler: function() {
@@ -60,42 +64,75 @@ Ext.apply(YaVDR, {
   }
 });
 
-YaVDR.Header = Ext.extend(Ext.Container, {
-  height: 60,
+YaVDR.Header = Ext.extend(Ext.Panel, {
+  height: 55,
+  style: "background: #000 url('static/images/yavdr.gif') no-repeat right center;",
   region: 'north',
   border: false,
+  layout: 'hbox',
+  id: 'yavdr-menu',
+  cls: 'yavdr-menu',
+  baseCls:'x-plain',
+  layoutConfig: {
+    padding:'0 0 0 0'
+  },
+  defaults: {
+    cls: 'x-btn-menu',
+    iconAlign: 'center',
+    scale: 'large',
+    height: 42,
+    xtype:'button',
+    margins:'5 5 0 0'
+  },
   initComponent: function() {
+
 
     this.items = [
       {
-        xtype: 'box',
-        height: 30,
-        style: 'text-align: right; margin-bottom: 5px; line-height: 30px; text-indent: 5px; color: #4E78B1; font-wight: bold; font-size: 20px; font-family: Arial',
-        html: 'yaVDR'
-      }, {
-
-        xtype: 'buttongroup',
-        id: 'yavdr-menu',
-        cls: 'yavdr-menu',
-        plain: true,
-        border: false,
-        unstyled: true,
-        defaults: {
-          style: 'margin: 0 0 0 5px'
-        },
-        items: [
-          {
-            text: ' Dashboard ',
-            style: '',
-            scope: YaVDR.Component.Dashboard,
-            handler: function() {
-              YaVDR.openComponent(this);
-            }
-          }
-        ]
+        width: 50,
+        height: 50,
+        scale: 'larger',
+        icon: 'static/images/menu_home.png',
+        handler: function() {
+          YaVDR.openComponent(YaVDR.Component.Dashboard)
+        }
+      },
+      {
+        width: 32,
+        icon: 'static/images/moblin/preferences-system-windows.png',
+        handler: function() {
+          YaVDR.openComponent(YaVDR.Component.Dashboard)
+        }
+      },
+      {
+        width: 32,
+        icon: 'static/images/moblin/preferences-desktop-wallpaper.png',
+        handler: function() {
+          YaVDR.openComponent(YaVDR.Component.Dashboard)
+        }
+      },
+      {
+        width: 32,
+        icon: 'static/images/moblin/preferences-system-windows.png',
+        handler: function() {
+          YaVDR.openComponent(YaVDR.Component.Dashboard)
+        }
+      },
+      {
+        width: 32,
+        icon: 'static/images/moblin/notification-properties.png',
+        handler: function() {
+          YaVDR.openComponent(YaVDR.Component.Dashboard)
+        }
+      },
+      {
+        width: 32,
+        icon: 'static/images/moblin/preferences-system-windows.png',
+        handler: function() {
+          YaVDR.openComponent(YaVDR.Component.Dashboard)
+        }
       }
     ];
-
 
     YaVDR.Header.superclass.initComponent.call(this);
   }
@@ -110,15 +147,11 @@ YaVDR.Body = Ext.extend(Ext.Panel, {
   initComponent: function() {
 
     this.items = [
-      //new Ext.TabPanel({
       new Ext.Panel({
         id: 'yavdr-content',
         border: false,
         activeItem: 0,
-        // activeTab: 0,
         layout: 'card',
-        //plugins: new Ext.ux.TabCloseMenu(),
-        //enableTabScroll:true,
         defaults: {
           autoScroll: true
         },
@@ -135,14 +168,15 @@ YaVDR.Body = Ext.extend(Ext.Panel, {
 YaVDR.Viewport = Ext.extend(Ext.Viewport, {
   id: 'yavdr',
   layout: 'border',
-  //style: 'background-color: #4E78B1',
   initComponent: function() {
     this.items = [
       new YaVDR.Header({
-        margins: '5 5 0 5'
+        //margins: '0 0 0 0'
       }),
       new YaVDR.Body({
-        margins: '5 5 5 5'
+        border: false,
+        padding: 5
+        //margins: '5 5 5 5'
       })
     ];
 
@@ -176,7 +210,7 @@ YaVDR.Component.Legacy = Ext.extend(YaVDR.Component, {
     }
 
     this.header = false;
-    this.padding = 5;
+    //this.padding = 5;
     this.items = panel;
     YaVDR.Component.Legacy.superclass.initComponent.call(this);
   }

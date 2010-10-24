@@ -1,181 +1,227 @@
 <html>
 <head>
-  <title>yaVDR</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <meta name="lang" content="de"/>
-  <meta name="author" content="yaVDR Team"/>
-  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
-  <link rel="icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
+<title>yaVDR</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="lang" content="de"/>
+<meta name="author" content="yaVDR Team"/>
+<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/static/images/favicon.ico" type="image/vnd.microsoft.icon">
 
 
-  <link rel="stylesheet" type="text/css" href="/ext/resources/css/ext-all.css"/>
-  <link rel="stylesheet" type="text/css" href="/ext-ux/css/Portal.css"/>
-  <link rel="stylesheet" type="text/css" href="/ext-ux/css/GroupTab.css"/>
-  <link rel="stylesheet" type="text/css" href="/ext-ux/css/Spinner.css"/>
-  <link rel="stylesheet" type="text/css" href="/static/yavdr.css"/>
+<link rel="stylesheet" type="text/css" href="/ext/resources/css/ext-all-notheme.css"/>
+<link rel="stylesheet" type="text/css" href="/ext/resources/css/xtheme-gray.css"/>
+<link rel="stylesheet" type="text/css" href="/ext-ux/css/Portal.css"/>
+<link rel="stylesheet" type="text/css" href="/ext-ux/css/GroupTab.css"/>
+<link rel="stylesheet" type="text/css" href="/ext-ux/css/Spinner.css"/>
+<link rel="stylesheet" type="text/css" href="/static/yavdr.css"/>
 
 
-  <script type="text/javascript" src="/ext/adapter/ext/ext-base.js"></script>
-  <script type="text/javascript" src="/ext/ext-all.js"></script>
+<script type="text/javascript" src="/ext/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="/ext/ext-all.js"></script>
 
-  <script type="text/javascript" src="/ext-ux/GroupTabPanel.js"></script>
-  <script type="text/javascript" src="/ext-ux/GroupTab.js"></script>
-  <script type="text/javascript" src="/ext-ux/Portal.js"></script>
-  <script type="text/javascript" src="/ext-ux/PortalColumn.js"></script>
-  <script type="text/javascript" src="/ext-ux/Portlet.js"></script>
-  <script type="text/javascript" src="/ext-ux/Spinner.js"></script>
-  <script type="text/javascript" src="/ext-ux/SpinnerField.js"></script>
-  <script type="text/javascript" src="/ext-ux/TabCloseMenu.js"></script>
-
-
-  <style type="text/css">
-
-    .yavdr-menu .x-btn-text {
-       margin: 0 10px 0 10px;
-    }
-      /*
-
-      font-family: 'Arial', 'Helvetica Neue';
-      background-color: #4E78B1;
-      color: #FFF;
-      padding: 0 5px 0 5px;
-      line-height: 40px;
-      font-size: 30px;
-      border-bottom: 1px solid #233d6d;
-    }
-
-    .yavdr-header .x-toolbar {
-      background: transparent;
-      border: none;
-    }
-
-    .yavdr-header .x-toolbar, x-toolbar-cell {
-      padding: 3px 3px 3px 3px;
-      background-color: #EEE;
-    }
-
-    .yavdr-header .x-toolbar .x-btn-text {
-      color: #000;
-      line-height: 15px;
-      padding: 0 10px 0 10px;
-      font-size: 13px;
-    }
-
-         */
+<script type="text/javascript" src="/ext-ux/GroupTabPanel.js"></script>
+<script type="text/javascript" src="/ext-ux/GroupTab.js"></script>
+<script type="text/javascript" src="/ext-ux/Portal.js"></script>
+<script type="text/javascript" src="/ext-ux/PortalColumn.js"></script>
+<script type="text/javascript" src="/ext-ux/Portlet.js"></script>
+<script type="text/javascript" src="/ext-ux/Spinner.js"></script>
+<script type="text/javascript" src="/ext-ux/SpinnerField.js"></script>
+<script type="text/javascript" src="/ext-ux/TabCloseMenu.js"></script>
 
 
-  </style>
+<style type="text/css">
 
-  <script type="text/javascript">
-    Ext.BLANK_IMAGE_URL = '/ext/resources/images/default/s.gif';
-    var yavdrwebGlobalInfo = {
-      user : "unknown",  // to be def by axjax
-      lang : "de",
-      devmode : ""
-    };
-  </script>
+  .yavdr-menu .x-btn-menu .x-btn-tl,
+  .yavdr-menu .x-btn-menu .x-btn-tr,
+  .yavdr-menu .x-btn-menu .x-btn-tc,
+  .yavdr-menu .x-btn-menu .x-btn-ml,
+  .yavdr-menu .x-btn-menu .x-btn-mr,
+  .yavdr-menu .x-btn-menu .x-btn-mc,
+  .yavdr-menu .x-btn-menu .x-btn-bl,
+  .yavdr-menu .x-btn-menu .x-btn-br,
+  .yavdr-menu .x-btn-menu .x-btn-bc {
+    background: transparent;
+    width2: 0;
+  }
 
-  <script type="text/javascript" src="/static/ng/static/javascript/base.js"></script>
-  <script type="text/javascript" src="/static/base.js"></script>
-  <script type="text/javascript" src="/static/dpkg.js"></script>
-  <script type="text/javascript" src="/static/locale/de.js"></script>
-  <script type="text/javascript" src="/static/language-handling.js"></script>
+  .yavdr-menu .x-btn-menu .x-btn-tl,
+  .yavdr-menu .x-btn-menu .x-btn-tr,
+  .yavdr-menu .x-btn-menu .x-btn-tc,
+  .yavdr-menu .x-btn-menu .x-btn-bl,
+  .yavdr-menu .x-btn-menu .x-btn-br,
+  .yavdr-menu .x-btn-menu .x-btn-bc {
+    height2: 0;
+  }
 
-  <script type="text/javascript" src="/static/ng/static/javascript/component/dashboard.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/programm.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/timer.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/recordings.js"></script>
+  .yavdr-menu .x-btn-menu.x-btn-icon .x-btn-larger .x-btn-text {
+    width: 50px;
+    height: 50px;
+  }
 
-
-  <script type="text/javascript" src="/static/config_tabs/vdr-frontend.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/vdr-upload-config.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/shutdown.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/lifeguard.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/packages.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/channels.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/remote.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/sound.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/timeout.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/x11.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/system.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/network.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/web-frontend.js"></script>
-  <script type="text/javascript" src="/static/config_tabs/diagnose.js"></script>
+  /*.yavdr-menu .x-btn-menu.x-btn-over {
+    background: #FFF;
+  }
 
 
-  <script type="text/javascript" src="/static/ng/static/javascript/component/vdr/frontend.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/vdr/lifeguard.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/vdr/shutdown.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/vdr/packages.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/system/remote.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/system/sound.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/system/config_editor.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/system/grub.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/system/display.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/system/network.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/system_infos.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/system_logs.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/xbmc_logs.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/lirc.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/vdr.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/x11.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/dpkg.js"></script>
-  <script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/yavdr.js"></script>
 
-  <script type="text/javascript">
-    YaVDR.Data = {
-      locale: 'de',
-      debug: true
-    };
+  .yavdr-menu .x-btn-menu {
 
+  }
 
-    // Build Menu
-    Ext.onReady(function() {
-      YaVDR.registerComponent(YaVDR.Component.Programm);
-      YaVDR.registerComponent(YaVDR.Component.Timer);
-      YaVDR.registerComponent(YaVDR.Component.Recordings);
-      YaVDR.registerSection('vdr', 'VDR');
+  .yavdr-menu.x-btn-over {
+    background: #FFF;
+  }      */
 
-      YaVDR.registerComponent(YaVDR.Component.VDR.Frontend, 'vdr');
-      YaVDR.registerComponent(YaVDR.Component.VDR.Lifeguard, 'vdr');
-      YaVDR.registerComponent(YaVDR.Component.VDR.Shutdown, 'vdr');
-      YaVDR.registerComponent(YaVDR.Component.VDR.Packages, 'vdr');
+  .dashboard-icon {
+    background-image: url('/icons/silk/application_home.png')
+  }
 
-      YaVDR.registerSection('system', 'System');
-      YaVDR.registerComponent(YaVDR.Component.System.Remote, 'system');
-      YaVDR.registerComponent(YaVDR.Component.System.ConfigEditor, 'system');
-      YaVDR.registerComponent(YaVDR.Component.System.Sound, 'system');
-      YaVDR.registerComponent(YaVDR.Component.System.Grub, 'system');
-      YaVDR.registerComponent(YaVDR.Component.System.Display, 'system');
-      YaVDR.registerComponent(YaVDR.Component.System.Network, 'system');
+    /*
 
-      YaVDR.registerSection('commands', 'Befehle');
-      YaVDR.registerCommand('VDR neustarten', function() {
-        alert('todo');
-      }, 'commands');
-      YaVDR.registerCommand('VDR beenden', function() {
-        alert('todo');
-      }, 'commands');
-      YaVDR.registerCommand('XBMC beenden', function() {
-        alert('todo');
-      }, 'commands');
-      YaVDR.registerCommand('System neustarten', function() {
-        alert('todo');
-      }, 'commands');
-      YaVDR.registerSection('diagnose', 'Diagnose');
-      YaVDR.registerComponent(YaVDR.Component.Diagnose.SystemInfos, 'diagnose');
-      YaVDR.registerComponent(YaVDR.Component.Diagnose.SystemLogs, 'diagnose');
-      YaVDR.registerComponent(YaVDR.Component.Diagnose.XbmcLogs, 'diagnose');
-      YaVDR.registerComponent(YaVDR.Component.Diagnose.Lirc, 'diagnose');
-      YaVDR.registerComponent(YaVDR.Component.Diagnose.VDR, 'diagnose');
-      YaVDR.registerComponent(YaVDR.Component.Diagnose.X11, 'diagnose');
-      YaVDR.registerComponent(YaVDR.Component.Diagnose.Dpkg, 'diagnose');
-      YaVDR.registerComponent(YaVDR.Component.Diagnose.YaVDR, 'diagnose');
+ font-family: 'Arial', 'Helvetica Neue';
+ background-color: #4E78B1;
+ color: #FFF;
+ padding: 0 5px 0 5px;
+ line-height: 40px;
+ font-size: 30px;
+ border-bottom: 1px solid #233d6d;
+}
+
+.yavdr-header .x-toolbar {
+ background: transparent;
+ border: none;
+}
+
+.yavdr-header .x-toolbar, x-toolbar-cell {
+ padding: 3px 3px 3px 3px;
+ background-color: #EEE;
+}
+
+.yavdr-header .x-toolbar .x-btn-text {
+ color: #000;
+ line-height: 15px;
+ padding: 0 10px 0 10px;
+ font-size: 13px;
+}
+
+    */
 
 
-    });
+</style>
 
-  </script>
+<script type="text/javascript">
+  Ext.BLANK_IMAGE_URL = '/ext/resources/images/default/s.gif';
+  var yavdrwebGlobalInfo = {
+    user : "unknown",  // to be def by axjax
+    lang : "de",
+    devmode : ""
+  };
+</script>
+
+<script type="text/javascript" src="/static/ng/static/javascript/base.js"></script>
+<script type="text/javascript" src="/static/base.js"></script>
+<script type="text/javascript" src="/static/dpkg.js"></script>
+<script type="text/javascript" src="/static/locale/de.js"></script>
+<script type="text/javascript" src="/static/language-handling.js"></script>
+
+<script type="text/javascript" src="/static/ng/static/javascript/component/dashboard.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/programm.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/timer.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/recordings.js"></script>
+
+
+<script type="text/javascript" src="/static/config_tabs/vdr-frontend.js"></script>
+<script type="text/javascript" src="/static/config_tabs/vdr-upload-config.js"></script>
+<script type="text/javascript" src="/static/config_tabs/shutdown.js"></script>
+<script type="text/javascript" src="/static/config_tabs/lifeguard.js"></script>
+<script type="text/javascript" src="/static/config_tabs/packages.js"></script>
+<script type="text/javascript" src="/static/config_tabs/channels.js"></script>
+<script type="text/javascript" src="/static/config_tabs/remote.js"></script>
+<script type="text/javascript" src="/static/config_tabs/sound.js"></script>
+<script type="text/javascript" src="/static/config_tabs/timeout.js"></script>
+<script type="text/javascript" src="/static/config_tabs/x11.js"></script>
+<script type="text/javascript" src="/static/config_tabs/system.js"></script>
+<script type="text/javascript" src="/static/config_tabs/network.js"></script>
+<script type="text/javascript" src="/static/config_tabs/web-frontend.js"></script>
+<script type="text/javascript" src="/static/config_tabs/diagnose.js"></script>
+
+
+<script type="text/javascript" src="/static/ng/static/javascript/component/vdr/frontend.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/vdr/lifeguard.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/vdr/shutdown.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/vdr/packages.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/remote.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/sound.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/config_editor.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/grub.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/display.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/network.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/system_infos.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/system_logs.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/xbmc_logs.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/lirc.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/vdr.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/x11.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/dpkg.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/yavdr.js"></script>
+
+<script type="text/javascript">
+  YaVDR.Data = {
+    locale: 'de',
+    debug: true
+  };
+
+
+  // Build Menu
+  Ext.onReady(function() {
+    YaVDR.registerComponent(YaVDR.Component.Programm);
+    YaVDR.registerComponent(YaVDR.Component.Timer);
+    YaVDR.registerComponent(YaVDR.Component.Recordings);
+    YaVDR.registerSection('vdr', 'VDR-Einstellung');
+
+    YaVDR.registerComponent(YaVDR.Component.VDR.Frontend, 'vdr');
+    YaVDR.registerComponent(YaVDR.Component.VDR.Lifeguard, 'vdr');
+    YaVDR.registerComponent(YaVDR.Component.VDR.Shutdown, 'vdr');
+    YaVDR.registerComponent(YaVDR.Component.VDR.Packages, 'vdr');
+
+    YaVDR.registerSection('system', 'System');
+    YaVDR.registerComponent(YaVDR.Component.System.Remote, 'system');
+    YaVDR.registerComponent(YaVDR.Component.System.ConfigEditor, 'system');
+    YaVDR.registerComponent(YaVDR.Component.System.Sound, 'system');
+    YaVDR.registerComponent(YaVDR.Component.System.Grub, 'system');
+    YaVDR.registerComponent(YaVDR.Component.System.Display, 'system');
+    YaVDR.registerComponent(YaVDR.Component.System.Network, 'system');
+
+    YaVDR.registerSection('commands', 'Befehle');
+    YaVDR.registerCommand('VDR neustarten', function() {
+      alert('todo');
+    }, 'commands');
+    YaVDR.registerCommand('VDR beenden', function() {
+      alert('todo');
+    }, 'commands');
+    YaVDR.registerCommand('XBMC beenden', function() {
+      alert('todo');
+    }, 'commands');
+    YaVDR.registerCommand('System neustarten', function() {
+      alert('todo');
+    }, 'commands');
+    YaVDR.registerSection('diagnose', 'Diagnose');
+    YaVDR.registerComponent(YaVDR.Component.Diagnose.SystemInfos, 'diagnose');
+    YaVDR.registerComponent(YaVDR.Component.Diagnose.SystemLogs, 'diagnose');
+    YaVDR.registerComponent(YaVDR.Component.Diagnose.XbmcLogs, 'diagnose');
+    YaVDR.registerComponent(YaVDR.Component.Diagnose.Lirc, 'diagnose');
+    YaVDR.registerComponent(YaVDR.Component.Diagnose.VDR, 'diagnose');
+    YaVDR.registerComponent(YaVDR.Component.Diagnose.X11, 'diagnose');
+    YaVDR.registerComponent(YaVDR.Component.Diagnose.Dpkg, 'diagnose');
+    YaVDR.registerComponent(YaVDR.Component.Diagnose.YaVDR, 'diagnose');
+
+    /* Ext.getCmp('yavdr-menu').add({
+     text: 'Test'
+     });   */
+
+  });
+
+</script>
 </head>
 <body>
 </body>
