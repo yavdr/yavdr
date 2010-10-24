@@ -65,7 +65,7 @@ Ext.apply(YaVDR, {
 });
 
 YaVDR.Header = Ext.extend(Ext.Panel, {
-  height: 55,
+  height: 52,
   style: "background: #000 url('static/images/yavdr.gif') no-repeat right center;",
   region: 'north',
   border: false,
@@ -74,60 +74,20 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
   cls: 'yavdr-menu',
   baseCls:'x-plain',
   layoutConfig: {
-    padding:'0 0 0 0'
+    padding:'10 5 0 5'
   },
   defaults: {
-    cls: 'x-btn-menu',
     iconAlign: 'center',
     scale: 'large',
-    height: 42,
     xtype:'button',
-    margins:'5 5 0 0'
+    margins:'0 5 0 0'
   },
   initComponent: function() {
 
 
     this.items = [
       {
-        width: 50,
-        height: 50,
-        scale: 'larger',
-        icon: 'static/images/menu_home.png',
-        handler: function() {
-          YaVDR.openComponent(YaVDR.Component.Dashboard)
-        }
-      },
-      {
-        width: 32,
-        icon: 'static/images/moblin/preferences-system-windows.png',
-        handler: function() {
-          YaVDR.openComponent(YaVDR.Component.Dashboard)
-        }
-      },
-      {
-        width: 32,
-        icon: 'static/images/moblin/preferences-desktop-wallpaper.png',
-        handler: function() {
-          YaVDR.openComponent(YaVDR.Component.Dashboard)
-        }
-      },
-      {
-        width: 32,
-        icon: 'static/images/moblin/preferences-system-windows.png',
-        handler: function() {
-          YaVDR.openComponent(YaVDR.Component.Dashboard)
-        }
-      },
-      {
-        width: 32,
-        icon: 'static/images/moblin/notification-properties.png',
-        handler: function() {
-          YaVDR.openComponent(YaVDR.Component.Dashboard)
-        }
-      },
-      {
-        width: 32,
-        icon: 'static/images/moblin/preferences-system-windows.png',
+        icon: '/icons/tango/32x32/actions/gtk-home.png',
         handler: function() {
           YaVDR.openComponent(YaVDR.Component.Dashboard)
         }

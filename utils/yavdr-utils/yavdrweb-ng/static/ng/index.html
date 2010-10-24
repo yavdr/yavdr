@@ -30,7 +30,7 @@
 
 
 <style type="text/css">
-
+        /*
   .yavdr-menu .x-btn-menu .x-btn-tl,
   .yavdr-menu .x-btn-menu .x-btn-tr,
   .yavdr-menu .x-btn-menu .x-btn-tc,
@@ -58,7 +58,7 @@
     height: 50px;
   }
 
-  /*.yavdr-menu .x-btn-menu.x-btn-over {
+  .yavdr-menu .x-btn-menu.x-btn-over {
     background: #FFF;
   }
 
@@ -128,6 +128,7 @@
 <script type="text/javascript" src="/static/ng/static/javascript/component/programm.js"></script>
 <script type="text/javascript" src="/static/ng/static/javascript/component/timer.js"></script>
 <script type="text/javascript" src="/static/ng/static/javascript/component/recordings.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/settings.js"></script>
 
 
 <script type="text/javascript" src="/static/config_tabs/vdr-frontend.js"></script>
@@ -183,6 +184,9 @@
     YaVDR.registerComponent(YaVDR.Component.VDR.Lifeguard, 'vdr');
     YaVDR.registerComponent(YaVDR.Component.VDR.Shutdown, 'vdr');
     YaVDR.registerComponent(YaVDR.Component.VDR.Packages, 'vdr');
+
+    YaVDR.registerComponent(YaVDR.Component.Settings);
+
 
     YaVDR.registerSection('system', 'System');
     YaVDR.registerComponent(YaVDR.Component.System.Remote, 'system');
