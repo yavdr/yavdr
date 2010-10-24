@@ -31,7 +31,7 @@ Ext.apply(YaVDR, {
   registerComponent: function(component, section) {
     var tbar = Ext.getCmp('yavdr-menu');
     var title = (new component).menuTitle;
-    if(!title) title = (new component).title;
+    if (!title) title = (new component).title;
     var itemId = (new component).itemId;
     var iconCls = (new component).iconCls;
     if (section) {
@@ -158,6 +158,10 @@ Ext.ns('YaVDR.Component.VDR');
 Ext.ns('YaVDR.Component.System');
 Ext.ns('YaVDR.Component.Diagnose');
 
+YaVDR.Component.Header = Ext.extend(Ext.BoxComponent, {
+  style: 'color: #233d6d;font-weight: bold; font-size: 1.4em; margin: 0 0 5px 3px; font-family: sans-serif;'
+});
+
 YaVDR.Component.Legacy = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     var panel = new Ext.Panel({
@@ -179,6 +183,12 @@ YaVDR.Component.Legacy = Ext.extend(YaVDR.Component, {
     this.items = panel;
     YaVDR.Component.Legacy.superclass.initComponent.call(this);
   }
+});
+
+YaVDR.Component.Item = Ext.extend(Ext.Panel, {
+  frame: true,
+  width: 800,
+  style: 'margin-top: 5px'
 });
 
 

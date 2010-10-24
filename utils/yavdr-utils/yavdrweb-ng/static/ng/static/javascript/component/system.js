@@ -1,6 +1,6 @@
-YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
-  itemId: 'settings-overview',
-  menuTitle: 'Einstellung',
+YaVDR.Component.System = Ext.extend(YaVDR.Component, {
+  itemId: 'system-overview',
+  menuTitle: 'System',
   //iconCls: 'settings-icon',
   layout: 'auto',
   border: false,
@@ -9,11 +9,7 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
 
     this.items = [
       new YaVDR.Component.Header({
-        html: 'Einstellung'
-      }),
-      new YaVDR.Component.Item({
-        title: 'Einleitung',
-        html: 'Hier haben Sie die Möglichkeit die Einstellungen Ihres VDRs vorzunehmen.'
+        html: 'System'
       }),
       new YaVDR.Component.Item({
         title: 'VDR'
