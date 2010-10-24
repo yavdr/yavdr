@@ -138,14 +138,13 @@ int display_device_mask(string name) {
       // writing primary display
       err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
       
+      cleanDisplayInHDF(hdf, 0);
       if (freq0.size() > 0 && primary == display0) {
         writeDisplayToHDF(hdf, 0, display0, freq0, overscan0);
       } else if (freq1.size() > 0 && primary == display1) {
         writeDisplayToHDF(hdf, 0, display1, freq1, overscan1);
       } else if (freq2.size() > 0 && primary == display2) {
         writeDisplayToHDF(hdf, 0, display2, freq2, overscan2);
-      } else {
-        cleanDisplayInHDF(hdf, 0);
       }
     }
     else
@@ -154,18 +153,17 @@ int display_device_mask(string name) {
       err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
       
+      cleanDisplayInHDF(hdf, 0);
       if (freq0.size() > 0 && primary == display0) {
         writeDisplayToHDF(hdf, 0, display0, freq0, overscan0);
       } else if (freq1.size() > 0 && primary == display1) {
         writeDisplayToHDF(hdf, 0, display1, freq1, overscan1);
       } else if (freq2.size() > 0 && primary == display2) {
         writeDisplayToHDF(hdf, 0, display2, freq2, overscan2);
-      } else {
-        cleanDisplayInHDF(hdf, 0);
       }
       
+      cleanDisplayInHDF(hdf, 1);
       if (primary != "" && secondary == primary) {
-        cleanDisplayInHDF(hdf, 1);
         err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
         err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
       } else if (freq0.size() > 0 && secondary == display0) {
@@ -174,8 +172,6 @@ int display_device_mask(string name) {
         writeDisplayToHDF(hdf, 1, display1, freq1, overscan1);
       } else if (freq2.size() > 0 && secondary == display2) {
         writeDisplayToHDF(hdf, 1, display2, freq2, overscan2);
-      } else {
-        cleanDisplayInHDF(hdf, 1);
       }
     }
     

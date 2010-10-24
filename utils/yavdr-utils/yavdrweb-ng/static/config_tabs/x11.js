@@ -119,13 +119,33 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
     });
     
     var checkboxes = [];
-    //console.log(record.data.hz);
-    for(hz in record.data.hz) {
+    var count = 0;
+    var hasValids = false;
+    for(hz in record.data.modes) {
+    	if(record.data.modes.hasOwnProperty(hz)) {
+          ++count;
+    	  hasValids = hasValids || (!record.data.modes[hz].interlace && !record.data.modes[hz].doublescan);
+    	}
+    }
+    
+    for(hz in record.data.modes) {
+      var mode = record.data.modes[hz];
+      
+      var isChecked = false;
+      if (display.itemData.current.modeline.id == record.data.id) {
+    	for(i = 0; i < display.itemData.current.selected.length; i++) {
+    	  if (isChecked = (display.itemData.current.selected[i] == mode.id)) break;
+    	}
+      } else {
+    	isChecked = ((!mode.interlace && !mode.doublescan) || count == 1 || !hasValids);
+      }
+      
       checkboxes.push(new YaVDR.X11.FrequencyCheckbox({
+    	checked: isChecked,
         hz: hz,
         index: index,
         defaultFrequency: defaultFrequency,
-        frequency: record.data.hz[hz]
+        frequency: record.data.modes[hz]
       }));
     }
     
@@ -150,7 +170,6 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
     var display = this.getComponent('display_' + combo.index);
     
     this.buildFrequencies.call(this, display, record);
-      
   },
   onPrimaryCheck: function(cb, checked) {
     // Deaktivere eigenen secondary und aktivere alle anderen
@@ -175,9 +194,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
     items.push({
       hideLabel: true,
       xtype: 'displayfield',
-      value: getLL('x11.device')+': ' + item.devicename + ', ' + 
-            getLL('x11.modeline')+': ' + item.current_modeline.id +
-            ' ' + item.current_modeline.x + 'x' + item.current_modeline.y
+      value: getLL('x11.device')+': ' + item.devicename + ', ' + getLL('x11.modeline')+': ' + item.current.modeline.x + 'x' + item.current.modeline.y + ' ' + item.current.modeline.name + ' Hz'
     });
     
     items.push({
@@ -215,13 +232,10 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       idIndex: 0,
       fields: [
         "id",
-        "hz"
+        "modes"
       ],
       data : item.modelines
     });
-    
-    //console.log(item.current_modeline);
-    //console.log(item.modelines);
     
     items.push(new YaVDR.EasyComboBox({
       itemId: 'modeline',
@@ -231,9 +245,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       emptyText: getLL('x11.select_res'),
       fieldLabel: getLL('x11.resolution'),
       hiddenName: 'modeline' + index,
-       // hack: hier kommt id immer mit _50 zb an
-            value: item.current_modeline.id,
-      // value: item.current_modeline.x + 'x' + item.current_modeline.y,
+      value: item.current.modeline.x + 'x' + item.current.modeline.y,
       listeners: {
         scope: this,
         select: this.onModelineSelect,
@@ -259,7 +271,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       maxValue: 255,
       fieldLabel: getLL("nvidia.overscan_slider_label"),
       useTip: true,
-      value: parseInt(item.current_modeline.overscan)
+      value: parseInt(item.overscan)
     });
     
     this.insert(1+index, {
@@ -281,11 +293,6 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
           var displayData = Ext.decode( xhr.responseText );
           var basic = this.getComponent('basic');
           var xine = this.getComponent('xine');
-          
-          
-          // hack Dual Screen
-          //displayData.system.x11.displays.push(displayData.system.x11.displays[0]);
-          //displayData.system.x11.displays.push(displayData.system.x11.displays[0]);
           
           if (typeof displayData.system.x11.displays != "undefined") {
             Ext.each(displayData.system.x11.displays, function(item, index) {
@@ -362,7 +369,7 @@ YaVDR.X11.DefaultFrequency = Ext.extend(Ext.form.ComboBox, {
 });
 
 YaVDR.X11.FrequencyCheckbox = Ext.extend(Ext.form.Checkbox, {
-  checked: true,
+  //checked: true,
   initComponent: function() {
     
     var value = "000" + String(this.frequency.hz);
@@ -374,7 +381,9 @@ YaVDR.X11.FrequencyCheckbox = Ext.extend(Ext.form.Checkbox, {
     this.inputValue = value;
     
     this.record = new this.store.recordType({id: this.inputValue, label: this.boxLabel});
-    this.store.add(this.record);
+    if (this.checked) {
+      this.store.add(this.record);
+    }
     
     YaVDR.X11.FrequencyCheckbox.superclass.initComponent.call(this);
     
@@ -382,6 +391,7 @@ YaVDR.X11.FrequencyCheckbox = Ext.extend(Ext.form.Checkbox, {
   },
   
   updateFrequencyStoreOnCheck: function(cb, checked) {
+	console.log(this.store);
     if(checked) {
       this.add(cb.record);
     } else {
