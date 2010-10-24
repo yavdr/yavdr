@@ -23,6 +23,7 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
             anchor: '100%',
             title: 'VDR',
             style: 'margin: 0 5px 5px 0 ',
+            tools: [{id: 'refresh'}],
             html: '<b>Status</b>: VDR gestartet<br><b>Speicherplatz</b>: 45G<br><b>Frontend</b>: Xine<br><b>Auflösung</b>: 1920x1080'
           },
           {
@@ -32,6 +33,7 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
             height: 150,
             title: 'Aktuelle VDR-Aufnahme',
             style: 'margin: 0 5px 0 0 ',
+            tools: [{id: 'refresh'}],
             html: '* Filme 1<br>* Filme 1<br>* Filme 1<br>* Filme 1<br>* Filme 1<br>* Filme 1<br>'
           }
         ]
@@ -46,6 +48,7 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
             height: 150,
             anchor: '100%',
             title: 'System',
+            tools: [{id: 'refresh'}],
             style: 'margin: 0 0 5px 0 ',
             html: '<b>Shutdown</b>: S3 (Disabled USB-Wakeup)<br> <b>CPU</b>: 10% - <b>RAM</b>: 1024MB (169 MG frei)<br><b>Soundausgabe</b>: HDMI + Analog'
           },
@@ -55,6 +58,7 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
             anchor: '100%',
             height: 150,
             title: 'Nächste Timer',
+            tools: [{id: 'refresh'}],
             style: 'margin: 0 0 0 0 ',
             html: '* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>* 20:15 Film abc<br>'
           }

@@ -17,6 +17,12 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
       }),
       new YaVDR.Component.Item({
         title: 'VDR'
+      }),
+      new YaVDR.Component.Item({
+        title: 'Hardware'
+      }),
+      new YaVDR.Component.Item({
+        title: 'System'
       })
     ]
     YaVDR.Component.Settings.superclass.initComponent.call(this);

@@ -187,7 +187,7 @@ YaVDR.Component.Legacy = Ext.extend(YaVDR.Component, {
 
 YaVDR.Component.Item = Ext.extend(Ext.Panel, {
   frame: true,
-  width: 800,
+  width: 690,
   style: 'margin-top: 5px'
 });
 

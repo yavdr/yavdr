@@ -186,6 +186,14 @@
     YaVDR.registerComponent(YaVDR.Component.Programm);
     YaVDR.registerComponent(YaVDR.Component.Timer);
     YaVDR.registerComponent(YaVDR.Component.Recordings);
+
+
+
+    YaVDR.registerComponent(YaVDR.Component.Settings);
+    YaVDR.registerComponent(YaVDR.Component.System);
+
+    Ext.getCmp('yavdr-menu').add({ text: 'ab hier alt ->'});
+
     YaVDR.registerSection('vdr', 'VDR-Einstellung');
 
     YaVDR.registerComponent(YaVDR.Component.VDR.Frontend, 'vdr');
@@ -228,8 +236,6 @@
 
 
 
-    YaVDR.registerComponent(YaVDR.Component.Settings);
-    YaVDR.registerComponent(YaVDR.Component.System);
 
 
     /* Ext.getCmp('yavdr-menu').add({
