@@ -457,7 +457,16 @@ else
 											displays[nDisplayDevice]["current"]["selected"][l++] = mode;
 										}
 									} while (mode != NULL);
-									displays[nDisplayDevice]["current"]["defaultfreq"] =  hdf_get_valuef(hdf, "system.x11.display.%u.default", nDisplayDevice);
+									char *defaultfreq = hdf_get_valuef(hdf, "system.x11.display.%u.default", nDisplayDevice);
+									if (defaultfreq != NULL)
+									{
+										displays[nDisplayDevice]["current"]["defaultfreq"] = defaultfreq;
+									}
+									else
+									{
+										displays[nDisplayDevice]["current"]["defaultfreq"] = "";
+
+									}
 
 									char *overscan = hdf_get_valuef(hdf, "system.x11.display.%u.overscan", nDisplayDevice);
 									if (overscan != NULL)
