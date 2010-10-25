@@ -3,8 +3,8 @@ YAVDRWEBDIR=../../../../utils/yavdr-utils/yavdrweb-ng/
 all: sundtek.so
 
 test: all
-#	cp -f sundtek.so ${YAVDRWEBDIR}
-#	#${TNTNET} -c ${YAVDRWEBDIR}tntnet.localtest.conf
+	cp -f sundtek.so ${YAVDRWEBDIR}
+	make -C ${YAVDRWEBDIR} test
 
 sundtek.so: get_dvb.o set_dvb.o
 	${CXX} -o $@ $^ ${LDFLAGS}

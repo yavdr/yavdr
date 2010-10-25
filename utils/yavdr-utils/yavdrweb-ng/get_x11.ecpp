@@ -431,8 +431,8 @@ else
 									Json::Value modeline;
 									modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
 									if (modeline["id"] == "nvidia-auto-select") { // map to real name
-										modeline["modeline"] = tokens[2] + "x" + tokens[6];
-										//modeline["id"] = "800x600";
+										modeline["id"] = tokens[2] + "x" + tokens[6];
+										modeline["id"] = "800x600";
 									}
 
 									modeline["modeline"] = trim(parts[parts.size()-1].substr(tokens[0].length()+1));
@@ -457,6 +457,7 @@ else
 											displays[nDisplayDevice]["current"]["selected"][l++] = mode;
 										}
 									} while (mode != NULL);
+									displays[nDisplayDevice]["current"]["defaultfreq"] =  hdf_get_valuef(hdf, "system.x11.display.%u.default", nDisplayDevice);
 
 									char *overscan = hdf_get_valuef(hdf, "system.x11.display.%u.overscan", nDisplayDevice);
 									if (overscan != NULL)

@@ -93,6 +93,7 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       scope:this,
       success: function (form, action) {
         Ext.MessageBox.alert( getLL("standardform.messagebox_caption.message"), getLL("x11.submit.success") );
+        this.loadSettings();
       },
       failure:function(form, action) {
         Ext.MessageBox.alert( getLL("standardform.messagebox_caption.error"), getLL("x11.submit.failure") );
@@ -115,7 +116,8 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
     
     var defaultFrequency = new YaVDR.X11.DefaultFrequency({
       index: index,
-      name: 'defaultfreq' + index
+      name: 'defaultfreq' + index + '_name',
+      hiddenName: 'defaultfreq' + index
     });
     
     var checkboxes = [];
@@ -130,11 +132,11 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
     
     for(hz in record.data.modes) {
       var mode = record.data.modes[hz];
-      
+    		  
       var isChecked = false;
       if (display.itemData.current.modeline.id == record.data.id) {
     	for(i = 0; i < display.itemData.current.selected.length; i++) {
-    	  if (isChecked = (display.itemData.current.selected[i] == mode.id)) break;
+    	  if (isChecked = (count == 1 || display.itemData.current.selected[i] == mode.id)) break;
     	}
       } else {
     	isChecked = ((!mode.interlace && !mode.doublescan) || count == 1 || !hasValids);
@@ -149,9 +151,12 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       }));
     }
     
-    // select first
-    defaultFrequency.setValue(defaultFrequency.store.getAt(0).data.id);
-    
+    if (display.itemData.current.defaultfreq.substring(0, record.data.id.length) == record.data.id) {
+	  defaultFrequency.setValue(display.itemData.current.defaultfreq);
+    } else {
+	  // select first
+	  defaultFrequency.setValue(defaultFrequency.store.getAt(0).data.id);
+    }
     display.insert(5, defaultFrequency);
     
     display.insert(6, {
@@ -378,7 +383,8 @@ YaVDR.X11.FrequencyCheckbox = Ext.extend(Ext.form.Checkbox, {
     
     this.boxLabel = this.hz + ' Hz';
     this.name = 'freq' + this.index;
-    this.inputValue = value;
+    //this.inputValue = value;
+    this.inputValue = this.frequency.id;
     
     this.record = new this.store.recordType({id: this.inputValue, label: this.boxLabel});
     if (this.checked) {
