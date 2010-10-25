@@ -17,6 +17,9 @@ case $1 in
                 fi
                 /usr/bin/logger -t "vdr-mounter" "REMOVE: $*"
                 ;;
+	--unmount-all)
+                for dev in $(udisks-umountall | grep -o "/dev/.*") ; do udisks --unmount $dev ; done
+                ;;
         *)
                 /usr/bin/logger -t "vdr-mounter" "Unknown Action: $1 for $2"
                 ;;
