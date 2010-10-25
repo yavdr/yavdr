@@ -1,0 +1,18 @@
+
+description     "start udisks-automounter to automount and notify vdr"
+
+start on filesystem
+stop on runlevel [016]
+
+env DISPLAY=:1
+
+export DISPLAY
+
+script
+exec su -c 'ck-launch-session udisks-automounter -m "/usr/bin/vdr-mounter --mount" -u "/usr/bin/vdr-mounter --unmount"' vdr
+end script
+
+post-stop script
+killall udisks-automounter || /bin/true
+end script
+

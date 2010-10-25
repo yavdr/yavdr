@@ -83,8 +83,7 @@ xserver-xorg-input-evtouch
 xserver-xorg-video-vesa
 yavdr-startup
 yavdr-utils
-halevt
-hal
 vdr-skins-anthra
 xterm
 uswsusp
+udisks-automounter
