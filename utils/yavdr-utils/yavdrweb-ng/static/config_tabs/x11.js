@@ -301,6 +301,10 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
           
           if (typeof displayData.system.x11.displays != "undefined") {
             Ext.each(displayData.system.x11.displays, function(item, index) {
+              var display = this.getComponent('display_' + index);
+              if (display) {
+            	display.destroy();
+              }
               this.renderDisplay.call(this, item, index);
             }, this);
           }
