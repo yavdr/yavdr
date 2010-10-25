@@ -30,10 +30,10 @@ Ext.apply(YaVDR, {
   },
   registerComponent: function(component, section) {
     var tbar = Ext.getCmp('yavdr-menu');
-    var title = (new component).menuTitle;
-    if (!title) title = (new component).title;
-    var itemId = (new component).itemId;
-    var iconCls = (new component).iconCls;
+    var title = component.prototype.menuTitle;
+    if (!title) title = component.prototype.title;
+    var itemId = component.prototype.itemId;
+    var iconCls = component.prototype.iconCls;
     if (section) {
       var menu = tbar.getComponent(section).menu;
       menu.add({
@@ -61,7 +61,8 @@ Ext.apply(YaVDR, {
   openComponent: function(component) {
     var panel = new component;
     Ext.getCmp('yavdr-content').add(panel);
-    Ext.getCmp('yavdr-content').getLayout().setActiveItem(panel.itemId);
+    Ext.History.add(panel.itemId);
+
   }
 });
 
@@ -151,7 +152,10 @@ YaVDR.Viewport = Ext.extend(Ext.Viewport, {
 });
 
 YaVDR.Component = Ext.extend(Ext.Panel, {
-  border: false
+  border: false ,
+  initComponent: function() {
+    YaVDR.Component.superclass.initComponent.call(this);
+  }
 });
 
 Ext.ns('YaVDR.Component.VDR');
@@ -191,10 +195,50 @@ YaVDR.Component.Item = Ext.extend(Ext.Panel, {
   style: 'margin-top: 5px'
 });
 
+Ext.ns('YaVDR.Default');
+YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
+  labelWidth: 200,
+  initComponent: function() {
+    this.buttons = [
+      {
+        itemId: 'cancel',
+        scope: this,
+        text: 'Zurücksetzen',
+        handler: this.onCancel,
+        icon: '/icons/fugue/cross.png'
+      },
+      {
+        itemId: 'save',
+        scope: this,
+        text: 'Speichern',
+        handler: this.onSave,
+        icon: '/icons/fugue/disk-black.png'
+      }
+    ];
+    YaVDR.Default.Form.superclass.initComponent.call(this);
+  },
+  onSave: function() {
+    alert('onSave not implemented');
+  },
+  onCancel: function() {
+    alert('onCancel not implemented');
+  }
+});
 
 Ext.onReady(function() {
   Ext.QuickTips.init();
+  Ext.History.init();
   new YaVDR.Viewport();
+
+
+  Ext.History.on('change', function(token) {
+    if (!token) {
+      token = 'dashboard';
+    }
+    Ext.getCmp('yavdr-content').getLayout().setActiveItem(token);
+  });
+
+
 });
 
 

@@ -1,10 +1,5 @@
 YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
   itemId: 'dashboard',
-  //title: 'Dashboard',
-  iconCls: 'dashboard-icon',
-  closable: false,
-  border: false,
-  //frame: true,
   layout:'column',
   initComponent: function() {
 

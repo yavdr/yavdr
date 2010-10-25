@@ -1,10 +1,6 @@
 YaVDR.Component.System = Ext.extend(YaVDR.Component, {
   itemId: 'system-overview',
   menuTitle: 'System',
-  //iconCls: 'settings-icon',
-  layout: 'auto',
-  border: false,
-  frame: false,
   initComponent: function() {
 
     this.items = [

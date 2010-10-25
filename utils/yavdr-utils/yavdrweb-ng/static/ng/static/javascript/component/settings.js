@@ -1,10 +1,6 @@
 YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
   itemId: 'settings-overview',
   menuTitle: 'Einstellung',
-  //iconCls: 'settings-icon',
-  layout: 'auto',
-  border: false,
-  frame: false,
   initComponent: function() {
 
     this.items = [
@@ -26,7 +22,10 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
             margins:'0 5 0 0',
             height: 40,
             scale: 'medium',
-            flex: 0.25
+            flex: 0.25,
+            handler: function() {
+              YaVDR.openComponent(this);
+            }
           }
         },
         items: [
@@ -35,19 +34,19 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
             items: [
               {
                 text: 'Allgemein',
-                icon: '/icons/fugue/wrench.png'
-              },
-              {
-                text: 'Frontend',
+                scope: YaVDR.Component.Settings.VdrGeneric,
                 icon: '/icons/fugue/television-image.png'
               },
               {
                 text: 'Kanäle',
+                scope: YaVDR.Component.Settings.VdrChannels,
                 icon: '/icons/fugue/book-open-list.png'
               },
               {
-                text: 'Liveguard',
-                icon: '/icons/fugue/shield.png'
+                xtype: 'spacer'
+              },
+              {
+                xtype: 'spacer'
               }
             ]
           }
