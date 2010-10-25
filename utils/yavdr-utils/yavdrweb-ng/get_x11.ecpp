@@ -467,7 +467,6 @@ else
 									{
 										displays[nDisplayDevice]["overscan"] = "";
 									}
-									free(overscan);
 									XFree(str);
 								}
 								else
