@@ -1,6 +1,7 @@
 
 all: yavdrweb.so
 
+test: CEXTRAFLAGS=-fPIC -g
 test: all
 	${TNTNET} -c tntnet.localtest.conf
 
@@ -18,8 +19,11 @@ yavdrweb.so: ../common/make_dirs.o \
 EXTRA_ENV+="PATH=$$PATH:/usr/bin"
 ECPPC=env ${EXTRA_ENV} ecppc -v
 TNTNET=env ${EXTRA_ENV} tntnet
-CXXFLAGS+=-I.. -I/usr/include -I/usr/include/ClearSilver -fPIC -O2
-CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl -fPIC -O2
+ifeq ($(CEXTRAFLAGS),)
+     CEXTRAFLAGS=-fPIC -O2
+endif
+CXXFLAGS+=-I.. -I/usr/include -I/usr/include/ClearSilver $(CEXTRAFLAGS)
+CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl $(CEXTRAFLAGS)
 LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lneo_cs -lpam -lXNVCtrl -lX11 -lXext -ljson -lboost_regex
 
 .ecpp.cpp:
