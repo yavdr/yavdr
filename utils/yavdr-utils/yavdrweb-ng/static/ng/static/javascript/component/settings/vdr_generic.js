@@ -1,10 +1,8 @@
 YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
   itemId: 'settings-vdr-generic',
+  title: 'Einstellung',
   initComponent: function() {
     this.items = [
-      new YaVDR.Component.Header({
-        html: 'Einstellung'
-      }),
       new YaVDR.Component.Item({
         title: 'Frontend',
         items: new YaVDR.Component.Settings.VdrGeneric.Frontend

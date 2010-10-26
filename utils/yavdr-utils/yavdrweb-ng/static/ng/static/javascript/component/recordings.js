@@ -1,11 +1,7 @@
 YaVDR.Component.Recordings = Ext.extend(YaVDR.Component, {
   itemId: 'recordings',
+  title: 'Aufnahmen',
   initComponent: function() {
-    this.items = [
-      new YaVDR.Component.Header({
-        html: 'Aufnahmen'
-      })
-    ];
     YaVDR.Component.Recordings.superclass.initComponent.call(this);
   }
 });

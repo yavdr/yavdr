@@ -203,8 +203,10 @@ YaVDR.Viewport = Ext.extend(Ext.Viewport, {
 
 YaVDR.Component = Ext.extend(Ext.Panel, {
   border: false ,
+  header: false,
   initComponent: function() {
     YaVDR.Component.superclass.initComponent.call(this);
+    if(this.title) this.insert(0, new YaVDR.Component.Header({ html: this.title }));
   }
 });
 
@@ -217,33 +219,9 @@ YaVDR.Component.Header = Ext.extend(Ext.BoxComponent, {
   style: 'color: #233d6d;font-weight: bold; font-size: 1.4em; text-indent: 3px; font-family: sans-serif;'
 });
 
-YaVDR.Component.Legacy = Ext.extend(YaVDR.Component, {
-  initComponent: function() {
-    var panel = new Ext.Panel({
-      title: this.title,
-      frame: true,
-      items: [
-        new this.panel
-      ]
-    });
-
-    if (this.layout == 'fit') {
-      panel.layout = 'fit'
-    } else {
-      panel.anchor = '100%'
-    }
-
-    this.header = false;
-    //this.padding = 5;
-    this.items = panel;
-    YaVDR.Component.Legacy.superclass.initComponent.call(this);
-  }
-});
-
 YaVDR.Component.Item = Ext.extend(Ext.Panel, {
   frame: true,
-  width: 690,
-  style: 'margin-top: 5px'
+  width: 690
 });
 
 Ext.ns('YaVDR.Default');
