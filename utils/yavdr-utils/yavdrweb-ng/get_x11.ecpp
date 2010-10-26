@@ -430,10 +430,10 @@ else
 
 									Json::Value modeline;
 									modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
-									if (modeline["id"] == "nvidia-auto-select") { // map to real name
-										modeline["id"] = tokens[2] + "x" + tokens[6];
+									//if (modeline["id"] == "nvidia-auto-select") { // map to real name
+									//	modeline["id"] = tokens[2] + "x" + tokens[6];
 										//modeline["id"] = "800x600";
-									}
+									//}
 
 									modeline["modeline"] = trim(parts[parts.size()-1].substr(tokens[0].length()+1));
 									modeline["x"] = tokens[2];
