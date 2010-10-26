@@ -1,81 +1,16 @@
 Ext.ns('YaVDR');
 
 Ext.apply(YaVDR, {
-  /*
-   registerSection: function(section, title) {
-   var tbar = Ext.getCmp('yavdr-menu');
-   tbar.add({
-   itemId: section,
-   text: title,
-   menu: new Ext.menu.Menu()
-   });
-   tbar.doLayout();
-
-   },
-   registerCommand: function(title, func, section, iconCls) {
-   var tbar = Ext.getCmp('yavdr-menu');
-   if (section) {
-   var menu = tbar.getComponent(section).menu;
-   menu.add({
-   text: title,
-   iconCls: iconCls,
-   handler: func
-   });
-   } else {
-   tbar.add({
-   text: title,
-   handler: func
-   });
-   }
-   tbar.doLayout();
-   },  */
-
 
   getComponent: function(componentId) {
     return YaVDR.Components[componentId];
   },
-
   registerComponent: function(component) {
     var componentId = component.prototype.itemId;
     YaVDR.Components[componentId] = component;
-    /*
-     var tbar = Ext.getCmp('yavdr-menu');
-     var title = component.prototype.menuTitle;
-     if (!title) title = component.prototype.title;
-     var itemId = component.prototype.itemId;
-     var iconCls = component.prototype.iconCls;
-     if (section) {
-     var menu = tbar.getComponent(section).menu;
-     menu.add({
-     text: title,
-     iconCls: iconCls,
-     itemId: itemId,
-     scope: component,
-     handler: function() {
-     YaVDR.openComponent(this);
-     }
-     });
-     } else {
-     tbar.add({
-     itemId: itemId,
-     // iconCls: iconCls,
-     text: title,
-     scope: component,
-     handler: function() {
-     YaVDR.openComponent(this);
-     }
-     });
-     }
-     tbar.doLayout();   */
   },
   openComponent: function(componentId) {
-    Ext.History.add(componentId);
-
-    /*
-     var panel = new component;
-     Ext.getCmp('yavdr-content').add(panel);
-     Ext.History.add(panel.itemId);
-     */
+    if(YaVDR.Components[componentId]) Ext.History.add(componentId);
   },
   showComponent: function(componentId) {
     if (!componentId) componentId = 'dashboard';

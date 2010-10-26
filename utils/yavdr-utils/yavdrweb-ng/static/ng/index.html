@@ -143,113 +143,27 @@ background: #FFF;
 <script type="text/javascript" src="/static/ng/static/javascript/component/settings/vdr_generic.js"></script>
 <script type="text/javascript" src="/static/ng/static/javascript/component/settings/vdr_channels.js"></script>
 
-
-<script type="text/javascript" src="/static/config_tabs/vdr-frontend.js"></script>
-<script type="text/javascript" src="/static/config_tabs/vdr-upload-config.js"></script>
-<script type="text/javascript" src="/static/config_tabs/shutdown.js"></script>
-<script type="text/javascript" src="/static/config_tabs/lifeguard.js"></script>
-<script type="text/javascript" src="/static/config_tabs/packages.js"></script>
-<script type="text/javascript" src="/static/config_tabs/channels.js"></script>
-<script type="text/javascript" src="/static/config_tabs/remote.js"></script>
-<script type="text/javascript" src="/static/config_tabs/sound.js"></script>
-<script type="text/javascript" src="/static/config_tabs/timeout.js"></script>
-<script type="text/javascript" src="/static/config_tabs/x11.js"></script>
-<script type="text/javascript" src="/static/config_tabs/system.js"></script>
-<script type="text/javascript" src="/static/config_tabs/network.js"></script>
-<script type="text/javascript" src="/static/config_tabs/web-frontend.js"></script>
-<script type="text/javascript" src="/static/config_tabs/diagnose.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_system_infos.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_system_logs.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_xbmc.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_lirc.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_vdr.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_x11.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_alsa.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_dpkg.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_yavdr.js"></script>
 
 
-<script type="text/javascript" src="/static/ng/static/javascript/component/vdr/frontend.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/vdr/lifeguard.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/vdr/shutdown.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/vdr/packages.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/remote.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/sound.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/config_editor.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/grub.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/display.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/network.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/system_infos.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/system_logs.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/xbmc_logs.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/lirc.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/vdr.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/x11.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/dpkg.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/diagnose/yavdr.js"></script>
+
+<script type="text/javascript" src="/static/ng/static/javascript/base/pastebin.js"></script>
+
 
 <script type="text/javascript">
   YaVDR.Data = {
     locale: 'de',
     debug: true
   };
-
-
-  // Build Menu
-  Ext.onReady(function() {
-
-
-
-                                   /*
-    YaVDR.registerComponent(YaVDR.Component.Programm);
-    YaVDR.registerComponent(YaVDR.Component.Timer);
-    YaVDR.registerComponent(YaVDR.Component.Recordings);
-
-
-    YaVDR.registerComponent(YaVDR.Component.Settings);
-    YaVDR.registerComponent(YaVDR.Component.System);
-
-    Ext.getCmp('yavdr-menu').add({ text: 'ab hier alt ->'});
-
-    YaVDR.registerSection('vdr', 'VDR-Einstellung');
-
-    YaVDR.registerComponent(YaVDR.Component.VDR.Frontend, 'vdr');
-    YaVDR.registerComponent(YaVDR.Component.VDR.Lifeguard, 'vdr');
-    YaVDR.registerComponent(YaVDR.Component.VDR.Shutdown, 'vdr');
-    YaVDR.registerComponent(YaVDR.Component.VDR.Packages, 'vdr');
-
-
-    YaVDR.registerSection('system', 'System');
-    YaVDR.registerComponent(YaVDR.Component.System.Remote, 'system');
-    YaVDR.registerComponent(YaVDR.Component.System.ConfigEditor, 'system');
-    YaVDR.registerComponent(YaVDR.Component.System.Sound, 'system');
-    YaVDR.registerComponent(YaVDR.Component.System.Grub, 'system');
-    YaVDR.registerComponent(YaVDR.Component.System.Display, 'system');
-    YaVDR.registerComponent(YaVDR.Component.System.Network, 'system');
-
-    YaVDR.registerSection('commands', 'Befehle');
-    YaVDR.registerCommand('VDR neustarten', function() {
-      alert('todo');
-    }, 'commands');
-    YaVDR.registerCommand('VDR beenden', function() {
-      alert('todo');
-    }, 'commands');
-    YaVDR.registerCommand('XBMC beenden', function() {
-      alert('todo');
-    }, 'commands');
-    YaVDR.registerCommand('System neustarten', function() {
-      alert('todo');
-    }, 'commands');
-    YaVDR.registerSection('diagnose', 'Diagnose');
-    YaVDR.registerComponent(YaVDR.Component.Diagnose.SystemInfos, 'diagnose');
-    YaVDR.registerComponent(YaVDR.Component.Diagnose.SystemLogs, 'diagnose');
-    YaVDR.registerComponent(YaVDR.Component.Diagnose.XbmcLogs, 'diagnose');
-    YaVDR.registerComponent(YaVDR.Component.Diagnose.Lirc, 'diagnose');
-    YaVDR.registerComponent(YaVDR.Component.Diagnose.VDR, 'diagnose');
-    YaVDR.registerComponent(YaVDR.Component.Diagnose.X11, 'diagnose');
-    YaVDR.registerComponent(YaVDR.Component.Diagnose.Dpkg, 'diagnose');
-    YaVDR.registerComponent(YaVDR.Component.Diagnose.YaVDR, 'diagnose');
-
-                                   */
-    /* Ext.getCmp('yavdr-menu').add({
-     text: 'Test'
-     });   */
-
-
-
-  });
-
 </script>
 </head>
 <body>

@@ -16,10 +16,10 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
             margins:'0 5 5 0',
             height: 40,
             scale: 'medium',
-            flex: 0.25/*,
+            flex: 0.25,
             handler: function(button) {
               YaVDR.openComponent(button.itemId);
-            }           */
+            }
           }
         },
         items: [
@@ -27,61 +27,57 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
 
             items: [
               {
-                itemId: '',
-                text: 'System-Informationen',
-                scope: YaVDR.Component.Diagnose.SystemInfos
+                itemId: 'system-diagnose-system-infos',
+                text: 'System-Informationen'
               },
               {
-                text: 'System-Logfiles',
-                scope: YaVDR.Component.Diagnose.SystemLogs
+                itemId: 'system-diagnose-system-logs',
+                text: 'System-Logfiles'
               },
               {
-                text: 'XBMC-Abstürze',
-                scope: YaVDR.Component.Diagnose.XbmcLogs
+                itemId: 'system-diagnose-xbmc',
+                text: 'XBMC-Abstürze'
               },
               {
-                text: 'LIRC-Konfiguration',
-                scope: YaVDR.Component.Diagnose.Lirc
+                itemId: 'system-diagnose-lirc',
+                text: 'LIRC-Konfiguration'
               }
             ]
           },
           {
             items: [
               {
-                text: 'VDR-Konfiguration',
-                scope: YaVDR.Component.Diagnose.VDR
+                itemId: 'system-diagnose-vdr',
+                text: 'VDR-Konfiguration'
               },
               {
-                text: 'X-Serever',
-                scope: YaVDR.Component.Diagnose.X11
+                itemId: 'system-diagnose-x11',
+                text: 'X-Serever'
               },
               {
-                text: 'Sound (ALSA)',
-                scope: YaVDR.Component.Diagnose.SystemInfos
+                itemId: 'system-diagnose-alsa',
+                text: 'Sound (ALSA)'
               },
               {
-                text: 'Pakete',
-                scope: YaVDR.Component.Diagnose.Dpkg
+                itemId: 'system-diagnose-dpkg',
+                text: 'Pakete'
               }
             ]
           },
           {
             items: [
               {
-                text: 'yaVDR-Utils',
-                scope: YaVDR.Component.Diagnose.SystemInfos
+                itemId: 'system-diagnose-yavdr',
+                text: 'yaVDR-Utils'
               },
               {
-                xtype: 'spacer',
-                scope: YaVDR.Component.Diagnose.SystemInfos
+                xtype: 'spacer'
               },
               {
-                xtype: 'spacer',
-                scope: YaVDR.Component.Diagnose.SystemInfos
+                xtype: 'spacer'
               },
               {
-                xtype: 'spacer',
-                scope: YaVDR.Component.Diagnose.SystemInfos
+                xtype: 'spacer'
               }
             ]
           }
