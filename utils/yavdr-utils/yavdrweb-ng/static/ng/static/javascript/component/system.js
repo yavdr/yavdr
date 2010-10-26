@@ -1,6 +1,5 @@
 YaVDR.Component.System = Ext.extend(YaVDR.Component, {
-  itemId: 'system-overview',
-  menuTitle: 'System',
+  itemId: 'system',
   initComponent: function() {
 
     this.items = [
@@ -22,10 +21,10 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
             margins:'0 5 5 0',
             height: 40,
             scale: 'medium',
-            flex: 0.25,
-            handler: function() {
-              YaVDR.openComponent(this);
-            }
+            flex: 0.25/*,
+            handler: function(button) {
+              YaVDR.openComponent(button.itemId);
+            }           */
           }
         },
         items: [
@@ -33,6 +32,7 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
 
             items: [
               {
+                itemId: '',
                 text: 'System-Informationen',
                 scope: YaVDR.Component.Diagnose.SystemInfos
               },
@@ -93,6 +93,8 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
         ]
       })
     ];
-    YaVDR.Component.Settings.superclass.initComponent.call(this);
+    YaVDR.Component.System.superclass.initComponent.call(this);
   }
 });
+
+YaVDR.registerComponent(YaVDR.Component.System);

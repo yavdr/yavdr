@@ -1,9 +1,13 @@
 YaVDR.Component.Programm = Ext.extend(YaVDR.Component, {
   itemId: 'programm',
-  title: 'Programm',
-  border: true,
-  frame: true,
   initComponent: function() {
+    this.items = [
+      new YaVDR.Component.Header({
+        html: 'Programm'
+      })
+    ];
     YaVDR.Component.Programm.superclass.initComponent.call(this);
   }
 });
+
+YaVDR.registerComponent(YaVDR.Component.Programm);

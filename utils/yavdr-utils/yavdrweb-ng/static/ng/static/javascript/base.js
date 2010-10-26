@@ -1,70 +1,94 @@
 Ext.ns('YaVDR');
 
 Ext.apply(YaVDR, {
-  registerSection: function(section, title) {
-    var tbar = Ext.getCmp('yavdr-menu');
-    tbar.add({
-      itemId: section,
-      text: title,
-      menu: new Ext.menu.Menu()
-    });
-    tbar.doLayout();
+  /*
+   registerSection: function(section, title) {
+   var tbar = Ext.getCmp('yavdr-menu');
+   tbar.add({
+   itemId: section,
+   text: title,
+   menu: new Ext.menu.Menu()
+   });
+   tbar.doLayout();
 
-  },
-  registerCommand: function(title, func, section, iconCls) {
-    var tbar = Ext.getCmp('yavdr-menu');
-    if (section) {
-      var menu = tbar.getComponent(section).menu;
-      menu.add({
-        text: title,
-        iconCls: iconCls,
-        handler: func
-      });
-    } else {
-      tbar.add({
-        text: title,
-        handler: func
-      });
-    }
-    tbar.doLayout();
-  },
-  registerComponent: function(component, section) {
-    var tbar = Ext.getCmp('yavdr-menu');
-    var title = component.prototype.menuTitle;
-    if (!title) title = component.prototype.title;
-    var itemId = component.prototype.itemId;
-    var iconCls = component.prototype.iconCls;
-    if (section) {
-      var menu = tbar.getComponent(section).menu;
-      menu.add({
-        text: title,
-        iconCls: iconCls,
-        itemId: itemId,
-        scope: component,
-        handler: function() {
-          YaVDR.openComponent(this);
-        }
-      });
-    } else {
-      tbar.add({
-        itemId: itemId,
-        // iconCls: iconCls,
-        text: title,
-        scope: component,
-        handler: function() {
-          YaVDR.openComponent(this);
-        }
-      });
-    }
-    tbar.doLayout();
-  },
-  openComponent: function(component) {
-    var panel = new component;
-    Ext.getCmp('yavdr-content').add(panel);
-    Ext.History.add(panel.itemId);
+   },
+   registerCommand: function(title, func, section, iconCls) {
+   var tbar = Ext.getCmp('yavdr-menu');
+   if (section) {
+   var menu = tbar.getComponent(section).menu;
+   menu.add({
+   text: title,
+   iconCls: iconCls,
+   handler: func
+   });
+   } else {
+   tbar.add({
+   text: title,
+   handler: func
+   });
+   }
+   tbar.doLayout();
+   },  */
 
+
+  getComponent: function(componentId) {
+    return YaVDR.Components[componentId];
+  },
+
+  registerComponent: function(component) {
+    var componentId = component.prototype.itemId;
+    YaVDR.Components[componentId] = component;
+    /*
+     var tbar = Ext.getCmp('yavdr-menu');
+     var title = component.prototype.menuTitle;
+     if (!title) title = component.prototype.title;
+     var itemId = component.prototype.itemId;
+     var iconCls = component.prototype.iconCls;
+     if (section) {
+     var menu = tbar.getComponent(section).menu;
+     menu.add({
+     text: title,
+     iconCls: iconCls,
+     itemId: itemId,
+     scope: component,
+     handler: function() {
+     YaVDR.openComponent(this);
+     }
+     });
+     } else {
+     tbar.add({
+     itemId: itemId,
+     // iconCls: iconCls,
+     text: title,
+     scope: component,
+     handler: function() {
+     YaVDR.openComponent(this);
+     }
+     });
+     }
+     tbar.doLayout();   */
+  },
+  openComponent: function(componentId) {
+    Ext.History.add(componentId);
+
+    /*
+     var panel = new component;
+     Ext.getCmp('yavdr-content').add(panel);
+     Ext.History.add(panel.itemId);
+     */
+  },
+  showComponent: function(componentId) {
+    if(!componentId) componentId = 'dashboard';
+    var panel = YaVDR.getComponent(componentId);
+    if(!panel) {
+      YaVDR.openComponent('dashboard');
+    } else {
+      Ext.getCmp('yavdr-content').add(new YaVDR.Components[componentId]);
+      Ext.getCmp('yavdr-content').getLayout().setActiveItem(componentId);
+    }
   }
 });
+YaVDR.Components = new Array();
 
 YaVDR.Header = Ext.extend(Ext.Panel, {
   height: 56,
@@ -82,22 +106,48 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
   defaults: {
     iconAlign: 'center',
     xtype:'button',
-    margins:'5 5 0 0'
+    margins:'5 5 0 0',
+    handler: function(button) {
+      YaVDR.openComponent(button.getItemId())
+    }
   },
   initComponent: function() {
 
 
     this.items = [
       {
+        itemId: 'dashboard',
         height: 50,
         width: 50,
         margins:'5 15 0 0',
         cls: 'x-btn-menu',
         scale: 'larger',
-        icon: 'static/images/menu_home.png',
-        handler: function() {
-          YaVDR.openComponent(YaVDR.Component.Dashboard)
-        }
+        icon: 'static/images/menu_home.png'
+      },
+      {
+        itemId: 'programm',
+        margins:'5 5 0 0',
+        text: 'Programm'
+      },
+      {
+        itemId: 'recordings',
+        margins:'5 5 0 0',
+        text: 'Aufnahmen'
+      },
+      {
+        itemId: 'timer',
+        margins:'5 5 0 0',
+        text: 'Timer'
+      },
+      {
+        itemId: 'settings',
+        margins:'5 5 0 0',
+        text: 'Einstellungen'
+      },
+      {
+        itemId: 'system',
+        margins:'5 5 0 0',
+        text: 'System'
       }
     ];
 
@@ -123,7 +173,7 @@ YaVDR.Body = Ext.extend(Ext.Panel, {
           autoScroll: true
         },
         items: [
-          new YaVDR.Component.Dashboard
+          //new YaVDR.Component.Dashboard
         ]
       })
     ];
@@ -163,7 +213,8 @@ Ext.ns('YaVDR.Component.System');
 Ext.ns('YaVDR.Component.Diagnose');
 
 YaVDR.Component.Header = Ext.extend(Ext.BoxComponent, {
-  style: 'color: #233d6d;font-weight: bold; font-size: 1.4em; margin: 0 0 5px 3px; font-family: sans-serif;'
+  height: 36,
+  style: 'color: #233d6d;font-weight: bold; font-size: 1.4em; text-indent: 3px; font-family: sans-serif;'
 });
 
 YaVDR.Component.Legacy = Ext.extend(YaVDR.Component, {
@@ -232,13 +283,10 @@ Ext.onReady(function() {
 
 
   Ext.History.on('change', function(token) {
-    if (!token) {
-      token = 'dashboard';
-    }
-    Ext.getCmp('yavdr-content').getLayout().setActiveItem(token);
+    if (!token) token = 'dashboard';
+    YaVDR.showComponent(token);
   });
-
-
+  YaVDR.showComponent(Ext.History.getToken());
 });
 
 

@@ -17,6 +17,7 @@ YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
     YaVDR.Component.Settings.VdrGeneric.superclass.initComponent.call(this);
   }
 });
+YaVDR.registerComponent(YaVDR.Component.Settings.VdrGeneric);
 
 
 YaVDR.Component.Settings.VdrGeneric.Lifeguard = Ext.extend(YaVDR.Default.Form, {

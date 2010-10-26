@@ -65,3 +65,5 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
     YaVDR.Component.Dashboard.superclass.initComponent.call(this);
   }
 });
+
+YaVDR.registerComponent(YaVDR.Component.Dashboard);

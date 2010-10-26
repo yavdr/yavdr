@@ -1,6 +1,5 @@
 YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
-  itemId: 'settings-overview',
-  menuTitle: 'Einstellung',
+  itemId: 'settings',
   initComponent: function() {
 
     this.items = [
@@ -23,8 +22,8 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
             height: 40,
             scale: 'medium',
             flex: 0.25,
-            handler: function() {
-              YaVDR.openComponent(this);
+            handler: function(button) {
+              YaVDR.openComponent(button.itemId);
             }
           }
         },
@@ -34,12 +33,12 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
             items: [
               {
                 text: 'Allgemein',
-                scope: YaVDR.Component.Settings.VdrGeneric,
+                itemId: 'settings-vdr-generic',
                 icon: '/icons/fugue/television-image.png'
               },
               {
                 text: 'Kanäle',
-                scope: YaVDR.Component.Settings.VdrChannels,
+                itemId: 'settings-vdr-channels',
                 icon: '/icons/fugue/book-open-list.png'
               },
               {
@@ -129,3 +128,5 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
     YaVDR.Component.Settings.superclass.initComponent.call(this);
   }
 });
+
+YaVDR.registerComponent(YaVDR.Component.Settings);
