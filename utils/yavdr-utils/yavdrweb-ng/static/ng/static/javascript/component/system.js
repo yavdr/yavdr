@@ -1,14 +1,12 @@
 YaVDR.Component.System = Ext.extend(YaVDR.Component, {
   itemId: 'system',
   title: 'System',
+  description: 'Hier haben Sie die Möglichkeit Ihr System zu überwachen.',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: 'Einleitung',
-        html: 'Hier haben Sie die möglichkeit Ihr System zu überwachen.'
-      }),
-      new YaVDR.Component.Item({
         title: 'Diagnose',
+        style: 'padding-bottom: 5px',
         defaults: {
           anchor: '100%',
           margins: '5 0 0 0',

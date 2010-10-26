@@ -78,9 +78,9 @@ Ext.apply(YaVDR, {
      */
   },
   showComponent: function(componentId) {
-    if(!componentId) componentId = 'dashboard';
+    if (!componentId) componentId = 'dashboard';
     var panel = YaVDR.getComponent(componentId);
-    if(!panel) {
+    if (!panel) {
       YaVDR.openComponent('dashboard');
     } else {
       Ext.getCmp('yavdr-content').add(new YaVDR.Components[componentId]);
@@ -206,7 +206,12 @@ YaVDR.Component = Ext.extend(Ext.Panel, {
   header: false,
   initComponent: function() {
     YaVDR.Component.superclass.initComponent.call(this);
-    if(this.title) this.insert(0, new YaVDR.Component.Header({ html: this.title }));
+    if (this.title) this.insert(0, new YaVDR.Component.Header({ html: this.title }));
+    if (this.description) this.insert(1, new YaVDR.Component.Item({
+      title: 'Einleitung',
+      style: 'padding-bottom: 5px',
+      html: this.description
+    }));
   }
 });
 
@@ -216,7 +221,7 @@ Ext.ns('YaVDR.Component.Diagnose');
 
 YaVDR.Component.Header = Ext.extend(Ext.BoxComponent, {
   height: 36,
-  style: 'color: #233d6d;font-weight: bold; font-size: 1.4em; text-indent: 3px; font-family: sans-serif;'
+  style: 'color: #233d6d;font-weight: bold; font-size: 1.4em; text-indent: 3px; font-family: sans-serif; padding-bottom: 5px;'
 });
 
 YaVDR.Component.Item = Ext.extend(Ext.Panel, {
