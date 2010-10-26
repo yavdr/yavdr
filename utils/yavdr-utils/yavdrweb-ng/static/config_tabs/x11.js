@@ -367,9 +367,6 @@ YaVDR.X11.DefaultFrequency = Ext.extend(Ext.form.ComboBox, {
     this.store.on('remove', this.onRecordRemove, this);
     this.on('select', this.test , this);
   },
-  test: function(y, x) {
-    alert(x); console.log(x);
-  },
   onRecordRemove: function(store, record, index) {
     // lösche ich die freq die aus gewählt ist nehme ich den ersten noch verfühgbaren eintrag aus store
     if(record.data.id == this.getValue()) {

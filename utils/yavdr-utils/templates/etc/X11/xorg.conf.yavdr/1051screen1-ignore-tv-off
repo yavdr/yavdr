@@ -1,3 +1,4 @@
-<?cs if:(?system.x11.dualhead.enabled && system.x11.dualhead.enabled == 1 && ?system.x11.display.1.mode && system.x11.display.1.mode != "" && system.x11.display.1.mode != "disabled") ?>
+<?cs if:(?system.x11.display.1.default && system.x11.display.1.default != "" && system.x11.display.1.default != "disabled") ?>
+    Option         "ConnectedMonitor" "<?cs var:system.x11.display.1.device ?>"
     Option         "UseDisplayDevice" "<?cs var:system.x11.display.1.device ?>"
 <?cs /if ?>
