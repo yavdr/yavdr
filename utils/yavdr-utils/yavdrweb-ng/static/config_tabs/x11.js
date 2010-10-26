@@ -151,7 +151,8 @@ YaVDR.X11 = Ext.extend(YaVDR.BaseFormPanel, {
       }));
     }
     
-    if (display.itemData.current.defaultfreq.substring(0, record.data.id.length) == record.data.id) {
+    if (typeof display.itemData.current.defaultfreq != 'undefined' && 
+    		display.itemData.current.defaultfreq.substring(0, record.data.id.length) == record.data.id) {
 	  defaultFrequency.setValue(display.itemData.current.defaultfreq);
     } else {
 	  // select first
