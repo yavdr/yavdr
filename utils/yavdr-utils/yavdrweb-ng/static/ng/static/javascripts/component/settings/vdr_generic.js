@@ -75,11 +75,36 @@ YaVDR.Component.Settings.VdrGeneric.Lifeguard = Ext.extend(YaVDR.Default.Form, {
       this.lifeguardHelp
     ];
     YaVDR.Component.Settings.VdrGeneric.Lifeguard.superclass.initComponent.call(this);
+  },
+  doSave: function() {
+    this.getForm().submit({
+      url : '/admin/set_signal?signal=change-lifeguard'
+    });
+  },
+  doLoad: function() {
+    YaVDR.getHdfTree('vdr.plugin.lifeguard.enable', function(data) {
+      if (typeof data != null) {
+        if (typeof data.enable == "object") {
+          for (var i = 0; i < data.enable.length; i++) {
+            this.getComponent('lifeguard').items.each(function(item) {
+              if (item.getItemId() == data.enable[i]) {
+                item.setValue(true);
+              }
+            });
+          }
+        }
+      } else {
+        this.getComponent('lifeguard').items.each(function(field) {
+          field.setValue(true);
+        });
+      }
+    }, this);
   }
 });
 
 
 YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
+
   initComponent: function() {
 
     this.frontendStore = new Ext.data.JsonStore({
@@ -149,35 +174,15 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
 
     YaVDR.Component.Settings.VdrGeneric.Frontend.superclass.initComponent.call(this);
   },
-
-  onLoad: function() {
-    Ext.Ajax.request({
-      url: '/admin/get_hdf_value?hdfpaths=vdr.frontend&hdfpaths=system.x11.dualhead.enabled&hdfpaths=vdr.plugin.graphtft.enabled',
-      timeout: 3000,
-      method: 'GET',
-      scope: this,
-      success: function(xhr) {
-        var data = Ext.util.JSON.decode(xhr.responseText);
-        var currentFrontend = "";
-
-        var switchScreenButton = this.getTopToolbar().getComponent('switch-screen');
-
-        try {
-          currentFrontend = data.vdr.frontend;
-        } catch (err) {
-          Ext.MessageBox.alert(getLL("standardform.messagebox_caption.error"), 'Could not recognize current frontend.');
-          return false; // Abort
-        }
-
-        this.frontendSelectiorView.select("frontend-selection-" + currentFrontend);
-
-        if (data.system.x11.dualhead.enabled == "1" && data.vdr.plugin.graphtft.enabled != "1") {
-          switchScreenButton.enable();
-        } else {
-          switchScreenButton.disable();
-        }
-
-      }
+  doSave: function() {
+    this.getForm().submit({
+      url: '/admin/set_signal?signal=change-frontend'
     });
+  },
+
+  doLoad: function() {
+    YaVDR.getHdfValue('vdr.frontend', function(value) {
+      this.frontendSelectiorView.select("frontend-selection-" + value);
+    }, this);
   }
 });

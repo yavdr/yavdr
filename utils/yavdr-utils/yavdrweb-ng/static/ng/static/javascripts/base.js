@@ -3,6 +3,23 @@ YaVDR.Components = new Array();
 
 Ext.apply(YaVDR, {
 
+  notice: function(title, message) {
+    Ext.Msg.show({
+      title: title,
+      msg: message,
+      buttons: Ext.Msg.OK,
+      icon: Ext.MessageBox.INFO
+    });
+  },
+  alert: function(title, message) {
+    Ext.Msg.show({
+      title: title,
+      msg: message,
+      buttons: Ext.Msg.OK,
+      icon: Ext.MessageBox.ERROR
+    });
+  },
+
   getComponent: function(componentId) {
     return YaVDR.Components[componentId];
   },
@@ -22,6 +39,50 @@ Ext.apply(YaVDR, {
       Ext.getCmp('yavdr-content').add(new YaVDR.Components[componentId]);
       Ext.getCmp('yavdr-content').getLayout().setActiveItem(componentId);
     }
+  },
+  // Todo Error Handling
+  getHdfValue: function(key, callback, scope) {
+    Ext.Ajax.request({
+      url: '/admin/get_hdf_value?hdfpath=' + key,
+      timeout: 3000,
+      method: 'GET',
+      scope: scope,
+      success: function(xhr) {
+        var value = xhr.responseText;
+        callback.call(this, value);
+      }
+    });
+  },
+  // Todo Error Handling
+  getHdfTree: function(key, callback, scope) {
+    Ext.Ajax.request({
+      url: '/admin/get_hdf_value?hdftree=' + key,
+      timeout: 3000,
+      method: 'GET',
+      scope: scope,
+      success: function(xhr) {
+        var value = Ext.decode(xhr.responseText);
+        callback.call(this, value);
+      }
+    });
+  },
+  // Todo Error Handling
+  getFileContent: function(file, callback, scope, options) {
+    if (typeof options != 'object') options = {};
+
+    options = Ext.applyIf(options, {
+      puretext: true
+    });
+
+    Ext.Ajax.request({
+      url: '/admin/get_file_content?file=' + file + '&puretext=' + (options.puretext ? 'true' : 'false'),
+      timeout: 3000,
+      method: 'GET',
+      scope: scope,
+      success: function(xhr) {
+        callback.call(this, xhr.responseText);
+      }
+    })
   }
 });
 
@@ -141,24 +202,37 @@ YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
         itemId: 'cancel',
         scope: this,
         text: 'Zurücksetzen',
-        handler: this.onCancel,
+        handler: this.doLoad,
         icon: '/icons/fugue/cross.png'
       },
       {
         itemId: 'save',
         scope: this,
         text: 'Speichern',
-        handler: this.onSave,
+        handler: this.doSave,
         icon: '/icons/fugue/disk-black.png'
       }
     ];
     YaVDR.Default.Form.superclass.initComponent.call(this);
+    this.on('actioncomplete', this.afterComplete, this);
+    this.on('beforeaction', this.beforeAction, this);
+    this.on('actionfailed', this.actionFailed, this);
+    this.on('render', this.doLoad, this);
   },
-  onSave: function() {
-    alert('onSave not implemented');
+  actionFailed: function() {
+    YaVDR.alert('Übertragung', 'Die Daten könnte nicht übermittelt werden');
+    Ext.getBody().unmask();
   },
-  onCancel: function() {
-    alert('onCancel not implemented');
+  beforeAction: function(form, action) {
+    Ext.getBody().mask("Übertrage...", 'x-mask-loading');
+  },
+  afterComplete: function(form, action) {
+    YaVDR.notice('Übertragung', 'Die Daten wurde erfolgreich gespeichert');
+    Ext.getBody().unmask();
+  },
+  doSave: function() {
+  },
+  doLoad: function() {
   }
 });
 
