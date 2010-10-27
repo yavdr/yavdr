@@ -1,6 +1,0 @@
-
-# vorzeitiges beenden des ImonLCDs
-# soll sicherstellen, daß das Plugin wirklich deaktiviert und
-# sauber mit der neuen Timer-Aufwachzeit geproggt wird
-
-svdrpsend plug imonlcd off
