@@ -1,4 +1,5 @@
 Ext.ns('YaVDR');
+YaVDR.Components = new Array();
 
 Ext.apply(YaVDR, {
 
@@ -10,7 +11,7 @@ Ext.apply(YaVDR, {
     YaVDR.Components[componentId] = component;
   },
   openComponent: function(componentId) {
-    if(YaVDR.Components[componentId]) Ext.History.add(componentId);
+    if (YaVDR.Components[componentId]) Ext.History.add(componentId);
   },
   showComponent: function(componentId) {
     if (!componentId) componentId = 'dashboard';
@@ -23,7 +24,6 @@ Ext.apply(YaVDR, {
     }
   }
 });
-YaVDR.Components = new Array();
 
 YaVDR.Header = Ext.extend(Ext.Panel, {
   height: 56,
@@ -47,7 +47,6 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
     }
   },
   initComponent: function() {
-
 
     this.items = [
       {
@@ -106,10 +105,7 @@ YaVDR.Body = Ext.extend(Ext.Panel, {
         layout: 'card',
         defaults: {
           autoScroll: true
-        },
-        items: [
-          //new YaVDR.Component.Dashboard
-        ]
+        }
       })
     ];
 
@@ -134,34 +130,6 @@ YaVDR.Viewport = Ext.extend(Ext.Viewport, {
 
     YaVDR.Viewport.superclass.initComponent.call(this);
   }
-});
-
-YaVDR.Component = Ext.extend(Ext.Panel, {
-  border: false ,
-  header: false,
-  initComponent: function() {
-    YaVDR.Component.superclass.initComponent.call(this);
-    if (this.title) this.insert(0, new YaVDR.Component.Header({ html: this.title }));
-    if (this.description) this.insert(1, new YaVDR.Component.Item({
-      title: 'Einleitung',
-      style: 'padding-bottom: 5px',
-      html: this.description
-    }));
-  }
-});
-
-Ext.ns('YaVDR.Component.VDR');
-Ext.ns('YaVDR.Component.System');
-Ext.ns('YaVDR.Component.Diagnose');
-
-YaVDR.Component.Header = Ext.extend(Ext.BoxComponent, {
-  height: 36,
-  style: 'color: #233d6d;font-weight: bold; font-size: 1.4em; text-indent: 3px; font-family: sans-serif; padding-bottom: 5px;'
-});
-
-YaVDR.Component.Item = Ext.extend(Ext.Panel, {
-  frame: true,
-  width: 690
 });
 
 Ext.ns('YaVDR.Default');
@@ -206,16 +174,3 @@ Ext.onReady(function() {
   });
   YaVDR.showComponent(Ext.History.getToken());
 });
-
-
-// Hack for YaVDRMenuManager
-
-YaVDRMenuManager = {
-  addGroupPanelTab: function(x) {
-    return YaVDRMenuManager;
-  },
-
-  addGroupPanelSection: function(x) {
-    return YaVDRMenuManager;
-  }
-};

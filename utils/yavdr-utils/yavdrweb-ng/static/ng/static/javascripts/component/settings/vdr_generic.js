@@ -147,5 +147,36 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
     ];
 
     YaVDR.Component.Settings.VdrGeneric.Frontend.superclass.initComponent.call(this);
+  },
+
+  onLoad: function() {
+    Ext.Ajax.request({
+      url: '/admin/get_hdf_value?hdfpaths=vdr.frontend&hdfpaths=system.x11.dualhead.enabled&hdfpaths=vdr.plugin.graphtft.enabled',
+      timeout: 3000,
+      method: 'GET',
+      scope: this,
+      success: function(xhr) {
+        var data = Ext.util.JSON.decode(xhr.responseText);
+        var currentFrontend = "";
+
+        var switchScreenButton = this.getTopToolbar().getComponent('switch-screen');
+
+        try {
+          currentFrontend = data.vdr.frontend;
+        } catch (err) {
+          Ext.MessageBox.alert(getLL("standardform.messagebox_caption.error"), 'Could not recognize current frontend.');
+          return false; // Abort
+        }
+
+        this.frontendSelectiorView.select("frontend-selection-" + currentFrontend);
+
+        if (data.system.x11.dualhead.enabled == "1" && data.vdr.plugin.graphtft.enabled != "1") {
+          switchScreenButton.enable();
+        } else {
+          switchScreenButton.disable();
+        }
+
+      }
+    });
   }
 });

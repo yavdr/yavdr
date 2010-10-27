@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="/ext-ux/css/Portal.css"/>
 <link rel="stylesheet" type="text/css" href="/ext-ux/css/GroupTab.css"/>
 <link rel="stylesheet" type="text/css" href="/ext-ux/css/Spinner.css"/>
-<link rel="stylesheet" type="text/css" href="/static/yavdr.css"/>
+<link rel="stylesheet" type="text/css" href="/static/ng/static/stylesheets/yavdr.css"/>
 
 
 <script type="text/javascript" src="/ext/adapter/ext/ext-base.js"></script>
@@ -29,94 +29,6 @@
 <script type="text/javascript" src="/ext-ux/TabCloseMenu.js"></script>
 
 
-<style type="text/css">
-  .x-panel-body {
-    background-color: #F1F1F1;
-  }
-
-  .yavdr-menu .x-btn-menu .x-btn-tl,
-  .yavdr-menu .x-btn-menu .x-btn-tr,
-  .yavdr-menu .x-btn-menu .x-btn-tc,
-  .yavdr-menu .x-btn-menu .x-btn-ml,
-  .yavdr-menu .x-btn-menu .x-btn-mr,
-  .yavdr-menu .x-btn-menu .x-btn-mc,
-  .yavdr-menu .x-btn-menu .x-btn-bl,
-  .yavdr-menu .x-btn-menu .x-btn-br,
-  .yavdr-menu .x-btn-menu .x-btn-bc {
-    background: transparent;
-    width2: 0;
-  }
-
-  .yavdr-menu .x-btn-menu .x-btn-tl,
-  .yavdr-menu .x-btn-menu .x-btn-tr,
-  .yavdr-menu .x-btn-menu .x-btn-tc,
-  .yavdr-menu .x-btn-menu .x-btn-bl,
-  .yavdr-menu .x-btn-menu .x-btn-br,
-  .yavdr-menu .x-btn-menu .x-btn-bc {
-    height2: 0;
-  }
-
-  .yavdr-menu .x-btn-menu.x-btn-icon .x-btn-larger .x-btn-text {
-    width: 50px;
-    height: 50px;
-  }
-
-  .yavdr-menu .x-btn-small .x-btn-text {
-    padding: 0 5 0 5;
-  }
-
-    /*
-.yavdr-menu .x-btn-menu.x-btn-over {
-background: #FFF;
-}
-
-
-
-.yavdr-menu .x-btn-menu {
-
-}
-
-.yavdr-menu.x-btn-over {
-background: #FFF;
-}      */
-
-  .dashboard-icon {
-    background-image: url('/icons/silk/application_home.png')
-  }
-
-    /*
-
- font-family: 'Arial', 'Helvetica Neue';
- background-color: #4E78B1;
- color: #FFF;
- padding: 0 5px 0 5px;
- line-height: 40px;
- font-size: 30px;
- border-bottom: 1px solid #233d6d;
-}
-
-.yavdr-header .x-toolbar {
- background: transparent;
- border: none;
-}
-
-.yavdr-header .x-toolbar, x-toolbar-cell {
- padding: 3px 3px 3px 3px;
- background-color: #EEE;
-}
-
-.yavdr-header .x-toolbar .x-btn-text {
- color: #000;
- line-height: 15px;
- padding: 0 10px 0 10px;
- font-size: 13px;
-}
-
-    */
-
-
-</style>
-
 <script type="text/javascript">
   Ext.BLANK_IMAGE_URL = '/ext/resources/images/default/s.gif';
   var yavdrwebGlobalInfo = {
@@ -126,37 +38,37 @@ background: #FFF;
   };
 </script>
 
-<script type="text/javascript" src="/static/ng/static/javascript/base.js"></script>
-<script type="text/javascript" src="/static/base.js"></script>
-<script type="text/javascript" src="/static/dpkg.js"></script>
-<script type="text/javascript" src="/static/locale/de.js"></script>
-<script type="text/javascript" src="/static/language-handling.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/init.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component.js"></script>
 
-<script type="text/javascript" src="/static/ng/static/javascript/component/dashboard.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/programm.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/timer.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/recordings.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/settings.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/pastebin.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/easy_combobox.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/selection_list.js"></script>
 
-
-<script type="text/javascript" src="/static/ng/static/javascript/component/settings/vdr_generic.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/settings/vdr_channels.js"></script>
-
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_system_infos.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_system_logs.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_xbmc.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_lirc.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_vdr.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_x11.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_alsa.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_dpkg.js"></script>
-<script type="text/javascript" src="/static/ng/static/javascript/component/system/diagnose_yavdr.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/dashboard.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/programm.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/timer.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/recordings.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/settings.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system.js"></script>
 
 
+<script type="text/javascript" src="/static/ng/static/javascripts/component/settings/vdr_generic.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/settings/vdr_channels.js"></script>
 
-<script type="text/javascript" src="/static/ng/static/javascript/base/pastebin.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_system_infos.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_system_logs.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_xbmc.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_lirc.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_vdr.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_x11.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_alsa.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_dpkg.js"></script>
+<script type="text/javascript" src="/static/ng/static/javascripts/component/system/diagnose_yavdr.js"></script>
+
+
+
 
 
 <script type="text/javascript">
