@@ -59,7 +59,10 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
             margins:'0 5 0 0',
             height: 40,
             scale: 'medium',
-            flex: 0.25
+            flex: 0.25,
+            handler: function(button) {
+              YaVDR.openComponent(button.itemId);
+            }
           }
         },
         items: [
@@ -67,6 +70,7 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
             items: [
               {
                 text: 'Fernbedinung',
+                itemId: 'settings-hw-remote',
                 icon: '/icons/silk/keyboard.png'
               },
               {
@@ -95,7 +99,10 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
             margins:'0 5 0 0',
             height: 40,
             scale: 'medium',
-            flex: 0.25
+            flex: 0.25,
+            handler: function(button) {
+              YaVDR.openComponent(button.itemId);
+            }
           }
         },
         items: [
