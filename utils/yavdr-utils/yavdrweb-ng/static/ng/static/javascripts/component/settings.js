@@ -74,6 +74,7 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
                 icon: '/icons/silk/keyboard.png'
               },
               {
+                itemId: 'settings-hw-audio',
                 text: 'Tonausgabe',
                 icon: '/icons/fugue/speaker.png'
               },
@@ -118,6 +119,7 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
               },
               {
                 text: 'Pakete',
+                itemId: 'settings-system-packages',
                 icon: '/icons/silk/package.png'
               },
               {

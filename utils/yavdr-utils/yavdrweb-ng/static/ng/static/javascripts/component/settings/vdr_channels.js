@@ -5,7 +5,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
     this.items = [
       new YaVDR.Component.Header({
         region: 'north',
-        html: 'Kanäle'
+        html: 'Einstellungen'
       }),
       new YaVDR.Component.Item({
         region: 'center',
