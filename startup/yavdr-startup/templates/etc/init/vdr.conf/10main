@@ -19,7 +19,7 @@ end script
 kill timeout 15
 normal exit 0
 nice -10
-console owner
+console ouptput
 
 script
 # load default values and overrides from /etc/default/vdr 

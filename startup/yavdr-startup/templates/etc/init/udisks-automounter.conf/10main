@@ -1,7 +1,7 @@
 
 description     "start udisks-automounter to automount and notify vdr"
 
-start on filesystem
+start on stopped openbox-tools
 stop on runlevel [016]
 
 env DISPLAY=:1
