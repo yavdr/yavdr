@@ -1,4 +1,9 @@
 
+. /usr/lib/vdr/config-loader
+
+DIR="$2"
+NAME=$(basename "$DIR")
+
 case $1 in
 
         --mount)
