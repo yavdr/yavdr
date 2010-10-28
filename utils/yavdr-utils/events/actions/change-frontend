@@ -49,8 +49,7 @@ elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   disable_plugin "control"
 elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
   enable_plugin "dummydevice"
-#  disable_plugin "xine"
-  enable_plugin "xine"
+  disable_plugin "xine"
   disable_plugin "xineliboutput"
   disable_plugin "lcdproc"
   disable_plugin "imonlcd"
