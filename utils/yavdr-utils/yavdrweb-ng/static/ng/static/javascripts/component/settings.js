@@ -125,6 +125,7 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
               },
               {
                 text: 'Konfigurationseditor',
+                itemId: 'settings-system-config-editor',
                 icon: '/icons/silk/page_edit.png'
               }
             ]

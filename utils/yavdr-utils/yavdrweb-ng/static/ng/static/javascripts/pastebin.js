@@ -21,7 +21,8 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
       items: [
         {
           name: 'paste_name',
-          fieldLabel: 'Titel (optional)'
+          fieldLabel: 'Titel (optional)',
+          value: this.contentTitle
         },
         {
           name: 'paste_email',
@@ -78,8 +79,9 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
 });
 
 Ext.apply(YaVDR.PasteBin, {
-  paste: function(content) {
+  paste: function(content, title) {
     (new YaVDR.PasteBin({
+      contentTitle: title,
       content: content
     })).show();
   }

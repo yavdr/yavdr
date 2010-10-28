@@ -1,6 +1,5 @@
 YaVDR.Component.System.Diagnose = Ext.extend(YaVDR.Component, {
   layout: 'border',
-  subTitle: 'Diagnose',
   initComponent: function() {
 
     this.tabPanel = new Ext.TabPanel({ activeTab: 0 });
@@ -74,6 +73,6 @@ YaVDR.Component.System.DiagnoseItem =  Ext.extend(Ext.Panel, {
     this.body.dom.scrollTop = this.body.dom.scrollHeight - this.body.dom.offsetHeight;
   },
   sendPasteBin: function() {
-    YaVDR.PasteBin.paste(this.body.dom.innerHTML);
+    YaVDR.PasteBin.paste(this.body.dom.innerHTML, this.file);
   }
 });
