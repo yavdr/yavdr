@@ -111,6 +111,7 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
             items: [
               {
                 text: 'System',
+                itemId: 'settings-system-generic',
                 icon: '/icons/silk/computer.png'
               },
               {
