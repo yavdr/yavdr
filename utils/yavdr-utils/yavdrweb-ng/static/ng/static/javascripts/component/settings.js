@@ -80,6 +80,7 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
               },
               {
                 text: 'Anzeige',
+                itemId: 'settings-hw-display',
                 icon: '/icons/fugue/television.png'
               },
               {
