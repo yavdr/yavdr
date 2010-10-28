@@ -4,6 +4,13 @@ YaVDR.Component.Settings.SystemGeneric = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
+        title: 'Webfrontend-Sprache',
+        style: 'margin-bottom: 5px',
+        items: [
+          new YaVDR.Component.Settings.SystemGeneric.Language
+        ]
+      }),
+      new YaVDR.Component.Item({
         title: 'Shutdown',
         style: 'margin-bottom: 5px',
         items: [
@@ -52,6 +59,92 @@ YaVDR.Component.Settings.SystemGeneric.Grub = Ext.extend(YaVDR.Default.Form, {
   doLoad: function() {
     YaVDR.getHdfValue('system.grub.timeout', function(value) {
       this.getComponent('timeout').setValue(value);
+    }, this);
+  }
+});
+
+
+YaVDR.Component.Settings.SystemGeneric.Language = Ext.extend(YaVDR.Default.Form, {
+  initComponent: function() {
+
+
+    this.store = new Ext.data.JsonStore({
+      fields: [
+        { name: 'key' },
+        { name: 'title' }
+      ],
+
+      data: [
+        {
+          key: 'zh',
+          title: 'Chinese'
+        },
+        {
+          key: 'nl',
+          title: 'Dutch'
+        },
+        {
+          key: 'en',
+          title: 'English'
+        },
+        {
+          key: 'fr',
+          title: 'French'
+        },
+        {
+          key: 'de',
+          title: 'German'
+        },
+        {
+          key: 'it',
+          title: 'Italian'
+        },
+        {
+          key: 'pt',
+          title: 'Portugese'
+        }
+      ]
+
+    });
+
+    this.languageTpl = new Ext.XTemplate(
+      '<tpl for=".">',
+      '<div class="selection-wrap selectable" id="language-selection-{key}">',
+      '<div class="title">{title}</div>',
+      '</div>',
+      '</tpl>'
+      );
+
+    this.languageSelectionHidden = new Ext.form.Hidden({
+      name: 'value',
+      value: 'english'
+    });
+
+    this.languageSelectiorView = new YaVDR.SelectionList({
+      hiddenField: this.languageSelectionHidden,
+      fieldLabel: "Sprache",
+      tpl: this.languageTpl,
+      store: this.store
+    });
+
+    this.items = [
+      this.languageSelectionHidden,
+      this.languageSelectiorView
+    ];
+
+    YaVDR.Component.Settings.SystemGeneric.Language.superclass.initComponent.call(this);
+  },
+  doSave: function() {
+    this.getForm().submit({
+      url: '/admin/set_hdf_value?key=webfrontend.language',
+      success: function (form, action) {
+        window.location.reload();
+      }
+    })
+  },
+  doLoad: function() {
+    YaVDR.getHdfValue('webfrontend.language', function(value) {
+      this.languageSelectiorView.select("language-selection-" + value);
     }, this);
   }
 });
