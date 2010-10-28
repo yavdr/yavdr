@@ -115,6 +115,7 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
               },
               {
                 text: 'Netzwerk',
+                itemId: 'settings-system-network',
                 icon: '/icons/fugue/network-ethernet.png'
               },
               {
