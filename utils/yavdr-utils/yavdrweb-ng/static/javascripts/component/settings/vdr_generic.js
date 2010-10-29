@@ -1,7 +1,7 @@
 YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
   itemId: 'settings-vdr-generic',
   title: 'General Settings',
-  description: 'Hier können allgemeine Einstellungen zum VDR vorgenommen werden.',
+  description: 'Here you can make general setting for and around VDR.',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
@@ -134,7 +134,7 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
         {
           key: 'headless',
           title: 'headless (yaVDR server)',
-          description: 'You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards.'
+          description: 'You can choose this if you don\'t want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards.'
         }
       ]
 
