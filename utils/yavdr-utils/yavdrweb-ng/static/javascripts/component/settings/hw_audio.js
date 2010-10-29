@@ -1,7 +1,7 @@
 YaVDR.Component.Settings.HwAudio = Ext.extend(YaVDR.Component, {
   itemId: 'settings-hw-audio',
-  description: 'Stellen Sie hier den Audio-Ausgang ein',
-  title: 'Einstellung',
+  description: 'Please select the audio output',
+  title: 'Audio Settings',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
@@ -29,27 +29,27 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
         {
           key: 'analog',
           title: 'Analog',
-          description: 'Tonausgabe erfolgt über Analog über die Klinkenbuchse.'
+          description: 'Audio output will happen through the speaker/headphone plug'
         },
         {
           key: 'spdif',
           title: 'Digital (Toslink/SPDIF)',
-          description: 'Tonausgabe erfolgt über digital über Toslink/SPDIF.'
+          description: 'Audio output will happen through Toslink/SPDIF.'
         },
         {
           key: 'hdmi',
           title: 'HDMI Stereo',
-          description: 'Tonausgabe erfolgt über HDMI in PCM. Diese Variante ist für Receiver oder TVs die keinen keinen Suround verarbeiten können.'
+          description: 'Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets).'
         },
         {
           key: 'hdmi+analog',
           title: 'HDMI-Analog',
-          description: 'Tonausgabe erfolgt über HDMI und Analog zeitgleich.'
+          description: 'Audio output will happen through HDMI and analog at the same time. HDMI will be stereo.'
         },
         {
           key: 'passthrough',
           title: 'HDMI Pass Through',
-          description: 'Tonausgabe erfolgt über HDMI und liefert den orginalen Stream.'
+          description: 'Audio output will happen through HDMI with Pass Through.'
         }
       ]
 
@@ -77,7 +77,7 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
     });
 
     this.soundSelectiorView = new YaVDR.SelectionList({
-      fieldLabel: "Ton-Konfiguration",
+      fieldLabel: "Audio Output ",
       hiddenField: this.soundSelectionHidden,
       tpl: this.soundTpl,
       store: this.store
