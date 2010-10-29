@@ -2,7 +2,7 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
   data: {},
   itemId: 'settings-hw-remote',
   title: 'Einstellung',
-  description: '<p>Um den Infrarot-Empfänger Ihrer Fernbedienung in Betrieb zu nehmen, wählen Sie LIRC oder einen der beiden zu LIRC kompatiblen Server (Inputlirc oder IRServer) aus. Sie sollten denjenigen Server auswählen, welcher am besten zu der von Ihnen verwendeten Hardware passt. Sobald Sie den Button "Speichern" drücken, wird die Anwendung VDR neu gestartet, um die Änderung zu übernehmen.<br>Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben, wird Ihnen direkt nach dem Neustart auf der Bildschirmanzeige ("On-Screen-Display") eine Anlernphase für Ihre Fernbedienung angeboten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie erneut auf den Button "Speichern" drücken.<br>&nbsp;</p><h2>Lirc</h2><p>Dieses unterstützt die meisten Geräte.<br>Zur Konfiguration ist es nötig zu wissen, welcher Treiber für das eigene Gerät benötigt wird.<br>Wenn es ein serieller Empfänger ist, muss zusätzlich noch die verwendete serielle Schnittstelle ausgewählt werden.<br>&nbsp;</p><h2>InputLirc</h2><p>Einige DVB Karten liefern einen Fernbedienungsempfänger mit. Viele dieser Empfänger, sowie einige USB Empfänger werden als sogenannte INPUT Geräte eingebunden. Hier muss nur der Fernbedienungsempfänger aus der Liste erkannter Geräte ausgewählt werden.<br>&nbsp;</p><h2>Irserver</h2><p>Einige HTPC-Gehäuse (z.B. OrigonAE) haben integrierte Infrarot-Empfänger, welche einen speziellen Server (Irserver) benötigen. Hier muss nur der Server aktiviert und anschließend gespeichert werden.</p>',
+  description: '<p>In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press "Save" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device "On Screen Display". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the "Learning Phase" by pressing "Save" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it.</p>',
   initComponent: function() {
 
     this.lircForm = new YaVDR.Component.Settings.HwRemote.LIRC({
@@ -96,9 +96,9 @@ YaVDR.Component.Settings.HwRemote.LIRC = Ext.extend(YaVDR.Default.Form, {
     this.driver = new Ext.form.ComboBox({
       itemId: 'driver',
       tpl: '<tpl for="."><div ext:qtip="' +
-        "Treiber" +
+        "Driver" +
         ': {driver}<br/' + '>' +
-        'LIRC-Treiber' +
+        'LIRC driver' +
         ': {lirc_driver}<br/' +
         '>HW-Default: {hw_default}<' + 'br/' +
         '>Lircd-Conf: {lircd_conf}" class="x-combo-list-item">{description}</div></tpl>',
@@ -112,7 +112,7 @@ YaVDR.Component.Settings.HwRemote.LIRC = Ext.extend(YaVDR.Default.Form, {
       mode: "local",
       store: this.receiverStore,
       triggerAction: 'all',
-      fieldLabel: 'Empfänger',
+      fieldLabel: 'Receiver',
       selectOnFocus: true,
       disabled: true
     });
@@ -122,11 +122,11 @@ YaVDR.Component.Settings.HwRemote.LIRC = Ext.extend(YaVDR.Default.Form, {
       itemId: 'serial_port',
       name: 'serial_port',
       columns: 1,
-      fieldLabel: 'Serielle Schnittstelle',
+      fieldLabel: 'Serial Port',
       items: [
-        {boxLabel: 'keine', name: 'serial_port', inputValue: ''},
-        {boxLabel: '/dev/ttyS0', name: 'serial_port', inputValue: '/dev/ttyS0'},
-        {boxLabel: '/dev/ttyS1', name: 'serial_port', inputValue: '/dev/ttyS1'}
+        {boxLabel: 'none', name: 'serial_port', inputValue: ''},
+        {boxLabel: '/dev/ttyS0 (COM1)', name: 'serial_port', inputValue: '/dev/ttyS0'},
+        {boxLabel: '/dev/ttyS1 (COM2)', name: 'serial_port', inputValue: '/dev/ttyS1'}
       ],
       disabled: true
     });
@@ -134,7 +134,7 @@ YaVDR.Component.Settings.HwRemote.LIRC = Ext.extend(YaVDR.Default.Form, {
     this.active = new Ext.form.Radio({
       name: 'remotetype',
       inputValue: 'lircd',
-      fieldLabel: 'LIRC aktivieren',
+      fieldLabel: 'Activate LIRC',
       listeners: {
         scope: this,
         check: function(cb, checked) {
@@ -179,7 +179,7 @@ YaVDR.Component.Settings.HwRemote.InputLIRC = Ext.extend(YaVDR.Default.Form, {
 
     this.active = new Ext.form.Radio({
       name: 'remotetype',
-      fieldLabel: 'Inputlirc aktivieren',
+      fieldLabel: 'Activate Inputlirc',
       inputValue: 'inputlirc',
       listeners: {
         scope: this,
@@ -220,7 +220,7 @@ YaVDR.Component.Settings.HwRemote.InputLIRC = Ext.extend(YaVDR.Default.Form, {
       forceSelection: true,
       mode: "local",
       triggerAction: 'all',
-      fieldLabel: 'Empfänger',
+      fieldLabel: 'Receiver',
       selectOnFocus: true,
       disabled: true
     });
@@ -275,7 +275,7 @@ YaVDR.Component.Settings.HwRemote.IrServer = Ext.extend(YaVDR.Default.Form, {
 
     this.active = new Ext.form.Radio({
       name: 'remotetype',
-      fieldLabel: 'IRServer aktivieren',
+      fieldLabel: 'Activate IRServer',
       inputValue: 'irserver',
       listeners: {
         scope: this,

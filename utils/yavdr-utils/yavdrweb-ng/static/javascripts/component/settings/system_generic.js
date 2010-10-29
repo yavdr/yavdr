@@ -1,11 +1,11 @@
 YaVDR.Component.Settings.SystemGeneric = Ext.extend(YaVDR.Component, {
   itemId: 'settings-system-generic',
-  title: 'Einstellung',
+  title: 'Settings',
   description: 'Hier können allgemeine Systemeinstellungen zum VDR vorgenommen werden.',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: 'Webfrontend-Sprache',
+        title: 'Webfrontend Language',
         style: 'margin-bottom: 5px',
         items: [
           new YaVDR.Component.Settings.SystemGeneric.Language
@@ -39,13 +39,13 @@ YaVDR.Component.Settings.SystemGeneric.Grub = Ext.extend(YaVDR.Default.Form, {
     this.items = [
       new Ext.ux.form.SpinnerField({
         itemId: 'timeout',
-        fieldLabel: "Wähle Timeout:",
+        fieldLabel: "Choose Timeout in seconds:",
         name: 'value',
         minValue: 0,
         maxValue: 10,
         defaultValue: 0,
-        maxText: "Der Maximalwert ist 10",
-        minText: "Der Minimalwert ist 0"
+        maxText: "The Maximum is 10.",
+        minText: "The Minimum is 0."
       })
     ];
 
@@ -123,7 +123,7 @@ YaVDR.Component.Settings.SystemGeneric.Language = Ext.extend(YaVDR.Default.Form,
 
     this.languageSelectiorView = new YaVDR.SelectionList({
       hiddenField: this.languageSelectionHidden,
-      fieldLabel: "Sprache",
+      fieldLabel: "Language",
       tpl: this.languageTpl,
       store: this.store
     });
@@ -164,23 +164,23 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
       data: [
         {
           key: 's3',
-          title: 'suspend to RAM',
-          description: 'Fährt den Rechner in einen Stromspar-Modus wären der RAM weiterhin mit Strom versorgt wird.'
+          title: 'Suspend to RAM',
+          description: 'Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR.'
         },
         {
           key: 's4',
-          title: 'suspend to DISK',
-          description: 'Eine alternatives Ausgabedevice und kann verwendet werden falls es Probleme mit xineliboutput gibt'
+          title: 'Fake Suspend to DISK',
+          description: 'Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices'
         },
         {
           key: 's5',
-          title: 'shutdown',
-          description: 'Hierbei wird der Rechner ganz klassich herunter gefahren.'
+          title: 'Shutdown',
+          description: 'This is the classical shutdown.'
         },
         {
           key: 'reboot',
           title: 'reboot PowerOff-kernel',
-          description: 'Manche Mainboard benötigen einen Trick damit diese automatisch wieder hochfahren.'
+          description: 'Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem.'
         }
       ]
 
@@ -214,7 +214,7 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
 
     this.disableUsbWakeupField = new Ext.form.Checkbox({
       fieldLabel: 'Disable USB-Wakeup',
-      boxLabel: 'USB-Wakeup deaktivieren, wenn Mainboard nicht kompatibel',
+      boxLabel: 'Deactivate USB wakeup, for incompatible hardware',
       name: 'value2',
       inputValue: '1'
     });
@@ -255,7 +255,7 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
           }
 
           if (allowed.indexOf(type.toUpperCase()) < 0) {
-            record.data.title = record.data.title + " (nicht verfühgbar)";
+            record.data.title = record.data.title + " (not available)";
             record.data.disabled = true;
           }
         });

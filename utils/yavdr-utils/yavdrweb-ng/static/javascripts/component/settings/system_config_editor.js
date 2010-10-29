@@ -4,12 +4,12 @@ YaVDR.Component.Settings.SystemConfigEditor = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Header({
-        html: 'Einstellungen',
+        html: 'Settings',
         region: 'north'
       }),
       {
         region: 'center',
-        title: 'Konfigurationseditor',
+        title: 'Configuration Editor',
         frame: true,
         layout: 'fit',
         items: new YaVDR.Component.Settings.SystemConfigEditor.Editor
@@ -57,7 +57,7 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
       {
         xtype: 'tbtext',
         style: "background: url('/static/images/icons/find.png') no-repeat 3px center; text-indent: 22px;",
-        text: 'Wähle eine Datei: '
+        text: 'Choose a file: '
       },
       this.fileSelectionField,
       '-',
@@ -66,7 +66,7 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
         disabled: true,
         icon: '/static/images/icons/save.png',
         scope: this,
-        text: 'Speichern',
+        text: 'Save',
         handler: this.saveContent
       },
       {
@@ -74,7 +74,7 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
         disabled: true,
         icon: '/static/images/icons/refresh.png',
         scope: this,
-        text: 'Neuladen',
+        text: 'Reload',
         handler: this.reloadContent
       },
       {
@@ -82,13 +82,13 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
         disabled: true,
         icon: '/static/images/icons/selection.png',
         scope: this,
-        text: 'Markiere Inhalt',
+        text: 'Mark content',
         handler: this.maskContent
       },
       {
         itemId: 'pastebin',
         disabled: true,
-        text: 'Sende an PasteBin',
+        text: 'Send to PasteBin',
         icon: '/static/images/icons/clipboard-paste-document-text.png',
         scope: this,
         handler: this.sendPasteBin

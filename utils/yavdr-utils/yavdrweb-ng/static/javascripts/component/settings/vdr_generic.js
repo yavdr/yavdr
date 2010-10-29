@@ -1,16 +1,16 @@
 YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
   itemId: 'settings-vdr-generic',
-  title: 'Einstellung',
+  title: 'General Settings',
   description: 'Hier können allgemeine Einstellungen zum VDR vorgenommen werden.',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: 'Frontend',
+        title: 'Frontend Settings',
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.VdrGeneric.Frontend
       }),
       new YaVDR.Component.Item({
-        title: 'Lifeguard',
+        title: 'Lifeguard Monitoring Items',
         items: new YaVDR.Component.Settings.VdrGeneric.Lifeguard
       })
     ];
@@ -67,7 +67,7 @@ YaVDR.Component.Settings.VdrGeneric.Lifeguard = Ext.extend(YaVDR.Default.Form, {
 
     this.lifeguardHelp = {
       xtype: 'displayfield',
-      value: 'VDR-Lifeguard kann vor dem Ausschalten prüfen ob bestimmte Prozesse aktiv sind. Soll ein Prozess nicht unterbrochen werden, wird das Ausschalten verschoben. Fügen Sie hier Prozesse hinzu, die das Ausschalten verhindern sollen. Nicht markiert bedeutet: VDR-Lifeguard ist deaktiviert',
+      value: 'VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown.',
       labelSeparator: ' '
     };
 
@@ -119,22 +119,22 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
         {
           key: 'xineliboutput',
           title: 'vdr-sxfe@vdr-plugin-xineliboutput',
-          description: 'Diese Variante verwendet die xineliboutput-Ausgabe und ist die Standardauswahl für yaVDR'
+          description: 'This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR'
         },
         {
           key: 'xine',
           title: 'xine@vdr-plugin-xine',
-          description: 'Eine alternatives Ausgabedevice und kann verwendet werden falls es Probleme mit xineliboutput gibt'
+          description: 'This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.'
         },
         {
           key: 'xbmc',
-          title: 'XBMC@vdr-plugin-streamdev (experimental)',
-          description: 'Möchten Sie kein VDR-Frontend, sondern XBMC als Fernsehausgabe nutzen so wählen Sie diesen Punkt'
+          title: 'XBMC@vdr-plugin-vnsi (experimental)',
+          description: 'If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice.'
         },
         {
           key: 'headless',
           title: 'headless (yaVDR server)',
-          description: 'Diese Variate ist für Server gedacht die über keine Fernsehausgabe verfügen'
+          description: 'You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards.'
         }
       ]
 
@@ -162,7 +162,7 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
     });
 
     this.frontendSelectiorView = new YaVDR.SelectionList({
-      fieldLabel: 'Ausgabe',
+      fieldLabel: 'Video Output',
       hiddenField: this.frontendSelectionHidden,
       tpl: this.frontendTpl,
       store: this.frontendStore

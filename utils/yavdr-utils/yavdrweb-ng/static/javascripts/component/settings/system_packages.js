@@ -9,13 +9,13 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
     this.items = [
       new YaVDR.Component.Header({
         region: 'north',
-        html: 'Einstellungen'
+        html: 'Settings'
       }),
       new YaVDR.Component.Item({
         region: 'center',
         style: '',
         layout: 'border',
-        title: 'yaVDR-Paket',
+        title: 'Package Installer',
         tbar: [
           {
             text: 'apt-get update',
@@ -48,7 +48,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
       items: [
         {
           scope: this,
-          text: 'Installieren',
+          text: 'Install',
           icon: '/static/images/icons/dpkg_install.png',
           disabled: (record.data.installed != 0),
           handler: function() {
@@ -57,7 +57,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
         },
         {
           scope: this,
-          text: 'Deinstallieren',
+          text: 'Remove',
           icon: '/static/images/icons/dpkg_remove.png',
           disabled: (record.data.installed == 0),
           handler: function() {
@@ -66,7 +66,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
         },
         {
           scope: this,
-          text: 'Aktivieren',
+          text: 'Activate',
           icon: '/static/images/icons/dpkg_enable.png',
           disabled: (record.data.Package.substr(0, 11) != "vdr-plugin-" || record.data.installed == 2 || record.data.installed == 0),
           handler: function() {
@@ -75,7 +75,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
         },
         {
           scope: this,
-          text: 'Deaktivieren',
+          text: 'Deactivate',
           icon: '/static/images/icons/dpkg_disable.png',
           disabled: (record.data.Package.substr(0, 11) != "vdr-plugin-" || record.data.installed != 2),
           handler: function() {

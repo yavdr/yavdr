@@ -1,11 +1,11 @@
 YaVDR.Component.Settings.HwDisplay = Ext.extend(YaVDR.Component, {
   itemId: 'settings-hw-display',
-  description: 'Hier können Sie die Ausgabe konfigurieren',
-  title: 'Einstellung',
+  description: 'Here you can configure your display settings.',
+  title: 'Display Settings',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: 'Anzeige',
+        title: 'Display Settings',
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.HwDisplay.Display
       })
@@ -30,15 +30,15 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
     this.items = [
       {
         itemId: 'basic',
-        title: 'Basiseinstellung',
+        title: 'Basic Settings',
         items: [
           {
             disabled: true,
             itemId: 'x11_dualhead',
             name: 'x11_dualhead',
             xtype: 'checkbox',
-            fieldLabel: 'Zwei-Bildschirm Betrieb',
-            boxLabel: 'aktiviert',
+            fieldLabel: 'Dual-Head Mode',
+            boxLabel: 'enabled',
             inputValue: 1
           },
           {
@@ -46,7 +46,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
             name: 'x11_graphtft',
             xtype: 'checkbox',
             fieldLabel: 'GraphTFT',
-            boxLabel: 'aktiviert',
+            boxLabel: 'enabled',
             inputValue: 1,
             disabled: true
           }
@@ -54,7 +54,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       },
       {
         itemId: 'xine',
-        title: 'Xine-Einstellung',
+        title: 'Xine Settings',
         items: [
           new YaVDR.EasyComboBox({
             itemId: 'deinterlacer_hd',
@@ -66,7 +66,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
               ['temporal'],
               ['temporal_spatial']
             ],
-            fieldLabel: 'Xine-HD-Deinterlacer (Voreinstellung: bob)',
+            fieldLabel: 'Xine HD deinterlacer (Default: bob)',
             inputValue: 'bob'
           }),
           new YaVDR.EasyComboBox({
@@ -79,7 +79,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
               ['temporal'],
               ['temporal_spatial']
             ],
-            fieldLabel: 'Xine-SD-Deinterlacer (Voreinstellung: temporal)',
+            fieldLabel: 'Xine SD deinterlacer (Default: temporal)',
             inputValue: 'temporal'
           })
         ]
@@ -162,7 +162,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       name: 'freq' + index,
       xtype: 'checkboxgroup',
       columns: 3,
-      fieldLabel: 'Fequenzen',
+      fieldLabel: 'Refresh Rate',
       itemId: 'frequencies',
       items: checkboxes
     });

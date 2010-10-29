@@ -1,6 +1,6 @@
 YaVDR.Component.Settings.HwAudio = Ext.extend(YaVDR.Component, {
   itemId: 'settings-hw-audio',
-  description: 'Please select the audio output',
+  description: 'Please select the audio output. Make your choice and press "Save". At saving VDR and the video output will be restarted in order to make your choice activ. ...',
   title: 'Audio Settings',
   initComponent: function() {
     this.items = [

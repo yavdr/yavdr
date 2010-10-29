@@ -5,13 +5,13 @@ YaVDR.Component.Settings.SystemNetwork = Ext.extend(YaVDR.Component, {
     this.items = [
       new YaVDR.Component.Header({
         region: 'north',
-        html: 'Einstellungen'
+        html: 'Settings'
       }),
       new YaVDR.Component.Item({
         region: 'center',
         style: '',
         layout: 'border',
-        title: 'Netzwerk',
+        title: 'Network',
         items: [
           {
             plain: true,
@@ -27,7 +27,7 @@ YaVDR.Component.Settings.SystemNetwork = Ext.extend(YaVDR.Component, {
             margins: '5 0 0 0',
             padding: 6,
             style: 'background-color: #FFF; border: 1px solid #D0D0D0; font-size: 12px;',
-            html: 'Hier können NFS Freigaben von anderen Hosts eingebunden werden. Die Verzeichnisse müssen in der Form "host:/ein/verzeichnis" eingegeben werden. Der Knopf "Übernehmen" trägt die Verzeichnisse in die lokale Konfiguration ein. Sie müssen den VDR Neustarten (Menü "System", Punkt "Wartung"), um die Änderungen zu aktivieren!'
+            html: 'You can define Host and shares which should be mounted automatically. You need to key in the shares using "host:/path/to/the/share".'
           }
         ]
       })
@@ -59,25 +59,25 @@ YaVDR.Component.Settings.SystemNetwork.NFS = Ext.extend(Ext.grid.GridPanel, {
       },
       {
         icon: '/static/images/icons/socket--plus.png',
-        text: 'Hinzufügen',
+        text: 'Add',
         scope: this,
         handler: this.addExport
       },
       {
         icon: '/static/images/icons/socket--pencil.png',
-        text: 'Ändern',
+        text: 'Edit',
         scope: this,
         handler: this.changeExport
       },
       {
         icon: '/static/images/icons/socket--minus.png',
-        text: 'Löschen',
+        text: 'Delete',
         scope: this,
         handler: this.deleteExport
       },
       {
         icon: '/static/images/icons/socket--arrow.png',
-        text: 'Übernehmen',
+        text: 'Save',
         scope: this,
         handler: this.saveExports
       }
