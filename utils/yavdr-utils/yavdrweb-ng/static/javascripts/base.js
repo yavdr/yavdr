@@ -1,4 +1,3 @@
-
 Ext.override(Ext.form.Checkbox, {
   setBoxLabel: function(boxLabel){
     this.boxLabel = boxLabel;
@@ -101,7 +100,7 @@ Ext.apply(YaVDR, {
 
 YaVDR.Header = Ext.extend(Ext.Panel, {
   height: 56,
-  style: "background: #000 url('static/images/yavdr.gif') no-repeat right center;",
+  style: "background: #000 url('/static/images/yavdr.gif') no-repeat right center;",
   region: 'north',
   border: false,
   layout: 'hbox',
@@ -130,7 +129,7 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
         margins:'5 15 0 0',
         cls: 'x-btn-menu',
         scale: 'larger',
-        icon: 'static/images/menu_home.png'
+        icon: '/static/images/menu_home.png'
       },
       {
         itemId: 'programm',
