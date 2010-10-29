@@ -1,6 +1,7 @@
 YaVDR.Component.Settings.SystemGeneric = Ext.extend(YaVDR.Component, {
   itemId: 'settings-system-generic',
   title: 'Einstellung',
+  description: 'Hier können allgemeine Systemeinstellungen zum VDR vorgenommen werden.',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
