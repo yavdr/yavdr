@@ -1,0 +1,12 @@
+    <!-- js_cmps_system -->
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_system_infos.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_system_logs.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_xbmc.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_lirc.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_vdr.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_x11.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_alsa.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_dpkg.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system/diagnose_yavdr.js"></script> 
+ 

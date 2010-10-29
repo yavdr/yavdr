@@ -1,0 +1,8 @@
+
+    <!-- js_cmps_base -->
+    <script type="text/javascript" src="/static/javascripts/component/dashboard.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/programm.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/timer.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/recordings.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/settings.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/system.js"></script>

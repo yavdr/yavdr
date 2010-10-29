@@ -1,0 +1,8 @@
+
+    <!-- js_base -->
+    <script type="text/javascript" src="/static/javascripts/base.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component.js"></script>
+    <script type="text/javascript" src="/static/javascripts/dpkg.js"></script>
+    <script type="text/javascript" src="/static/javascripts/pastebin.js"></script>
+    <script type="text/javascript" src="/static/javascripts/easy_combobox.js"></script>
+    <script type="text/javascript" src="/static/javascripts/selection_list.js"></script>
