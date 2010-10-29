@@ -25,6 +25,11 @@ script
 # load default values and overrides from /etc/default/vdr 
 . /usr/lib/vdr/config-loader
 
+# override SVDRP port if svdrpd is installed to keep the port free
+if which svdrpd ; then
+    SVDRP_PORT=6420
+fi
+
 # load all plugins from plugin folder
 . /usr/lib/vdr/plugin-loader
 
