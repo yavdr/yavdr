@@ -1,6 +1,6 @@
 YaVDR.Component.System.VDR = Ext.extend(YaVDR.Component.System.Diagnose, {
   itemId: 'system-diagnose-vdr',
-  subTitle: 'VDR-Konfiguration',
+  subTitle: 'VDR Basic configuration',
   initComponent: function() {
     YaVDR.Component.System.VDR.superclass.initComponent.call(this);
     this.addFileContent('VDR Setup', '/etc/vdr/setup.conf');

@@ -1,6 +1,6 @@
 YaVDR.Component.System.ALSA = Ext.extend(YaVDR.Component.System.Diagnose, {
   itemId: 'system-diagnose-alsa',
-  subTitle: 'ALSA',
+  subTitle: 'ALSA status information',
   initComponent: function() {
     YaVDR.Component.System.ALSA.superclass.initComponent.call(this);
     this.addShellResponse('Alsa Device List', 'aplay');

@@ -1,6 +1,6 @@
 YaVDR.Component.System.LIRC = Ext.extend(YaVDR.Component.System.Diagnose, {
   itemId: 'system-diagnose-lirc',
-  subTitle: 'LIRC-Konfiguration',
+  subTitle: 'LIRC configuration',
   initComponent: function() {
     YaVDR.Component.System.LIRC.superclass.initComponent.call(this);
     this.addFileContent('LIRC Hardware Configuration', '/etc/lirc/hardware.conf');

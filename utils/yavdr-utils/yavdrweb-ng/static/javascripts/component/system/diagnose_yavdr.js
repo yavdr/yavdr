@@ -1,6 +1,6 @@
 YaVDR.Component.System.YaVDR = Ext.extend(YaVDR.Component.System.Diagnose, {
   itemId: 'system-diagnose-yavdr',
-  subTitle: 'YaVDR-Utils',
+  subTitle: 'YaVDR database',
   initComponent: function() {
     YaVDR.Component.System.YaVDR.superclass.initComponent.call(this);
     this.addFileContent('yaVDR DB', '/var/lib/yavdrdb.hdf');

@@ -1,6 +1,6 @@
 YaVDR.Component.System.Dpkg = Ext.extend(YaVDR.Component.System.Diagnose, {
   itemId: 'system-diagnose-dpkg',
-  subTitle: 'Pakete',
+  subTitle: 'Package information',
   initComponent: function() {
     YaVDR.Component.System.Dpkg.superclass.initComponent.call(this);
     this.addShellResponse('Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)', 'dpkg');

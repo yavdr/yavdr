@@ -1,6 +1,6 @@
 YaVDR.Component.System.DiagnoseSystemInfo = Ext.extend(YaVDR.Component.System.Diagnose, {
   itemId: 'system-diagnose-system-infos',
-  subTitle: 'System-Informationen',
+  subTitle: 'System Information',
   initComponent: function() {
     YaVDR.Component.System.DiagnoseSystemInfo.superclass.initComponent.call(this);
     this.addShellResponse('Systemauslastung', 'top');
