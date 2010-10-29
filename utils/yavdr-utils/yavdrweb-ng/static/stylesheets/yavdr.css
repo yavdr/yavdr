@@ -1,3 +1,9 @@
+	.component-header .x-panel-body {
+		font-size: 12px;
+		padding: 3px 0 3px 0;
+		font-family: tahoma, arial, helvetica, sans-serif;		
+	}
+
   .x-panel-body {
     background-color: #F1F1F1;
   }

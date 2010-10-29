@@ -6,6 +6,7 @@ YaVDR.Component = Ext.extend(Ext.Panel, {
     if (this.title) this.insert(0, new YaVDR.Component.Header({ html: this.title }));
     if (this.description) this.insert(1, new YaVDR.Component.Item({
       title: 'Einleitung',
+			cls: 'component-header',
       style: 'padding-bottom: 5px',
       html: this.description
     }));
@@ -15,7 +16,7 @@ YaVDR.Component = Ext.extend(Ext.Panel, {
 
 YaVDR.Component.Header = Ext.extend(Ext.BoxComponent, {
   height: 36,
-  style: 'color: #233d6d;font-weight: bold; font-size: 1.4em; text-indent: 3px; font-family: sans-serif; padding-bottom: 5px;'
+  style: 'color: #233d6d; font-weight: bold; font-size: 12px; text-indent: 3px; font-family: sans-serif; padding-bottom: 5px;'
 });
 
 YaVDR.Component.Item = Ext.extend(Ext.Panel, {
