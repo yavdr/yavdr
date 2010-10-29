@@ -10,3 +10,4 @@ events/*		usr/share/yavdr/events/
 templates/*		usr/share/yavdr/templates/
 scripts/black.pcf	usr/share/fonts/X11/misc/
 themes/*		usr/share/themes/
+scripts/svdrpd		usr/sbin/
