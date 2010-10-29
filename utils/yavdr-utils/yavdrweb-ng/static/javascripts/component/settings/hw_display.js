@@ -1,7 +1,7 @@
 YaVDR.Component.Settings.HwDisplay = Ext.extend(YaVDR.Component, {
   itemId: 'settings-hw-display',
   description: 'Here you can configure your display settings.',
-  title: 'Display Settings',
+  title: 'Settings',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
