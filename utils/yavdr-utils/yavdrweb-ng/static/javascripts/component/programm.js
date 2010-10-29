@@ -3,7 +3,7 @@ YaVDR.Component.Programm = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Header({
-        html: 'Programm'
+        html: 'Schedule'
       })
     ];
     YaVDR.Component.Programm.superclass.initComponent.call(this);

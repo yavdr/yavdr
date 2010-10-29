@@ -1,7 +1,7 @@
 YaVDR.Component.System = Ext.extend(YaVDR.Component, {
   itemId: 'system',
   title: 'System',
-  description: 'Hier haben Sie die Möglichkeit Ihr System zu überwachen.',
+  description: 'Here you can monitor your system. You can look into log files and send them to pastebin to let others review them.',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
@@ -26,13 +26,13 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
             items: [
               {
                 icon: '/icons/fugue/monitor--arrow.png',
-                text: 'VDR temporär auf 2. Bildschirm',
+                text: 'Switch temporary to second screen',
                 scope: this,
                 handler: this.changeVdrToSecondDisplay
               },
               {
                 icon: '/icons/fugue/arrow-circle-225.png',
-                text: 'Rechner neustarten',
+                text: 'Reboot computer',
                 scope: this,
                 handler: this.reboot
               }
@@ -42,13 +42,13 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
             items: [
               {
                 icon: '/icons/fugue/arrow-step.png',
-                text: 'XBMC-Beendung erzwingen',
+                text: 'Kill XBMC',
                 scope: this,
                 handler: this.killXBMC
               },
               {
                 icon: '/icons/fugue/arrow-circle-double-135.png',
-                text: 'VDR-Backend neustarten',
+                text: 'Restart VDR',
                 scope: this,
                 handler: this.restartVDR
               }
@@ -80,22 +80,22 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
               {
                 itemId: 'system-diagnose-system-infos',
                 icon: '/icons/fugue/system-monitor.png',
-                text: 'System-Informationen'
+                text: 'System Informations'
               },
               {
                 itemId: 'system-diagnose-system-logs',
                 icon: '/icons/fugue/script-text.png',
-                text: 'System-Logfiles'
+                text: 'System log files'
               },
               {
                 itemId: 'system-diagnose-xbmc',
                 icon: '/icons/fugue/exclamation.png',
-                text: 'XBMC-Abstürze'
+                text: 'XBMC crash log'
               },
               {
                 itemId: 'system-diagnose-lirc',
                 icon: '/icons/silk/keyboard.png',
-                text: 'LIRC-Konfiguration'
+                text: 'LIRC configuration'
               }
             ]
           },
@@ -104,12 +104,12 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
               {
                 itemId: 'system-diagnose-vdr',
                 icon: '/icons/fugue/screwdriver.png',
-                text: 'VDR-Konfiguration'
+                text: 'VDR configuration'
               },
               {
                 itemId: 'system-diagnose-x11',
                 icon: '/icons/fugue/television.png',
-                text: 'X-Serever'
+                text: 'Xorg server'
               },
               {
                 itemId: 'system-diagnose-alsa',
@@ -119,7 +119,7 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
               {
                 itemId: 'system-diagnose-dpkg',
                 icon: '/icons/silk/package.png',
-                text: 'Pakete'
+                text: 'Package informations'
               }
             ]
           },
@@ -128,7 +128,7 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
               {
                 itemId: 'system-diagnose-yavdr',
                 icon: '/icons/fugue/database.png',
-                text: 'yaVDR-Utils'
+                text: 'yaVDR database'
               },
               {
                 xtype: 'spacer'
@@ -162,15 +162,15 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
     this.request('/admin/set_signal?signal=reboot');
   },
   request: function(url) {
-    Ext.getBody().mask("Führe Befehl aus...", 'x-mask-loading');
+    Ext.getBody().mask("Execute command...", 'x-mask-loading');
     Ext.Ajax.request({
       url: url,
       success: function() {
-        YaVDR.notice('Führe Befehl aus', 'Der Befehl wurde ausgeführt');
+        YaVDR.notice('Execute command', 'The command has been executed successfully');
         Ext.getBody().unmask();
       },
       failue: function() {
-        YaVDR.alert('Führe Befehl aus', 'Der Befehl konte nicht ausgeführt werden');
+        YaVDR.alert('Execute command', 'The command could not complete successfully');
         Ext.getBody().unmask();
       }
     });

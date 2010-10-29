@@ -28,12 +28,12 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
 
             items: [
               {
-                text: 'Allgemein',
+                text: 'General',
                 itemId: 'settings-vdr-generic',
                 icon: '/icons/fugue/television-image.png'
               },
               {
-                text: 'Kanäle',
+                text: 'Channels',
                 itemId: 'settings-vdr-channels',
                 icon: '/icons/fugue/book-open-list.png'
               },
@@ -69,17 +69,17 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
           {
             items: [
               {
-                text: 'Fernbedinung',
+                text: 'Remote Control Settings',
                 itemId: 'settings-hw-remote',
                 icon: '/icons/silk/keyboard.png'
               },
               {
                 itemId: 'settings-hw-audio',
-                text: 'Tonausgabe',
+                text: 'Audio Configuration',
                 icon: '/icons/fugue/speaker.png'
               },
               {
-                text: 'Anzeige',
+                text: 'Display Settings',
                 itemId: 'settings-hw-display',
                 icon: '/icons/fugue/television.png'
               },
@@ -116,17 +116,17 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
                 icon: '/icons/silk/computer.png'
               },
               {
-                text: 'Netzwerk',
+                text: 'Network',
                 itemId: 'settings-system-network',
                 icon: '/icons/fugue/network-ethernet.png'
               },
               {
-                text: 'Pakete',
+                text: 'Packages',
                 itemId: 'settings-system-packages',
                 icon: '/icons/silk/package.png'
               },
               {
-                text: 'Konfigurationseditor',
+                text: 'Edit Configurations',
                 itemId: 'settings-system-config-editor',
                 icon: '/icons/silk/page_edit.png'
               }
