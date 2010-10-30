@@ -18,7 +18,9 @@ using namespace std;
 		json["timestamp"] = dummy;
 		json["uptime"]  = "";
 		json["config"]  = "";
-
+		json["daemons"]["vdr"]  = "1";
+		json["daemons"]["xine"]  = "0";
+		json["daemons"]["xbmc"]  = "1";
 		free(dummy);
 	}
 
