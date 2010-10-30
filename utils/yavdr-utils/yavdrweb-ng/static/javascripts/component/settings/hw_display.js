@@ -302,7 +302,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       itemData: item,
       itemId: 'display_' + index,
-      title: 'DISPLAY ' + ((typeof item.displaynumber != 'undefined') ? ':' + item.displaynumber + '.' + item.screen + ' (' + item.name : item.name + ' disabled') + ')',
+      title: 'DISPLAY ' + ((typeof item.displaynumber != 'undefined') ? ':' + item.displaynumber + '.' + item.screen + ' (' + item.name : ' (' + item.name + ' disabled') + ')',
       items: items
     });
 
