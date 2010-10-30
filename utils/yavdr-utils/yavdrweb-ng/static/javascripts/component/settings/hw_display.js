@@ -312,7 +312,8 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
         // Gibt es mehrere Displays
         if (typeof displayData.system.x11.displays == "undefined"
           || displayData.system.x11.displays.length >= 2
-          || (yavdrwebGlobalInfo.devmode == "1")) {
+          //|| (yavdrwebGlobalInfo.devmode == "1")
+          ) {
 
           // Aktivere CB
           basic.getComponent('x11_dualhead').enable();
