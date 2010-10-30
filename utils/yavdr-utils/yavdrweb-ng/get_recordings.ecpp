@@ -11,13 +11,30 @@ using namespace std;
 
 	Json::Value json;
 
-	json["total"] = 0;
-    // so sieht dann data aus
-	// [{ id: 0, name: 'Der Film', length: 123, information: 'text' }]
-	json["data"]  = "";
 	json["metaData"]["root"]  = "data";
 	json["metaData"]["idProperty"]  = "id";
 	json["metaData"]["totalProperty"]  = "total";
+
+	json["metaData"]["fields"][0u]["name"] = "id";
+	json["metaData"]["fields"][0u]["type"] = "integer";
+	json["metaData"]["fields"][1u] = "name";
+	json["metaData"]["fields"][2u] = "information";
+	json["metaData"]["fields"][3u]["name"] = "length";
+	json["metaData"]["fields"][3u]["type"] = "integer";
+
+	json["total"] = 2;
+    // so sieht dann data aus
+	// [{ id: 0, name: 'Der Film', length: 123, information: 'text' }]
+	json["data"][0u]["id"]  = 0;
+	json["data"][0u]["name"]  = "Der Film";
+	json["data"][0u]["length"]  = 123;
+	json["data"][0u]["information"]  = "text";
+
+	json["data"][1u]["id"]  = 0;
+	json["data"][1u]["name"]  = "Der nächste Film";
+	json["data"][1u]["length"]  = 765;
+	json["data"][1u]["information"]  = "text ist echt langweilig!";
+
 
     // das mus in die json["metaData"]["fields"] und zwar als array
 	// [{ name: 'id', type: 'integer' }, 'name', 'information', { name: 'length', type: 'integer' }]
