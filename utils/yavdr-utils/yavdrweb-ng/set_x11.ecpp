@@ -32,6 +32,10 @@ using namespace std;
   string display1; string freq1[];
   string display2; string freq2[];
 
+  string modeline0;
+  string modeline1;
+  string modeline2;
+
   string overscan0;
   string overscan1;
   string overscan2;
@@ -40,17 +44,21 @@ using namespace std;
   string defaultfreq1;
   string defaultfreq2;
 </%args><%shared>
-bool writeDisplayToHDF(HDF *hdf, int id, string display, std::vector<string> modes, string overscan, string defaultfreq) {
+bool writeDisplayToHDF(HDF *hdf, int id, string display, string modeline, std::vector<string> modes, string overscan, string defaultfreq) {
     if (modes.size() > 0) {
         NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=%s"  , id, display.c_str());
 
-        sort(modes.begin(), modes.end());
-        for(int i=0; i < modes.size(); i++) {
-          err = hdf_set_valuef(hdf, "system.x11.display.%i.mode.%i=%s", id, i, modes[i].c_str());
+        if (modeline != "nvidia-auto-select") {
+			sort(modes.begin(), modes.end());
+			for(int i=0; i < modes.size(); i++) {
+			  err = hdf_set_valuef(hdf, "system.x11.display.%i.mode.%i=%s", id, i, modes[i].c_str());
+			}
+	        err = hdf_set_valuef(hdf, "system.x11.display.%i.default=%s", id, defaultfreq.c_str());
+        } else {
+        	err = hdf_set_valuef(hdf, "system.x11.display.%i.mode.0=nvidia-auto-select", id);
+            err = hdf_set_valuef(hdf, "system.x11.display.%i.default=nvidia-auto-select", id);
         }
-
         err = hdf_set_valuef(hdf, "system.x11.display.%i.overscan=%s", id, overscan.c_str());
-        err = hdf_set_valuef(hdf, "system.x11.display.%i.default=%s", id, defaultfreq.c_str());
         
         return true;
     }
@@ -142,11 +150,11 @@ int display_device_mask(string name) {
       
       cleanDisplayInHDF(hdf, 0);
       if (freq0.size() > 0 && primary == display0) {
-        writeDisplayToHDF(hdf, 0, display0, freq0, overscan0, defaultfreq0);
+        writeDisplayToHDF(hdf, 0, display0, modeline0, freq0, overscan0, defaultfreq0);
       } else if (freq1.size() > 0 && primary == display1) {
-        writeDisplayToHDF(hdf, 0, display1, freq1, overscan1, defaultfreq1);
+        writeDisplayToHDF(hdf, 0, display1, modeline1, freq1, overscan1, defaultfreq1);
       } else if (freq2.size() > 0 && primary == display2) {
-        writeDisplayToHDF(hdf, 0, display2, freq2, overscan2, defaultfreq2);
+        writeDisplayToHDF(hdf, 0, display2, modeline2, freq2, overscan2, defaultfreq2);
       }
     }
     else
@@ -156,24 +164,30 @@ int display_device_mask(string name) {
       err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
       
       cleanDisplayInHDF(hdf, 0);
-      if (freq0.size() > 0 && primary == display0) {
-        writeDisplayToHDF(hdf, 0, display0, freq0, overscan0, defaultfreq0);
+      if (modeline0 == "disabled") {
+      	err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
+        err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
+      } else if (freq0.size() > 0 && primary == display0) {
+        writeDisplayToHDF(hdf, 0, display0, modeline0, freq0, overscan0, defaultfreq0);
       } else if (freq1.size() > 0 && primary == display1) {
-        writeDisplayToHDF(hdf, 0, display1, freq1, overscan1, defaultfreq1);
+        writeDisplayToHDF(hdf, 0, display1, modeline1, freq1, overscan1, defaultfreq1);
       } else if (freq2.size() > 0 && primary == display2) {
-        writeDisplayToHDF(hdf, 0, display2, freq2, overscan2, defaultfreq2);
+        writeDisplayToHDF(hdf, 0, display2, modeline2, freq2, overscan2, defaultfreq2);
       }
       
       cleanDisplayInHDF(hdf, 1);
-      if (primary != "" && secondary == primary) {
+      if ((primary != "" && secondary == primary) || modeline1 == "disabled") {
         err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
         err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
       } else if (freq0.size() > 0 && secondary == display0) {
-        writeDisplayToHDF(hdf, 1, display0, freq0, overscan0, defaultfreq0);
+        writeDisplayToHDF(hdf, 1, display0, modeline0, freq0, overscan0, defaultfreq0);
       } else if (freq1.size() > 0 && secondary == display1) {
-        writeDisplayToHDF(hdf, 1, display1, freq1, overscan1, defaultfreq1);
+        writeDisplayToHDF(hdf, 1, display1, modeline1, freq1, overscan1, defaultfreq1);
       } else if (freq2.size() > 0 && secondary == display2) {
-        writeDisplayToHDF(hdf, 1, display2, freq2, overscan2, defaultfreq2);
+        writeDisplayToHDF(hdf, 1, display2, modeline2, freq2, overscan2, defaultfreq2);
+      } else {
+          err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
+          err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
       }
     }
     

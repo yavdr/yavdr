@@ -249,7 +249,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       emptyText: 'wähle Auflösung',
       fieldLabel: 'Auflösung',
       hiddenName: 'modeline' + index,
-      value: item.current.modeline.x + 'x' + item.current.modeline.y,
+      value: (item.current.modeline.x>0?item.current.modeline.x + 'x' + item.current.modeline.y:'disabled'),
       listeners: {
         scope: this,
         select: this.onModelineSelect,
@@ -324,7 +324,6 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 
           var graphtft = displayData.vdr.plugin.graphtft.enabled
           if (graphtft == '0' || graphtft == '1') basic.getComponent('x11_graphtft').setValue(graphtft == '1');
-
         } else {
           // Disable Checkox und Update Texts
           basic.getComponent('x11_dualhead').disable().setBoxLabel('deaktiviert (< 2 Bildschirme gefunden)');
