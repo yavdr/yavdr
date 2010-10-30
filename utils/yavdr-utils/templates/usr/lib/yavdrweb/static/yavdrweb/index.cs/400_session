@@ -1,0 +1,10 @@
+    
+    <!-- 400_session -->
+    <script type="text/javascript">
+    Ext.onReady(function() {
+      Ext.TaskMgr.start({
+        run: YaVDR.syncSession,
+        interval: 5000
+      });
+    });
+    </script>

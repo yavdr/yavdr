@@ -4,6 +4,12 @@
 		font-family: tahoma, arial, helvetica, sans-serif;		
 	}
 
+	.x-mask-offline div {
+		padding: 10px 20px 10px 20px;	
+		font-weight: bold;
+		color: #B00;
+	}
+
   .x-panel-body {
     background-color: #F1F1F1;
   }

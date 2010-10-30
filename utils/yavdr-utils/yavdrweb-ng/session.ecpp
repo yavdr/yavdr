@@ -17,6 +17,7 @@ using namespace std;
 	if (asprintf(&dummy, "%li", (long int) seconds) > 0) {
 		json["timestamp"] = dummy;
 		json["uptime"]  = "";
+		json["config"]  = "";
 
 		free(dummy);
 	}
