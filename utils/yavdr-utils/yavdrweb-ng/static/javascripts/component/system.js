@@ -80,7 +80,7 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
               {
                 itemId: 'system-diagnose-system-infos',
                 icon: '/icons/fugue/system-monitor.png',
-                text: 'System Informations'
+                text: 'System Information'
               },
               {
                 itemId: 'system-diagnose-system-logs',
@@ -119,7 +119,7 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
               {
                 itemId: 'system-diagnose-dpkg',
                 icon: '/icons/silk/package.png',
-                text: 'Package informations'
+                text: 'Package information'
               }
             ]
           },

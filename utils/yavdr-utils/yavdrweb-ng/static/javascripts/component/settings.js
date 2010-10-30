@@ -1,7 +1,7 @@
 YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
   itemId: 'settings',
-  title: 'Einstellung',
-  description: 'Hier haben Sie die Möglichkeit die Einstellungen Ihres VDRs vorzunehmen.',
+  title: 'Settings',
+  description: 'Here you can configure your VDR and applications around it.',
   initComponent: function() {
 
     this.items = [
