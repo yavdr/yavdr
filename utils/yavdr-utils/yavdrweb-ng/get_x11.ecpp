@@ -262,7 +262,7 @@ else
 								Json::Value modelines;
 
 								int next = 0;
-
+/*
 								modelines[next]["id"] = "disabled";
 								modelines[next]["modes"]["0"]["modeline"] = "";
 								modelines[next]["modes"]["0"]["x"] = 0;
@@ -270,7 +270,7 @@ else
 								modelines[next]["modes"]["0"]["interlace"] = false;
 								modelines[next]["modes"]["0"]["doublescan"] = false;
 								next++;
-
+*/
 								modelines[next]["id"] = "nvidia-auto-select";
 								modelines[next]["modes"]["auto"]["modeline"] = "nvidia-auto-select";
 								modelines[next]["modes"]["auto"]["x"] = 0;
@@ -429,6 +429,7 @@ else
 									string freq = ss.str() + (interlace?"i":"") + (doublescan?"d":"");
 
 									Json::Value modeline;
+
 									modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
 									//if (modeline["id"] == "nvidia-auto-select") { // map to real name
 									//	modeline["id"] = tokens[2] + "x" + tokens[6];
@@ -446,6 +447,19 @@ else
 									}
 									modeline["hz"] = frequency;
 									modeline["name"] = freq;
+
+									displays[nDisplayDevice]["current"]["id"] = tokens[2] + "x" + tokens[6];
+/*
+									// test
+									modeline["id"] = "800x600_72";
+									modeline["x"] = 800;
+									modeline["y"] = 600;
+									modeline["interlace"] = false;
+									modeline["doublescan"] = false;
+									modeline["hz"] = 72;
+									modeline["name"] = 72;
+									displays[nDisplayDevice]["current"]["id"] = "800x600";
+*/
 									displays[nDisplayDevice]["current"]["modeline"] = modeline;
 
 									// get selected modlines...
@@ -468,6 +482,14 @@ else
 
 									}
 
+/*
+									// test
+									displays[nDisplayDevice]["current"]["id"] = "800x600";
+									displays[nDisplayDevice]["current"]["selected"][0u] = "800x600_60";
+									displays[nDisplayDevice]["current"]["selected"][1u] = "800x600_72";
+									displays[nDisplayDevice]["current"]["selected"][2u] = "800x600_85";
+									displays[nDisplayDevice]["current"]["defaultfreq"] = "800x600_85";
+*/
 									char *overscan = hdf_get_valuef(hdf, "system.x11.display.%u.overscan", nDisplayDevice);
 									if (overscan != NULL)
 									{

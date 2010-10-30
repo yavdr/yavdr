@@ -136,7 +136,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       var mode = record.data.modes[hz];
 
       var isChecked = false;
-      if (display.itemData.current.modeline.id == record.data.id && typeof display.itemData.current.selected != "undefined") {
+      if (display.itemData.current.id == record.data.id && typeof display.itemData.current.selected != "undefined") {
         for (i = 0; i < display.itemData.current.selected.length; i++) {
           if (isChecked = (count == 1 || display.itemData.current.selected[i] == mode.id)) break;
         }
@@ -154,7 +154,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
     }
 
     if (typeof display.itemData.current.defaultfreq != 'undefined' &&
-      display.itemData.current.defaultfreq.substring(0, record.data.id.length) == record.data.id) {
+      display.itemData.current.id == record.data.id) {
       defaultFrequency.setValue(display.itemData.current.defaultfreq);
     } else {
       // select first
