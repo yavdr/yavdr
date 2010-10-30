@@ -169,8 +169,12 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
 			},
 			{
 				itemId: 'settings',
-				margins:'5 5 0 0',
-				text: 'Einstellungen'
+				height: 50,
+				width: 50,
+				margins:'5 15 0 0',
+				cls: 'x-btn-menu',
+				scale: 'larger',
+				icon: '/static/images/menu_settings.png'
 			},
 			{
 				itemId: 'system',
