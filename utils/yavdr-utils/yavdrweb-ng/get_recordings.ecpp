@@ -1,0 +1,28 @@
+<%pre>
+#include <stdio.h>
+#include <time.h>
+#include <string>
+#include <jsoncpp/json.h>
+
+using namespace std;
+</%pre><& authenticate ><%cpp>
+	reply.setHeader ("Cache-Control", "no-cache", false);
+	reply.setHeader ("Content-Type", "application/json", false);
+
+	Json::Value json;
+
+	json["total"] = 0;
+    // so sieht dann data aus
+	// [{ id: 0, name: 'Der Film', length: 123, information: 'text' }]
+	json["data"]  = "";
+	json["metaData"]["root"]  = "data";
+	json["metaData"]["idProperty"]  = "id";
+	json["metaData"]["totalProperty"]  = "total";
+
+    // das mus in die json["metaData"]["fields"] und zwar als array
+	// [{ name: 'id', type: 'integer' }, 'name', 'information', { name: 'length', type: 'integer' }]
+
+
+	reply.out() << json;
+
+</%cpp>
