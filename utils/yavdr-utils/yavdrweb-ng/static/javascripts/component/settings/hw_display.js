@@ -39,7 +39,11 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
             xtype: 'checkbox',
             fieldLabel: 'Dual-Head Mode',
             boxLabel: 'enabled',
-            inputValue: 1
+            inputValue: 1,
+            listeners: {
+              scope: this,
+              check: this.onDualHeadCheck
+            }
           },
           {
             itemId: 'x11_graphtft',
@@ -175,6 +179,22 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 
     this.buildFrequencies.call(this, display, record);
   },
+  onDualHeadCheck: function(cb, checked) {
+    for (index = 0; index < 3; index++) {
+      var displayFieldset = this.getComponent('display_' + index);
+      if (displayFieldset) {
+        if (checked) {
+          if (displayFieldset.getComponent('primary').getValue() == '1') {
+        	displayFieldset.getComponent('secondary').show().disable().setValue(false);
+          } else {
+            displayFieldset.getComponent('secondary').show().enable();
+          }
+        } else {
+          displayFieldset.getComponent('secondary').hide().disable().setValue(false);
+        }
+      }
+    }
+  },
   onPrimaryCheck: function(cb, checked) {
     // Deaktivere eigenen secondary und aktivere alle anderen
     if (this.getComponent('basic').getComponent('x11_dualhead').getValue()) {
@@ -212,7 +232,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       itemId: 'primary',
       name: 'primary',
-      fieldLabel: 'primär',
+      fieldLabel: 'primary',
       inputValue: item.devicename,
       checked: item.primary,
       listeners: {
