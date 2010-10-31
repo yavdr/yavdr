@@ -448,7 +448,6 @@ else
 									modeline["hz"] = frequency;
 									modeline["name"] = freq;
 
-									displays[nDisplayDevice]["current"]["id"] = tokens[2] + "x" + tokens[6];
 /*
 									// test
 									modeline["id"] = "800x600_72";
@@ -475,12 +474,19 @@ else
 									if (defaultfreq != NULL)
 									{
 										displays[nDisplayDevice]["current"]["defaultfreq"] = defaultfreq;
+										if (defaultfreq != "nvidia-auto-select") {
+											displays[nDisplayDevice]["current"]["id"] = tokens[2] + "x" + tokens[6];
+										} else {
+											displays[nDisplayDevice]["current"]["id"] = "nvidia-auto-select";
+										}
 									}
 									else
 									{
 										displays[nDisplayDevice]["current"]["defaultfreq"] = "";
-
+										displays[nDisplayDevice]["current"]["id"] = tokens[2] + "x" + tokens[6];
 									}
+
+
 
 /*
 									// test
