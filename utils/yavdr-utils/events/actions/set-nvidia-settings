@@ -1,0 +1,21 @@
+#!/bin/sh
+
+export DISPLAY=:1
+
+DEV=`dbget system.x11.display.0.device`
+
+nvidia-settings -a "SyncToVBlank=1" \
+                -a "AllowFlipping=1" \
+                -a "FSAAAppControlled=1" \
+                -a "OpenGLImageSettings=3" \
+                -a "LogAniso=0" \
+                -a "GPUScaling[$DEV]=1,1" > /dev/null
+
+DUAL=`dbget system.x11.dualhead.enabled`
+
+if [ "$DUAL" = "1" ]; then
+    DEV=`dbget system.x11.display.1.device`
+    nvidia-settings -a "GPUScaling[$DEV]=1,1" > /dev/null
+fi
+
+nvidia-settings --config /etc/yavdr/nvidia-settings -r  > /dev/null

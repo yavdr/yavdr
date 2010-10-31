@@ -2,7 +2,7 @@
 
 COMP=`dbget system.x11.display.0.overscan`
 if [ ! -z "$COMP" ]; then 
-DISPLAY=:1.0 nvidia-settings --config /etc/yavdr/nvidia-settings -a OverscanCompensation=$COMP
+    DISPLAY=:1.0 nvidia-settings --config /etc/yavdr/nvidia-settings -a OverscanCompensation=$COMP
 fi 
 
 DUALHEAD=`dbget system.x11.dualhead.enabled`
