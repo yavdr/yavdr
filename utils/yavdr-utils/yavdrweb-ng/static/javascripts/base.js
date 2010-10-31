@@ -41,16 +41,69 @@ Ext.apply(YaVDR, {
 			success: function(xhr) {
 				var data = Ext.util.JSON.decode(xhr.responseText);
 
-				
 
 				Ext.getBody().unmask();
 			},
 			failure: function() {
-				if(!Ext.getBody().isMasked()) {
+				if (!Ext.getBody().isMasked()) {
 					Ext.getBody().mask('VDR seams to be switched off or webserver is stopped.', 'x-mask-offline');
 				}
 			}
 		});
+	},
+
+	createSubmenu: function(items, columns) {
+
+		var rows = Math.ceil(items.length / columns);
+		var menu = new Array();
+
+		for (var x = 1; x <= rows; x++) {
+			var columnsMenu = new Array;
+
+			for (var y = 1; y <= columns; y++) {
+				var item;
+				var z = ((x - 1) * columns) + y - 1;
+
+				if (items[z]) {
+					item = items[z];
+				} else {
+					item = {
+						xtype: 'spacer'
+					}
+				}
+
+				var left = 0;
+				if (y != columns) left = 5;
+
+				var bottom = 0;
+				if (x != rows) bottom = 5;
+
+				item.margins = '0 ' + left  + 'px ' + bottom + 'px 0';
+
+				columnsMenu.push(item);
+			}
+			menu.push({ items: columnsMenu });
+		}
+
+		var return_menu = {
+			defaults: {
+				anchor: '100%',
+				margins: '5 0 0 0',
+				layout: 'hbox',
+				defaults: {
+					xtype: 'button',
+					height: 40,
+					scale: 'medium',
+					flex: 1,
+					handler: function(button) {
+						YaVDR.openComponent(button.itemId);
+					}
+				}
+			},
+			items: menu
+		};
+
+		return return_menu;
 	},
 
 	getComponent: function(componentId) {

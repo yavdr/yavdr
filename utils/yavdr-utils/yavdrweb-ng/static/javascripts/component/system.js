@@ -6,142 +6,13 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
     this.items = [
       new YaVDR.Component.Item({
         title: 'Befehle',
-        style: 'padding-bottom: 5px',
-        defaults: {
-          anchor: '100%',
-          margins: '5 0 0 0',
-          layout: 'hbox',
-          defaults: {
-            xtype: 'button',
-            margins:'0 5 5 0',
-            height: 40,
-            scale: 'medium',
-            flex: 0.5
-          }
-        },
-        items: [
-
-          {
-
-            items: [
-              {
-                icon: '/icons/fugue/monitor--arrow.png',
-                text: 'Switch temporary to second screen',
-                scope: this,
-                handler: this.changeVdrToSecondDisplay
-              },
-              {
-                icon: '/icons/fugue/arrow-circle-225.png',
-                text: 'Reboot computer',
-                scope: this,
-                handler: this.reboot
-              }
-            ]
-          },
-          {
-            items: [
-              {
-                icon: '/icons/fugue/arrow-step.png',
-                text: 'Kill XBMC',
-                scope: this,
-                handler: this.killXBMC
-              },
-              {
-                icon: '/icons/fugue/arrow-circle-double-135.png',
-                text: 'Restart VDR',
-                scope: this,
-                handler: this.restartVDR
-              }
-            ]
-          }
-        ]
+        style: 'margin-bottom: 5px',
+				items: YaVDR.createSubmenu(YaVDR.Component.System.menu['commands'], 2)
       }),
       new YaVDR.Component.Item({
         title: 'Diagnose',
-        defaults: {
-          anchor: '100%',
-          margins: '5 0 0 0',
-          layout: 'hbox',
-          defaults: {
-            xtype: 'button',
-            margins:'0 5 5 0',
-            height: 40,
-            scale: 'medium',
-            flex: 0.25,
-            handler: function(button) {
-              YaVDR.openComponent(button.itemId);
-            }
-          }
-        },
-        items: [
-          {
+				items: YaVDR.createSubmenu(YaVDR.Component.System.menu['diagnose'], 4)
 
-            items: [
-              {
-                itemId: 'system-diagnose-system-infos',
-                icon: '/icons/fugue/system-monitor.png',
-                text: 'System Information'
-              },
-              {
-                itemId: 'system-diagnose-system-logs',
-                icon: '/icons/fugue/script-text.png',
-                text: 'System log files'
-              },
-              {
-                itemId: 'system-diagnose-xbmc',
-                icon: '/icons/fugue/exclamation.png',
-                text: 'XBMC crash log'
-              },
-              {
-                itemId: 'system-diagnose-lirc',
-                icon: '/icons/silk/keyboard.png',
-                text: 'LIRC configuration'
-              }
-            ]
-          },
-          {
-            items: [
-              {
-                itemId: 'system-diagnose-vdr',
-                icon: '/icons/fugue/screwdriver.png',
-                text: 'VDR configuration'
-              },
-              {
-                itemId: 'system-diagnose-x11',
-                icon: '/icons/fugue/television.png',
-                text: 'Xorg server'
-              },
-              {
-                itemId: 'system-diagnose-alsa',
-                icon: '/icons/fugue/speaker.png',
-                text: 'Sound (ALSA)'
-              },
-              {
-                itemId: 'system-diagnose-dpkg',
-                icon: '/icons/silk/package.png',
-                text: 'Package information'
-              }
-            ]
-          },
-          {
-            items: [
-              {
-                itemId: 'system-diagnose-yavdr',
-                icon: '/icons/fugue/database.png',
-                text: 'yaVDR database'
-              },
-              {
-                xtype: 'spacer'
-              },
-              {
-                xtype: 'spacer'
-              },
-              {
-                xtype: 'spacer'
-              }
-            ]
-          }
-        ]
       })
     ];
     YaVDR.Component.System.superclass.initComponent.call(this);
@@ -177,4 +48,40 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
   }
 });
 
+YaVDR.Component.System.menu = new Array;
+YaVDR.Component.System.menu['commands'] = new Array;
+YaVDR.Component.System.menu['diagnose'] = new Array;
+
+Ext.apply(YaVDR.Component.System, {
+	addCommand: function(label, handler, icon, scope) {
+		YaVDR.Component.System.menu['commands'].push({
+			scope: scope,
+			text: label,
+			handler: handler,
+			icon: icon
+		});
+	},
+	addMenu: function(section, itemId, label, icon) {
+		YaVDR.Component.System.menu[section].push({
+			itemId: itemId,
+			text: label,
+			icon: icon
+		});
+	}
+});
+
+YaVDR.Component.System.addCommand('Switch temporary to second screen', YaVDR.Component.Settings.prototype.changeVdrToSecondDisplay, '/icons/fugue/monitor--arrow.png');
+YaVDR.Component.System.addCommand('Reboot computer', YaVDR.Component.Settings.prototype.reboot, '/icons/fugue/arrow-circle-225.png');
+YaVDR.Component.System.addCommand('Kill XBMC', YaVDR.Component.Settings.prototype.killXBMC, '/icons/fugue/arrow-step.png');
+YaVDR.Component.System.addCommand('Restart VDR', YaVDR.Component.Settings.prototype.restartVDR, '/icons/fugue/arrow-circle-double-135.png');
+
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-infos', 'System Information', '/icons/fugue/system-monitor.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-logs', 'System log files', '/icons/fugue/script-text.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-xbmc', 'XBMC crash log', '/icons/fugue/exclamation.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-lirc', 'LIRC configuration', '/icons/silk/keyboard.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-vdr', 'VDR configuration', '/icons/fugue/screwdriver.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-x11', 'Xorg server', '/icons/fugue/television.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-alsa', 'Sound (ALSA)', '/icons/fugue/speaker.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-dpkg', 'System Information', '/icons/silk/package.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-yavdr', 'yaVDR database', '/icons/fugue/database.png');
 YaVDR.registerComponent(YaVDR.Component.System);
