@@ -1,4 +1,5 @@
-<script type="text/javascript" src="/static/config_tabs/sundtek.js"></script>
-
+<script type="text/javascript" src="/static/javascripts/component/settings/hw_sundtek.js"></script>
+<!--
 <script type="text/javascript" src="/static/locale/sundtek/en.js"></script>
 <?cs if:webfrontend.language != "en" ?><script type="text/javascript" src="/static/locale/sundtek/<?cs var:webfrontend.language ?>.js"></script><?cs /if ?>
+-->

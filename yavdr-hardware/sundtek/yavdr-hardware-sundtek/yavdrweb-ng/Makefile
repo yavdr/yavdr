@@ -7,6 +7,7 @@ test: all testdeploy
 	make -C ${YAVDRWEBDIR} test
 
 testdeploy: all
+	@mkdir -p /tmp/yavdrweb
 	@cp -f sundtek.so /tmp/yavdrweb/
 	@cp -pfr static /tmp/yavdrweb
 	@cp -pfr ../templates /tmp/yavdrweb

@@ -84,7 +84,8 @@ YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
                 icon: '/icons/fugue/television.png'
               },
               {
-                text: 'Sundtek'
+                text: 'Sundtek',
+                itemId: 'settings-hw-sundtek'
               }
             ]
           }

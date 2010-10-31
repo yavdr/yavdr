@@ -3,7 +3,7 @@ all: yavdrweb.so
 
 test: CEXTRAFLAGS=-g
 test: all testdeploy
-	${TNTNET} -c tntnet.localtest.conf
+	${TNTNET} -d -c tntnet.localtest.conf
 
 yavdrweb.so: ../common/make_dirs.o \
              neo_hdf.o neo_err.o auth.o authenticate.o yavdrweb.o \
