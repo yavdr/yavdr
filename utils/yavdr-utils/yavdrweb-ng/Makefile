@@ -2,7 +2,7 @@
 all: yavdrweb.so
 
 test: CEXTRAFLAGS=-g
-test: all
+test: all testdeploy
 	${TNTNET} -c tntnet.localtest.conf
 
 yavdrweb.so: ../common/make_dirs.o \
@@ -15,6 +15,12 @@ yavdrweb.so: ../common/make_dirs.o \
              get_x11.o set_x11.o get_packages.o dpkg.o session.o
 	${CXX} -o $@ $^ ${LDFLAGS}
 
+testdeploy: all
+	@mkdir -p /tmp/yavdrweb	
+	@cp -pfr yavdrweb.so /tmp/yavdrweb
+	@cp -pfr static /tmp/yavdrweb
+	@cp -pfr ../templates /tmp/yavdrweb
+	
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp .png
 EXTRA_ENV+="PATH=$$PATH:/usr/bin"
 ECPPC=env ${EXTRA_ENV} ecppc -v
@@ -43,7 +49,8 @@ LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lneo_cs -lpam -lXNVCtrl -lX11 -l
 
 clean:
 	@rm -f *.o *.so *.cpp
-
+	@rm -rf /tmp/yavdrweb
+	
 install:
 	@install -d $(DESTDIR)/usr/lib/yavdrweb
 	@install yavdrweb.so $(DESTDIR)/usr/lib/yavdrweb/

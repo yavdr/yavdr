@@ -2,10 +2,15 @@ YAVDRWEBDIR=../../../../utils/yavdr-utils/yavdrweb-ng/
 
 all: sundtek.so
 
-test: all
-	cp -f sundtek.so ${YAVDRWEBDIR}
+test: all testdeploy
+	make -C ${YAVDRWEBDIR} testdeploy
 	make -C ${YAVDRWEBDIR} test
 
+testdeploy: all
+	@cp -f sundtek.so /tmp/yavdrweb/
+	@cp -pfr static /tmp/yavdrweb
+	@cp -pfr ../templates /tmp/yavdrweb
+	
 sundtek.so: get_dvb.o set_dvb.o
 	${CXX} -o $@ $^ ${LDFLAGS}
 
@@ -34,7 +39,8 @@ LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl
 
 clean:
 	@rm -f *.o *.so *.cpp
-
+	@rm -rf /tmp/yavdrweb
+	
 install:
 #	@install -d $(DESTDIR)/usr/lib/yavdrweb
 	@install sundtek.so $(DESTDIR)/usr/lib/yavdrweb/
