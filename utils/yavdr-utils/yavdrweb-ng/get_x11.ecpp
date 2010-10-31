@@ -474,7 +474,7 @@ else
 									if (defaultfreq != NULL)
 									{
 										displays[nDisplayDevice]["current"]["defaultfreq"] = defaultfreq;
-										if (strcmp(defaultfreq, "nvidia-auto-select") == 0) {
+										if (strcmp(defaultfreq, "nvidia-auto-select") != 0) {
 											displays[nDisplayDevice]["current"]["id"] = tokens[2] + "x" + tokens[6];
 										} else {
 											displays[nDisplayDevice]["current"]["id"] = "nvidia-auto-select";
