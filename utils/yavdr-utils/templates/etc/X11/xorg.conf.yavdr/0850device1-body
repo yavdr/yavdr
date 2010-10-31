@@ -8,5 +8,4 @@
     Option         "TripleBuffer" "False"
     Option         "AddARGBGLXVisuals" "True"
     Option         "TwinView" "0"
-    Option         "ConnectedMonitor" "<?cs var:system.x11.display.1.device ?>"
     Option         "DynamicTwinView" "0"
