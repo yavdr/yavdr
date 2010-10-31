@@ -331,7 +331,7 @@ else
 												pos = known[resolution].asInt();
 											}
 
-											if (!modelines[pos].isMember("hz") || !modelines[pos]["modes"].isMember(freq) || !modelines[pos]["modes"][freq]["isedid"]) {
+											if (!modelines[pos].isMember("modes") || !modelines[pos]["modes"].isMember(freq) || !modelines[pos]["modes"][freq]["isedid"]) {
 												Json::Value modeline;
 												modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
 												modeline["isedid"] = isEDIDMode;
@@ -584,6 +584,7 @@ else
 											Tokenize(_s, parts, ":");
 											Tokenize(parts[parts.size()-1], tokens);
 
+											bool isEDIDMode = (parts[0].find("source=edid") != string::npos);
 											string resolution = tokens[2]+"x"+tokens[6];
 
 											bool interlace = false;
@@ -613,9 +614,10 @@ else
 												pos = known[resolution].asInt();
 											}
 
-											if (!modelines[pos].isMember("hz") || !modelines[pos]["hz"].isMember(freq)) {
+											if (!modelines[pos].isMember("modes") || !modelines[pos]["modes"].isMember(freq) || !modelines[pos]["modes"][freq]["isedid"]) {
 												Json::Value modeline;
 												modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
+												modeline["isedid"] = isEDIDMode;
 												modeline["modeline"] = trim(parts[parts.size()-1].substr(tokens[0].length()+1));
 												modeline["x"] = tokens[2];
 												modeline["y"] = tokens[6];
