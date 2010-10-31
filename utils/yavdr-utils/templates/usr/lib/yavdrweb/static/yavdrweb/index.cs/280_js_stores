@@ -1,0 +1,4 @@
+
+    <!-- js_stores -->
+    <script type="text/javascript" src="/static/javascripts/stores/recordings.js"></script>
+    <script type="text/javascript" src="/static/javascripts/stores/timers.js"></script>

@@ -1,79 +1,85 @@
-	.component-header .x-panel-body {
-		font-size: 12px;
-		padding: 3px 0 3px 0;
-		font-family: tahoma, arial, helvetica, sans-serif;		
-	}
-
-	.x-mask-offline div {
-		padding: 10px 20px 10px 20px;	
-		font-weight: bold;
-		color: #B00;
-	}
-
-  .x-panel-body {
-    background-color: #F1F1F1;
-  }
-
-  .yavdr-menu .x-btn-menu .x-btn-tl,
-  .yavdr-menu .x-btn-menu .x-btn-tr,
-  .yavdr-menu .x-btn-menu .x-btn-tc,
-  .yavdr-menu .x-btn-menu .x-btn-ml,
-  .yavdr-menu .x-btn-menu .x-btn-mr,
-  .yavdr-menu .x-btn-menu .x-btn-mc,
-  .yavdr-menu .x-btn-menu .x-btn-bl,
-  .yavdr-menu .x-btn-menu .x-btn-br,
-  .yavdr-menu .x-btn-menu .x-btn-bc {
-    background: transparent;
-    width2: 0;
-  }
-
-  .yavdr-menu .x-btn-menu .x-btn-tl,
-  .yavdr-menu .x-btn-menu .x-btn-tr,
-  .yavdr-menu .x-btn-menu .x-btn-tc,
-  .yavdr-menu .x-btn-menu .x-btn-bl,
-  .yavdr-menu .x-btn-menu .x-btn-br,
-  .yavdr-menu .x-btn-menu .x-btn-bc {
-    height2: 0;
-  }
-
-  .yavdr-menu .x-btn-menu.x-btn-icon .x-btn-larger .x-btn-text {
-    width: 50px;
-    height: 50px;
-  }
-
-  .yavdr-menu .x-btn-small .x-btn-text {
-    padding: 0 5px 0 5px;
-  }
-
-.selection-wrap{
-  cursor: pointer;
-  margin: 3px;
-  padding: 6px;
-  padding-left: 40px;
+.component-header .x-panel-body {
+	font-size: 12px;
+	padding: 3px 0 3px 0;
+	font-family: tahoma, arial, helvetica, sans-serif;
 }
+
+.x-mask-offline div {
+	padding: 10px 20px 10px 20px;
+	font-weight: bold;
+	color: #B00;
+}
+
+.x-panel-body {
+	background-color: #F1F1F1;
+}
+
+.yavdr-menu .x-btn-menu .x-btn-tl,
+.yavdr-menu .x-btn-menu .x-btn-tr,
+.yavdr-menu .x-btn-menu .x-btn-tc,
+.yavdr-menu .x-btn-menu .x-btn-ml,
+.yavdr-menu .x-btn-menu .x-btn-mr,
+.yavdr-menu .x-btn-menu .x-btn-mc,
+.yavdr-menu .x-btn-menu .x-btn-bl,
+.yavdr-menu .x-btn-menu .x-btn-br,
+.yavdr-menu .x-btn-menu .x-btn-bc {
+	background: transparent;
+	width2: 0;
+}
+
+.yavdr-menu .x-btn-menu .x-btn-tl,
+.yavdr-menu .x-btn-menu .x-btn-tr,
+.yavdr-menu .x-btn-menu .x-btn-tc,
+.yavdr-menu .x-btn-menu .x-btn-bl,
+.yavdr-menu .x-btn-menu .x-btn-br,
+.yavdr-menu .x-btn-menu .x-btn-bc {
+	height2: 0;
+}
+
+.yavdr-menu .x-btn-menu.x-btn-icon .x-btn-larger .x-btn-text {
+	width: 50px;
+	height: 50px;
+}
+
+.yavdr-menu .x-btn-small .x-btn-text {
+	padding: 0 5px 0 5px;
+}
+
+.x-panel-mc .frame-border {
+	border: 1px solid #D0D0D0;
+}
+
+.selection-wrap {
+	cursor: pointer;
+	margin: 3px;
+	padding: 6px;
+	padding-left: 40px;
+}
+
 .selection-wrap .title {
-  font-weight: bold;
+	font-weight: bold;
 }
+
 .selection-wrap.unselectable {
-  cursor: default;
-  opacity: .4;
+	cursor: default;
+	opacity: .4;
 }
 
-.selectable.x-view-over{
-  border:1px solid #dddddd;
-  background: #F6F6F6 repeat-x left top;
-  padding: 5px;
-  padding-left: 39px;
+.selectable.x-view-over {
+	border: 1px solid #dddddd;
+	background: #F6F6F6 repeat-x left top;
+	padding: 5px;
+	padding-left: 39px;
 }
 
-.x-view-selected.x-view-over{
-  border:1px solid #D0D0D0;
-  background: #efefef url(/static/images/icons/tick.png) no-repeat 12px center;
+.x-view-selected.x-view-over {
+	border: 1px solid #D0D0D0;
+	background: #efefef url(/static/images/icons/tick.png) no-repeat 12px center;
 }
 
-.x-view-selected{
-  background: #efefef url(/static/images/icons/tick.png) no-repeat 12px center;
-  border:1px solid #D0D0D0;
-  padding: 5px;
-  padding-left: 39px;
+.x-view-selected {
+	background: #efefef url(/static/images/icons/tick.png) no-repeat 12px center;
+	border: 1px solid #D0D0D0;
+	padding: 5px;
+	padding-left: 39px;
 }
