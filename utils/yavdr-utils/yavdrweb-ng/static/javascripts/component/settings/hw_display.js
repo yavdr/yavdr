@@ -261,6 +261,16 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       data : item.modelines
     });
 
+    var resolution = null;
+    if (item.current.modeline.x>0) {
+    	if (item.current.id == "nvidia-auto-select") {
+    		resolution = "nvidia-auto-select";
+    	} else {
+    		resolution = item.current.modeline.x + 'x' + item.current.modeline.y;
+    	}
+    } else {
+    	resolution = 'disabled';
+    }
     items.push(new YaVDR.EasyComboBox({
       itemId: 'modeline',
       index: index,
@@ -269,7 +279,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       emptyText: 'wähle Auflösung',
       fieldLabel: 'Auflösung',
       hiddenName: 'modeline' + index,
-      value: (item.current.modeline.x>0?item.current.modeline.x + 'x' + item.current.modeline.y:'disabled'),
+      value: resolution,
       listeners: {
         scope: this,
         select: this.onModelineSelect,
