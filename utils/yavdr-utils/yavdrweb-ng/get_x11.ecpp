@@ -331,7 +331,7 @@ else
 												pos = known[resolution].asInt();
 											}
 
-											if (!modelines[pos].isMember("modes") || !modelines[pos]["modes"].isMember(freq) || !modelines[pos]["modes"][freq]["isedid"]) {
+											if (!modelines[pos].isMember("modes") || !modelines[pos]["modes"].isMember(freq) || (isEDIDMode && !modelines[pos]["modes"][freq]["isedid"])) {
 												Json::Value modeline;
 												modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
 												modeline["isedid"] = isEDIDMode;
@@ -614,7 +614,7 @@ else
 												pos = known[resolution].asInt();
 											}
 
-											if (!modelines[pos].isMember("modes") || !modelines[pos]["modes"].isMember(freq) || !modelines[pos]["modes"][freq]["isedid"]) {
+											if (!modelines[pos].isMember("modes") || !modelines[pos]["modes"].isMember(freq) || (isEDIDMode && !modelines[pos]["modes"][freq]["isedid"])) {
 												Json::Value modeline;
 												modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
 												modeline["isedid"] = isEDIDMode;
