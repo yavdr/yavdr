@@ -1,0 +1,51 @@
+msgid "Timer" 
+msgstr "Laikmatis" 
+
+msgid "Video" 
+msgstr "Video"
+
+msgid "Applications" 
+msgstr "Programos" 
+
+msgid "Web" 
+msgstr "Naršymas internete" 
+
+msgid "Internet" 
+msgstr "Internetas" 
+
+msgid "Media" 
+msgstr "Media" 
+
+msgid "XBMC on graphtft Display" 
+msgstr "XBMC grafiniam ekrane" 
+
+msgid "Games" 
+msgstr "Žaidimai" 
+
+msgid "Tools" 
+msgstr "Įrankiai" 
+
+msgid "Xterm" 
+msgstr "X terminalas" 
+
+msgid "System" 
+msgstr "Sistama" 
+
+msgid "Commands" 
+msgstr "Komandos" 
+
+msgid "Safely remove usb mass storage" 
+msgstr "Saugiai ištraukite usb atmintinę" 
+
+msgid "Update vdr recordings list" 
+msgstr "Atnaujinti vdr įrašų sąrašą" 
+
+msgid "Restart vdr" 
+msgstr "Perkrauti vdr" 
+
+msgid "Reboot system" 
+msgstr "Perkrauti sistemą" 
+
+msgid "Shutdown system" 
+msgstr "Išjungti sistemą" 
+
