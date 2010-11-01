@@ -33,6 +33,7 @@ if (
 		(signal == "change-timeout") ||
 		(signal == "change-sound") ||
 		(signal == "graphtft-state-change") ||
+		(signal == "change-epg") ||
 		(signal == "change-display") ||
 		(signal == "change-plugin")
 )

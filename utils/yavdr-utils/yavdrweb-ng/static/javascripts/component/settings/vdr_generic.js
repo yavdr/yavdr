@@ -11,7 +11,12 @@ YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
       }),
       new YaVDR.Component.Item({
         title: 'Lifeguard Monitoring Items',
+        style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.VdrGeneric.Lifeguard
+      }),
+      new YaVDR.Component.Item({
+        title: 'EPG',
+        items: new YaVDR.Component.Settings.VdrGeneric.EPG
       })
     ];
     YaVDR.Component.Settings.VdrGeneric.superclass.initComponent.call(this);
@@ -186,4 +191,72 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
       this.frontendSelectiorView.select("frontend-selection-" + value);
     }, this);
   }
+});
+
+YaVDR.Component.Settings.VdrGeneric.EPG = Ext.extend(YaVDR.Default.Form, {
+
+	initComponent: function() {
+
+		this.charsetOverrideStore = new Ext.data.JsonStore({
+			fields: [
+				{ name: 'key' },
+				{ name: 'title' },
+				{ name: 'description' }
+			],
+			data: [
+				{
+					key: '',
+					title: 'Nothing',
+					description: ''
+				},
+				{
+					key: 'ISO-8859-9',
+					title: 'ISO-8859-9',
+					description: 'The bestway for german television, because sky send epg not in utf-8'
+				}
+			]
+		});
+
+		this.charsetOverrideTpl = new Ext.XTemplate(
+						'<tpl for=".">',
+						'<div class="selection-wrap selectable" id="charset-selection-{key}">',
+						'<div class="title">{title}</div>',
+						'<div class="description">{description}</div>',
+						'</div>',
+						'</tpl>'
+						);
+
+		this.charsetOverrideTpl.compile();
+
+		this.charsetOverrideSelectionHidden = new Ext.form.Hidden({
+			name: 'value',
+			value: ''
+		});
+
+		this.charsetOverrideSelectiorView = new YaVDR.SelectionList({
+			fieldLabel: 'Charset override',
+			hiddenField: this.charsetOverrideSelectionHidden,
+			tpl: this.charsetOverrideTpl,
+			store: this.charsetOverrideStore
+		});
+
+		this.items = [
+			this.charsetOverrideSelectionHidden,
+			this.charsetOverrideSelectiorView
+		];
+
+
+		YaVDR.Component.Settings.VdrGeneric.EPG.superclass.initComponent.call(this);
+	},
+	doSave: function() {
+		this.getForm().submit({
+			url: '/admin/set_signal?signal=change-epg'
+		});
+	},
+
+	doLoad: function() {
+		YaVDR.getHdfValue('vdr.epg.charset_override', function(value) {
+      this.charsetOverrideSelectiorView.select("charset-selection-" + value);
+		}, this);
+	}
 });
