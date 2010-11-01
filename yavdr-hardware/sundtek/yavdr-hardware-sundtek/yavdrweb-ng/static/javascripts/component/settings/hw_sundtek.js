@@ -58,3 +58,5 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
     })
   }
 });
+
+YaVDR.Component.Settings.addMenu('hw', 'settings-hw-sundtek', 'Sundtek', null);
