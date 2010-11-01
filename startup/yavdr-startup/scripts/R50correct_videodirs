@@ -1,0 +1,171 @@
+#!/bin/bash
+#
+# Version 1.2 2007-01-31
+#
+# Example:
+# correct_videodirs.sh <basis videodir> <path to .rec>
+#
+# correct_videodirs.sh /video0 /video0/hitec/Doku/%Die_stille_Revolution_der_Mechatronik/2004-04-23.15\:25.50.99.rec
+#
+# In rwrapper.sh:
+#
+#      move)
+#        correct_videodirs.sh /video0 "$3"
+#        ;;
+#    rename)
+#        correct_videodirs.sh /video0 "$3"
+#        ;;
+#
+#
+# Author: Mike Constabel <vejoun @ toppoint.de>
+#                        <vejoun @ vdrportal>
+#
+# Warning: Use it at your own risk, don't blame me if you loose recordings.
+# I never loose something, but nothing is 100%. ;-)
+#
+# HISTORY:
+# --------
+#
+# 31.01.2007 Version 1.2
+#
+# - Fixes info about rwrapper.sh, use $3 instead of $2,
+#   thanks to Christian Jacobsen
+# - Use --target-directory instead of -t, the ln from Suse doesn't know -t,
+#   thanks to Christian Jacobsen
+#
+# 23.06.2006 Version 1.1
+#
+# - first public release
+#
+case $1 in 
+	move|rename)
+		echo "Fix $2"
+		;;
+	*)
+		exit 0
+		;;
+esac
+
+if [ -e /usr/lib/vdr/config-loader ]; then
+. /usr/lib/vdr/config-loader
+else
+    exit 1
+fi 
+
+VPATH="${2/%\/}" # .rec without trailing slash
+
+VDIRSIZE=${#VIDEO_DIR}
+
+[ $# -ne 2 ]              && { echo -e "Script needs two parameters. See example inside the script."; exit 1; }
+[ -z "$VIDEO_DIR" ]        && { echo -e "Missing first parameter."; exit 1; }
+[ -d "$VPATH" ]           || { echo -e "$VPATH is not a directory!"; exit 1; }
+[ -n "${VPATH/*\.rec/}" ] && { echo -e "$VPATH is not a \".rec\" directory!"; exit 1; }
+
+# Search all ???.vdr in VPATH
+VDRFILES="$(find "$VPATH" -regextype posix-extended -regex ".*[0-9]+(vdr|ts)" -printf "%P " -type f)"
+
+# loop for every ???.vdr in VPATH
+for VDRFILE in $VDRFILES
+do
+
+  # Check if it is a file
+  if [ ! -e "$VPATH/$VDRFILE" -a ! -L "$VPATH/$VDRFILE" ]; then
+    echo -e "Error!\n$VPATH/$VDRFILE\nis not a file nor a link!"
+    exit 1
+  fi
+
+  # Check if file is a link, continue if not
+  if [ ! -L "$VPATH/$VDRFILE" ]; then
+    continue
+  fi
+
+  # check if this ???.vdr is already ready
+  for i in $FERTIG; do
+    if [ "$i" = "$VDRFILE" ]; then
+      echo "$i already correct."
+      continue 2
+    fi
+  done
+
+  # split the source path
+  # example:
+  # QFILE=/home/vdr1/v0/hitec/Doku/%Die_stille_Revolution_der_Mechatronik/2004-04-23.15:25.50.99.rec/001.vdr
+  # QDIR=hitec/Doku/%Die_stille_Revolution_der_Mechatronik/2004-04-23.15:25.50.99.rec
+  # QPART=home/vdr1/v0
+  QFILE="$VPATH/$VDRFILE"
+  SIZE=${#QFILE}
+  QDIR=${QFILE:${VDIRSIZE}+1:${SIZE}-${VDIRSIZE}-9}
+  QPART=${QFILE:1:${VDIRSIZE}-1}
+
+  # calculate the target path
+  # same as above, but ZFILE is the dereferenced link from ???.vdr
+  ZFILE=$(find "$VPATH/$VDRFILE" -printf "%l")
+  SIZE=${#ZFILE}
+  ZDIR=${ZFILE:${VDIRSIZE}+1:${SIZE}-${VDIRSIZE}-9}
+  ZPART=${ZFILE:1:${VDIRSIZE}-1}
+
+  # remove double slashes
+  QDIR="${QDIR//\/\///}"
+  ZDIR="${ZDIR//\/\///}"
+
+  # Check if pathname is equal, continue with loop if yes
+  [ "$QDIR" = "$ZDIR" ] && continue
+
+  [ -z "$QDIR" ] && { echo -e "QDIR ist zero!"; exit 1; }
+  [ -z "$ZDIR" ] && { echo -e "ZDIR ist zero!"; exit 1; }
+
+  echo
+  echo "$QDIR != $ZDIR"
+  echo "Directorys differs, i'll try to correct them..."
+  echo "Create path /${ZPART}/${QDIR}"
+
+  # create new target dir
+  mkdir -p "/${ZPART}/${QDIR}"
+
+  if [ $(stat --format=%d "/${ZPART}/${ZDIR}/") -ne $(stat --format=%d "/${ZPART}/${QDIR}/") ]; then
+  	echo "Source and target are on different mountpoints! Not moving anything."
+  	exit 1
+  fi
+
+  # find all files in old target dir...
+  FILES=$(find "/${ZPART}/${ZDIR}" -type f -printf "%P ")
+
+  [ -z "$FILES" ] && { echo -e "FILES is empty!"; exit 1; }
+
+  echo "Now moving files..."
+  
+  # ... and move them to the new target dir
+  for i in $FILES
+  do
+    mv -v "/${ZPART}/${ZDIR}/${i}" "/${ZPART}/${QDIR}/${i}" || { echo "mv -v /${ZPART}/${ZDIR}/${i} /${ZPART}/${QDIR}/${i} exited with error!"; exit 1; }
+  done
+
+  # remove old target dir, rmdir removes only empty dirs
+  echo "Remove old directory /${ZPART}/${ZDIR}..."
+  rmdir -p "/${ZPART}/${ZDIR}"
+
+  echo "Create new links..."
+
+  # create new links
+  for i in $FILES; do
+    cd "/${QPART}/${QDIR}/"
+    if [ -L "/${QPART}/${QDIR}/${i}" ]; then
+      echo "Change link /${QPART}/${QDIR}/${i}"
+      ln -f -s --target-directory="/${QPART}/${QDIR}/" "/${ZPART}/${QDIR}/${i}"
+      FERTIG="${FERTIG} "$i
+    else
+      echo "Error: /${QPART}/${QDIR}/${i} is no link"
+    fi
+  done
+
+  echo
+
+done
+
+if [ -n "$FERTIG" ]; then
+  exit 2
+fi
+
+exit 0
+
+#EOF
