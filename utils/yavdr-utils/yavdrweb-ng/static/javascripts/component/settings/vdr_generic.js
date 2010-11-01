@@ -206,13 +206,13 @@ YaVDR.Component.Settings.VdrGeneric.EPG = Ext.extend(YaVDR.Default.Form, {
 			data: [
 				{
 					key: '',
-					title: 'Nothing',
+					title: 'None',
 					description: ''
 				},
 				{
 					key: 'ISO-8859-9',
 					title: 'ISO-8859-9',
-					description: 'The bestway for german television, because sky send epg not in utf-8'
+					description: 'The best way for german television, because sky send epg not correct'
 				}
 			]
 		});
