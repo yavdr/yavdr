@@ -212,7 +212,7 @@ YaVDR.Component.Settings.VdrGeneric.EPG = Ext.extend(YaVDR.Default.Form, {
 				{
 					key: 'ISO-8859-9',
 					title: 'ISO-8859-9',
-					description: 'The best way for german television, because sky send epg not correct'
+					description: 'Override incorrect not DVB compliant EPG Encoding, as send by Sky'
 				}
 			]
 		});
