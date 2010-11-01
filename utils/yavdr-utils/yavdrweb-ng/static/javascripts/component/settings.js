@@ -44,9 +44,6 @@ YaVDR.Component.Settings.addMenu('vdr', 'settings-vdr-channels', 'Channels', '/i
 YaVDR.Component.Settings.addMenu('hw', 'settings-hw-remote', 'Remote Control Settings', '/icons/silk/keyboard.png');
 YaVDR.Component.Settings.addMenu('hw', 'settings-hw-audio', 'Audio Configuration', '/icons/fugue/speaker.png');
 YaVDR.Component.Settings.addMenu('hw', 'settings-hw-display', 'Display Settings', '/icons/fugue/television.png');
-YaVDR.Component.Settings.addMenu('hw', 'settings-hw-sundtek', 'Sundtek', null);
-
-
 
 YaVDR.Component.Settings.addMenu('system', 'settings-system-generic', 'System', '/icons/silk/computer.png');
 YaVDR.Component.Settings.addMenu('system', 'settings-system-network', 'Network', '/icons/fugue/network-ethernet.png');
