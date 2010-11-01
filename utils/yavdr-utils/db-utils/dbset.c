@@ -1,9 +1,9 @@
 #include <fcntl.h>
 #include <ClearSilver.h>
-
 #include "common.h"
+#include "dbset.h"
 
-int main(int argc, char *argv[])
+int dbset(char *arg)
 {
   int ret = 0;
   NEOERR *err;
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
       }
       else
       {
-        err = hdf_set_valuef(hdf, argv[1]);
+        err = hdf_set_valuef(hdf, arg);
         if (err != STATUS_OK)
         {
           nerr_log_error(err);

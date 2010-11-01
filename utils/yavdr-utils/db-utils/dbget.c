@@ -1,11 +1,13 @@
 #include <fcntl.h>
 #include <ClearSilver.h>
 #include <stdio.h>
+#include <string.h>
 #include "common.h"
+#include "dbget.h"
 
-int main(int argc, char *argv[])
+char *dbget(char *name, char *defval)
 {
-  int ret = 0;
+  char *ret = NULL;
   NEOERR *err;
   HDF *hdf = NULL;
   char *value = NULL;
@@ -14,31 +16,25 @@ int main(int argc, char *argv[])
   if (err != STATUS_OK)
   {
     nerr_log_error(err);
-    ret = -1;
   }
   else
   { 
     int fd = 0;
 
-    if ((fd = open(YAVDRDB, O_RDONLY)) == -1)
-    {
-      ret = -2;
-    }
-    else
+    if ((fd = open(YAVDRDB, O_RDONLY)) != -1)
     {
       flock(fd, LOCK_SH);
       err = hdf_read_file(hdf, YAVDRDB);
       if (err && !nerr_handle(&err, NERR_NOT_FOUND))
       {
         nerr_log_error(err);
-        ret = -3;
       }
       else
       {
-        value = hdf_get_value(hdf, argv[1], (argc == 3) ? argv[2]: "");
+        value = hdf_get_value(hdf, name, defval);
         if (value != NULL)
         {
-          fputs(value, stdout);
+          ret = strdup(value);
         }
       }
       flock(fd, LOCK_UN);
