@@ -66,7 +66,8 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json, bool includeLength) {
     "system.grub.timeout",
     "vdr.plugin.graphtft.enabled",
     "vdr.plugin.lifeguard.enable",
-    "system.x11.dualhead.enabled"
+    "system.x11.dualhead.enabled",
+	"vdr.epg.charset_override"
   };
   
   bool validRequest = false;

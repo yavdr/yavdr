@@ -89,6 +89,26 @@ if (
 			hdf_destroy(&hdf);
 		}
 	}
+	else if (signal == "change-epg" )
+	{
+		if ((value == "") || (value == "ISO-8859-9"))
+		{
+			NEOERR *err;
+			HDF *hdf = NULL;
+			if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+			{
+				nerr_log_error(err);
+			}
+
+			hdf_set_valuef(hdf, "vdr.epg.charset_override=%s", value.c_str());
+			err = hdf_write_file(hdf, YAVDRDB);
+			if (err != STATUS_OK)
+			{
+				nerr_log_error(err);
+			}
+			hdf_destroy(&hdf);
+		}
+	}
 	else if (signal == "change-timeout" )
 	{
 		int timeoutval = atoi(value.c_str());
