@@ -50,7 +50,7 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
 						autoScroll: true,
 						height: 150,
 						anchor: '100%',
-						title: 'System',
+						title: _('System'),
 						tools: [
 							{id: 'refresh'}
 						],
@@ -82,7 +82,7 @@ YaVDR.Component.Dashboard.Item = Ext.extend(Ext.Panel, {
 
 
 YaVDR.Component.Dashboard.Recordings = Ext.extend(YaVDR.Component.Dashboard.Item, {
-	title: 'Recordings',
+	title: _('Recordings'),
 	style: 'margin: 0 5px 0 0 ',
 	initComponent: function() {
 
@@ -105,8 +105,8 @@ YaVDR.Component.Dashboard.Recordings = Ext.extend(YaVDR.Component.Dashboard.Item
 			},
 			disableSelection: true,
 			columns: [
-				{ header: 'Name', dataIndex: 'name', width: 400 },
-				{ header: 'Dauer', dataIndex: 'length', width: 100 }
+				{ header: _('Name'), dataIndex: 'name', width: 400 },
+				{ header: _('Duration'), dataIndex: 'length', width: 100 }
 			],
 			store: this.store
 		});
@@ -122,7 +122,7 @@ YaVDR.Component.Dashboard.Recordings = Ext.extend(YaVDR.Component.Dashboard.Item
 
 
 YaVDR.Component.Dashboard.Timers = Ext.extend(YaVDR.Component.Dashboard.Item, {
-	title: 'Timers',
+	title: _('Timers'),
 	initComponent: function() {
 
 		this.tools = [
@@ -144,8 +144,8 @@ YaVDR.Component.Dashboard.Timers = Ext.extend(YaVDR.Component.Dashboard.Item, {
 			},
 			disableSelection: true,
 			columns: [
-				{ header: 'Name', dataIndex: 'name', width: 400 },
-				{ header: 'Dauer', dataIndex: 'length', width: 100 }
+				{ header: _('Name'), dataIndex: 'name', width: 400 },
+				{ header: _('Duration'), dataIndex: 'length', width: 100 }
 			],
 			store: this.store
 		});

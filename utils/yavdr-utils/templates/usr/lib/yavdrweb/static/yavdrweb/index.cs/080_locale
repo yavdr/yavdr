@@ -1,0 +1,10 @@
+    <!-- locale -->
+    <link rel="gettext" lang="<?cs var:webfrontend.language ?>" href="/static/locale/<?cs var:webfrontend.language ?>/yavdr-wfe.json"/>
+    <script language="javascript" src="/static/javascripts/gettext.js"></script>
+    <script type="text/javascript">
+      var gt = new Gettext({ 'domain' : 'yavdr-wfe' });
+      function _(msgid) {
+        return gt.gettext(msgid);
+      }
+    </script>
+

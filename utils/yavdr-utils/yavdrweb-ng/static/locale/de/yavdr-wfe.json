@@ -1,0 +1,6 @@
+{
+  "domain" : "yavdr-wfe",
+  "locale_data" : {
+    'Recordings' : [null, 'Aufnahmen']
+  }
+}
