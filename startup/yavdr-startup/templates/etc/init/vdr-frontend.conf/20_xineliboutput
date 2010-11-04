@@ -1,4 +1,4 @@
-<?cs if:(!?vdr.frontend || vdr.frontend == "xineliboutput" ) ?> su -c "/usr/bin/start-xineliboutput" vdr 
+<?cs if:(!?vdr.frontend || vdr.frontend == "xineliboutput" ) ?>
 script 
 export DISPLAY=:1`dbget vdr.tempdisplay`
 export HOME=/var/lib/vdr
