@@ -1,4 +1,0 @@
-
-if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then                                                         
-  vdpauinfo 2>/dev/null >/dev/null && XINELIBOUTPUTOPTS="$XINELIBOUTPUTOPTS --video=vdpau"
-fi             

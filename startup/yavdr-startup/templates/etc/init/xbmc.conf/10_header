@@ -1,0 +1,10 @@
+description     "XBMC Daemon"
+author          "Steffen Barszus <steffenbpunkt@gmail.com>"
+
+<?cs if:(vdr.frontend == "xbmc") ?>
+start on ((started vdr and openbox-started and sound-card-added) or vdr-frontend-restart)
+stop on (stopping vdr or stopping openbox)
+nice -10
+
+respawn
+<?cs /if ?>

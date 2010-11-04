@@ -1,6 +1,0 @@
-/sbin/stop vdr-frontend
-
-xbmc --standalone
-
-/sbin/start vdr-frontend
-

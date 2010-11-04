@@ -1,1 +1,0 @@
-GEOMETRY=`xrandr | grep "\*" | cut -d" " -f4`

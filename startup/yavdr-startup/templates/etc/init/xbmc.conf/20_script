@@ -1,2 +1,2 @@
-
+script
 export DISPLAY=:1`dbget vdr.tempdisplay`

@@ -1,6 +1,4 @@
-description     "XBMC Daemon"
-author          "Steffen Barszus <steffenbpunkt@gmail.com>"
-
+<?cs if:(vdr.frontend != "xbmc") ?>
 pre-start script
 /usr/bin/svdrpsend remo off || /bin/true
 if [ ! -z $STANDALONE ] ; then
@@ -13,6 +11,4 @@ post-stop script
 /usr/bin/svdrpsend remo on || /bin/true
 /sbin/initctl emit --no-wait vdr-frontend-restart
 end script
-
-exec su -c "/usr/bin/xbmc --standalone" vdr
-
+<?cs /if ?>

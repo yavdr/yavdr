@@ -1,0 +1,13 @@
+# yavdr-frontend - Starts xine or vdr-sxfe
+#
+
+description     "yavdr-frontend"
+author          "Gerald Dachs <gda@dachsweb.de>"
+
+<?cs if:((!?vdr.frontend || vdr.frontend != "headless") && (vdr.frontend != "xbmc")) ?>
+start on ((started vdr and openbox-started and sound-card-added) or vdr-frontend-restart)
+stop on (stopping vdr or stopping openbox)
+
+nice -10
+respawn
+<?cs /if ?>

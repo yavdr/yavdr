@@ -1,0 +1,12 @@
+<?cs if:(!?vdr.frontend || vdr.frontend == "xineliboutput" ) ?> su -c "/usr/bin/start-xineliboutput" vdr 
+script 
+export DISPLAY=:1`dbget vdr.tempdisplay`
+export HOME=/var/lib/vdr
+
+XINELIBOUTPUTOPTS="--post tvtime:method=use_vo_driver --reconnect --audio=alsa --syslog --silent"
+CONFIG="--config /etc/vdr-sxfe/config_xineliboutput"
+
+while  ! netcat -z localhost 37890; do sleep 0.1; done;
+su -c "/usr/bin/vdr-sxfe $XINELIBOUTPUTOPTS $CONFIG xvdr://127.0.0.1:37890" vdr
+end script 
+<?cs /if ?> 

@@ -1,3 +1,0 @@
-
-test -f /etc/default/xine && . /etc/default/xine
-XINEOPTS="-G $GEOMETRY -A alsa --config /etc/xine/config --keymap=file:/etc/xine/keymap --post vdr --post vdr_video --post vdr_audio --verbose=2 --no-gui --no-logo --no-splash --deinterlace -pq"
