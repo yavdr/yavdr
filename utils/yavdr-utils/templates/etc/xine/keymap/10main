@@ -71,7 +71,7 @@ ScanPlaylistInfo {
 
 # add a mediamark from current playback
 AddMediamark {
-	key = a
+	key = VOID
 	modifier = control
 }
 
@@ -239,7 +239,7 @@ Amp- {
 
 # reset amplification to default value
 ResetAmp {
-	key = A
+	key = VOID
 	modifier = control
 }
 
@@ -413,7 +413,7 @@ SubpictureMenu {
 
 # jump to Audio Menu
 AudioMenu {
-	key = A
+	key = VOID
 	modifier = none
 }
 
@@ -1057,6 +1057,12 @@ VDRChannelPrevious {
 VDRSubtitles {
 	key = VOID
 	modifier = none
+}
+
+# atmolight: switch on/off
+AtmolightEnable {
+    key = a
+    modifier = none
 }
 
 ##
