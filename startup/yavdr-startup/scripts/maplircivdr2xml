@@ -1,0 +1,72 @@
+#!/usr/bin/ruby
+
+remote_conf = File.open('/var/lib/vdr/remote.conf','r')
+remote = remote_conf.read()
+remote_conf.close()
+
+key = {} 
+remote.chomp.each do |line|
+ key[$1]=$3 if line =~ /^LIRC\.(.*[^ ])( +|\t+)(.*)$/
+end
+
+puts <<EOF
+<!-- This file contains the mapping of LIRC keys to XBMC keys used in Keymap.xml  -->
+<!--                                                                              -->
+<!-- How to add remotes                                                           -->
+<!-- <remote device="name_Lirc_calls_the_remote">                                 -->
+<!--                                                                              -->
+<!-- For the commands the layout following layout is used                         -->
+<!-- <XBMC_COMMAND>#{key["TODO"]}</XBMC_COMMAND>                                  -->
+<!--                                                                              -->
+<!-- For a list of XBMC_COMMAND's check out the <remote> sections of keymap.xml   -->
+
+<lircmap>
+	<remote device="*">
+		<play>#{key["Play"]}</play>
+		<pause>#{key["Pause"]}</pause>
+		<stop>#{key["Stop"]}</stop>
+		<forward>#{key["FastFwd"]}</forward>
+		<reverse>#{key["FastRew"]}</reverse>
+		<left>#{key["Left"]}</left>
+		<right>#{key["Right"]}</right>
+		<up>#{key["Up"]}</up>
+		<down>#{key["Down"]}</down>
+		<select>#{key["Ok"]}</select>
+		<pageplus>#{key["Channel+"]}</pageplus>
+		<pageminus>#{key["Channel-"]}</pageminus>
+		<back>#{key["Back"]}</back>
+		<menu>#{key["Menu"]}</menu>
+		<title>#{key["Info"]}</title>
+		<info>#{key["Audio"]}</info>
+		<skipplus>#{key["Next"]}</skipplus>
+		<skipminus>#{key["Prev"]}</skipminus>
+		<display>#{key["TODO"]}</display>
+		<start>#{key["TODO"]}</start>
+		<record>#{key["Record"]}</record>
+		<volumeplus>#{key["Volume+"]}</volumeplus>
+		<volumeminus>#{key["Volume-"]}</volumeminus>
+		<mute>#{key["Mute"]}</mute>
+		<power>#{key["Power"]}</power>
+		<one>#{key["1"]}</one>
+		<two>#{key["2"]}</two>
+		<three>#{key["3"]}</three>
+		<four>#{key["4"]}</four>
+		<five>#{key["5"]}</five>
+		<six>#{key["6"]}</six>
+		<seven>#{key["7"]}</seven>
+		<eight>#{key["8"]}</eight>
+		<nine>#{key["9"]}</nine>
+		<zero>#{key["0"]}</zero>
+		<star>#{key["TODO"]}</star>
+		<hash>#{key["TODO"]}</hash>
+		<clear>#{key["TODO"]}</clear>
+		<enter>#{key["Ok"]}</enter>
+		<red>#{key["Red"]}</red>
+		<green>#{key["Green"]}</green>
+		<yellow>#{key["Yellow"]}</yellow>
+		<blue>#{key["Blue"]}</blue>
+		<teletext>#{key["TODO"]}</teletext>
+	</remote>
+</lircmap>
+EOF
+
