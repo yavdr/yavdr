@@ -3,7 +3,7 @@
 #include "common.h"
 #include "dbset.h"
 
-int dbset(char *arg)
+static int _dbset(const char *fmt, va_list ap)
 {
   int ret = 0;
   NEOERR *err;
@@ -34,7 +34,7 @@ int dbset(char *arg)
       }
       else
       {
-        err = hdf_set_valuef(hdf, arg);
+        err = hdf_set_valuevf(hdf, fmt, ap);
         if (err != STATUS_OK)
         {
           nerr_log_error(err);
@@ -59,3 +59,14 @@ int dbset(char *arg)
 
   return ret;
 }
+
+int dbset(const char *fmt, ...)                                                                 
+{                                                                                                                       
+  int ret;
+  va_list ap;                                                                                                           
+                                                                                                                        
+  va_start(ap, fmt);                                                                                                    
+  ret = _dbset(fmt, ap);                                                                                  
+  va_end(ap);                                                                                                           
+  return ret;                                                                                                
+}          
