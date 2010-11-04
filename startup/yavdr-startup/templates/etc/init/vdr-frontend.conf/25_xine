@@ -3,7 +3,7 @@ script
 export DISPLAY=:1`dbget vdr.tempdisplay`
 export HOME=/var/lib/vdr
 
-ASPECT_RATIO="anamorphic"
+#ASPECT_RATIO="anamorphic"
 GEOMETRY=`xrandr | grep "\*" | cut -d" " -f4`
 USE_AUTOCROP="0"
 
