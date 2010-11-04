@@ -30,7 +30,7 @@ ifeq ($(CEXTRAFLAGS),)
 endif
 CXXFLAGS+=-I.. -I/usr/include -I/usr/include/ClearSilver -fPIC $(CEXTRAFLAGS)
 CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl -fPIC $(CEXTRAFLAGS)
-LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lneo_cs -lpam -lXNVCtrl -lX11 -lXext -ljson -lboost_regex
+LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lneo_cs -lpam -lXNVCtrl -lX11 -lXext -ljson -lboost_regex -L../db-utils -lyavdrdb
 
 .ecpp.cpp:
 	${ECPPC} ${ECPPFLAGS} ${ECPPFLAGS_CPP} $<

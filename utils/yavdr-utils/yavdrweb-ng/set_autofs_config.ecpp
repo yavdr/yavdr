@@ -3,7 +3,10 @@
 #include <iostream>
 #include <fstream>
 #include <ctype.h>
-#include <ClearSilver.h>
+extern "C" {
+#include "db-utils/dbset.h"
+#include "db-utils/dbremove.h"
+}
 #include "../common.h"
 
 using namespace std;
@@ -19,48 +22,32 @@ string success = "false";
 
 if( cmd == "mounts" )
 {
-  HDF *hdf = NULL;
-  NEOERR *err;
+  int err;
 
-  if( ( STATUS_OK != ( err = hdf_init( &hdf ) ) )
-	||( STATUS_OK != ( err = hdf_read_file( hdf, YAVDRDB ) ) ) )
-  {
-	nerr_log_error( err );
-  }
-  else
-  {
     const char * base = "system.net.media.video";
     mounts_type::const_iterator it = mounts.begin();
-    hdf_remove_tree( hdf, base );
+    dbremove(base);
     for( int idx = 0; idx < 999; ++idx )
     {
       if( it != mounts.end() )
       {
         log_info( *it );
-        err = hdf_set_valuef( hdf,
+        err = dbset(
                               "%s.%.3d=%s",
                               base,
                               idx,
                               it->c_str() );
         ++it;
       }
-      if( STATUS_OK != err ) { break; }
+      if (err) { break; }
     }
 
-    err = hdf_write_file(hdf, YAVDRDB);
-    if( STATUS_OK != err )
-    {
-      nerr_log_error(err);
-    }
-    hdf_destroy(&hdf);
-
-    if( STATUS_OK == err )
+    if (!err)
     {
       int ret = system( "/usr/bin/signal-event change-auto-net-yavdr" );
 
       if( 0 == ret )  success = "true";
     }
-  }
 }
 </%cpp>
 {

@@ -6,7 +6,8 @@
 #include <fstream>
 #include <ctype.h>
 extern "C" {
-#include <ClearSilver.h>
+#include <db-utils/dbset.h>
+#include <db-utils/dbremove.h>
 };
 
 #include "common.h"
@@ -44,31 +45,31 @@ using namespace std;
   string defaultfreq1;
   string defaultfreq2;
 </%args><%shared>
-bool writeDisplayToHDF(HDF *hdf, int id, string display, string modeline, std::vector<string> modes, string overscan, string defaultfreq) {
+bool writeDisplayToHDF(int id, string display, string modeline, std::vector<string> modes, string overscan, string defaultfreq) {
     if (modes.size() > 0) {
-        NEOERR *err = hdf_set_valuef(hdf, "system.x11.display.%i.device=%s"  , id, display.c_str());
+        int err = dbset("system.x11.display.%i.device=%s"  , id, display.c_str());
 
         if (modeline != "nvidia-auto-select") {
 			sort(modes.begin(), modes.end());
 			for(int i=0; i < modes.size(); i++) {
-			  err = hdf_set_valuef(hdf, "system.x11.display.%i.mode.%i=%s", id, i, modes[i].c_str());
+			  err = dbset("system.x11.display.%i.mode.%i=%s", id, i, modes[i].c_str());
 			}
-	        err = hdf_set_valuef(hdf, "system.x11.display.%i.default=%s", id, defaultfreq.c_str());
+	        err = dbset("system.x11.display.%i.default=%s", id, defaultfreq.c_str());
         } else {
-        	err = hdf_set_valuef(hdf, "system.x11.display.%i.mode.0=nvidia-auto-select", id);
-            err = hdf_set_valuef(hdf, "system.x11.display.%i.default=nvidia-auto-select", id);
+        	err = dbset("system.x11.display.%i.mode.0=nvidia-auto-select", id);
+            err = dbset("system.x11.display.%i.default=nvidia-auto-select", id);
         }
-        err = hdf_set_valuef(hdf, "system.x11.display.%i.overscan=%s", id, overscan.c_str());
+        err = dbset("system.x11.display.%i.overscan=%s", id, overscan.c_str());
         
         return true;
     }
     return false;
 }
 
-void cleanDisplayInHDF(HDF *hdf, int id) {
+void cleanDisplayInHDF(int id) {
 	char buffer[100];
 	sprintf(buffer, "system.x11.display.%i", id);
-    NEOERR *err = hdf_remove_tree(hdf, buffer);
+    int err = dbremove(buffer);
 }
 
 
@@ -130,126 +131,120 @@ int display_device_mask(string name) {
   string success = "false";
   string msg = "Unspecified error.";
   
-  NEOERR *err;
-  HDF *hdf = NULL;
-  if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
-  {
-    msg = "Failed to reset display settings.";
+  int err;
+
+  err = dbset("vdr.deinterlacer.hd.type=%s", deinterlacer_hd.c_str());
+  err = dbset("vdr.deinterlacer.sd.type=%s", deinterlacer_sd.c_str());
+
+  if (x11_dualhead != "1") {
+    err = dbset("system.x11.dualhead.enabled=0");
+    err = dbset("vdr.plugin.graphtft.enabled=0");
+      
+    // writing primary display
+    err = dbset("system.x11.display.default=%s", primary.c_str());
+      
+    cleanDisplayInHDF(0);
+    if (freq0.size() > 0 && primary == display0) {
+      writeDisplayToHDF(0, display0, modeline0, freq0, overscan0, defaultfreq0);
+    } else if (freq1.size() > 0 && primary == display1) {
+      writeDisplayToHDF(0, display1, modeline1, freq1, overscan1, defaultfreq1);
+    } else if (freq2.size() > 0 && primary == display2) {
+      writeDisplayToHDF(0, display2, modeline2, freq2, overscan2, defaultfreq2);
+    }
   }
   else
   {
-    err = hdf_set_valuef(hdf, "vdr.deinterlacer.hd.type=%s", deinterlacer_hd.c_str());
-    err = hdf_set_valuef(hdf, "vdr.deinterlacer.sd.type=%s", deinterlacer_sd.c_str());
-
-    if (x11_dualhead != "1") {
-      err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
-      err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
-      
-      // writing primary display
-      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
-      
-      cleanDisplayInHDF(hdf, 0);
-      if (freq0.size() > 0 && primary == display0) {
-        writeDisplayToHDF(hdf, 0, display0, modeline0, freq0, overscan0, defaultfreq0);
-      } else if (freq1.size() > 0 && primary == display1) {
-        writeDisplayToHDF(hdf, 0, display1, modeline1, freq1, overscan1, defaultfreq1);
-      } else if (freq2.size() > 0 && primary == display2) {
-        writeDisplayToHDF(hdf, 0, display2, modeline2, freq2, overscan2, defaultfreq2);
-      }
-    }
-    else
-    {
-      err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=1");
-      err = hdf_set_valuef(hdf, "system.x11.display.default=%s", primary.c_str());
-      err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
-      
-      cleanDisplayInHDF(hdf, 0);
-      if (modeline0 == "disabled") {
-      	err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
-        err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
-      } else if (freq0.size() > 0 && primary == display0) {
-        writeDisplayToHDF(hdf, 0, display0, modeline0, freq0, overscan0, defaultfreq0);
-      } else if (freq1.size() > 0 && primary == display1) {
-        writeDisplayToHDF(hdf, 0, display1, modeline1, freq1, overscan1, defaultfreq1);
-      } else if (freq2.size() > 0 && primary == display2) {
-        writeDisplayToHDF(hdf, 0, display2, modeline2, freq2, overscan2, defaultfreq2);
-      }
-      
-      cleanDisplayInHDF(hdf, 1);
-      if ((primary != "" && secondary == primary) || modeline1 == "disabled") {
-        err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
-        err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
-      } else if (freq0.size() > 0 && secondary == display0) {
-        writeDisplayToHDF(hdf, 1, display0, modeline0, freq0, overscan0, defaultfreq0);
-      } else if (freq1.size() > 0 && secondary == display1) {
-        writeDisplayToHDF(hdf, 1, display1, modeline1, freq1, overscan1, defaultfreq1);
-      } else if (freq2.size() > 0 && secondary == display2) {
-        writeDisplayToHDF(hdf, 1, display2, modeline2, freq2, overscan2, defaultfreq2);
-      } else {
-          err = hdf_set_valuef(hdf, "system.x11.dualhead.enabled=0");
-          err = hdf_set_valuef(hdf, "vdr.plugin.graphtft.enabled=0");
-      }
-    }
+    err = dbset("system.x11.dualhead.enabled=1");
+    err = dbset("system.x11.display.default=%s", primary.c_str());
+    err = dbset("vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
     
-    // Query PCI-Device
-    Display *dpy = XOpenDisplay(NULL);
+    cleanDisplayInHDF(0);
+    if (modeline0 == "disabled") {
+      err = dbset("system.x11.dualhead.enabled=0");
+      err = dbset("vdr.plugin.graphtft.enabled=0");
+    } else if (freq0.size() > 0 && primary == display0) {
+      writeDisplayToHDF(0, display0, modeline0, freq0, overscan0, defaultfreq0);
+    } else if (freq1.size() > 0 && primary == display1) {
+      writeDisplayToHDF(0, display1, modeline1, freq1, overscan1, defaultfreq1);
+    } else if (freq2.size() > 0 && primary == display2) {
+      writeDisplayToHDF(0, display2, modeline2, freq2, overscan2, defaultfreq2);
+    }
+      
+    cleanDisplayInHDF(1);
+    if ((primary != "" && secondary == primary) || modeline1 == "disabled") {
+      err = dbset("system.x11.dualhead.enabled=0");
+      err = dbset("vdr.plugin.graphtft.enabled=0");
+    } else if (freq0.size() > 0 && secondary == display0) {
+      writeDisplayToHDF(1, display0, modeline0, freq0, overscan0, defaultfreq0);
+    } else if (freq1.size() > 0 && secondary == display1) {
+      writeDisplayToHDF(1, display1, modeline1, freq1, overscan1, defaultfreq1);
+    } else if (freq2.size() > 0 && secondary == display2) {
+      writeDisplayToHDF(1, display2, modeline2, freq2, overscan2, defaultfreq2);
+    } else {
+        err = dbset("system.x11.dualhead.enabled=0");
+        err = dbset("vdr.plugin.graphtft.enabled=0");
+    }
+  }
     
-    if (dpy) {
-        int pci_bus;
-        int pci_device;
-        int pci_func;
+  // Query PCI-Device
+  Display *dpy = XOpenDisplay(NULL);
+  
+  if (dpy) {
+      int pci_bus;
+      int pci_device;
+      int pci_func;
 
-        int screen = DefaultScreen(dpy);
-        if (XNVCTRLIsNvScreen(dpy, screen)) {
-            Bool ret;
-            ret = XNVCTRLQueryTargetAttribute(dpy,
-                                              NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
-                                              0,
-                                              NV_CTRL_PCI_BUS,
-                                              &pci_bus);
-            ret = XNVCTRLQueryTargetAttribute(dpy,
-                                              NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
-                                              0,
-                                              NV_CTRL_PCI_DEVICE,
-                                              &pci_device);
-            ret = XNVCTRLQueryTargetAttribute(dpy,
-                                              NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
-                                              0,
-                                              NV_CTRL_PCI_FUNCTION,
-                                              &pci_func);
-            err = hdf_set_valuef(hdf, "system.hardware.nvidia.busid=%i:%i:%i", pci_bus, pci_device, pci_func);
+      int screen = DefaultScreen(dpy);
+      if (XNVCTRLIsNvScreen(dpy, screen)) {
+          Bool ret;
+          ret = XNVCTRLQueryTargetAttribute(dpy,
+                                            NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+                                            0,
+                                            NV_CTRL_PCI_BUS,
+                                            &pci_bus);
+          ret = XNVCTRLQueryTargetAttribute(dpy,
+                                            NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+                                            0,
+                                            NV_CTRL_PCI_DEVICE,
+                                            &pci_device);
+          ret = XNVCTRLQueryTargetAttribute(dpy,
+                                            NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+                                            0,
+                                            NV_CTRL_PCI_FUNCTION,
+                                            &pci_func);
+          err = dbset("system.hardware.nvidia.busid=%i:%i:%i", pci_bus, pci_device, pci_func);
 
 
-            // read EDIDs
-            /* check if EDID is available for this display device */
+          // read EDIDs
+          /* check if EDID is available for this display device */
 
 
-			int num_gpus, i;
-			/* Get the number of gpus in the system */
-			ret = XNVCTRLQueryTargetCount(dpy, NV_CTRL_TARGET_TYPE_GPU,
+          int num_gpus, i;
+          /* Get the number of gpus in the system */
+          ret = XNVCTRLQueryTargetCount(dpy, NV_CTRL_TARGET_TYPE_GPU,
 					&num_gpus);
 
-			if (ret) {
-				int display_devices, len;
+          if (ret) {
+            int display_devices, len;
 
-				/* display information about all GPUs */
-				for (int gpu = 0; gpu < num_gpus; gpu++) {
-					int *pData;
-					/* X Screens driven by this GPU */
-					ret = XNVCTRLQueryTargetBinaryData(dpy,
-							NV_CTRL_TARGET_TYPE_GPU,
-							gpu, // target_id
-							0, // display_mask
-							NV_CTRL_BINARY_DATA_XSCREENS_USING_GPU,
-							(unsigned char **) &pData,
-							&len);
+            /* display information about all GPUs */
+            for (int gpu = 0; gpu < num_gpus; gpu++) {  
+              int *pData;
+              /* X Screens driven by this GPU */
+              ret = XNVCTRLQueryTargetBinaryData(dpy,
+                                                 NV_CTRL_TARGET_TYPE_GPU,
+                                                 gpu, // target_id
+                                                 0, // display_mask
+                                                 NV_CTRL_BINARY_DATA_XSCREENS_USING_GPU,
+                                                 (unsigned char **) &pData,
+                                                 &len);
 
-					if (ret) {
-						/* Connected Display Devices on X Screen */
-						ret = XNVCTRLQueryTargetAttribute(dpy,
-								NV_CTRL_TARGET_TYPE_X_SCREEN,
-								0, // target_id
-								0, // display_mask
+              if (ret) {
+                /* Connected Display Devices on X Screen */
+                ret = XNVCTRLQueryTargetAttribute(dpy,
+                NV_CTRL_TARGET_TYPE_X_SCREEN,
+                0, // target_id
+                0, // display_mask
 								NV_CTRL_CONNECTED_DISPLAYS,
 								&display_devices);
 
@@ -293,13 +288,13 @@ int display_device_mask(string name) {
 										if (myFile) {
 											myFile.write (data, len);
 											myFile.close();
-											err = hdf_set_valuef(hdf, "system.hardware.nvidia.0.edid=1");
+											err = dbset("system.hardware.nvidia.0.edid=1");
 										} else {
-											err = hdf_set_valuef(hdf, "system.hardware.nvidia.0.edid=0");
+											err = dbset("system.hardware.nvidia.0.edid=0");
 										}
 									}
 								} else {
-									err = hdf_remove_tree(hdf, "system.hardware.nvidia.0.edid");
+									err = dbremove("system.hardware.nvidia.0.edid");
 								}
 							}
 
@@ -329,13 +324,13 @@ int display_device_mask(string name) {
 										if (myFile) {
 											myFile.write (data, len);
 											myFile.close();
-											err = hdf_set_valuef(hdf, "system.hardware.nvidia.1.edid=1");
+											err = dbset("system.hardware.nvidia.1.edid=1");
 										} else {
-											err = hdf_set_valuef(hdf, "system.hardware.nvidia.1.edid=0");
+											err = dbset("system.hardware.nvidia.1.edid=0");
 										}
 									}
 								} else {
-									err = hdf_remove_tree(hdf, "system.hardware.nvidia.1.edid");
+									err = dbremove("system.hardware.nvidia.1.edid");
 								}
 							}
 						}
@@ -348,17 +343,14 @@ int display_device_mask(string name) {
 
         XCloseDisplay(dpy);
     }
-    if ((err != STATUS_OK) || (err = hdf_write_file(hdf, YAVDRDB)) != STATUS_OK) {
-      nerr_log_error(err);
-      msg = "Error on hdf_write_file";
+    if (err) {
+      msg = "Error on database operation";
     }
-    hdf_destroy(&hdf);
-    if (err == STATUS_OK) {
+    else {
       int ret = system("/usr/bin/signal-event graphtft-state-change");
       success = "true";
       msg = "OK. signal-event graphtft-state-change";
     }
-  }
 </%cpp>{
     success: <$success$>
 /*    errors: {
