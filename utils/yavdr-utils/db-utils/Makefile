@@ -3,23 +3,19 @@ LDLIBS=-lneo_utl -lneo_cs
 
 all: dbget dbset dbremove libyavdrdb.a
 
-dbget_main.o dbget.o: dbget.h
+dbget_main.o dbget.o: dbget.h ../common.h
 
 dbget: dbget_main.o dbget.o
 
-dbget.o: ../common.h
+dbremove_main.o dbremove.o: dbremove.h ../common.h
 
-dbremove: dbremove.o
+dbremove: dbremove_main.o dbremove.o
 
-dbremove.o: ../common.h
-
-dbset_main.o dbset.o: dbset.h
+dbset_main.o dbset.o: dbset.h ../common.h
 
 dbset: dbset_main.o dbset.o
 
-dbset.o: ../common.h
-
-libyavdrdb.a: dbget.o dbset.o
+libyavdrdb.a: dbget.o dbset.o dbremove.o
 	rm -f $@
 	ar cq $@ $^
 

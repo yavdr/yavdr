@@ -2,8 +2,9 @@
 #include <ClearSilver.h>
 #include <stdio.h>
 #include "common.h"
+#include "dbremove.h"
 
-int main(int argc, char *argv[]) {
+int dbremove(const char *tree) {
 	int ret = 0;
 	NEOERR *err;
 	HDF *hdf = NULL;
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]) {
 				ret = -3;
 			} else {
 				// ignore error. If not found -> is removed
-				hdf_remove_tree(hdf, argv[1]);
+				hdf_remove_tree(hdf, tree);
 			}
 			flock(fd, LOCK_UN);
 			close(fd);
