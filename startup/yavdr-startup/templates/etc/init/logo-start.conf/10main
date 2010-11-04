@@ -8,7 +8,7 @@ export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/var/lib/vdr
 
 script
-if  status vdr-frontend | grep -q process ; then exit 0 ; fi
+if  status <?cs if:(vdr.frontend == "xbmc") ?> xbmc <?cs else ?>  vdr-frontend <?cs /if ?> | grep -q process ; then exit 0 ; fi
 PICTURES='/usr/share/yavdr/images/animation/intro*'
 xsetroot -cursor /usr/share/yavdr/images/nocursor /usr/share/yavdr/images/nocursor
 while true ; do 
