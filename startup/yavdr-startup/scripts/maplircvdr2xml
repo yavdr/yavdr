@@ -10,21 +10,21 @@ remote.chomp.each do |line|
 end
 
 devices = [""]
-#remoted = `dbget system.remoted`
-#if remoted == 'inputlirc'
-#   process = `ps aux | grep '^nobody.*/usr/sbin/inputlircd.*'`
-#   process.split(' ').each do |part|
-#      devices = devices | File.basename(part).chomp.to_a if part =~ /^\/dev\/input.*/ 
-#   end
-#end 
+remoted = `dbget system.remoted`
+if remoted == 'inputlirc'
+   process = `ps aux | grep '^nobody.*/usr/sbin/inputlircd.*'`
+   process.split(' ').each do |part|
+      devices = devices | File.basename(part).chomp.to_a if part =~ /^\/dev\/input.*/ 
+   end
+end 
 
-#if remoted == 'lirc'
+if remoted == 'lirc'
    lircd_conf = File.open('/etc/lirc/lircd.conf.dpkg-old','r')
    names = lircd_conf.read()
    names.each do |name|
          devices = devices | $2.to_a if name =~ /^[^#].*name( +|\t+)([a-zA-Z].*)/
    end
-#end
+end
 
 puts <<EOF
 <!-- This file contains the mapping of LIRC keys to XBMC keys used in Keymap.xml  -->
