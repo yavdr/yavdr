@@ -18,12 +18,13 @@ if remoted == 'inputlirc'
    end
 end 
 
-if remoted == 'lirc'
-   lircd_conf = File.open('/etc/lirc/lircd.conf.dpkg-old','r')
+if remoted == 'lircd' || remoted == ''
+   lircd_conf = File.open('/etc/lirc/lircd.conf','r')
    names = lircd_conf.read()
    names.each do |name|
          devices = devices | $2.to_a if name =~ /^[^#].*name( +|\t+)([a-zA-Z].*)/
    end
+   exit if devices == nil 
 end
 
 puts <<EOF
