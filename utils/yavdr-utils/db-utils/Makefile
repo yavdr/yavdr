@@ -1,4 +1,4 @@
-CFLAGS=-g -I.. -I/usr/include/ClearSilver
+CFLAGS=-g -fPIC -I.. -I/usr/include/ClearSilver
 LDLIBS=-lneo_utl -lneo_cs
 
 all: dbget dbset dbremove libyavdrdb.a
