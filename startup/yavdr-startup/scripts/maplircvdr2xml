@@ -57,11 +57,11 @@ puts <<EOF  if !(device =~ /^$/)
 		<pageminus>#{key["Channel-"]}</pageminus>
 		<back>#{key["Back"]}</back>
 		<menu>#{key["Menu"]}</menu>
-		<title>#{key["Info"]}</title>
+		<title>#{key["TODO"]}</title>
 		<info>#{key["Audio"]}</info>
 		<skipplus>#{key["Next"]}</skipplus>
 		<skipminus>#{key["Prev"]}</skipminus>
-		<display>#{key["TODO"]}</display>
+		<display>#{key["Info"]}</display>
 		<start>#{key["TODO"]}</start>
 		<record>#{key["Record"]}</record>
 		<volumeplus>#{key["Volume+"]}</volumeplus>
@@ -81,7 +81,7 @@ puts <<EOF  if !(device =~ /^$/)
 		<star>#{key["TODO"]}</star>
 		<hash>#{key["TODO"]}</hash>
 		<clear>#{key["TODO"]}</clear>
-		<enter>#{key["Ok"]}</enter>
+		<enter>#{key["TODO"]}</enter>
 		<red>#{key["Red"]}</red>
 		<green>#{key["Green"]}</green>
 		<yellow>#{key["Yellow"]}</yellow>
