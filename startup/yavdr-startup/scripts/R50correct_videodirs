@@ -62,7 +62,7 @@ VDIRSIZE=${#VIDEO_DIR}
 [ -n "${VPATH/*\.rec/}" ] && { echo -e "$VPATH is not a \".rec\" directory!"; exit 1; }
 
 # Search all ???.vdr in VPATH
-VDRFILES="$(find "$VPATH" -regextype posix-extended -regex ".*[0-9]+(vdr|ts)" -printf "%P " -type f)"
+VDRFILES="$(find "$VPATH" -regextype posix-extended -regex ".*[0-9]+.(vdr|ts)" -printf "%P " -type f)"
 
 # loop for every ???.vdr in VPATH
 for VDRFILE in $VDRFILES
@@ -148,13 +148,13 @@ do
 
   # create new links
   for i in $FILES; do
-    cd "/${QPART}/${QDIR}/"
-    if [ -L "/${QPART}/${QDIR}/${i}" ]; then
-      echo "Change link /${QPART}/${QDIR}/${i}"
-      ln -f -s --target-directory="/${QPART}/${QDIR}/" "/${ZPART}/${QDIR}/${i}"
+    cd "/${QPART}/${QDIR}"
+    if [ -L "/${QPART}/${QDIR}${i}" ]; then
+      echo "Change link /${QPART}/${QDIR}${i}"
+      ln -f -s --target-directory="/${QPART}/${QDIR}" "/${ZPART}/${QDIR}${i}"
       FERTIG="${FERTIG} "$i
     else
-      echo "Error: /${QPART}/${QDIR}/${i} is no link"
+      echo "Error: /${QPART}/${QDIR}${i} is no link"
     fi
   done
 

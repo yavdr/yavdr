@@ -56,4 +56,10 @@ for MODULE in $BLACKLIST ; do
     echo "blacklist $MODULE" >> /etc/modprobe.d/lirc-blacklist.conf 
     modprobe -r $MODULE 
 done 
+
+MODULE=""
+for MODULE in `dbget system.lirchw.driver` ; do
+    modprobe -r $MODULE
+    modprobe $MODULE
 fi 
+
