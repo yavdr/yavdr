@@ -27,7 +27,20 @@ int dbremove(const char *tree) {
 				ret = -3;
 			} else {
 				// ignore error. If not found -> is removed
-				hdf_remove_tree(hdf, tree);
+				err = hdf_remove_tree(hdf, tree);
+          			if (err != STATUS_OK)
+          			{
+            				nerr_log_error(err);
+            				ret = -4;
+          			} else {
+          				err = hdf_write_file(hdf, YAVDRDB);
+          				if (err != STATUS_OK)
+          				{
+            					nerr_log_error(err);
+            					ret = -5;
+          				}
+				}
+
 			}
 			flock(fd, LOCK_UN);
 			close(fd);
