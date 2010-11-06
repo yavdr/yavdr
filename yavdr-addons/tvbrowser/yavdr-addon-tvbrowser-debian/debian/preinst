@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ install = "$1" -o upgrade = "$1" ]; then 
-cat <<EOF >/etc/apt/sources.list.d/yavdr.list 
+cat <<EOF >/etc/apt/sources.list.d/yavdr-addon-tvbrowser.list 
 deb http://ppa.launchpad.net/phobie/ppa/ubuntu lucid main 
 deb-src http://ppa.launchpad.net/phobie/ppa/ubuntu lucid main 
 EOF
