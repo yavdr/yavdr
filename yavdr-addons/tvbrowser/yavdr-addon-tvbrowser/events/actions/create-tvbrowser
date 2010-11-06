@@ -1,0 +1,4 @@
+#!/bin/bash
+
+process-template /etc/init/tvbrowser.conf
+

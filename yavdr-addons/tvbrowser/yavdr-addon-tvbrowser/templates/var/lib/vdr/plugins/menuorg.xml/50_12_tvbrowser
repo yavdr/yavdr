@@ -1,0 +1,1 @@
+        <command name="TV-Browser" execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=tvbrowser &amp;> /dev/null " />
