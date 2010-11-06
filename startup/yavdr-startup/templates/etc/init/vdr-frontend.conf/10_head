@@ -5,7 +5,7 @@ description     "yavdr-frontend"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
 <?cs if:((!?vdr.frontend || vdr.frontend != "headless") && (vdr.frontend != "xbmc")) ?>
-start on ((started vdr and openbox-started and sound-card-added) or vdr-frontend-restart)
+start on ((started vdr and stopped openbox-tools and sound-card-added) or vdr-frontend-restart)
 stop on (stopping vdr or stopping openbox)
 
 nice -10
