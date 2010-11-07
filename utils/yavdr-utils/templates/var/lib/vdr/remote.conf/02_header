@@ -1,4 +1,4 @@
-<?cs if:system.lirchw.lircd_conf == "imon/lircd.conf.imon-antec-veris" ?>#################################################################################
+<?cs if:(system.lirchw.lircd_conf == "imon/lircd.conf.imon-antec-veris" || system.remoted == "irserver")?>#################################################################################
 #                                                                               #
 #   The following configuration file is generated automatically by the yaVDR    #
 #     system. Don't change this file as every update of yaVDR will overwrite    #
