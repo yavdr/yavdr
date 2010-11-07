@@ -70,10 +70,10 @@ Ext.apply(YaVDR.Component.System, {
 	}
 });
 
-YaVDR.Component.System.addCommand('Switch temporary to second screen', YaVDR.Component.Settings.prototype.changeVdrToSecondDisplay, '/icons/fugue/monitor--arrow.png');
-YaVDR.Component.System.addCommand('Reboot computer', YaVDR.Component.Settings.prototype.reboot, '/icons/fugue/arrow-circle-225.png');
-YaVDR.Component.System.addCommand('Kill XBMC', YaVDR.Component.Settings.prototype.killXBMC, '/icons/fugue/arrow-step.png');
-YaVDR.Component.System.addCommand('Restart VDR', YaVDR.Component.Settings.prototype.restartVDR, '/icons/fugue/arrow-circle-double-135.png');
+YaVDR.Component.System.addCommand('Switch temporary to second screen', YaVDR.Component.System.prototype.changeVdrToSecondDisplay, '/icons/fugue/monitor--arrow.png');
+YaVDR.Component.System.addCommand('Reboot computer', YaVDR.Component.System.prototype.reboot, '/icons/fugue/arrow-circle-225.png');
+YaVDR.Component.System.addCommand('Kill XBMC', YaVDR.Component.System.prototype.killXBMC, '/icons/fugue/arrow-step.png');
+YaVDR.Component.System.addCommand('Restart VDR', YaVDR.Component.System.prototype.restartVDR, '/icons/fugue/arrow-circle-double-135.png');
 
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-infos', 'System Information', '/icons/fugue/system-monitor.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-logs', 'System log files', '/icons/fugue/script-text.png');
