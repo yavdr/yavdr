@@ -2,17 +2,25 @@ yaVDR-startup release history
 ---------------------------------------
 
 -----------------
-Version 0.x.x (xx.xxx.xxxxx)
+Version 0.3.1 (xx.xxx.xxxxx)
 -----------------
 
-- complete web frontend overhaul
-- enable refresh rate switching in XBMC
+NEW 
 - udisks based usb automounter
 - copy epg images into recording when available
 - correct directories on move/rename with multiple video.0x dirs
 - create keymap for xbmc to make it behave similar to vdr 
 - create simple lirc mapping on request 
 - simplify upstart scripts ( remove start-*.sh scripts)
+- added czech translation (thx Radek Stastny)
+- yavdr-addon-tvbrowser 
+
+Webfrontend : 
+- complete web frontend overhaul
+- enable refresh rate switching in XBMC
+- disable usb-wakeup checkbox
+- epg charset override : ISO-8859-9
+
 
 -----------------
 Version 0.3.0 (18.Oct.2010)
