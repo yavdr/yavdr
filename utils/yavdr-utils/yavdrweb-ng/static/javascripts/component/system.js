@@ -7,30 +7,52 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
       new YaVDR.Component.Item({
         title: 'Befehle',
         style: 'margin-bottom: 5px',
-				items: YaVDR.createSubmenu(YaVDR.Component.System.menu['commands'], 2)
+        items: YaVDR.createSubmenu(YaVDR.Component.System.menu['commands'], 2)
       }),
       new YaVDR.Component.Item({
         title: 'Diagnose',
-				items: YaVDR.createSubmenu(YaVDR.Component.System.menu['diagnose'], 4)
+        items: YaVDR.createSubmenu(YaVDR.Component.System.menu['diagnose'], 4)
 
       })
     ];
     YaVDR.Component.System.superclass.initComponent.call(this);
+  }
+});
+
+YaVDR.Component.System.menu = new Array;
+YaVDR.Component.System.menu['commands'] = new Array;
+YaVDR.Component.System.menu['diagnose'] = new Array;
+
+Ext.apply(YaVDR.Component.System, {
+  addCommand: function(label, handler, icon, scope) {
+    YaVDR.Component.System.menu['commands'].push({
+      scope: scope,
+      text: label,
+      handler: handler,
+      icon: icon
+    });
+  },
+  addMenu: function(section, itemId, label, icon) {
+    YaVDR.Component.System.menu[section].push({
+      itemId: itemId,
+      text: label,
+      icon: icon
+    });
   },
   changeVdrToSecondDisplay: function() {
-    this.request('/admin/set_signal?signal=change-display');
+    YaVDR.Component.System.request('/admin/set_signal?signal=change-display');
   },
   stopVDR: function() {
-    this.request('/admin/set_signal?signal=stop-vdr');
+    YaVDR.Component.System.request('/admin/set_signal?signal=stop-vdr');
   },
   restartVDR: function() {
-    this.request('/admin/set_signal?signal=restart-vdr');
+    YaVDR.Component.System.request('/admin/set_signal?signal=restart-vdr');
   },
   killXBMC: function() {
-    this.request('/admin/set_signal?signal=kill-xbmc');
+    YaVDR.Component.System.request('/admin/set_signal?signal=kill-xbmc');
   },
   reboot: function() {
-    this.request('/admin/set_signal?signal=reboot');
+    YaVDR.Component.System.request('/admin/set_signal?signal=reboot');
   },
   request: function(url) {
     Ext.getBody().mask("Execute command...", 'x-mask-loading');
@@ -48,32 +70,10 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
   }
 });
 
-YaVDR.Component.System.menu = new Array;
-YaVDR.Component.System.menu['commands'] = new Array;
-YaVDR.Component.System.menu['diagnose'] = new Array;
-
-Ext.apply(YaVDR.Component.System, {
-	addCommand: function(label, handler, icon, scope) {
-		YaVDR.Component.System.menu['commands'].push({
-			scope: scope,
-			text: label,
-			handler: handler,
-			icon: icon
-		});
-	},
-	addMenu: function(section, itemId, label, icon) {
-		YaVDR.Component.System.menu[section].push({
-			itemId: itemId,
-			text: label,
-			icon: icon
-		});
-	}
-});
-
-YaVDR.Component.System.addCommand('Switch temporary to second screen', YaVDR.Component.System.prototype.changeVdrToSecondDisplay, '/icons/fugue/monitor--arrow.png');
-YaVDR.Component.System.addCommand('Reboot computer', YaVDR.Component.System.prototype.reboot, '/icons/fugue/arrow-circle-225.png');
-YaVDR.Component.System.addCommand('Kill XBMC', YaVDR.Component.System.prototype.killXBMC, '/icons/fugue/arrow-step.png');
-YaVDR.Component.System.addCommand('Restart VDR', YaVDR.Component.System.prototype.restartVDR, '/icons/fugue/arrow-circle-double-135.png');
+YaVDR.Component.System.addCommand('Switch temporary to second screen', YaVDR.Component.System.changeVdrToSecondDisplay, '/icons/fugue/monitor--arrow.png');
+YaVDR.Component.System.addCommand('Reboot computer', YaVDR.Component.System.reboot, '/icons/fugue/arrow-circle-225.png');
+YaVDR.Component.System.addCommand('Kill XBMC', YaVDR.Component.System.killXBMC, '/icons/fugue/arrow-step.png');
+YaVDR.Component.System.addCommand('Restart VDR', YaVDR.Component.System.restartVDR, '/icons/fugue/arrow-circle-double-135.png');
 
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-infos', 'System Information', '/icons/fugue/system-monitor.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-logs', 'System log files', '/icons/fugue/script-text.png');
