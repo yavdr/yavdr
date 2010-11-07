@@ -346,8 +346,9 @@ int main(int argc, char *argv[])
       else if (!strcmp(longopts[longindex].name, "help"))
       {
         usage(argv[0]);
+        return 0; 
       }
-      return 0; 
+      break; 
     case 'h' :
       usage(argv[0]);
       return 0; 
