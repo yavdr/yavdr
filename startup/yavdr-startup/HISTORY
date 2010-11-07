@@ -1,9 +1,21 @@
 yaVDR-startup release history
 ---------------------------------------
 
+-----------------
+Version 0.x.x (xx.xxx.xxxxx)
+-----------------
+
+- complete web frontend overhaul
+- enable refresh rate switching in XBMC
+- udisks based usb automounter
+- copy epg images into recording when available
+- correct directories on move/rename with multiple video.0x dirs
+- create keymap for xbmc to make it behave similar to vdr 
+- create simple lirc mapping on request 
+- simplify upstart scripts ( remove start-*.sh scripts)
 
 -----------------
-Version 0.3.0 (xx.xxx.2010)
+Version 0.3.0 (18.Oct.2010)
 -----------------
 
 - bugfix fsck on shutdown
