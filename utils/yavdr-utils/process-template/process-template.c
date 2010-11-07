@@ -23,6 +23,11 @@ NEOERR *csoutfunc(void *ctx, char *str)
   return STATUS_OK;
 }
 
+void usage(char *name)
+{
+  printf("usage: %s\n", name);
+}
+
 int process_template(HDF *hdf, char *infile, char *outfile)
 {
   int ret = 0;
@@ -298,10 +303,11 @@ int main(int argc, char *argv[])
       {"output", 1, 0, 0},
       {"data", 1, 0, 0},
       {"database", 1, 0, 0},
+      {"help", 0, 0, 0},
       {0, 0, 0, 0}
     };
  
-    if ((c = getopt_long(argc, argv, "", longopts, &longindex)) == -1)
+    if ((c = getopt_long(argc, argv, "h", longopts, &longindex)) == -1)
       break;
 
     switch (c) {
@@ -337,8 +343,15 @@ int main(int argc, char *argv[])
       {
         database = optarg;
       }
-      break;
-     }
+      else if (!strcmp(longopts[longindex].name, "help"))
+      {
+        usage(argv[0]);
+      }
+      return 0; 
+    case 'h' :
+      usage(argv[0]);
+      return 0; 
+    }
   }
   if (optind < argc)
   {
@@ -425,7 +438,7 @@ int main(int argc, char *argv[])
   }
   else
   {
-    fprintf(stderr, "no template file name given!\n");
+    usage(argv[0]);
   }
 
   return ret;
