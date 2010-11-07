@@ -1,0 +1,15 @@
+#!/bin/bash
+# eventid for recording
+ELINE=`grep "^E " $2/info*`
+ELINE=${ELINE//E }
+EVENTID=${ELINE// *}
+
+EPGIMAGES=/var/cache/vdr/epgimages/
+
+if [ ! -f $2/Cover-Enigma.jpg ]; then
+   if [ -f $EPGIMGAGES/$EVENTID.jpg ]; then
+      cp $EPGIMGAGES/$EVENTID.jpg $2
+      ln -s $2/$EVENTID.jpg $2/Cover-Enigma.jpg
+   fi
+fi
+
