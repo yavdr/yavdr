@@ -36,6 +36,7 @@ class ZeroconfBrowser(object):
 			'org.freedesktop.Avahi.Server')
 
 		self.lock = threading.Lock()
+		self.mounts = {}
 		print "ready"
 
 	def __call__(self):
@@ -91,8 +92,9 @@ class ZeroconfBrowser(object):
 			elif key == "subtype":
 				subtype = value
 
-		mount = Mount(host, path, name)
+		mount = Mount(host, path, subtype)
 		mount.create()
+		self.mounts[name] = mount
 		print "Service resolved: %s:%s nach %s" % (host, path, name)
 		
 	def resolve_error(self, exception):
@@ -102,21 +104,26 @@ class ZeroconfBrowser(object):
 		print "Browse Error:", args, kwargs
 
 	def removal(self, interface, protocol, name, type, domain, flags):
-		mount = Mount(host, path, name)
-		mount.remove()
-		print "Service removed: %s:%s nach %s" % (host, path, name)
+		with self.lock:
+			mount = self.mounts.get(name, None)
+			if mount is not None:
+				mount.remove()
+				del self.mounts[name]
+				print "Service removed: %s" % (name)
+
 
 	def allfornow(self):
-		time.sleep(2)
-		os.utime("/srv/vdr/video.00/.update", None)
 		print "allfornow"
 
 class Mount:
-	def __init__(self, host, path, name):
+	def __init__(self, host, path, subtype):
 		print "Mount created"
 		self.remote = host + ":" + path
 		self.media = "/srv/media/"
-		self.name = name + " on " + host
+		if subtype == "video":
+			self.name = "Aufnahmen_auf_" + host
+		else:
+			self.name = "Sonstige_auf_" + host
 		self.local = self.media + self.name
 		self.vdr = "/srv/vdr/video.00/" + self.name
 
@@ -131,7 +138,7 @@ class Mount:
 			if len(path) != 0 and path.split()[2] == self.local:
 				return
 		try:
-			os.mkdir(self.local)
+			os.makedirs(self.local)
 		except OSError as (errno, strerror):
 			if errno != 17:
 				print "unable to make dir: " + strerror
@@ -142,12 +149,19 @@ class Mount:
 				 self.local])
 		try:
 			os.symlink(self.local, self.vdr)
+			self.notify()
 		except OSError as (errno, strerror):
 			print "I/O error({0}): {1}".format(errno, strerror)
 
+	def notify(self):
+		time.sleep(3)
+		os.utime("/srv/vdr/video.00/.update", None)
+
 	def remove(self):
+		os.remove(self.vdr)
 		subprocess.Popen(["umount", self.local])
-		os.rmdir(self.local)
+		# os.rmdir(self.local)
+		self.notify()
 
 browser = ZeroconfBrowser()
 browser.browse('_nfs._tcp')

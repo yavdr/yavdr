@@ -1,4 +1,4 @@
 common/make_dirs.h	usr/include/yavdr/common
 yavdrweb-ng/auth.h	usr/include/yavdr/yavdrweb-ng
 common.h		usr/include/yavdr
-net-utils/nsmd.py	usr/bin	
+net-utils/avahi-mounter	usr/bin	
