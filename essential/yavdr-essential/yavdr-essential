@@ -14,8 +14,6 @@ graphtft-fe
 irserver
 inputlirc
 irserver
-libavahi-compat-libdnssd-dev
-libnss-mdns
 lirc
 libxine1-xvdr
 linux-firmware
