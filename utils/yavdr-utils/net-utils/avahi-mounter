@@ -15,6 +15,9 @@ import subprocess
 import avahi
 import gobject
 import dbus
+import socket
+import syslog
+from syslog import *
 from dbus import DBusException
 from dbus.mainloop.glib import DBusGMainLoop
 
@@ -23,7 +26,7 @@ __all__ = ["ZeroconfBrowser"]
 
 class ZeroconfBrowser(object):
 	def __init__(self, loop=None):
-		print "initialize the browser"
+		self.localhost = socket.gethostname()
 		self.local_loop = False
 		if loop is None:
 			gobject.threads_init()
@@ -37,12 +40,12 @@ class ZeroconfBrowser(object):
 
 		self.lock = threading.Lock()
 		self.mounts = {}
-		print "ready"
+		syslog("initialized zeroconf browser on %s" % self.localhost)
 
 	def __call__(self):
-		print "__called__"
 		if self.local_loop:
 			gobject.MainLoop().run()
+		syslog("main loop started")
 
 	def browse(self,
 		   type,
@@ -50,7 +53,7 @@ class ZeroconfBrowser(object):
 		   protocol=avahi.PROTO_UNSPEC,
 		   domain='local',
 		   flags=dbus.UInt32(0)):
-		print "browse"
+		syslog("browse")
 		with self.lock:
 			sbrowser = dbus.Interface(
 				self.bus.get_object(
@@ -68,11 +71,11 @@ class ZeroconfBrowser(object):
 			sbrowser.connect_to_signal("ItemRemove", self.removal)
 			sbrowser.connect_to_signal("AllForNow", self.allfornow)
 			sbrowser.connect_to_signal("Failure", self.browse_error)
-			print "connected_to_signals"
+			syslog("connected_to_signals")
 
 	def resolve(self, interface, protocol, name,
 				type, domain, aprotocol, flags=dbus.UInt32(0)):
-		print "Service found async:", interface, protocol, name, type, domain, flags
+		#syslog("Service found async:", interface, protocol, name, type, domain, flags)
 		with self.lock:
 			self.server.ResolveService(
 				interface, protocol, name,
@@ -82,6 +85,7 @@ class ZeroconfBrowser(object):
 	def resolved(self, interface, protocol, name, type,
 				 domain, host, aprotocol, address,
 				 port, txt, flags):
+		if self.localhost == host.split(".")[0]: return
 		path = []
 		subtype = []
 		for t in txt:
@@ -95,13 +99,13 @@ class ZeroconfBrowser(object):
 		mount = Mount(host, path, subtype)
 		mount.create()
 		self.mounts[name] = mount
-		print "Service resolved: %s:%s nach %s" % (host, path, name)
+		syslog("Service resolved: %s:%s nach %s" % (host, path, name))
 		
 	def resolve_error(self, exception):
-		print "Resolution error:", exception
+		syslog("Resolution error:", exception)
 
 	def browse_error(self, *args, **kwargs):
-		print "Browse Error:", args, kwargs
+		syslog("Browse Error:", args, kwargs)
 
 	def removal(self, interface, protocol, name, type, domain, flags):
 		with self.lock:
@@ -109,15 +113,15 @@ class ZeroconfBrowser(object):
 			if mount is not None:
 				mount.remove()
 				del self.mounts[name]
-				print "Service removed: %s" % (name)
+				#syslog("Service removed: %s" % (name))
 
 
 	def allfornow(self):
-		print "allfornow"
+		syslog("allfornow")
 
 class Mount:
 	def __init__(self, host, path, subtype):
-		print "Mount created"
+		syslog("Mount created")
 		self.remote = host + ":" + path
 		self.media = "/srv/media/"
 		if subtype == "video":
@@ -128,20 +132,20 @@ class Mount:
 		self.vdr = "/srv/vdr/video.00/" + self.name
 
 	def create(self):
-		print "create"
+		syslog("create")
 		p1 = subprocess.Popen(["mount"], stdout=subprocess.PIPE)
 		mounts = subprocess.Popen(["grep", "type nfs"],
 					  stdin=p1.stdout,
 					  stdout=subprocess.PIPE).communicate()[0]
 		for path in mounts.split('\n'):
-			print "compare " + path
+			#syslog("compare " + path)
 			if len(path) != 0 and path.split()[2] == self.local:
 				return
 		try:
 			os.makedirs(self.local)
 		except OSError as (errno, strerror):
 			if errno != 17:
-				print "unable to make dir: " + strerror
+				#syslog("unable to make dir: " + strerror)
 				return
 		subprocess.call(['/bin/mount',
 				 '-t', 'nfs',
@@ -151,7 +155,7 @@ class Mount:
 			os.symlink(self.local, self.vdr)
 			self.notify()
 		except OSError as (errno, strerror):
-			print "I/O error({0}): {1}".format(errno, strerror)
+			syslog("I/O error({0}): {1}".format(errno, strerror))
 
 	def notify(self):
 		time.sleep(3)
@@ -163,13 +167,8 @@ class Mount:
 		# os.rmdir(self.local)
 		self.notify()
 
+openlog('avahi-mounter', LOG_PID, LOG_USER)
 browser = ZeroconfBrowser()
 browser.browse('_nfs._tcp')
 browser()
 
-
-# import subprocess
-# subprocess.Popen(["mount", "-t nfs", "data:/dir/", "/mnt/data_dir"])
-
-# import os
-# os.cmd ("mount -t nfs data:/dir/ /mnt/data_dir")
