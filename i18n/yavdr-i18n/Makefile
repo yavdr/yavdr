@@ -9,6 +9,9 @@ I18Npot   = $(PODIR)/yavdr.pot
 %.mo: %.po
 	msgfmt -c -o $@ $<
 
+%.json: %.po
+	po2json $< >$@
+
 %.po: $(PODIR)/yavdr.pot
 	msgmerge -U --no-wrap --no-location --backup=none -q $@ $<
 	@touch $@
