@@ -123,8 +123,8 @@ string urlencode(const string &c)
 }
 
 </%shared><%cpp>
-reply.setHeader ("Cache-Control", "no-cache", false);
-reply.setHeader ("Content-Type", "application/json", false);
+reply.setHeader ("Cache-Control", "no-cache", true);
+reply.setHeader ("Content-Type", "application/json", true);
 
 HDF *hdf = NULL;
 NEOERR *err;
