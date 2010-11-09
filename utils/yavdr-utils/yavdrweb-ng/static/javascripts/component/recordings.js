@@ -20,7 +20,7 @@ YaVDR.Component.Recordings = Ext.extend(YaVDR.Component, {
 			tbar: [
 				{
 					icon: '/icons/silk/arrow_refresh.png',
-					text: 'Reload',
+					text: _('Reload'),
 					scope: this,
 					handler: this.reloadStore
 				}
@@ -29,8 +29,8 @@ YaVDR.Component.Recordings = Ext.extend(YaVDR.Component, {
 				forceFit: true
 			},
 			columns: [
-				{ header: 'Name', dataIndex: 'name' },
-				{ header: 'Dauer', dataIndex: 'length' }
+				{ header: _('Name'), dataIndex: 'name' },
+				{ header: _('Duration'), dataIndex: 'length' }
 			],
 			store: this.store,
 			itemId: 'list',
@@ -40,7 +40,7 @@ YaVDR.Component.Recordings = Ext.extend(YaVDR.Component, {
 
 		this.items = [
 			new YaVDR.Component.Header({
-				html: 'Recordings',
+				html: _('Recordings'),
 				region: 'north'
 			}),
 			{
