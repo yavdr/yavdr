@@ -138,24 +138,25 @@ class Mount:
 					  stdin=p1.stdout,
 					  stdout=subprocess.PIPE).communicate()[0]
 		for path in mounts.split('\n'):
-			#syslog("compare " + path)
+			syslog("compare %s" % path)
 			if len(path) != 0 and path.split()[2] == self.local:
 				return
 		try:
 			os.makedirs(self.local)
 		except OSError as (errno, strerror):
 			if errno != 17:
-				#syslog("unable to make dir: " + strerror)
+				syslog("unable to make dir: %s" % strerror)
 				return
 		subprocess.call(['/bin/mount',
 				 '-t', 'nfs',
 				 self.remote,
 				 self.local])
 		try:
+			os.remove(self.vdr)
 			os.symlink(self.local, self.vdr)
-			self.notify()
 		except OSError as (errno, strerror):
 			syslog("I/O error({0}): {1}".format(errno, strerror))
+		self.notify()
 
 	def notify(self):
 		time.sleep(3)
