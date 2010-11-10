@@ -2,3 +2,7 @@
 
 mkdir -p /srv/vdr/video.00
 chown -R vdr:vdr /srv/vdr
+
+mkdir -m 777 -p /srv/audio
+mkdir -m 777 -p /srv/video
+mkdir -m 777 -p /srv/picture

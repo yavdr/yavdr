@@ -123,11 +123,19 @@ class Mount:
 	def __init__(self, host, path, subtype):
 		syslog("Mount created")
 		self.remote = host + ":" + path
-		self.media = "/srv/media/"
-		if subtype == "video":
-			self.name = "Aufnahmen_auf_" + host
+		self.media = "/media/"
+		self.subtype = subtype
+		if subtype == "vdr":
+			self.name = "Aufnahmen_auf_"
+		elif subtype == "video":
+			self.name = "Videos_auf_"
+		elif subtype == "audio":
+			self.name = "Musik_auf_"
+		elif subtype == "picture":
+			self.name = "Bilder_auf_"
 		else:
-			self.name = "Sonstige_auf_" + host
+			self.name = "Sonstige_auf_"
+		self.name += host.split('.')[0]
 		self.local = self.media + self.name
 		self.vdr = "/srv/vdr/video.00/" + self.name
 
@@ -151,8 +159,17 @@ class Mount:
 				 '-t', 'nfs',
 				 self.remote,
 				 self.local])
+		if self.subtype == "vdr":
+			self.link()
+
+	def link(self):
 		try:
 			os.remove(self.vdr)
+		except OSError as (errno, strerror):
+			if errno != 2:
+				syslog("I/O error({0}): {1}".format(errno, strerror))
+				return
+		try:
 			os.symlink(self.local, self.vdr)
 		except OSError as (errno, strerror):
 			syslog("I/O error({0}): {1}".format(errno, strerror))
