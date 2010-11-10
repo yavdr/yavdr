@@ -1,3 +1,0 @@
-#!/bin/bash
-
-process-template --mode=750 /lib/udev/refresh-vdr-on-mount_helper

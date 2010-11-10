@@ -1,1 +1,0 @@
-SUBSYSTEM=="bdi", ACTION=="add|remove", RUN+="/lib/udev/refresh-vdr-on-mount_helper"

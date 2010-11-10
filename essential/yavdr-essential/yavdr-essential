@@ -3,7 +3,6 @@ acpid
 alsa-utils
 anacron
 at
-autofs
 avahi-daemon
 avahi-discover
 build-essential

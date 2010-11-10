@@ -1,4 +1,0 @@
-#!/bin/bash
-
-stop vdr
-start vdr
