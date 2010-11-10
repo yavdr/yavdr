@@ -12,8 +12,7 @@ NEW
 - create keymap for xbmc to make it behave similar to vdr 
 - create simple lirc mapping on request 
 - simplify upstart scripts ( remove start-*.sh scripts)
-- added czech translation (thx Radek Stastny)
-- yavdr-addon-tvbrowser 
+- svdrpd integration
 
 Webfrontend : 
 - complete web frontend overhaul
