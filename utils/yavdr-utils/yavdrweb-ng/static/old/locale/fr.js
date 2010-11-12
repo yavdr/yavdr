@@ -1,4 +1,4 @@
-﻿﻿var locale_fr = {
+﻿var locale_fr = {
     meta_lang: {
         local : 'Francais',
         int : 'French',
@@ -132,10 +132,28 @@
             panel_title : '' //unused
         },
         grid_header : { 
-            cnumber : 'N°',
-            cname : 'Nom de la chaîne',
-            cprovider : 'Fournisseur',
-            cstr : 'Séquence Complete de la Chaîne'
+            _num : 'N°',
+            name : 'Nom',
+            provider : 'Fournisseur',
+            str : 'Information comlete de la chaîne',
+            frequency : 'Frequence',
+            modulation : 'Modulation',
+            source : 'Source',
+            symbolrate : 'Symbolrate',
+            vpid : 'VPID',
+            apid : 'APID',
+            tpid : 'TPID',
+            caid : 'CAID',
+            sid : 'SID',
+            nid : 'NID',
+            tid : 'TID',
+            rid : 'RID',
+            _group : 'Groupe',
+            _friendly_transp: 'Transpondeur',
+            _friendly_lang: 'Langue',
+            _friendly_type: 'TV/Radio',
+            _friendly_scrambled : 'Gratuite/Cryptée',
+            _friendly_dvb_sat_band : 'Zone de couverture satellite',
         },
         grid_title : 'Liste des Chaînes (toute radio et chaînes de TV)' 
     },
@@ -244,7 +262,12 @@
                 title : 'Samba',
                 tabtip : 'Maintenir les partages Samba'
             }
-       }
+       },
+        submit: {
+            waitmsg : 'La configuration est appliquée.',    
+            success : 'La table de montage a été modifié avec succès.',
+            failure : 'Un problème pendant la modification de la table de montage a été détecté.'
+        }
     },
     nvidia: {
         menutab: {
@@ -419,6 +442,7 @@
         label: 'Paramètres audio'
     },
     lifeguard: {
+        help: 'VDR-Lifeguard vérifie avant l\'extinction de yaVDR si certains processus sont actifs. L\'arret est reportée si l\'un des tests indiquent qu\'il y a un processus qui ne devrait pas être interrompu. Activez ici les processus empêchant la mise hors tension de l\'appareil. Aucune sélection signifie que VDR-Lifeguard est désactivé',
         menutab: {
             title : 'VDR-Lifeguard',
             tabtip : 'Paramètres Lifeguard',
