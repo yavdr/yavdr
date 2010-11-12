@@ -145,7 +145,7 @@ YaVDR.Component.Dashboard.Timers = Ext.extend(YaVDR.Component.Dashboard.Item, {
 			disableSelection: true,
 			columns: [
 				{ header: _('Name'), dataIndex: 'name', width: 400 },
-				{ header: _('Duration'), dataIndex: 'length', width: 100 }
+				{ header: _('Start'), dataIndex: 'start', width: 100, xtype: 'datecolumn', format: 'd.m.Y H:i' }
 			],
 			store: this.store
 		});
