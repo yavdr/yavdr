@@ -694,3 +694,21 @@ msgstr ""
 
 msgid "web.sound.label"
 msgstr ""
+
+#: begin avahi-mounter
+msgid "Recordings_on_"
+msgstr ""
+
+msgid "Videos_on_"
+msgstr ""
+
+msgid "Music_on_"
+msgstr ""
+
+msgid "Pictures_on_"
+msgstr ""
+
+msgid "Miscellaneous_on_"
+msgstr ""
+
+#: end avahi-mounter

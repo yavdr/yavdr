@@ -681,3 +681,21 @@ msgstr "Failure."
 
 msgid "web.lifeguard.label"
 msgstr "VDR-Lifeguard settings"
+
+#: begin avahi-mounter
+msgid "Recordings_on_"
+msgstr "Recordings_on_"
+
+msgid "Videos_on_"
+msgstr "Videos_on_"
+
+msgid "Music_on_"
+msgstr "Music_on_"
+
+msgid "Pictures_on_"
+msgstr "Pictures_on_"
+
+msgid "Miscellaneous_on_"
+msgstr "Miscellaneous_on_"
+#: end avahi-mounter
+

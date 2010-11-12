@@ -17,6 +17,7 @@ import gobject
 import dbus
 import socket
 import syslog
+import gettext
 from syslog import *
 from dbus import DBusException
 from dbus.mainloop.glib import DBusGMainLoop
@@ -126,15 +127,15 @@ class Mount:
 		self.media = "/media/"
 		self.subtype = subtype
 		if subtype == "vdr":
-			self.name = "Aufnahmen_auf_"
+			self.name = _("Recordings_on_")
 		elif subtype == "video":
-			self.name = "Videos_auf_"
+			self.name = _("Videos_on_")
 		elif subtype == "audio":
-			self.name = "Musik_auf_"
+			self.name = _("Music_on_")
 		elif subtype == "picture":
-			self.name = "Bilder_auf_"
+			self.name = _("Pictures_on_")
 		else:
-			self.name = "Sonstige_auf_"
+			self.name = _("Miscellaneous_on_")
 		self.name += host.split('.')[0]
 		self.local = self.media + self.name
 		self.vdr = "/srv/vdr/video.00/" + self.name
@@ -180,12 +181,22 @@ class Mount:
 		os.utime("/srv/vdr/video.00/.update", None)
 
 	def remove(self):
-		os.remove(self.vdr)
-		subprocess.Popen(["umount", self.local])
+		try:
+			os.remove(self.vdr)
+		except OSError as (errno, strerror):
+			if errno != 2:
+				syslog("I/O error({0}): {1}".format(errno, strer		subprocess.Popen(["umount", self.local])
 		# os.rmdir(self.local)
 		self.notify()
 
+# initialize gettext
+gettext.install('yavdr', '/usr/share/yavdr/locale', unicode=1)
+# _ = gettext.lgettext
+
+# initialize logging
 openlog('avahi-mounter', LOG_PID, LOG_USER)
+
+# start main loop
 browser = ZeroconfBrowser()
 browser.browse('_nfs._tcp')
 browser()

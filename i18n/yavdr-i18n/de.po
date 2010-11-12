@@ -689,3 +689,20 @@ msgstr "Fehler."
 msgid "web.sound.label"
 msgstr "Ton-Konfiguration"
 
+#: begin avahi-mounter
+msgid "Recordings_on_"
+msgstr "Aufnahmen_auf_"
+
+msgid "Videos_on_"
+msgstr "Videos_auf_"
+
+msgid "Music_on_"
+msgstr "Musik_auf_"
+
+msgid "Pictures_on_"
+msgstr "Bilder_auf_"
+
+msgid "Miscellaneous_on_"
+msgstr "Sonstige_auf_"
+#: end avahi-mounter
+
