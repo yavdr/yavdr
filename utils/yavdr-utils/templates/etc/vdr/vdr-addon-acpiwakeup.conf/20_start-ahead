@@ -1,0 +1,3 @@
+# How many minutes should the machine wake up before the timer starts:
+ACPI_START_AHEAD=5
+

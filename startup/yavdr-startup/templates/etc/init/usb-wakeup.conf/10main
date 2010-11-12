@@ -1,7 +1,7 @@
 
 description     "Enable USB Wakeup for devices in /dev/input/wakeup"
 author          "Steffen Barszus <steffenbpunkt@gmail.com"
-<?cs if:(!?system.disable_usb_wakeup || system.disable_usb_wakeup == "0") ?>
+<?cs if:(!?system.wakeup.disable_usb || system.wakeup.disable_usb == "0") ?>
 start on stopped udev-finish
 <?cs /if ?>
 task
