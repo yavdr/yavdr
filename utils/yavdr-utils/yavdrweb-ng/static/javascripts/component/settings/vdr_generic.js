@@ -88,7 +88,7 @@ YaVDR.Component.Settings.VdrGeneric.Lifeguard = Ext.extend(YaVDR.Default.Form, {
     });
   },
   doLoad: function() {
-    YaVDR.getHdfTree('vdr.plugin.lifeguard.enable', function(data) {
+    YaVDR.getHdfValue('vdr.plugin.lifeguard.enable', function(data) {
       if (typeof data != null) {
         if (typeof data.enable == "object") {
           for (var i = 0; i < data.enable.length; i++) {

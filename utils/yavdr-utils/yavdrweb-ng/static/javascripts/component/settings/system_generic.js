@@ -12,7 +12,7 @@ YaVDR.Component.Settings.SystemGeneric = Ext.extend(YaVDR.Component, {
         ]
       }),
       new YaVDR.Component.Item({
-        title: 'Shutdown',
+        title: 'Shutdown and wakeup',
         style: 'margin-bottom: 5px',
         items: [
           new YaVDR.Component.Settings.SystemGeneric.Shutdown
@@ -109,12 +109,12 @@ YaVDR.Component.Settings.SystemGeneric.Language = Ext.extend(YaVDR.Default.Form,
     });
 
     this.languageTpl = new Ext.XTemplate(
-      '<tpl for=".">',
-      '<div class="selection-wrap selectable" id="language-selection-{key}">',
-      '<div class="title">{title}</div>',
-      '</div>',
-      '</tpl>'
-      );
+        '<tpl for=".">',
+        '<div class="selection-wrap selectable" id="language-selection-{key}">',
+        '<div class="title">{title}</div>',
+        '</div>',
+        '</tpl>'
+        );
 
     this.languageSelectionHidden = new Ext.form.Hidden({
       name: 'value',
@@ -154,7 +154,7 @@ YaVDR.Component.Settings.SystemGeneric.Language = Ext.extend(YaVDR.Default.Form,
 YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form, {
   initComponent: function() {
 
-    this.store = new Ext.data.JsonStore({
+    this.shutdownStore = new Ext.data.JsonStore({
       fields: [
         { name: 'key' },
         { type: 'boolean', name: 'disabled' },
@@ -186,36 +186,90 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
 
     });
 
+
+    this.wakeupMethodStore = new Ext.data.JsonStore({
+      fields: [
+        { name: 'key' },
+        { type: 'boolean', name: 'disabled' },
+        { name: 'title' },
+        { name: 'description' }
+      ],
+      data: [
+        {
+          key: '',
+          title: 'None',
+          description: 'Without timer wakeup.'
+        },
+        {
+          key: 'acpi',
+          title: 'ACPI',
+          description: 'ACPI timer wakeup. YaVDR default setting.'
+        },
+        {
+          key: 'nvram',
+          title: 'NVRAM',
+          description: 'You need a special nvram configuration to use it.'
+        }
+      ]
+
+    });
+
+    this.wakeupMethodTpl = new Ext.XTemplate(
+        '<tpl for=".">',
+        '<tpl if="disabled == true">',
+        '<div class="selection-wrap unselectable" id="wakeup-method-selection-{key}">',
+        '</tpl>',
+        '<tpl if="disabled == false">',
+        '<div class="selection-wrap selectable" id="wakeup-method-selection-{key}">',
+        '</tpl>',
+        '<div class="title">{title}</div>',
+        '<div class="description">{description}</div>',
+        '</div>',
+        '</tpl>'
+        );
+
+
     this.shutdownTpl = new Ext.XTemplate(
-      '<tpl for=".">',
-      '<tpl if="disabled == true">',
-      '<div class="selection-wrap unselectable" id="shutdown-selection-{key}">',
-      '</tpl>',
-      '<tpl if="disabled == false">',
-      '<div class="selection-wrap selectable" id="shutdown-selection-{key}">',
-      '</tpl>',
-      '<div class="title">{title}</div>',
-      '<div class="description">{description}</div>',
-      '</div>',
-      '</tpl>'
-      );
+        '<tpl for=".">',
+        '<tpl if="disabled == true">',
+        '<div class="selection-wrap unselectable" id="shutdown-selection-{key}">',
+        '</tpl>',
+        '<tpl if="disabled == false">',
+        '<div class="selection-wrap selectable" id="shutdown-selection-{key}">',
+        '</tpl>',
+        '<div class="title">{title}</div>',
+        '<div class="description">{description}</div>',
+        '</div>',
+        '</tpl>'
+        );
 
     this.shutdownSelectionHidden = new Ext.form.Hidden({
-      name: 'value',
+      name: 'shutdown_method',
       value: 's3'
+    });
+
+    this.wakeupMethodSelectionHidden = new Ext.form.Hidden({
+      name: 'wakeup_method'
     });
 
     this.shutdownSelectiorView = new YaVDR.SelectionList({
       hiddenField: this.shutdownSelectionHidden,
-      fieldLabel: 'Gewünschte Methode',
+      fieldLabel: 'Shutdown method',
       tpl: this.shutdownTpl,
-      store: this.store
+      store: this.shutdownStore
+    });
+
+    this.wakeupMethodSelectiorView = new YaVDR.SelectionList({
+      hiddenField: this.wakeupMethodSelectionHidden,
+      fieldLabel: 'Wakeup method',
+      tpl: this.wakeupMethodTpl,
+      store: this.wakeupMethodStore
     });
 
     this.disableUsbWakeupField = new Ext.form.Checkbox({
       fieldLabel: 'Disable USB-Wakeup',
       boxLabel: 'Deactivate USB wakeup, for incompatible hardware',
-      name: 'value2',
+      name: 'disable_usb',
       inputValue: '1'
     });
 
@@ -230,54 +284,69 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
     this.items = [
       this.shutdownSelectionHidden,
       this.shutdownSelectiorView,
+      this.wakeupMethodSelectionHidden,
+      this.wakeupMethodSelectiorView,
       this.disableUsbWakeupField
     ];
 
 
     YaVDR.Component.Settings.SystemGeneric.Shutdown.superclass.initComponent.call(this);
+    this.un('render', this.doLoad);
     this.on('render', this.disableUnavailables, this, { single: true });
   },
   disableUnavailables: function() {
     Ext.Ajax.request({
       url: '/admin/get_file_content?file=/proc/acpi/sleep&puretext=true',
-      timeout: 3000,
       method: 'GET',
       scope: this,
       success: function(xhr) {
         // field references
         var allowed = xhr.responseText;
 
+        if (allowed.length > 0) {
+          this.shutdownStore.each(function(record) {
+            type = record.data.key
+            if (type == 'reboot' || type == 'poweroff') {
+              return;
+            }
 
-        this.store.each(function(record) {
-          type = record.data.key
-          if (type == 'reboot' || type == 'poweroff') {
-            return;
-          }
+            if (allowed.indexOf(type.toUpperCase()) < 0) {
+              record.data.title = record.data.title + " (not available)";
+              record.data.disabled = true;
+            }
+          });
 
-          if (allowed.indexOf(type.toUpperCase()) < 0) {
-            record.data.title = record.data.title + " (not available)";
-            record.data.disabled = true;
-          }
-        });
-
-        this.shutdownSelectiorView.refresh();
+          this.shutdownSelectiorView.refresh();
+        }
         this.doLoad.call(this);
       }
     });
   },
   doSave: function() {
     this.getForm().submit({
-      url: '/admin/set_signal?signal=change-shutdown'
+      url: '/admin/set_shutdown_wakeup'
     })
   },
   doLoad: function() {
-    YaVDR.getHdfValue('system.shutdown', function(value) {
-      this.shutdownSelectiorView.select("shutdown-selection-" + value);
-    }, this);
-    YaVDR.getHdfValue('system.disable_usb_wakeup', function(value) {
-      if (value == "1") {
-        this.disableUsbWakeupField.setValue(1);
+    YaVDR.getHdfValue(['system.shutdown', 'system.wakeup.method', 'system.wakeup.methods_available', 'system.wakeup.disable_usb'], function(value) {
+
+      try {
+        this.shutdownSelectiorView.select("shutdown-selection-" + value.system.shutdown);
+      } catch(e) {
       }
+
+      try {
+        this.wakeupMethodSelectiorView.select("wakeup-method-selection-" + value.system.wakeup.method);
+      } catch(e) {
+      }
+
+      try {
+        this.disableUsbWakeupField.setValue(value.system.wakeup.disable_usb == "1" ? 1 : 0);
+      } catch(e) {
+      }
+
+
     }, this);
   }
 });
+
