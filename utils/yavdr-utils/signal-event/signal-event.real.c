@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
             action = NULL;
           }
           
-          if (!strcmp(namelist[n]->d_name, "templates2expand"))
+          if (!strncmp(namelist[n]->d_name, "templates2expand", strlen("templates2expand")))
             continue;
 
           if (asprintf(&action, "%s/%s", eventdir, namelist[n]->d_name) > 0)
@@ -191,6 +191,16 @@ int main(int argc, char *argv[])
         free(namelist);
       }
       free(eventdir);
+
+      if (asprintf(&templates2expanddir, "%s/%s", eventdir, "templates2expand-late") > 0)
+      {
+        if (!access(templates2expanddir, F_OK | X_OK))
+        {
+          process_template(templates2expanddir);
+        }
+        free(templates2expanddir);
+      }
+
     }
   }
 
