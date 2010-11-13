@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for disp in ":1" ":1.1"; do
+  LINE=$(xrandr -display $disp -q| head -n 1)
+  SCREEN=$(echo $LINE | cut -d ":" -f 1 | cut -d " " -f 2)
+  X=$(echo $LINE | cut -d ":" -f 2 | cut -d "," -f 2 | cut -d " " -f 3)
+  Y=$(echo $LINE | cut -d ":" -f 2 | cut -d "," -f 2 | cut -d " " -f 5)
+  dbset "system.x11.display.$SCREEN.resolution.x=$X"
+  dbset "system.x11.display.$SCREEN.resolution.y=$Y"
+done
