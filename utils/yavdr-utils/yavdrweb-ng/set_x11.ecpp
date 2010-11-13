@@ -347,9 +347,9 @@ int display_device_mask(string name) {
       msg = "Error on database operation";
     }
     else {
-      int ret = system("/usr/bin/signal-event graphtft-state-change");
+      int ret = system("/usr/bin/signal-event display-state-change");
       success = "true";
-      msg = "OK. signal-event graphtft-state-change";
+      msg = "OK. signal-event display-state-change";
     }
 </%cpp>{
     success: <$success$>
