@@ -156,10 +156,14 @@ class Mount:
 			if errno != 17:
 				syslog("unable to make dir: %s" % strerror)
 				return
-		subprocess.call(['/bin/mount',
-				 '-t', 'nfs',
-				 self.remote,
-				 self.local])
+		try:
+			subprocess.call(['/bin/mount',
+					 '-t', 'nfs',
+					 self.remote,
+					 self.local])
+		except OSError as (errno, strerror):
+			syslog("unable to mount: %s" % strerror)
+			return
 		if self.subtype == "vdr":
 			self.link()
 
@@ -185,16 +189,54 @@ class Mount:
 			os.remove(self.vdr)
 		except OSError as (errno, strerror):
 			if errno != 2:
-				syslog("I/O error({0}): {1}".format(errno, strer		subprocess.Popen(["umount", self.local])
+				syslog("I/O error({0}): {1}".format(errno, strerror))
+		subprocess.Popen(["umount", self.local])
 		# os.rmdir(self.local)
 		self.notify()
 
+class StaticMounter:
+	def __init__(self):
+		self.hdf_path = "system.net.media.video"
+		self.vdr = "/srv/vdr/video.00"
+
+	def __call__(self):
+		for i in range(1,999):
+			path = "%s.%03d" % (self.hdf_path, i)
+			dest = subprocess.Popen(["dbget",path],
+						stdout=subprocess.PIPE).communicate()[0]
+			if "%s" % dest != '':
+				self.mount(dest, i)
+			else:
+				return
+
+	def mount(self, dest, idx):
+		syslog("establish static mount: %s" % dest)
+		(host, path) = dest.split(':')
+		localpath = "%s/%s.%03d" % (self.vdr, host, idx)
+		syslog("localpath: %s" % localpath)
+		try:
+			os.makedirs(localpath)
+		except OSError as (errno, strerror):
+			if errno != 17:
+				syslog("unable to make dir: %s" % strerror)
+				return
+		try:
+			subprocess.call(['/bin/mount',
+					 '-t', 'nfs',
+					 dest ,
+					 localpath])
+		except OSError as (errno, strerror):
+			syslog("unable to mount: %s" % strerror)
+
 # initialize gettext
 gettext.install('yavdr', '/usr/share/yavdr/locale', unicode=1)
-# _ = gettext.lgettext
 
 # initialize logging
 openlog('avahi-mounter', LOG_PID, LOG_USER)
+
+# establish static mounts
+staticMounter = StaticMounter()
+staticMounter()
 
 # start main loop
 browser = ZeroconfBrowser()
