@@ -1,3 +1,2 @@
 # restart vdr if dvb device added after vdr is running
 KERNEL=="dvb?.frontend?", ACTION=="add", RUN+="/lib/udev/dvbmon_helper"
-
