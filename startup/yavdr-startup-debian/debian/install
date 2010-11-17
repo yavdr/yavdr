@@ -15,5 +15,5 @@ scripts/R50correct_videodirs	usr/share/vdr/recording-hooks
 scripts/R60copy_epgimage	usr/share/vdr/recording-hooks
 upstart/*.conf		/etc/init/
 upstart/*.conf		/etc/init/
-udev/*.rules		/etc/udev/rules.d
+udev/*.rules		/lib/udev/rules.d
 
