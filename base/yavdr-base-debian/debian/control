@@ -1,0 +1,14 @@
+Source: yavdr-base
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7.0.50~)
+
+Package: yavdr-base
+Architecture: any
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-startup (>=0.3.0.2362)
+Conflicts: yavdr-startup (<< 0.3.0.2362)
+Description: scripts for startup, shutdown and s3
+  scripts for startup, shutdown and s3 for yaVDR

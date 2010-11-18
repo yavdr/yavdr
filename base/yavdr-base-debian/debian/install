@@ -1,0 +1,2 @@
+udev/*.rules		/lib/udev/rules.d
+udev/dvbmon_helper	/lib/udev
