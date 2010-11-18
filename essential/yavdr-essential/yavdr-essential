@@ -80,6 +80,7 @@ xserver-xorg-input-evtouch
 xserver-xorg-video-vesa
 yavdr-startup
 yavdr-utils
+yavdr-base
 vdr-skins-anthra
 xterm
 uswsusp
