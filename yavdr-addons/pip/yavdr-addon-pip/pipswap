@@ -1,0 +1,7 @@
+#!/bin/bash
+
+VDRCHAN=$(svdrpsend chan|grep "^250"| cut -d ' ' -f 2)
+PIPCHAN=$(svdrpsend -p 2102 chan|grep "^250"| cut -d ' ' -f 2)
+
+svdrpsend chan $PIPCHAN
+svdrpsend -p 2102 chan $VDRCHAN
