@@ -229,7 +229,7 @@ class StaticMounter:
 			syslog("unable to mount: %s" % strerror)
 
 # initialize gettext
-gettext.install('yavdr', '/usr/share/yavdr/locale', unicode=1)
+gettext.install('vdr-addon-avahi-mounter', '/usr/share/vdr-addon-avahi-mounter/locale', unicode=1)
 
 # initialize logging
 openlog('avahi-mounter', LOG_PID, LOG_USER)
