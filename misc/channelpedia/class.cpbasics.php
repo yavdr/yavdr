@@ -27,17 +27,17 @@ class cpBasics {
 	private 
 		$path,
 		$dbh,
-		$dbfile;
+		$dbfile,
+		$cableSourceType;
 
 	function __construct($path){
 		$this->path = $path;
 		$this->dbfile = $this->path . "channeldb.sqlite";	
 		$this->dbh = new PDO('sqlite:'.$this->dbfile); 
-		//$this->createFreshChannelDB();
-		$this->createAllSortedChannelsConfFromDB();
+		$this->cableSourceType = "Germany_KabelBW";
 	}
 
-	private function createAllSortedChannelsConfFromDB(){
+	public function createAllSortedChannelsConfFromDB(){
 	
 		$filter = " AND ((tid != '1092' AND tid != '1113' AND provider != '-') OR (name = 'DMAX')) AND provider != 'SKY' ";
 		
@@ -122,8 +122,8 @@ class cpBasics {
 
 	}
 	
-	private function createFreshChannelDB(){	
-		@unlink($this->dbfile); //delete existing database file
+	public function createFreshChannelDB(){
+		//@unlink($this->dbfile); //delete existing database file
 		$this->createDBTables();
 		$this->insertChannelsConfIntoDB();
 	}
@@ -176,8 +176,7 @@ class cpBasics {
 			}
 			$provider = "";
 			if ($row["provider"] != "")
-				$provider = ";". $row["provider"];
-			
+				$provider = ";". $row["provider"];			
 			
 			$rawstring =
 				$row["name"] .
@@ -193,13 +192,7 @@ class cpBasics {
 				$row["sid"] . ":".
 				$row["nid"] . ":".
 				$row["tid"] . ":".
-				$row["rid"];
-			
-			if ($rawstring != $row['rawstring']){
-				die("rawstring construction wrong:\n$rawstring\n".$row['rawstring']."\n");
-			}
-			
-			
+				$row["rid"];			
 			fputs($handle, "$rawstring\n");
 	    }
 	    fclose($handle);
@@ -237,8 +230,7 @@ class cpBasics {
 	
 	private function createDBTables(){
 		$sqltext= "CREATE TABLE channels(
-		    sourcetype TEXT,
-		    region TEXT, 
+		    cablesourcetype TEXT,
 			name TEXT,
 			provider TEXT,
 			frequency INTEGER,
@@ -254,8 +246,8 @@ class cpBasics {
 			tid TEXT,
 			rid INTEGER,
 			cgroup TEXT,
-			rawstring TEXT
-			);";
+			PRIMARY KEY ( source, nid, tid, sid)
+			) ;";
 	
 		$query = $this->dbh->exec($sqltext);
 		if ($query === false) {
@@ -263,54 +255,50 @@ class cpBasics {
 		    print_r($this->dbh->errorInfo());
 		    die("DB problem on create db + tables");
 		}
-	}
-	
+	}	
 	
 	private function insertChannelIntoDB ($params){
-	    	$columns = implode( ", ", array_keys($params) );
-	    	$values = implode( ", ", array_values($params) );
-	    	$sqltext = "INSERT INTO channels ( " . $columns . " ) VALUES ( " . $values . " );";
-	    	//print "$sqltext\n";
-			$query = $this->dbh->exec($sqltext);
-			if (!$query) {
-			    echo "\nPDO::errorInfo():\n";
-			    print_r($this->dbh->errorInfo());
-			    die("db error on insert");
-			}
+    	$columns = implode( ", ", array_keys($params) );
+    	$values = implode( ", ", array_values($params) );
+    	$sqltext = "INSERT INTO channels ( " . $columns . " ) VALUES ( " . $values . " );";
+    	//print "$sqltext\n";
+		$query = $this->dbh->exec($sqltext);
+		if (!$query) {
+		    echo "\nPDO::errorInfo():\n";
+		    print_r($this->dbh->errorInfo());
+		    die("db error on insert");
+		}
 	}
 	
 	private function getParamArray( $buffer, $cgroup){
-	    	$details = explode( ":", $buffer);
-			if (count($details) != 13) return false;    	
-	    	$cname = $details[0];
-	    	$cprovider = "";
-		    $cnamedetails = explode( ";", $cname);
-		    if (count($cnamedetails) == 2){
-		    	$cname = $cnamedetails[0];
-			    $cprovider = $cnamedetails[1];	    	
-		    }
-	    		    	
-	    	return array(
-			    "sourcetype" 	=> $this->dbh->quote( 'sourcetype hepi S/C' ),
-			    "region" 		=> $this->dbh->quote( 'regionx' ), 
-				"name" 			=> $this->dbh->quote( $cname ),
-				"provider" 		=> $this->dbh->quote( $cprovider ),
-				"frequency" 	=> $this->dbh->quote( $details[1] ),
-				"modulation" 	=> $this->dbh->quote( $details[2] ),
-				"source" 		=> $this->dbh->quote( $details[3] ),
-				"symbolrate" 	=> $this->dbh->quote( $details[4] ),
-				"vpid" 			=> $this->dbh->quote( $details[5] ),
-				"apid" 			=> $this->dbh->quote( $details[6] ),
-				"tpid"			=> $this->dbh->quote( $details[7] ),
-				"caid" 			=> $this->dbh->quote( $details[8] ),
-				"sid" 			=> $this->dbh->quote( $details[9] ),
-				"nid" 			=> $this->dbh->quote( $details[10] ),
-				"tid" 			=> $this->dbh->quote( $details[11] ),
-				"rid" 			=> $this->dbh->quote( $details[12] ),
-				"cgroup" 		=> $this->dbh->quote( $cgroup ),
-				"rawstring" 	=> $this->dbh->quote( $buffer )
-	    	);
-	}
+    	$details = explode( ":", $buffer);
+		if (count($details) != 13) return false;    	
+    	$cname = $details[0];
+    	$cprovider = "";
+	    $cnamedetails = explode( ";", $cname);
+	    if (count($cnamedetails) == 2){
+	    	$cname = $cnamedetails[0];
+		    $cprovider = $cnamedetails[1];	    	
+	    }
 
+    	return array(
+		    "cablesourcetype" 	=> $this->dbh->quote( $this->cableSourceType ),
+			"name" 			=> $this->dbh->quote( $cname ),
+			"provider" 		=> $this->dbh->quote( $cprovider ),
+			"frequency" 	=> $this->dbh->quote( $details[1] ),
+			"modulation" 	=> $this->dbh->quote( $details[2] ),
+			"source" 		=> $this->dbh->quote( $details[3] ),
+			"symbolrate" 	=> $this->dbh->quote( $details[4] ),
+			"vpid" 			=> $this->dbh->quote( $details[5] ),
+			"apid" 			=> $this->dbh->quote( $details[6] ),
+			"tpid"			=> $this->dbh->quote( $details[7] ),
+			"caid" 			=> $this->dbh->quote( $details[8] ),
+			"sid" 			=> $this->dbh->quote( $details[9] ),
+			"nid" 			=> $this->dbh->quote( $details[10] ),
+			"tid" 			=> $this->dbh->quote( $details[11] ),
+			"rid" 			=> $this->dbh->quote( $details[12] ),
+			"cgroup" 		=> $this->dbh->quote( $cgroup )
+    	);
+	}
 }
 ?>
