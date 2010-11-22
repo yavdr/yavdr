@@ -1,0 +1,14 @@
+Source: vdr-addon-avahi-mounter
+Section: video
+Priority: extra
+Maintainer: Holger Schvestka <hotzenplotz5@gmx.de>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.4
+Homepage: https://svn.origo.ethz.ch/yavdr/trunk/
+
+Package: vdr-addon-avahi-mounter
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${vdr:Depends}, vdr, avahi-daemon, avahi-discover, python
+Description: avahi-mounter an VDR-Addon  
+ avahi-mounter an VDR-Addon                                            
+
