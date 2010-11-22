@@ -1,0 +1,23 @@
+#!/bin/bash
+
+PIPWIDTH=720
+PIPHEIGHT=576
+
+if [ -f /etc/default/tntnet ] ; then
+        . /etc/default/tntnet
+fi
+
+export DISPLAY=:1
+SCREENWIDTH=$(xdpyinfo | grep 'dimensions:' | cut -f 2 -d ':' | cut -f 1 -d 'x')
+
+if start vdr-pip; then
+  while [ -z "${VDRWINS[0]}" ]; do
+    VDRWINS=($(wmctrl -l|grep "Local VDR"|cut -d ' ' -f 1))
+  done
+
+  wmctrl -i -r ${VDRWINS[0]} -b remove,maximized_vert,maximized_horz
+  wmctrl -i -r ${VDRWINS[0]} -e 0,$(( SCREENWIDTH-PIPWIDTH )),0,$PIPWIDTH,$PIPHEIGHT
+  wmctrl -i -r ${VDRWINS[0]} -b add,above
+else
+  stop vdr-pip
+fi
