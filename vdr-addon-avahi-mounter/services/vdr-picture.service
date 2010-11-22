@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+<name replace-wildcards="yes">Pictures on %h</name> ## Name
+<service>
+       <type>_nfs._tcp</type>
+       <port>2049</port>
+       <txt-record>path=/srv/picture</txt-record> ## path to shared Folder
+       <txt-record>subtype=picture</txt-record> ## subtype
+</service>
+</service-group>

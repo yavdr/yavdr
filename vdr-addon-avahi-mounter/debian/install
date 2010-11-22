@@ -1,1 +1,3 @@
 avahi-mounter	usr/bin
+avahi-mounter.conf	etc/init
+services/*	/etc/avahi/services
