@@ -1,0 +1,13 @@
+Source: yavdr-addon-pip
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-addon-pip
+Architecture: all
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, wmctrl
+Description: yavdr-addon-pip
+ yavdr-addon-pip

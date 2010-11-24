@@ -1,0 +1,4 @@
+vdr-pip.conf	etc/init
+pipswap		usr/bin
+piponoff	usr/bin
+vdr-pip		var/lib

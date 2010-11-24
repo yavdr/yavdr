@@ -1,0 +1,8 @@
+#!/bin/sh                                                                                                               
+                                                                                                                        
+if [ remove = "$1" ]; then 
+/usr/bin/signal-event addons-update
+process-template /etc/init/launcher.conf
+fi
+
+#DEBHELPER#
