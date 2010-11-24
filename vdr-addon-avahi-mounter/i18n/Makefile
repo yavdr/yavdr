@@ -2,11 +2,15 @@
 
 PODIR     = ./
 LOCALEDIR = $(DESTDIR)/usr/share/vdr-addon-avahi-mounter/locale
+LOCDIR    = $(PREFIX)/share/locale
 I18Npo    = $(wildcard $(PODIR)/*.po)
 I18Nmsgs  = $(addprefix $(LOCALEDIR)/, $(addsuffix /LC_MESSAGES/vdr-addon-avahi-mounter.mo, $(notdir $(foreach file, $(I18Npo), $(basename $(file))))))
 I18Npot   = $(PODIR)/vdr-addon-avahi-mounter.pot
 
-.PHONY: i18n clean
+all:
+	@echo "Done."
+
+
 i18n: $(I18Nmsgs)
 
 %.mo: %.po
@@ -20,6 +24,12 @@ $(I18Nmsgs): $(LOCALEDIR)/%/LC_MESSAGES/vdr-addon-avahi-mounter.mo: $(PODIR)/%.m
 	@mkdir -p $(dir $@)
 	echo cp $< $@
 	cp $< $@
+
+install-i18n:
+	@mkdir -p $(DESTDIR)$(LOCDIR)
+	@(cd $(LOCALEDIR); cp -r --parents * $(DESTDIR)$(LOCALEDIR))
+
+install: i18n
 
 clean:
 	@rm -f *.mo

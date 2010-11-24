@@ -1,4 +1,0 @@
-avahi-mounter	usr/bin
-avahi-mounter.conf	etc/init
-services/*	/etc/avahi/services
-# usr/share/vdr-addon-avahi-mounter/locale
