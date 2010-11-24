@@ -8,6 +8,8 @@ Build-Depends: debhelper (>= 7), cdbs
 
 Package: yavdr-addon-pip
 Architecture: all
-Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, wmctrl
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, wmctrl, x11-utils, vdr,
+ vdr-plugin-xinelibpoutput, libxineliboutput-sxfe,
+ vdr-plugin-streamdev-client, vdr-plugin-streamdev-server
 Description: yavdr-addon-pip
  yavdr-addon-pip

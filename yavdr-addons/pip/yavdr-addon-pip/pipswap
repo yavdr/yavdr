@@ -3,5 +3,5 @@
 VDRCHAN=$(svdrpsend chan|grep "^250"| cut -d ' ' -f 2)
 PIPCHAN=$(svdrpsend -p 2101 chan|grep "^250"| cut -d ' ' -f 2)
 
-svdrpsend chan $PIPCHAN
-svdrpsend -p 2102 chan $VDRCHAN
+svdrpsend chan $PIPCHAN >/dev/null 2>/dev/null
+svdrpsend -p 2101 chan $VDRCHAN >/dev/null 2>/dev/null
