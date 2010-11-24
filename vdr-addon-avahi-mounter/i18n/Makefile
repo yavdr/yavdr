@@ -1,7 +1,7 @@
 ### Internationalization (I18N):
 
 PODIR     = ./
-LOCALEDIR = $(DESTDIR)/usr/share/vdr-addon-avahi-mounter/locale
+LOCALEDIR = $(DESTDIR)/usr/share/locale
 LOCDIR    = $(PREFIX)/share/locale
 I18Npo    = $(wildcard $(PODIR)/*.po)
 I18Nmsgs  = $(addprefix $(LOCALEDIR)/, $(addsuffix /LC_MESSAGES/vdr-addon-avahi-mounter.mo, $(notdir $(foreach file, $(I18Npo), $(basename $(file))))))
