@@ -11,6 +11,7 @@ import threading
 # import functools
 import time
 import os
+import sys
 import subprocess
 import avahi
 import gobject
@@ -18,6 +19,7 @@ import dbus
 import socket
 import syslog
 import gettext
+import ConfigParser
 from syslog import *
 from dbus import DBusException
 from dbus.mainloop.glib import DBusGMainLoop
@@ -228,11 +230,32 @@ class StaticMounter:
 		except OSError as (errno, strerror):
 			syslog("unable to mount: %s" % strerror)
 
+class Config:
+	def __init__(self):
+		self.default_config = '/etc/init/avahi-mounter'
+		self.user_config = '/var/lib/vdr/.avahi-mounter'
+		self.config = ConfigParser.ConfigParser()
+		self.config.read([self.default_config, self.user_config])
+		syslog("[base].enabled = %s" % self.get("base", "enabled"))
+		if self.config.getboolean("base", "enabled") is not True:
+			syslog("avahi-mounter is disabled")
+			sys.exit()
+
+	def get(self, section, key):
+		try:
+			return self.config.get(section, key)
+		except ConfigParser.NoSectionError or ConfigParser.NoOptionError:
+			syslog("request for non-existing option: [%s].%s" % section, key)
+
+
 # initialize gettext
 gettext.install('vdr-addon-avahi-mounter', '/usr/share/locale', unicode=1)
 
 # initialize logging
 openlog('avahi-mounter', LOG_PID, LOG_USER)
+
+# load config options
+config = Config()
 
 # establish static mounts
 staticMounter = StaticMounter()

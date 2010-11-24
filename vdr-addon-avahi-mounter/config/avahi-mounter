@@ -1,0 +1,6 @@
+[base]
+enabled=1
+
+[dir]
+media_dir=/media
+video_dir=/srv/vdr/video.00
