@@ -9,6 +9,6 @@ install:
 	@mkdir -p $(DESTDIR)/usr/bin
 	@cp piponoff pipswap $(DESTDIR)/usr/bin
 	@mkdir -p $(DESTDIR)/etc/init
-	@cp vdr-pip.conf $(DESTDIR)/etc/init
+	@cp vdr-pip.conf pipswap.conf $(DESTDIR)/etc/init
 
 clean:
