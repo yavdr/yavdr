@@ -1,2 +1,2 @@
-        <command name=<?cs call:quote(_("PIP on/off")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=piponoff &amp;> /dev/null " />
-        <command name=<?cs call:quote(_("PIP swap")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=pipswap &amp;> /dev/null " />
+        <command name=<?cs call:quote(_("PIP on/off")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=vdr-pip &amp;> /dev/null " />
+        <command name=<?cs call:quote(_("PIP swap")) ?> execute="/usr/bin/pipswap &amp;> /dev/null " />
