@@ -17,6 +17,7 @@ $(INSTALL):
 	mkdir -p $(DESTDIR)/usr/bin
 	mkdir -p $(DESTDIR)/etc/init
 	mkdir -p $(DESTDIR)/etc/avahi/services
+	mkdir -p $(DESTDIR)/var/lib/vdr
 	install -m 700 avahi-mounter $(DESTDIR)/usr/bin
 	install avahi-mounter.conf $(DESTDIR)/etc/init
 	install -m 700 services/* $(DESTDIR)/etc/avahi/services
