@@ -22,7 +22,7 @@ $(INSTALL):
 	install avahi-mounter.conf $(DESTDIR)/etc/init
 	install -m 700 services/* $(DESTDIR)/etc/avahi/services
 	install -m 500 config/avahi-mounter $(DESTDIR)/etc/default
-	install -o vdr -g vdr -m 500 config/.avahi-mounter $(DESTDIR)/var/lib/vdr
+	install -m 500 config/.avahi-mounter $(DESTDIR)/var/lib/vdr
 
 $(CLEAN):
 	$(MAKE) -C $(@:-clean=) clean
