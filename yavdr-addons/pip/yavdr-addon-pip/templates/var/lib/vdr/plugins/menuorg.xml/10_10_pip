@@ -1,2 +1,0 @@
-        <command name="PIP on/off" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=piponoff &amp;> /dev/null " />
-        <command name="PIP swap" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=pipswap &amp;> /dev/null " />
