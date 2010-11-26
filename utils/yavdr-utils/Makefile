@@ -1,4 +1,4 @@
-SUBDIRS = common db-utils process-template signal-event yavdrweb-ng dvb-test
+SUBDIRS = common db-utils process-template signal-event dvb-test
 .PHONY: $(SUBDIRS)
 
 ALL = $(addsuffix -all,$(SUBDIRS))
@@ -23,8 +23,7 @@ $(INSTALL):
 	install -m 700 change-vdr-uid $(DESTDIR)/usr/sbin
 	install -m 700 create-initial-database $(DESTDIR)/usr/sbin
 	install -m 700 yavdr-post-install $(DESTDIR)/usr/sbin
-	install -m 700 net-utils/avahi-mounter	$(DESTDIR)/usr/bin
-	install misc/tntnet.conf	$(DESTDIR)/etc/tntnet
+	install -m 700 net-utils/avahi-mounter	$(DESTDIR)/usr/bin	
 
 $(CLEAN):
 	$(MAKE) -C $(@:-clean=) clean
