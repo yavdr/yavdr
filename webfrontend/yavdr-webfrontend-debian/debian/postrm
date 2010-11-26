@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ remove = "$1" ]; then 
+   dpkg-divert --package yavdr-webfrontend --remove --rename \
+      --divert /etc/tntnet/tntnet.conf.dontremove /etc/tntnet/tntnet.conf
+fi
