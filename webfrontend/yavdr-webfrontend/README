@@ -1,4 +1,4 @@
-yaVDR-utils Readme
+yaVDR-webfrontend Readme
 ---------------------------------------
 
 "yet another VDR" (yaVDR) is a Linux distribution focussed on Klaus Schmidingers Video Disk Recorder and based on Ubuntu 9.10 i386.
@@ -40,6 +40,7 @@ The developers of the yaVDR project are (in alphabetical order):
     * Holger Reichelt
     * Volker Richert
     * Holger Schvestka
+    * Marco Scholl
 
 team(at)yavdr.org
 
