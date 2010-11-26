@@ -1,0 +1,4 @@
+<script type="text/javascript" src="/static/locale/en.js"></script>
+<?cs if:webfrontend.language != "en" ?><script type="text/javascript" src="/static/locale/<?cs var:webfrontend.language ?>.js"></script><?cs /if ?>
+
+<script type="text/javascript" src="/static/language-handling.js"></script>

@@ -1,0 +1,108 @@
+<%pre>
+#include <stdio.h>
+#include <time.h>
+#include <string>
+#include <cstring>
+#include <jsoncpp/json.h>
+#include <time.h>
+
+extern "C" {
+#include <svdrp.h>
+}
+
+using namespace std;
+</%pre><& authenticate ><%cpp>
+	reply.setHeader ("Cache-Control", "no-cache", true);
+	reply.setHeader ("Content-Type", "application/json", true);
+
+	Json::Value json;
+
+	json["metaData"]["root"]  = "data";
+	json["metaData"]["idProperty"]  = "id";
+	json["metaData"]["totalProperty"]  = "total";
+
+	json["metaData"]["fields"][0u]["name"] = "id";
+	json["metaData"]["fields"][0u]["type"] = "integer";
+
+	json["metaData"]["fields"][1u] = "channel";
+	json["metaData"]["fields"][2u] = "name";
+
+  json["metaData"]["fields"][3u]["name"] = "first_date";
+	json["metaData"]["fields"][3u]["type"] = "date";
+
+	json["metaData"]["fields"][4u]["name"] = "is_active";
+	json["metaData"]["fields"][4u]["type"] = "bool";
+
+	json["metaData"]["fields"][5u]["name"] = "is_instant";
+	json["metaData"]["fields"][5u]["type"] = "bool";
+
+	json["metaData"]["fields"][6u]["name"] = "is_recording";
+	json["metaData"]["fields"][6u]["type"] = "bool";
+
+	json["metaData"]["fields"][7u]["name"] = "repeating";
+	json["metaData"]["fields"][7u]["type"] = "bool";
+
+	json["metaData"]["fields"][8u]["name"] = "use_vps";
+	json["metaData"]["fields"][8u]["type"] = "bool";
+
+	json["metaData"]["fields"][9u]["name"] = "lifetime";
+	json["metaData"]["fields"][9u]["type"] = "integer";
+
+	json["metaData"]["fields"][10u]["name"] = "priority";
+	json["metaData"]["fields"][10u]["type"] = "integer";
+
+  json["metaData"]["fields"][11u]["name"] = "start";
+	json["metaData"]["fields"][11u]["type"] = "date";
+	
+	json["metaData"]["fields"][12u] = "stop";
+
+	svdrp_t *svdrp;
+
+	svdrp = svdrp_open("192.168.178.23", 2004, SVDRP_DEFAULT_TIMEOUT, SVDRP_MSG_VERBOSE);
+	if(svdrp_is_connected(svdrp)) {
+		int convert_time = 0;
+		struct tm tm = {0};
+		svdrp_timer_t timer;
+		int timer_id = 0;
+		int ret = 0;
+		char time_str[256];
+		int option = -1;
+		char *start;
+
+		int i = 0;
+
+		while (ret = svdrp_get_timer(svdrp, timer_id+1, &timer) == SVDRP_OK) {
+			Json::Value timerStore;
+
+      // todo build start and end datetime
+      start = timer.first_date;
+      strcat(start, " 00:00");
+
+			timerStore["id"] = timer.id;
+			timerStore["channel"] = timer.channel;
+			timerStore["first_date"] = timer.first_date;
+			timerStore["start"] = start;
+			timerStore["stop"] = timer.stop;
+			timerStore["repeating"] = timer.repeating;
+			timerStore["is_active"] = timer.is_active;
+			timerStore["is_recording"] = timer.is_recording;
+			timerStore["is_instant"] = timer.is_instant;
+			timerStore["use_vps"] = timer.use_vps;
+			timerStore["priority"] = timer.priority;
+			timerStore["lifetime"] = timer.lifetime;
+			timerStore["name"] = timer.file;
+			//timerStore["data"] = timer.data;
+
+			json["data"][i++] = timerStore;
+			timer_id++;
+		}
+		svdrp_close(svdrp);
+		json["total"] = timer_id;
+	} else {
+		json["total"] = 0;
+		json["data"] = "";
+	}
+
+	reply.out() << json;
+
+</%cpp>

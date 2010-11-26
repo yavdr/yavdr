@@ -1,0 +1,13 @@
+
+<script type="text/javascript" src="/ext/adapter/ext/ext-base<?cs if:webfrontend.devmode == "1" ?>-debug<?cs /if ?>.js"></script>
+<script type="text/javascript" src="/ext/ext-all<?cs if:webfrontend.devmode == "1" ?>-debug<?cs /if ?>.js"></script>
+<!-- TODO: only use those parts of ext that a really used by this application. saves a lot of http traffic -->
+
+<script>
+Ext.BLANK_IMAGE_URL = '/ext/resources/images/default/s.gif';
+var yavdrwebGlobalInfo = {
+    user : "unknown",  // to be def by axjax
+    lang : "<?cs var:webfrontend.language ?>",
+    devmode : "<?cs var:webfrontend.devmode ?>"
+};
+</script>

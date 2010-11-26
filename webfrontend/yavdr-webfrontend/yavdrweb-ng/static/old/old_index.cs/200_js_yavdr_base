@@ -1,0 +1,42 @@
+<!-- yavdrweb js -->
+<script type="text/javascript" src="/static/menumanager.js"></script>
+
+<!-- miframe-->
+<script type="text/javascript" src="/static/miframe.js"></script>
+
+<!-- basic-->
+<script type="text/javascript" src="/static/base.js"></script>
+<script type="text/javascript" src="/static/dpkg.js"></script>
+
+<!-- help -->
+<script type="text/javascript" src="/static/config_tabs/lirc.js"></script>
+<script type="text/javascript" src="/static/config_tabs/inputlirc.js"></script>
+<script type="text/javascript" src="/static/config_tabs/irserver.js"></script>
+
+<!-- vdr -->
+<script type="text/javascript" src="/static/config_tabs/vdr-frontend.js"></script>
+<script type="text/javascript" src="/static/config_tabs/vdr-upload-config.js"></script>
+<script type="text/javascript" src="/static/config_tabs/shutdown.js"></script>
+<script type="text/javascript" src="/static/config_tabs/lifeguard.js"></script>
+<script type="text/javascript" src="/static/config_tabs/packages.js"></script>
+<script type="text/javascript" src="/static/config_tabs/channels.js"></script>
+
+<!-- system -->
+<script type="text/javascript" src="/static/config_tabs/remote.js"></script>
+<script type="text/javascript" src="/static/config_tabs/sound.js"></script>
+<script type="text/javascript" src="/static/config_tabs/timeout.js"></script>
+<script type="text/javascript" src="/static/config_tabs/x11.js"></script>
+<script type="text/javascript" src="/static/config_tabs/system.js"></script>
+<script type="text/javascript" src="/static/config_tabs/network.js"></script>
+<script type="text/javascript" src="/static/config_tabs/web-frontend.js"></script>
+
+<!-- demo -->
+
+<!-- diagnose -->
+<script type="text/javascript" src="/static/config_tabs/diagnose.js"></script>
+
+<!-- dev -->
+
+
+<!-- /yavdrweb js -->
+

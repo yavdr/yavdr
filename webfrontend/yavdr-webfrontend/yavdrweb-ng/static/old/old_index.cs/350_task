@@ -1,0 +1,42 @@
+<script>
+var taskRunner = null;
+check = function() {
+    Ext.Ajax.request({
+        url: 'get_time',
+        timeout: 5000,
+        method: 'GET',
+        success: function(xhr) {
+    		var data = Ext.util.JSON.decode( xhr.responseText );
+    		if (taskRunner.offline) {
+    			taskRunner.interval = 5000;
+        		taskRunner.offline = false;
+        		Ext.getCmp('webfrontend').enable();
+        	}
+        },
+        failure: function(xhr) {
+        	switch (xhr.status) {
+        	case -1: // timeout -> ignore
+        		break;
+        	default:
+	        	if (!taskRunner.offline) {
+	            	taskRunner.interval = 30000;
+	        		taskRunner.offline = true;
+	        		alert('VDR seams to be switched off or webserver is stopped.');
+	        		Ext.getCmp('webfrontend').disable();
+	        	}
+        	}
+        }
+    });
+} 
+
+if (yavdrwebGlobalInfo.devmode != "1") {
+	Ext.onReady(function() {
+	    // equivalent using TaskMgr
+		taskRunner = Ext.TaskMgr.start({
+	        run: check,
+	        interval: 5000,
+	        offline: false
+	    });
+	});
+}
+</script>
