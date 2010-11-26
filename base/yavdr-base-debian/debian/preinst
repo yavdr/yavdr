@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ install = "$1" -o upgrade = "$1" ]; then 
+   
+   signal-event base-migration   
+
+fi  
+
