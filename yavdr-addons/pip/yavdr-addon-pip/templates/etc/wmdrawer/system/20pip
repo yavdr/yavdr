@@ -1,2 +1,2 @@
-(PIP on/off)               (yavdr_toggle_frontend.gif)     (/usr/bin/piponoff)
-(PIP swap channels)        (yavdr_toggle_taskbar.gif)      (/usr/bin/pipswap)
+(PIP on/off)               (yavdr_pip_onoff.gif)     (/usr/share/vdr/menuorg-appswitcher standalone=no app=vdr-pip)
+(PIP swap channels)        (yavdr_pip_swap.gif)      (/usr/share/vdr/menuorg-appswitcher standalone=no app=pipswap)

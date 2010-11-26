@@ -1,3 +1,0 @@
-#!/bin/bash
-
-start vdr-pip 2>/dev/null >/dev/null || stop vdr-pip >/dev/null
