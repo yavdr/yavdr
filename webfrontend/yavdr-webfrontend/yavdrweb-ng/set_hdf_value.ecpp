@@ -4,10 +4,10 @@
 #include <ctype.h>
 
 extern "C" {
-#include "db-utils/dbset.h"
+#include <yavdr/db-utils/dbset.h>
 };
 
-#include "common.h"
+#include <yavdr/common.h>
 
 using namespace std;
 </%pre><& authenticate ><%args>
