@@ -1,4 +1,5 @@
 common/make_dirs.h	usr/include/yavdr/common
 yavdrweb-ng/auth.h	usr/include/yavdr/yavdrweb-ng
 common.h		usr/include/yavdr
+db-utils/dbset.h	usr/include/yavdr/db-utils
 
