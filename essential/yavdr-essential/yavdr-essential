@@ -81,6 +81,7 @@ xserver-xorg-video-vesa
 yavdr-startup
 yavdr-utils
 yavdr-base
+yavdr-webfrontend
 vdr-addon-avahi-mounter
 vdr-skins-anthra
 xterm
