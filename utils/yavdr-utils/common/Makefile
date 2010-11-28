@@ -11,3 +11,5 @@ clean:
 	@rm -rf *.o *.a
 
 install:
+	@mkdir -p $(DESTDIR)/usr/lib/yavdr
+	@cp libyavdutils.a $(DESTDIR)/usr/lib/yavdr
