@@ -12,7 +12,7 @@
 #include <ClearSilver/ClearSilver.h>
 
 #include "common.h"
-#include "make_dirs.h"
+#include "common/make_dirs.h"
 
 #define BACKUPCMD "[ -f %s ] && mkdir -p %s%s && cp %s %s%s/$(date +%%Y%%m%%d%%H%%M%%S)"
 #define MAX_DATA_ENTRIES 100
