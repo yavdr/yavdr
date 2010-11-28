@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "../common/make_dirs.h"
+#include <yavdr/make_dirs.h>
 
 using namespace std;
 </%pre><& authenticate ><%args>

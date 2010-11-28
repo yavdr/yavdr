@@ -14,6 +14,7 @@ $(ALL):
 
 $(INSTALL):
 	$(MAKE) -C $(@:-install=) install
+	mkdir -p $(DESTDIR)/etc/tntnet
 	install misc/tntnet.conf	$(DESTDIR)/etc/tntnet
 
 $(CLEAN):
