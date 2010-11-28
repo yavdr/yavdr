@@ -2,7 +2,7 @@ Source: yavdr-webfrontend
 Section: misc
 Priority: extra
 Maintainer: Gerald Dachs <gda@dachsweb.de>
-Build-Depends: debhelper (>= 7.0.50~), libtntnet-dev, libpam0g-dev, flex, libx11-dev, nvidia-settings, libxext-dev, libjsoncpp-dev, libboost-dev, libboost-regex-dev, libsvdrp-dev, yavdr-utils-dev
+Build-Depends: debhelper (>= 7.0.50~), libtntnet-dev, libpam0g-dev, flex, libx11-dev, nvidia-settings, libxext-dev, libjsoncpp-dev, libboost-dev, libboost-regex-dev, libsvdrp-dev, yavdr-utils-dev, clearsilver-dev
 Standards-Version: 3.8.4
 Homepage: http://yavdr.origo.ethz.ch/
 
