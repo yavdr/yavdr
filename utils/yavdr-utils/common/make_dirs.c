@@ -4,7 +4,7 @@
 #include <sys/stat.h>                                                                                            
 #include <unistd.h> 
 #include <stdlib.h> 
-#include <yavdr/make_dirs.h>
+#include "make_dirs.h"
 
 int make_dirs(const char *FileName)
 {
