@@ -1,9 +1,9 @@
 CFLAGS+=-fPIC
 
-all: libyavdutils.a
+all: libyavdrutils.a
 
 
-libyavdutils.a: make_dirs.o
+libyavdrutils.a: make_dirs.o
 	rm -f $@
 	ar cq $@ $^
 
@@ -14,4 +14,4 @@ install:
 	@mkdir -p $(DESTDIR)/usr/include/yavdr
 	@cp make_dirs.h $(DESTDIR)/usr/include/yavdr
 	@mkdir -p $(DESTDIR)/usr/lib/yavdr
-	@cp libyavdutils.a $(DESTDIR)/usr/lib/yavdr
+	@cp libyavdrutils.a $(DESTDIR)/usr/lib/yavdr
