@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ install = "$1" -o upgrade = "$1" ]; then 
+   dpkg-divert --package vdr-addon-avahi-mounter --remove --rename \
+      --divert /usr/bin/avahi-mounter.dont-remove /usr/bin/avahi-mounter
+   dpkg-divert --package vdr-addon-avahi-mounter --remove --rename \
+      --divert /etc/init/avahi-mounter.conf.dont-remove /etc/init/avahi-mounter.conf
+fi  
+
+#DEBHELPER#
+
