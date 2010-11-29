@@ -126,7 +126,12 @@ class Mount:
 	def __init__(self, host, path, subtype):
 		syslog("Mount created")
 		self.remote = host + ":" + path
-		self.media = "/media/"
+		self.media = config.get('dir','media')
+		if self.media is None:
+			self.media = "/media"
+		self.video = config.get('dir','vdr')
+		if self.video is None:
+			self.video = "/srv/vdr/video.00"
 		self.subtype = subtype
 		if subtype == "vdr":
 			self.name = _("Recordings_on_")
@@ -139,8 +144,8 @@ class Mount:
 		else:
 			self.name = _("Miscellaneous_on_")
 		self.name += host.split('.')[0]
-		self.local = self.media + self.name
-		self.vdr = "/srv/vdr/video.00/" + self.name
+		self.local = self.media + '/' + self.name
+		self.vdr = self.video + '/' + self.name
 
 	def create(self):
 		syslog("create")
@@ -199,7 +204,10 @@ class Mount:
 class StaticMounter:
 	def __init__(self):
 		self.hdf_path = "system.net.media.video"
-		self.vdr = "/srv/vdr/video.00"
+		self.vdr = config.get('dir','vdr')
+		if self.vdr is None:
+			self.vdr = "/srv/vdr/video.00"
+		syslog("mount static to %s" % self.vdr)
 
 	def __call__(self):
 		for i in range(1,999):
@@ -232,20 +240,24 @@ class StaticMounter:
 
 class Config:
 	def __init__(self):
-		self.default_config = '/etc/init/avahi-mounter'
-		self.user_config = '/var/lib/vdr/.avahi-mounter'
+		self.values = {}
 		self.config = ConfigParser.ConfigParser()
-		self.config.read([self.default_config, self.user_config])
-		syslog("[base].enabled = %s" % self.get("base", "enabled"))
+		self.config.readfp(open('/etc/default/avahi-mounter'))
+		self.config.read(['/var/lib/vdr/.avahi-mounter',
+				  os.path.expanduser('~vdr/.avahi-mounter')])
 		if self.config.getboolean("base", "enabled") is not True:
 			syslog("avahi-mounter is disabled")
 			sys.exit()
+		self.vdr = self.get('dir','vdr')
 
 	def get(self, section, key):
 		try:
-			return self.config.get(section, key)
+			idx = "%s_%s" % (section, key)
+			if not idx in self.values:
+				self.values[idx] = self.config.get(section, key)
+			return self.values[idx]
 		except ConfigParser.NoSectionError or ConfigParser.NoOptionError:
-			syslog("request for non-existing option: [%s].%s" % section, key)
+			syslog("request for non-existing option: [%s].%s" % (section, key))
 
 
 # initialize gettext
