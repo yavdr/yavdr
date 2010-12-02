@@ -6,12 +6,27 @@
 #include <jsoncpp/json.h>
 #include <time.h>
 
+#include <algorithm>
+#include <vector>
+
 extern "C" {
-#include <svdrp.h>
+	#include <svdrp.h>
 }
 
 using namespace std;
-</%pre><& authenticate ><%cpp>
+
+</%pre><& authenticate ><%shared>
+
+typedef struct yavdr_timer_s {
+    time_t timestamp;
+    svdrp_timer_t timer;
+} yavdr_timer_t;
+
+bool compareTimer (yavdr_timer_t i, yavdr_timer_t j) {
+	return (i.timestamp<j.timestamp);
+}
+
+</%shared><%cpp>
 	reply.setHeader ("Cache-Control", "no-cache", true);
 	reply.setHeader ("Content-Type", "application/json", true);
 
@@ -27,7 +42,7 @@ using namespace std;
 	json["metaData"]["fields"][1u] = "channel";
 	json["metaData"]["fields"][2u] = "name";
 
-  json["metaData"]["fields"][3u]["name"] = "first_date";
+	json["metaData"]["fields"][3u]["name"] = "first_date";
 	json["metaData"]["fields"][3u]["type"] = "date";
 
 	json["metaData"]["fields"][4u]["name"] = "is_active";
@@ -51,37 +66,62 @@ using namespace std;
 	json["metaData"]["fields"][10u]["name"] = "priority";
 	json["metaData"]["fields"][10u]["type"] = "integer";
 
-  json["metaData"]["fields"][11u]["name"] = "start";
+	json["metaData"]["fields"][11u]["name"] = "start";
 	json["metaData"]["fields"][11u]["type"] = "date";
 	
 	json["metaData"]["fields"][12u] = "stop";
 
 	svdrp_t *svdrp;
 
-	svdrp = svdrp_open("192.168.178.23", 2004, SVDRP_DEFAULT_TIMEOUT, SVDRP_MSG_VERBOSE);
+	svdrp = svdrp_open("192.168.6.253", 6419, SVDRP_DEFAULT_TIMEOUT, SVDRP_MSG_VERBOSE);
 	if(svdrp_is_connected(svdrp)) {
-		int convert_time = 0;
 		struct tm tm = {0};
-		svdrp_timer_t timer;
+		struct tm * timeinfo;
+
+		yavdr_timer_t *yaTimer;
 		int timer_id = 0;
 		int ret = 0;
 		char time_str[256];
 		int option = -1;
 		char *start;
+		time_t ts;
 
 		int i = 0;
 
-		while (ret = svdrp_get_timer(svdrp, timer_id+1, &timer) == SVDRP_OK) {
-			Json::Value timerStore;
+		std::vector<yavdr_timer_t> vec;
 
-      // todo build start and end datetime
-      start = timer.first_date;
-      strcat(start, " 00:00");
+		yaTimer = new yavdr_timer_t; //malloc(sizeof yavdr_timer_t);
+
+		while (ret = svdrp_get_timer(svdrp, timer_id+1, &(yaTimer->timer)) == SVDRP_OK) {
+
+			if (yaTimer->timer.first_date != NULL) {
+				strptime(yaTimer->timer.first_date, "%Y-%m-%d", &tm);
+				ts = mktime(&tm);
+			} else {
+				ts = time(NULL);
+			}
+
+			printf(" i: %s \n ", asctime(localtime(&ts)));
+
+			string start = string(yaTimer->timer.start);
+			string stop = string(yaTimer->timer.stop);
+
+			ts += atoi(start.substr(0,2).c_str()) * 3600 + atoi(start.substr(2,2).c_str()) * 60;
+			printf(" i: %s \n ", asctime(localtime(&ts)));
+			yaTimer->timestamp = ts;
+
+			vec.push_back(*yaTimer);
+
+/*			Json::Value timerStore;
 
 			timerStore["id"] = timer.id;
 			timerStore["channel"] = timer.channel;
-			timerStore["first_date"] = timer.first_date;
-			timerStore["start"] = start;
+			if (timer.first_date == NULL) {
+				timerStore["first_date"] = NULL;
+			} else {
+				timerStore["first_date"] = timer.first_date;
+			}
+			timerStore["start"] = timer.start;
 			timerStore["stop"] = timer.stop;
 			timerStore["repeating"] = timer.repeating;
 			timerStore["is_active"] = timer.is_active;
@@ -93,10 +133,14 @@ using namespace std;
 			timerStore["name"] = timer.file;
 			//timerStore["data"] = timer.data;
 
-			json["data"][i++] = timerStore;
+			json["data"][i++] = timerStore;*/
 			timer_id++;
+			yaTimer = new yavdr_timer_t;
 		}
+
+		std::sort(vec.begin(), vec.end(), compareTimer );
 		svdrp_close(svdrp);
+		//json["data"] = vec;
 		json["total"] = timer_id;
 	} else {
 		json["total"] = 0;
