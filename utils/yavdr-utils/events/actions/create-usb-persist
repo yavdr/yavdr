@@ -1,4 +1,0 @@
-#!/bin/bash
-
-process-template --mode=750 /usr/bin/yavdr-persist
-
