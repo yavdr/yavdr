@@ -41,7 +41,7 @@ const char *files[] = {
 
     "/etc/asound.conf",
     
-    "/proc/acpi/sleep"
+    "/sys/power/state"
 };
 
 int findex = 0;

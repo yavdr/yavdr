@@ -296,28 +296,28 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
   },
   disableUnavailables: function() {
     Ext.Ajax.request({
-      url: '/admin/get_file_content?file=/proc/acpi/sleep&puretext=true',
+      url: '/admin/get_file_content?file=/sys/power/state&puretext=true',
       method: 'GET',
       scope: this,
       success: function(xhr) {
         // field references
         var allowed = xhr.responseText;
 
-        if (allowed.length > 0) {
-          this.shutdownStore.each(function(record) {
-            type = record.data.key
-            if (type == 'reboot' || type == 'poweroff') {
-              return;
-            }
+        this.shutdownStore.each(function(record) {
+          type = record.data.key
 
-            if (allowed.indexOf(type.toUpperCase()) < 0) {
-              record.data.title = record.data.title + " (not available)";
-              record.data.disabled = true;
-            }
-          });
+          var available = true;
+          if(type == 's3' && !allowed.match(/mem/)) available = false;
+          if(type == 's4' && !allowed.match(/disk/)) available = false;
 
-          this.shutdownSelectiorView.refresh();
-        }
+          if(!available) {
+            record.data.title = record.data.title + " (not available)";
+            record.data.disabled = true;
+          }
+
+        });
+
+        this.shutdownSelectiorView.refresh();
         this.doLoad.call(this);
       }
     });
