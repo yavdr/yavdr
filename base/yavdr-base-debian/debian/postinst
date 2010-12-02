@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case "$1" in
+    configure)
+        chown -R vdr:vdr /etc/xine
+
+        ;;
+esac
+
+
+#DEBHELPER#
+
+exit 0
