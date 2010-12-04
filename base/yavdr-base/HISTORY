@@ -1,0 +1,108 @@
+yaVDR-startup release history
+---------------------------------------
+
+-----------------
+Version 0.3.1 (xx.xxx.xxxxx)
+-----------------
+
+NEW 
+- udisks based usb automounter
+- copy epg images into recording when available
+- correct directories on move/rename with multiple video.0x dirs
+- create keymap for xbmc to make it behave similar to vdr 
+- create simple lirc mapping on request 
+- simplify upstart scripts ( remove start-*.sh scripts)
+- svdrpd integration
+
+Webfrontend : 
+- complete web frontend overhaul
+- enable refresh rate switching in XBMC
+- disable usb-wakeup checkbox
+- epg charset override : ISO-8859-9
+
+
+-----------------
+Version 0.3.0 (18.Oct.2010)
+-----------------
+
+- bugfix fsck on shutdown
+- bugfix inputlirc (thx to kris)
+- bugfix nvidia-overscan
+- extended channellist in webfrontend
+- nfs, some bugfixes
+- fixed headless mode (new : vdr-plugin-control in headless mode)
+
+NEW
+
+- autogenerate custom EDID
+- disabled webfrontend if vdr is disappeared
+- changed pvr-client in xbmc to vnsi (default enabled)
+- plugable webfrontend
+- hidecursor-patch in sxfe (replaces unclutter)
+- yavdrpackage installer (install yavdr-addons and vdr-plugins over webfrontend)
+- configurable lifeguard in webfrontend
+- extended file upload over webfrontend (new: lircd.conf, lircmap.xml)
+- changed s3 to uswsusp (s2ram)
+- added autodetection usb-wakeup for remotes
+- default vdr-skin : anthra (thx tomas @ vdrportal)
+- added remove-marks (noad)
+- fixed commands.conf
+- yavdr-hardware-sundtek (driver install, and configurable in yavdr-webfrontend)
+- yavdr-addons :
+  * pidgin
+  * chromium 
+  * claws-mail
+  * dvdrip
+  * asunder
+  * mediathek
+  * performous
+  * semsix
+  * simfy
+  * tuxracer
+  * vlc
+  * youtube
+- yavdr launcher + taskbar (start/stop addons)
+- remove externalplayer-plugin (redundant)
+- start/stop applications over menuorg-plugin
+- dvbmon (dvbmon_helper : use udev and upstart to detect when all devices are loaded)
+- process-template is now i18n aware - menuorg.xml will be generated in local language (if available)
+
+-----------------
+Version 0.2.0 (02.May.2010)
+-----------------
+- update to ubuntu lucid
+NEW
+- hard shutdown with double press on power button
+- fsck on shutdown
+FIX
+- xterm starts now as system owner
+-----------------
+Version 0.1.1 (18.Feb.2010)
+-----------------
+startup with more flexible network interface name 
+cpufrequtils didn't get enabled,
+start-xine bugfix (547),
+added missing autofs dependency
+added usb-wakeup.conf without usb for wol
+added hack to solve live tv problem with xbmc
+alsa-utils didn't get startet
+-----------------
+4.Feb.2010
+-----------------
+fixed min cpu freq for k8
+NEW lirc upstart 
+NEW setserial-minimal upstart (for lirc)
+FIX lirc - serial configuration, several bugfixes
+FIX lirc - blacklist for ati-remote works now
+NEW lirc - changes are effective immediatly now
+FIX unclutter reseting cursor position
+added gpl 2 licence
+NEW openbox as windowmanager
+NEW autoconfig. graphtft
+NEW added xterm to applications
+NEW vdpauinfo check, now yavdr is usable without vdpau
+-----------------
+15.Jan.2010 
+-----------------
+initial release
+
