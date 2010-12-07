@@ -47,7 +47,8 @@ reply.setHeader ("Cache-Control", "no-cache", false);
 if (command == "install" ||
         command == "update" ||
         command == "remove" ||
-        command == "autoremove")
+        command == "autoremove" ||
+        command == "clean")
 {
     string cmd = "";
     bool lockNeeded = true;
@@ -62,6 +63,8 @@ if (command == "install" ||
     }
     else if (command == "autoremove")
         cmd = "apt-get -y autoremove";
+    else if (command == "clean")
+        cmd = "apt-get -y clean";
 
     cmd += " 2>&1";
 

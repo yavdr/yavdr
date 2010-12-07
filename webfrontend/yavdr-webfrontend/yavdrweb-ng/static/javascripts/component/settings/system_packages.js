@@ -15,7 +15,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
         region: 'center',
         style: '',
         layout: 'border',
-        title: 'Package Installer',
+        title: _('Package Installer'),
         tbar: [
           {
             text: 'apt-get update',
@@ -28,7 +28,17 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
             icon: '/static/images/icons/dpkg_autoremove.png',
             scope: this,
             handler: this.aptAutoRemove
-          }
+          },
+          {
+              text: 'apt-get clean',
+              icon: '/static/images/icons/dpkg_clean.png',
+              tooltip: {
+                text: _('apt-get clean clears out the local repository of retrieved package file'),
+                title: 'apt-get clean'
+              },
+              scope: this,
+              handler: this.aptClean
+            }
         ],
         items: [this.gridPanel, this.detailPanel]
       })
@@ -48,7 +58,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
       items: [
         {
           scope: this,
-          text: 'Install',
+          text: _('Install'),
           icon: '/static/images/icons/dpkg_install.png',
           disabled: (record.data.installed != 0),
           handler: function() {
@@ -57,7 +67,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
         },
         {
           scope: this,
-          text: 'Remove',
+          text: _('Remove'),
           icon: '/static/images/icons/dpkg_remove.png',
           disabled: (record.data.installed == 0),
           handler: function() {
@@ -66,7 +76,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
         },
         {
           scope: this,
-          text: 'Activate',
+          text: _('Activate'),
           icon: '/static/images/icons/dpkg_enable.png',
           disabled: (record.data.Package.substr(0, 11) != "vdr-plugin-" || record.data.installed == 2 || record.data.installed == 0),
           handler: function() {
@@ -75,7 +85,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
         },
         {
           scope: this,
-          text: 'Deactivate',
+          text: _('Deactivate'),
           icon: '/static/images/icons/dpkg_disable.png',
           disabled: (record.data.Package.substr(0, 11) != "vdr-plugin-" || record.data.installed != 2),
           handler: function() {
@@ -92,6 +102,9 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
   aptAutoRemove: function() {
     YaVDR.DPKG.autoremove(this.reloadPackages, this);
   },
+  aptClean: function() {
+	YaVDR.DPKG.clean(this);
+  },
   initGridEvents: function() {
     // load store only first time
     this.on('render', this.reloadPackages, this, { single: true });
@@ -100,9 +113,9 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
   },
   detailTemplate: function() {
     return new Ext.Template([
-      'Package: {Package}<br/>',
-      'Maintainer: {Maintainer}<br/>',
-      'Description: {Description}<br/>'
+      _('Package') +': {Package}<br/>',
+      _('Maintainer') +': {Maintainer}<br/>',
+      _('Description') +': {Description}<br/>'
     ]);
   },
   updateDetail: function(sm, index, row) {
@@ -135,7 +148,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
       },
       height: 74,
       itemId: 'package-detail',
-      html: 'Please select a package to see additional details.'
+      html: _('Please select a package to see additional details.')
     });
   },
   initGridPanel: function() {
@@ -160,22 +173,22 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
             renderer: this.stateRenderer
           },
           {
-            header: "Package",
+            header: _('Package'),
             width: 180,
             dataIndex: 'Package'
           },
           {
-            header: "Version",
+            header: _('Version'),
             width: 180,
             dataIndex: 'Version'
           },
           {
-            header: "Maintainer",
+            header: _('Maintainer'),
             width: 180,
             dataIndex: 'Maintainer'
           },
           {
-            header: "Description",
+            header: _('Description'),
             width: 1000,
             dataIndex: 'Description'
           }

@@ -70,6 +70,12 @@ Ext.apply(YaVDR.DPKG, {
       callback: callback
     })).show();
   },
+  clean: function(scope) {
+    (new YaVDR.DPKG({
+      scope: scope,
+      command: 'clean'
+    })).show();
+  },
   install: function(package, callback, scope) {
     Ext.Msg.show({
       title:'Install package?',
