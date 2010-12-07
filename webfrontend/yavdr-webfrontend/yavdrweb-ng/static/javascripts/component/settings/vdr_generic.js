@@ -1,21 +1,21 @@
 YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
   itemId: 'settings-vdr-generic',
-  title: 'Settings',
+  title: _('Settings'),
   description: 'Here you can make general setting for and around VDR.',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: 'General Settings',
+        title: _('General Settings'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.VdrGeneric.Frontend
       }),
       new YaVDR.Component.Item({
-        title: 'Lifeguard Monitoring Items',
+        title: _('Lifeguard Monitoring Items'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.VdrGeneric.Lifeguard
       }),
       new YaVDR.Component.Item({
-        title: 'EPG',
+        title: _('EPG'),
         items: new YaVDR.Component.Settings.VdrGeneric.EPG
       })
     ];
@@ -31,7 +31,7 @@ YaVDR.Component.Settings.VdrGeneric.Lifeguard = Ext.extend(YaVDR.Default.Form, {
     this.lifeguard = {
       itemId: 'lifeguard',
       xtype: 'checkboxgroup',
-      fieldLabel: 'Lifeguard',
+      fieldLabel: _('Lifeguard'),
       columns: 2,
       defaults: {
         name: 'values'
@@ -72,7 +72,7 @@ YaVDR.Component.Settings.VdrGeneric.Lifeguard = Ext.extend(YaVDR.Default.Form, {
 
     this.lifeguardHelp = {
       xtype: 'displayfield',
-      value: 'VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown.',
+      value: _('VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown.'),
       labelSeparator: ' '
     };
 
@@ -124,22 +124,22 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
         {
           key: 'xineliboutput',
           title: 'vdr-sxfe@vdr-plugin-xineliboutput',
-          description: 'This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR'
+          description: _('This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR')
         },
         {
           key: 'xine',
           title: 'xine@vdr-plugin-xine',
-          description: 'This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.'
+          description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.')
         },
         {
           key: 'xbmc',
           title: 'XBMC@vdr-plugin-vnsi (experimental)',
-          description: 'If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice.'
+          description: _('If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice.')
         },
         {
           key: 'headless',
           title: 'headless (yaVDR server)',
-          description: 'You can choose this if you don\'t want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards.'
+          description: _('You can choose this if you don\'t want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards.')
         }
       ]
 
@@ -167,7 +167,7 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
     });
 
     this.frontendSelectiorView = new YaVDR.SelectionList({
-      fieldLabel: 'Video Output',
+      fieldLabel: _('Video Output'),
       hiddenField: this.frontendSelectionHidden,
       tpl: this.frontendTpl,
       store: this.frontendStore
@@ -212,7 +212,7 @@ YaVDR.Component.Settings.VdrGeneric.EPG = Ext.extend(YaVDR.Default.Form, {
 				{
 					key: 'ISO-8859-9',
 					title: 'ISO-8859-9',
-					description: 'Override incorrect not DVB compliant EPG Encoding, as send by Sky'
+					description: _('Override incorrect not DVB compliant EPG Encoding, as send by Sky')
 				}
 			]
 		});
@@ -234,7 +234,7 @@ YaVDR.Component.Settings.VdrGeneric.EPG = Ext.extend(YaVDR.Default.Form, {
 		});
 
 		this.charsetOverrideSelectiorView = new YaVDR.SelectionList({
-			fieldLabel: 'Charset override',
+			fieldLabel: _('Charset override'),
 			hiddenField: this.charsetOverrideSelectionHidden,
 			tpl: this.charsetOverrideTpl,
 			store: this.charsetOverrideStore

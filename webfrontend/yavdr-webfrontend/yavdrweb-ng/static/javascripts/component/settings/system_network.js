@@ -5,13 +5,13 @@ YaVDR.Component.Settings.SystemNetwork = Ext.extend(YaVDR.Component, {
     this.items = [
       new YaVDR.Component.Header({
         region: 'north',
-        html: 'Settings'
+        html: _('Settings')
       }),
       new YaVDR.Component.Item({
         region: 'center',
         style: '',
         layout: 'border',
-        title: 'Network',
+        title: _('Network'),
         items: [
           {
             plain: true,
@@ -27,7 +27,7 @@ YaVDR.Component.Settings.SystemNetwork = Ext.extend(YaVDR.Component, {
             margins: '5 0 0 0',
             padding: 6,
             style: 'background-color: #FFF; border: 1px solid #D0D0D0; font-size: 12px;',
-            html: 'You can define Host and shares which should be mounted automatically. You need to key in the shares using "host:/path/to/the/share".'
+            html: _('You can define Host and shares which should be mounted automatically. You need to key in the shares using "host:/path/to/the/share".')
           }
         ]
       })
@@ -136,7 +136,7 @@ YaVDR.Component.Settings.SystemNetwork.NFS = Ext.extend(Ext.grid.GridPanel, {
   addExport: function() {
     var remote = this.getTopToolbar().getComponent('remote');
     if (!remote.getValue()) {
-      remote.markInvalid('Gebe einen Namen an')
+      remote.markInvalid(_('The name is missing'))
     } else {
       var record = new this.store.recordType({netspec: remote.getValue()});
       record.markDirty();

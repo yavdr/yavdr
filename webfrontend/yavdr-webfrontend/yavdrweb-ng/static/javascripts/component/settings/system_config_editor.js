@@ -1,6 +1,7 @@
 YaVDR.Component.Settings.SystemConfigEditor = Ext.extend(YaVDR.Component, {
   itemId: 'settings-system-config-editor',
   layout: 'border',
+  title: _('Settings'),
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Header({
@@ -9,7 +10,7 @@ YaVDR.Component.Settings.SystemConfigEditor = Ext.extend(YaVDR.Component, {
       }),
       {
         region: 'center',
-        title: 'Configuration Editor',
+        title: _('Configuration Editor'),
         frame: true,
         layout: 'fit',
         items: new YaVDR.Component.Settings.SystemConfigEditor.Editor
@@ -57,7 +58,7 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
       {
         xtype: 'tbtext',
         style: "background: url('/static/images/icons/find.png') no-repeat 3px center; text-indent: 22px;",
-        text: 'Choose a file: '
+        text: _('Choose a file:')
       },
       this.fileSelectionField,
       '-',
@@ -66,7 +67,7 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
         disabled: true,
         icon: '/static/images/icons/save.png',
         scope: this,
-        text: 'Save',
+        text: _('Save'),
         handler: this.saveContent
       },
       {
@@ -74,7 +75,7 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
         disabled: true,
         icon: '/static/images/icons/refresh.png',
         scope: this,
-        text: 'Reload',
+        text: _('Reload'),
         handler: this.reloadContent
       },
       {
@@ -82,13 +83,13 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
         disabled: true,
         icon: '/static/images/icons/selection.png',
         scope: this,
-        text: 'Mark content',
+        text: _('Mark content'),
         handler: this.maskContent
       },
       {
         itemId: 'pastebin',
         disabled: true,
-        text: 'Send to PasteBin',
+        text: _('Send to PasteBin'),
         icon: '/static/images/icons/clipboard-paste-document-text.png',
         scope: this,
         handler: this.sendPasteBin

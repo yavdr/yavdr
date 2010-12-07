@@ -1,11 +1,11 @@
 YaVDR.Component.Settings.HwAudio = Ext.extend(YaVDR.Component, {
   itemId: 'settings-hw-audio',
-  description: 'Please select the audio output. Make your choice and press "Save". At saving VDR and the video output will be restarted in order to make your choice activ. ...',
-  title: 'Settings',
+  description: _('Please select the audio output. Make your choice and press "Save". At saving VDR and the video output will be restarted in order to make your choice activ. ...'),
+  title: _('Settings'),
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: 'Audio Settings',
+        title: _('Audio Settings'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.HwAudio.Audio
       })
@@ -28,28 +28,28 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
       data: [
         {
           key: 'analog',
-          title: 'Analog',
-          description: 'Audio output will happen through the speaker/headphone plug'
+          title: _('Analog'),
+          description: _('Audio output will happen through the speaker/headphone plug')
         },
         {
           key: 'spdif',
-          title: 'Digital (Toslink/SPDIF)',
-          description: 'Audio output will happen through Toslink/SPDIF.'
+          title: _('Digital (Toslink/SPDIF)'),
+          description: _('Audio output will happen through Toslink/SPDIF.')
         },
         {
           key: 'hdmi',
-          title: 'HDMI Stereo',
-          description: 'Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets).'
+          title: _('HDMI Stereo'),
+          description: _('Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets).')
         },
         {
           key: 'hdmi+analog',
-          title: 'HDMI-Analog',
-          description: 'Audio output will happen through HDMI and analog at the same time. HDMI will be stereo.'
+          title: _('HDMI-Analog'),
+          description: _('Audio output will happen through HDMI and analog at the same time. HDMI will be stereo.')
         },
         {
           key: 'passthrough',
-          title: 'HDMI Pass Through',
-          description: 'Audio output will happen through HDMI with Pass Through.'
+          title: _('HDMI Pass Through'),
+          description: _('Audio output will happen through HDMI with Pass Through.')
         }
       ]
 
@@ -77,7 +77,7 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
     });
 
     this.soundSelectiorView = new YaVDR.SelectionList({
-      fieldLabel: "Audio Output ",
+      fieldLabel: _("Audio Output"),
       hiddenField: this.soundSelectionHidden,
       tpl: this.soundTpl,
       store: this.store

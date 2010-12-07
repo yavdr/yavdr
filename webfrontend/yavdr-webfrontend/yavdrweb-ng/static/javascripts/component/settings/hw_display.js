@@ -1,11 +1,11 @@
 YaVDR.Component.Settings.HwDisplay = Ext.extend(YaVDR.Component, {
   itemId: 'settings-hw-display',
-  description: 'Here you can configure your display settings.',
+  description: _('Here you can configure your display settings.'),
   title: 'Settings',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: 'Display Settings',
+        title: _('Display Settings'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.HwDisplay.Display
       })
@@ -30,14 +30,14 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
     this.items = [
       {
         itemId: 'basic',
-        title: 'Basic Settings',
+        title: _('Basic Settings'),
         items: [
           {
             disabled: true,
             itemId: 'x11_dualhead',
             name: 'x11_dualhead',
             xtype: 'checkbox',
-            fieldLabel: 'Dual-Head Mode',
+            fieldLabel: _('Dual-Head Mode'),
             boxLabel: 'enabled',
             inputValue: 1,
             listeners: {
@@ -49,7 +49,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
             itemId: 'x11_graphtft',
             name: 'x11_graphtft',
             xtype: 'checkbox',
-            fieldLabel: 'GraphTFT',
+            fieldLabel: _('GraphTFT'),
             boxLabel: 'enabled',
             inputValue: 1,
             disabled: true
@@ -58,7 +58,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       },
       {
         itemId: 'xine',
-        title: 'Xine Settings',
+        title: _('Xine Settings'),
         items: [
           new YaVDR.EasyComboBox({
             itemId: 'deinterlacer_hd',
@@ -70,7 +70,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
               ['temporal'],
               ['temporal_spatial']
             ],
-            fieldLabel: 'Xine HD deinterlacer (Default: bob)',
+            fieldLabel: _('Xine HD deinterlacer (Default: bob)'),
             inputValue: 'bob'
           }),
           new YaVDR.EasyComboBox({
@@ -83,7 +83,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
               ['temporal'],
               ['temporal_spatial']
             ],
-            fieldLabel: 'Xine SD deinterlacer (Default: temporal)',
+            fieldLabel: _('Xine SD deinterlacer (Default: temporal)'),
             inputValue: 'temporal'
           })
         ]
@@ -166,7 +166,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       name: 'freq' + index,
       xtype: 'checkboxgroup',
       columns: 3,
-      fieldLabel: 'Refresh Rate',
+      fieldLabel: _('Refresh rate'),
       itemId: 'frequencies',
       items: checkboxes
     });
@@ -218,7 +218,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
     items.push({
       hideLabel: true,
       xtype: 'displayfield',
-      value: 'Gerät' + ': ' + item.devicename + ', ' + 'modeline' + ': ' + item.current.modeline.x + 'x' + item.current.modeline.y + ' ' + item.current.modeline.name + ' Hz'
+      value: _('device') + ': ' + item.devicename + ', ' + 'modeline' + ': ' + item.current.modeline.x + 'x' + item.current.modeline.y + ' ' + item.current.modeline.name + ' Hz'
     });
 
     items.push({
@@ -232,7 +232,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       itemId: 'primary',
       name: 'primary',
-      fieldLabel: 'primary',
+      fieldLabel: _('primary'),
       inputValue: item.devicename,
       checked: item.primary,
       listeners: {
@@ -246,7 +246,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       disabled: true,
       itemId: 'secondary',
-      name: 'secondary',
+      name: _('secondary'),
       fieldLabel: 'secondary',
       inputValue: item.devicename,
       checked: item.secondary
@@ -276,8 +276,8 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       store: modelines,
       inputValue: 'temporal',
-      emptyText: 'wähle Auflösung',
-      fieldLabel: 'Auflösung',
+      emptyText: _('select resolution'),
+      fieldLabel: _('Resolution'),
       hiddenName: 'modeline' + index,
       value: resolution,
       listeners: {
@@ -303,7 +303,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       keyIncrement: 1,
       minValue: '0',
       maxValue: 255,
-      fieldLabel: 'Nvidia Overscan-Kompensation',
+      fieldLabel: _('Nvidia overscan compensation'),
       useTip: true,
       value: parseInt(item.overscan)
     });
@@ -312,7 +312,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       itemData: item,
       itemId: 'display_' + index,
-      title: 'DISPLAY ' + ((typeof item.displaynumber != 'undefined') ? ':' + item.displaynumber + '.' + item.screen + ' (' + item.name : ' (' + item.name + ' disabled') + ')',
+      title: _('DISPLAY') + ' ' + ((typeof item.displaynumber != 'undefined') ? ':' + item.displaynumber + '.' + item.screen + ' (' + item.name : ' (' + item.name + ' disabled') + ')',
       items: items
     });
 
@@ -386,7 +386,7 @@ YaVDR.DefaultFrequency = Ext.extend(Ext.form.ComboBox, {
   hiddenName: 'dsdasd',
   displayField: 'label',
   itemId: 'defaultfreq',
-  fieldLabel: 'Standard-Fequenz',
+  fieldLabel: _('default frequency'),
   initComponent: function() {
     this.store = new Ext.data.JsonStore({
       idProperty: 'id',
@@ -416,7 +416,7 @@ YaVDR.FrequencyCheckbox = Ext.extend(Ext.form.Checkbox, {
     this.store = this.defaultFrequency.store;
     value = value.substring(value.length - 3, value.length) + this.frequency.id;
 
-    this.boxLabel = this.hz + ' Hz';
+    this.boxLabel = this.hz + ' ' + _('rate');
     this.name = 'freq' + this.index;
     //this.inputValue = value;
     this.inputValue = this.frequency.id;

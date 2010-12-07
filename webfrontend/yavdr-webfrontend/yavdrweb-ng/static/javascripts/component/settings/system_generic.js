@@ -5,21 +5,21 @@ YaVDR.Component.Settings.SystemGeneric = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: 'Webfrontend Language',
+        title: _('Webfrontend language'),
         style: 'margin-bottom: 5px',
         items: [
           new YaVDR.Component.Settings.SystemGeneric.Language
         ]
       }),
       new YaVDR.Component.Item({
-        title: 'Shutdown and wakeup',
+        title: _('Shutdown and wakeup'),
         style: 'margin-bottom: 5px',
         items: [
           new YaVDR.Component.Settings.SystemGeneric.Shutdown
         ]
       }),
       new YaVDR.Component.Item({
-        title: 'Grub',
+        title: _('Grub'),
         items: [
           new YaVDR.Component.Settings.SystemGeneric.Grub
         ]
@@ -39,13 +39,13 @@ YaVDR.Component.Settings.SystemGeneric.Grub = Ext.extend(YaVDR.Default.Form, {
     this.items = [
       new Ext.ux.form.SpinnerField({
         itemId: 'timeout',
-        fieldLabel: "Choose Timeout in seconds:",
+        fieldLabel: _("Choose timeout in seconds:"),
         name: 'value',
         minValue: 0,
         maxValue: 10,
         defaultValue: 0,
-        maxText: "The Maximum is 10.",
-        minText: "The Minimum is 0."
+        maxText: _("The Maximum is 10."),
+        minText: _("The Minimum is 0.")
       })
     ];
 
@@ -123,7 +123,7 @@ YaVDR.Component.Settings.SystemGeneric.Language = Ext.extend(YaVDR.Default.Form,
 
     this.languageSelectiorView = new YaVDR.SelectionList({
       hiddenField: this.languageSelectionHidden,
-      fieldLabel: "Language",
+      fieldLabel: _("Language"),
       tpl: this.languageTpl,
       store: this.store
     });
@@ -164,23 +164,23 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
       data: [
         {
           key: 's3',
-          title: 'Suspend to RAM',
-          description: 'Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR.'
+          title: _('Suspend to RAM'),
+          description: _('Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR.')
         },
         {
           key: 's4',
-          title: 'Fake Suspend to DISK',
-          description: 'Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices'
+          title: _('Fake Suspend to DISK'),
+          description: _('Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices')
         },
         {
           key: 's5',
-          title: 'Shutdown',
-          description: 'This is the classical shutdown.'
+          title: _('Shutdown'),
+          description: _('This is the classical shutdown.')
         },
         {
           key: 'reboot',
-          title: 'reboot PowerOff-kernel',
-          description: 'Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem.'
+          title: _('reboot PowerOff-kernel'),
+          description: _('Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem.')
         }
       ]
 
@@ -198,17 +198,17 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
         {
           key: '',
           title: 'None',
-          description: 'Without timer wakeup.'
+          description: _('Without timer wakeup.')
         },
         {
           key: 'acpi',
           title: 'ACPI',
-          description: 'ACPI timer wakeup. YaVDR default setting.'
+          description: _('ACPI timer wakeup. YaVDR default setting.')
         },
         {
           key: 'nvram',
           title: 'NVRAM',
-          description: 'You need a special nvram configuration to use it.'
+          description: _('You need a special nvram configuration to use it.')
         }
       ]
 
@@ -254,21 +254,21 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
 
     this.shutdownSelectiorView = new YaVDR.SelectionList({
       hiddenField: this.shutdownSelectionHidden,
-      fieldLabel: 'Shutdown method',
+      fieldLabel: _('Shutdown method'),
       tpl: this.shutdownTpl,
       store: this.shutdownStore
     });
 
     this.wakeupMethodSelectiorView = new YaVDR.SelectionList({
       hiddenField: this.wakeupMethodSelectionHidden,
-      fieldLabel: 'Wakeup method',
+      fieldLabel: _('Wakeup method'),
       tpl: this.wakeupMethodTpl,
       store: this.wakeupMethodStore
     });
 
     this.disableUsbWakeupField = new Ext.form.Checkbox({
-      fieldLabel: 'Disable USB-Wakeup',
-      boxLabel: 'Deactivate USB wakeup, for incompatible hardware',
+      fieldLabel: _('Disable USB-Wakeup'),
+      boxLabel: _('Deactivate USB wakeup, for incompatible hardware'),
       name: 'disable_usb',
       inputValue: '1'
     });
