@@ -57,7 +57,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
         autoFill :true,
         hideGroupedColumn: true,
         showGroupName: false,
-        startCollapsed: true,
+        startCollapsed: false,
         groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
       }),
       loadMask: "Lade Kannäle"
