@@ -1,8 +1,11 @@
 #!/bin/sh
 
 if [ install = "$1" -o upgrade = "$1" ]; then 
-   
-   signal-event.real base-migration   
+
+   	signal-event.real base-migration
+
+	dpkg-divert --package yavdr-base --add --rename \
+	--divert /etc/logrotate.conf.dontremove /etc/logrotate.conf   
 
 fi  
 

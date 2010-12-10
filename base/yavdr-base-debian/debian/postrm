@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ remove = "$1" ]; then 
+   dpkg-divert --package yavdr-base --remove --rename \
+      --divert /etc/logrotate.conf.dontremove /etc/logrotate.conf
+fi 
+
+#DEBHELPER#
