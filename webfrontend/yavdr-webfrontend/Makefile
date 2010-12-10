@@ -14,6 +14,9 @@ $(ALL):
 
 $(INSTALL):
 	$(MAKE) -C $(@:-install=) install
+	mkdir -p $(DESTDIR)/usr/share/yavdr
+	for f in events templates; do \
+	cp -pr $$f $(DESTDIR)/usr/share/yavdr; done
 	mkdir -p $(DESTDIR)/etc/tntnet
 	install misc/tntnet.conf	$(DESTDIR)/etc/tntnet
 
