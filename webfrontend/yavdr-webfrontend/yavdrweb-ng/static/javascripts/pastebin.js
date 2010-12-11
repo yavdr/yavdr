@@ -5,6 +5,7 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
   modal: true,
   closable: true,
   id: 'pastebin',
+  maximizable: true,
   title: 'Sende an PasteBin',
   initComponent: function() {
 
@@ -16,6 +17,7 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
       method: 'post',
       defaults: {
         xtype: 'textfield',
+        style: 'font-family: monospace; white-space: pre; font-size: 12px;',
         anchor: '100%'
       },
       items: [
