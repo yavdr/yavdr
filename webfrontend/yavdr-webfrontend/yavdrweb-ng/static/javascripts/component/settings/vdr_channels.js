@@ -480,29 +480,41 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
         items: [
           {
             text: 'Verschiebe in Liste',
+            icon: '/icons/silk/cart_remove.png',
             menu: [
               {
                 text: 'an den Anfang',
+                icon: '/icons/fugue/node-insert-previous.png',
                 scope: this,
                 handler: function() {
                   var selections = this.clipBoardGrid.getSelectionModel().getSelections();
-                  this.clipBoardStore.remove(selections);
-                  this.store.insert(0, selections);
+                  var position = 0;
+                  Ext.each(selections, function(record) {
+                    this.store.insert(position, record);
+                    this.clipBoardStore.remove(record);
+                    position++;
+                  }, this);
                 }
               },
               {
                 text: 'an das Ende',
+                icon: '/icons/fugue/node-insert-next.png',
                 scope: this,
                 handler: function() {
                   var selections = this.clipBoardGrid.getSelectionModel().getSelections();
-                  this.clipBoardStore.remove(selections);
-                  this.store.insert(this.store.getCount(), selections);
+                  var position = this.store.getCount();
+                  Ext.each(selections, function(record) {
+                    this.store.insert(position, record);
+                    this.clipBoardStore.remove(record);
+                    position++;
+                  }, this);
                 }
               }
             ]
           },
           {
             text: this.clipBoardGrid.getSelectionModel().getSelections().length > 1 ? 'Auswahl löschen' : 'Lösche ' + record.data.name,
+            icon: '/icons/silk/delete.png',
             scope: this,
             handler: function() {
               this.clipBoardStore.remove(this.clipBoardGrid.getSelectionModel().getSelections());
@@ -552,11 +564,13 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       tbar: [
         {
           text: 'Neuladen',
+          icon: '/icons/silk/arrow_refresh.png',
           scope: this,
           handler: this.reloadStore
         },
         {
           text: 'Neue Gruppe',
+          icon: '/icons/silk/folder_add.png',
           scope: this,
           handler: this.newGroup
         },
@@ -564,10 +578,12 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
         {
           text: "Zeige channels.conf",
           scope: this,
+          icon: '/icons/silk/page.png',
           handler:this.displayConf
         },
         {
           text: 'Speichern',
+          icon: '/icons/fugue/disk-black.png',
           scope: this,
           handler: this.saveStore
         }
@@ -594,9 +610,11 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
         items: [
           {
             text: 'Verschiebe in Zwischenablage',
+            icon: '/icons/silk/cart_put.png',
             menu: [
               {
                 text: 'an den Anfang',
+                icon: '/icons/fugue/node-insert-previous.png',
                 scope: this,
                 handler: function() {
                   var selections = this.grid.getSelectionModel().getSelections();
@@ -606,6 +624,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
               },
               {
                 text: 'an das Ende',
+                icon: '/icons/fugue/node-insert-next.png',
                 scope: this,
                 handler: function() {
                   var records = this.grid.getSelectionModel().getSelections();
@@ -619,11 +638,13 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
           },
           {
             text: 'Zwischenablage einfügen',
+            icon: '/icons/silk/cart_remove.png',
             disabled: (this.clipBoardStore.getCount() == 0),
             menu: [
               {
                 text: 'vor ' + record.data.name,
                 scope: this,
+                icon: '/icons/fugue/node-insert-previous.png',
                 handler: function() {
                   var position = index;
                   this.clipBoardStore.each(function(record) {
@@ -635,6 +656,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
               },
               {
                 text: 'hinter ' + record.data.name,
+                icon: '/icons/fugue/node-insert-next.png',
                 scope: this,
                 handler: function() {
                   var position = index + 1;
@@ -649,6 +671,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
           },
           {
             text: 'Bearbeiten',
+            icon: '/icons/silk/pencil.png',
             scope: this,
             disabled: (record.data.type != 1 || this.grid.getSelectionModel().getSelections().length > 1),
             handler: function() {
@@ -657,6 +680,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
           },
           {
             text: this.grid.getSelectionModel().getSelections().length > 1 ? 'Auswahl löschen' : 'Lösche ' + record.data.name,
+            icon: '/icons/silk/delete.png',
             scope: this,
             handler: function() {
               this.store.remove(this.grid.getSelectionModel().getSelections());
