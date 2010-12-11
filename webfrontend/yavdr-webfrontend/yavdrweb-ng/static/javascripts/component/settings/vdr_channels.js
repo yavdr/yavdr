@@ -241,6 +241,52 @@ YaVDR.ChannelsReader = function(meta, recordType) {
   YaVDR.ChannelsReader.superclass.constructor.call(this, meta, recordType || meta.fields);
 };
 
+YaVDR.ChannelGroupEdit = Ext.extend(Ext.Window, {
+  record: false,
+  width: 400,
+  title: 'Gruppennamen',
+  border: false,
+  initComponent: function() {
+    this.form = new Ext.FormPanel({
+      padding: 10,
+      defaults: {
+        anchor: "100%",
+        xtype: 'textfield'
+      },
+      items: [
+        {
+          itemId: 'name',
+          fieldLabel: 'Name',
+          name: 'name',
+          value: this.record.data.name
+        },
+        {
+          itemId: 'number',
+          fieldLabel: 'Zähler',
+          name: 'number',
+          value: this.record.data.number
+        }
+      ],
+      fbar: [
+        {
+          text: 'Speichern',
+          scope: this,
+          handler: function() {
+            this.record.beginEdit();
+            this.record.set('name', this.form.getComponent('name').getValue());
+            this.record.set('number', this.form.getComponent('number').getValue());
+            this.record.endEdit();
+            this.destroy();
+          }
+        }
+      ]
+    });
+
+    this.items = this.form;
+    YaVDR.ChannelGroupEdit.superclass.initComponent.call(this);
+  }
+});
+
 Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
   getSuccess : function() {
     return true;
@@ -261,11 +307,19 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
       if (line == '') continue;
       var columns = line.split(':')
 
-      var data = {}
+      var names, position, data = {}
       // is a channel
       if (columns[0] == '') {
+
+        if(columns[1].slice(0, 1) == '@') {
+          position = columns[1].indexOf(" ");
+          data.number = parseInt(columns[1].substr(1, position));
+          data.name = columns[1].substr(position+1);
+        } else {
+          data.name = columns[1];
+        }
+
         data.type = 1;
-        data.name = columns[1];
       } else {
         names = columns[0].split(';');
         data.type = 0;
@@ -307,7 +361,11 @@ YaVDR.ChannelsStore = Ext.extend(Ext.data.Store, {
     this.each(function(record) {
       var data = record.data;
       if (data.type == 1) {
-        channels.push(":" + data.name)
+        if (data.number > 0) {
+          channels.push(":@" + data.number + ' ' + data.name)
+        } else {
+          channels.push(":" + data.name)
+        }
       } else {
         channels.push(data.name + ';' + data.provider + ':' + data.frequency + ':' + data.parameters + ':' +
             data.source + ':' + data.srate + ':' + data.vpid + ':' + data.apid + ':' + data.tpid + ':' +
@@ -444,7 +502,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             ]
           },
           {
-            text: 'Löschen',
+            text: this.clipBoardGrid.getSelectionModel().getSelections().length > 1 ? 'Auswahl löschen' : 'Lösche ' + record.data.name,
             scope: this,
             handler: function() {
               this.clipBoardStore.remove(this.clipBoardGrid.getSelectionModel().getSelections());
@@ -472,11 +530,14 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
     }, this);
   },
   renderName: function(value, metaData, record, rowIndex, colIndex, store) {
+    var name;
     if (record.data.type == 1) {
-      return "<b>" + value + "</b>";
+      name = "<b>" + value + "</b>";
+      if(record.data.number > 0) name = name + " (" + record.data.number + ")"
     } else {
-      return value;
+      name = value;
     }
+    return name;
   },
   displayConf: function() {
     (new YaVDR.ChannelConfWindow({
@@ -529,7 +590,6 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       if (!grid.getSelectionModel().isIdSelected(record.id) || !grid.getSelectionModel().hasSelection()) {
         grid.getSelectionModel().selectRow(index);
       }
-
       var contextMenu = new Ext.menu.Menu({
         items: [
           {
@@ -588,7 +648,15 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             ]
           },
           {
-            text: 'Löschen',
+            text: 'Bearbeiten',
+            scope: this,
+            disabled: (record.data.type != 1 || this.grid.getSelectionModel().getSelections().length > 1),
+            handler: function() {
+              (new YaVDR.ChannelGroupEdit({ scope: this, record: record })).show()
+            }
+          },
+          {
+            text: this.grid.getSelectionModel().getSelections().length > 1 ? 'Auswahl löschen' : 'Lösche ' + record.data.name,
             scope: this,
             handler: function() {
               this.store.remove(this.grid.getSelectionModel().getSelections());
