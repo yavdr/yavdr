@@ -1,4 +1,4 @@
-<?php
+<?php 
 /***************************************************************
 *  Copyright notice
 *
@@ -22,20 +22,14 @@
 *
 */
 
-class cpBasics {
+require_once 'class.cpbasics.php';
 
-	protected
-		$path,
-		$dbh,
-		$dbfile;
+//init db: delete db and re-create it with empty tables
+//require_once 'class.cpinitdb.php';
+//$x = new cpDBInit("/home/hp/Desktop/channels/");
 
-	function __construct($path){
-		$this->path = $path;
-		$this->dbfile = $this->path . "channeldb.sqlite";	
-	}
-	
-	protected function connect(){
-		$this->dbh = new PDO('sqlite:'.$this->dbfile); 
-	}
-}
+//input: reads channel.conf from path and put channels into db
+//require_once 'class.cpinput.php';
+//$x = new cpInput("/home/hp/Desktop/channels/", "Germany_KabelBW");
+
 ?>

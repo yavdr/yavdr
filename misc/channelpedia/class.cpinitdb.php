@@ -22,20 +22,43 @@
 *
 */
 
-class cpBasics {
-
-	protected
-		$path,
-		$dbh,
-		$dbfile;
+class cpDBInit extends cpBasics {
 
 	function __construct($path){
-		$this->path = $path;
-		$this->dbfile = $this->path . "channeldb.sqlite";	
+		parent::__construct($path);
+		@unlink($this->dbfile); //delete existing database file
+		$this->connect();
+		$this->createDBTables();
 	}
+		
+	private function createDBTables(){
+		$sqltext= "CREATE TABLE channels(
+		    cablesourcetype TEXT,
+			name TEXT,
+			provider TEXT,
+			frequency INTEGER,
+			modulation TEXT,
+			source TEXT,
+			symbolrate INTEGER,
+			vpid INTEGER,
+			apid INTEGER,
+			tpid TEXT,
+			caid TEXT,
+			sid INTEGER,
+			nid INTEGER,
+			tid TEXT,
+			rid INTEGER,
+			cgroup TEXT,
+			PRIMARY KEY ( source, nid, tid, sid)
+			) ;";
 	
-	protected function connect(){
-		$this->dbh = new PDO('sqlite:'.$this->dbfile); 
-	}
+		$query = $this->dbh->exec($sqltext);
+		if ($query === false) {
+		    echo "\nPDO::errorInfo():\n";
+		    print_r($this->dbh->errorInfo());
+		    die("DB problem on create db + tables");
+		}
+	}		
 }
+
 ?>
