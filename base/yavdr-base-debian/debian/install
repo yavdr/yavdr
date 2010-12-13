@@ -1,4 +1,11 @@
 udev/*.rules		/lib/udev/rules.d
 udev/dvbmon_helper	/lib/udev
 etc
+images/animation/*.png	usr/share/yavdr/images/animation/
+images/*.png		usr/share/yavdr/images/
+images/*.gif		usr/share/yavdr/images/
+images/nocursor		usr/share/yavdr/images/
+images/noSignal4x3.mpg	var/lib/vdr/plugins/xine/
+images/noSignal16x9.mpg	var/lib/vdr/plugins/xine/
+images/nosignal.mpg	usr/share/libxine1-xvdr/	
 
