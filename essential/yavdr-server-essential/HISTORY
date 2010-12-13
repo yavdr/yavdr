@@ -1,0 +1,47 @@
+yaVDR-essential release history
+---------------------------------------
+
+
+-----------------
+Version 0.3.0 (xx.xxx.2010)
+-----------------
+added vnsiserver-plugin
+added xli
+added update-manager-core
+added vdr-plugin-console
+added vdr-skins-anthra
+added tint2
+added wmdrawer
+added uswsusp
+remove vdr-plugin-avolctl
+remove unclutter
+remove feh
+-----------------
+Version 0.2.0 (02.May.2010)
+-----------------
+update to ubuntu lucid
+added vdr-addon-lifeguard
+added halevt
+added hal
+remove nodm
+added touchscreen driver
+added vdr-plugin-dummydevice
+remove suspendoutput
+-----------------
+Version 0.1.1 (17.Feb.2010)
+-----------------
+added nvram-wakeup,
+added lirc-nct677x-src
+-----------------
+4.Feb.2010
+-----------------
+add gpl 2 licence
+add support for nfs
+remove burn 
+add vdpauinfo
+-----------------
+15.Jan.2010 
+-----------------
+initial release
+
+
