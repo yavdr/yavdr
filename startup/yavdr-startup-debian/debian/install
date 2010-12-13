@@ -2,7 +2,6 @@ scripts/mount-loader	usr/lib/vdr/
 events/*		usr/share/yavdr/events/
 templates/*		usr/share/yavdr/templates/
 scripts/black.pcf	usr/share/fonts/X11/misc/
-themes/*		usr/share/themes/
 scripts/svdrpd		usr/sbin/
 scripts/R50correct_videodirs	usr/share/vdr/recording-hooks
 scripts/R60copy_epgimage	usr/share/vdr/recording-hooks
