@@ -1,0 +1,37 @@
+#!/bin/bash
+
+. /usr/lib/vdr/config-loader
+
+DIR="$2"
+NAME=$(basename "$DIR")
+
+case $1 in
+
+        --mount)
+                [ ! -h $VIDEO_DIR/"$NAME" ] && ln -s "$DIR" $VIDEO_DIR/"$NAME"
+                if [ "$(find $DIR -name *.rec)" != "" ]; then
+                    touch $VIDEO_DIR/.update
+                    chown vdr:vdr $VIDEO_DIR/.update
+                    /usr/bin/svdrpsend -p $SVDRP_PORT MESG "$NAME mounted (with recordings)"
+                else
+                    /usr/bin/svdrpsend -p $SVDRP_PORT MESG "$NAME mounted"
+                fi
+                /usr/bin/logger -t "vdr-mounter" "ADD: $*"
+                ;;
+        --unmount)
+                if [ -h "$VIDEO_DIR/$NAME" ] ; then
+                  rm "$VIDEO_DIR/$NAME"
+                  touch $VIDEO_DIR/.update
+                  chown vdr:vdr $VIDEO_DIR/.update
+                  /usr/bin/svdrpsend -p $SVDRP_PORT MESG "$NAME unmounted"
+                fi
+                /usr/bin/logger -t "vdr-mounter" "REMOVE: $*"
+                ;;
+	--unmount-all)
+                for dev in $(udisks-umountall | grep -o "/dev/.*") ; do udisks --unmount $dev ; done
+                ;;
+        *)
+                /usr/bin/logger -t "vdr-mounter" "Unknown Action: $1 for $2"
+                ;;
+esac
+
