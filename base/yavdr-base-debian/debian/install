@@ -1,6 +1,7 @@
 udev/*.rules		/lib/udev/rules.d
 udev/dvbmon_helper	/lib/udev
 etc
+usr
 images/animation/*.png	usr/share/yavdr/images/animation/
 images/*.png		usr/share/yavdr/images/
 images/*.gif		usr/share/yavdr/images/

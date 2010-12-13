@@ -3,6 +3,7 @@
 case "$1" in
     configure)
         chown -R vdr:vdr /etc/xine
+	chmod +x /usr/bin/vdr-mounter
 
         ;;
 esac
