@@ -2,6 +2,7 @@ acpi-support
 acpid
 anacron
 avahi-daemon
+busybox-syslogd
 cpufrequtils
 ethtool
 linux-firmware
@@ -23,16 +24,17 @@ vdr-addon-acpiwakeup
 vdr-addon-noad
 vdr-addon-lifeguard
 vdr-plugin-channellists
+vdr-plugin-control
 vdr-plugin-dummydevice
 vdr-plugin-epgsearch
 vdr-plugin-femon
 vdr-plugin-iptv
 vdr-plugin-live
 vdr-plugin-streamdev-server
+vdr-plugin-svdrposd
 vdr-plugin-vnsiserver
 vdr-plugin-wirbelscan
 vdr-plugin-xineliboutput
-vdr-plugin-control
 w-scan
 wget
 yavdr-startup
