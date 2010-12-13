@@ -1,6 +1,6 @@
 YaVDR.Component.System.DiagnoseSystemLogs = Ext.extend(YaVDR.Component.System.Diagnose, {
   itemId: 'system-diagnose-system-logs',
-  subTitle: 'System Information',
+  subTitle: _('System Information'),
   initComponent: function() {
     YaVDR.Component.System.DiagnoseSystemLogs.superclass.initComponent.call(this);
     this.addFileContent('/var/log/messages', '/var/log/messages');

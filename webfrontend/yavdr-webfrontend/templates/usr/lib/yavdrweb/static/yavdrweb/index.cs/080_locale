@@ -1,10 +1,34 @@
     <!-- locale -->
-    <link rel="gettext" type="application/json" lang="<?cs var:webfrontend.language ?>" href="/static/locale/<?cs var:webfrontend.language ?>/yavdr-wfe.json"/>
+<?cs if:(?webfrontend.language) ?>
+    <link rel="gettext" type="application/json" lang="<?cs var:webfrontend.language ?>" href="/static/locale/<?cs var:webfrontend.language ?>/LC_MESSAGES/yavdr.json"/>
+<?cs else ?>
+    <link rel="gettext" type="application/json" lang="en" href="/static/locale/en/LC_MESSAGES/yavdr.json"/>    
+<?cs /if ?>
     <script language="javascript" src="/static/javascripts/gettext.js"></script>
+
     <script type="text/javascript">
-      var gt = new Gettext({ 'domain' : 'yavdr-wfe' });
-      function _(msgid) {
-        return gt.gettext(msgid);
+      try {
+        var gt = new Gettext({ 'domain' : '<?cs if:(?webfrontend.language) ?><?cs var:webfrontend.language ?><?cs else ?>en<?cs /if ?>' });
+        
+        function _(msgid) {
+<?cs if:(webfrontend.devmode == "1") ?>
+            var translated = gt.gettext(msgid);
+            if (console && translated == msgid) {
+                console.log ('msgid "' + msgid.replace('"', '\\"') + '"\nmsgstr "'+msgid.replace('"', '\\"')+'"\n\n' );
+            }
+            return translated;
+<?cs else ?>
+            return gt.gettext(msgid);
+<?cs /if ?>
+        }
+      } catch (e) {
+<?cs if:(webfrontend.devmode == "1") ?>
+        alert("Language file is missing. Please run \"sudo make\" in the yavdr-i18n directory!");
+<?cs /if ?>
+        function _(msgid) {
+            return <?cs if:(webfrontend.devmode == "1") ?>"?"+<?cs /if ?>msgid;
+        }
       }
+      
     </script>
 

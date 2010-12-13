@@ -62,6 +62,9 @@ msgstr "Rechner neu starten"
 msgid "Shutdown system"
 msgstr "System herunterfahren"
 
+msgid "Settings"
+msgstr "Einstellungen"
+
 msgid "web.meta_lang.local"
 msgstr "Deutsch"
 

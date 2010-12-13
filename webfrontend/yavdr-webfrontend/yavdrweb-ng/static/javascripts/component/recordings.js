@@ -48,7 +48,7 @@ YaVDR.Component.Recordings = Ext.extend(YaVDR.Component, {
 				region: 'center',
 				layout: 'border',
 				header: true,
-				//title: 'Recordings',
+				//title: _('Recordings'),
 				items: [
 					this.gridPanel,
 					this.detailPanel

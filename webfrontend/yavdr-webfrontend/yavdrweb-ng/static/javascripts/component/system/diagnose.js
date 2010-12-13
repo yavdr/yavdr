@@ -6,7 +6,7 @@ YaVDR.Component.System.Diagnose = Ext.extend(YaVDR.Component, {
 
     this.items = [
       new YaVDR.Component.Header({
-        html: 'Diagnostics',
+        html: _('Diagnostics'),
         region: 'north'
       }),
       {
@@ -43,19 +43,19 @@ YaVDR.Component.System.DiagnoseItem =  Ext.extend(Ext.Panel, {
   initComponent: function() {
     this.tbar = [
       {
-        text: 'Refresh',
+        text: _('Refresh'),
         icon: '/static/images/icons/refresh.png',
         scope: this,
         handler: this.reload
       },
       {
-        text: 'Go to the end',
+        text: _('Go to the end'),
         icon: '/static/images/icons/arrow_down.png',
         scope: this,
         handler: this.jumpDown
       },
       {
-        text: 'Sende to PasteBin',
+        text: _('Sende to PasteBin'),
         icon: '/static/images/icons/clipboard-paste-document-text.png',
         scope: this,
         handler: this.sendPasteBin

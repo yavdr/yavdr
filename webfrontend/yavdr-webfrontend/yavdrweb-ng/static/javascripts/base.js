@@ -220,22 +220,22 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
       {
         itemId: 'programm',
         margins:'5 5 0 0',
-        text: 'Programm'
+        text: _('Program')
       },
       {
         itemId: 'recordings',
         margins:'5 5 0 0',
-        text: 'Aufnahmen'
+        text: _('Recordings')
       },
       {
         itemId: 'timer',
         margins:'5 5 0 0',
-        text: 'Timer'
+        text: _('Timer')
       },
       {
         itemId: 'settings',
         margins:'5 5 0 0',
-        text: 'Einstellungen'
+        text: _('Settings')
       },
       {
         height: 50,
@@ -244,7 +244,7 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
         margins:'5 15 0 0',
         cls: 'x-btn-menu',
         scale: 'larger',
-        icon: '/static/images/menu_settings.png'
+        icon: '/static/images/menu_system.png'
       }
     ];
 

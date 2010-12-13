@@ -16,7 +16,7 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
 						autoScroll: true,
 						height: 150,
 						anchor: '100%',
-						title: 'VDR',
+						title: _('VDR'),
 						style: 'margin: 0 5px 5px 0 ',
 						tools: [
 							{id: 'refresh'}
