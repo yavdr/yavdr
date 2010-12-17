@@ -1,0 +1,3 @@
+<?cs if:(?system.x11.display.1.default && system.x11.display.1.default != "" && system.x11.display.1.default != "disabled") ?>
+    Option         "UseDisplayDevice" "<?cs var:system.x11.display.1.device ?>"
+<?cs /if ?>

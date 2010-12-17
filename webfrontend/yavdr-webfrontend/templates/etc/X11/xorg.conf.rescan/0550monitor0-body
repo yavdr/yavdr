@@ -1,0 +1,11 @@
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "Unknown"
+<?cs if:(system.x11.display.0.default == "VGA2Scart_4_3" || system.x11.display.0.default == "VGA2Scart_16_9") ?>
+    HorizSync       14-17
+    VertRefresh     49-61
+    Modeline "<?cs var:system.x11.display.0.default ?>" <?cs if:(system.x11.display.0.default == "VGA2Scart_4_3" ) ?>13.875 720 744 808 888 576 580 585 625 -HSync -Vsync interlace<?cs else ?>19 1024 1032 1120 1216 576 581 586 625 -Hsync -Vsync interlace<?cs /if ?>
+<?cs /if ?>
+    Option         "DPMS"
+    Option         "ExactModeTimingsDVI" "True"
+

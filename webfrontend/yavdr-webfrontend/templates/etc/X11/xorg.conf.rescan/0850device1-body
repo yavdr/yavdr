@@ -1,0 +1,11 @@
+    Identifier     "Device1"
+    <?cs if:system.hardware.nvidia.detected ?>Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"<?cs /if ?>
+    Screen          1
+<?cs if:(?system.hardware.nvidia.busid && system.hardware.nvidia.busid != "") ?>    BusID          "PCI:<?cs var:system.hardware.nvidia.busid ?>"<?cs /if ?>
+    Option         "NoLogo" "True"
+    Option         "UseEvents" "True"
+    Option         "TripleBuffer" "False"
+    Option         "AddARGBGLXVisuals" "True"
+    Option         "TwinView" "0"
+    Option         "DynamicTwinView" "0"

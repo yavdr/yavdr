@@ -1,0 +1,9 @@
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    SubSection     "Display"
+        Depth       24
+        Modes      "<?cs var:system.x11.display.0.default ?>"<?cs each:mode = system.x11.display.0.mode ?><?cs if:(mode != system.x11.display.0.default) ?> "<?cs var:mode ?>"<?cs /if ?><?cs /each ?>
+    EndSubSection
+
