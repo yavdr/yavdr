@@ -12,6 +12,10 @@
 
 static char *display_device_name(int mask);
 
+#include <yavdr/db-utils/dbset.h>
+#include <yavdr/db-utils/dbremove.h>
+
+#include <yavdr/common.h>
 
 int main(int argc, char *argv[])
 {
@@ -57,18 +61,34 @@ int main(int argc, char *argv[])
 
     nDisplayDevice = 0;
     for (mask = 1; mask < (1 << 24); mask <<= 1) {
-        
         if (display_devices & mask) {
-            
             XNVCTRLQueryStringAttribute(dpy, screen, mask,
                                         NV_CTRL_STRING_DISPLAY_DEVICE_NAME,
                                         &str);
 
+            dbset("system.x11.display.%i.device=%s"  , nDisplayDevice, display_device_name(mask));
+            dbset("system.x11.display.%i.mask=0x%08x"  , nDisplayDevice, mask);
+
             printf("%i:%s:0x%08x:%s\n",
             		nDisplayDevice++, display_device_name(mask), mask, str);
-
         }
     }
+
+    if (nDisplayDevice > 1) { // more than one screen found
+    	dbset("system.x11.dualhead.enabled=1");
+    } else {
+    	dbset("system.x11.dualhead.enabled=0");
+    }
+
+    char *dummy;
+    for (; nDisplayDevice <= 3; nDisplayDevice++) {
+    	if (asprintf(&dummy, "system.x11.display.%i", nDisplayDevice) >= 0) {
+    		dbremove(dummy);
+    		free(dummy);
+    	}
+    }
+
+    return 0;
 }
 
 /*****************************************************************************/

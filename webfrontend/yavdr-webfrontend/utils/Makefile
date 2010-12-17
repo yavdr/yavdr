@@ -1,6 +1,6 @@
 LOCDIR   = ./locale
 CFLAGS=-g -fPIC -I.. -I/usr/include/NVCtrl -I/usr/share/doc/nvidia-settings/examples/samples -DLOCDIR=\"$(LOCDIR)\" 
-LDLIBS=-lXNVCtrl -lXext
+LDLIBS=-lXNVCtrl -lXext -L/usr/lib/yavdr -lyavdrdb -lneo_utl 
 
 all: getdevices
 
