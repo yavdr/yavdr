@@ -25,9 +25,16 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
     }
   },
   initComponent: function() {
-
-
-    this.items = [
+    this.buttons = [
+	  {
+	    itemId: 'rescan',
+		scope: this,
+		text: _('rescan displays'),
+		handler: this.doRescan,
+		icon: '/icons/fugue/cross.png'
+	  }
+	];
+	this.items = [
       {
         itemId: 'basic',
         title: _('Basic Settings'),
@@ -87,11 +94,10 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
             inputValue: 'temporal'
           })
         ]
-      }
-    ]
+      }]
 
-    YaVDR.Component.Settings.HwDisplay.Display.superclass.initComponent.call(this);
-    this.getComponent('basic').getComponent('x11_dualhead').on('check', this.onCheckDualHead, this);
+      YaVDR.Component.Settings.HwDisplay.Display.superclass.initComponent.call(this);
+	  this.getComponent('basic').getComponent('x11_dualhead').on('check', this.onCheckDualHead, this);
   },
   doLoad: function() {
   },
@@ -365,7 +371,23 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       }
     });
   },
+  doRescan: function() {
+	  Ext.getBody().mask(_('rescan display. Displays may flicker.'), 'x-mask-loading');
 
+      Ext.Ajax.request({
+	    url: '/admin/set_signal?signal=rescan-display',
+	    timeout: 3000,
+	    method: 'GET',
+	    scope: this,
+	    success: function(xhr) {
+	      Ext.getBody().unmask();
+	    },
+	    failure:function() {
+	      Ext.getBody().unmask();
+	    }
+	  });
+	  
+  },
   onCheckDualHead: function(field, check) {
     var basic = this.getComponent('basic');
     if (check) {

@@ -22,6 +22,7 @@ string values[];
 </%args><%cpp>
 
 string success = "false";
+int ret = 0;
 
 if (
 		(signal == "reboot") ||
@@ -36,7 +37,8 @@ if (
 		(signal == "graphtft-state-change") ||
 		(signal == "change-epg") ||
 		(signal == "change-display") ||
-		(signal == "change-plugin")
+		(signal == "change-plugin") ||
+		(signal == "rescan-display")
 )
 {
 
@@ -110,9 +112,10 @@ if (
 		cmd += " " + signal_params;
 	}
 
-	int ret = system( cmd.c_str());
+	ret = system( cmd.c_str() );
 	success = "true"; //TODO: use ret to find out if we were successful.
 }
 </%cpp> {
-	success: <$success$>
+	success: <$success$>,
+	result: <$ret$>
 }
