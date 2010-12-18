@@ -5,8 +5,8 @@ YaVDR.Component = Ext.extend(Ext.Panel, {
     YaVDR.Component.superclass.initComponent.call(this);
     if (this.title) this.insert(0, new YaVDR.Component.Header({ html: this.title }));
     if (this.description) this.insert(1, new YaVDR.Component.Item({
-      title: 'Einleitung',
-			cls: 'component-header',
+      title: _('Introduction'),
+      cls: 'component-header',
       style: 'padding-bottom: 5px',
       html: this.description
     }));

@@ -118,21 +118,21 @@ Ext.apply(YaVDR.DPKG, {
   },
   enable: function(package, callback, scope) {
     Ext.Msg.show({
-      title:'enable plugin?',
+      title: _('enable plugin?'),
       msg: 'Would you like to enable "' + Ext.util.Format.htmlEncode(package) + '"?',
       buttons: Ext.Msg.YESNO,
       fn: function(buttonId, text, opt) {
         if (buttonId == "yes") {
           Ext.Ajax.request({
             url: '/admin/set_signal?signal=change-plugin&signal_params=enable ' + package,
-            waitMsg: getLL("nvidia.submit.waitmsg"),
+            waitMsg: _("Please wait..."),
             timeout: 3000,
             method: 'GET',
             success: function(xhr) {
               callback.call(scope, true);
             },
             failure: function() {
-              alert('fatal error: disable plugin failed');
+              alert(_('fatal error: disable plugin failed'));
               callback.call(scope, false);
             }
           });
@@ -144,14 +144,14 @@ Ext.apply(YaVDR.DPKG, {
   },
   disable: function(package, callback, scope) {
     Ext.Msg.show({
-      title:'disable plugin?',
+      title: _('disable plugin?'),
       msg: 'Would you like to disable "' + Ext.util.Format.htmlEncode(package) + '"?',
       buttons: Ext.Msg.YESNO,
       fn: function(button) {
         if (button == "yes") {
           Ext.Ajax.request({
             url: '/admin/set_signal?signal=change-plugin&signal_params=disable ' + package,
-            waitMsg: getLL("nvidia.submit.waitmsg"),
+            waitMsg: _("Please wait..."),
             timeout: 3000,
             method: 'GET',
             success: function(xhr) {

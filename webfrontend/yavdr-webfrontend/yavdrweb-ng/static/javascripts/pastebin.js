@@ -6,7 +6,7 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
   closable: true,
   id: 'pastebin',
   maximizable: true,
-  title: 'Sende an PasteBin',
+  title: _('Sende an PasteBin'),
   initComponent: function() {
 
     this.formPanel = new Ext.FormPanel({
@@ -23,17 +23,17 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
       items: [
         {
           name: 'paste_name',
-          fieldLabel: 'Titel (optional)',
+          fieldLabel: _('title (optional)'),
           value: this.contentTitle
         },
         {
           name: 'paste_email',
-          fieldLabel: 'E-Mail (optional)'
+          fieldLabel: _('e-mail (optional)')
         },
         {
           height: 200,
           name: 'paste_code',
-          fieldLabel: 'Inhalt',
+          fieldLabel: _('content'),
           xtype: 'textarea',
           value: this.content
         },
@@ -55,13 +55,13 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
     this.buttons = [
       {
         icon: '/icons/fugue/cross.png',
-        text: 'Abbrechen',
+        text: _('cancel'),
         scope: this,
         handler: this.cancel
       },
       {
         icon: '/icons/silk/accept.png',
-        text: 'Senden',
+        text: _('send'),
         scope: this,
         handler: this.send
       }

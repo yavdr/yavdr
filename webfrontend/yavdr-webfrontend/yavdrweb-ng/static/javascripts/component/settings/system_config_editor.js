@@ -112,7 +112,7 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
 
     YaVDR.Component.Settings.SystemConfigEditor.Editor.superclass.initComponent.call(this);
 
-    this.loadMask = new Ext.LoadMask(Ext.getBody(), { msg:"Please wait..." });
+    this.loadMask = new Ext.LoadMask(Ext.getBody(), { msg:_("Please wait...") });
 
     // SubmitHandling from default
     this.on('actioncomplete', YaVDR.Default.Form.prototype.afterComplete, this);

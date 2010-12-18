@@ -306,14 +306,14 @@ YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
       {
         itemId: 'cancel',
         scope: this,
-        text: 'Zurücksetzen',
+        text: _('cancel'),
         handler: this.doLoad,
         icon: '/icons/fugue/cross.png'
       },
       {
         itemId: 'save',
         scope: this,
-        text: 'Speichern',
+        text: _('save'),
         handler: this.doSave,
         icon: '/icons/fugue/disk-black.png'
       }
@@ -325,14 +325,14 @@ YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
     this.on('render', this.doLoad, this);
   },
   actionFailed: function() {
-    YaVDR.alert('Übertragung', 'Die Daten könnte nicht übermittelt werden');
+    YaVDR.alert(_('Saving'), _('Error while saving data.');
     Ext.getBody().unmask();
   },
   beforeAction: function(form, action) {
-    Ext.getBody().mask("Übertrage...", 'x-mask-loading');
+    Ext.getBody().mask(_("Saving"), 'x-mask-loading');
   },
   afterComplete: function(form, action) {
-    YaVDR.notice('Übertragung', 'Die Daten wurde erfolgreich gespeichert');
+    YaVDR.notice(_('Saving'), _('Data stored successfully.'));
     Ext.getBody().unmask();
   },
   doSave: function() {
