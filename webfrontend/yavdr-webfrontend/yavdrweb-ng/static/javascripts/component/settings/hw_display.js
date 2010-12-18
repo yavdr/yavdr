@@ -31,7 +31,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 		scope: this,
 		text: _('rescan displays'),
 		handler: this.doRescan,
-		icon: '/icons/fugue/monitor-screensaver.png'
+		icon: '/icons/fugue/monitor--plus.png'
 	  }
 	];
 	this.items = [
