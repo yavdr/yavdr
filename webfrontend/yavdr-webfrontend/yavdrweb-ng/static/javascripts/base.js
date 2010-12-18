@@ -299,7 +299,10 @@ Ext.ns('YaVDR.Default');
 YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
   labelWidth: 200,
   initComponent: function() {
-    this.buttons = [
+	if (!Ext.isArray(this.buttons)) {
+		this.buttons = [];
+	}
+	this.buttons = this.buttons.concat([
       {
         itemId: 'cancel',
         scope: this,
@@ -314,7 +317,7 @@ YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
         handler: this.doSave,
         icon: '/icons/fugue/disk-black.png'
       }
-    ];
+    ]);
     YaVDR.Default.Form.superclass.initComponent.call(this);
     this.on('actioncomplete', this.afterComplete, this);
     this.on('beforeaction', this.beforeAction, this);
