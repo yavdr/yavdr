@@ -709,3 +709,116 @@ msgid "Miscellaneous_on_"
 msgstr "Sonstige_auf_"
 #: end avahi-mounter
 
+msgid "Send to PasteBin"
+msgstr "Senden an PasteBin"
+
+msgid "Recordings"
+msgstr "Aufnahmen"
+
+msgid "Timers"
+msgstr "Timers"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Channels"
+msgstr "kanäle"
+
+msgid "Remote Control Settings"
+msgstr "Einstellung der Fernbedinung"
+
+msgid "Audio Configuration"
+msgstr "Audio-Einstellungen"
+
+msgid "Display Settings"
+msgstr "Anzeigeeinstellungen"
+
+msgid "Network"
+msgstr "Netzwerk"
+
+msgid "Packages"
+msgstr "Pakete"
+
+msgid "Edit Configurations"
+msgstr "Einstellungen ändern"
+
+msgid "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+msgstr "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+
+msgid "Switch temporary to second screen"
+msgstr "Vorübergehend auf 2. Anzeige umschalten"
+
+msgid "Reboot computer"
+msgstr "Rechner neu starten"
+
+msgid "Kill XBMC"
+msgstr "XBMC beenden"
+
+msgid "Restart VDR"
+msgstr "VDR neu starten"
+
+msgid "System Information"
+msgstr "System Information"
+
+msgid "System log files"
+msgstr "System log files"
+
+msgid "XBMC crash log"
+msgstr "XBMC crash log"
+
+msgid "LIRC configuration"
+msgstr "LIRC-Einstellungen"
+
+msgid "VDR configuration"
+msgstr "VDR-Einstellungen"
+
+msgid "Xorg server"
+msgstr "Xorg-Aerver"
+
+msgid "Sound (ALSA)"
+msgstr "Audio (ALSA)"
+
+msgid "yaVDR database"
+msgstr "yaVDR Datenbank"
+
+msgid "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
+msgstr "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
+
+msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ. ..."
+msgstr "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ. ..."
+
+msgid "Here you can configure your display settings."
+msgstr "Here you can configure your display settings."
+
+msgid "default frequency"
+msgstr "Standardfrquenz"
+
+msgid "XBMC Crash log"
+msgstr "XBMC Crash log"
+
+msgid "VDR basic configuration"
+msgstr "VDR Basis Einstellungen"
+
+msgid "Xorg server log"
+msgstr "Xorg Server log"
+
+msgid "ALSA status information"
+msgstr "ALSA Status Informationen"
+
+msgid "Package information"
+msgstr "Pakteinformationen"
+
+msgid "Program"
+msgstr "Programm"
+
+msgid "VDR"
+msgstr "VDR"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Duration"
+msgstr "Dauer"
+
+msgid "Start"
+msgstr "Start"

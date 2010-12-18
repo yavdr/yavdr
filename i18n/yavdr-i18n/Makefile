@@ -24,7 +24,7 @@ $(I18Nmsgs): $(LOCALEDIR)/%/LC_MESSAGES/yavdr.mo: $(PODIR)/%.mo
 
 $(I18Njson): $(LOCALEDIR)/%/LC_MESSAGES/yavdr.json: $(PODIR)/%.po
 	@mkdir -p $(dir $@)
-	po2json/po2json $< >$@
+	po2json/po2json -p $< >$@
 
 clean:
 	@rm -f *.mo
