@@ -325,7 +325,7 @@ YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
     this.on('render', this.doLoad, this);
   },
   actionFailed: function() {
-    YaVDR.alert(_('Saving'), _('Error while saving data.');
+    YaVDR.alert(_('Saving'), _('Error while saving data.'));
     Ext.getBody().unmask();
   },
   beforeAction: function(form, action) {

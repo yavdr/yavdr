@@ -13,8 +13,9 @@
         function _(msgid) {
 <?cs if:(webfrontend.devmode == "1") ?>
             var translated = gt.gettext(msgid);
-            if (console && translated == msgid) {
-                console.log ('msgid "' + msgid.replace('"', '\\"') + '"\nmsgstr "'+msgid.replace('"', '\\"')+'"\n\n' );
+            if (typeof console != "undefined" && translated == msgid) {
+                console.log ('msgid "' + msgid.replace('"', '\\"') + '"');
+                console.log ('msgstr "'+msgid.replace('"', '\\"')+'"' );
             }
             return translated;
 <?cs else ?>

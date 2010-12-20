@@ -6,7 +6,7 @@ YaVDR.PasteBin = Ext.extend(Ext.Window, {
   closable: true,
   id: 'pastebin',
   maximizable: true,
-  title: _('Sende an PasteBin'),
+  title: _('Send to PasteBin'),
   initComponent: function() {
 
     this.formPanel = new Ext.FormPanel({
