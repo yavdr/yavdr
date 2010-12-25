@@ -26,8 +26,6 @@ nct677x-dkms
 ntfs-3g
 nvram-wakeup
 ruby
-ruby-dev
-rubygems
 smbfs
 samba
 samba-common
@@ -78,7 +76,6 @@ xinit
 xserver-xorg
 xserver-xorg-input-evtouch
 xserver-xorg-video-vesa
-yavdr-startup
 yavdr-utils
 yavdr-base
 yavdr-webfrontend
@@ -87,3 +84,5 @@ vdr-skins-anthra
 xterm
 uswsusp
 udisks-automounter
+vdpauinfo
+openbox
