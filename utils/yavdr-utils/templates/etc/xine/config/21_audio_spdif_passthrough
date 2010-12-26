@@ -66,7 +66,7 @@ audio.synchronization.force_rate:48000
 
 # Resampling benutzen
 # { auto  off  on }, default: 0
-audio.synchronization.resample_mode:off
+audio.synchronization.resample_mode:on
 
 # Startlautstärke
 # [0..100], default: 50
