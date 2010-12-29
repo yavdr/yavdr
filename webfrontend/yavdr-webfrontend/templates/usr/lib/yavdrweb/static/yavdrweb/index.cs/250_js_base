@@ -1,5 +1,6 @@
 
     <!-- js_base -->
+    <script type="text/javascript" src="/static/javascripts/sprintf.js"></script>
     <script type="text/javascript" src="/static/javascripts/base.js"></script>
     <script type="text/javascript" src="/static/javascripts/component.js"></script>
     <script type="text/javascript" src="/static/javascripts/dpkg.js"></script>

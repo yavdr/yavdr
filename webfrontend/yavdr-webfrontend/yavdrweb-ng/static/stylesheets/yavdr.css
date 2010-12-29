@@ -83,3 +83,18 @@
 	padding: 5px;
 	padding-left: 39px;
 }
+
+.x-grid3-body div.grid-row-insert-below {
+	border-bottom-color: #36c;
+	background: url(/ext/resources/images/default/tree/drop-under.gif) no-repeat bottom right;
+}
+
+.x-grid3-body div.grid-row-insert-between {
+    border-bottom-color: #36c;
+    background: url(/ext/resources/images/default/tree/drop-between.gif) no-repeat bottom right;
+}
+
+.x-grid3-body div.grid-row-insert-above {
+    border-top-color: #36c;
+    background: url(/ext/resources/images/default/tree/drop-over.gif) no-repeat top right;
+}
