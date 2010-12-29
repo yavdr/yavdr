@@ -16,8 +16,5 @@ if [ install = "$1" -o upgrade = "$1" ]; then
       --divert /usr/share/libxine1-xvdr/nosignal.mpg.dontremove /usr/share/libxine1-xvdr/nosignal.mpg
    dpkg-divert --package yavdr-base --add --rename \
       --divert /etc/issue.dontremove /etc/issue
-   dpkg-divert --package yavdr-base --add --rename \
-      --divert /etc/tntnet/tntnet.conf.dontremove /etc/tntnet/tntnet.conf
-
 fi  
 
