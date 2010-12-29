@@ -8,15 +8,15 @@ if [ install = "$1" -o upgrade = "$1" ]; then
       --divert /etc/logrotate.conf.dontremove /etc/logrotate.conf   
    dpkg-divert --package yavdr-base --add --rename \
       --divert /etc/samba/smb.conf.dontremove /etc/samba/smb.conf   
-   dpkg-divert --package yavdr-startup --add --rename \
+   dpkg-divert --package yavdr-base --add --rename \
       --divert /var/lib/vdr/plugins/xine/noSignal4x3.mpg.dontremove /var/lib/vdr/plugins/xine/noSignal4x3.mpg
-   dpkg-divert --package yavdr-startup --add --rename \
+   dpkg-divert --package yavdr-base --add --rename \
       --divert /var/lib/vdr/plugins/xine/noSignal16x9.mpg.dontremove /var/lib/vdr/plugins/xine/noSignal16x9.mpg
-   dpkg-divert --package yavdr-startup --add --rename \
+   dpkg-divert --package yavdr-base --add --rename \
       --divert /usr/share/libxine1-xvdr/nosignal.mpg.dontremove /usr/share/libxine1-xvdr/nosignal.mpg
-   dpkg-divert --package yavdr-startup --add --rename \
+   dpkg-divert --package yavdr-base --add --rename \
       --divert /etc/issue.dontremove /etc/issue
-   dpkg-divert --package yavdr-startup --add --rename \
+   dpkg-divert --package yavdr-base --add --rename \
       --divert /etc/tntnet/tntnet.conf.dontremove /etc/tntnet/tntnet.conf
 
 fi  
