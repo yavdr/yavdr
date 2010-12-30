@@ -10,6 +10,7 @@ Package: yavdr-utils
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: lirc
+Conflicts: yavdr-startup
 Description: Utilities and WEB front end for yaVDR
  Utilities and WEB front end for yaVDR (yet another VDR) a VDR distribution
  ready to run with near zero configuration effort.
