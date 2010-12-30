@@ -1,0 +1,66 @@
+<%pre>
+#include <stdio.h>
+#include <string>
+#include <dirent.h>
+#include <jsoncpp/json.h>
+
+using namespace std;
+</%pre><%args>
+command;
+filename;
+newfilename;
+</%args><%shared>
+
+int scandirfilter(const struct dirent *entry)
+{
+	if(strncmp(entry->d_name, "channels.conf.", 14)) 
+		return 0;
+	else
+		return 1;
+}
+
+</%shared><%cpp>
+reply.setHeader ("Cache-Control", "no-cache", false);
+
+//restrict commands
+
+if (command == "list" ||
+		command == "load" ||
+		command == "save" ||
+		command == "delete" ||
+		command == "rename" )
+{
+	if (command == "list") {
+
+		Json::Value json;
+
+		struct dirent **namelist;
+		int numchannels = scandir("/var/lib/vdr/plugins/channellists/", &namelist, scandirfilter, alphasort);
+		if (numchannels >= 0) {
+			json["total"] = numchannels;
+
+			for (int n = 0, m = 0; n < numchannels; n++)
+			{
+				json["channellists"][n]["filename"] = namelist[n]->d_name;
+				json["channellists"][n]["name"] = ((char*)namelist[n]->d_name) + 14;
+				free(namelist[n]);
+			}
+			free(namelist);
+		}
+
+		reply.out() << json;
+	} else if (command == "load") {
+
+	} else if (command == "save") {
+
+	} else if (command == "delete") {
+
+	} else if (command == "rename") {
+
+	}
+}
+else
+reply.out() << "Illegal command.";
+
+</%cpp>
+
