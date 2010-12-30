@@ -2,7 +2,6 @@
 
 case "$1" in
     configure)
-    configure)
 	chown vdr:vdr /var/log/vdr
 	chsh -s /bin/bash vdr
 	adduser vdr audio
