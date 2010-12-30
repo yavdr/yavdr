@@ -302,7 +302,7 @@ YaVDR.ChannelsReader = function(meta, recordType) {
 YaVDR.ChannelGroupEdit = Ext.extend(Ext.Window, {
   record : false,
   width : 400,
-  title : _('name of groups'),
+  title : _('Name of the group'),
   border : false,
   initComponent : function() {
     this.form = new Ext.FormPanel( {
@@ -318,7 +318,7 @@ YaVDR.ChannelGroupEdit = Ext.extend(Ext.Window, {
         value : this.record.data.name
       }, {
         itemId : 'number',
-        fieldLabel : _('Counter'),
+        fieldLabel : _('next channel number'),
         name : 'number',
         value : this.record.data.number
       } ],
@@ -459,7 +459,7 @@ YaVDR.ChannelsStore = Ext
 
 YaVDR.ChannelConfWindow = Ext.extend(Ext.Window, {
   value : "",
-  title : _('generate channels.conf'),
+  title : _('generated channels.conf'),
   modal : true,
   maximizable : true,
   width : 400,
@@ -467,7 +467,7 @@ YaVDR.ChannelConfWindow = Ext.extend(Ext.Window, {
   layout : 'fit',
   initComponent : function() {
     this.tbar = [ {
-      text : _('Sende to PasteBin'),
+      text : _('Send to PasteBin'),
       icon : '/static/images/icons/clipboard-paste-document-text.png',
       scope : this,
       handler : this.sendPasteBin

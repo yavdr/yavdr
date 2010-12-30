@@ -1,7 +1,0 @@
-<link rel="stylesheet" type="text/css" href="/ext/resources/css/ext-all.css" />
-<!-- overrides to base library -->
-<link rel="stylesheet" type="text/css" href="/ext-ux/css/Portal.css" />
-<link rel="stylesheet" type="text/css" href="/ext-ux/css/GroupTab.css" />
-<link rel="stylesheet" type="text/css" href="/ext-ux/css/Spinner.css" />
-<link rel="stylesheet" type="text/css" href="/static/yavdr.css" />
-
