@@ -3,7 +3,7 @@ YaVDR.DPKG = Ext.extend(Ext.Window, {
   callback: null,
   store: null,
   command: 'update',
-  title: 'yaVDR Paket Installer',
+  title: _('yaVDR Paket Installer'),
   width: 600,
   height: 450,
   resizable: true,
@@ -79,7 +79,7 @@ Ext.apply(YaVDR.DPKG, {
   install: function(package, callback, scope) {
     Ext.Msg.show({
       title:'Install package?',
-      msg: 'Would you like to install package "' + Ext.util.Format.htmlEncode(package) + '"?',
+      msg: sprintf(_('Would you like to install package "%s"?', Ext.util.Format.htmlEncode(package)),
       buttons: Ext.Msg.YESNO,
       animEl: 'elId',
       scope: this,
@@ -99,7 +99,7 @@ Ext.apply(YaVDR.DPKG, {
   remove: function(package, callback, scope) {
     Ext.Msg.show({
       title:'Install package?',
-      msg: 'Would you like to remove package "' + Ext.util.Format.htmlEncode(package) + '"?',
+      msg: sprintf(_('Would you like to remove package "%s"?'), Ext.util.Format.htmlEncode(package)),
       buttons: Ext.Msg.YESNO,
       animEl: 'elId',
       scope: this,
@@ -119,7 +119,7 @@ Ext.apply(YaVDR.DPKG, {
   enable: function(package, callback, scope) {
     Ext.Msg.show({
       title: _('enable plugin?'),
-      msg: 'Would you like to enable "' + Ext.util.Format.htmlEncode(package) + '"?',
+      msg: sprintf(_('Would you like to enable "%s"?'), Ext.util.Format.htmlEncode(package)),
       buttons: Ext.Msg.YESNO,
       fn: function(buttonId, text, opt) {
         if (buttonId == "yes") {
@@ -145,7 +145,7 @@ Ext.apply(YaVDR.DPKG, {
   disable: function(package, callback, scope) {
     Ext.Msg.show({
       title: _('disable plugin?'),
-      msg: 'Would you like to disable "' + Ext.util.Format.htmlEncode(package) + '"?',
+      msg: sprintf(_('Would you like to disable "%s"?'), Ext.util.Format.htmlEncode(package)),
       buttons: Ext.Msg.YESNO,
       fn: function(button) {
         if (button == "yes") {

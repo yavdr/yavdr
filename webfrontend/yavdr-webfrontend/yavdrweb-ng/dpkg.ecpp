@@ -88,6 +88,11 @@ if (command == "install" ||
                reply.out().flush();
           }
         }
+        reply.out() << "<br />\n";
+        reply.out() << "--------------------<br />\n";
+        reply.out() << "- finished         -<br />\n";
+        reply.out() << "--------------------<br />\n";
+        
         pclose(stream); 
       }
     }
