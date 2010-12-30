@@ -18,10 +18,6 @@ YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
         title: _('EPG'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.VdrGeneric.EPG
-      }),
-      new YaVDR.Component.Item({
-          title: _('WakeUp'),
-          items: new YaVDR.Component.Settings.VdrGeneric.WakeUp
       })
     ];
     YaVDR.Component.Settings.VdrGeneric.superclass.initComponent.call(this);
@@ -264,80 +260,4 @@ YaVDR.Component.Settings.VdrGeneric.EPG = Ext.extend(YaVDR.Default.Form, {
       this.charsetOverrideSelectiorView.select("charset-selection-" + value);
 		}, this);
 	}
-});
-
-
-YaVDR.Component.Settings.VdrGeneric.WakeUp = Ext.extend(YaVDR.Default.Form, {
-
-  initComponent: function() {
-
-    this.wakeupStore = new Ext.data.JsonStore({
-      fields: [
-        { name: 'key' },
-        { type: 'boolean', name: 'disabled' },
-        { name: 'title' },
-        { name: 'description' }
-      ],
-      data: [
-        {
-          key: 'acpi',
-          title: _('Wakeup using ACPI'),
-          description: _('Hier feht ne Beschreibung!!')
-        },
-        {
-          key: 'nvram',
-          title: _('Wakeup using NVRam'),
-          description: _('Hier feht ne Beschreibung!!')
-        }
-      ]
-
-    });
-
-    this.wakeupTpl = new Ext.XTemplate(
-      '<tpl for=".">',
-      '<tpl if="disabled == true">',
-      '<div class="selection-wrap unselectable" id="wakeup-selection-{key}">',
-      '</tpl>',
-      '<tpl if="disabled == false">',
-      '<div class="selection-wrap selectable" id="wakeup-selection-{key}">',
-      '</tpl>',
-      '<div class="title">{title}</div>',
-      '<div class="description">{description}</div>',
-      '</div>',
-      '</tpl>'
-      );
-
-    this.wakeupTpl.compile();
-
-    this.wakeupSelectionHidden = new Ext.form.Hidden({
-      name: 'value',
-      value: 'acpi'
-    });
-
-    this.wakeupSelectiorView = new YaVDR.SelectionList({
-      fieldLabel: _('Method'),
-      hiddenField: this.wakeupSelectionHidden,
-      tpl: this.wakeupTpl,
-      store: this.wakeupStore
-    });
-
-    this.items = [
-      this.wakeupSelectionHidden,
-      this.wakeupSelectiorView
-    ];
-
-    YaVDR.Component.Settings.VdrGeneric.WakeUp.superclass.initComponent.call(this);
-  },
-  
-  doSave: function() {
-    this.getForm().submit({
-      url: '/admin/set_signal?signal=change-wakeup'
-    });
-  },
-
-  doLoad: function() {
-    YaVDR.getHdfValue('system.wakeup.type', function(value) {
-      this.wakeupSelectiorView.select("wakeup-selection-" + (value!=''?value:this.wakeupSelectionHidden.getValue()));
-    }, this);
-  }
 });

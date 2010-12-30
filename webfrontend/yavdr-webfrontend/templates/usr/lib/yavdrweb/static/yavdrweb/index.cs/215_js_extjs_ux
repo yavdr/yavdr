@@ -7,3 +7,4 @@
     <script type="text/javascript" src="/ext-ux/Spinner.js"></script>
     <script type="text/javascript" src="/ext-ux/SpinnerField.js"></script>
     <script type="text/javascript" src="/ext-ux/TabCloseMenu.js"></script>
+    <script type="text/javascript" src="/ext-ux/BufferView.js"></script>
