@@ -79,7 +79,7 @@ Ext.apply(YaVDR.DPKG, {
   install: function(package, callback, scope) {
     Ext.Msg.show({
       title:'Install package?',
-      msg: sprintf(_('Would you like to install package "%s"?', Ext.util.Format.htmlEncode(package)),
+      msg: sprintf(_('Would you like to install package "%s"?', Ext.util.Format.htmlEncode(package))),
       buttons: Ext.Msg.YESNO,
       animEl: 'elId',
       scope: this,

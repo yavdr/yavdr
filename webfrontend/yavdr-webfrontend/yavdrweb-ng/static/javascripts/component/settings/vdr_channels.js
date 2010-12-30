@@ -304,6 +304,7 @@ YaVDR.ChannelGroupEdit = Ext.extend(Ext.Window, {
   width : 400,
   title : _('Name of the group'),
   border : false,
+  
   initComponent : function() {
     this.form = new Ext.FormPanel( {
       padding : 10,
@@ -689,9 +690,15 @@ YaVDR.Component.Settings.VdrChannels = Ext
                 copy : false,
                 scrollable : true
               }),
-              viewConfig : {
+
+              view: new Ext.ux.grid.BufferView({
+                // custom row height
+                //rowHeight: 34,
+                // render rows as they come into viewable area.
+                scrollDelay: false,
                 forceFit : true
-              },
+              }),
+              
               loadMask : _("loading channels")
             });
 
