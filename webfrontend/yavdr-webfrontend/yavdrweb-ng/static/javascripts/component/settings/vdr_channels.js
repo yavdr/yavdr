@@ -120,6 +120,7 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
             ds.insert(insertIndex, selections[i]);
           }
 
+          ds.resortChannelNo();
           // re-select the row(s)
           var sm = this.grid.getSelectionModel();
           if (sm) {
@@ -142,9 +143,12 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
           var position = dd.rindex + (dd.mode == "below" ? 1 : 0);
           Ext.each(selections, function(record) {
             this.grid.store.insert(position, record);
+            
             data.grid.store.remove(record);
             position++;
           }, this);
+          if (this.grid.store.resortChannelNo) this.grid.store.resortChannelNo();
+          else data.grid.store.resortChannelNo();
         }
 
         // fire the after move/copy event
@@ -359,6 +363,7 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
     var success = true;
     var lines = doc.split("\n");
     var records = new Array();
+    var channel = 1;
     for ( var i = 0; i < lines.length; ++i) {
       var line = lines[i];
       if (line == '')
@@ -372,6 +377,7 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
         if (columns[1].slice(0, 1) == '@') {
           position = columns[1].indexOf(" ");
           data.number = parseInt(columns[1].substr(1, position));
+          channel = data.number;
           data.name = columns[1].substr(position + 1);
         } else {
           data.name = columns[1];
@@ -395,6 +401,8 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
         data.nid = columns[10];
         data.tid = columns[11];
         data.rid = columns[12];
+        data.channel_orig = channel;
+        data.channel = channel++;
       }
       records.push(new Ext.data.Record(data));
     }
@@ -455,6 +463,22 @@ YaVDR.ChannelsStore = Ext
                 alert(_('Channels saved'));
               }
             });
+          },
+          resortChannelNo: function() {
+            var channel = 1;
+            this.each(function(record) {
+              var data = record.data;
+              if (data.type == 1) {
+                if (data.number > 0) {
+                  channel = data.number;
+                }
+              } else {
+                record.beginEdit();
+                record.set('channel', channel++);
+                record.endEdit();
+                record.commit(true);
+              }
+            }, this);
           }
         });
 
@@ -628,17 +652,26 @@ YaVDR.Component.Settings.VdrChannels = Ext
                   }
                 }, this);
           },
-          renderName : function(value, metaData, record, rowIndex, colIndex,
-              store) {
+          renderName : function(value, metaData, record, rowIndex, colIndex, store) {
             var name;
             if (record.data.type == 1) {
-              name = "<b>" + value + "</b>";
+              name = "<b>" + record.data.name + "</b>";
               if (record.data.number > 0)
                 name = name + " (" + record.data.number + ")"
             } else {
               name = value;
             }
             return name;
+          },
+          renderChannel : function(value, metaData, record, rowIndex, colIndex, store) {
+            if (record.data.type == 1) {
+              return "";
+            } else {
+              if (value == record.data.channel_orig)
+                return value;
+              else
+                return value + " (" + record.data.channel_orig + ")";
+            }
           },
           displayConf : function() {
             (new YaVDR.ChannelConfWindow( {
@@ -673,6 +706,13 @@ YaVDR.Component.Settings.VdrChannels = Ext
               } ],
               bodyStyle : 'border: 1px solid #D0D0D0;',
               columns : [ {
+                header : _("Channel"),
+                renderer: this.renderChannel,
+                align : 'right',
+                width : 60,
+                dataIndex : 'channel',
+                sortable : false
+              }, {
                 header : _("Name"),
                 renderer : this.renderName,
                 align : 'left',
@@ -681,6 +721,7 @@ YaVDR.Component.Settings.VdrChannels = Ext
                 sortable : false
               }, {
                 header : _("Provider"),
+                id:"provider",
                 align : 'left',
                 width : 100,
                 dataIndex : 'provider',
@@ -690,13 +731,13 @@ YaVDR.Component.Settings.VdrChannels = Ext
                 copy : false,
                 scrollable : true
               }),
-
+              autoExpandColumn: "provider",
               view: new Ext.ux.grid.BufferView({
                 // custom row height
                 //rowHeight: 34,
                 // render rows as they come into viewable area.
-                scrollDelay: false,
-                forceFit : true
+                scrollDelay: false
+                //forceFit : true
               }),
               
               loadMask : _("loading channels")
