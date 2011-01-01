@@ -70,7 +70,7 @@ Ext.apply(YaVDR.Component.System, {
   }
 });
 
-YaVDR.Component.System.addCommand(_('Switch temporary to second screen'), YaVDR.Component.System.changeVdrToSecondDisplay, '/icons/fugue/monitor--arrow.png');
+YaVDR.Component.System.addCommand(_('Switch temporarily to second screen'), YaVDR.Component.System.changeVdrToSecondDisplay, '/icons/fugue/monitor--arrow.png');
 YaVDR.Component.System.addCommand(_('Reboot computer'), YaVDR.Component.System.reboot, '/icons/fugue/arrow-circle-225.png');
 YaVDR.Component.System.addCommand(_('Kill XBMC'), YaVDR.Component.System.killXBMC, '/icons/fugue/arrow-step.png');
 YaVDR.Component.System.addCommand(_('Restart VDR'), YaVDR.Component.System.restartVDR, '/icons/fugue/arrow-circle-double-135.png');
@@ -84,4 +84,5 @@ YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-x11', _('Xorg server
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-alsa', _('Sound (ALSA)'), '/icons/fugue/speaker.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-dpkg', _('System Information'), '/icons/silk/package.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-yavdr', _('yaVDR database'), '/icons/fugue/database.png');
+
 YaVDR.registerComponent(YaVDR.Component.System);

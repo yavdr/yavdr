@@ -1,4 +1,7 @@
          <system name="Setup" />
+<?cs if:(system.x11.dualhead.enabled == "1") ?>
+         <command name=<?cs call:quote(_("Switch temporarily to second screen")) ?> execute="/usr/bin/signal-event change-display &amp;> /dev/null &amp; " />
+<?cs /if ?>
          <plugin name="femon" />
          <plugin name="avolctl" />
          <plugin name="suspendoutput" />
