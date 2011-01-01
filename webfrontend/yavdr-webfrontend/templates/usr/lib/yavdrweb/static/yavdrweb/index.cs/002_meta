@@ -1,3 +1,5 @@
+    <title>yaVDR Configuration</title>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="lang" content="<?cs var:webfrontend.language ?>" />
     <meta name="author" content="yaVDR Team" />

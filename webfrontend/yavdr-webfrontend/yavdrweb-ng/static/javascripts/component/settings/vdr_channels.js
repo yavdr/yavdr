@@ -474,9 +474,15 @@ YaVDR.ChannelsStore = Ext
                 }
               } else {
                 record.beginEdit();
-                record.set('channel', channel++);
+                record.set('channel', channel);
                 record.endEdit();
                 record.commit(true);
+                //if (record.get("channel") == channel++) {
+                  //record.reject();
+                  //record.modified = null;
+                //}
+                
+                channel++;
               }
             }, this);
           }
@@ -684,11 +690,6 @@ YaVDR.Component.Settings.VdrChannels = Ext
               store : this.store,
               // enableDragDrop: true,
               tbar : [ {
-                text : _('reload'),
-                icon : '/icons/silk/arrow_refresh.png',
-                scope : this,
-                handler : this.reloadStore
-              }, {
                 text : _('add new group'),
                 icon : '/icons/silk/folder_add.png',
                 scope : this,
@@ -698,11 +699,16 @@ YaVDR.Component.Settings.VdrChannels = Ext
                 scope : this,
                 icon : '/icons/silk/page.png',
                 handler : this.displayConf
-              }, {
+              }, '-', {
                 text : _('Save'),
-                icon : '/icons/fugue/disk-black.png',
+                icon: '/static/images/icons/save.png',
                 scope : this,
                 handler : this.saveStore
+              }, {
+                text : _('Reload'),
+                icon: '/static/images/icons/refresh.png',
+                scope : this,
+                handler : this.reloadStore
               } ],
               bodyStyle : 'border: 1px solid #D0D0D0;',
               columns : [ {
