@@ -10,3 +10,5 @@
     Option         "AddARGBGLXVisuals" "True"
     Option         "TwinView" "0"
     Option         "DynamicTwinView" "0"
+    Option         "OnDemandVBlankinterrupts" "on
+    Option         "FlatPanelProperties" "Scaling = Native"
