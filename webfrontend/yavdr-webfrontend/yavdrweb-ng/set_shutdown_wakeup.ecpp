@@ -28,6 +28,8 @@ if (
   int err1 = dbset("system.wakeup.method=%s", wakeup_method.c_str());
   int err2 = dbset("system.wakeup.disable_usb=%s", (disable_usb == "1"?"1":"0"));
   int err3 = dbset("system.shutdown=%s", shutdown_method.c_str());
+  
+  int ret = system("/usr/bin/signal-event change-shutdown-wakeup");
   success = "true";
 }
 

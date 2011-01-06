@@ -27,7 +27,7 @@ int ret = 0;
 if (
 		(signal == "reboot") ||
 		(signal == "change-frontend") ||
-		(signal == "change-shutdown") ||
+//		(signal == "change-shutdown") ||
 		(signal == "change-lifeguard") ||
 		(signal == "kill-xbmc") ||
 		(signal == "restart-vdr") ||
@@ -46,19 +46,19 @@ if (
 	{
 		if ((value == "xine") || (value == "xineliboutput") || (value == "xbmc") || (value == "headless"))
 		{
-                        int err = dbset("vdr.frontend=%s", value.c_str());
+			int err = dbset("vdr.frontend=%s", value.c_str());
 		}
 	}
-	else if (signal == "change-shutdown" )
+/*	else if (signal == "change-shutdown" )
 	{
 		if ((value == "s3") || (value == "s4") || (value == "s5") || (value == "poweroff") || (value == "reboot"))
 		{
-                        int err = dbset("system.shutdown=%s", value.c_str());
+			int err = dbset("system.shutdown=%s", value.c_str());
 
-                        err = dbset("system.disable_usb_wakeup=%s", (value2 == "1"?"1":"0"));
+			err = dbset("system.disable_usb_wakeup=%s", (value2 == "1"?"1":"0"));
 		}
 	}
-	else if (signal == "change-epg" )
+*/	else if (signal == "change-epg" )
 	{
 		if ((value == "") || (value == "ISO-8859-9"))
 		{
