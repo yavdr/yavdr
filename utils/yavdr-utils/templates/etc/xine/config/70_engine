@@ -1,10 +1,10 @@
 # Anzahl der Audiopuffer
 # numeric, default: 230
-engine.buffers.audio_num_buffers:2300
+engine.buffers.audio_num_buffers:1000
 
 # Anzahl der Videopuffer
 # numeric, default: 500
-engine.buffers.video_num_buffers:5000
+engine.buffers.video_num_buffers:1000
 
 # Standardanzahl von Videobildern
 # numeric, default: 15
