@@ -320,10 +320,11 @@ YaVDR.ChannelGroupEdit = Ext.extend(Ext.Window, {
         itemId : 'name',
         fieldLabel : _('Name'),
         name : 'name',
-        value : this.record.data.name
+        value : this.record.data.name,
+        allowBlank: false
       }, {
         itemId : 'number',
-        fieldLabel : _('next channel number'),
+        fieldLabel : _('next channel no.'),
         name : 'number',
         value : this.record.data.number
       } ],
@@ -331,11 +332,15 @@ YaVDR.ChannelGroupEdit = Ext.extend(Ext.Window, {
         text : _('Save'),
         scope : this,
         handler : function() {
+          var oldChannelNumber = this.record.get('number');
           this.record.beginEdit();
           this.record.set('name', this.form.getComponent('name').getValue());
-          this.record
-              .set('number', this.form.getComponent('number').getValue());
+          this.record.set('number', this.form.getComponent('number').getValue());
           this.record.endEdit();
+          if (oldChannelNumber != this.record.get('number')) {
+            window.setTimeout("this.store.resortChannelNo()", 100);
+            ;
+          }
           this.destroy();
         }
       } ]
@@ -650,7 +655,7 @@ YaVDR.Component.Settings.VdrChannels = Ext
             // Show a dialog using config options:
             Ext.Msg.prompt(_('add new group'),
                 _('Please enter the group name:'), function(btn, text) {
-                  if (btn == 'ok') {
+                  if (btn == 'ok' && text != '') {
                     this.store.insert(0, new Ext.data.Record( {
                       type : 1,
                       name : text
@@ -843,7 +848,8 @@ YaVDR.Component.Settings.VdrChannels = Ext
                                   handler : function() {
                                     (new YaVDR.ChannelGroupEdit( {
                                       scope : this,
-                                      record : record
+                                      record : record,
+                                      store: this.store
                                     })).show()
                                   }
                                 },
@@ -865,8 +871,8 @@ YaVDR.Component.Settings.VdrChannels = Ext
                     }, this);
           },
           initStore : function() {
-            this.store = new YaVDR.ChannelsStore( {
-            // autoLoad: true
+            this.store = new YaVDR.ChannelsStore({
+              autoLoad: false
             });
           }
         });
