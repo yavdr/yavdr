@@ -469,6 +469,12 @@ YaVDR.ChannelsStore = Ext
             });
           },
           resortChannelNo: function() {
+            var _self = this;            
+            window.setTimeout(function () {
+              _self._asyncResortChannelNo();
+            }, 100);
+          },
+          _asyncResortChannelNo: function() {
             var channel = 1;
             this.each(function(record) {
               var data = record.data;
