@@ -212,12 +212,13 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
         itemId: 'dashboard',
         height: 50,
         width: 50,
+        tooltip: _('Dashboard'),
         margins:'5 15 0 0',
         cls: 'x-btn-menu',
         scale: 'larger',
         icon: '/static/images/menu_home.png'
       },
-      {
+/*      {
         itemId: 'programm',
         margins:'5 5 0 0',
         text: _('Program')
@@ -237,10 +238,12 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
         scale: 'larger',
         icon: '/static/images/menu_timer.png'
       },
+*/
       {
         itemId: 'settings',
         margins:'5 5 0 0',
-        text: _('Settings')
+        text: _('Settings'),
+        tooltip: _('Settings')
       },
       {
         height: 50,
@@ -249,7 +252,8 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
         margins:'5 15 0 0',
         cls: 'x-btn-menu',
         scale: 'larger',
-        icon: '/static/images/menu_system.png'
+        icon: '/static/images/menu_system.png',
+        tooltip: _('System')
       }
     ];
 
