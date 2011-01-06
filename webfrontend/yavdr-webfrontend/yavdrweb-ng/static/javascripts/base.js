@@ -228,9 +228,14 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
         text: _('Recordings')
       },
       {
+
+        height: 50,
         itemId: 'timer',
-        margins:'5 5 0 0',
-        text: _('Timer')
+        width: 50,
+        margins:'5 15 0 0',
+        cls: 'x-btn-menu',
+        scale: 'larger',
+        icon: '/static/images/menu_timer.png'
       },
       {
         itemId: 'settings',
