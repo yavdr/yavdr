@@ -338,8 +338,7 @@ YaVDR.ChannelGroupEdit = Ext.extend(Ext.Window, {
           this.record.set('number', this.form.getComponent('number').getValue());
           this.record.endEdit();
           if (oldChannelNumber != this.record.get('number')) {
-            window.setTimeout("this.store.resortChannelNo()", 100);
-            ;
+            this.store.resortChannelNo();
           }
           this.destroy();
         }
