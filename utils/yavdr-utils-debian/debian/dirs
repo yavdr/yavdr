@@ -5,3 +5,4 @@ usr/share/yavdr
 var/cache/yavdr/upload
 etc/yavdr/templates_custom
 var/cache/yavdr/process-template-backup
+var/log/vdr
