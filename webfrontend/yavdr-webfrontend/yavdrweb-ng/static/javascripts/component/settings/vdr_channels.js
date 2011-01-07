@@ -479,7 +479,7 @@ YaVDR.ChannelsStore = Ext
             this.each(function(record) {
               var data = record.data;
               if (data.type == 1) {
-                if (data.number > 0) {
+                if (data.number > channel) {
                   channel = data.number;
                 }
               } else {
