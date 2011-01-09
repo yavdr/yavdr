@@ -1,0 +1,10 @@
+#/bin/sh
+
+set -x
+
+if [ -n "$1" -a -f "$1" ]; then
+  ts=`date "+%F %R:%S"`
+  echo $ts
+  
+  cp -f "$1" "$1.$ts"
+fi

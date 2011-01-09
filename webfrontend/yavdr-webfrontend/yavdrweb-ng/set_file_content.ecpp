@@ -13,68 +13,59 @@ content;
 </%args><%cpp>
 
 const char *files[] = {
-    "/var/lib/vdr/remote.conf",
-    "/etc/vdr/diseqc.conf",
-    "/var/lib/vdr/channels.conf",
-    "/etc/lirc/lircd.conf",
-    "/var/lib/vdr/.xbmc/userdata/Lircmap.xml"
+	"/etc/lirc/lircd.conf",
+	"/etc/vdr/diseqc.conf",
+	"/var/lib/vdr/channels.conf",
+	"/var/lib/vdr/remote.conf",
+	"/var/lib/vdr/.xbmc/userdata/Lircmap.xml"
 };
 
 int findex = 0;
 string success = "false";
 
-if (file == "filelist")
+bool validFileName = false;
+for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))) && !validFileName; findex++)
 {
-    for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))); findex++)
-    {
-        //TODO: this is not implemented completely... work in progress
-        if (file == files[findex])
-            reply.out() << files[findex] << "\n";
-    }
+
+	if (file == files[findex]) {
+		validFileName = true;
+	}
 }
-else{
 
-    bool validFileName = false;
-    for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))) && !validFileName; findex++)
-    {
-        if (file == files[findex])
-            validFileName = true;
-    }
+if (validFileName)
+{
+	file = "/var/cache/yavdr/upload" + file;
 
-    if (validFileName)
-    {
-      file = "/var/cache/yavdr/upload" + file;
+	if (make_dirs(file.c_str()))
+	{
+		ofstream myfile;
+		myfile.open ( file.c_str(), ios::trunc );
+		myfile << content;
+		myfile.close();
+		// signal-event
+		string sigevt = "/usr/bin/signal-event process-file-upload " + file;
 
-      if (make_dirs(file.c_str()))
-      {
-        ofstream myfile;
-        myfile.open ( file.c_str(), ios::trunc );
-        myfile << content;
-        myfile.close();
-// signal-event
-        string sigevt = "/usr/bin/signal-event process-file-upload";
-
-        if (FILE *stream = popen(sigevt.c_str(), "r"))
-        {
-          char buffer[1024];
-          reply.out() << "/*";
-          while (!feof(stream))
-          {
-            if (fgets(buffer, sizeof(buffer), stream) != NULL)
-            {
-              reply.out() << buffer;
-            }
-          }
-          pclose(stream); 
-          reply.out() << "*/";
-        }
-      }
-// signal-event end
-      success = "true";
-  }
-  else
-    reply.out() << "/*Illegal command.*/";
+		if (FILE *stream = popen(sigevt.c_str(), "r"))
+		{
+			char buffer[1024];
+			reply.out() << "/*";
+			while (!feof(stream))
+			{
+				if (fgets(buffer, sizeof(buffer), stream) != NULL)
+				{
+					reply.out() << buffer;
+				}
+			}
+			pclose(stream);
+			reply.out() << "*/";
+		}
+	}
+	// signal-event end
+	success = "true";
 }
-</%cpp>{
-    success: <$success$>
+else
+	reply.out() << "/*Illegal command.*/";
+
+</%cpp> {
+	success: <$success$>
 }

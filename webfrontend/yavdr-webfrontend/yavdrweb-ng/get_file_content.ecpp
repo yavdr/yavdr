@@ -6,7 +6,53 @@ using namespace std;
 </%pre><& authenticate ><%args>
 file;
 puretext;
-</%args><%cpp>
+</%args><%shared>
+
+/*
+ * This is a fast, lightweight, and simple pattern matching function.
+ * 
+ * if (wildcmp("bl?h.*", "blah.jpg")) {
+ *   //we have a match!
+ * } else {
+ *   //no match =(
+ * }
+ */
+
+int wildcmp(const char *wild, const char *string) {
+	// Written by Jack Handy - jakkhandy@hotmail.com
+
+	const char *cp = NULL, *mp = NULL;
+
+	while ((*string) && (*wild != '*')) {
+		if ((*wild != *string) && (*wild != '?')) {
+			return 0;
+		}
+		wild++;
+		string++;
+	}
+
+	while (*string) {
+		if (*wild == '*') {
+			if (!*++wild) {
+				return 1;
+			}
+			mp = wild;
+			cp = string+1;
+		} else if ((*wild == *string) || (*wild == '?')) {
+			wild++;
+			string++;
+		} else {
+			wild = mp;
+			string = cp++;
+		}
+	}
+
+	while (*wild == '*') {
+		wild++;
+	}
+	return !*wild;
+}
+</%shared><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 
 //string param puretext can be "true" or "false", defaults to "false"
@@ -26,6 +72,7 @@ const char *files[] = {
     "/var/lib/vdr/.xbmc/userdata/Lircmap.xml",
     "/var/lib/vdr/remote.conf",
     "/var/lib/vdr/channels.conf",
+	"/var/lib/vdr/plugins/channellists/channels.conf.*",
     "/var/lib/yavdrdb.hdf",
     
     "/etc/X11/xorg.conf.yavdr",
@@ -60,7 +107,8 @@ else{
     bool validFileName = false;
     for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))) && !validFileName; findex++)
     {
-        if (file == files[findex])
+    	printf("testing %s\n", files[findex]);
+        if (wildcmp(files[findex], file.c_str()))
             validFileName = true;
     }
     
