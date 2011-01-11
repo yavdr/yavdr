@@ -7,6 +7,6 @@ XINELIBOUTPUTOPTS="--post tvtime:method=use_vo_driver --reconnect --audio=alsa -
 CONFIG="--config /etc/vdr-sxfe/config_xineliboutput"
 
 while  ! netcat -z localhost 37890; do sleep 0.1; done;
-su -c "/usr/bin/vdr-sxfe $XINELIBOUTPUTOPTS $CONFIG xvdr://127.0.0.1:37890" vdr
+exec su -c "/usr/bin/vdr-sxfe $XINELIBOUTPUTOPTS $CONFIG xvdr://127.0.0.1:37890" vdr
 end script 
 <?cs /if ?> 
