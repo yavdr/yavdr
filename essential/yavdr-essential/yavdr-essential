@@ -86,3 +86,4 @@ uswsusp
 udisks-automounter
 vdpauinfo
 openbox
+linux-backports-modules-alsa-lucid-generic
