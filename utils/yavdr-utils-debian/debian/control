@@ -3,7 +3,7 @@ Section: misc
 Priority: extra
 Maintainer: Gerald Dachs <gda@dachsweb.de>
 Build-Depends: debhelper (>= 7), clearsilver-dev
-Standards-Version: 3.8.4
+Standards-Version: 3.9.1
 Homepage: http://yavdr.origo.ethz.ch/
 
 Package: yavdr-utils

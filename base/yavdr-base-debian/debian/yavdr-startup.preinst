@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case "$1" in
+    configure)
+	dpkg-divert --remove /etc/issue
+
+        ;;
+esac
+
+
+#DEBHELPER#
+
+exit 0
