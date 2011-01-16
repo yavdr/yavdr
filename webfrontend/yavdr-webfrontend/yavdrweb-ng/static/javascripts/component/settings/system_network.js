@@ -47,7 +47,7 @@ YaVDR.Component.Settings.SystemNetwork.NFS = Ext.extend(Ext.grid.GridPanel, {
 
     this.viewConfig = {
       forceFit: true
-    }
+    };
 
     this.sm = new Ext.grid.RowSelectionModel({ singleSelect:true });
 
@@ -59,25 +59,25 @@ YaVDR.Component.Settings.SystemNetwork.NFS = Ext.extend(Ext.grid.GridPanel, {
       },
       {
         icon: '/static/images/icons/socket--plus.png',
-        text: 'Add',
+        text: _('Add'),
         scope: this,
         handler: this.addExport
       },
       {
         icon: '/static/images/icons/socket--pencil.png',
-        text: 'Edit',
+        text: _('Edit'),
         scope: this,
         handler: this.changeExport
       },
       {
         icon: '/static/images/icons/socket--minus.png',
-        text: 'Delete',
+        text: _('Delete'),
         scope: this,
         handler: this.deleteExport
       },
       {
         icon: '/static/images/icons/socket--arrow.png',
-        text: 'Save',
+        text: _('Save'),
         scope: this,
         handler: this.saveExports
       }

@@ -1,6 +1,6 @@
 YaVDR.Component.Settings.HwAudio = Ext.extend(YaVDR.Component, {
   itemId: 'settings-hw-audio',
-  description: _('Please select the audio output. Make your choice and press "Save". At saving VDR and the video output will be restarted in order to make your choice activ. ...'),
+  description: _('Please select the audio output. Make your choice and press "Save". At saving VDR and the video output will be restarted in order to make your choice activ.'),
   title: _('Settings'),
   initComponent: function() {
     this.items = [
@@ -38,7 +38,7 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
         },
         {
           key: 'hdmi',
-          title: _('HDMI Stereo'),
+          title: _('HDMI-Stereo'),
           description: _('Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets).')
         },
         {
@@ -48,7 +48,7 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
         },
         {
           key: 'passthrough',
-          title: _('HDMI Pass Through'),
+          title: _('HDMI-Passthrough'),
           description: _('Audio output will happen through HDMI with Pass Through.')
         }
       ]
@@ -77,7 +77,7 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
     });
 
     this.soundSelectiorView = new YaVDR.SelectionList({
-      fieldLabel: _("Audio Output"),
+      fieldLabel: _("Audio output"),
       hiddenField: this.soundSelectionHidden,
       tpl: this.soundTpl,
       store: this.store

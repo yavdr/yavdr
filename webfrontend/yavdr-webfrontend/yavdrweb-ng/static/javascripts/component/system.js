@@ -10,7 +10,7 @@ YaVDR.Component.System = Ext.extend(YaVDR.Component, {
         items: YaVDR.createSubmenu(YaVDR.Component.System.menu['commands'], 2)
       }),
       new YaVDR.Component.Item({
-        title: _('Diagnistics'),
+        title: _('Diagnostics'),
         items: YaVDR.createSubmenu(YaVDR.Component.System.menu['diagnose'], 4)
 
       })
@@ -75,14 +75,14 @@ YaVDR.Component.System.addCommand(_('Reboot computer'), YaVDR.Component.System.r
 YaVDR.Component.System.addCommand(_('Kill XBMC'), YaVDR.Component.System.killXBMC, '/icons/fugue/arrow-step.png');
 YaVDR.Component.System.addCommand(_('Restart VDR'), YaVDR.Component.System.restartVDR, '/icons/fugue/arrow-circle-double-135.png');
 
-YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-infos', _('System Information'), '/icons/fugue/system-monitor.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-infos', _('System information'), '/icons/fugue/system-monitor.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-logs', _('System log files'), '/icons/fugue/script-text.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-xbmc', _('XBMC crash log'), '/icons/fugue/exclamation.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-lirc', _('LIRC configuration'), '/icons/silk/keyboard.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-vdr', _('VDR configuration'), '/icons/fugue/screwdriver.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-x11', _('Xorg server'), '/icons/fugue/television.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-alsa', _('Sound (ALSA)'), '/icons/fugue/speaker.png');
-YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-dpkg', _('System Information'), '/icons/silk/package.png');
+YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-dpkg', _('System information'), '/icons/silk/package.png');
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-yavdr', _('yaVDR database'), '/icons/fugue/database.png');
 
 YaVDR.registerComponent(YaVDR.Component.System);

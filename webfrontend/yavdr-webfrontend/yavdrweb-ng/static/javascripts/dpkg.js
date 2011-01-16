@@ -30,7 +30,7 @@ YaVDR.DPKG = Ext.extend(Ext.Window, {
     this.closeButton = new Ext.Button({
       disabled:true,
       scope: this,
-      text: 'Close',
+      text: _('Close'),
       handler: function() {
         this.close();
         if (typeof this.callback == 'function') {
@@ -78,7 +78,7 @@ Ext.apply(YaVDR.DPKG, {
   },
   install: function(package, callback, scope) {
     Ext.Msg.show({
-      title:'Install package?',
+      title: _('Install package?'),
       msg: sprintf(_('Would you like to install package "%s"?', Ext.util.Format.htmlEncode(package))),
       buttons: Ext.Msg.YESNO,
       animEl: 'elId',
@@ -98,7 +98,7 @@ Ext.apply(YaVDR.DPKG, {
   },
   remove: function(package, callback, scope) {
     Ext.Msg.show({
-      title:'Install package?',
+      title: _('Install package?'),
       msg: sprintf(_('Would you like to remove package "%s"?'), Ext.util.Format.htmlEncode(package)),
       buttons: Ext.Msg.YESNO,
       animEl: 'elId',
@@ -118,7 +118,7 @@ Ext.apply(YaVDR.DPKG, {
   },
   enable: function(package, callback, scope) {
     Ext.Msg.show({
-      title: _('enable plugin?'),
+      title: _('Enable plugin?'),
       msg: sprintf(_('Would you like to enable "%s"?'), Ext.util.Format.htmlEncode(package)),
       buttons: Ext.Msg.YESNO,
       fn: function(buttonId, text, opt) {
@@ -144,7 +144,7 @@ Ext.apply(YaVDR.DPKG, {
   },
   disable: function(package, callback, scope) {
     Ext.Msg.show({
-      title: _('disable plugin?'),
+      title: _('Disable plugin?'),
       msg: sprintf(_('Would you like to disable "%s"?'), Ext.util.Format.htmlEncode(package)),
       buttons: Ext.Msg.YESNO,
       fn: function(button) {

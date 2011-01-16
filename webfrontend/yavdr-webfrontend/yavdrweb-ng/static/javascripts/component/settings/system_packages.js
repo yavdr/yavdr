@@ -9,36 +9,44 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
     this.items = [
       new YaVDR.Component.Header({
         region: 'north',
-        html: 'Settings'
+        html: _('Settings')
       }),
       new YaVDR.Component.Item({
         region: 'center',
         style: '',
         layout: 'border',
-        title: _('Package Installer'),
+        title: _('Package installer'),
         tbar: [
           {
             text: 'apt-get update',
             icon: '/static/images/icons/dpkg_update.png',
+            tooltip: {
+              text: 'apt-get update: ' + _('load new information from internet'),
+              title: 'apt-get update'
+            },
             scope: this,
             handler: this.aptUpdate
           },
           {
             text: 'apt-get autoremove',
             icon: '/static/images/icons/dpkg_autoremove.png',
+            tooltip: {
+              text: 'apt-get autoremove: ' + _('remove unneeded packages'),
+              title: 'apt-get autoremove'
+            },
             scope: this,
             handler: this.aptAutoRemove
           },
           {
-              text: 'apt-get clean',
-              icon: '/static/images/icons/dpkg_clean.png',
-              tooltip: {
-                text: _('apt-get clean clears out the local repository of retrieved package file'),
-                title: 'apt-get clean'
-              },
-              scope: this,
-              handler: this.aptClean
-            }
+            text: 'apt-get clean',
+            icon: '/static/images/icons/dpkg_clean.png',
+            tooltip: {
+              text: 'apt-get clean: ' + _('clears out the local repository of retrieved package file'),
+              title: 'apt-get clean'
+            },
+            scope: this,
+            handler: this.aptClean
+          }
         ],
         items: [this.gridPanel, this.detailPanel]
       })
@@ -52,7 +60,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
     e.stopEvent();
 
     var record = this.gridPanel.store.getAt(rowIndex);
-    var package = record.data.Package;
+    var package_name = record.data.Package;
 
     var menu = new Ext.menu.Menu({
       items: [
@@ -62,7 +70,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
           icon: '/static/images/icons/dpkg_install.png',
           disabled: (record.data.installed != 0),
           handler: function() {
-            this.installPackage(package);
+            this.installPackage(package_name);
           }
         },
         {
@@ -71,7 +79,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
           icon: '/static/images/icons/dpkg_remove.png',
           disabled: (record.data.installed == 0),
           handler: function() {
-            this.removePackage(package);
+            this.removePackage(package_name);
           }
         },
         {
@@ -80,7 +88,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
           icon: '/static/images/icons/dpkg_enable.png',
           disabled: (record.data.Package.substr(0, 11) != "vdr-plugin-" || record.data.installed == 2 || record.data.installed == 0),
           handler: function() {
-            this.enablePackage(package);
+            this.enablePackage(package_name);
           }
         },
         {
@@ -89,7 +97,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
           icon: '/static/images/icons/dpkg_disable.png',
           disabled: (record.data.Package.substr(0, 11) != "vdr-plugin-" || record.data.installed != 2),
           handler: function() {
-            this.disablePackage(package);
+            this.disablePackage(package_name);
           }
         }
       ]
@@ -103,7 +111,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
     YaVDR.DPKG.autoremove(this.reloadPackages, this);
   },
   aptClean: function() {
-	YaVDR.DPKG.clean(this);
+    YaVDR.DPKG.clean(this);
   },
   initGridEvents: function() {
     // load store only first time
@@ -113,9 +121,9 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
   },
   detailTemplate: function() {
     return new Ext.Template([
-      _('Package') +': {Package}<br/>',
-      _('Maintainer') +': {Maintainer}<br/>',
-      _('Description') +': {Description}<br/>'
+      _('Package') + ': {Package}<br/>',
+      _('Maintainer') + ': {Maintainer}<br/>',
+      _('Description') + ': {Description}<br/>'
     ]);
   },
   updateDetail: function(sm, index, row) {
@@ -199,23 +207,23 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
       })
     });
   },
-  removePackage: function(package) {
-    YaVDR.DPKG.remove(package, function() {
+  removePackage: function(package_name) {
+    YaVDR.DPKG.remove(package_name, function() {
       this.packagesStore.reload();
     }, this);
   },
-  installPackage: function(package) {
-    YaVDR.DPKG.install(package, function() {
+  installPackage: function(package_name) {
+    YaVDR.DPKG.install(packagename, function() {
       this.packagesStore.reload();
     }, this);
   },
-  enablePackage: function(package) {
-    YaVDR.DPKG.enable(package, function() {
+  enablePackage: function(package_name) {
+    YaVDR.DPKG.enable(package_name, function() {
       this.packagesStore.reload();
     }, this);
   },
-  disablePackage: function(package) {
-    YaVDR.DPKG.disable(package, function() {
+  disablePackage: function(package_name) {
+    YaVDR.DPKG.disable(package_name, function() {
       this.packagesStore.reload();
     }, this);
   },

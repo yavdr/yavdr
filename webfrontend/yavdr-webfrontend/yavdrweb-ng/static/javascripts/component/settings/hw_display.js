@@ -1,11 +1,11 @@
 YaVDR.Component.Settings.HwDisplay = Ext.extend(YaVDR.Component, {
   itemId: 'settings-hw-display',
   description: _('Here you can configure your display settings.'),
-  title: 'Settings',
+  title: _('Settings'),
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: _('Display Settings'),
+        title: _('Display settings'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.HwDisplay.Display
       })
@@ -29,7 +29,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 	  {
 	    itemId: 'rescan',
 		scope: this,
-		text: _('rescan displays'),
+		text: _('Rescan displays'),
 		handler: this.doRescan,
 		icon: '/icons/fugue/monitor--plus.png'
 	  }
@@ -37,7 +37,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 	this.items = [
       {
         itemId: 'basic',
-        title: _('Basic Settings'),
+        title: _('Basic settings'),
         items: [
           {
             disabled: true,
@@ -65,7 +65,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       },
       {
         itemId: 'xine',
-        title: _('Xine Settings'),
+        title: _('Xine settings'),
         items: [
           new YaVDR.EasyComboBox({
             itemId: 'deinterlacer_hd',
@@ -77,7 +77,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
               ['temporal'],
               ['temporal_spatial']
             ],
-            fieldLabel: _('Xine HD deinterlacer (Default: bob)'),
+            fieldLabel: _('Xine HD deinterlacer') + ' <small/>(' + _('default') + ': bob)</small>',
             inputValue: 'bob'
           }),
           new YaVDR.EasyComboBox({
@@ -90,16 +90,14 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
               ['temporal'],
               ['temporal_spatial']
             ],
-            fieldLabel: _('Xine SD deinterlacer (Default: temporal)'),
+            fieldLabel: _('Xine SD deinterlacer') + ' <small/>(' + _('default') + ': temporal)</small>',
             inputValue: 'temporal'
           })
         ]
-      }]
+      }];
 
       YaVDR.Component.Settings.HwDisplay.Display.superclass.initComponent.call(this);
 	  this.getComponent('basic').getComponent('x11_dualhead').on('check', this.onCheckDualHead, this);
-  },
-  doLoad: function() {
   },
   doSave: function() {
     this.getForm().submit({
@@ -219,12 +217,12 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
     }
   },
   renderDisplay: function(item, index) {
-    var items = []
+    var items = [];
 
     items.push({
       hideLabel: true,
       xtype: 'displayfield',
-      value: _('device') + ': ' + item.devicename + ', ' + 'modeline' + ': ' + item.current.modeline.x + 'x' + item.current.modeline.y + ' ' + item.current.modeline.name + ' Hz'
+      value: _('Device') + ': ' + item.devicename + ', ' + 'modeline' + ': ' + item.current.modeline.x + 'x' + item.current.modeline.y + ' ' + item.current.modeline.name + ' Hz'
     });
 
     items.push({
@@ -238,7 +236,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       itemId: 'primary',
       name: 'primary',
-      fieldLabel: _('primary'),
+      fieldLabel: _('Primary'),
       inputValue: item.devicename,
       checked: item.primary,
       listeners: {
@@ -252,8 +250,8 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       disabled: true,
       itemId: 'secondary',
-      name: _('secondary'),
-      fieldLabel: 'secondary',
+      name: 'secondary',
+      fieldLabel: _('Secondary'),
       inputValue: item.devicename,
       checked: item.secondary
     });
@@ -282,7 +280,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       store: modelines,
       inputValue: 'temporal',
-      emptyText: _('select resolution'),
+      emptyText: _('Select resolution'),
       fieldLabel: _('Resolution'),
       hiddenName: 'modeline' + index,
       value: resolution,
@@ -318,7 +316,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       index: index,
       itemData: item,
       itemId: 'display_' + index,
-      title: _('DISPLAY') + ' ' + ((typeof item.displaynumber != 'undefined') ? ':' + item.displaynumber + '.' + item.screen + ' (' + item.name : ' (' + item.name + ' disabled') + ')',
+      title: _('Display') + ' ' + ((typeof item.displaynumber != 'undefined') ? ':' + item.displaynumber + '.' + item.screen + ' (' + item.name : ' (' + item.name + ' disabled') + ')',
       items: items
     });
 
@@ -355,10 +353,10 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
           basic.getComponent('x11_dualhead').enable();
 
           // Wenn ja aktivere CheckBoxen
-          var dualhead = displayData.system.x11.dualhead.enabled
+          var dualhead = displayData.system.x11.dualhead.enabled;
           if (dualhead == '0' || dualhead == '1') basic.getComponent('x11_dualhead').setValue(dualhead == '1');
 
-          var graphtft = displayData.vdr.plugin.graphtft.enabled
+          var graphtft = displayData.vdr.plugin.graphtft.enabled;
           if (graphtft == '0' || graphtft == '1') basic.getComponent('x11_graphtft').setValue(graphtft == '1');
         } else {
           // Disable Checkox und Update Texts
@@ -372,7 +370,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
     });
   },
   doRescan: function() {
-	  Ext.getBody().mask(_('rescan display. Displays may flicker.'), 'x-mask-loading');
+	  Ext.getBody().mask(_('Rescan display. Displays may flicker.'), 'x-mask-loading');
 
       Ext.Ajax.request({
 	    url: '/admin/set_signal?signal=rescan-display',
@@ -408,7 +406,7 @@ YaVDR.DefaultFrequency = Ext.extend(Ext.form.ComboBox, {
   hiddenName: 'dsdasd',
   displayField: 'label',
   itemId: 'defaultfreq',
-  fieldLabel: _('default frequency'),
+  fieldLabel: _('Default frequency'),
   initComponent: function() {
     this.store = new Ext.data.JsonStore({
       idProperty: 'id',
@@ -438,7 +436,7 @@ YaVDR.FrequencyCheckbox = Ext.extend(Ext.form.Checkbox, {
     this.store = this.defaultFrequency.store;
     value = value.substring(value.length - 3, value.length) + this.frequency.id;
 
-    this.boxLabel = this.hz + ' ' + _('rate');
+    this.boxLabel = this.hz + (this.hz == 'auto' ? '' : 'hz')  +' ' + _('rate');
     this.name = 'freq' + this.index;
     //this.inputValue = value;
     this.inputValue = this.frequency.id;

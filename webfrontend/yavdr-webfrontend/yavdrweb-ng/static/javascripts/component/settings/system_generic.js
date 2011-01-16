@@ -1,7 +1,7 @@
 YaVDR.Component.Settings.SystemGeneric = Ext.extend(YaVDR.Component, {
   itemId: 'settings-system-generic',
-  title: 'Settings',
-  description: 'Hier können allgemeine Systemeinstellungen zum VDR vorgenommen werden.',
+  title: _('Settings'),
+  description: _('General system settings are made here.'),
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
@@ -44,8 +44,8 @@ YaVDR.Component.Settings.SystemGeneric.Grub = Ext.extend(YaVDR.Default.Form, {
         minValue: 0,
         maxValue: 10,
         defaultValue: 0,
-        maxText: _("The Maximum is 10."),
-        minText: _("The Minimum is 0.")
+        maxText: _("The maximum is 10."),
+        minText: _("The minimum is 0.")
       })
     ];
 
@@ -169,7 +169,7 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
         },
         {
           key: 's4',
-          title: _('Fake Suspend to DISK'),
+          title: _('Fake suspend to disk'),
           description: _('Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices')
         },
         {
@@ -267,8 +267,8 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
     });
 
     this.disableUsbWakeupField = new Ext.form.Checkbox({
-      fieldLabel: _('Disable USB-Wakeup'),
-      boxLabel: _('Deactivate USB wakeup, for incompatible hardware'),
+      fieldLabel: _('Disable USB-wakeup'),
+      boxLabel: _('Deactivate USB-wakeup, for incompatible hardware'),
       name: 'disable_usb',
       inputValue: '1'
     });
@@ -304,7 +304,7 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
         var allowed = xhr.responseText;
 
         this.shutdownStore.each(function(record) {
-          type = record.data.key
+          type = record.data.key;
 
           var available = true;
           if(type == 's3' && !allowed.match(/mem/)) available = false;

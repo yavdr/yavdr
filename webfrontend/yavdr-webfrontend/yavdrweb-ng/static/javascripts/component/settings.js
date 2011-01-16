@@ -1,7 +1,7 @@
 YaVDR.Component.Settings = Ext.extend(YaVDR.Component, {
 	itemId: 'settings',
 	title: _('Settings'),
-	description: 'Here you can configure your VDR and applications around it.',
+	description: _('Here you can configure your VDR and applications around it.'),
 	initComponent: function() {
 		this.items = [
 			new YaVDR.Component.Item({
@@ -41,13 +41,13 @@ Ext.apply(YaVDR.Component.Settings, {
 YaVDR.Component.Settings.addMenu('vdr', 'settings-vdr-generic', _('General'), '/icons/fugue/television-image.png');
 YaVDR.Component.Settings.addMenu('vdr', 'settings-vdr-channels', _('Channels'), '/icons/fugue/book-open-list.png');
 
-YaVDR.Component.Settings.addMenu('hw', 'settings-hw-remote', _('Remote Control Settings'), '/icons/silk/keyboard.png');
-YaVDR.Component.Settings.addMenu('hw', 'settings-hw-audio', _('Audio Configuration'), '/icons/fugue/speaker.png');
-YaVDR.Component.Settings.addMenu('hw', 'settings-hw-display', _('Display Settings'), '/icons/fugue/television.png');
+YaVDR.Component.Settings.addMenu('hw', 'settings-hw-remote', _('Remote control settings'), '/icons/silk/keyboard.png');
+YaVDR.Component.Settings.addMenu('hw', 'settings-hw-audio', _('Audio configuration'), '/icons/fugue/speaker.png');
+YaVDR.Component.Settings.addMenu('hw', 'settings-hw-display', _('Display settings'), '/icons/fugue/television.png');
 
 YaVDR.Component.Settings.addMenu('system', 'settings-system-generic', _('System'), '/icons/silk/computer.png');
 YaVDR.Component.Settings.addMenu('system', 'settings-system-network', _('Network'), '/icons/fugue/network-ethernet.png');
 YaVDR.Component.Settings.addMenu('system', 'settings-system-packages', _('Packages'), '/icons/silk/package.png');
-YaVDR.Component.Settings.addMenu('system', 'settings-system-config-editor', _('Edit Configurations'), '/icons/silk/page_edit.png');
+YaVDR.Component.Settings.addMenu('system', 'settings-system-config-editor', _('Edit configurations'), '/icons/silk/page_edit.png');
 
 YaVDR.registerComponent(YaVDR.Component.Settings);

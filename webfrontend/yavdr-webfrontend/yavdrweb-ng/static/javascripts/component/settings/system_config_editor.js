@@ -5,12 +5,12 @@ YaVDR.Component.Settings.SystemConfigEditor = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Header({
-        html: 'Settings',
+        html: _('Settings'),
         region: 'north'
       }),
       {
         region: 'center',
-        title: _('Configuration Editor'),
+        title: _('Configuration editor'),
         frame: true,
         layout: 'fit',
         items: new YaVDR.Component.Settings.SystemConfigEditor.Editor
@@ -99,7 +99,6 @@ YaVDR.Component.Settings.SystemConfigEditor.Editor = Ext.extend(Ext.FormPanel, {
     this.items = [
       {
         itemId: 'editor',
-        style: 'border: 1px solid #00F',
         hideLabel: true,
         xtype: 'textarea',
         disabled: true,

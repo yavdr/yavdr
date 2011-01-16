@@ -9,7 +9,7 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
     if (config)
       Ext.apply(this, config);
 
-    this.addEvents( {
+    this.addEvents({
       beforerowmove : true,
       afterrowmove : true,
       beforerowcopy : true,
@@ -23,7 +23,7 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
     this.grid = grid;
     grid.enableDragDrop = true;
 
-    grid.on( {
+    grid.on({
       render : {
         fn : this.onGridRender,
         scope : this,
@@ -70,8 +70,8 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
           // Changes for multiselction by Spirit
           var selections = new Array();
           var keys = ds.data.keys;
-          for ( var key in keys) {
-            for ( var i = 0; i < data.selections.length; i++) {
+          for (var key in keys) {
+            for (var i = 0; i < data.selections.length; i++) {
               if (keys[key] == data.selections[i].id) {
                 // Exit to prevent drop of selected records on itself.
                 if (rindex == key) {
@@ -110,12 +110,12 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
            */
 
           if (!self.copy) {
-            for ( var i = 0; i < data.selections.length; i++) {
+            for (var i = 0; i < data.selections.length; i++) {
               ds.remove(ds.getById(data.selections[i].id));
             }
           }
 
-          for ( var i = selections.length - 1; i >= 0; i--) {
+          for (var i = selections.length - 1; i >= 0; i--) {
             var insertIndex = rindex;
             ds.insert(insertIndex, selections[i]);
           }
@@ -143,7 +143,7 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
           var position = dd.rindex + (dd.mode == "below" ? 1 : 0);
           Ext.each(selections, function(record) {
             this.grid.store.insert(position, record);
-            
+
             data.grid.store.remove(record);
             position++;
           }, this);
@@ -166,8 +166,8 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
         // quits function if any one row matches the current selected row.
         var ds = this.grid.getStore();
         var keys = ds.data.keys;
-        for ( var key in keys) {
-          for ( var i = 0; i < data.selections.length; i++) {
+        for (var key in keys) {
+          for (var i = 0; i < data.selections.length; i++) {
             if (keys[key] == data.selections[i].id) {
               if (rindex == key) {
                 if (this.currentRowEl) {
@@ -193,7 +193,7 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
           // d&d to empty board
           if (rindex === false && data.grid != this.grid) {
             dd.mode = "below";
-            dd.rindex = this.grid.getStore().data.length-1;
+            dd.rindex = this.grid.getStore().data.length - 1;
             return this.dropAllowed;
           } else {
             var currentRow = this.grid.getView().getRow(rindex);
@@ -266,7 +266,7 @@ Ext.ux.dd.GridDragDropRowOrder = Ext.extend(Ext.util.Observable, {
 
     if (this.scrollable) {
       Ext.dd.ScrollManager.register(grid.getView().getEditorParent());
-      grid.on( {
+      grid.on({
         beforedestroy : this.onBeforeDestroy,
         scope : this,
         single : true
@@ -308,41 +308,46 @@ YaVDR.ChannelGroupEdit = Ext.extend(Ext.Window, {
   width : 400,
   title : _('Name of the group'),
   border : false,
-  
+
   initComponent : function() {
-    this.form = new Ext.FormPanel( {
+    this.form = new Ext.FormPanel({
       padding : 10,
       defaults : {
         anchor : "100%",
         xtype : 'textfield'
       },
-      items : [ {
-        itemId : 'name',
-        fieldLabel : _('Name'),
-        name : 'name',
-        value : this.record.data.name,
-        allowBlank: false
-      }, {
-        itemId : 'number',
-        fieldLabel : _('next channel no.'),
-        name : 'number',
-        value : this.record.data.number
-      } ],
-      fbar : [ {
-        text : _('Save'),
-        scope : this,
-        handler : function() {
-          var oldChannelNumber = this.record.get('number');
-          this.record.beginEdit();
-          this.record.set('name', this.form.getComponent('name').getValue());
-          this.record.set('number', this.form.getComponent('number').getValue());
-          this.record.endEdit();
-          if (oldChannelNumber != this.record.get('number')) {
-            this.store.resortChannelNo();
-          }
-          this.destroy();
+      items : [
+        {
+          itemId : 'name',
+          fieldLabel : _('Name'),
+          name : 'name',
+          value : this.record.data.name,
+          allowBlank: false
+        },
+        {
+          itemId : 'number',
+          fieldLabel : _('Next channel no.'),
+          name : 'number',
+          value : this.record.data.number
         }
-      } ]
+      ],
+      fbar : [
+        {
+          text : _('Save'),
+          scope : this,
+          handler : function() {
+            var oldChannelNumber = this.record.get('number');
+            this.record.beginEdit();
+            this.record.set('name', this.form.getComponent('name').getValue());
+            this.record.set('number', this.form.getComponent('number').getValue());
+            this.record.endEdit();
+            if (oldChannelNumber != this.record.get('number')) {
+              this.store.resortChannelNo();
+            }
+            this.destroy();
+          }
+        }
+      ]
     });
 
     this.items = this.form;
@@ -368,7 +373,7 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
     var lines = doc.split("\n");
     var records = new Array();
     var channel = 1;
-    for ( var i = 0; i < lines.length; ++i) {
+    for (var i = 0; i < lines.length; ++i) {
       var line = lines[i];
       if (line == '')
         continue;
@@ -419,84 +424,75 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
   }
 });
 
-YaVDR.ChannelsStore = Ext
-    .extend(
-        Ext.data.Store,
-        {
-          constructor : function(config) {
-            YaVDR.ChannelsStore.superclass.constructor
-                .call(
-                    this,
-                    Ext
-                        .apply(
-                            config,
-                            {
-                              url : '/admin/get_file_content?file=/var/lib/vdr/channels.conf&puretext=true',
-                              reader : new YaVDR.ChannelsReader(config)
-                            }));
-          },
-          generateConfig : function() {
-            var channels = new Array();
-            this.each(function(record) {
-              var data = record.data;
-              if (data.type == 1) {
-                if (data.number > 0) {
-                  channels.push(":@" + data.number + ' ' + data.name)
-                } else {
-                  channels.push(":" + data.name)
-                }
-              } else {
-                channels.push(data.name + ';' + data.provider + ':'
-                    + data.frequency + ':' + data.parameters + ':'
-                    + data.source + ':' + data.srate + ':' + data.vpid + ':'
-                    + data.apid + ':' + data.tpid + ':' + data.caid + ':'
-                    + data.sid + ':' + data.nid + ':' + data.tid + ':'
-                    + data.rid)
-              }
+YaVDR.ChannelsStore = Ext.extend(Ext.data.Store, {
+  constructor : function(config) {
+    YaVDR.ChannelsStore.superclass.constructor.call(this, Ext.apply(config, {
+      url : '/admin/get_file_content?file=/var/lib/vdr/channels.conf&puretext=true',
+      reader : new YaVDR.ChannelsReader(config)
+    }));
+  },
+  generateConfig : function() {
+    var channels = new Array();
+    this.each(function(record) {
+      var data = record.data;
+      if (data.type == 1) {
+        if (data.number > 0) {
+          channels.push(":@" + data.number + ' ' + data.name)
+        } else {
+          channels.push(":" + data.name)
+        }
+      } else {
+        channels.push(data.name + ';' + data.provider + ':'
+            + data.frequency + ':' + data.parameters + ':'
+            + data.source + ':' + data.srate + ':' + data.vpid + ':'
+            + data.apid + ':' + data.tpid + ':' + data.caid + ':'
+            + data.sid + ':' + data.nid + ':' + data.tid + ':'
+            + data.rid)
+      }
 
-            }, this);
-            return channels.join("\n");
-          },
-          save : function() {
-            Ext.Ajax.request( {
-              url : '/admin/set_file_content?file=/var/lib/vdr/channels.conf',
-              params : {
-                content : this.generateConfig()
-              },
-              success : function() {
-                alert(_('Channels saved'));
-              }
-            });
-          },
-          resortChannelNo: function() {
-            var _self = this;            
-            window.setTimeout(function () {
-              _self._asyncResortChannelNo();
-            }, 100);
-          },
-          _asyncResortChannelNo: function() {
-            var channel = 1;
-            this.each(function(record) {
-              var data = record.data;
-              if (data.type == 1) {
-                if (data.number > channel) {
-                  channel = data.number;
-                }
-              } else {
-                record.beginEdit();
-                record.set('channel', channel);
-                record.endEdit();
-                record.commit(true);
-                //if (record.get("channel") == channel++) {
-                  //record.reject();
-                  //record.modified = null;
-                //}
-                
-                channel++;
-              }
-            }, this);
-          }
-        });
+    }, this);
+    return channels.join("\n");
+  },
+  save : function() {
+    Ext.Ajax.request({
+      url : '/admin/set_file_content?file=/var/lib/vdr/channels.conf',
+      params : {
+        content : this.generateConfig()
+      },
+      success : function() {
+        alert(_('Channels saved'));
+      }
+    });
+  },
+  resortChannelNo: function() {
+    var _self = this;
+    window.setTimeout(function () {
+      _self._asyncResortChannelNo();
+    }, 100);
+  },
+  _asyncResortChannelNo: function() {
+    var channel = 1;
+    this.each(function(record) {
+      var data = record.data;
+      if (data.type == 1) {
+        if (data.number > channel) {
+          channel = data.number;
+        }
+      } else {
+        record.beginEdit();
+        record.set('channel', channel);
+        record.endEdit();
+        record.commit(true);
+        //if (record.get("channel") == channel++) {
+        //record.reject();
+        //record.modified = null;
+        //}
+
+        channel++;
+      }
+    }, this);
+  }
+});
 
 YaVDR.ChannelConfWindow = Ext.extend(Ext.Window, {
   value : "",
@@ -507,13 +503,15 @@ YaVDR.ChannelConfWindow = Ext.extend(Ext.Window, {
   height : 300,
   layout : 'fit',
   initComponent : function() {
-    this.tbar = [ {
-      text : _('Send to PasteBin'),
-      icon : '/static/images/icons/clipboard-paste-document-text.png',
-      scope : this,
-      handler : this.sendPasteBin
-    } ];
-    this.content = new Ext.form.TextArea( {
+    this.tbar = [
+      {
+        text : _('Send to PasteBin'),
+        icon : '/static/images/icons/clipboard-paste-document-text.png',
+        scope : this,
+        handler : this.sendPasteBin
+      }
+    ];
+    this.content = new Ext.form.TextArea({
       autoScroll : true,
       border : false,
       style : 'font-family: monospace; white-space: pre; font-size: 12px;',
@@ -529,356 +527,353 @@ YaVDR.ChannelConfWindow = Ext.extend(Ext.Window, {
 
 YaVDR.Component.Settings.VdrChannels = Ext
     .extend(
-        YaVDR.Component,
-        {
-          itemId : 'settings-vdr-channels',
-          layout : 'border',
-          initComponent : function() {
-            this.initStore();
-            this.initGrid();
-            this.initClipBoardStore();
-            this.initClipBoardGrid();
+    YaVDR.Component,
+  {
+    itemId : 'settings-vdr-channels',
+    layout : 'border',
+    initComponent : function() {
+      this.initStore();
+      this.initGrid();
+      this.initClipBoardStore();
+      this.initClipBoardGrid();
 
-            this.items = [ new YaVDR.Component.Header( {
-              region : 'north',
-              html : _('Settings')
-            }), new YaVDR.Component.Item( {
-              region : 'center',
-              title : _('Channel List'),
-              layout : 'fit',
-              items : this.grid
-            }), new YaVDR.Component.Item( {
-              region : 'east',
-              title : _('Clipboard'),
-              layout : 'fit',
-              width : 250,
-              split : true,
-              items : this.clipBoardGrid
-            })
+      this.items = [ new YaVDR.Component.Header({
+        region : 'north',
+        html : _('Settings')
+      }), new YaVDR.Component.Item({
+        region : 'center',
+        title : _('Channel list'),
+        layout : 'fit',
+        items : this.grid
+      }), new YaVDR.Component.Item({
+        region : 'east',
+        title : _('Clipboard'),
+        layout : 'fit',
+        width : 250,
+        split : true,
+        items : this.clipBoardGrid
+      })
 
-            ];
-            YaVDR.Component.Settings.VdrChannels.superclass.initComponent
-                .call(this);
-            this.on('render', this.reloadStore, this);
+      ];
+      YaVDR.Component.Settings.VdrChannels.superclass.initComponent
+          .call(this);
+      this.on('render', this.reloadStore, this);
 
-          },
-          initClipBoardStore : function() {
-            this.clipBoardStore = new Ext.data.Store();
-          },
-          initClipBoardGrid : function() {
-            this.clipBoardGrid = new Ext.grid.GridPanel( {
-              store : this.clipBoardStore,
-              ddGroup : 'channels',
-              bodyStyle : 'border: 1px solid #D0D0D0;',
-              columns : [ {
-                header : _("Name"),
-                renderer : this.renderName,
-                align : 'left',
-                width : 160,
-                dataIndex : 'name',
-                sortable : false
-              } ],
-              // sm: new Ext.grid.RowSelectionModel({ singleSelect: true }),
-              plugins : new Ext.ux.dd.GridDragDropRowOrder( {
-                copy : false,
-                scrollable : true
-              }),
-              viewConfig : {
-                forceFit : true
-              }
-            });
-
-            this.clipBoardGrid.on('rowcontextmenu', function(grid, index, e) {
-              e.stopEvent();
-              var record = this.clipBoardStore.getAt(index);
-              if (!grid.getSelectionModel().isIdSelected(record.id)
-                  || !grid.getSelectionModel().hasSelection()) {
-                grid.getSelectionModel().selectRow(index);
-              }
-
-              var contextMenu = new Ext.menu.Menu( {
-                items : [
-                    {
-                      text : _('move into channels.conf'),
-                      icon : '/icons/silk/cart_remove.png',
-                      menu : [
-                          {
-                            text : 'on top',
-                            icon : '/icons/fugue/node-insert-previous.png',
-                            scope : this,
-                            handler : function() {
-                              var selections = this.clipBoardGrid
-                                  .getSelectionModel().getSelections();
-                              var position = 0;
-                              Ext.each(selections, function(record) {
-                                this.store.insert(position, record);
-                                this.clipBoardStore.remove(record);
-                                position++;
-                              }, this);
-                            }
-                          },
-                          {
-                            text : 'at bottom',
-                            icon : '/icons/fugue/node-insert-next.png',
-                            scope : this,
-                            handler : function() {
-                              var selections = this.clipBoardGrid
-                                  .getSelectionModel().getSelections();
-                              var position = this.store.getCount();
-                              Ext.each(selections, function(record) {
-                                this.store.insert(position, record);
-                                this.clipBoardStore.remove(record);
-                                position++;
-                              }, this);
-                            }
-                          } ]
-                    },
-                    {
-                      text : this.clipBoardGrid.getSelectionModel()
-                          .getSelections().length > 1 ? _('delete selection')
-                          : sprintf(_('delete "%s"'), record.data.name),
-                      icon : '/icons/silk/delete.png',
-                      scope : this,
-                      handler : function() {
-                        this.clipBoardStore.remove(this.clipBoardGrid
-                            .getSelectionModel().getSelections());
-                      }
-                    } ]
-              });
-              // show
-              contextMenu.showAt(e.getXY());
-            }, this);
-          },
-          reloadStore : function() {
-            this.store.reload();
-            this.clipBoardStore.removeAll();
-          },
-          saveStore : function() {
-            this.store.save();
-          },
-          newGroup : function() {
-            // Show a dialog using config options:
-            Ext.Msg.prompt(_('add new group'),
-                _('Please enter the group name:'), function(btn, text) {
-                  if (btn == 'ok' && text != '') {
-                    this.store.insert(0, new Ext.data.Record( {
-                      type : 1,
-                      name : text
-                    }))
-                  }
-                }, this);
-          },
-          renderName : function(value, metaData, record, rowIndex, colIndex, store) {
-            var name;
-            if (record.data.type == 1) {
-              name = "<b>" + record.data.name + "</b>";
-              if (record.data.number > 0)
-                name = name + " (" + record.data.number + ")"
-            } else {
-              name = value;
-            }
-            return name;
-          },
-          renderChannel : function(value, metaData, record, rowIndex, colIndex, store) {
-            if (record.data.type == 1) {
-              return "";
-            } else {
-              if (value == record.data.channel_orig)
-                return value;
-              else
-                return value + " (" + record.data.channel_orig + ")";
-            }
-          },
-          displayConf : function() {
-            (new YaVDR.ChannelConfWindow( {
-              value : this.store.generateConfig()
-            })).show();
-          },
-          initGrid : function() {
-            this.grid = new Ext.grid.GridPanel( {
-              ddGroup : 'channels',
-              store : this.store,
-              // enableDragDrop: true,
-              tbar : [ {
-                text : _('add new group'),
-                icon : '/icons/silk/folder_add.png',
-                scope : this,
-                handler : this.newGroup
-              }, '-', {
-                text : _("display channels.conf"),
-                scope : this,
-                icon : '/icons/silk/page.png',
-                handler : this.displayConf
-              }, '-', {
-                text : _('Save'),
-                icon: '/static/images/icons/save.png',
-                scope : this,
-                handler : this.saveStore
-              }, {
-                text : _('Reload'),
-                icon: '/static/images/icons/refresh.png',
-                scope : this,
-                handler : this.reloadStore
-              } ],
-              bodyStyle : 'border: 1px solid #D0D0D0;',
-              columns : [ {
-                header : _("Channel"),
-                renderer: this.renderChannel,
-                align : 'right',
-                width : 60,
-                dataIndex : 'channel',
-                sortable : false
-              }, {
-                header : _("Name"),
-                renderer : this.renderName,
-                align : 'left',
-                width : 160,
-                dataIndex : 'name',
-                sortable : false
-              }, {
-                header : _("Provider"),
-                id:"provider",
-                align : 'left',
-                width : 100,
-                dataIndex : 'provider',
-                sortable : false
-              } ],
-              plugins : new Ext.ux.dd.GridDragDropRowOrder( {
-                copy : false,
-                scrollable : true
-              }),
-              autoExpandColumn: "provider",
-              view: new Ext.ux.grid.BufferView({
-                // custom row height
-                //rowHeight: 34,
-                // render rows as they come into viewable area.
-                scrollDelay: false
-                //forceFit : true
-              }),
-              
-              loadMask : _("loading channels")
-            });
-
-            this.grid
-                .on(
-                    'rowcontextmenu',
-                    function(grid, index, e) {
-                      e.stopEvent();
-                      var record = this.store.getAt(index);
-                      if (!grid.getSelectionModel().isIdSelected(record.id)
-                          || !grid.getSelectionModel().hasSelection()) {
-                        grid.getSelectionModel().selectRow(index);
-                      }
-                      var contextMenu = new Ext.menu.Menu(
-                          {
-                            items : [
-                                {
-                                  text : _('move into clipboard'),
-                                  icon : '/icons/silk/cart_put.png',
-                                  menu : [
-                                      {
-                                        text : _('on top'),
-                                        icon : '/icons/fugue/node-insert-previous.png',
-                                        scope : this,
-                                        handler : function() {
-                                          var selections = this.grid
-                                              .getSelectionModel()
-                                              .getSelections();
-                                          this.store.remove(selections);
-                                          this.clipBoardStore.insert(0,
-                                              selections);
-                                        }
-                                      },
-                                      {
-                                        text : _('at bottom'),
-                                        icon : '/icons/fugue/node-insert-next.png',
-                                        scope : this,
-                                        handler : function() {
-                                          var records = this.grid
-                                              .getSelectionModel()
-                                              .getSelections();
-                                          Ext.each(records, function(record) {
-                                            this.store.remove(record);
-                                            this.clipBoardStore.insert(
-                                                this.clipBoardStore.getCount(),
-                                                record);
-                                          }, this);
-                                        }
-                                      } ]
-                                },
-                                {
-                                  text : _('insert clipboard'),
-                                  icon : '/icons/silk/cart_remove.png',
-                                  disabled : (this.clipBoardStore.getCount() == 0),
-                                  menu : [
-                                      {
-                                        text : sprintf(_('above %s'),
-                                            record.data.name),
-                                        scope : this,
-                                        icon : '/icons/fugue/node-insert-previous.png',
-                                        handler : function() {
-                                          var position = index;
-                                          this.clipBoardStore.each(
-                                              function(record) {
-                                                this.store.insert(position,
-                                                    record);
-                                                position++;
-                                              }, this);
-                                          this.clipBoardStore.removeAll();
-                                        }
-                                      },
-                                      {
-                                        text : sprintf(_('below %s'),
-                                            record.data.name),
-                                        icon : '/icons/fugue/node-insert-next.png',
-                                        scope : this,
-                                        handler : function() {
-                                          var position = index + 1;
-                                          this.clipBoardStore.each(
-                                              function(record) {
-                                                this.store.insert(position,
-                                                    record);
-                                                position++;
-                                              }, this);
-                                          this.clipBoardStore.removeAll();
-                                        }
-                                      } ]
-                                },
-                                {
-                                  text : _('Edit'),
-                                  icon : '/icons/silk/pencil.png',
-                                  scope : this,
-                                  disabled : (record.data.type != 1 || this.grid
-                                      .getSelectionModel().getSelections().length > 1),
-                                  handler : function() {
-                                    (new YaVDR.ChannelGroupEdit( {
-                                      scope : this,
-                                      record : record,
-                                      store: this.store
-                                    })).show()
-                                  }
-                                },
-                                {
-                                  text : this.grid.getSelectionModel()
-                                      .getSelections().length > 1 ? _('delete selection')
-                                      : sprintf(_('delete "%s"'),
-                                          record.data.name),
-                                  icon : '/icons/silk/delete.png',
-                                  scope : this,
-                                  handler : function() {
-                                    this.store.remove(this.grid
-                                        .getSelectionModel().getSelections());
-                                  }
-                                } ]
-                          });
-                      // show
-                      contextMenu.showAt(e.getXY());
-                    }, this);
-          },
-          initStore : function() {
-            this.store = new YaVDR.ChannelsStore({
-              autoLoad: false
-            });
+    },
+    initClipBoardStore : function() {
+      this.clipBoardStore = new Ext.data.Store();
+    },
+    initClipBoardGrid : function() {
+      this.clipBoardGrid = new Ext.grid.GridPanel({
+        store : this.clipBoardStore,
+        ddGroup : 'channels',
+        bodyStyle : 'border: 1px solid #D0D0D0;',
+        columns : [
+          {
+            header : _("Name"),
+            renderer : this.renderName,
+            align : 'left',
+            width : 160,
+            dataIndex : 'name',
+            sortable : false
           }
+        ],
+        // sm: new Ext.grid.RowSelectionModel({ singleSelect: true }),
+        plugins : new Ext.ux.dd.GridDragDropRowOrder({
+          copy : false,
+          scrollable : true
+        }),
+        viewConfig : {
+          forceFit : true
+        }
+      });
+
+      this.clipBoardGrid.on('rowcontextmenu', function(grid, index, e) {
+        e.stopEvent();
+        var record = this.clipBoardStore.getAt(index);
+        if (!grid.getSelectionModel().isIdSelected(record.id)
+            || !grid.getSelectionModel().hasSelection()) {
+          grid.getSelectionModel().selectRow(index);
+        }
+
+        var contextMenu = new Ext.menu.Menu({
+          items : [
+            {
+              text : _('Move into channels.conf'),
+              icon : '/icons/silk/cart_remove.png',
+              menu : [
+                {
+                  text : 'On top',
+                  icon : '/icons/fugue/node-insert-previous.png',
+                  scope : this,
+                  handler : function() {
+                    var selections = this.clipBoardGrid
+                        .getSelectionModel().getSelections();
+                    var position = 0;
+                    Ext.each(selections, function(record) {
+                      this.store.insert(position, record);
+                      this.clipBoardStore.remove(record);
+                      position++;
+                    }, this);
+                  }
+                },
+                {
+                  text : 'At bottom',
+                  icon : '/icons/fugue/node-insert-next.png',
+                  scope : this,
+                  handler : function() {
+                    var selections = this.clipBoardGrid
+                        .getSelectionModel().getSelections();
+                    var position = this.store.getCount();
+                    Ext.each(selections, function(record) {
+                      this.store.insert(position, record);
+                      this.clipBoardStore.remove(record);
+                      position++;
+                    }, this);
+                  }
+                }
+              ]
+            },
+            {
+              text : this.clipBoardGrid.getSelectionModel()
+                  .getSelections().length > 1 ? _('Delete selection')
+                  : sprintf(_('Delete "%s"'), record.data.name),
+              icon : '/icons/silk/delete.png',
+              scope : this,
+              handler : function() {
+                this.clipBoardStore.remove(this.clipBoardGrid
+                    .getSelectionModel().getSelections());
+              }
+            }
+          ]
         });
+        // show
+        contextMenu.showAt(e.getXY());
+      }, this);
+    },
+    reloadStore : function() {
+      this.store.reload();
+      this.clipBoardStore.removeAll();
+    },
+    saveStore : function() {
+      this.store.save();
+    },
+    newGroup : function() {
+      // Show a dialog using config options:
+      Ext.Msg.prompt(_('Add new group'),
+          _('Please enter the group name:'), function(btn, text) {
+        if (btn == 'ok' && text != '') {
+          this.store.insert(0, new Ext.data.Record({
+            type : 1,
+            name : text
+          }))
+        }
+      }, this);
+    },
+    renderName : function(value, metaData, record, rowIndex, colIndex, store) {
+      var name;
+      if (record.data.type == 1) {
+        name = "<b>" + record.data.name + "</b>";
+        if (record.data.number > 0)
+          name = name + " (" + record.data.number + ")"
+      } else {
+        name = value;
+      }
+      return name;
+    },
+    renderChannel : function(value, metaData, record, rowIndex, colIndex, store) {
+      if (record.data.type == 1) {
+        return "";
+      } else {
+        if (value == record.data.channel_orig)
+          return value;
+        else
+          return value + " (" + record.data.channel_orig + ")";
+      }
+    },
+    displayConf : function() {
+      (new YaVDR.ChannelConfWindow({
+        value : this.store.generateConfig()
+      })).show();
+    },
+    initGrid : function() {
+      this.grid = new Ext.grid.GridPanel({
+        ddGroup : 'channels',
+        store : this.store,
+        // enableDragDrop: true,
+        tbar : [
+          {
+            text : _('Add new group'),
+            icon : '/icons/silk/folder_add.png',
+            scope : this,
+            handler : this.newGroup
+          },
+          '-',
+          {
+            text : _("Display channels.conf"),
+            scope : this,
+            icon : '/icons/silk/page.png',
+            handler : this.displayConf
+          },
+          '-',
+          {
+            text : _('Save'),
+            icon: '/static/images/icons/save.png',
+            scope : this,
+            handler : this.saveStore
+          },
+          {
+            text : _('Reload'),
+            icon: '/static/images/icons/refresh.png',
+            scope : this,
+            handler : this.reloadStore
+          }
+        ],
+        bodyStyle : 'border: 1px solid #D0D0D0;',
+        columns : [
+          {
+            header : _("Channel"),
+            renderer: this.renderChannel,
+            align : 'right',
+            width : 60,
+            dataIndex : 'channel',
+            sortable : false
+          },
+          {
+            header : _("Name"),
+            renderer : this.renderName,
+            align : 'left',
+            width : 160,
+            dataIndex : 'name',
+            sortable : false
+          },
+          {
+            header : _("Provider"),
+            id:"provider",
+            align : 'left',
+            width : 100,
+            dataIndex : 'provider',
+            sortable : false
+          }
+        ],
+        plugins : new Ext.ux.dd.GridDragDropRowOrder({
+          copy : false,
+          scrollable : true
+        }),
+        autoExpandColumn: "provider",
+        view: new Ext.ux.grid.BufferView({
+          // custom row height
+          //rowHeight: 34,
+          // render rows as they come into viewable area.
+          scrollDelay: false
+          //forceFit : true
+        }),
+
+        loadMask : _("loading channels")
+      });
+
+      this.grid.on('rowcontextmenu', function(grid, index, e) {
+        e.stopEvent();
+        var record = this.store.getAt(index);
+        if (!grid.getSelectionModel().isIdSelected(record.id)
+            || !grid.getSelectionModel().hasSelection()) {
+          grid.getSelectionModel().selectRow(index);
+        }
+        var contextMenu = new Ext.menu.Menu(
+        {
+          items : [
+            {
+              text : _('Move into clipboard'),
+              icon : '/icons/silk/cart_put.png',
+              menu : [
+                {
+                  text : _('On top'),
+                  icon : '/icons/fugue/node-insert-previous.png',
+                  scope : this,
+                  handler : function() {
+                    var selections = this.grid.getSelectionModel().getSelections();
+                    this.store.remove(selections);
+                    this.clipBoardStore.insert(0, selections);
+                  }
+                },
+                {
+                  text : _('At bottom'),
+                  icon : '/icons/fugue/node-insert-next.png',
+                  scope : this,
+                  handler : function() {
+                    var records = this.grid.getSelectionModel().getSelections();
+                    Ext.each(records, function(record) {
+                      this.store.remove(record);
+                      this.clipBoardStore.insert(this.clipBoardStore.getCount(), record);
+                    }, this);
+                  }
+                }
+              ]
+            },
+            {
+              text : _('Insert clipboard'),
+              icon : '/icons/silk/cart_remove.png',
+              disabled : (this.clipBoardStore.getCount() == 0),
+              menu : [
+                {
+                  text : sprintf(_('Above %s'), record.data.name),
+                  scope : this,
+                  icon : '/icons/fugue/node-insert-previous.png',
+                  handler : function() {
+                    var position = index;
+                    this.clipBoardStore.each(function(record) {
+                      this.store.insert(position, record);
+                      position++;
+                    }, this);
+                    this.clipBoardStore.removeAll();
+                  }
+                },
+                {
+                  text : sprintf(_('Below %s'), record.data.name),
+                  icon : '/icons/fugue/node-insert-next.png',
+                  scope : this,
+                  handler : function() {
+                    var position = index + 1;
+                    this.clipBoardStore.each(function(record) {
+                      this.store.insert(position, record);
+                      position++;
+                    }, this);
+                    this.clipBoardStore.removeAll();
+                  }
+                }
+              ]
+            },
+            {
+              text : _('Edit'),
+              icon : '/icons/silk/pencil.png',
+              scope : this,
+              disabled : (record.data.type != 1 || this.grid.getSelectionModel().getSelections().length > 1),
+              handler : function() {
+                (new YaVDR.ChannelGroupEdit({
+                  scope : this,
+                  record : record,
+                  store: this.store
+                })).show()
+              }
+            },
+            {
+              text : this.grid.getSelectionModel().getSelections().length > 1 ? _('Delete selection') : sprintf(_('Delete "%s"'), record.data.name),
+              icon : '/icons/silk/delete.png',
+              scope : this,
+              handler : function() {
+                this.store.remove(this.grid.getSelectionModel().getSelections());
+              }
+            }
+          ]
+        });
+        // show
+        contextMenu.showAt(e.getXY());
+      }, this);
+    },
+    initStore : function() {
+      this.store = new YaVDR.ChannelsStore({
+        autoLoad: false
+      });
+    }
+  });
 YaVDR.registerComponent(YaVDR.Component.Settings.VdrChannels);

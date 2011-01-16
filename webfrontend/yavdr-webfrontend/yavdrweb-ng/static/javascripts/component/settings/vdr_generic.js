@@ -5,12 +5,12 @@ YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: _('General Settings'),
+        title: _('General settings'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.VdrGeneric.Frontend
       }),
       new YaVDR.Component.Item({
-        title: _('Lifeguard Monitoring Items'),
+        title: _('Lifeguard monitoring items'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.VdrGeneric.Lifeguard
       }),

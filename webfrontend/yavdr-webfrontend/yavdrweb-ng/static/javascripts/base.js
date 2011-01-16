@@ -306,7 +306,7 @@ YaVDR.Viewport = Ext.extend(Ext.Viewport, {
 
 Ext.ns('YaVDR.Default');
 YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
-  labelWidth: 200,
+  labelWidth: 250,
   initComponent: function() {
 	if (!Ext.isArray(this.buttons)) {
 		this.buttons = [];
@@ -315,14 +315,14 @@ YaVDR.Default.Form = Ext.extend(Ext.FormPanel, {
       {
         itemId: 'cancel',
         scope: this,
-        text: _('cancel'),
+        text: _('Cancel'),
         handler: this.doLoad,
         icon: '/icons/fugue/cross.png'
       },
       {
         itemId: 'save',
         scope: this,
-        text: _('save'),
+        text: _('Save'),
         handler: this.doSave,
         icon: '/icons/fugue/disk-black.png'
       }

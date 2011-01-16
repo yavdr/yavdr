@@ -122,7 +122,7 @@ YaVDR.Component.Settings.HwRemote.LIRC = Ext.extend(YaVDR.Default.Form, {
       itemId: 'serial_port',
       name: 'serial_port',
       columns: 1,
-      fieldLabel: _('Serial Port'),
+      fieldLabel: _('Serial port'),
       items: [
         {boxLabel: 'none', name: 'serial_port', inputValue: ''},
         {boxLabel: '/dev/ttyS0 (COM1)', name: 'serial_port', inputValue: '/dev/ttyS0'},
