@@ -22,9 +22,9 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
 							{id: 'refresh'}
 						],
 						html: '<b>Status</b>: VDR gestartet<br><b>Speicherplatz</b>: 45G<br><b>Frontend</b>: Xine<br><b>Auflösung</b>: 1920x1080'
-					},
+					}//,
 
-					new YaVDR.Component.Dashboard.Recordings()
+					//new YaVDR.Component.Dashboard.Recordings()
 					/*
 					 {
 					 frame: true,
@@ -56,8 +56,8 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
 						],
 						style: 'margin: 0 0 5px 0 ',
 						html: '<b>Shutdown</b>: S3 (Disabled USB-Wakeup)<br> <b>CPU</b>: 10% - <b>RAM</b>: 1024MB (169 MG frei)<br><b>Soundausgabe</b>: HDMI + Analog'
-					},
-					new YaVDR.Component.Dashboard.Timers()
+					}//,
+					//new YaVDR.Component.Dashboard.Timers()
 				]
 			}
 
