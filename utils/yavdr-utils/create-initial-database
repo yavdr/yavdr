@@ -2,7 +2,9 @@
 
 touch /var/lib/yavdrdb.hdf
 for i in /usr/share/yavdr/defaults/*.hdf; do
-  cat $i >> /var/lib/yavdrdb.hdf
+  while read LINE ; do 
+	dbset "$LINE"
+  done < $i
 done
 
 language=`echo $LANG | cut -d_ -f1`
