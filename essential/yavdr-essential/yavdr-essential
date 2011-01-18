@@ -1,6 +1,7 @@
 acpi-support
 acpid
 alsa-utils
+alsa-base
 anacron
 at
 avahi-daemon
