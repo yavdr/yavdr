@@ -125,14 +125,17 @@ class ZeroconfBrowser(object):
 class Mount:
 	def __init__(self, host, path, subtype):
 		syslog("Mount created")
-		self.remote = host + ":" + path
-		self.media = config.get('dir','media')
-		if self.media is None:
-			self.media = "/media"
-		self.video = config.get('dir','vdr')
-		if self.video is None:
-			self.video = "/srv/vdr/video.00"
 		self.subtype = subtype
+		self.remote = host + ":" + path
+		if subtype == "vdr":
+			self.media = config.get('dir','vdr')
+			if self.media is None:
+				self.media = "/srv/vdr/video.00"
+		else:
+			self.media = config.get('dir','media')
+			if self.media is None:
+				self.media = "/media"
+		syslog("media is %s for %s:%s" % (self.media, host, path))
 		if subtype == "vdr":
 			self.name = _("Recordings_on_")
 		elif subtype == "video":
@@ -145,7 +148,6 @@ class Mount:
 			self.name = _("Miscellaneous_on_")
 		self.name += host.split('.')[0]
 		self.local = self.media + '/' + self.name
-		self.vdr = self.video + '/' + self.name
 
 	def create(self):
 		syslog("create")
@@ -172,20 +174,7 @@ class Mount:
 			syslog("unable to mount: %s" % strerror)
 			return
 		if self.subtype == "vdr":
-			self.link()
-
-	def link(self):
-		try:
-			os.remove(self.vdr)
-		except OSError as (errno, strerror):
-			if errno != 2:
-				syslog("I/O error({0}): {1}".format(errno, strerror))
-				return
-		try:
-			os.symlink(self.local, self.vdr)
-		except OSError as (errno, strerror):
-			syslog("I/O error({0}): {1}".format(errno, strerror))
-		self.notify()
+			self.notify()
 
 	def notify(self):
 		time.sleep(3)
@@ -210,7 +199,7 @@ class StaticMounter:
 		syslog("mount static to %s" % self.vdr)
 
 	def __call__(self):
-		for i in range(1,999):
+		for i in range(0,999):
 			path = "%s.%03d" % (self.hdf_path, i)
 			dest = subprocess.Popen(["dbget",path],
 						stdout=subprocess.PIPE).communicate()[0]
