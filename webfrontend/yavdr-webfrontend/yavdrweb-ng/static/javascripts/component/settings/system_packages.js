@@ -213,7 +213,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
     }, this);
   },
   installPackage: function(package_name) {
-    YaVDR.DPKG.install(packagename, function() {
+    YaVDR.DPKG.install(package_name, function() {
       this.packagesStore.reload();
     }, this);
   },
