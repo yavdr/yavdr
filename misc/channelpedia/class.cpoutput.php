@@ -66,7 +66,9 @@ class cpOutput extends cpBasics{
 	    $frequency = 0;
 	    @unlink($filename);
 		$handle = fopen ($filename, "w");
-	    foreach ($this->dbh->query($sqlquery) as $row) {
+		$result = $this->dbh->query($sqlquery);
+		if ($result === false) die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
+	    foreach ($result as $row) {
 			if ($row['frequency'] !== $frequency){
 	    		$frequency = $row['frequency'];
 	    		$hilow = "";
@@ -98,7 +100,8 @@ class cpOutput extends cpBasics{
 				$row["rid"];			
 			fputs($handle, "$rawstring\n");
 	    }
-	    fclose($handle);
+	    if (fclose($handle) === false)
+	    	die("Error on file close.");
 	//    delete($this->dbh); 
 	}	
 }
