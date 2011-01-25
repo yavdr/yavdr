@@ -342,7 +342,7 @@ if (command == "LSTC") // || command == "NEWC")
                  string::size_type begin_of_channel_name  = sBuffer.substr(4, channel_length -4 ).find_first_of(" ", bof) + 4;
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
                  if (filtermode == 0)
-			         reply.out() << sBuffer.substr(begin_of_channel_name, channel_length - begin_of_channel_name ) << "\n";
+			         reply.out() << sBuffer.substr(begin_of_channel_name +1, channel_length - begin_of_channel_name -1 ) << "\n";
 			     else
 			     {                 
 	                 //check if we have got a channel group label which always has channel_nr 0
