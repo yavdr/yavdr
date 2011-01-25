@@ -1,0 +1,12 @@
+vdr-plugin-jsonapi (0.0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  
+  Important:
+  
+  If you intend to make this plugin available to others, please create an
+  ITP-bug (see http://www.debian.org/devel/wnpp ) and contact the
+  Debian VDR packaging team: pkg-vdr-dvb-devel@lists.alioth.debian.org
+
+ -- Gerald Dachs <gda@dachsweb.de>  Tue, 25 Jan 2011 18:47:20 +0100
+

@@ -1,0 +1,15 @@
+Source: vdr-plugin-jsonapi
+Section: video
+Priority: extra
+Maintainer: Gerald Dachs <Gerald Dachs <gda@dachsweb.de>>
+Build-Depends: cdbs, debhelper (>= 7.0.50~), vdr-dev (>= 1.7.16-18yavdr5), gettext, libcxxtools-dev
+Standards-Version: 3.8.4
+Vcs-Svn: svn://svn.debian.org/pkg-vdr-dvb/vdr/vdr-plugin-jsonapi/trunk/
+Vcs-Browser: http://svn.debian.org/wsvn/pkg-vdr-dvb/vdr/vdr-plugin-jsonapi/trunk/
+Homepage: <url://example.com>
+
+Package: vdr-plugin-jsonapi
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${vdr:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
