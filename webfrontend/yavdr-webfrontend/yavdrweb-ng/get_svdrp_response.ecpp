@@ -284,7 +284,10 @@ Json::Value filterJSONSingleChannelData( Json::Value json_channel, unsigned int 
 	    json_channel.removeMember("_friendly_scrambled");
 	
 	    json_channel.removeMember("_friendly_dvb_sat_band");
-
+	}
+	
+    if (filterMode & CF_FILTER_BOOL_ADDITIONS)
+	{
 		//bool dvb_s2
 	    json_channel.removeMember("dvb_s2");
 	    
@@ -313,6 +316,11 @@ if (command == "LSTC") // || command == "NEWC")
 {
     sprintf( svdrpcmd, "%s LSTC :groups", svdrpCmdString.c_str() );
 
+	unsigned int filtermask = CF_FILTER_GROUP_AND_NUMBER  + CF_FILTER_CHANNEL_DETAILS;
+    int filtermode = atoi( param1.c_str() );
+    if (filtermode == 0)
+    	filtermask = CF_FILTER_GROUP_AND_NUMBER  + CF_FILTER_HUMAN_READABLE_ADDITIONS + CF_FILTER_BOOL_ADDITIONS;
+
     if (FILE *stream = popen(svdrpcmd, "r"))
     {
         int counter = 0;
@@ -339,7 +347,7 @@ if (command == "LSTC") // || command == "NEWC")
                  {
                      json_channels[counter] = filterJSONSingleChannelData(
                          convertSingleRawChannelDataToJSON( buffer, channel_nr, begin_of_channel_name, prefixed_groupname),
-                         CF_FILTER_GROUP_AND_NUMBER + CF_FILTER_HUMAN_READABLE_ADDITIONS //+ CF_FILTER_CHANNEL_DETAILS 
+                         filtermask 
                      );
                     
                      counter ++;
