@@ -341,48 +341,55 @@ if (command == "LSTC") // || command == "NEWC")
                  int channel_length = strlen(buffer) -1;
                  string::size_type begin_of_channel_name  = sBuffer.substr(4, channel_length -4 ).find_first_of(" ", bof) + 4;
                  int channel_nr = atoi(sBuffer.substr(4, begin_of_channel_name -4).c_str());
-                 
-                 //check if we have got a channel group label which always has channel_nr 0
-                 if (channel_nr != 0)
-                 {
-                     json_channels[counter] = filterJSONSingleChannelData(
-                         convertSingleRawChannelDataToJSON( buffer, channel_nr, begin_of_channel_name, prefixed_groupname),
-                         filtermask 
-                     );
-                    
-                     counter ++;
-                 }
-                 else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
-                 {
-                     if (groupcounter == 0) groupcounter =1 ; //if first group has a defined name it should not be group zero
-                     //group zero only exists if no group exists (no group = default)
-                     groupname = sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
-                     if ( groupname.substr(0, 1) == "@")
-                     {
-                         string::size_type first_blank = groupname.find_first_of(" ", bof);
-                         if ( first_blank != string::npos && first_blank < strlen(groupname.c_str()) )
-                         {
-                             string startwithnumber = groupname.substr(1, first_blank -1);
-                             groupname = groupname.substr( first_blank +1, strlen(groupname.c_str()) - first_blank -1);
-                             groupname += " (@";
-                             groupname += startwithnumber;
-                             groupname += ")";
-                         }
-                     }
-                     
-                     sprintf( prefixed_groupname ,"%03d %s", groupcounter, groupname.c_str() );
-                     
-                     groupcounter++;
-                     
+                 if (filtermode == 0)
+			         reply.out() << sBuffer.substr(begin_of_channel_name, channel_length - begin_of_channel_name ) << "\n";
+			     else
+			     {                 
+	                 //check if we have got a channel group label which always has channel_nr 0
+	                 if (channel_nr != 0)
+	                 {
+	                     json_channels[counter] = filterJSONSingleChannelData(
+	                         convertSingleRawChannelDataToJSON( buffer, channel_nr, begin_of_channel_name, prefixed_groupname),
+	                         filtermask 
+	                     );
+	                    
+	                     counter ++;
+	                 }
+	                 else if (sBuffer.substr(begin_of_channel_name + 1,1) == ":")
+	                 {
+	                     if (groupcounter == 0) groupcounter =1 ; //if first group has a defined name it should not be group zero
+	                     //group zero only exists if no group exists (no group = default)
+	                     groupname = sBuffer.substr(begin_of_channel_name + 2, strlen(buffer) - begin_of_channel_name - 4);
+	                     if ( groupname.substr(0, 1) == "@")
+	                     {
+	                         string::size_type first_blank = groupname.find_first_of(" ", bof);
+	                         if ( first_blank != string::npos && first_blank < strlen(groupname.c_str()) )
+	                         {
+	                             string startwithnumber = groupname.substr(1, first_blank -1);
+	                             groupname = groupname.substr( first_blank +1, strlen(groupname.c_str()) - first_blank -1);
+	                             groupname += " (@";
+	                             groupname += startwithnumber;
+	                             groupname += ")";
+	                         }
+	                     }
+	                     
+	                     sprintf( prefixed_groupname ,"%03d %s", groupcounter, groupname.c_str() );
+	                     
+	                     groupcounter++;
+	                     
+	                 }
                  }
              }
           }
         }
         pclose(stream);
-        Json::Value json_channellist;
-        json_channellist["channelList"] = json_channels;
-        json_channellist["totalCount"]  = counter;
-        reply.out() << json_channellist;
+        if (filtermode != 0)
+        {
+	        Json::Value json_channellist;
+	        json_channellist["channelList"] = json_channels;
+	        json_channellist["totalCount"]  = counter;
+	        reply.out() << json_channellist;
+	    }
     }
 }
 else if (command == "CHAN"){
