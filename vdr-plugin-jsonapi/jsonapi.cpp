@@ -6,58 +6,17 @@
  * $Id$
  */
 
-#include <cxxtools/http/server.h>
-#include <cxxtools/http/request.h>
-#include <cxxtools/http/reply.h>
-#include <cxxtools/http/responder.h>
-#include <cxxtools/eventloop.h>
-#include <cxxtools/arg.h>
-
 #include <vdr/plugin.h>
+#include "serverthread.h"
 
 static const char *VERSION        = "0.0.1";
 static const char *DESCRIPTION    = "Enter description for 'jsonapi' plugin";
 static const char *MAINMENUENTRY  = "Jsonapi";
 
-// HelloResponder
-//
-class HelloResponder : public cxxtools::http::Responder
-{
-  public:
-    explicit HelloResponder(cxxtools::http::Service& service)
-      : cxxtools::http::Responder(service)
-      { }
-
-    virtual void reply(std::ostream&, cxxtools::http::Request& request, cxxtools::http::Reply& reply);
-};
-
-void HelloResponder::reply(std::ostream& out, cxxtools::http::Request& request, cxxtools::http::Reply& reply)
-{
-  isyslog("send hello");
-
-  reply.addHeader("Content-Type", "text/html");
-  out << "<html>\n"
-         " <head>\n"
-         "  <title>Hello World-application</title>\n"
-         " </head>\n"
-         " <body bgcolor=\"#FFFFFF\">\n"
-         "  <h1>Hello World</h1>\n"
-         " </body>\n"
-         "</html>\n";
-
-}
-
-// HelloService
-//
-typedef cxxtools::http::CachedService<HelloResponder> HelloService;
-
 class cPluginJsonapi : public cPlugin {
 private:
   // Add any member variables or functions you may need here.
-  std::string listenIp;
-  unsigned short int listenPort;
-  cxxtools::EventLoop loop;
-  cxxtools::http::Server *server;
+  cServerThread serverthread;
 public:
   cPluginJsonapi(void);
   virtual ~cPluginJsonapi();
@@ -83,17 +42,11 @@ public:
 
 cPluginJsonapi::cPluginJsonapi(void)
 {
-  listenIp = "0.0.0.0";
-  listenPort = 8001;
-
-  isyslog("create server");
-  server = new cxxtools::http::Server(loop, listenIp, listenPort);
 }
 
 cPluginJsonapi::~cPluginJsonapi()
 {
   // Clean up after yourself!
-  delete server;
 }
 
 const char *cPluginJsonapi::CommandLineHelp(void)
@@ -116,10 +69,7 @@ bool cPluginJsonapi::Initialize(void)
 
 bool cPluginJsonapi::Start(void)
 {
-  HelloService service;
-
-  server->addService("/hello", service);
-  loop.run();
+  serverthread.Start();
 
   return true;
 }
