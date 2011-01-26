@@ -24,41 +24,42 @@
 
 class cpDBInit extends cpBasics {
 
-	function __construct($path){
-		parent::__construct($path);
-		@unlink($this->dbfile); //delete existing database file
-		$this->connect();
-		$this->createDBTables();
-	}
-		
-	private function createDBTables(){
-		$sqltext= "CREATE TABLE channels(
-		    cablesourcetype TEXT,
-			name TEXT,
-			provider TEXT,
-			frequency INTEGER,
-			modulation TEXT,
-			source TEXT,
-			symbolrate INTEGER,
-			vpid INTEGER,
-			apid INTEGER,
-			tpid TEXT,
-			caid TEXT,
-			sid INTEGER,
-			nid INTEGER,
-			tid TEXT,
-			rid INTEGER,
-			cgroup TEXT,
-			PRIMARY KEY ( source, nid, tid, sid)
-			) ;";
-	
-		$query = $this->dbh->exec($sqltext);
-		if ($query === false) {
-		    echo "\nPDO::errorInfo():\n";
-		    print_r($this->dbh->errorInfo());
-		    die("DB problem on create db + tables");
-		}
-	}		
+    function __construct($path){
+        parent::__construct($path);
+        @unlink($this->dbfile); //delete existing database file
+        $this->connect();
+        $this->createDBTables();
+    }
+        
+    private function createDBTables(){
+        $sqltext= "CREATE TABLE channels(
+            cablesourcetype TEXT,
+            name TEXT,
+            provider TEXT,
+            frequency INTEGER,
+            modulation TEXT,
+            source TEXT,
+            symbolrate INTEGER,
+            vpid INTEGER,
+            apid INTEGER,
+            tpid TEXT,
+            caid TEXT,
+            sid INTEGER,
+            nid INTEGER,
+            tid TEXT,
+            rid INTEGER,
+            cgroup TEXT,
+            last_changed TIMESTAMP,
+            PRIMARY KEY ( source, nid, tid, sid)
+            ) ;";
+    
+        $query = $this->dbh->exec($sqltext);
+        if ($query === false) {
+            echo "\nPDO::errorInfo():\n";
+            print_r($this->dbh->errorInfo());
+            die("DB problem on create db + tables");
+        }
+    }        
 }
 
 ?>

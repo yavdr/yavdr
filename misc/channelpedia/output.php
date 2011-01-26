@@ -30,177 +30,176 @@ $x = new cpOutput("/home/hp/Desktop/channels/");
 
 //this filters channels that don't fit into some standard categories
 $filter_astra1_fta = " AND ((tid != '1092' AND tid != '1113' AND provider != '-') OR (name = 'DMAX')) AND provider != 'SKY' ";
- 	
+     
 $x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.SDTV.Public.de", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = $filter_astra1_fta . 
- 		"AND UPPER(name) NOT LIKE '% HD' ". 
- 		"AND UPPER(name) NOT LIKE '%TEST-%' ".
- 		"AND ( (provider = 'ARD' ".
- 		"AND ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' )) OR provider = 'ZDFvision') "
- 	);
+    $label = "S19.2E_Astra1.FTA.SDTV.Public.de", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = $filter_astra1_fta . 
+        "AND UPPER(name) NOT LIKE '% HD' ". 
+        "AND UPPER(name) NOT LIKE '%TEST-%' ".
+        "AND ( (provider = 'ARD' ".
+        "AND ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' )) OR provider = 'ZDFvision') "
+    );
 
 $x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.SDTV.Public_Regional.de", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = $filter_astra1_fta . 
- 		"AND UPPER(name) NOT LIKE '% HD' 
- 		 AND UPPER(name) NOT LIKE '%TEST-%' 
- 		 AND provider = 'ARD' AND NOT ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' ) "
- 	);
- 	
-$x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.HDTV.de", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = $filter_astra1_fta . "AND UPPER(name) LIKE '% HD' "
- 	);
+    $label = "S19.2E_Astra1.FTA.SDTV.Public_Regional.de", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = $filter_astra1_fta . 
+        "AND UPPER(name) NOT LIKE '% HD' 
+         AND UPPER(name) NOT LIKE '%TEST-%' 
+         AND provider = 'ARD' AND NOT ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' ) "
+    );
 
 $x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.SDTV.Private.de", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = $filter_astra1_fta . "AND UPPER(name) NOT LIKE '% HD' ". 
- 	    "AND name NOT LIKE '% Austria' AND name NOT LIKE '% A' AND name NOT LIKE '% CH'  AND name NOT LIKE '% Schweiz' ".
- 		"AND (provider = 'ProSiebenSat.1' OR provider = 'RTL World' OR provider = 'RTL') "
- 	);
- 	
-$x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.SDTV.Rest_Private.de", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = $filter_astra1_fta . 
- 		"AND UPPER(name) NOT LIKE '% HD' 
- 		AND provider != 'ProSiebenSat.1' 
- 		AND provider != 'RTL World' 
- 		AND provider != 'RTL' 
- 		AND provider != 'ARD' 
- 		AND provider != 'ZDFvision'  "
- 		);
- 	
-$x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.SDTV.Private.au", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = $filter_astra1_fta . "AND UPPER(name) NOT LIKE '% HD' ".
- 	    "AND (name LIKE '% Austria' OR name LIKE '% A') ".
- 		"AND (provider = 'ProSiebenSat.1' OR provider = 'RTL World' OR provider = 'RTL') "
- 	);
+    $label = "S19.2E_Astra1.FTA.HDTV.de", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = $filter_astra1_fta . "AND UPPER(name) LIKE '% HD' "
+    );
 
 $x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.SDTV.Private.ch", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = $filter_astra1_fta . "AND UPPER(name) NOT LIKE '% HD' ".
- 	    "AND (name LIKE '% CH' OR name LIKE '% Schweiz') ".
- 		"AND (provider = 'ProSiebenSat.1' OR provider = 'RTL World' OR provider = 'RTL') "
- 	);
- 	
+    $label = "S19.2E_Astra1.FTA.SDTV.Private.de", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = $filter_astra1_fta . "AND UPPER(name) NOT LIKE '% HD' ". 
+        "AND name NOT LIKE '% Austria' AND name NOT LIKE '% A' AND name NOT LIKE '% CH'  AND name NOT LIKE '% Schweiz' ".
+        "AND (provider = 'ProSiebenSat.1' OR provider = 'RTL World' OR provider = 'RTL') "
+    );
+
+$x->createSortedChannelsConfFromDB( 
+    $label = "S19.2E_Astra1.FTA.SDTV.Rest_Private.de", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = $filter_astra1_fta . 
+       "AND UPPER(name) NOT LIKE '% HD' 
+        AND provider != 'ProSiebenSat.1' 
+        AND provider != 'RTL World' 
+        AND provider != 'RTL' 
+        AND provider != 'ARD' 
+        AND provider != 'ZDFvision'  "
+   );
+
+$x->createSortedChannelsConfFromDB( 
+    $label = "S19.2E_Astra1.FTA.SDTV.Private.au", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = $filter_astra1_fta . "AND UPPER(name) NOT LIKE '% HD' ".
+        "AND (name LIKE '% Austria' OR name LIKE '% A') ".
+        "AND (provider = 'ProSiebenSat.1' OR provider = 'RTL World' OR provider = 'RTL') "
+     );
+
+$x->createSortedChannelsConfFromDB( 
+    $label = "S19.2E_Astra1.FTA.SDTV.Private.ch", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = $filter_astra1_fta . "AND UPPER(name) NOT LIKE '% HD' ".
+        "AND (name LIKE '% CH' OR name LIKE '% Schweiz') ".
+        "AND (provider = 'ProSiebenSat.1' OR provider = 'RTL World' OR provider = 'RTL') "
+     );
+     
 /*
 $x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.rubbish.de", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere =" AND (tid = '1092' OR tid = '1113' OR provider = '-' OR provider = 'SKY') "
- 	);
- */
- 	
-$x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.Radio.ARD_ZDF.de", 
-	$source = "S19.2E", 
-	$caidMode = 1, 
-	$mediaType = 2, 
-	$language = "deu", 
-	$orderby="UPPER(name) ASC",
-	$customwhere = " AND (provider LIKE '%ARD%' OR provider = 'ZDFvision') " 
-	);
+    $label = "S19.2E_Astra1.FTA.rubbish.de", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere =" AND (tid = '1092' OR tid = '1113' OR provider = '-' OR provider = 'SKY') "
+    );
+*/
 
 $x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.Radio.Private.de", 
-	$source = "S19.2E", 
-	$caidMode = 1, 
-	$mediaType = 2, 
-	$language = "deu", 
-	$orderby="UPPER(name) ASC",
-	$customwhere = " AND provider NOT LIKE '%ARD%' AND provider != 'ZDFvision' AND provider != 'ORF' " 
-	);
+    $label = "S19.2E_Astra1.FTA.Radio.ARD_ZDF.de", 
+    $source = "S19.2E", 
+    $caidMode = 1, 
+    $mediaType = 2, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC",
+    $customwhere = " AND (provider LIKE '%ARD%' OR provider = 'ZDFvision') " 
+    );
 
 $x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.Radio.ORF.at", 
-	$source = "S19.2E", 
-	$caidMode = 1, 
-	$mediaType = 2, 
-	$language = "deu", 
-	$orderby="UPPER(name) ASC",
-	$customwhere = " AND provider = 'ORF' " 
-	);
-	
-$x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.SKY.SDTV.de", 
-	$source = "S19.2E", 
-	$caidMode = 2,
- 	$mediaType = 1, 
- 	$language = "deu", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) NOT LIKE '% HD%' "
- 	);
+    $label = "S19.2E_Astra1.FTA.Radio.Private.de", 
+    $source = "S19.2E", 
+    $caidMode = 1, 
+    $mediaType = 2, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC",
+    $customwhere = " AND provider NOT LIKE '%ARD%' AND provider != 'ZDFvision' AND provider != 'ORF' " 
+    );
 
 $x->createSortedChannelsConfFromDB( 
-	$label = "S19.2E_Astra1.FTA.TV.fra", 
-	$source = "S19.2E", 
-	$caidMode = 1,
- 	$mediaType = 1, 
- 	$language = "fra", 
- 	$orderby = "UPPER(name) ASC"
- 	//$customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) NOT LIKE '% HD%' "
- 	);
- 	
+    $label = "S19.2E_Astra1.FTA.Radio.ORF.at", 
+    $source = "S19.2E", 
+    $caidMode = 1, 
+    $mediaType = 2, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC",
+    $customwhere = " AND provider = 'ORF' " 
+    );
+    
 $x->createSortedChannelsConfFromDB( 
-	$label = "_long.S19.2E_Astra1.scrambled.TV.fra", 
-	$source = "S19.2E", 
-	$caidMode = 2,
- 	$mediaType = 1, 
- 	$language = "fra", 
- 	$orderby="UPPER(name) ASC", 
- 	$customwhere = "" //$filter_astra1_fta . "AND UPPER(name) NOT LIKE '% HD' "
- 	);		 	
- 	
+    $label = "S19.2E_Astra1.SKY.SDTV.de", 
+    $source = "S19.2E", 
+    $caidMode = 2,
+    $mediaType = 1, 
+    $language = "deu", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) NOT LIKE '% HD%' "
+    );
 
 $x->createSortedChannelsConfFromDB( 
-	$label = "_long.S28.2E_Astra2.FTA.radio", 
-	$source = "S28.2E", 
-	$caidMode = 1, 
-	$mediaType=2, 
-	$language = "", 
-	$orderby="UPPER(name) ASC"
-	);
+    $label = "S19.2E_Astra1.FTA.TV.fra", 
+    $source = "S19.2E", 
+    $caidMode = 1,
+    $mediaType = 1, 
+    $language = "fra", 
+    $orderby = "UPPER(name) ASC"
+    //$customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) NOT LIKE '% HD%' "
+    );
+     
+$x->createSortedChannelsConfFromDB( 
+    $label = "_long.S19.2E_Astra1.scrambled.TV.fra", 
+    $source = "S19.2E", 
+    $caidMode = 2,
+    $mediaType = 1, 
+    $language = "fra", 
+    $orderby="UPPER(name) ASC", 
+    $customwhere = "" //$filter_astra1_fta . "AND UPPER(name) NOT LIKE '% HD' "
+    );
+
+$x->createSortedChannelsConfFromDB( 
+    $label = "_long.S28.2E_Astra2.FTA.radio", 
+    $source = "S28.2E", 
+    $caidMode = 1, 
+    $mediaType=2, 
+    $language = "", 
+    $orderby="UPPER(name) ASC"
+    );
 
 $x->createSortedChannelsConfFromDB( $label = "_long.S28.2E_Astra2.FTA.tv", $source = "S28.2E", $caidMode = 1, $mediaType=1, $language = "", $orderby="UPPER(name) ASC");
 $x->createSortedChannelsConfFromDB( $label = "_long.S19.2E_Astra1.complete", $source = "S19.2E", $caidMode = 0, $mediaType = 0, $language = "" );

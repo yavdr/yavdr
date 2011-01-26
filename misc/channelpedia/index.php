@@ -29,7 +29,7 @@ require_once 'class.cpbasics.php';
 //$x = new cpDBInit("/home/hp/Desktop/channels/");
 
 //input: reads channel.conf from path and put channels into db
-//require_once 'class.cpinput.php';
-//$x = new cpInput("/home/hp/Desktop/channels/", "Germany_KabelBW");
+require_once 'class.cpinput.php';
+$x = new cpInput("/home/hp/Desktop/channels/", "Germany_KabelBW", "none");
 
 ?>

@@ -24,18 +24,18 @@
 
 class cpBasics {
 
-	protected
-		$path,
-		$dbh,
-		$dbfile;
+    protected
+        $path,
+        $dbh,
+        $dbfile;
 
-	function __construct($path){
-		$this->path = $path;
-		$this->dbfile = $this->path . "channeldb.sqlite";	
-	}
-	
-	protected function connect(){
-		$this->dbh = new PDO('sqlite:'.$this->dbfile); 
-	}
+    function __construct($path){
+        $this->path = $path;
+        $this->dbfile = $this->path . "channeldb.sqlite";    
+    }
+    
+    protected function connect(){
+        $this->dbh = new PDO('sqlite:'.$this->dbfile); 
+    }
 }
 ?>
