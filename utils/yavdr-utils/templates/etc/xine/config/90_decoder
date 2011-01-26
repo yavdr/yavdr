@@ -5,3 +5,7 @@
 # Pfad zu win32-Codecs
 # string, default: /usr/lib/codecs
 #decoder.external.win32_codecs_path:/usr/lib/codecs
+
+# disable decoder flush from video out
+# bool, default: 0
+engine.decoder.disable_flush_from_video_out:1
