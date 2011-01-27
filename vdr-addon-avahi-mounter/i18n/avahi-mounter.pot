@@ -17,19 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: begin avahi-mounter
-msgid "Recordings_on_"
+msgid "Recording"
 msgstr ""
 
-msgid "Videos_on_"
+msgid "Video"
 msgstr ""
 
-msgid "Music_on_"
+msgid "Music"
 msgstr ""
 
-msgid "Pictures_on_"
+msgid "Picture"
 msgstr ""
 
-msgid "Miscellaneous_on_"
+msgid "Miscellaneous"
 msgstr ""
 
 #: end avahi-mounter

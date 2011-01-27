@@ -128,26 +128,17 @@ class Mount:
 		self.subtype = subtype
 		self.remote = host + ":" + path
 		if subtype == "vdr":
-			self.media = config.get('dir','vdr')
-			if self.media is None:
-				self.media = "/srv/vdr/video.00"
-		else:
-			self.media = config.get('dir','media')
-			if self.media is None:
-				self.media = "/media"
-		syslog("media is %s for %s:%s" % (self.media, host, path))
-		if subtype == "vdr":
-			self.name = _("Recordings_on_")
+			self.local = config.vdr + '/'
 		elif subtype == "video":
-			self.name = _("Videos_on_")
+			self.local = config.video
 		elif subtype == "audio":
-			self.name = _("Music_on_")
+			self.local = config.audio
 		elif subtype == "picture":
-			self.name = _("Pictures_on_")
+			self.local = config.picture
 		else:
-			self.name = _("Miscellaneous_on_")
-		self.name += host.split('.')[0]
-		self.local = self.media + '/' + self.name
+			self.local = config.misc
+		self.local += host.split('.')[0]
+		syslog("media is %s for %s:%s" % (self.local, host, path))
 
 	def create(self):
 		syslog("create")
@@ -194,8 +185,6 @@ class StaticMounter:
 	def __init__(self):
 		self.hdf_path = "system.net.media.video"
 		self.vdr = config.get('dir','vdr')
-		if self.vdr is None:
-			self.vdr = "/srv/vdr/video.00"
 		syslog("mount static to %s" % self.vdr)
 
 	def __call__(self):
@@ -237,13 +226,33 @@ class Config:
 		if self.config.getboolean("base", "enabled") is not True:
 			syslog("avahi-mounter is disabled")
 			sys.exit()
-		self.vdr = self.get('dir','vdr')
+		# preset some values
+		self.vdr = self.config.get('dir','vdr','/srv/vdr/video.00')
+		self.media = self.config.get('dir','media','/media')
+		self.record  = self.__getDir(_("Record")) 
+		self.video   = self.__getDir(_("Video"))
+		self.audio   = self.__getDir(_("Music"))
+		self.picture = self.__getDir(_("Picture"))
+		self.misc    = self.__getDir(_("Miscellaneous"))
+	
+	def __getDir(self, name):
+		__dir = self.media + '/' + name + '/'
+		try:
+			os.makedirs(__dir)
+		except OSError as (errno, strerror):
+			if errno != 17:
+				syslog("unable to make dir: %s" % strerror)
+				raise
+		return __dir
 
-	def get(self, section, key):
+	def get(self, section, key, default=None):
 		try:
 			idx = "%s_%s" % (section, key)
 			if not idx in self.values:
-				self.values[idx] = self.config.get(section, key)
+				self.value = self.config.get(section, key)
+				if self.value is None:
+					self.value = default
+				self.values[idx] = self.value
 			return self.values[idx]
 		except ConfigParser.NoSectionError or ConfigParser.NoOptionError:
 			syslog("request for non-existing option: [%s].%s" % (section, key))

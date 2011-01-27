@@ -12,19 +12,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: begin avahi-mounter
-msgid "Recordings_on_"
-msgstr "Aufnahmen_auf_"
+msgid "Recording"
+msgstr "Aufnahmen"
 
-msgid "Videos_on_"
-msgstr "Videos_auf_"
+msgid "Video"
+msgstr "Video"
 
-msgid "Music_on_"
-msgstr "Musik_auf_"
+msgid "Music"
+msgstr "Musik"
 
-msgid "Pictures_on_"
-msgstr "Bilder_auf_"
+msgid "Picture"
+msgstr "Bilder"
 
-msgid "Miscellaneous_on_"
-msgstr "Sonstige_auf_"
+msgid "Miscellaneous"
+msgstr "Sonstige"
 #: end avahi-mounter
 
