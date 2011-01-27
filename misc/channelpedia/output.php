@@ -65,7 +65,7 @@ $x->createSortedChannelsConfFromDB(
     $mediaType = 1, 
     $language = "deu", 
     $orderby="UPPER(name) ASC", 
-    $customwhere = $filter_astra1_fta . "AND UPPER(name) LIKE '% HD' "
+    $customwhere = $filter_astra1_fta . "AND UPPER(name) LIKE '% HD%' "
     );
 
 $x->createSortedChannelsConfFromDB( 

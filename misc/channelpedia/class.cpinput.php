@@ -52,17 +52,24 @@ class cpInput extends cpBasics {
             $sqlquery = "SELECT * FROM channels WHERE source = ".$params["source"]." AND nid = ".$params["nid"]." AND tid = ".$params["tid"]." AND sid = ".$params["sid"];
             $result = $this->dbh->query($sqlquery);
             if ($result === false) die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
-            $changed = false;
+            $query = $this->dbh->exec("BEGIN TRANSACTION");
             foreach ($result as $row){
+                $changes = "";
+                $update_data = array();
                 foreach ($params as $key => $value){
                     if ($value != $this->dbh->quote( $row[$key])){
-                        print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": Parameter $key: from ".$this->dbh->quote( $row[$key]). " to $value\n";
-                        $changed = true;
+                        $changes .= "Parameter $key: from ".$this->dbh->quote( $row[$key]). " to $value, ";
+                        $update_data[] = "$key = $value";
                     }
                 }
+                if ($changes != ""){
+                    print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": $changes\n";
+                    $statement = "UPDATE channels SET ".implode(", " , $update_data)." WHERE source = ".$params["source"]." AND nid = ".$params["nid"]." AND tid = ".$params["tid"]." AND sid = ".$params["sid"];
+                    print "$statement\n";
+                    $query = $this->dbh->exec($statement);
+                }
             }
-            //if ($changed)
-              //  die("test");
+            $query = $this->dbh->exec("COMMIT TRANSACTION");
         }
     }
 
