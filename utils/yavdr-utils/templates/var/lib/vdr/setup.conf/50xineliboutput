@@ -33,3 +33,9 @@ xineliboutput.Video.SwScale.Resize = 0
 xineliboutput.Video.SwScale.Width = 720
 xineliboutput.Audio.SoftwareVolumeControl = 1
 xineliboutput.Audio.Speakers = Stereo 2.0
+xineliboutput.Media.BrowseFilesDir = /media/Video
+xineliboutput.Media.BrowseImagesDir = /media/Picture
+xineliboutput.Media.BrowseMusicDir = /media/Music
+xineliboutput.Media.DVD.ArrowKeysControlPlayback = 1
+xineliboutput.Media.RootDir = /media
+
