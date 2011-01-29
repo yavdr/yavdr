@@ -30,10 +30,10 @@ class cpDBInit extends cpBasics {
         $this->connect();
         $this->createDBTables();
     }
-        
+
     private function createDBTables(){
-        $sqltext= "CREATE TABLE channels(
-            cablesourcetype TEXT,
+        $sqltext= "
+        CREATE TABLE channels(
             name TEXT,
             provider TEXT,
             frequency INTEGER,
@@ -51,15 +51,26 @@ class cpDBInit extends cpBasics {
             cgroup TEXT,
             last_changed TIMESTAMP,
             PRIMARY KEY ( source, nid, tid, sid)
-            ) ;";
-    
+            ) ;
+
+		CREATE TABLE channel_update_log(
+            timestamp TIMESTAMP,
+			name TEXT,
+			combined_id TEXT,
+			update_description TEXT
+		);
+
+
+
+        ";
+
         $query = $this->dbh->exec($sqltext);
         if ($query === false) {
             echo "\nPDO::errorInfo():\n";
             print_r($this->dbh->errorInfo());
             die("DB problem on create db + tables");
         }
-    }        
+    }
 }
 
 ?>

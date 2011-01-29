@@ -43,30 +43,44 @@ class cpInput extends cpBasics {
      * tries to update all channel data of the channels
      * listed in array existingChannelBuffer
      */
-    
+
     private function updateExistingChannels(){
-        
+
         foreach ($this->existingChannelBuffer as $params){
             //print "checking channel ".$params["name"]." for changes: ";
-            //implement
-            $sqlquery = "SELECT * FROM channels WHERE source = ".$params["source"]." AND nid = ".$params["nid"]." AND tid = ".$params["tid"]." AND sid = ".$params["sid"];
+            $sqlquery = "SELECT * FROM channels WHERE source = ".
+                $this->dbh->quote( $params["source"])." AND nid = ".
+                $this->dbh->quote( $params["nid"])." AND tid = ".
+                $this->dbh->quote( $params["tid"])." AND sid = ".
+                $this->dbh->quote( $params["sid"]);
             $result = $this->dbh->query($sqlquery);
             if ($result === false) die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
             $query = $this->dbh->exec("BEGIN TRANSACTION");
             foreach ($result as $row){
-                $changes = "";
+                $changes = array();
                 $update_data = array();
                 foreach ($params as $key => $value){
-                    if ($value != $this->dbh->quote( $row[$key])){
-                        $changes .= "Parameter $key: from ".$this->dbh->quote( $row[$key]). " to $value, ";
-                        $update_data[] = "$key = $value";
+                    if ($value != $row[$key]){
+                        $changes[] = "Parameter $key: from '".$row[$key]. "' to '". $value."'";
+                        $update_data[] = "$key = ".$this->dbh->quote( $value);
                     }
                 }
-                if ($changes != ""){
-                    print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": $changes\n";
-                    $statement = "UPDATE channels SET ".implode(", " , $update_data)." WHERE source = ".$params["source"]." AND nid = ".$params["nid"]." AND tid = ".$params["tid"]." AND sid = ".$params["sid"];
+                if (count ($changes) != 0){
+                    print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
+                    $statement = "UPDATE channels SET ".implode(", " , $update_data)." WHERE source = ".
+                        $this->dbh->quote( $params["source"] )." AND nid = ".
+                        $this->dbh->quote( $params["nid"] )." AND tid = ".
+                        $this->dbh->quote( $params["tid"])." AND sid = ".
+                        $this->dbh->quote( $params["sid"])."; ";
+                    $statement .= "INSERT INTO channel_update_log (combined_id, name, update_description) VALUES
+                        ( ".$this->dbh->quote( $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"]).",
+                         ".$this->dbh->quote( $params["name"]).", ".$this->dbh->quote( implode(", ",$changes))." );";
                     print "$statement\n";
                     $query = $this->dbh->exec($statement);
+                    //$query = $this->dbh->exec($statement2);
+                }
+                else{
+                    //print "channel unchanged.\n";
                 }
             }
             $query = $this->dbh->exec("COMMIT TRANSACTION");
@@ -74,10 +88,10 @@ class cpInput extends cpBasics {
     }
 
     /*
-     * reads channel conf file line by line and 
+     * reads channel conf file line by line and
      * adds channel lines that seem correct to the db
      */
-    
+
     private function insertChannelsConfIntoDB(){
         $filename = $this->path . 'channels.conf';
         if (file_exists($filename)) {
@@ -91,7 +105,9 @@ class cpInput extends cpBasics {
                 $buffer = rtrim( $buffer, "\n");
                 if (substr($buffer,0,1) == ":")
                    $cgroup = ltrim($buffer,":");
-                elseif($buffer == ""){}
+                elseif($buffer == ""){
+                    print "illegal channel: ignoring empty line.\n";
+                }
                 else{
                     $counter++;
                     $params = $this->getParamArray($buffer,$cgroup);
@@ -112,15 +128,17 @@ class cpInput extends cpBasics {
             $query = $this->dbh->exec("COMMIT TRANSACTION");
         }
     }
-    
+
     /*
      * inserts a channel into db
-     * takes an associative array with keys and values 
+     * takes an associative array with keys and values
      * that are used for insert
      */
-    
+
     private function insertChannelIntoDB ($params){
         $success = true;
+        foreach ($params as $key => $value)
+            $params[$key]=$this->dbh->quote( $value );
         $columns = implode( ", ", array_keys($params) );
         $values = implode( ", ", array_values($params) );
         $sqltext = "INSERT INTO channels ( " . $columns . " ) VALUES ( " . $values . " );";
@@ -141,10 +159,10 @@ class cpInput extends cpBasics {
     }
 
     /*
-     * converts channel data string into an array 
+     * converts channel data string into an array
      * ready to use for db insert
      */
-    
+
     private function getParamArray( $buffer, $cgroup){
         $details = explode( ":", $buffer);
         if (count($details) != 13) return false;
@@ -155,24 +173,27 @@ class cpInput extends cpBasics {
             $cname = $cnamedetails[0];
             $cprovider = $cnamedetails[1];
         }
+        if ($details[3] == "C")
+            $details[3] .= '['.$this->cableSourceType.']';
+        else if ($details[3] == "T")
+            $details[3] .= '['.$this->terrSourceType.']';
 
         return array(
-            "cablesourcetype" => $this->dbh->quote( $this->cableSourceType ),
-            "name"            => $this->dbh->quote( $cname ),
-            "provider"        => $this->dbh->quote( $cprovider ),
-            "frequency"       => $this->dbh->quote( $details[1] ),
-            "modulation"      => $this->dbh->quote( $details[2] ),
-            "source"          => $this->dbh->quote( $details[3] ),
-            "symbolrate"      => $this->dbh->quote( $details[4] ),
-            "vpid"            => $this->dbh->quote( $details[5] ),
-            "apid"            => $this->dbh->quote( $details[6] ),
-            "tpid"            => $this->dbh->quote( $details[7] ),
-            "caid"            => $this->dbh->quote( $details[8] ),
-            "sid"             => $this->dbh->quote( $details[9] ),
-            "nid"             => $this->dbh->quote( $details[10] ),
-            "tid"             => $this->dbh->quote( $details[11] ),
-            "rid"             => $this->dbh->quote( $details[12] ),
-            "cgroup"          => $this->dbh->quote( $cgroup )
+            "name"            => $cname,
+            "provider"        => $cprovider,
+            "frequency"       => $details[1],
+            "modulation"      => $details[2],
+            "source"          => $details[3],
+            "symbolrate"      => $details[4],
+            "vpid"            => $details[5],
+            "apid"            => $details[6],
+            "tpid"            => $details[7],
+            "caid"            => $details[8],
+            "sid"             => $details[9],
+            "nid"             => $details[10],
+            "tid"             => $details[11],
+            "rid"             => $details[12],
+            "cgroup"          => $cgroup
         );
     }
 }

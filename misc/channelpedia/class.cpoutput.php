@@ -23,15 +23,15 @@
 */
 
 class cpOutput extends cpBasics{
-    
+
     function __construct($path){
         parent::__construct($path);
         $this->connect();
     }
-    
+
     /*
      * extracts specific channels from the db and stores them in a file
-     * 
+     *
      * label (string, used in file name of newly generated channels file, use it to distinguish between different channels files)
      * source (string, satellite position, cable, terrestial, empty string means: show all. Example: "S28.2E", "S19.2E", "C", no lists allowed)
      * caidMode (0=show all CAIDs including FTA, 1= show only channels FTA channels, 2 = show only encrypted channels)
@@ -39,33 +39,44 @@ class cpOutput extends cpBasics{
      * language (string with comma separated list of languages that should be displayed, empty string means all languages)
      * path to files that should be saved
      */
-    
-    function createSortedChannelsConfFromDB( $label, $source = "", $caidMode = 0, $mediaType = 0, $language = "", $orderby = "frequency, modulation, provider, name ASC", $customwhere =""){
+
+    function createSortedChannelsConfFromDB(
+        $label,
+        $source = "",
+        $caidMode = 0,
+        $mediaType = 0,
+        $language = "",
+        $orderby = "frequency, modulation, provider, name ASC",
+        $customwhere =""
+    ){
         $gpath = $this->path."generated_channellists/";
-        $filename = $gpath . 'channels.' . $label . '.conf';
+        $groupname = $source. '.' . $label;
+        $filename = $gpath . 'channels.' . $groupname . '.conf';
         $where = array();
-        
+
         if ($source != "")
             $where[] = "source = ". $this->dbh->quote( $source );
-    
+
         if ($caidMode != 0)
             $where[] = "caid ". ($caidMode === 2 ? "!= '0'": "= '0'");
-    
+
         if ($mediaType != 0)
             $where[] = "vpid ". ($mediaType === 1 ? "!= '0'": "= '0'");
-    
+
         if ($language != "")
             $where[] = "apid LIKE '%=$language%'";
-            
-            
+
+
         if (count($where) > 0)
-            $where = "WHERE " . implode( $where, " AND " ) . $customwhere;    
-        
+            $where = "WHERE " . implode( $where, " AND " ) . $customwhere;
+
         $sqlquery="SELECT * FROM channels $where ORDER BY $orderby";
         echo "$label: $sqlquery\n";
         $frequency = 0;
         @unlink($filename);
         $handle = fopen ($filename, "w");
+        fputs($handle, ":### $groupname ###\n");
+
         $result = $this->dbh->query($sqlquery);
         if ($result === false) die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
         foreach ($result as $row) {
@@ -82,7 +93,7 @@ class cpOutput extends cpBasics{
             $provider = "";
             if ($row["provider"] != "")
                 $provider = ";". $row["provider"];
-            
+
             $rawstring =
                 $row["name"] .
                 $provider . ":".
@@ -97,11 +108,11 @@ class cpOutput extends cpBasics{
                 $row["sid"] . ":".
                 $row["nid"] . ":".
                 $row["tid"] . ":".
-                $row["rid"];            
+                $row["rid"];
             fputs($handle, "$rawstring\n");
         }
         if (fclose($handle) === false)
             die("Error on file close.");
-    //    delete($this->dbh); 
-    }    
+    //    delete($this->dbh);
+    }
 }
