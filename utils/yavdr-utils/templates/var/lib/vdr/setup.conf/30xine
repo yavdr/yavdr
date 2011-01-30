@@ -1,9 +1,9 @@
 xine.modeLiveTV.monitoringDuration = 30
 xine.modeLiveTV.monitoringMode = monitoringOnce
-xine.modeLiveTV.prebufferFramesAudio = 6
+xine.modeLiveTV.prebufferFramesAudio = 4
 xine.modeLiveTV.prebufferFramesVideoHD = 32
-xine.modeLiveTV.prebufferFramesVideoSD = 6
-xine.modeLiveTV.prebufferHysteresis = 6
+xine.modeLiveTV.prebufferFramesVideoSD = 3
+xine.modeLiveTV.prebufferHysteresis = 3
 xine.osdMode = osdOverlay
 xine.osdExtent.X = 1920
 xine.osdExtent.Y = 1080
