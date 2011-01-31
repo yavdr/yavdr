@@ -31,11 +31,11 @@ class cpBasics {
 
     function __construct($path){
         $this->path = $path;
-        $this->dbfile = $this->path . "channeldb.sqlite";    
+        $this->dbfile = $this->path . "channeldb.sqlite";
     }
-    
+
     protected function connect(){
-        $this->dbh = new PDO('sqlite:'.$this->dbfile); 
+        $this->dbh = new PDO('sqlite:'.$this->dbfile);
     }
 }
 ?>
