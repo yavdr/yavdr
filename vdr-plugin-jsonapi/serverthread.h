@@ -8,16 +8,19 @@
 #ifndef __SERVERTHREAD_H
 #define __SERVERTHREAD_H
 
-#include <cxxtools/http/server.h>                                                                                       
-#include <cxxtools/http/request.h>                                                                                      
-#include <cxxtools/http/reply.h>                                                                                        
-#include <cxxtools/http/responder.h>                                                                                    
-#include <cxxtools/eventloop.h>                                                                                         
-#include <cxxtools/arg.h>                                                                                               
-                                                                                                                        
-#include <unistd.h>                                                                                                     
-#include <vdr/tools.h>                                                                                                  
-#include <vdr/thread.h>  
+#include <cxxtools/http/server.h>
+#include <cxxtools/http/request.h>
+#include <cxxtools/http/reply.h>
+#include <cxxtools/http/responder.h>
+#include <cxxtools/eventloop.h>
+#include <cxxtools/arg.h>
+#include <cxxtools/jsonserializer.h>
+#include <cxxtools/serializationinfo.h>
+
+#include <unistd.h>
+#include <vdr/tools.h>
+#include <vdr/thread.h>
+#include <vdr/recording.h>
 
 using namespace std;
 

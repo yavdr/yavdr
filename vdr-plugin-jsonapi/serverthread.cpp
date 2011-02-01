@@ -7,37 +7,69 @@
 
 #include "serverthread.h"
 
-// HelloResponder
+struct RecordingRec
+{
+  RecordingRec()
+//    : user(0),
+//      nice(0),
+//      system(0),
+//      idle(0),
+//      iowait(0),
+//      irq(0),
+//      softirq(0)
+      { }
+
+  std::string name;
+};
+
+struct RecordingsRec
+{
+  std::vector < struct RecordingRec > recording;
+};
+
+void operator<<= (cxxtools::SerializationInfo& si, const RecordingRec& p)
+{
+  si.addMember("name") <<= p.name;
+}
+
+void operator<<= (cxxtools::SerializationInfo& si, const RecordingsRec& p)
+{
+  si.addMember("recording") <<= p.recording;
+}
+
+// RecordingsResponder
 //
-class HelloResponder : public cxxtools::http::Responder
+class RecordingsResponder : public cxxtools::http::Responder
 {
   public:
-    explicit HelloResponder(cxxtools::http::Service& service)
+    explicit RecordingsResponder(cxxtools::http::Service& service)
       : cxxtools::http::Responder(service)
       { }
 
     virtual void reply(std::ostream&, cxxtools::http::Request& request, cxxtools::http::Reply& reply);
 };
 
-void HelloResponder::reply(std::ostream& out, cxxtools::http::Request& request, cxxtools::http::Reply& reply)
-{                                                                                                                       
-  isyslog("send hello");
 
-  reply.addHeader("Content-Type", "text/html");
-  out << "<html>\n"
-         " <head>\n"
-         "  <title>Hello World-application</title>\n"
-         " </head>\n"
-         " <body bgcolor=\"#FFFFFF\">\n"
-         "  <h1>Hello World</h1>\n"
-         " </body>\n"
-         "</html>\n";
+void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& request, cxxtools::http::Reply& reply)
+{
+  RecordingRec recordingRec;
+  std::vector < struct RecordingRec > recordingsRec;
 
+  reply.addHeader("Content-Type", "application/json");
+  cxxtools::JsonSerializer serializer(out);
+  for (cRecording* recording = Recordings.First(); recording; recording = Recordings.Next(recording)) {
+    recordingRec.name = recording->Name();
+    recordingsRec.push_back(recordingRec);
+
+  }
+  serializer.serialize(recordingsRec, "recordings");
+  serializer.finish();
 }
 
-// HelloService
+
+// RecordingService
 //
-typedef cxxtools::http::CachedService<HelloResponder> HelloService;
+typedef cxxtools::http::CachedService<RecordingsResponder> RecordingsService;
 
 cServerThread::cServerThread ()
 {
@@ -67,9 +99,8 @@ cServerThread::Action(void)
 {
   active = true;
 
-  HelloService service;                                                                                                 
-                                                                                                                        
-  server->addService("/hello", service);                                                                                
+  RecordingsService service;                                                                                                 
+  server->addService("/recordings", service);                                                                                
   loop.run(); 
 
   dsyslog("JSONAPI: server thread ended (pid=%d)", getpid());
