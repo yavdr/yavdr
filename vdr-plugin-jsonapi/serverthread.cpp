@@ -9,17 +9,11 @@
 
 struct RecordingRec
 {
-  RecordingRec()
-//    : user(0),
-//      nice(0),
-//      system(0),
-//      idle(0),
-//      iowait(0),
-//      irq(0),
-//      softirq(0)
-      { }
-
-  std::string name;
+  std::string Name;
+  std::string FileName;
+  bool IsNew;
+  bool IsEdited;
+  bool IsPesRecording;
 };
 
 struct RecordingsRec
@@ -29,7 +23,11 @@ struct RecordingsRec
 
 void operator<<= (cxxtools::SerializationInfo& si, const RecordingRec& p)
 {
-  si.addMember("name") <<= p.name;
+  si.addMember("Name") <<= p.Name;
+  si.addMember("FileName") <<= p.FileName;
+  si.addMember("IsNew") <<= p.IsNew;
+  si.addMember("IsEdited") <<= p.IsEdited;
+  si.addMember("IsPesRecording") <<= p.IsPesRecording;
 }
 
 void operator<<= (cxxtools::SerializationInfo& si, const RecordingsRec& p)
@@ -58,9 +56,12 @@ void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& requ
   reply.addHeader("Content-Type", "application/json");
   cxxtools::JsonSerializer serializer(out);
   for (cRecording* recording = Recordings.First(); recording; recording = Recordings.Next(recording)) {
-    recordingRec.name = recording->Name();
+    recordingRec.Name = recording->Name();
+    recordingRec.FileName = recording->FileName();
+    recordingRec.IsNew = recording->IsNew();
+    recordingRec.IsEdited = recording->IsEdited();
+    recordingRec.IsPesRecording = recording->IsPesRecording();
     recordingsRec.push_back(recordingRec);
-
   }
   serializer.serialize(recordingsRec, "recordings");
   serializer.finish();
