@@ -18,7 +18,7 @@ case $1 in
             modules=( `cat $FRMLIST | sed "s/#.*$//"` )
 
             for module in ${modules[@]}; do
-               rmmod $module
+               rmmod $module || /bin/true
             done
           
             for module in ${modules[@]}; do
