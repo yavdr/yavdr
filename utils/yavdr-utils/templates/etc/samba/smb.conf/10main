@@ -98,6 +98,3 @@
 # This option controls how unsuccessful authentication attempts are mapped 
 # to anonymous connections
    map to guest = bad user
-
-   include = /etc/samba/smb.conf.yavdr
-
