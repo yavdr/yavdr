@@ -72,7 +72,7 @@ class cpOutput extends cpBasics{
         print "Updating labels for channels belonging to $source / $label.\n";
     }
 
-    public function writeChannelSectionByLabel($label, $source){
+    public function writeChannelSectionByLabel($label, $source, $orderby){
 
         $where = "";
         if ($label !== "")
@@ -94,16 +94,17 @@ class cpOutput extends cpBasics{
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
 
         foreach ($result as $row) {
-            if ($row['frequency'] !== $frequency){
+            //if label is empty, automatically create transponder based group delimiters
+            if ($label = "" && $row['frequency'] !== $frequency){
                 $frequency = $row['frequency'];
                 $hilow = "";
                 if (substr($source,0,1) == "S" && $frequency >= 11700 && $frequency <= 12750)
                     $hilow = "High-Band";
                 else if (substr($source,0,1) == "S" && $frequency >= 10700 && $frequency < 11700)
                     $hilow = "Low-Band";
-                if ($label = "") fputs($handle, ":transponder " . $source . " " . $hilow . " " .$row['modulation']. " " . $row['frequency'] . "\n");
-                $frequency = $row['frequency'];
+                fputs($handle, ":transponder " . $source . " " . $hilow . " " .$row['modulation']. " " . $row['frequency'] . "\n");
             }
+
             $provider = "";
             if ($row["provider"] != "")
                 $provider = ";". $row["provider"];

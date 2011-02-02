@@ -60,11 +60,12 @@ class cpInput extends cpBasics {
                 $changes = array();
                 $update_data = array();
                 foreach ($params as $key => $value){
-                    if ($value != $row[$key]){
+                    if ($value != $row[$key] && $key !== "last_changed"  && $key !== "label"){
                         $changes[] = "Parameter $key: from '".$row[$key]. "' to '". $value."'";
                         $update_data[] = "$key = ".$this->dbh->quote( $value);
                     }
                 }
+                $update_data[] = "last_changed = ".time();
                 if (count ($changes) != 0){
                     print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
                     $statement = "UPDATE channels SET ".implode(", " , $update_data)." WHERE source = ".
@@ -72,9 +73,12 @@ class cpInput extends cpBasics {
                         $this->dbh->quote( $params["nid"] )." AND tid = ".
                         $this->dbh->quote( $params["tid"])." AND sid = ".
                         $this->dbh->quote( $params["sid"])."; ";
-                    $statement .= "INSERT INTO channel_update_log (combined_id, name, update_description) VALUES
+                    $statement .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp) VALUES
                         ( ".$this->dbh->quote( $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"]).",
-                         ".$this->dbh->quote( $params["name"]).", ".$this->dbh->quote( implode(", ",$changes))." );";
+                         ".$this->dbh->quote( $params["name"]).", ".
+                           $this->dbh->quote( implode(", ",$changes)).", ".
+                           time().
+                         " );";
                     print "$statement\n";
                     $query = $this->dbh->exec($statement);
                     //$query = $this->dbh->exec($statement2);
@@ -193,7 +197,8 @@ class cpInput extends cpBasics {
             "nid"             => $details[10],
             "tid"             => $details[11],
             "rid"             => $details[12],
-            "label"           => ""
+            "label"           => "",
+            "last_changed"    => time()
         );
     }
 }

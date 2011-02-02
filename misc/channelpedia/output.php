@@ -205,7 +205,7 @@ function createEssentialListsDE( $source, $x ){
         $mediaType = 1,
         $language = "deu",
         $orderby="UPPER(name) ASC",
-        $customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) NOT LIKE '% HD%' "
+        $customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) NOT " . HD_CHANNEL
     );
 
     $x->updateLabelsOfChannelSelection(
@@ -215,7 +215,7 @@ function createEssentialListsDE( $source, $x ){
         $mediaType = 1,
         $language = "deu",
         $orderby="UPPER(name) ASC",
-        $customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) LIKE '% HD%' "
+        $customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND " . HD_CHANNEL
     );
 }
 
