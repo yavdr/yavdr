@@ -110,7 +110,7 @@ class cpInput extends cpBasics {
                 }
                 else{
                     $counter++;
-                    $params = $this->getParamArray($buffer,$cgroup);
+                    $params = $this->getParamArray($buffer);
                     if ($params !== false)
                         if (false === $this->insertChannelIntoDB ($params)){
                             $this->existingChannelBuffer[] = $params;
@@ -163,7 +163,7 @@ class cpInput extends cpBasics {
      * ready to use for db insert
      */
 
-    private function getParamArray( $buffer, $cgroup){
+    private function getParamArray( $buffer ){
         $details = explode( ":", $buffer);
         if (count($details) != 13) return false;
         $cname = $details[0];
@@ -193,7 +193,7 @@ class cpInput extends cpBasics {
             "nid"             => $details[10],
             "tid"             => $details[11],
             "rid"             => $details[12],
-            "cgroup"          => $cgroup
+            "label"           => ""
         );
     }
 }

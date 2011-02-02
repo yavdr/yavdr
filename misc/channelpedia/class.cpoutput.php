@@ -40,7 +40,7 @@ class cpOutput extends cpBasics{
      * path to files that should be saved
      */
 
-    function createSortedChannelsConfFromDB(
+    public function updateLabelsOfChannelSelection(
         $label,
         $source = "",
         $caidMode = 0,
@@ -49,9 +49,6 @@ class cpOutput extends cpBasics{
         $orderby = "frequency, modulation, provider, name ASC",
         $customwhere =""
     ){
-        $gpath = $this->path."generated_channellists/";
-        $groupname = $source. '.' . $label;
-        $filename = $gpath . 'channels.' . $groupname . '.conf';
         $where = array();
 
         if ($source != "")
@@ -66,19 +63,36 @@ class cpOutput extends cpBasics{
         if ($language != "")
             $where[] = "apid LIKE '%=$language%'";
 
-
+        //update label tag in the selected channels
         if (count($where) > 0)
             $where = "WHERE " . implode( $where, " AND " ) . $customwhere;
 
-        $sqlquery="SELECT * FROM channels $where ORDER BY $orderby";
+        $sqlquery="UPDATE channels SET label=". $this->dbh->quote($label) ." $where";
+        $result = $this->dbh->query($sqlquery);
+        print "Updating labels for channels belonging to $source / $label.\n";
+    }
+
+    public function writeChannelSectionByLabel($label, $source){
+
+        $where = "";
+        if ($label !== "")
+            $where = "label = ". $this->dbh->quote($label). " AND ";
+        $sqlquery="SELECT * FROM channels WHERE $where source= ". $this->dbh->quote($source) . " " . $orderby;
         echo "$label: $sqlquery\n";
-        $frequency = 0;
+
+        $gpath = $this->path."generated_channellists/";
+        $groupname = $source. '.' . $label;
+        $filename = $gpath . 'channels.' . $groupname . '.conf';
         @unlink($filename);
         $handle = fopen ($filename, "w");
         fputs($handle, ":### $groupname ###\n");
 
+        $frequency = 0;
+
         $result = $this->dbh->query($sqlquery);
-        if ($result === false) die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
+        if ($result === false)
+            die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
+
         foreach ($result as $row) {
             if ($row['frequency'] !== $frequency){
                 $frequency = $row['frequency'];
@@ -87,7 +101,7 @@ class cpOutput extends cpBasics{
                     $hilow = "High-Band";
                 else if (substr($source,0,1) == "S" && $frequency >= 10700 && $frequency < 11700)
                     $hilow = "Low-Band";
-                //fputs($handle, ":transponder " . $source . " " . $hilow . " " .$row['modulation']. " " . $row['frequency'] . "\n");
+                if ($label = "") fputs($handle, ":transponder " . $source . " " . $hilow . " " .$row['modulation']. " " . $row['frequency'] . "\n");
                 $frequency = $row['frequency'];
             }
             $provider = "";
@@ -113,6 +127,5 @@ class cpOutput extends cpBasics{
         }
         if (fclose($handle) === false)
             die("Error on file close.");
-    //    delete($this->dbh);
     }
 }

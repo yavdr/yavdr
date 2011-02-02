@@ -48,7 +48,7 @@ class cpDBInit extends cpBasics {
             nid INTEGER,
             tid TEXT,
             rid INTEGER,
-            cgroup TEXT,
+            label TEXT,
             last_changed TIMESTAMP,
             PRIMARY KEY ( source, nid, tid, sid)
             ) ;

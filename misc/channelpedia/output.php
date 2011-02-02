@@ -43,7 +43,7 @@ $filter_astra1_fta = " AND ((tid != '1092' AND tid != '1113' AND provider != '-'
 createEssentialListsDE("S19.2E", $x);
 createEssentialListsDE(CABLE_PROVIDER, $x);
 
-$x->createSortedChannelsConfFromDB(
+$x->updateLabelsOfChannelSelection(
     $label = "au.FTA.SDTV.Private",
     $source = "S19.2E",
     $caidMode = 1,
@@ -53,7 +53,7 @@ $x->createSortedChannelsConfFromDB(
     $customwhere = $filter_astra1_fta . "AND NOT ". HD_CHANNEL. "AND ". AUSTRIA. "AND ". DE_PRIVATE_PRO7_RTL
 );
 
-$x->createSortedChannelsConfFromDB(
+$x->updateLabelsOfChannelSelection(
     $label = "ch.FTA.SDTV.Private",
     $source = "S19.2E",
     $caidMode = 1,
@@ -64,7 +64,7 @@ $x->createSortedChannelsConfFromDB(
 );
 
 /*
-$x->createSortedChannelsConfFromDB(
+$x->updateLabelsOfChannelSelection(
     $label = "FTA.rubbish",
     $source = "S19.2E",
     $caidMode = 1,
@@ -75,7 +75,7 @@ $x->createSortedChannelsConfFromDB(
     );
 */
 
-$x->createSortedChannelsConfFromDB(
+$x->updateLabelsOfChannelSelection(
     $label = "at.FTA.Radio.ORF",
     $source = "S19.2E",
     $caidMode = 1,
@@ -85,7 +85,9 @@ $x->createSortedChannelsConfFromDB(
     $customwhere = " AND provider = 'ORF' "
     );
 
-$x->createSortedChannelsConfFromDB(
+/*
+
+$x->updateLabelsOfChannelSelection(
     $label = "_long.FTA.radio",
     $source = "S28.2E",
     $caidMode = 1,
@@ -94,16 +96,17 @@ $x->createSortedChannelsConfFromDB(
     $orderby="UPPER(name) ASC"
     );
 
-$x->createSortedChannelsConfFromDB( $label = "_long.FTA.tv", $source = "S28.2E", $caidMode = 1, $mediaType=1, $language = "", $orderby="UPPER(name) ASC");
-$x->createSortedChannelsConfFromDB( $label = "_long.complete", $source = "S19.2E", $caidMode = 0, $mediaType = 0, $language = "" );
-$x->createSortedChannelsConfFromDB( $label = "_long.FTA", $source = "S19.2E", $caidMode = 1, $mediaType = 0, $language = "");
-$x->createSortedChannelsConfFromDB( $label = "_long.scrambled", $source = "S28.2E", $caidMode = 2);
-$x->createSortedChannelsConfFromDB( $label = "_long.all", $source = "S28.2E", $caidMode = 0);
-$x->createSortedChannelsConfFromDB( $label = "_long.C_Germany_KabelBW", $source = CABLE_PROVIDER);
+$x->updateLabelsOfChannelSelection( $label = "_long.FTA.tv", $source = "S28.2E", $caidMode = 1, $mediaType=1, $language = "", $orderby="UPPER(name) ASC");
+$x->updateLabelsOfChannelSelection( $label = "_long.complete", $source = "S19.2E", $caidMode = 0, $mediaType = 0, $language = "" );
+$x->updateLabelsOfChannelSelection( $label = "_long.FTA", $source = "S19.2E", $caidMode = 1, $mediaType = 0, $language = "");
+$x->updateLabelsOfChannelSelection( $label = "_long.scrambled", $source = "S28.2E", $caidMode = 2);
+$x->updateLabelsOfChannelSelection( $label = "_long.all", $source = "S28.2E", $caidMode = 0);
+$x->updateLabelsOfChannelSelection( $label = "_long.C_Germany_KabelBW", $source = CABLE_PROVIDER);
+*/
 
 function createEssentialListsDE( $source, $x ){
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.FTA.SDTV.Public",
         $source,
         $caidMode = 1,
@@ -119,7 +122,7 @@ function createEssentialListsDE( $source, $x ){
         	") "
     );
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.FTA.SDTV.Public_Regional",
         $source,
         $caidMode = 1,
@@ -132,7 +135,7 @@ function createEssentialListsDE( $source, $x ){
             " AND provider = 'ARD' AND NOT ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' ) "
     );
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.FTA.HDTV.Public",
         $source,
         $caidMode = 1,
@@ -142,7 +145,7 @@ function createEssentialListsDE( $source, $x ){
         $customwhere = " AND " . HD_CHANNEL. " AND ".DE_PUBLIC_PROVIDER
     );
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.FTA.HDTV.Private",
         $source,
         $caidMode = 1,
@@ -152,7 +155,7 @@ function createEssentialListsDE( $source, $x ){
         $customwhere = "AND ". HD_CHANNEL. " AND NOT (" . DE_PUBLIC_PROVIDER . " OR ".AUSTRIA." " . " OR ".SWITZERLAND.")"
     );
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.FTA.SDTV.Private",
         $source,
         $caidMode = 1,
@@ -164,7 +167,7 @@ function createEssentialListsDE( $source, $x ){
 
     $filter_astra1_fta = " AND ((tid != '1092' AND tid != '1113' AND provider != '-') OR (name = 'DMAX')) AND provider != 'SKY' ";
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.FTA.SDTV.Rest_Private",
         $source,
         $caidMode = 1,
@@ -175,7 +178,7 @@ function createEssentialListsDE( $source, $x ){
             $filter_astra1_fta . " AND NOT (". HD_CHANNEL . " OR ".DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
     );
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.FTA.Radio.ARD_ZDF",
         $source,
         $caidMode = 1,
@@ -185,7 +188,7 @@ function createEssentialListsDE( $source, $x ){
         $customwhere = " AND ".DE_PUBLIC_PROVIDER
     );
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.FTA.Radio.Private",
         $source,
         $caidMode = 1,
@@ -195,7 +198,7 @@ function createEssentialListsDE( $source, $x ){
         $customwhere = " AND NOT ".DE_PUBLIC_PROVIDER
     );
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.SKY.SDTV",
         $source,
         $caidMode = 2,
@@ -205,7 +208,7 @@ function createEssentialListsDE( $source, $x ){
         $customwhere = " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) NOT LIKE '% HD%' "
     );
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "de.SKY.HDTV",
         $source,
         $caidMode = 2,
@@ -218,7 +221,7 @@ function createEssentialListsDE( $source, $x ){
 
 function createEssentialListsFRA( $source, $x ){
 
-    $x->createSortedChannelsConfFromDB(
+    $x->updateLabelsOfChannelSelection(
         $label = "fra.FTA.TV",
         $source = "S19.2E",
         $caidMode = 1,
@@ -226,8 +229,8 @@ function createEssentialListsFRA( $source, $x ){
         $language = "fra",
         $orderby = "UPPER(name) ASC"
     );
-
-    $x->createSortedChannelsConfFromDB(
+/*
+    $x->updateLabelsOfChannelSelection(
         $label = "_long.fra.scrambled.TV",
         $source = "S19.2E",
         $caidMode = 2,
@@ -236,5 +239,6 @@ function createEssentialListsFRA( $source, $x ){
         $orderby="UPPER(name) ASC",
         $customwhere = ""
     );
+*/
 }
 ?>
