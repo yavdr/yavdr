@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Henning Pingel
+*  (c) 2011 Henning Pingel
 *  All rights reserved
 *
 *  This script is part of the yaVDR project. yaVDR is
@@ -22,12 +22,13 @@
 *
 */
 
+require_once 'config.php';
 require_once 'class.cpbasics.php';
 require_once 'class.cpoutput.php';
 require_once 'include.groups.php';
 
 //output
-$x = new cpOutput("/home/hp/Desktop/channels/");
+$x = new cpOutput( PATH, EXPORTFOLDER );
 
 define("CABLE_PROVIDER","C[Germany_KabelBW]");
 
@@ -36,8 +37,12 @@ define("CABLE_PROVIDER","C[Germany_KabelBW]");
 createEssentialListsDE("S19.2E", $x, $groups);
 createEssentialListsDE(CABLE_PROVIDER, $x, $groups);
 
+//write complete channels conf for S28.2E
 $x->writeChannelSectionByLabel( "", "S28.2E");
 
+foreach ($groups as $label){
+
+}
 
 function createEssentialListsDE( $source, $x, $groups ){
 

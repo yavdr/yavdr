@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Henning Pingel
+*  (c) 2011 Henning Pingel
 *  All rights reserved
 *
 *  This script is part of the yaVDR project. yaVDR is

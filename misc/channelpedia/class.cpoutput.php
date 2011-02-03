@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Henning Pingel
+*  (c) 2011 Henning Pingel
 *  All rights reserved
 *
 *  This script is part of the yaVDR project. yaVDR is
@@ -24,9 +24,13 @@
 
 class cpOutput extends cpBasics{
 
-    function __construct($path){
+    private
+        $exportFolder;
+
+    function __construct($path, $exportFolder){
         parent::__construct($path);
         $this->connect();
+        $this->exportFolder = $exportFolder;
     }
 
     /*
@@ -82,7 +86,7 @@ class cpOutput extends cpBasics{
         $sqlquery="SELECT * FROM channels WHERE $where source = ". $this->dbh->quote($source) . " ORDER BY " . $orderby;
         echo "$label: $sqlquery\n";
 
-        $gpath = $this->path."generated_channellists/";
+        $gpath = $this->path. $this->exportFolder."/";
         $groupname = $source. '.' . $label;
         $filename = $gpath . 'channels.' . $groupname . '.conf';
 

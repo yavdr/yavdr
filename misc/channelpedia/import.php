@@ -22,11 +22,11 @@
 *
 */
 
-require_once 'class.cpbasics.php';
+//input: reads channel.conf from path and put channels into db
 require_once 'config.php';
+require_once 'class.cpbasics.php';
+require_once 'class.cpinput.php';
+$x = new cpInput(PATH, "Germany_KabelBW", "none");
 
-//init db: delete db and re-create it with empty tables
-//require_once 'class.cpinitdb.php';
-//$x = new cpDBInit(PATH);
 
 ?>
