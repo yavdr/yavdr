@@ -46,7 +46,6 @@ class cpOutput extends cpBasics{
         $caidMode = 0,
         $mediaType = 0,
         $language = "",
-        $orderby = "frequency, modulation, provider, name ASC",
         $customwhere =""
     ){
         $where = array();
@@ -69,23 +68,23 @@ class cpOutput extends cpBasics{
 
         $sqlquery="UPDATE channels SET label=". $this->dbh->quote($label) ." $where";
         $result = $this->dbh->query($sqlquery);
-        print "Updating labels for channels belonging to $source / $label.\n";
+        print "Updating labels for channels belonging to $source / $label / $sqlquery.\n";
     }
 
-    public function writeChannelSectionByLabel($label, $source, $orderby){
+    public function writeChannelSectionByLabel($label, $source, $orderby = "frequency, modulation, provider, name ASC"){
 
         $where = "";
         if ($label !== "")
             $where = "label = ". $this->dbh->quote($label). " AND ";
-        $sqlquery="SELECT * FROM channels WHERE $where source= ". $this->dbh->quote($source) . " " . $orderby;
+        else
+            $label = "complete";
+
+        $sqlquery="SELECT * FROM channels WHERE $where source = ". $this->dbh->quote($source) . " ORDER BY " . $orderby;
         echo "$label: $sqlquery\n";
 
         $gpath = $this->path."generated_channellists/";
         $groupname = $source. '.' . $label;
         $filename = $gpath . 'channels.' . $groupname . '.conf';
-        @unlink($filename);
-        $handle = fopen ($filename, "w");
-        fputs($handle, ":### $groupname ###\n");
 
         $frequency = 0;
 
@@ -93,21 +92,16 @@ class cpOutput extends cpBasics{
         if ($result === false)
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
 
+        $empty = true;
         foreach ($result as $row) {
-            //if label is empty, automatically create transponder based group delimiters
-            if ($label = "" && $row['frequency'] !== $frequency){
-                $frequency = $row['frequency'];
-                $hilow = "";
-                if (substr($source,0,1) == "S" && $frequency >= 11700 && $frequency <= 12750)
-                    $hilow = "High-Band";
-                else if (substr($source,0,1) == "S" && $frequency >= 10700 && $frequency < 11700)
-                    $hilow = "Low-Band";
-                fputs($handle, ":transponder " . $source . " " . $hilow . " " .$row['modulation']. " " . $row['frequency'] . "\n");
-            }
 
             $provider = "";
             if ($row["provider"] != "")
                 $provider = ";". $row["provider"];
+
+            $sourcetest = strtoupper( substr($row["source"],0,1));
+            if ($sourcetest == "C" || $sourcetest == "T")
+                $row["source"] = $sourcetest;
 
             $rawstring =
                 $row["name"] .
@@ -124,9 +118,26 @@ class cpOutput extends cpBasics{
                 $row["nid"] . ":".
                 $row["tid"] . ":".
                 $row["rid"];
+
+            if ($empty){
+                @unlink($filename);
+                $handle = fopen ($filename, "w");
+                fputs($handle, ":### $groupname ###\n");
+                $empty = false;
+            }
+            //if label is empty, automatically create transponder based group delimiters
+            if ($label == "complete" && $row['frequency'] !== $frequency){
+                $frequency = $row['frequency'];
+                $hilow = "";
+                if (substr($source,0,1) == "S" && $frequency >= 11700 && $frequency <= 12750)
+                    $hilow = "High-Band";
+                else if (substr($source,0,1) == "S" && $frequency >= 10700 && $frequency < 11700)
+                    $hilow = "Low-Band";
+                fputs($handle, ":### transponder " . $source . " " . $hilow . " " .$row['modulation']. " " . $row['frequency'] . " ###\n");
+            }
             fputs($handle, "$rawstring\n");
         }
-        if (fclose($handle) === false)
+        if (!$empty && fclose($handle) === false)
             die("Error on file close.");
     }
 }
