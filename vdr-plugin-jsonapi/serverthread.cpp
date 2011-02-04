@@ -23,16 +23,16 @@ struct RecordingsRec
 
 void operator<<= (cxxtools::SerializationInfo& si, const RecordingRec& p)
 {
-  si.addMember("Name") <<= p.Name;
-  si.addMember("FileName") <<= p.FileName;
-  si.addMember("IsNew") <<= p.IsNew;
-  si.addMember("IsEdited") <<= p.IsEdited;
-  si.addMember("IsPesRecording") <<= p.IsPesRecording;
+  si.addMember("name") <<= p.Name;
+  si.addMember("file_name") <<= p.FileName;
+  si.addMember("is_new") <<= p.IsNew;
+  si.addMember("is_edited") <<= p.IsEdited;
+  si.addMember("is_pes_recording") <<= p.IsPesRecording;
 }
 
 void operator<<= (cxxtools::SerializationInfo& si, const RecordingsRec& p)
 {
-  si.addMember("recording") <<= p.recording;
+  si.addMember("rows") <<= p.recording;
 }
 
 // RecordingsResponder
@@ -63,7 +63,7 @@ void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& requ
     recordingRec.IsPesRecording = recording->IsPesRecording();
     recordingsRec.push_back(recordingRec);
   }
-  serializer.serialize(recordingsRec, "recordings");
+  serializer.serialize(recordingsRec, "rows");
   serializer.finish();
 }
 
@@ -100,9 +100,9 @@ cServerThread::Action(void)
 {
   active = true;
 
-  RecordingsService service;                                                                                                 
-  server->addService("/recordings", service);                                                                                
-  loop.run(); 
+  RecordingsService service;
+  server->addService("/recordings.json", service);
+  loop.run();
 
   dsyslog("JSONAPI: server thread ended (pid=%d)", getpid());
 }
