@@ -292,9 +292,13 @@ int display_device_mask(string name) {
 										} else {
 											err = dbset("system.hardware.nvidia.0.edid=0");
 										}
+									} else {
+										err = dbremove("system.hardware.nvidia.0.edid");
+										remove("/etc/X11/edid.0.yavdr");
 									}
 								} else {
 									err = dbremove("system.hardware.nvidia.0.edid");
+									remove("/etc/X11/edid.0.yavdr");
 								}
 							}
 
@@ -328,9 +332,13 @@ int display_device_mask(string name) {
 										} else {
 											err = dbset("system.hardware.nvidia.1.edid=0");
 										}
+									} else {
+										err = dbremove("system.hardware.nvidia.1.edid");
+										remove("/etc/X11/edid.1.yavdr");
 									}
 								} else {
 									err = dbremove("system.hardware.nvidia.1.edid");
+									remove("/etc/X11/edid.1.yavdr");
 								}
 							}
 						}
