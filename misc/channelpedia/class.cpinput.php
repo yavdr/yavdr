@@ -27,13 +27,15 @@ class cpInput extends cpBasics {
     private
         $cableSourceType,
         $terrSourceType,
-        $existingChannelBuffer;
+        $existingChannelBuffer,
+        $sourcepath;
 
-    function __construct($path, $cableSourceType, $terrSourceType){
+    function __construct($path, $sourcepath, $cableSourceType, $terrSourceType){
         parent::__construct($path);
         $this->connect();
         $this->cableSourceType = $cableSourceType;
         $this->terrSourceType = $terrSourceType;
+        $this->sourcepath = $sourcepath;
         $this->existingChannelBuffer = array();
         $this->insertChannelsConfIntoDB();
         $this->updateExistingChannels();
@@ -97,7 +99,7 @@ class cpInput extends cpBasics {
      */
 
     private function insertChannelsConfIntoDB(){
-        $filename = $this->path . 'channels.conf';
+        $filename = $this->sourcepath . 'channels.conf';
         if (file_exists($filename)) {
             $handle = fopen ($filename, "r");
             $counter = 1;
@@ -107,8 +109,10 @@ class cpInput extends cpBasics {
                 print "try to add channel $counter : ";
                 $buffer = fgets($handle, 4096);
                 $buffer = rtrim( $buffer, "\n");
-                if (substr($buffer,0,1) == ":")
+                if (substr($buffer,0,1) == ":"){
                    $cgroup = ltrim($buffer,":");
+                   print "Skipping a group delimiter.\n";
+                }
                 elseif($buffer == ""){
                     print "illegal channel: ignoring empty line.\n";
                 }

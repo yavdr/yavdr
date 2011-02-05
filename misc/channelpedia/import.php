@@ -26,7 +26,26 @@
 require_once 'config.php';
 require_once 'class.cpbasics.php';
 require_once 'class.cpinput.php';
-$x = new cpInput(PATH, "Germany_KabelBW", "none");
 
+importFromAllChannelSources();
 
+function importFromAllChannelSources(){
+
+    $dir = new DirectoryIterator( PATH."sources/" );
+
+    foreach ($dir as $fileinfo) {
+        if ( $fileinfo->isDir() && !$fileinfo->isDot()){
+            //echo $fileinfo->getFilename() . "\n";
+            $cableProvider = "";
+            $infofile = PATH."sources/". $fileinfo->getFilename() ."/info.txt";
+            if (file_exists( $infofile )){
+                $info = file_get_contents( $infofile);
+                $cableProvider = $info; //FIXME
+            }
+            //print $info ."/". $infofile ."/".  $cableProvider."\n";
+            $x = new cpInput(PATH, PATH."sources/". $fileinfo->getFilename()."/", $cableProvider, "none");
+            unset($x);
+        }
+    }
+}
 ?>

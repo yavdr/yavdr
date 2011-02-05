@@ -26,7 +26,8 @@ require_once 'class.cpbasics.php';
 require_once 'config.php';
 
 //init db: delete db and re-create it with empty tables
-//require_once 'class.cpinitdb.php';
-//$x = new cpDBInit(PATH);
+require_once 'class.cpinitdb.php';
+$x = new cpDBInit(PATH);
 
+print "end of init.\n"
 ?>

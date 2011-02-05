@@ -89,6 +89,7 @@ class cpOutput extends cpBasics{
         $gpath = $this->path. $this->exportFolder."/";
         $groupname = $source. '.' . $label;
         $filename = $gpath . 'channels.' . $groupname . '.conf';
+        print "writing to file $filename\n";
 
         $frequency = 0;
 
@@ -144,4 +145,24 @@ class cpOutput extends cpBasics{
         if (!$empty && fclose($handle) === false)
             die("Error on file close.");
     }
+
+    public function writeChangelog(){
+
+        $sqlquery="SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, update_description FROM channel_update_log";
+        $result = $this->dbh->query($sqlquery);
+        if ($result === false)
+            die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
+        $buffer = '<table border="1">';
+        foreach ($result as $row) {
+            $buffer.="<tr><td>".
+            $row["datestamp"]. "</td><td>".
+			$row["name"]. "</td><td>".
+			$row["combined_id"]. "</td><td>".
+			$row["update_description"] .
+			"</td></tr>\n";
+        }
+        $buffer .= "<table>";
+        file_put_contents(PATH."changelog.html", $buffer);
+    }
+
 }

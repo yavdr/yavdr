@@ -58,6 +58,47 @@ function createEssentialListsDE( $source, $x, $groups ){
         $x->writeChannelSectionByLabel( $label, $source, $details["orderby"]);
     }
 }
+
+
+$x->writeChangelog();
+
+
+$nice_html_output = '
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Nice channel lists</title>
+		<style>
+			body { font-face: Arial, sans-serif; font-size: 0.8em; background-color: #dddddd;}
+			pre { border: 1px solid black; padding: 5px; background-color: white; overflow: auto;}
+		</style>
+	</head>
+	<body>
+';
+
+$dir = new DirectoryIterator( PATH.EXPORTFOLDER );
+foreach ($dir as $fileinfo) {
+    if ( $fileinfo->isFile() && substr($fileinfo->getFilename(),0, 18) == "channels.S19.2E.de"){// && !$fileinfo->isDot()){
+        //echo $fileinfo->getFilename() . "\n";
+        $infofile = PATH.EXPORTFOLDER."/". $fileinfo->getFilename();
+        if (file_exists( $infofile )){
+            $nice_html_output .= "<pre>". file_get_contents( $infofile ) ."</pre>\n";
+        }
+    }
+}
+$nice_html_output .= "
+	</body>
+<html>
+";
+
+
+file_put_contents(PATH."nice_channels.html", $nice_html_output );
+
+
 /*
 
 function createEssentialListsFRA( $source, $x ){
