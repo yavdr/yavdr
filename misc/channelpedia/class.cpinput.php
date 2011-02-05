@@ -63,7 +63,7 @@ class cpInput extends cpBasics {
                 $update_data = array();
                 foreach ($params as $key => $value){
                     if ($value != $row[$key] && $key !== "last_changed"  && $key !== "label"){
-                        $changes[] = "Parameter $key: from '".$row[$key]. "' to '". $value."'";
+                        $changes[] = "Parameter <b>$key</b>: from '".$row[$key]. "' to '". $value."'";
                         $update_data[] = "$key = ".$this->dbh->quote( $value);
                     }
                 }
@@ -145,12 +145,18 @@ class cpInput extends cpBasics {
 
     private function insertChannelIntoDB ($params){
         $success = true;
+        $unique_channel_id = $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"];
         foreach ($params as $key => $value)
             $params[$key]=$this->dbh->quote( $value );
         $columns = implode( ", ", array_keys($params) );
         $values = implode( ", ", array_values($params) );
         $sqltext = "INSERT INTO channels ( " . $columns . " ) VALUES ( " . $values . " );";
-        //print "$sqltext\n";
+        $sqltext .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp) VALUES ( ".
+            $this->dbh->quote( $unique_channel_id ).", ".
+            $params["name"].", ".
+            $this->dbh->quote( "Added new channel." ).", ".
+            time().
+            " );";
         $query = $this->dbh->exec($sqltext);
         if (!$query) {
             //19 = channel already exists
@@ -158,6 +164,7 @@ class cpInput extends cpBasics {
             if ($errorinfo[1] == 19)
                 $success = false;
             else{
+                print "$sqltext\n";
                 echo "\nPDO::errorInfo():\n";
                 print_r($this->dbh->errorInfo());
                 die("db error on insert\n");

@@ -41,7 +41,7 @@ $user = $_POST["user"];
 if ( $user == "" || strstr($user,".") || strstr($user,"/") )
     die("illegal user value");
 
-if (is_file( PATH."sources/$user/info.txt" )){
+if (is_file( PATH."sources/$user/info.txt" ) && $_FILES["channels"]["name"] == "channels.conf"){
     print move_uploaded_file($_FILES["channels"]["tmp_name"], PATH."sources/$user/channels.conf" );
     print "upload successful.\n";
     //quick'n'dirty approach
@@ -57,5 +57,5 @@ if (is_file( PATH."sources/$user/info.txt" )){
     unset($x);
 }
 else
-    print "Error: Folder not found.";
+    print "Error: Folder not found.\n";
 ?>

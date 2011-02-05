@@ -30,15 +30,17 @@ require_once 'include.groups.php';
 //output
 $x = new cpOutput( PATH, EXPORTFOLDER );
 
-define("CABLE_PROVIDER","C[Germany_KabelBW]");
+define("CABLE_PROVIDER","Germany_KabelBW");
 
 //this filters channels that don't fit into some standard categories
 
 createEssentialListsDE("S19.2E", $x, $groups);
-createEssentialListsDE(CABLE_PROVIDER, $x, $groups);
+createEssentialListsDE("C[".CABLE_PROVIDER."]", $x, $groups);
 
-//write complete channels conf for S28.2E
+//write complete channels conf
+$x->writeChannelSectionByLabel( "", "S19.2E");
 $x->writeChannelSectionByLabel( "", "S28.2E");
+$x->writeChannelSectionByLabel( "", "C[".CABLE_PROVIDER."]");
 
 foreach ($groups as $label){
 
@@ -73,7 +75,7 @@ $nice_html_output = '
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Nice channel lists</title>
 		<style>
-			body { font-face: Arial, sans-serif; font-size: 0.8em; background-color: #dddddd;}
+			body { font-family: Arial, sans-serif; font-size: 0.8em; background-color: #dddddd;}
 			pre { border: 1px solid black; padding: 5px; background-color: white; overflow: auto;}
 		</style>
 	</head>

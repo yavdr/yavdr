@@ -152,7 +152,24 @@ class cpOutput extends cpBasics{
         $result = $this->dbh->query($sqlquery);
         if ($result === false)
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
-        $buffer = '<table border="1">';
+        $buffer = '
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Channel changelog</title>
+		<style>
+			body { font-family: Arial, sans-serif; font-size: 0.8em; background-color: #dddddd;}
+			table { font-family: Arial, sans-serif; font-size: 0.8em; background-color: white; border-collapse:collapse;}
+			td { border: 1px solid black; padding: 2px;}
+		</style>
+	</head>
+	<body>
+	    <h1>Changelog</h1>
+        <table>';
         foreach ($result as $row) {
             $buffer.="<tr><td>".
             $row["datestamp"]. "</td><td>".
@@ -161,7 +178,7 @@ class cpOutput extends cpBasics{
 			$row["update_description"] .
 			"</td></tr>\n";
         }
-        $buffer .= "<table>";
+        $buffer .= "<table></body></html>";
         file_put_contents(PATH."changelog.html", $buffer);
     }
 
