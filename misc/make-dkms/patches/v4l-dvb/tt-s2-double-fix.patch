@@ -1,0 +1,13 @@
+diff -r 7c0b887911cf linux/drivers/media/dvb/frontends/stv090x.c
+--- a/linux/drivers/media/dvb/frontends/stv090x.c	Mon Apr 05 22:56:43 2010 -0400
++++ b/linux/drivers/media/dvb/frontends/stv090x.c	Sun Apr 11 13:46:43 2010 +0200
+@@ -4664,7 +4664,7 @@ 
+ 	if (stv090x_i2c_gate_ctrl(state, 1) < 0)
+ 		goto err;
+ 
+-	if (state->config->tuner_sleep) {
++	if (fe->tuner_priv && state->config->tuner_sleep) {
+ 		if (state->config->tuner_sleep(fe) < 0)
+ 			goto err_gateoff;
+ 	}
+

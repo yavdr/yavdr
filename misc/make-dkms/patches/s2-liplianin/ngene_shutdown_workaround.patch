@@ -1,0 +1,65 @@
+diff -r 05ee8c4843a3 linux/drivers/media/dvb/ngene/ngene-cards.c
+--- a/linux/drivers/media/dvb/ngene/ngene-cards.c	Tue Jun 22 18:23:47 2010 +0200
++++ b/linux/drivers/media/dvb/ngene/ngene-cards.c	Wed Sep 22 16:34:21 2010 +0200
+@@ -890,6 +890,7 @@ static struct pci_driver ngene_pci_drive
+ #if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 15)
+ 	.err_handler = &ngene_errors,
+ #endif
++	.shutdown    = ngene_shutdown,
+ };
+ 
+ static __init int module_init_ngene(void)
+diff -r 05ee8c4843a3 linux/drivers/media/dvb/ngene/ngene-core.c
+--- a/linux/drivers/media/dvb/ngene/ngene-core.c	Tue Jun 22 18:23:47 2010 +0200
++++ b/linux/drivers/media/dvb/ngene/ngene-core.c	Wed Sep 22 16:34:21 2010 +0200
+@@ -1906,6 +1906,39 @@ static int init_channels(struct ngene *d
+ 	return 0;
+ }
+ 
++/***********************************/
++/* workaround for shutdown failure */
++/***********************************/
++
++static void ngene_unlink(struct ngene *dev)
++{
++	struct ngene_command com;
++
++	com.cmd.hdr.Opcode = CMD_MEM_WRITE;
++	com.cmd.hdr.Length = 3;
++	com.cmd.MemoryWrite.address = 0x910c;
++	com.cmd.MemoryWrite.data = 0xff;
++	com.in_len = 3;
++	com.out_len = 1;
++
++	down(&dev->cmd_mutex);
++	ngwritel(0, NGENE_INT_ENABLE);
++	ngene_command_mutex(dev, &com);
++	up(&dev->cmd_mutex);
++}
++
++void ngene_shutdown(struct pci_dev *pdev)
++{
++	struct ngene *dev = (struct ngene *)pci_get_drvdata(pdev);
++
++	if (!dev)
++		return;
++
++	printk(KERN_INFO DEVICE_NAME ": shutdown workaround...\n");
++	ngene_unlink(dev);
++	pci_disable_device(pdev);
++}
++
+ /****************************************************************************/
+ /* device probe/remove calls ************************************************/
+ /****************************************************************************/
+diff -r 05ee8c4843a3 linux/drivers/media/dvb/ngene/ngene.h
+--- a/linux/drivers/media/dvb/ngene/ngene.h	Tue Jun 22 18:23:47 2010 +0200
++++ b/linux/drivers/media/dvb/ngene/ngene.h	Wed Sep 22 16:34:21 2010 +0200
+@@ -898,6 +898,7 @@ int __devinit ngene_probe(struct pci_dev
+ int __devinit ngene_probe(struct pci_dev *pci_dev,
+ 			  const struct pci_device_id *id);
+ void __devexit ngene_remove(struct pci_dev *pdev);
++void ngene_shutdown(struct pci_dev *pdev);
+ int ngene_command(struct ngene *dev, struct ngene_command *com);
+ int ngene_command_gpio_set(struct ngene *dev, u8 select, u8 level);
+ void set_transfer(struct ngene_channel *chan, int state);

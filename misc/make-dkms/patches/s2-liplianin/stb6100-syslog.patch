@@ -1,0 +1,35 @@
+--- s2-liplianin/linux/drivers/media/dvb/frontends/stb6100_cfg.h	2009-12-24 15:42:54.488968598 +0100
++++ s2-liplianin-test/linux/drivers/media/dvb/frontends/stb6100_cfg.h	2010-02-14 21:50:15.460481256 +0100
+@@ -36,8 +36,6 @@
+ 			return err;
+ 		}
+ 		freq = *frequency;
+-		printk("%s: Frequency=%d\n", __func__, freq);
+-
+ 	}
+ 	return 0;
+ }
+@@ -57,7 +55,6 @@
+ 			printk("%s: Invalid parameter\n", __func__);
+ 			return err;
+ 		}
+-	printk("%s: Frequency=%d\n", __func__, frequency);
+ 	}
+ 	return 0;
+ }
+@@ -80,7 +77,6 @@
+ 		}
+ 		band = *bandwidth;
+ 	}
+-	printk("%s: Bandwidth=%d\n", __func__, band);
+ 	return 0;
+ }
+ 
+@@ -99,7 +95,6 @@
+ 			printk("%s: Invalid parameter\n", __func__);
+ 			return err;
+ 		}
+-	printk("%s: Bandwidth=%d\n", __func__, bandwidth);
+ 	}
+ 	return 0;
+ }

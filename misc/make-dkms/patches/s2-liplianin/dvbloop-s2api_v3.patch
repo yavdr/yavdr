@@ -1,0 +1,3275 @@
+Dateien v4l-dvb-hg/.hg/dirstate und v4l-dvb/.hg/dirstate sind verschieden.
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap.c v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap.c
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap.c	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap.c	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,451 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo_adap.c
++ * Desc: Support for virtual DVB adapters
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++/* avoid definition of __module_kernel_version in the resulting object file */
++#define __NO_VERSION__
++
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/spinlock.h>
++#include <linux/init.h>
++#include <linux/errno.h>
++#include <linux/version.h>
++
++#include "dvblo.h"
++#include "dvblo_adap.h"
++#include "dvblo_adap_fe.h"
++#include "dvblo_adap_ca.h"
++
++#define DBGLEV_ADAP1	(DBGLEV_1<<DBGLEV_ADAP)
++#define DBGLEV_ADAP2	(DBGLEV_2<<DBGLEV_ADAP)
++#define DBGLEV_ADAP3	(DBGLEV_3<<DBGLEV_ADAP)
++
++DVB_DEFINE_MOD_OPT_ADAPTER_NR(adapter_nr);
++
++/* -- Functions offered to others  -- */
++unsigned int dvblo_set_event (struct dvblo *dvblo, unsigned int event)
++{
++	unsigned int rv = 0;
++	if (dvblo == NULL) {
++		return rv;
++	}
++	spin_lock_irq (&dvblo->event_lock);
++	rv = dvblo->event;
++	if (event) {
++		dvblo->event |= event;
++		wake_up (&dvblo->event_queue);
++	} else {
++		dvblo->event = 0;
++	}
++	spin_unlock_irq (&dvblo->event_lock);
++	return rv;
++}
++
++int dvblog_adap_get_pids (struct dvblo *dvblo, dvblo_pids_t * pids_out)
++{
++	int rv = SUCCESS;
++	struct dvb_demux *demux = &dvblo->dvb.demux;
++	struct dvb_demux_feed *entry;
++	if (dvblo == NULL || dvblo->initdone == 0) {
++		rv = -EINVAL;
++		return rv;
++	}
++	spin_lock_irq (&demux->lock);
++	pids_out->num = 0;
++	list_for_each_entry (entry, &demux->feed_list, list_head) {
++		pids_out->pid[pids_out->num++] = entry->pid;
++	}
++	spin_unlock_irq (&demux->lock);
++	return rv;
++}
++
++int dvblo_adap_get_mac (struct dvblo *dvblo, u8 * mac_out)
++{
++	int rv = SUCCESS;
++	dprintk (DBGLEV_ADAP3, "[%s] dvblo=%p, mac_out=%p\n", dvblo->name, dvblo, mac_out);
++	if (dvblo == NULL || mac_out == NULL || dvblo->initdone == 0)
++		rv = -EINVAL;
++
++	else
++		memcpy (mac_out, DVBLO_DVB_ADAP (dvblo)->proposed_mac, 6);
++	return rv;
++}
++
++ssize_t dvblo_adap_deliver_packets (struct dvblo * dvblo, const u8 * buf, size_t len)
++{
++	ssize_t rv = 0;
++	if (dvblo == NULL || dvblo->initdone == 0 || buf == NULL)
++		rv = -EINVAL;
++
++	else if (len == 0)
++		rv = 0;
++
++	else if (down_interruptible (&dvblo->sem))
++		rv = -ERESTARTSYS;
++
++	else {
++		dprintk (DBGLEV_ADAP3, "[%s] dvblo=%p, buf=%p, len=%u\n", dvblo->name, dvblo, buf, len);
++		if (dvblo->feeding > 0) {
++			dvb_dmx_swfilter_packets (&dvblo->dvb.demux, buf, len / DVBLO_TS_SZ);
++			dvblo->stats.ts_count += len / DVBLO_TS_SZ;
++		}
++		rv = len;
++
++		// else: discard these TS packets
++		up (&dvblo->sem);
++	}
++	return rv;
++}
++
++
++/* -- DVB Demux Callbacks -- */
++
++/* called by dmx_ts_feed_start_filtering() and dmx_section_feed_start_filtering() */
++static int dvblo_demux_start_feed (struct dvb_demux_feed *feed)
++{
++	int rv = SUCCESS;
++	struct dvb_demux *demux;
++	struct dvblo *dvblo;
++	if (feed == NULL || (demux = feed->demux) == NULL || (dvblo = (struct dvblo *) demux->priv) == NULL)
++		rv = -EINVAL;
++
++	else if (down_interruptible (&dvblo->sem))
++		rv = -ERESTARTSYS;
++
++	else {
++		dprintk (DBGLEV_ADAP2, "[%s] feed=%p, demux=%p, pid=%d, dvblo=%p\n", dvblo->name, feed, demux, feed->pid, dvblo);
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,11)
++		feed->pusi_seen = 0;	/* have a clean section start */
++
++#endif /*  */
++		dvblo->feeding++;
++		rv = dvblo->feeding;
++		up (&dvblo->sem);
++		dvblo_set_event (dvblo, EV_PIDFILTER);
++	}
++	return rv;
++}
++
++/* called by dmx_ts_feed_stop_filtering() and dmx_section_feed_stop_filtering() */
++static int dvblo_demux_stop_feed (struct dvb_demux_feed *feed)
++{
++	int rv = SUCCESS;
++	struct dvb_demux *demux;
++	struct dvblo *dvblo;
++	if (feed == NULL || (demux = feed->demux) == NULL || (dvblo = (struct dvblo *) demux->priv) == NULL)
++		rv = -EINVAL;
++
++	else if (down_interruptible (&dvblo->sem))
++		rv = -ERESTARTSYS;
++
++	else {
++		dprintk (DBGLEV_ADAP2, "[%s] feed=%p, demux=%p, pid=%d, dvblo=%p\n", dvblo->name, feed, demux, feed->pid, dvblo);
++		dvblo->feeding--;
++		rv = dvblo->feeding;
++		up (&dvblo->sem);
++		dvblo_set_event (dvblo, EV_PIDFILTER);
++	}
++	return rv;
++}
++
++/* -- Functions for creating/destroying virtual DVB adapters -- */
++
++/**
++ * @note This function can cope with partially initialized dvblo structures
++ * by inspecting the init_level member.
++ * This is necessary because dvblo_destroy() is used by dvb_init() in case of an
++ * error during initialization
++ */
++int dvblo_adap_destroy (struct dvblo *dvblo)
++{
++	int rv = SUCCESS, step, i;
++	if (dvblo != NULL) {
++		dprintk (2, "destroying virtual DVB adapter: %s\n", dvblo->name);
++
++		/* cleanup dvblo structure
++		 * We rollback all init steps starting with the last one.
++		 */
++		for (step = dvblo->initlev, i = 0; step > 0; i = 0, step--) {
++
++			/* The items of the switch statement resemble the initialization
++			 * steps which were taken in dvblo_init()
++			 *
++			 * Yeah, I know it would be elegent to reverse the order of the
++			 * switch entries (the highest init step at the top) and remove
++			 * all break statements, so that when entering one init level (say 6)
++			 * all other levels (below it, i.e. 5,4,3,2,1) are also processed by falling-through.
++			 *
++			 * The reason why we (un)do every step in a for loop is that
++			 * we can easily check for errors (using the variable i) and
++			 * report the step which failed and then continue (although it 
++			 * might be dangerous).
++			 */
++			switch (step) {
++			case 1:
++
++				///@todo do have to cleanup the mutex?
++				break;
++			case 2:
++				i = dvb_unregister_adapter (DVBLO_DVB_ADAP (dvblo));
++				break;
++			case 3:
++				i = dvb_unregister_frontend (&dvblo->dvb.frontend);
++
++#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18)
++				kfree (dvblo->dvb.frontend.ops);
++
++#endif /*  */
++				break;
++			case 4:
++				dvb_dmx_release (&dvblo->dvb.demux);
++				break;
++			case 5:
++				dvb_dmxdev_release (&dvblo->dvb.dmxdev);
++				break;
++			case 6:
++				i = dvblo->dvb.demux.dmx.remove_frontend (&dvblo->dvb.demux.dmx, &dvblo->dvb.hw_frontend);
++				break;
++			case 7:
++				i = dvblo->dvb.demux.dmx.remove_frontend (&dvblo->dvb.demux.dmx, &dvblo->dvb.mem_frontend);
++				break;
++			case 8:
++				i = dvblo->dvb.demux.dmx.disconnect_frontend (&dvblo->dvb.demux.dmx);
++				break;
++			case 9:
++				dvb_net_release (&dvblo->dvb.net);
++				break;
++			case 10:				
++				dvblo_ca_unregister(dvblo);
++				break;
++			case 11:
++				dvblo_ca_exit(dvblo);
++				break;
++			default:
++				printk (KERN_ERR "%s: Oops! Invalid init step: %i\n", __FUNCTION__, i);
++				break;
++			}
++			if (i < 0) {
++				printk (KERN_ALERT "%s: cleanup of init step %i has failed. Continuing cleanup process. Expect more errors...\n", __FUNCTION__, step);
++				if (rv == SUCCESS)
++					rv = i;
++			}
++		}
++		kfree (dvblo);
++		dprintk (DBGLEV_ALL, "destroyed virtual DVB adapter: %s\n", dvblo->name);
++	} else {
++
++//              printk(KERN_ALERT "%s: Oops! Got NULL as dvblo argument. That's not a good sign...\n", __FUNCTION__);
++//              rv = -EINVAL;
++	}
++	return rv;
++}
++
++
++/** 
++ * @todo support automatic selection of DVB adapter number
++ * if adapnum param is negative.
++ * @todo check if the requested adapter number (adapnum) is 
++ * available
++ */
++int dvblo_adap_create (int adapnum, struct dvblo_adap_config *cfg, struct dvblo **dvblo_out)
++{
++	int rv = SUCCESS, i;
++	struct dvblo *dvblo = NULL;
++
++	do {
++		if (adapnum < 0 || adapnum > DVBLO_DEVMAX || dvblo_out == NULL) {
++			rv = -EINVAL;
++			break;
++		}
++		dvblo = kmalloc (sizeof (*dvblo), GFP_KERNEL);
++		if (dvblo == NULL) {
++			rv = -ENOMEM;
++			break;
++		}
++		memset (dvblo, 0, sizeof (*dvblo));
++		init_MUTEX (&dvblo->sem);
++		spin_lock_init (&dvblo->event_lock);
++		init_waitqueue_head (&dvblo->event_queue);
++		dvblo->initlev++;	/* 1 */
++		adapnum = 0;
++		i = snprintf (dvblo->name, sizeof (dvblo->name), DVBLO_NAME "_adap%d", adapnum);
++		if (i < 0 || i >= sizeof (dvblo->name)) {
++			if (i < 0)
++				rv = i;
++
++			else
++				rv = -ENOBUFS;
++			break;
++		}
++		dprintk (2, "creating virtual DVB adapter %s...\n", dvblo->name);
++
++		/* returns the adapter number (>= 0) or an error (< 0) */
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++		/* since kernel version 2.6.18 dvb_register_adapter() has a fourth argument: device */
++		/**@todo do we need to supply a value for <device>? */
++		//i = dvb_register_adapter (&dvblo->dvb.adap, (const char *) dvblo->name, THIS_MODULE, NULL);
++		i = dvb_register_adapter (&dvblo->dvb.adap, (const char *) dvblo->name, THIS_MODULE, NULL, adapter_nr);
++
++#else /*  */
++		/* NOTE: 
++		   The API changed in 2.6.12:
++		   "Modified dvb_register_adapter() to avoid kmalloc/kfree.  Drivers have to embed
++		   struct dvb_adapter into their private data struct from now on."
++		   So now the first paramter of dvb_register_adapter() is a pointer to a struct.
++		   In previous versions (<2.6.12) the dvb_adapter structure was kmalloc'ed in 
++		   dvb_register_adapter().
++		   We do not care about this change here because we always supply
++		   a pointer to dvblo->dvb.adap as the first argument.
++		   However, in the declaration of struct dvblo, we have to take this into account of course. 
++		 */
++		i = dvb_register_adapter (&dvblo->dvb.adap, (const char *) dvblo->name, THIS_MODULE);
++
++#endif /*  */
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to register virtual DVB adapter\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 2 */
++
++		// initialize proposed MAC address at dvblo->dvb.adap.proposed_mac
++		if (cfg != NULL && cfg->mac_valid != 0)
++			memcpy (DVBLO_DVB_ADAP (dvblo)->proposed_mac, cfg->mac, 6);
++		dprintk (DBGLEV_ADAP2, "initializing DVB frontend...\n");
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++		dvblo->dvb.frontend.ops = dvblo_adap_fe_ops;
++
++#else /*  */
++		dvblo->dvb.frontend.ops = (struct dvb_frontend_ops *) kmalloc (sizeof (struct dvb_frontend_ops), GFP_KERNEL);
++		memcpy (dvblo->dvb.frontend.ops, &dvblo_adap_fe_ops, sizeof (struct dvb_frontend_ops));
++
++#endif /*  */
++// deti test init
++#if 1
++		dvblo->fe.status.st = FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC | FE_HAS_LOCK;
++		dvblo->fe.status.ber = 0;
++		dvblo->fe.status.strength = 100;
++		dvblo->fe.status.snr = 100;
++		dvblo->fe.status.ucblocks = 0;
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++		dvblo->fe.tuner.status = TUNER_STATUS_LOCKED;
++
++#endif /*  */
++
++#endif /*  */
++		FE_PRIV (&dvblo->dvb.frontend) = dvblo;
++
++		/* Note: dvblo->dvb.frontend.frontend_priv is used internally by the DVB
++		 * subsystem to hold the context for the frontend device.
++		 */
++		i = dvb_register_frontend (DVBLO_DVB_ADAP (dvblo), &dvblo->dvb.frontend);
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to initialize DVB frontend\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 3 */
++		dprintk (DBGLEV_ADAP2, "initializing DVB demux...\n");
++		dvblo->dvb.demux.priv = (void *) dvblo;
++		dvblo->dvb.demux.filternum = 256;
++		dvblo->dvb.demux.feednum = 256;
++		dvblo->dvb.demux.start_feed = dvblo_demux_start_feed;
++		dvblo->dvb.demux.stop_feed = dvblo_demux_stop_feed;
++		dvblo->dvb.demux.write_to_decoder = NULL;
++		dvblo->dvb.demux.dmx.capabilities = (DMX_TS_FILTERING | DMX_SECTION_FILTERING | DMX_MEMORY_BASED_FILTERING);
++		i = dvb_dmx_init (&dvblo->dvb.demux);
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to initialize DVB demux\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 4 */
++		dvblo->dvb.dmxdev.filternum = 256;
++		dvblo->dvb.dmxdev.demux = &dvblo->dvb.demux.dmx;
++		dvblo->dvb.dmxdev.capabilities = 0;
++		dprintk (DBGLEV_ADAP2, "initializing DVB demux device...\n");
++		i = dvb_dmxdev_init (&dvblo->dvb.dmxdev, DVBLO_DVB_ADAP (dvblo));
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to initialize DVB demux device\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 5 */
++		dprintk (DBGLEV_ADAP2, "adding hardware frontend to demux...\n");
++
++		///@todo check if hw frontend is needed
++		dvblo->dvb.hw_frontend.source = DMX_FRONTEND_0;
++		i = dvblo->dvb.demux.dmx.add_frontend (&dvblo->dvb.demux.dmx, &dvblo->dvb.hw_frontend);
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to add HW frontend device\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 6 */
++		dprintk (DBGLEV_ADAP2, "adding memory frontend to demux...\n");
++		dvblo->dvb.mem_frontend.source = DMX_MEMORY_FE;
++		i = dvblo->dvb.demux.dmx.add_frontend (&dvblo->dvb.demux.dmx, &dvblo->dvb.mem_frontend);
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to add memory frontend device\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 7 */
++		dprintk (DBGLEV_ADAP2, "connecting frontend to demux...\n");
++		i = dvblo->dvb.demux.dmx.connect_frontend (&dvblo->dvb.demux.dmx, &dvblo->dvb.hw_frontend);
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to connect HW frontend device\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 8 */
++		dprintk (DBGLEV_ADAP2, "initializing dvb net...\n");
++		i = dvb_net_init (DVBLO_DVB_ADAP (dvblo), &dvblo->dvb.net, &dvblo->dvb.demux.dmx);
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to initialize DVB net\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 9 */
++		dprintk (DBGLEV_ADAP2, "initializing dvb ca...\n");
++		i = dvblo_ca_init (dvblo);
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to initialize DVB ca ringbuffers\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 10 */
++		
++		i = dvblo_ca_register (dvblo);
++		if (i < 0) {
++			printk (KERN_ERR "%s: failed to initialize DVB ca\n", __FUNCTION__);
++			rv = i;
++			break;
++		}
++		dvblo->initlev++;	/* 11 */
++
++		/* success */
++		dvblo->initdone = 1;
++		dprintk (DBGLEV_ALL, "created new virtual DVB adapter: %s\n", dvblo->name);
++	} while (0);
++	if (rv != 0) {
++		if (dvblo != NULL) {
++			if (dvblo_adap_destroy (dvblo) < 0)
++				printk (KERN_ALERT "%s: failed in error cleanup\n", __FUNCTION__);
++			dvblo = NULL;
++		}
++	}
++	*dvblo_out = dvblo;
++	return rv;
++}
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap_ca.c v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap_ca.c
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap_ca.c	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap_ca.c	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,321 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2007 Deti Fliegl
++ -----------------------------------------
++ * File: dvblo_adap_ca.c
++ * Desc: Support for virtual DVB adapters
++ * Date: October 2007
++ * Author: Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++/* avoid definition of __module_kernel_version in the resulting object file */
++#define __NO_VERSION__
++
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/spinlock.h>
++#include <linux/init.h>
++#include <linux/errno.h>
++#include <linux/version.h>
++#include <linux/vmalloc.h>
++
++#include "dvblo.h"
++#include "dvblo_adap.h"
++#include "dvblo_adap_ca.h"  
++
++#define DBGLEV_ADAP_CA1		(DBGLEV_1<<DBGLEV_ADAP_CA)
++#define DBGLEV_ADAP_CA2		(DBGLEV_2<<DBGLEV_ADAP_CA)
++#define DBGLEV_ADAP_CA3		(DBGLEV_3<<DBGLEV_ADAP_CA)
++
++void ci_get_data(struct dvb_ringbuffer *cibuf, u8 *data, int len)
++{
++	if (dvb_ringbuffer_free(cibuf) < len + 2)
++		return;
++		
++	if(len > CA_TPDU_MAX)
++		return;
++
++	dprintk(DBGLEV_ADAP_CA1, "ci_get_data len %d\n",len );
++		
++	DVB_RINGBUFFER_WRITE_BYTE(cibuf, len >> 8);
++	DVB_RINGBUFFER_WRITE_BYTE(cibuf, len & 0xff);
++	dvb_ringbuffer_write(cibuf, data, len);
++	wake_up_interruptible(&cibuf->queue);
++}
++
++/******************************************************************************
++ * CI link layer file ops
++ ******************************************************************************/
++
++static int ci_ll_init(struct dvb_ringbuffer *cirbuf, struct dvb_ringbuffer *ciwbuf, int size)
++{
++	struct dvb_ringbuffer *tab[] = { cirbuf, ciwbuf, NULL }, **p;
++	void *data;
++
++	for (p = tab; *p; p++) {
++		data = vmalloc(size);
++		if (!data) {
++			while (p-- != tab) {
++				vfree(p[0]->data);
++				p[0]->data = NULL;
++			}
++			return -ENOMEM;
++		}
++		dvb_ringbuffer_init(*p, data, size);
++	}
++	return 0;
++}
++
++static void ci_ll_flush(struct dvb_ringbuffer *cirbuf, struct dvb_ringbuffer *ciwbuf)
++{
++	dvb_ringbuffer_flush_spinlock_wakeup(cirbuf);
++	dvb_ringbuffer_flush_spinlock_wakeup(ciwbuf);
++}
++
++static void ci_ll_release(struct dvb_ringbuffer *cirbuf, struct dvb_ringbuffer *ciwbuf)
++{
++	vfree(cirbuf->data);
++	cirbuf->data = NULL;
++	vfree(ciwbuf->data);
++	ciwbuf->data = NULL;
++}
++
++static int ci_ll_reset(struct dvb_ringbuffer *cibuf, struct file *file,
++		       int slots, ca_slot_info_t *slot)
++{
++	int i;
++	int len = 0;
++	u8 msg[8] = { 0x00, 0x06, 0x00, 0x00, 0xff, 0x02, 0x00, 0x00 };
++
++	for (i = 0; i < CA_MAX_SLOTS; i++) {
++		if (slots & (1 << i))
++			len += 8;
++	}
++
++	if (dvb_ringbuffer_free(cibuf) < len)
++		return -EBUSY;
++
++	for (i = 0; i < CA_MAX_SLOTS; i++) {
++		if (slots & (1 << i)) {
++			msg[2] = i;
++			dvb_ringbuffer_write(cibuf, msg, 8);
++			slot[i].flags = 0;
++		}
++	}
++
++	return 0;
++}
++
++static ssize_t ci_ll_write(struct dvb_ringbuffer *cibuf, struct file *file,
++			   const char __user *buf, size_t count, loff_t *ppos)
++{
++	int free;
++	int non_blocking = file->f_flags & O_NONBLOCK;
++	char *page = (char *)__get_free_page(GFP_USER);
++	int res;
++
++	if (!page)
++		return -ENOMEM;
++
++	res = -EINVAL;
++	if (count > CA_TPDU_MAX)
++		goto out;
++
++	res = -EFAULT;
++	if (copy_from_user(page, buf, count))
++		goto out;
++
++	free = dvb_ringbuffer_free(cibuf);
++	if (count + 2 > free) {
++		res = -EWOULDBLOCK;
++		if (non_blocking)
++			goto out;
++		res = -ERESTARTSYS;
++		if (wait_event_interruptible(cibuf->queue,
++					     (dvb_ringbuffer_free(cibuf) >= count + 2)))
++			goto out;
++	}
++
++	DVB_RINGBUFFER_WRITE_BYTE(cibuf, count >> 8);
++	DVB_RINGBUFFER_WRITE_BYTE(cibuf, count & 0xff);
++
++	res = dvb_ringbuffer_write(cibuf, page, count);
++out:
++	free_page((unsigned long)page);
++	return res;
++}
++
++static ssize_t ci_ll_read(struct dvb_ringbuffer *cibuf, struct file *file,
++			  char __user *buf, size_t count, loff_t *ppos)
++{
++	int avail;
++	int non_blocking = file->f_flags & O_NONBLOCK;
++	ssize_t len;
++
++	if (!cibuf->data || !count)
++		return 0;
++	if (non_blocking && (dvb_ringbuffer_empty(cibuf)))
++		return -EWOULDBLOCK;
++	if (wait_event_interruptible(cibuf->queue,
++				     !dvb_ringbuffer_empty(cibuf)))
++		return -ERESTARTSYS;
++	avail = dvb_ringbuffer_avail(cibuf);
++	if (avail < 4)
++		return 0;
++	len = DVB_RINGBUFFER_PEEK(cibuf, 0) << 8;
++	len |= DVB_RINGBUFFER_PEEK(cibuf, 1);
++	if (avail < len + 2 || count < len)
++		return -EINVAL;
++	DVB_RINGBUFFER_SKIP(cibuf, 2);
++
++	//return dvb_ringbuffer_read(cibuf, buf, len, 1);
++	return dvb_ringbuffer_read_user(cibuf, buf, len);
++
++}
++
++static int dvb_ca_open(struct inode *inode, struct file *file)
++{
++	struct dvb_device *dvbdev = file->private_data;
++	struct dvblo *dvblo = dvbdev->priv;
++	int err = dvb_generic_open(inode, file);
++
++	dprintk(DBGLEV_ADAP_CA1, "dvblo:%p %d\n",dvblo, err);
++
++	if (err < 0)
++		return err;
++	ci_ll_flush(&dvblo->ci_rbuffer, &dvblo->ci_wbuffer);
++	return 0;
++}
++
++static unsigned int dvb_ca_poll (struct file *file, poll_table *wait)
++{
++	struct dvb_device *dvbdev = file->private_data;
++	struct dvblo *dvblo = dvbdev->priv;
++	struct dvb_ringbuffer *rbuf = &dvblo->ci_rbuffer;
++	struct dvb_ringbuffer *wbuf = &dvblo->ci_wbuffer;
++	unsigned int mask = 0;
++
++	dprintk(DBGLEV_ADAP_CA1, "dvblo:%p\n",dvblo);
++
++	poll_wait(file, &rbuf->queue, wait);
++	poll_wait(file, &wbuf->queue, wait);
++
++	if (!dvb_ringbuffer_empty(rbuf))
++		mask |= (POLLIN | POLLRDNORM);
++
++	if (dvb_ringbuffer_free(wbuf) > 1024)
++		mask |= (POLLOUT | POLLWRNORM);
++
++	return mask;
++}
++
++static int dvb_ca_ioctl(struct inode *inode, struct file *file,
++		 unsigned int cmd, void *parg)
++{
++	struct dvb_device *dvbdev = file->private_data;
++	struct dvblo *dvblo = dvbdev->priv;
++	unsigned long arg = (unsigned long) parg;
++
++	dprintk(DBGLEV_ADAP_CA1, "dvblo:%p\n",dvblo);
++
++	switch (cmd) {
++	case CA_RESET:
++		dvblo_set_event (dvblo, EV_CA_RESET);
++		if(arg) {
++			int ret=ci_ll_reset(&dvblo->ci_wbuffer, file, arg, dvblo->ca.info);
++			dvblo_set_event (dvblo, EV_CA_WRITE);
++			return ret;
++		}
++		break;
++	case CA_GET_CAP:
++	{
++		memcpy(parg, &dvblo->ca.cap, sizeof(ca_caps_t));
++		break;
++	}
++
++	case CA_GET_SLOT_INFO:
++	{
++		ca_slot_info_t *info=(ca_slot_info_t *)parg;
++
++		if (info->num > (CA_MAX_SLOTS-1))
++			return -EINVAL;
++		memcpy(info, &dvblo->ca.info[info->num], sizeof(ca_slot_info_t));
++		break;
++	}
++#if 0
++	case CA_SET_DESCR:
++		dvblo_set_event (dvblo, EV_CA_DESCR);
++		break;
++		
++	case CA_SET_PID:
++		dvblo_set_event (dvblo, EV_CA_PID);
++		break;
++#endif
++	default:
++		return -EINVAL;
++	}
++	return 0;
++}
++
++static ssize_t dvb_ca_write(struct file *file, const char __user *buf,
++			    size_t count, loff_t *ppos)
++{
++	struct dvb_device *dvbdev = file->private_data;
++	struct dvblo *dvblo = dvbdev->priv;
++	int ret;
++
++	dprintk(DBGLEV_ADAP_CA1, "dvblo:%p write\n",dvblo);
++	ret=ci_ll_write(&dvblo->ci_wbuffer, file, buf, count, ppos);
++	dvblo_set_event (dvblo, EV_CA_WRITE);
++	return ret;
++}
++
++static ssize_t dvb_ca_read(struct file *file, char __user *buf,
++			   size_t count, loff_t *ppos)
++{
++	struct dvb_device *dvbdev = file->private_data;
++	struct dvblo *dvblo = dvbdev->priv;
++
++	dprintk(DBGLEV_ADAP_CA1, "dvblo:%p read %d\n",dvblo, count);
++	return ci_ll_read(&dvblo->ci_rbuffer, file, buf, count, ppos);
++}
++
++static struct file_operations dvb_ca_fops = {
++	.owner		= THIS_MODULE,
++	.read		= dvb_ca_read,
++	.write		= dvb_ca_write,
++	.ioctl		= dvb_generic_ioctl,
++	.open		= dvb_ca_open,
++	.release	= dvb_generic_release,
++	.poll		= dvb_ca_poll,
++};
++
++static struct dvb_device dvbdev_ca = {
++	.priv		= NULL,
++	.users		= 1,
++	.writers	= 1,
++	.fops		= &dvb_ca_fops,
++	.kernel_ioctl	= dvb_ca_ioctl,
++};
++
++int dvblo_ca_register(struct dvblo *dvblo)
++{
++	return dvb_register_device(&dvblo->dvb.adap, &dvblo->dvb.ca_dev,
++				   &dvbdev_ca, dvblo, DVB_DEVICE_CA);
++}
++
++void dvblo_ca_unregister(struct dvblo *dvblo)
++{
++	dvb_unregister_device(dvblo->dvb.ca_dev);
++}
++
++int dvblo_ca_init(struct dvblo* dvblo)
++{
++	return ci_ll_init(&dvblo->ci_rbuffer, &dvblo->ci_wbuffer, 8192);
++}
++
++void dvblo_ca_exit(struct dvblo* dvblo)
++{
++	ci_ll_release(&dvblo->ci_rbuffer, &dvblo->ci_wbuffer);
++}
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap_ca.h v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap_ca.h
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap_ca.h	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap_ca.h	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,43 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Flieg
++ -----------------------------------------
++ * File: dvblo_adap.c
++ * Desc: Support for virtual DVB adapters - Frontend implementation
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++#ifndef _DVBLO_ADAP_CA_H_
++#define _DVBLO_ADAP_CA_H_
++
++#include "dvbdev.h"
++#include "dvb_demux.h"
++#include "dmxdev.h"
++#include "dvb_net.h"
++#include "dvb_frontend.h"
++#include "dvb_ringbuffer.h"
++#include "linux/dvb/ca.h"
++
++void ci_get_data(struct dvb_ringbuffer *cibuf, u8 *data, int len);
++
++/**
++ * Register new ca device
++ */
++int dvblo_ca_register(struct dvblo *dvblo);
++/**
++ * Unregister ca device
++ */
++void dvblo_ca_unregister(struct dvblo *dvblo);
++/**
++ * Initialize ca device 
++ */
++int dvblo_ca_init(struct dvblo* dvblo);
++/**
++ * Uninitialize ca device 
++ */
++void dvblo_ca_exit(struct dvblo* dvblo);
++
++
++#endif /* _DVBLO_ADAP_FE_H_ */
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap_fe.c v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap_fe.c
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap_fe.c	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap_fe.c	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,536 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo_adap.c
++ * Desc: Support for virtual DVB adapters - Frontend implementation
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++/* avoid definition of __module_kernel_version in the resulting object file */
++#define __NO_VERSION__
++
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/spinlock.h>
++#include <linux/init.h>
++#include <linux/errno.h>
++#include <linux/version.h>
++
++#include "dvblo.h"
++#include "dvblo_adap.h"
++
++#define DBGLEV_ADAP_FE1		(DBGLEV_1<<DBGLEV_ADAP_FE)
++#define DBGLEV_ADAP_FE2		(DBGLEV_2<<DBGLEV_ADAP_FE)
++#define DBGLEV_ADAP_FE3		(DBGLEV_3<<DBGLEV_ADAP_FE)
++
++#if 0
++struct dvb_frontend_parameters
++{
++	__u32 frequency;	/* (absolute) frequency in Hz for QAM/OFDM/ATSC */
++
++	/* intermediate frequency in kHz for QPSK */
++	fe_spectral_inversion_t inversion;
++	union
++	{
++		struct dvb_qpsk_parameters qpsk;
++		struct dvb_qam_parameters qam;
++		struct dvb_ofdm_parameters ofdm;
++		struct dvb_vsb_parameters vsb;
++	} u;
++};
++
++struct dvb_frontend_tune_settings
++{
++	int min_delay_ms;
++	int step_size;
++	int max_drift;
++	struct dvb_frontend_parameters parameters;
++};
++
++#endif /*  */
++
++/* fontend ops */
++int dvblo_adap_fe_get_frontend (struct dvb_frontend *fe, struct dvb_frontend_parameters *params)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*params = dvblo->fe.params;
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_set_frontend (struct dvb_frontend *fe, struct dvb_frontend_parameters *params)
++{
++	struct dtv_frontend_properties *c = &fe->dtv_property_cache;
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		dvblo->fe.params = *params;
++
++		/* Hack for netceiver: modulation type is encoded in upper bits of FEC. Adjust dvblo->fe.params.qpsk.fec_inner accordingly. */
++		/* Translate FEC and modulation as well. New DVBAPI uses other enum values for the same things. */
++		
++		switch(c->delivery_system) {
++		        case SYS_DVBS:
++			    dprintk(DBGLEV_ADAP_FE, "DVB-S delivery system selected\n");
++			    break;
++		        case SYS_DVBS2:
++			    switch(c->fec_inner) {
++				    case FEC_3_5:
++					    /* set lower 16bits (FEC) to 13 for FEC 3/5, clear upper 16 bits (modulation) */
++					    dvblo->fe.params.u.qpsk.fec_inner = 13;
++					    dprintk(DBGLEV_ADAP_FE, "DVB-S2 delivery system: FEC3/5\n");
++					break;
++				    case FEC_9_10:
++					    /* set lower 16bits (FEC) to 14 for FEC 9/10, clear upper 16 bits (modulation) */
++					    dvblo->fe.params.u.qpsk.fec_inner = 14;
++					    dprintk(DBGLEV_ADAP_FE, "DVB-S2 delivery system: FEC9/10\n");
++					break;
++				    default:
++					break;
++			    }
++			    switch(c->modulation) {
++				    case QPSK:
++					    /* set upper 16bits (modulation) to 9 for DVB-S2 QPSK */
++				    	    dvblo->fe.params.u.qpsk.fec_inner |= (9<<16);
++					    dprintk(DBGLEV_ADAP_FE, "DVB-S2 delivery system: QPSK (DVB-S2)\n");
++					break;
++				    case PSK_8: 
++					    /* set upper 16bits (modulation) to 10 for DVB-S2 8PSK */
++				    	    dvblo->fe.params.u.qpsk.fec_inner |= (10<<16);
++					    dprintk(DBGLEV_ADAP_FE, "DVB-S2 delivery system: 8PSK\n");
++					break;
++				    default:
++					break;
++			    }
++			    
++			    break;
++			default:
++			    break;
++    		}    
++
++		dvblo_set_event (dvblo, EV_FRONTEND);
++
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_get_tune_settings (struct dvb_frontend *fe, struct dvb_frontend_tune_settings *settings)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		settings->min_delay_ms = 2000;
++		settings->step_size = 0;
++		settings->max_drift = 0;
++		settings->parameters = dvblo->fe.params;
++	}
++	return rv;
++}
++
++#if 0
++typedef enum fe_status
++{ FE_HAS_SIGNAL = 0x01,		/*  found something above the noise level */
++	FE_HAS_CARRIER = 0x02,	/*  found a DVB signal  */
++	FE_HAS_VITERBI = 0x04,	/*  FEC is stable  */
++	FE_HAS_SYNC = 0x08,	/*  found sync bytes  */
++	FE_HAS_LOCK = 0x10,	/*  everything's working... */
++	FE_TIMEDOUT = 0x20,	/*  no lock within the last ~2 seconds */
++	FE_REINIT = 0x40	/*  frontend was reinitialized,  */
++} fe_status_t;			/*  application is recommended to reset */
++
++	/*  DiSEqC, tone and parameters */
++#endif /*  */
++
++int dvblo_adap_fe_read_status (struct dvb_frontend *fe, fe_status_t * status)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*status = dvblo->fe.status.st;
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_read_ber (struct dvb_frontend *fe, u32 * ber)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*ber = dvblo->fe.status.ber;
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_read_signal_strength (struct dvb_frontend *fe, u16 * strength)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*strength = dvblo->fe.status.strength;
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_read_snr (struct dvb_frontend *fe, u16 * snr)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*snr = dvblo->fe.status.snr;
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_read_ucblocks (struct dvb_frontend *fe, u32 * ucblocks)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*ucblocks = dvblo->fe.status.ucblocks;
++	}
++	return rv;
++}
++
++static int dvblo_send_diseqc_msg (struct dvb_frontend *fe, struct dvb_diseqc_master_cmd *m)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		dvblo->fe.sec.diseqc_cmd = *m;
++		dvblo_set_event (dvblo, EV_DISEC_MSG);
++	}
++	return rv;
++}
++
++static int dvblo_send_diseqc_burst (struct dvb_frontend *fe, fe_sec_mini_cmd_t burst)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		dvblo->fe.sec.mini_cmd = burst;
++		dvblo_set_event (dvblo, EV_DISEC_BURST);
++	}
++	return rv;
++}
++
++static int dvblo_set_tone (struct dvb_frontend *fe, fe_sec_tone_mode_t tone)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		dvblo->fe.sec.tone_mode = tone;
++		dvblo_set_event (dvblo, EV_TONE);
++	}
++	return rv;
++}
++
++static int dvblo_set_voltage (struct dvb_frontend *fe, fe_sec_voltage_t voltage)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		dvblo->fe.sec.voltage = voltage;
++		dvblo_set_event (dvblo, EV_VOLTAGE);
++	}
++	return rv;
++}
++
++
++/* NOTE: In version 2.6.18, the Tuner was separated from the frontend.
++ */
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++
++/* tuner ops */
++
++/** This is for simple PLLs - set all parameters in one go. */
++int dvblo_adap_fe_tuner_set_params (struct dvb_frontend *fe, struct dvb_frontend_parameters *p)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		dvblo->fe.tuner.params = *p;
++		dvblo_set_event (dvblo, EV_TUNER);
++	}
++	return rv;
++}
++
++/** This is support for demods like the mt352 - fills out the supplied buffer with what to write. */
++//int dvblo_adap_fe_tuner_calc_regs(struct dvb_frontend *fe, struct dvb_frontend_parameters *p, u8 *buf, int buf_len);
++int dvblo_adap_fe_tuner_get_frequency (struct dvb_frontend *fe, u32 * frequency)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*frequency = dvblo->fe.tuner.params.frequency;
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_tuner_set_frequency (struct dvb_frontend *fe, u32 frequency)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		dvblo->fe.tuner.params.frequency = frequency;
++		dvblo_set_event (dvblo, EV_FREQUENCY);
++	}
++	return rv;
++}
++
++#if 0
++typedef enum fe_bandwidth
++{ BANDWIDTH_8_MHZ, BANDWIDTH_7_MHZ, BANDWIDTH_6_MHZ, BANDWIDTH_AUTO
++} fe_bandwidth_t;
++
++#endif /*  */
++
++int dvblo_adap_fe_tuner_get_bandwidth (struct dvb_frontend *fe, u32 * bandwidth)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*bandwidth = dvblo->fe.tuner.params.u.ofdm.bandwidth;
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_tuner_set_bandwidth (struct dvb_frontend *fe, u32 bandwidth)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		dvblo->fe.tuner.params.u.ofdm.bandwidth = bandwidth;
++		dvblo_set_event (dvblo, EV_BANDWIDTH);
++	}
++	return rv;
++}
++
++int dvblo_adap_fe_tuner_get_status (struct dvb_frontend *fe, u32 * status)
++{
++	int rv = SUCCESS;
++	struct dvblo *dvblo = FE_PRIV (fe);
++	dprintk (DBGLEV_ADAP_FE3, "fe=%p\n", fe);
++	if (dvblo == NULL)
++		rv = -EINVAL;
++
++	else {
++		*status = dvblo->fe.tuner.status;
++	}
++	return rv;
++}
++#endif /*  */
++struct dvb_frontend_ops dvblo_adap_fe_ops = {
++	.info =	{
++		.name = "Virtual DVB Frontend",
++		.type = FE_QPSK,
++		.frequency_min = 0,
++		.frequency_max = 2000000000,
++		.frequency_stepsize = 1000,
++		.frequency_tolerance = 500,
++		.symbol_rate_min = 0,
++		.symbol_rate_max = 50000000,
++		.symbol_rate_tolerance = 250,
++		.caps = FE_IS_STUPID
++		},
++	.release = NULL,
++	.init = NULL,
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++	/* Set to NULL or return 0 for SW-bases ZigZag algorithm
++	 * But this causes kernel oops in Linux versions!
++	 * get_frontend was added in 2.6.18
++	 */
++	.get_frontend_algo = NULL,
++#endif /*  */
++	/* these two are only used for the swzigzag code */
++	.set_frontend = dvblo_adap_fe_set_frontend,
++	.get_tune_settings = dvblo_adap_fe_get_tune_settings,
++	.get_frontend = dvblo_adap_fe_get_frontend,
++	.read_status = dvblo_adap_fe_read_status,
++	.read_ber = dvblo_adap_fe_read_ber,
++	.read_signal_strength = dvblo_adap_fe_read_signal_strength,
++	.read_snr = dvblo_adap_fe_read_snr,
++	.read_ucblocks = dvblo_adap_fe_read_ucblocks,
++	.diseqc_send_master_cmd = dvblo_send_diseqc_msg,
++	.diseqc_send_burst = dvblo_send_diseqc_burst,
++	.set_tone = dvblo_set_tone,
++	.set_voltage = dvblo_set_voltage,
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++	.tuner_ops = 	{
++			.info = {
++				.name = "Virtual DVB Tuner",
++				.frequency_min = 0,
++				.frequency_max = 2000000000,
++				.frequency_step = 1000,
++				.bandwidth_min = 0,
++				.bandwidth_max = 20000000,
++				.bandwidth_step = 500
++				},
++			.release = NULL,
++			.init = NULL,
++			.set_params = dvblo_adap_fe_tuner_set_params,
++			.get_frequency = dvblo_adap_fe_tuner_get_frequency,
++			.get_bandwidth = dvblo_adap_fe_tuner_get_bandwidth,
++			.get_status = dvblo_adap_fe_tuner_get_status,
++			.set_frequency = dvblo_adap_fe_tuner_set_frequency,
++			.set_bandwidth = dvblo_adap_fe_tuner_set_bandwidth
++			}
++#endif /*  */
++};
++
++int dvblo_fe_get_info (struct dvblo *dvblo, struct dvb_frontend_info *info)
++{
++	struct dvb_frontend_ops *ops;
++	int rv = SUCCESS;
++	if (dvblo == NULL) {
++		rv = -EINVAL;
++		return rv;
++	}
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++	ops = &dvblo->dvb.frontend.ops;
++
++#else /*  */
++	ops = dvblo->dvb.frontend.ops;
++
++#endif /*  */
++	*info = ops->info;
++
++        dprintk(DBGLEV_ADAP_FE, "Netceiver (mcli) called GET_INFO! Please report!\n");
++
++	return rv;
++}
++
++int dvblo_fe_set_info (struct dvblo *dvblo, struct dvb_frontend_info *info)
++{
++	struct dvb_frontend_ops *ops;
++	int rv = SUCCESS;
++	if (dvblo == NULL) {
++		rv = -EINVAL;
++		return rv;
++	}
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++	ops = &dvblo->dvb.frontend.ops;
++
++#else /*  */
++	ops = dvblo->dvb.frontend.ops;
++
++#endif /*  */
++	ops->info = *info;
++
++	dprintk(DBGLEV_ADAP_FE, "frontend type(from netceiver): %d\n", info->type);
++	dprintk(DBGLEV_ADAP_FE, "frontend name(from netceiver): %s\n", info->name);
++	
++	/* Hack for netceiver: if the name contains "DVB-S2", */
++	/* set new capability flag FE_CAN_2ND_GEN_MODULATION in .caps */
++	/* This is called by mcli and _not_ by the user space app. */
++
++	if ( strstr(info->name, "DVB-S2") ) 
++	    ops->info.caps  |= FE_CAN_2G_MODULATION;
++	
++	return rv;
++}
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++int dvblo_fe_get_tunerinfo (struct dvblo *dvblo, struct dvb_tuner_info *tunerinfo)
++{
++	struct dvb_frontend_ops *ops;
++	
++	int rv = SUCCESS;
++	if (dvblo == NULL) {
++		rv = -EINVAL;
++		return rv;
++	}
++	ops = &dvblo->dvb.frontend.ops;
++	*tunerinfo = ops->tuner_ops.info;
++	return rv;
++}
++
++int dvblo_fe_set_tunerinfo (struct dvblo *dvblo, struct dvb_tuner_info *tunerinfo)
++{
++	struct dvb_frontend_ops *ops;
++	
++	int rv = SUCCESS;
++	if (dvblo == NULL) {
++		rv = -EINVAL;
++		return rv;
++	}
++	ops = &dvblo->dvb.frontend.ops;
++	ops->tuner_ops.info = *tunerinfo;
++	return rv;
++}
++#endif /*  */
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap_fe.h v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap_fe.h
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap_fe.h	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap_fe.h	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,30 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Flieg
++ -----------------------------------------
++ * File: dvblo_adap.c
++ * Desc: Support for virtual DVB adapters - Frontend implementation
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++#ifndef _DVBLO_ADAP_FE_H_
++#define _DVBLO_ADAP_FE_H_
++
++#include "dvbdev.h"
++#include "dvb_demux.h"
++#include "dmxdev.h"
++#include "dvb_net.h"
++#include "dvb_frontend.h"
++extern struct dvb_frontend_ops dvblo_adap_fe_ops;
++int dvblo_fe_get_info (struct dvblo *dvblo, struct dvb_frontend_info *info);
++int dvblo_fe_set_info (struct dvblo *dvblo, struct dvb_frontend_info *info);
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++int dvblo_fe_get_tunerinfo (struct dvblo *dvblo, struct dvb_tuner_info *tunerinfo);
++int dvblo_fe_set_tunerinfo (struct dvblo *dvblo, struct dvb_tuner_info *tunerinfo);
++
++#endif /*  */
++
++#endif /* _DVBLO_ADAP_FE_H_ */
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap.h v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap.h
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_adap.h	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_adap.h	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,155 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo_adap.h
++ * Desc: Support for virtual DVB adapters
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++#ifndef _DVBLO_ADAP_H_
++#define _DVBLO_ADAP_H_
++
++#include <linux/types.h>
++#include "dvbdev.h"
++#include "dvb_demux.h"
++#include "dmxdev.h"
++#include "dvb_net.h"
++#include "dvb_frontend.h"
++#include <linux/dvb/ca.h>
++#include "dvblo_ioctl.h"
++
++struct dvblo_adap_statistics
++{
++
++	/// Number of TS packets received on the adapter
++	unsigned long ts_count;
++};
++
++/**
++ * Structure that represents a virtual DVB adapter instance
++ * @todo rename this to dvblo_adap
++ */
++struct dvblo
++{
++
++	/**
++	 * Level of initialization
++	 * This help dvblo_destroy() to determine which things have to be 
++	 * cleaned/unregistered as it is used by dvblo_init() when an error occurs
++	 */
++	unsigned int initlev:8;
++
++	/// Flag that is set to 1 if this dvblo structure is completely initialized
++	unsigned int initdone:1;
++
++	/// The name of this adapter, e.g. "dvblo_adap0"
++	char name[16];
++	struct
++	{
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,12)
++		/* Since kernel version 2.6.12 the dvb_adapter structure has to be 
++		 * embedded into our structure
++		 */
++		struct dvb_adapter adap;
++
++#define DVBLO_DVB_ADAP(dvblop) (&(dvblop)->dvb.adap)
++#else				/*  */
++		struct dvb_adapter *adap;
++
++#define DVBLO_DVB_ADAP(dvblop) ((dvblop)->dvb.adap)
++#endif				/*  */
++                struct dvb_device *ca_dev;
++		struct dmxdev dmxdev;
++		struct dvb_demux demux;
++		struct dvb_net net;
++		struct dvb_frontend frontend;
++
++		/* struct dvb_frontend: tuner_priv was added in 2.6.18 */
++#define FE_PRIV(fep) ((fep)->demodulator_priv)
++
++#define DVBLO_DVB_ADAP_FEPRIV(dvblop) FE_PRIV(&((dvblop)->dvb.frontend))
++		struct dmx_frontend hw_frontend;
++		struct dmx_frontend mem_frontend;
++	} dvb;
++
++	/// count, how many times dvblo_demux_start_feed() has been called
++	int feeding;
++	struct semaphore sem;
++	spinlock_t event_lock;
++	wait_queue_head_t event_queue;
++	unsigned int event;
++	struct dvblo_adap_statistics stats;
++	struct
++	{
++		struct dvb_frontend_parameters params;
++		struct
++		{
++			struct dvb_frontend_parameters params;
++			u32 status;
++		} tuner;
++		dvblo_sec_t sec;
++		dvblo_festatus_t status;
++	} fe;
++
++        struct dvb_ringbuffer ci_rbuffer;
++        struct dvb_ringbuffer ci_wbuffer;
++        dvblo_cacaps_t ca;
++        
++	dvblo_private_t private;
++};
++
++/**
++ * Adapter configuration paramters
++ */
++struct dvblo_adap_config
++{
++
++	/// Whether a MAC address is specified by this structure
++	unsigned int mac_valid:1;
++
++	/// The MAC address of the DVB adapter (if mac_valid == 1) 
++	u8 mac[6];
++};
++
++/** 
++ * Creates a new virtual DVB adapter
++ * @param adapnum The desired adapter number (set to -1 for automatic assignment)
++ * @param cfg Adapter configuration (may be NULL)
++ * @param dvblo_out A pointer to the newly allocated DVB adapter context is
++ * returned via this parameter
++ */
++int dvblo_adap_create (int adapnum, struct dvblo_adap_config *cfg, struct dvblo **dvblo_out);
++
++/** 
++ * Destroys a virtual DVB adapter
++ */
++int dvblo_adap_destroy (struct dvblo *dvblo);
++
++/**
++ * Deliver TS packets to the virtual DVB adapter
++ * @param dvblo The dvblo adapter context
++ * @param buf Pointer to buffer containing TS packets
++ * @param len Length of buf in bytes
++ */
++ssize_t dvblo_adap_deliver_packets (struct dvblo *dvblo, const u8 * buf, size_t len);
++
++/**
++ * Handle event bitpattern without race conditions
++ */
++unsigned int dvblo_set_event (struct dvblo *dvblo, unsigned int event);
++
++/**
++ * Get list of currently active PIDs from DVB adapter
++ */
++int dvblog_adap_get_pids (struct dvblo *dvblo, dvblo_pids_t * pids_out);
++
++/**
++ * Get MAC address of virtual DVB adapter
++ */
++int dvblo_adap_get_mac (struct dvblo *dvblo, u8 * mac_out);
++
++#endif /* _DVBLO_ADAP_H_ */
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo.c v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo.c
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo.c	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo.c	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,167 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo.c
++ * Desc: This is the module core
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++#include <linux/kernel.h>
++#include <linux/spinlock.h>
++#include <linux/module.h>
++#include <linux/moduleparam.h>
++#include <linux/version.h>
++#include <linux/init.h>
++#include <linux/errno.h>
++#include <linux/stat.h>
++
++#define DVBLO_DEFINE_GLOBALS 1
++
++#include "dvblo.h"
++#include "dvblo_char.h"
++#include "dvblo_util.h"
++static unsigned int dvblo_devcount = DVBLO_CHAR_DEVMAX;
++static char *dvblo_dvb_macaddrv[DVBLO_DEVMAX];
++static int dvblo_dvb_macaddrc = 0;
++
++// dvblo_debug is a global symbol (should be available in all .c files)
++unsigned int dvblo_debug = 0;
++unsigned int dvblo_autocreate = 0;
++module_param_named (devcount, dvblo_devcount, uint, S_IRUGO);
++MODULE_PARM_DESC (devcount, "The initial number of virtual DVB adapters");
++module_param_named (autocreate, dvblo_autocreate, uint, S_IRUGO);
++MODULE_PARM_DESC (autocreate, "Create DVB adapters on module load automatically");
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,10)
++module_param_array_named (macaddrs, dvblo_dvb_macaddrv, charp, &dvblo_dvb_macaddrc, S_IRUGO);
++
++#else /*  */
++module_param_array_named (macaddrs, dvblo_dvb_macaddrv, charp, dvblo_dvb_macaddrc, S_IRUGO);
++
++#endif /*  */
++MODULE_PARM_DESC (macaddrs, "A (comma-separated) list of MAC addresses assigned to the virtual DVB adapters");
++module_param_named (debug, dvblo_debug, uint, S_IRUGO | S_IWUSR);
++MODULE_PARM_DESC (debug, "The debug level. Higher values will generate more debug info");
++EXPORT_SYMBOL_GPL (dvblo_devcount);
++EXPORT_SYMBOL_GPL (dvblo_dvb_macaddrv);
++EXPORT_SYMBOL_GPL (dvblo_dvb_macaddrc);
++EXPORT_SYMBOL_GPL (dvblo_debug);
++MODULE_LICENSE ("GPL v2");
++MODULE_AUTHOR ("Christian Praehauser / Deti Fliegl");
++MODULE_DESCRIPTION ("DVB loopback device");
++MODULE_VERSION (DVBLO_VERSION);
++
++/// Module initialization level
++static int initlev = 0;
++
++/**
++ * @note This function can cope with a partially initialized dvblo module
++ * by inspecting the init_level member.
++ * This is necessary because dvblo_cleanup() is used by dvb_init() in case of an
++ * error during initialization
++ */
++static int dvblo_cleanup (void)
++{
++	int rv = SUCCESS, step, i = 0;
++
++	/* cleanup dvblo module
++	 * We rollback all init steps starting with the last one.
++	 */
++	for (step = initlev; step > 0; i = 0, step--) {
++
++		/* The items of the switch statement resemble the initialization
++		 * steps which were taken in dvblo_init()
++		 *
++		 * Yeah, I know it would be elegent to reverse the order of the
++		 * switch entries (the highest init step at the top) and remove
++		 * all break statements, so that when entering one init level (say 6)
++		 * all other levels (below it, i.e. 5,4,3,2,1) are also processed by falling-through.
++		 *
++		 * The reason why we (un)do every step in a for loop is that
++		 * we can easily check for errors (using the variable i) and
++		 * report the step which failed and then continue (although it 
++		 * might be dangerous).
++		 */
++		switch (step) {
++		case 1:
++			i = dvblo_char_exit ();
++			break;
++		default:
++			mprintk (KERN_ERR, "Oops! Invalid init step: %i\n", i);
++			break;
++		}
++		if (i < 0) {
++			mprintk (KERN_ALERT, "cleanup of init step %i has failed. Continuing cleanup process. Expect more errors...\n", step);
++			if (rv == SUCCESS)
++				rv = i;
++		}
++	}
++	return rv;
++}
++
++static int __init dvblo_init (void)
++{
++	int rv = SUCCESS, i;
++	unsigned int devnum;
++	struct dvblo_chardev_config devcfg;
++
++	do {
++		rv = dvblo_char_init ();
++		if (rv < 0) {
++			mprintk (KERN_ERR, "failed to initialize char driver\n");
++			break;
++		}
++		initlev++;
++		if (dvblo_devcount > 0) {
++
++			/* open initial number of dvbloop devices */
++			dprintk (DBGLEV_1, "adding %i " DVBLO_NAME " device%s...\n", dvblo_devcount, dvblo_devcount == 1 ? "" : "s");
++			for (i = 0; i < dvblo_devcount && rv == SUCCESS; i++) {
++				if (dvblo_dvb_macaddrc > i && dvblo_dvb_macaddrv[i] != NULL) {
++
++					/* MAC address was specified for this device */
++					rv = dvblo_parse_mac (dvblo_dvb_macaddrv[i], devcfg.dvbcfg.mac);
++					if (rv < 0) {
++						mprintk (KERN_ERR, "invalid MAC address: \"%s\"\n", dvblo_dvb_macaddrv[i]);
++						break;
++					}
++
++					else {
++						dprintk (DBGLEV_1, "Using MAC address %s for DVB adapter %d\n", dvblo_dvb_macaddrv[i], i);
++						devcfg.dvbcfg.mac_valid = 1;
++					}
++				} else
++					devcfg.dvbcfg.mac_valid = 0;
++				rv = dvblo_char_add_dev (&devcfg, &devnum);
++			}
++			if (rv != SUCCESS) {
++				mprintk (KERN_ERR, "FAILED to add DVB adapter %d\n", i);
++				break;
++			}
++		}
++
++		/* success */
++		mprintk (KERN_INFO, "successfully initialized " DVBLO_LONGMANE "\n");
++	} while (0);
++	if (rv != SUCCESS) {
++		mprintk (KERN_ERR, "FAILED to initialize " DVBLO_LONGMANE "\n");
++		i = dvblo_cleanup ();
++		if (i < 0)
++			mprintk (KERN_ALERT, "dvblo_cleanup() returned %d\n", i);
++	}
++	return rv;
++}
++
++static void __exit dvblo_exit (void)
++{
++	int i;
++	i = dvblo_cleanup ();
++	if (i < 0)
++		mprintk (KERN_ALERT, "dvblo_cleanup() returned %d\n", i);
++}
++
++module_init (dvblo_init);
++module_exit (dvblo_exit);
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_char.c v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_char.c
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_char.c	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_char.c	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,1098 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo_char.c
++ * Desc: Char device support for dvblo
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++/* avoid definition of __module_kernel_version in the resulting object file */
++#define __NO_VERSION__
++
++/**
++ * Whether to use the new char device interface provided since the 2.6 versions
++ * of the Linux kernel
++ */
++#define USE_CDEV 1
++
++#include <linux/version.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/fs.h>
++#include <linux/device.h>
++#include <linux/errno.h>
++#include <linux/wait.h>
++#include <linux/ctype.h>
++#if defined(USE_CDEV) && USE_CDEV != 0
++#include <linux/cdev.h>
++#endif /*  */
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++#include <linux/semaphore.h>
++#else
++#include <asm/semaphore.h>
++#endif
++#include <asm/atomic.h>
++#include <asm/uaccess.h>
++
++#include "dvblo.h"
++#include "dvblo_adap.h"
++#include "dvblo_adap_fe.h"
++#include "dvblo_adap_ca.h"
++#include "dvblo_char.h"
++#include "dvblo_ioctl.h"
++
++#define DBGLEV_CHAR1	(DBGLEV_1<<DBGLEV_CHAR)
++#define DBGLEV_CHAR2	(DBGLEV_2<<DBGLEV_CHAR)
++#define DBGLEV_CHAR3	(DBGLEV_3<<DBGLEV_CHAR)
++
++/**
++ * Context structure for the char device
++ */
++struct dvblo_chardev
++{
++
++	/// Whether this device is used
++	unsigned int used:1;
++
++	// The minor device number of this char device
++	unsigned int minor:7;
++
++	/// Set to 1 if this device is completely initialized and ready to use
++	unsigned int initdone:1;
++	unsigned int initlev:7;
++
++	/// Number of open file handles
++	unsigned int hcount;
++
++	/// Maximum number of open file handles allowed. 0 means "no limit"
++	unsigned int hcountmax;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)	
++	struct device *clsdev;
++#else
++	struct class_device *clsdev;
++#endif	
++	struct dvblo *dvblo;
++	struct
++	{
++
++		/// Size of TS packets (i.e. L2-framing mode, 188 or 204)
++		unsigned short ts_sz;
++
++		/// The default per-handle write buffer size (in bytes)
++		size_t hwrbuf_sz;
++	} cfg;
++
++	/// The device name
++	char name[16];
++};
++
++/**
++ * Context structure for open file handles
++ */
++struct dvblo_chardev_handle
++{
++	unsigned int initlev:7;
++	unsigned int initdone:1;
++	struct dvblo_chardev *chardev;
++	struct
++	{
++		u8 *base;
++		size_t size;
++		unsigned int pos;
++	} buf;
++};
++
++/// The major device number (0 means dynamic allocation)
++static int dvblo_char_major = 0;
++
++#if defined(USE_CDEV) && USE_CDEV != 0
++static struct cdev dvblo_char_cdev;
++
++#endif /*  */
++
++/// Array of char devices
++static struct dvblo_chardev chardevs[DVBLO_CHAR_DEVMAX];
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++static ssize_t clsdev_op_show_dvb_mac (struct device *dev, char *buf);
++static ssize_t clsdev_op_show_ts_sz (struct device *dev, char *buf);
++static ssize_t clsdev_op_store_ts_sz (struct device *dev, const char *buf, size_t count);
++static ssize_t clsdev_op_show_hwrbuf_sz (struct device *dev, char *buf);
++static ssize_t clsdev_op_store_hwrbuf_sz (struct device *dev, const char *buf, size_t count);
++static struct device_attribute clsdev_attrs[] = { 
++{{"mac" /*name */ , THIS_MODULE /*owner */ , S_IRUGO /*mode */ } /*attr */ , clsdev_op_show_dvb_mac /*show */ , NULL /*store */ },
++{{"ts_sz" /*name */ , THIS_MODULE /*owner */ , S_IRUGO | S_IWUSR /*mode */ } /*attr */ , clsdev_op_show_ts_sz /*show */ , clsdev_op_store_ts_sz /*store */ },
++{{"hwrbuf_sz" /*name */ , THIS_MODULE /*owner */ , S_IRUGO | S_IWUSR /*mode */ } /*attr */ , clsdev_op_show_hwrbuf_sz /*show */ , clsdev_op_store_hwrbuf_sz /*store */ }
++};
++static struct class *dvblo_class = NULL;
++
++#elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,13)
++static ssize_t clsdev_op_show_dvb_mac (struct class_device *dev, char *buf);
++static ssize_t clsdev_op_show_ts_sz (struct class_device *dev, char *buf);
++static ssize_t clsdev_op_store_ts_sz (struct class_device *dev, const char *buf, size_t count);
++static ssize_t clsdev_op_show_hwrbuf_sz (struct class_device *dev, char *buf);
++static ssize_t clsdev_op_store_hwrbuf_sz (struct class_device *dev, const char *buf, size_t count);
++static struct class_device_attribute clsdev_attrs[] = { 
++{{"mac" /*name */ , THIS_MODULE /*owner */ , S_IRUGO /*mode */ } /*attr */ , clsdev_op_show_dvb_mac /*show */ , NULL /*store */ },
++{{"ts_sz" /*name */ , THIS_MODULE /*owner */ , S_IRUGO | S_IWUSR /*mode */ } /*attr */ , clsdev_op_show_ts_sz /*show */ , clsdev_op_store_ts_sz /*store */ },
++{{"hwrbuf_sz" /*name */ , THIS_MODULE /*owner */ , S_IRUGO | S_IWUSR /*mode */ } /*attr */ , clsdev_op_show_hwrbuf_sz /*show */ , clsdev_op_store_hwrbuf_sz /*store */ }
++};
++static struct class *dvblo_class = NULL;
++
++#else /*  */
++/* The old-style "simple" class API */
++static struct class_simple *dvblo_class = NULL;
++
++#endif /*  */
++static int initlev = 0;
++DECLARE_MUTEX (dvblo_char_chardevs_sem);
++DECLARE_WAIT_QUEUE_HEAD (dvblo_char_chardevs_wq);
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,13)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++static ssize_t clsdev_op_store (int what, struct device *dev, const char *buf, size_t count)
++#else
++static ssize_t clsdev_op_store (int what, struct class_device *dev, const char *buf, size_t count)
++#endif
++{
++	char sbuf[64];
++	ssize_t rv = SUCCESS, minor = MINOR (dev->devt);
++	dprintk (DBGLEV_CHAR3, "what=%d, dev=%p, buf=%p, count=%u\n", what, dev, buf, count);
++	if (minor >= DVBLO_CHAR_DEVMAX || chardevs[minor].used == 0)
++		rv = -ENODEV;
++
++	else if (down_interruptible (&dvblo_char_chardevs_sem) != 0)
++		rv = -ERESTARTSYS;
++
++	else {
++		strncat (sbuf, buf, min (sizeof (sbuf) - 1, count));
++		if (chardevs[minor].used == 0)
++			rv = -ENODEV;
++
++		else
++			switch (what) {
++			case 1:	/* Set the L2-framing mode */
++				{
++					char *end = NULL;
++					unsigned long val = simple_strtoul (sbuf, &end, 0);
++					if (end == NULL || (end[0] != '\0' && !isspace (end[0])))
++						rv = -EINVAL;
++
++					else if (val != 188) {
++						mprintk (KERN_ERR, "Invalid value for TS packet size: the supplied value (%lu) was wrong: must be 188\n", val);
++						rv = -EINVAL;
++					} else {
++						chardevs[minor].cfg.ts_sz = val;
++						rv = count;
++					}
++					break;
++				}
++			case 2:	/* Set the (default) per-handle write buffer size */
++				{
++					char *end = NULL;
++					unsigned long val = simple_strtoul (sbuf, &end, 0);
++					if (end == NULL || (end[0] != '\0' && !isspace (end[0])))
++						rv = -EINVAL;
++
++					else if ((val % chardevs[minor].cfg.ts_sz) != 0) {
++						mprintk (KERN_ERR, "Invalid value for per-handle write buffer size: the supplied value (%lu) was wrong: must be a multiple of %u\n", val, chardevs[minor].cfg.ts_sz);
++						rv = -EINVAL;
++					} else {
++						chardevs[minor].cfg.hwrbuf_sz = val;
++						rv = count;
++					}
++					break;
++				}
++			default:
++				rv = -EINVAL;
++				break;
++			}
++		up (&dvblo_char_chardevs_sem);
++	}
++	return rv;
++}
++
++/* NOTE: buf is of size PAGE_SIZE */
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++static ssize_t clsdev_op_show (int what, struct device *dev, char *buf)
++#else
++static ssize_t clsdev_op_show (int what, struct class_device *dev, char *buf)
++#endif
++{
++	ssize_t rv = SUCCESS, minor = MINOR (dev->devt);
++	dprintk (DBGLEV_CHAR3, "what=%d, dev=%p, buf=%p\n", what, dev, buf);
++	if (minor >= DVBLO_CHAR_DEVMAX || chardevs[minor].used == 0)
++		rv = -ENODEV;
++
++	else if (down_interruptible (&dvblo_char_chardevs_sem) != 0)
++		rv = -ERESTARTSYS;
++
++	else {
++		if (chardevs[minor].used == 0)
++			rv = -ENODEV;
++
++		else
++			switch (what) {
++			case 0:	/* Get the MAC address of the DVB adapter */
++				{
++					u8 mac[6];
++					rv = dvblo_adap_get_mac (chardevs[minor].dvblo, mac);
++					if (rv == SUCCESS) {
++						int i = snprintf (buf, PAGE_SIZE, "%.2x:%.2x:%.2x:%.2x:%.2x:%.2x", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
++						if (i < 0 || i >= PAGE_SIZE) {
++							if (i < 0)
++								rv = i;
++
++							else
++								rv = -ENOBUFS;
++						}
++
++						else
++							rv = i;	// return number of characters written
++					}
++					break;
++				}
++			case 1:	/* Get the L2-framing mode */
++				{
++					int i = snprintf (buf, PAGE_SIZE, "%u", chardevs[minor].cfg.ts_sz);
++					if (i < 0 || i >= PAGE_SIZE) {
++						if (i < 0)
++							rv = i;
++
++						else
++							rv = -ENOBUFS;
++					}
++
++					else
++						rv = i;	// return number of characters written
++					break;
++				}
++			case 2:	/* Get the (default) per-handle write buffer size */
++				{
++					int i = snprintf (buf, PAGE_SIZE, "%u", chardevs[minor].cfg.hwrbuf_sz);
++					if (i < 0 || i >= PAGE_SIZE) {
++						if (i < 0)
++							rv = i;
++
++						else
++							rv = -ENOBUFS;
++					}
++
++					else
++						rv = i;	// return number of characters written
++					break;
++				}
++			default:
++				rv = -EINVAL;
++				break;
++			}
++		up (&dvblo_char_chardevs_sem);
++	}
++	return rv;
++}
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++static ssize_t clsdev_op_show_dvb_mac (struct device *dev, char *buf)
++#else
++static ssize_t clsdev_op_show_dvb_mac (struct class_device *dev, char *buf)
++#endif
++{
++	dprintk (DBGLEV_CHAR3, "dev=%p, buf=%p\n", dev, buf);
++	return clsdev_op_show (0, dev, buf);
++}
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++static ssize_t clsdev_op_show_ts_sz (struct device *dev, char *buf)
++#else
++static ssize_t clsdev_op_show_ts_sz (struct class_device *dev, char *buf)
++#endif
++{
++	dprintk (DBGLEV_CHAR3, "dev=%p, buf=%p\n", dev, buf);
++	return clsdev_op_show (1, dev, buf);
++}
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++static ssize_t clsdev_op_store_ts_sz (struct device *dev, const char *buf, size_t count)
++#else
++static ssize_t clsdev_op_store_ts_sz (struct class_device *dev, const char *buf, size_t count)
++#endif
++{
++	dprintk (DBGLEV_CHAR3, "dev=%p, buf=%p\n", dev, buf);
++	return clsdev_op_store (1, dev, buf, count);
++}
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++static ssize_t clsdev_op_show_hwrbuf_sz (struct device *dev, char *buf)
++#else
++static ssize_t clsdev_op_show_hwrbuf_sz (struct class_device *dev, char *buf)
++#endif
++{
++	dprintk (DBGLEV_CHAR3, "dev=%p, buf=%p\n", dev, buf);
++	return clsdev_op_show (2, dev, buf);
++}
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++static ssize_t clsdev_op_store_hwrbuf_sz (struct device *dev, const char *buf, size_t count)
++#else
++static ssize_t clsdev_op_store_hwrbuf_sz (struct class_device *dev, const char *buf, size_t count)
++#endif
++{
++	dprintk (DBGLEV_CHAR3, "dev=%p, buf=%p\n", dev, buf);
++	return clsdev_op_store (2, dev, buf, count);
++}
++#endif /*  */
++static int dvblo_char_handle_destroy (struct dvblo_chardev_handle *handle)
++{
++	int rv = SUCCESS;
++	dprintk (DBGLEV_CHAR3, "handle=%p\n", handle);
++	if (handle == NULL)
++		rv = -EINVAL;
++
++	else
++		switch (handle->initlev) {
++		case 1:
++			if (handle->buf.base != NULL)
++				kfree (handle->buf.base);
++		default:
++			break;
++		}
++	return rv;
++}
++
++static int dvblo_char_handle_create (struct dvblo_chardev *chardev, struct inode *inode, struct dvblo_chardev_handle **handle_out)
++{
++	int rv = SUCCESS;
++	struct dvblo_chardev_handle *handle = NULL;
++	dprintk (DBGLEV_CHAR3, "chardev=%p, inode=%p, handle_out=%p\n", chardev, inode, handle_out);
++	if (chardev == NULL || inode == NULL || handle_out == NULL)
++		rv = -EINVAL;
++
++	else if ((handle = kmalloc (sizeof (*handle), GFP_KERNEL)) == NULL)
++		rv = -ENOMEM;
++
++	else
++		do {
++			handle->initlev = 0;
++			handle->initdone = 0;
++			handle->chardev = chardev;
++			handle->buf.size = chardev->cfg.hwrbuf_sz;
++			handle->buf.base = kmalloc (handle->buf.size, GFP_KERNEL);
++			if (handle->buf.base == NULL) {
++				rv = -ENOMEM;
++				break;
++			}
++			handle->initlev++;	/* 1 */
++			handle->buf.pos = 0;
++
++			/* SUCCESS */
++			handle->initdone = 1;
++		} while (0);
++	if (rv != SUCCESS) {
++		*handle_out = NULL;
++		if (handle != NULL)
++			dvblo_char_handle_destroy (handle);
++	} else
++		*handle_out = handle;
++	return rv;
++}
++
++static int dvblo_char_op_open (struct inode *inode, struct file *filp)
++{
++	int rv = SUCCESS, minor = iminor (inode);
++	dprintk (DBGLEV_CHAR3, "inode=%p, filp=%p\n", inode, filp);
++	if (minor >= DVBLO_CHAR_DEVMAX)
++		rv = -ENODEV;
++
++	else if (down_interruptible (&dvblo_char_chardevs_sem) != 0)
++		rv = -ERESTARTSYS;
++
++	else {
++		if (chardevs[minor].used == 0)
++			rv = -ENODEV;
++
++		else {
++			if (!chardevs[minor].hcountmax || chardevs[minor].hcount < chardevs[minor].hcountmax) {
++
++				///@todo allocate per-file handle context structure
++				struct dvblo_chardev_handle *handle;
++				rv = dvblo_char_handle_create (&chardevs[minor], inode, &handle);
++				if (rv == SUCCESS) {
++					chardevs[minor].hcount++;
++					filp->private_data = handle;
++					try_module_get (THIS_MODULE);
++				}
++			} else
++				rv = -EBUSY;	// Too many open file handles
++		}
++		up (&dvblo_char_chardevs_sem);
++	}
++	return rv;
++}
++
++/* dvblo_char_write
++ *
++ * This function forwards TS packets written to the char device to the virtual DVB adapter
++ */
++static ssize_t dvblo_char_op_write (struct file *filp, const char __user * buf, size_t len, loff_t * off)
++{
++	struct dvblo_chardev_handle *handle = (struct dvblo_chardev_handle *) filp->private_data;
++	size_t ts_sz = handle->chardev->cfg.ts_sz, copy_bytes;
++	dprintk (DBGLEV_CHAR3, "filp=%p, buf=%p, len=%u, off=%p\n", filp, buf, len, off);
++
++	/* we only accept complete TS packets */
++	copy_bytes = (len / ts_sz) * ts_sz;
++	/* mare sure maxmimum bytes to copy from user space is buf.size */
++	copy_bytes = (copy_bytes > handle->buf.size)?handle->buf.size:copy_bytes;
++
++	if (down_interruptible (&dvblo_char_chardevs_sem) != 0) {
++		return -ERESTARTSYS;
++	}
++	/* NOTE: copy_from_user() returns number of bytes that could not be copied.
++	 * On success, this will be zero.
++	 */
++	if (copy_from_user (handle->buf.base, buf, copy_bytes) != 0) {
++		up (&dvblo_char_chardevs_sem);
++		return -EFAULT;
++	}
++	
++	dvblo_adap_deliver_packets (handle->chardev->dvblo, handle->buf.base, copy_bytes);
++
++	up (&dvblo_char_chardevs_sem);
++	return copy_bytes;
++}
++
++static int dvblo_char_op_release (struct inode *inode, struct file *filp)
++{
++	int rv = SUCCESS;
++	struct dvblo_chardev_handle *handle = (struct dvblo_chardev_handle *) filp->private_data;
++	dprintk (DBGLEV_CHAR3, "inode=%p, filp=%p\n", inode, filp);
++	if (handle == NULL || handle->chardev == NULL)
++		rv = -EINVAL;
++
++	else if (down_interruptible (&dvblo_char_chardevs_sem) != 0)
++		rv = -ERESTARTSYS;
++
++	else {
++		struct dvblo_chardev *chardev = handle->chardev;
++		if (chardev->used == 0)
++			rv = -ENODEV;
++
++		else {
++			rv = dvblo_char_handle_destroy (handle);
++			if (rv == SUCCESS) {
++				handle->chardev->hcount--;
++
++				/* 
++				 * Decrement the usage count, or else once you opened the file, you'll
++				 * never get get rid of the module. 
++				 */
++				module_put (THIS_MODULE);
++				up (&dvblo_char_chardevs_sem);
++				if (handle->chardev->hcount == 0)
++					wake_up_interruptible (&dvblo_char_chardevs_wq);
++			}
++		}
++	}
++	return rv;
++}
++
++static int dvblo_char_op_ioctl (struct inode *inode, struct file *filp, unsigned int cmd, unsigned long arg)
++{
++	struct dvb_ringbuffer *cibuf;
++	int avail;
++	dvblo_tpdu_t tpdu;
++	int rv = SUCCESS;
++	struct dvblo_chardev_handle *handle = (struct dvblo_chardev_handle *) filp->private_data;
++	struct dvblo_chardev *chardev = handle->chardev;
++	struct dvblo *dvblo = chardev->dvblo;
++	int __user *argp = (int __user *) arg;
++	switch (cmd) {
++	case DVBLO_IOCADDDEV:
++	{
++			if (dvblo == NULL) {
++				rv = dvblo_adap_create (chardev->minor, NULL, &chardev->dvblo);
++				if (rv < 0) {
++					mprintk (KERN_ALERT, "failed to create virtual DVB adapter: %d\n", rv);
++					dvblo = NULL;
++				}
++			}
++			return rv;
++	}
++	case DVBLO_IOCDELDEV:
++	{
++			if (dvblo != NULL) {
++				rv = dvblo_adap_destroy (dvblo);
++				if (rv < 0) {
++					mprintk (KERN_ALERT, "failed to destroy virtual DVB adapter: %d\n", rv);
++				}
++				chardev->dvblo = NULL;
++			}
++			return rv;
++	}
++	case DVBLO_IOCCHECKDEV:
++	{
++			return dvblo != NULL ? 1 : 0;
++	}
++	case DVBLO_GET_EVENT_MASK:
++	{
++			unsigned int event;
++			event = dvblo_set_event (dvblo, 0);
++			rv = copy_to_user (argp, &event, sizeof (unsigned int));
++			return rv;
++	}
++	case DVBLO_GET_FRONTEND_PARAMETERS:
++		if (dvblo != NULL) {
++			return copy_to_user (argp, &dvblo->fe.params, sizeof (struct dvb_frontend_parameters));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_SET_FRONTEND_PARAMETERS:
++		if (dvblo != NULL) {
++			return copy_from_user (&dvblo->fe.params, argp, sizeof (struct dvb_frontend_parameters));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_GET_TUNER_PARAMETERS:
++		if (dvblo != NULL) {
++			return copy_to_user (argp, &dvblo->fe.tuner.params, sizeof (struct dvb_frontend_parameters));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_SET_TUNER_PARAMETERS:
++		if (dvblo != NULL) {
++			return copy_from_user (&dvblo->fe.tuner.params, argp, sizeof (struct dvb_frontend_parameters));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_GET_SEC_PARAMETERS:
++		if (dvblo != NULL) {
++			return copy_to_user (argp, &dvblo->fe.sec, sizeof (struct dvblo_sec));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_SET_SEC_PARAMETERS:
++		if (dvblo != NULL) {
++			return copy_from_user (&dvblo->fe.sec, argp, sizeof (struct dvblo_sec));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_GET_FRONTEND_STATUS:
++		if (dvblo != NULL) {
++			return copy_to_user (argp, &dvblo->fe.status, sizeof (struct dvblo_festatus));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_SET_FRONTEND_STATUS:
++		if (dvblo != NULL) {
++			return copy_from_user (&dvblo->fe.status, argp, sizeof (struct dvblo_festatus));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_GET_TUNER_STATUS:
++		if (dvblo != NULL) {
++			return copy_to_user (argp, &dvblo->fe.tuner.status, sizeof (u32));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_SET_TUNER_STATUS:
++		if (dvblo != NULL) {
++			return copy_from_user (&dvblo->fe.tuner.status, argp, sizeof (u32));
++		} else {
++			return -EINVAL;
++		}
++	case DVBLO_GET_FRONTEND_INFO:
++	{
++			struct dvb_frontend_info info;
++			dvblo_fe_get_info (dvblo, &info);
++			return copy_to_user (argp, &info, sizeof (struct dvb_frontend_info));
++	} 
++	case DVBLO_SET_FRONTEND_INFO:
++	{
++			struct dvb_frontend_info info;
++			rv = copy_from_user (&info, argp, sizeof (struct dvb_frontend_info));
++			if (rv == SUCCESS) {
++				rv = dvblo_fe_set_info (dvblo, &info);
++			}
++			return rv;
++	}
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++	case DVBLO_GET_TUNER_INFO:
++	{
++			struct dvb_tuner_info info;
++			dvblo_fe_get_tunerinfo (dvblo, &info);
++			return copy_to_user (argp, &info, sizeof (struct dvb_frontend_info));
++	} 
++	case DVBLO_SET_TUNER_INFO:
++	{
++			struct dvb_tuner_info info;
++			rv = copy_from_user (&info, argp, sizeof (struct dvb_tuner_info));
++			if (rv == SUCCESS) {
++				rv = dvblo_fe_set_tunerinfo (dvblo, &info);
++			}
++			return rv;
++	}
++
++#endif /*  */
++	case DVBLO_GET_PRIVATE:
++	{
++			if (dvblo == NULL) {
++				rv = -EINVAL;
++				return rv;
++			}
++			dvblo_set_event (dvblo, EV_PRIV_READ);
++			return copy_to_user (argp, &dvblo->private, sizeof (dvblo_private_t));
++	}
++	case DVBLO_SET_PRIVATE:
++	{
++			if (dvblo == NULL) {
++				rv = -EINVAL;
++				return rv;
++			}
++			dvblo_set_event (dvblo, EV_PRIV_WRITE);
++			return copy_from_user (&dvblo->private, argp, sizeof (dvblo_private_t));
++	}
++	case DVBLO_GET_CA_CAPS:
++			if (dvblo == NULL) {
++				rv = -EINVAL;
++				return rv;
++			}
++			return copy_to_user (argp, &dvblo->ca, sizeof (dvblo_cacaps_t));
++		
++	case DVBLO_SET_CA_CAPS:
++			if (dvblo == NULL) {
++				rv = -EINVAL;
++				return rv;
++			}
++			return copy_from_user (&dvblo->ca, argp, sizeof (dvblo_cacaps_t));
++	case DVBLO_GET_TPDU: 
++	{
++			if (dvblo == NULL) {
++				rv = -EINVAL;
++				return rv;
++			}
++			cibuf = &dvblo->ci_wbuffer;
++			avail = dvb_ringbuffer_avail(cibuf);
++			if (avail <= 2) {
++				 tpdu.len=0;
++				rv=copy_to_user (argp, &tpdu, sizeof (dvblo_tpdu_t));
++				break;
++			}
++			tpdu.len = DVB_RINGBUFFER_PEEK(cibuf, 0) << 8;
++			tpdu.len |= DVB_RINGBUFFER_PEEK(cibuf, 1);
++			
++			if(tpdu.len> CA_TPDU_MAX) {
++				mprintk (KERN_ALERT, "invalid tpdu length %d\n", tpdu.len);
++				rv=-EINVAL;
++			} else {
++				DVB_RINGBUFFER_SKIP(cibuf, 2);
++				//dvb_ringbuffer_read(cibuf, tpdu.data, tpdu.len, 0);
++				dvb_ringbuffer_read(cibuf, tpdu.data, tpdu.len);
++
++				rv=copy_to_user (argp, &tpdu, sizeof (dvblo_tpdu_t));
++				if(!rv) {
++					wake_up(&cibuf->queue);
++				}
++			}
++			break;
++	}
++	case DVBLO_SET_TPDU: 
++	{
++			if (dvblo == NULL) {
++				rv = -EINVAL;
++				return rv;
++			}
++			rv=copy_from_user (&tpdu, argp, sizeof (dvblo_tpdu_t));
++			if(!rv) {
++				if(tpdu.len<=CA_TPDU_MAX) {
++					ci_get_data(&dvblo->ci_rbuffer, tpdu.data, tpdu.len);
++				} else {
++					rv=-EINVAL;
++				}
++			}
++			break;
++	}
++	case DVBLO_GET_PIDLIST:
++	{
++			dvblo_pids_t pids;
++			rv = dvblog_adap_get_pids (dvblo, &pids);
++			if (rv == SUCCESS) {
++				return copy_to_user (argp, &pids, sizeof (dvblo_pids_t));
++			}	//Fall through into default!
++	}
++	default:
++		rv = -ENOSYS;
++	}
++	return rv;
++}
++
++static unsigned int dvblo_char_op_poll (struct file *filp, poll_table * wait)
++{
++	unsigned int mask = 0;
++	struct dvblo_chardev_handle *handle = (struct dvblo_chardev_handle *) filp->private_data;
++	struct dvblo_chardev *chardev = handle->chardev;
++	struct dvblo *dvblo = chardev->dvblo;
++	if (dvblo == NULL) {
++		return -EINVAL;
++	}
++	poll_wait (filp, &dvblo->event_queue, wait);
++	if (dvblo->event) {
++		mask |= POLLIN;
++		mask |= POLLRDNORM;
++	}
++	return mask;
++}
++
++struct file_operations dvblo_char_fops = {
++						.open = dvblo_char_op_open,
++						.write = dvblo_char_op_write,
++						.release = dvblo_char_op_release,
++						.ioctl = dvblo_char_op_ioctl,
++						.poll = dvblo_char_op_poll,
++						.owner = THIS_MODULE
++					};
++
++static int dvblo_chardev_release (struct dvblo_chardev *chardev)
++{
++	int rv = SUCCESS, i;
++	if (chardev->used == 0) {
++		rv = -EINVAL;
++	} else if (chardev->hcount > 0) {
++		rv = -EAGAIN;
++	} else {
++		if (chardev->initdone != 0)
++			dprintk (0, "releasing char device with minor device number %u\n", chardev->minor);
++		switch (chardev->initlev) {
++		case 3:
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,13)
++			for (i = 0; i < (sizeof (clsdev_attrs) / sizeof (clsdev_attrs[0])) && rv == SUCCESS; i++)
++	#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++				device_remove_file (chardev->clsdev, &clsdev_attrs[i]);
++	#else
++				class_device_remove_file (chardev->clsdev, &clsdev_attrs[i]);
++	#endif
++
++#endif /*  */
++		case 2:
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,13)
++ #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++			device_destroy (dvblo_class, MKDEV (dvblo_char_major, chardev->minor));
++ #else
++ 			class_device_destroy (dvblo_class, MKDEV (dvblo_char_major, chardev->minor));
++ #endif
++
++#else /*  */
++			/* The old-style "simple" class API */
++			class_simple_device_remove (MKDEV (dvblo_char_major, chardev->minor));
++
++#endif /*  */
++		case 1:
++			if (chardev->dvblo != NULL) {
++				i = dvblo_adap_destroy (chardev->dvblo);
++				if (i < 0) {
++					mprintk (KERN_ALERT, "failed to destroy virtual DVB adapter: %d\n", i);
++					if (rv == 0)
++						rv = i;
++				}
++			}
++		default:
++			break;
++		}
++		if (chardev->initdone != 0)
++			mprintk (KERN_INFO, "removed character device %s\n", chardev->name);
++		chardev->initlev = 0;
++		chardev->initdone = 0;
++		chardev->used = 0;
++	}
++	return rv;
++}
++
++static int dvblo_chardev_init (struct dvblo_chardev *chardev, struct dvblo_chardev_config *cfg)
++{
++	int rv = SUCCESS, i;
++	if (chardev->used != 0) {
++		rv = -EINVAL;
++	} else {
++		chardev->used = 1;
++		chardev->initlev = 0;
++		chardev->initdone = 0;
++
++		do {
++			dprintk (DBGLEV_ALL, "initializing char device with minor device number %u\n", chardev->minor);
++			i = snprintf (chardev->name, sizeof (chardev->name), DVBLO_NAME "%d", chardev->minor);
++			if (i < 0 || i >= sizeof (chardev->name)) {
++				if (i < 0)
++					rv = i;
++
++				else
++					rv = -ENOBUFS;
++				break;
++			}
++			chardev->hcount = 0;
++			chardev->cfg.ts_sz = DVBLO_TS_SZ;
++			chardev->cfg.hwrbuf_sz = 20 * chardev->cfg.ts_sz;
++			if (dvblo_autocreate) {
++				i = dvblo_adap_create (chardev->minor, cfg ? &cfg->dvbcfg : NULL, &chardev->dvblo);
++				if (i < 0) {
++					mprintk (KERN_ALERT, "failed to create virtual DVB adapter: %d\n", i);
++					rv = i;
++					break;
++				}
++			}
++			chardev->initlev++;
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)			
++			chardev->clsdev = device_create (dvblo_class, NULL, MKDEV (dvblo_char_major, chardev->minor), NULL, chardev->name);
++#elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,15)
++			/* In 2.6.15, device_create() got a pointer to the parent device (if any) as its second param */
++   		chardev->clsdev = class_device_create (dvblo_class, NULL, MKDEV (dvblo_char_major, chardev->minor), NULL, chardev->name);
++#elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,13)
++			/* device_create() first appeared in 2.6.13 */
++			chardev->clsdev = device_create (dvblo_class, MKDEV (dvblo_char_major, chardev->minor), NULL, chardev->name);
++
++#else /*  */
++			/* The old-style "simple" class API */
++			chardev->clsdev = class_simple_device_add (dvblo_class, MKDEV (dvblo_char_major, chardev->minor), NULL, chardev->name);
++
++#endif /*  */
++			if (IS_ERR (chardev->clsdev)) {
++				rv = PTR_ERR (chardev->clsdev);
++				mprintk (KERN_ALERT, "failed to create device class \"%s\": %d\n", chardev->name, rv);
++				break;
++			}
++			chardev->initlev++;
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,13)
++			for (i = 0; i < (sizeof (clsdev_attrs) / sizeof (clsdev_attrs[0])) && rv == SUCCESS; i++)
++ #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28)
++				rv = device_create_file (chardev->clsdev, &clsdev_attrs[i]);
++ #else
++				rv = class_device_create_file (chardev->clsdev, &clsdev_attrs[i]);
++ #endif
++			if (rv != SUCCESS)
++				break;
++
++#endif /*  */
++			chardev->initlev++;
++			mprintk (KERN_INFO, "added character device %s\n", chardev->name);
++		} while (0);
++		if (rv != 0)
++			dvblo_chardev_release (chardev);	// error cleanup
++	}
++	return rv;
++}
++
++int dvblo_char_add_dev (struct dvblo_chardev_config *cfg, unsigned int *devnum_out)
++{
++	int rv = SUCCESS, i;
++	if (devnum_out == NULL)
++		rv = -EINVAL;
++
++	else if (down_interruptible (&dvblo_char_chardevs_sem) != 0)
++		rv = -ERESTARTSYS;
++
++	else {
++		for (i = 0; i < DVBLO_CHAR_DEVMAX && chardevs[i].used != 0; i++);
++		if (i == DVBLO_CHAR_DEVMAX)
++			rv = -ENFILE;
++
++		else {
++			rv = dvblo_chardev_init (&chardevs[i], cfg);
++			if (rv == SUCCESS)
++				*devnum_out = i;
++		}
++		up (&dvblo_char_chardevs_sem);
++	}
++	return rv;
++}
++
++int dvblo_char_del_dev (unsigned int devnum)
++{
++	int rv = SUCCESS;
++	if (devnum >= DVBLO_CHAR_DEVMAX || chardevs[devnum].used == 0)
++		rv = -EINVAL;
++
++	else if (down_interruptible (&dvblo_char_chardevs_sem) != 0)
++		rv = -ERESTARTSYS;
++
++	else {
++
++		// Wait, until all open file handles have been closed
++		while (rv == SUCCESS && chardevs[devnum].hcount > 0) {
++			up (&dvblo_char_chardevs_sem);
++			if (wait_event_interruptible (dvblo_char_chardevs_wq, (chardevs[devnum].hcount == 0)) != 0)
++				rv = -ERESTARTSYS;
++
++			else if (down_interruptible (&dvblo_char_chardevs_sem) != 0)
++				rv = -ERESTARTSYS;
++
++			// else: loop again and test condition
++		}
++		if (rv == SUCCESS) {
++			rv = dvblo_chardev_release (&chardevs[devnum]);
++			up (&dvblo_char_chardevs_sem);
++		}
++	}
++	return rv;
++}
++
++int dvblo_char_exit (void)
++{
++	int rv = SUCCESS, i, j;
++	switch (initlev) {
++	case 3:
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,13)
++		class_destroy (dvblo_class);
++
++#else /*  */
++		class_simple_destroy (dvblo_class);
++
++#endif /*  */
++	case 2:
++
++		/* NOTE: we have to lock dvblo_char_chardevs_sem to avoid that after
++		 * releasing all devices a new device is created again, becaus our char 
++		 * device driver is still registered.
++		 */
++		down (&dvblo_char_chardevs_sem);
++		for (j = 0; j < DVBLO_CHAR_DEVMAX; j++) {
++			if (chardevs[j].used != 0) {
++
++				// Wait, until all open file handles have been closed
++				int waitc = 0;
++				while (chardevs[j].hcount > 0) {
++					mprintk (KERN_INFO, "There are %i open file handles for device %s. %s...\n", chardevs[j].hcount, chardevs[j].name, waitc > 0 ? "Still waiting" : "Waiting");
++					up (&dvblo_char_chardevs_sem);
++					wait_event (dvblo_char_chardevs_wq, (chardevs[j].hcount == 0));
++					down (&dvblo_char_chardevs_sem);
++					waitc++;
++				}
++
++				// now that all file handles are closed, release the device
++				i = dvblo_chardev_release (&chardevs[j]);
++				if (i != SUCCESS) {
++					mprintk (KERN_ALERT, "failed to release char device %s: %d\n", chardevs[j].name, i);
++					if (rv == 0)
++						rv = i;
++				}
++			}
++		}
++
++#if defined(USE_CDEV) && USE_CDEV != 0
++		cdev_del (&dvblo_char_cdev);
++
++#else /*  */
++		i = unregister_chrdev (dvblo_char_major, DVBLO_NAME);
++		if (i < 0) {
++			mprintk (KERN_ALERT, "failed to unregister char device: %d\n", i);
++			if (rv == 0)
++				rv = i;
++		}
++#endif /*  */
++		up (&dvblo_char_chardevs_sem);
++	case 1:
++
++#if defined(USE_CDEV) && USE_CDEV != 0
++		unregister_chrdev_region (MKDEV (dvblo_char_major, 0), DVBLO_CHAR_DEVMAX);
++
++#endif /*  */
++		dvblo_char_major = 0;
++	default:
++		break;
++	}
++	initlev = 0;
++	return rv;
++}
++
++int dvblo_char_init (void)
++{
++	int rv = SUCCESS, i;
++
++	do {
++		if (initlev > 0) {
++			rv = -EINVAL;
++			break;
++		}
++
++		/* initialize array of char devices */
++		for (i = 0; i < DVBLO_CHAR_DEVMAX; i++) {
++			chardevs[i].used = 0;
++			chardevs[i].minor = i;
++		}
++
++#if defined(USE_CDEV) && USE_CDEV != 0
++		if (dvblo_char_major > 0) {
++
++			/* we explicitly request the major device number dvblo_char_major */
++			i = register_chrdev_region (MKDEV (dvblo_char_major, 0), DVBLO_CHAR_DEVMAX, DVBLO_NAME);
++			if (i < 0) {
++				mprintk (KERN_ALERT, "failed to register char device number region (major=%d, count=%d): %d\n", dvblo_char_major, DVBLO_CHAR_DEVMAX, i);
++				rv = dvblo_char_major;
++				break;
++			}
++		} else {
++
++			/* dynamic allocation of the major device number */
++			dev_t dev;
++			i = alloc_chrdev_region (&dev, 0, DVBLO_CHAR_DEVMAX, DVBLO_NAME);
++			if (i < 0) {
++				mprintk (KERN_ALERT, "failed to allocate char device number region (count=%d): %d\n", DVBLO_CHAR_DEVMAX, i);
++				rv = dvblo_char_major;
++				break;
++			}
++			dvblo_char_major = MAJOR (dev);
++		}
++
++#endif /*  */
++		initlev++;	/* 1 */
++
++#if defined(USE_CDEV) && USE_CDEV != 0
++		cdev_init (&dvblo_char_cdev, &dvblo_char_fops);
++
++		// fops are assigned in cdev_init()
++		//dvblo_char_cdev.ops = &dvblo_char_fops;
++		dvblo_char_cdev.owner = THIS_MODULE;
++		i = cdev_add (&dvblo_char_cdev, MKDEV (dvblo_char_major, 0), DVBLO_CHAR_DEVMAX);
++		if (i < 0) {
++			mprintk (KERN_ALERT, "failed to add char device: %d\n", i);
++			rv = dvblo_char_major;
++			break;
++		}
++#else /*  */
++		/* NOTE: by setting <major> to 0 we request a dynamic major device number
++		 */
++		i = register_chrdev (dvblo_char_major, DVBLO_NAME, &dvblo_char_fops);
++		if (i < 0) {
++			mprintk (KERN_ALERT, "failed to register char device: %d\n", i);
++			rv = i;
++			break;
++		} else if (dvblo_char_major == 0)
++			dvblo_char_major = i;
++
++		// else requested device major number was accepted
++#endif /*  */
++		initlev++;	/* 2 */
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,13)
++		dvblo_class = class_create (THIS_MODULE, DVBLO_NAME);
++
++#else /*  */
++		dvblo_class = class_simple_create (THIS_MODULE, DVBLO_NAME);
++
++#endif /*  */
++		if (IS_ERR (dvblo_class)) {
++			rv = PTR_ERR (dvblo_class);
++			mprintk (KERN_ALERT, "failed to create class \"" DVBLO_NAME "\": %d\n", rv);
++			break;
++		}
++		initlev++;	/* 3 */
++	} while (0);
++	if (rv != 0)
++		dvblo_char_exit ();	// err cleanup
++	return rv;
++}
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_char.h v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_char.h
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_char.h	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_char.h	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,33 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo_char.h
++ * Desc: Char device support for dvblo
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++#ifndef _DVBLO_CHAR_H_
++#define _DVBLO_CHAR_H_
++
++#include "dvblo.h"
++#include "dvblo_adap.h"
++
++/**
++ * Maximum number of devices
++ */
++#define DVBLO_CHAR_DEVMAX 8
++struct dvblo_chardev_config
++{
++
++	/// The configuration for the corresponding virtual DVB adapter
++	struct dvblo_adap_config dvbcfg;
++};
++int dvblo_char_init (void);
++int dvblo_char_exit (void);
++int dvblo_char_add_dev (struct dvblo_chardev_config *cfg, unsigned int *devnum_out);
++int dvblo_char_del_dev (unsigned int devnum);
++
++#endif /* _DVBLO_CHAR_H_ */
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo.h v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo.h
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo.h	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo.h	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,57 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo.h
++ * Desc: Common Header File
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++#ifndef _DVBLO_H_
++#define _DVBLO_H_
++
++#include <linux/stringify.h>
++
++#define DVBLO_NAME	"dvblo"
++#define DVBLO_VERSION   "0.9.4-s2api"
++#define DVBLO_LONGMANE	"DVB Loopback Adapter Version "DVBLO_VERSION
++
++#define DVBLO_DEVMAX 8
++
++#define DVBLO_TS_SZ 188
++
++#define SUCCESS 0
++
++/* DVBLO_DEFINE_GLOBALS is defined by the file which defines the global
++ * variables, which is usally dvblo.c.
++ */
++#ifndef DVBLO_DEFINE_GLOBALS
++/* defined in dvblo.c */
++extern unsigned int dvblo_debug;
++extern unsigned int dvblo_autocreate;
++#endif /*  */
++
++#define DVBLO_DEBUG_LEVELS 3
++
++#define DBGLEV_ADAP	DVBLO_DEBUG_LEVELS
++#define DBGLEV_ADAP_FE	(DBGLEV_ADAP+DVBLO_DEBUG_LEVELS)
++#define DBGLEV_ADAP_CA	(DBGLEV_ADAP_FE+DVBLO_DEBUG_LEVELS)
++#define DBGLEV_CHAR	(DBGLEV_ADAP_CA+DVBLO_DEBUG_LEVELS)
++
++#define DBGLEV_ALL	0
++#define DBGLEV_1 	(1<<0)
++#define DBGLEV_2	(1<<1)
++#define DBGLEV_3	(1<<2)
++
++#define dprintk(level,args...) \
++	do { if ((dvblo_debug & level) == level) { printk (KERN_DEBUG "%s: %s(): ", DVBLO_NAME, __FUNCTION__); printk (args); } } while (0)
++
++/*#define dprintk(level,args...) \
++	do {{ printk(KERN_DEBUG "%s: %s(): ", __stringify(DVBLO_NAME), __FUNCTION__); printk(args); } } while (0)
++*/
++#define mprintk(level, args...) \
++	do { printk (level "%s: %s(): ", DVBLO_NAME, __FUNCTION__); printk (args); } while (0)
++
++#endif /* _DVBLO_H_ */
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_ioctl.h v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_ioctl.h
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_ioctl.h	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_ioctl.h	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,203 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo_char.h
++ * Desc: Char device support for dvblo
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++#ifndef _DVBLO_IOCTL_H_
++#define _DVBLO_IOCTL_H_
++
++#ifndef WIN32
++#include <linux/ioctl.h>
++#endif
++/**
++ * Maximum number of devices
++ */
++#define DVBLO_IOC_MAGIC	'd'
++#define PRIV_DATA_SIZE	4096
++typedef struct
++{
++  u_int16_t pid[256];
++  int num;
++} dvblo_pids_t;
++typedef struct dvblo_sec
++{
++	struct dvb_diseqc_master_cmd diseqc_cmd;
++	fe_sec_mini_cmd_t mini_cmd;
++	fe_sec_tone_mode_t tone_mode;
++	fe_sec_voltage_t voltage;
++} dvblo_sec_t;
++typedef struct dvblo_festatus
++{
++	fe_status_t st;
++	u_int32_t ber;
++	u_int16_t strength;
++	u_int16_t snr;
++	u_int32_t ucblocks;
++} dvblo_festatus_t;
++typedef unsigned char dvblo_private_t[PRIV_DATA_SIZE];
++
++#define CA_MAX_SLOTS 16
++typedef struct {
++  ca_caps_t cap;
++  ca_slot_info_t info[CA_MAX_SLOTS];
++} dvblo_cacaps_t;
++
++#define CA_TPDU_MAX 2048
++typedef struct {
++  u_int16_t len;
++  u_int8_t data[CA_TPDU_MAX]; 
++} dvblo_tpdu_t;
++
++#define EV_MASK_FE	0x0000000f
++#define EV_MASK_PID	0x000000f0
++#define EV_MASK_SEC	0x00000f00
++#define EV_MASK_PRIV	0x0000f000
++#define EV_MASK_CA	0x000f0000
++
++#define EV_FRONTEND	0x00000001
++#define EV_TUNER	0x00000002
++#define EV_FREQUENCY	0x00000004
++#define EV_BANDWIDTH	0x00000008
++
++#define EV_PIDFILTER	0x00000010
++
++#define EV_TONE		0x00000100
++#define EV_VOLTAGE	0x00000200
++#define EV_DISEC_MSG	0x00000400
++#define EV_DISEC_BURST	0x00000800
++
++#define EV_PRIV_READ	0x00001000
++#define EV_PRIV_WRITE	0x00002000
++
++#define EV_CA_RESET	0x00010000
++#define EV_CA_WRITE	0x00020000
++#define EV_CA_PID	0x00040000
++#define EV_CA_DESCR	0x00080000
++
++struct dvblo_ioc_dev
++{
++
++	/// The MAC address of the virtual DVB adapter
++	u_int8_t mac[6];
++
++	/**
++	 * This is set to the number of the new device when ioctl(DVBLO_IOCADDDEV)
++	 * was successful.
++	 * @note This corresponds to the minor device number.
++	 */
++	int num;
++};
++
++/**
++ * @brief Add a new DVBLoop adapter device
++ */
++#define DVBLO_IOCADDDEV		_IO(DVBLO_IOC_MAGIC, 1)
++/**
++ * @brief Remove the DVBLoop adapter device with the specified number
++ */
++#define DVBLO_IOCDELDEV		_IO(DVBLO_IOC_MAGIC, 2)
++/**
++ * @brief Check if DVBLoop adapter has a corresponding dvb device
++ */
++#define DVBLO_IOCCHECKDEV	_IO(DVBLO_IOC_MAGIC, 30)
++/**
++ * @brief Get event mask
++ */
++#define DVBLO_GET_EVENT_MASK	_IOR(DVBLO_IOC_MAGIC, 3, unsigned int)
++/**
++ * @brief Get FE parameters
++ */
++#define DVBLO_GET_FRONTEND_PARAMETERS	_IOR(DVBLO_IOC_MAGIC, 4, struct dvb_frontend_parameters)
++/**
++ * @brief Set FE parameters
++ */
++#define DVBLO_SET_FRONTEND_PARAMETERS	_IOW(DVBLO_IOC_MAGIC, 4, struct dvb_frontend_parameters)
++/**
++ * @brief Get tuner parameters
++ */
++#define DVBLO_GET_TUNER_PARAMETERS	_IOR(DVBLO_IOC_MAGIC, 5, struct dvb_frontend_parameters)
++/**
++ * @brief Set tuner parameters
++ */
++#define DVBLO_SET_TUNER_PARAMETERS	_IOW(DVBLO_IOC_MAGIC, 5, struct dvb_frontend_parameters)
++/**
++ * @brief Get SEC parameters
++ */
++#define DVBLO_GET_SEC_PARAMETERS	_IOR(DVBLO_IOC_MAGIC, 6, struct dvblo_sec)
++/**
++ * @brief Get SEC parameters
++ */
++#define DVBLO_SET_SEC_PARAMETERS	_IOW(DVBLO_IOC_MAGIC, 6, struct dvblo_sec)
++/**
++ * @brief Set FE-Status parameters
++ */
++#define DVBLO_GET_FRONTEND_STATUS	_IOR(DVBLO_IOC_MAGIC, 7, struct dvblo_festatus)
++/**
++ * @brief Set Tuner-Status parameters
++ */
++#define DVBLO_SET_FRONTEND_STATUS	_IOW(DVBLO_IOC_MAGIC, 7, struct dvblo_festatus)
++/**
++ * @brief Get Tuner-Status parameters
++ */
++#define DVBLO_GET_TUNER_STATUS		_IOR(DVBLO_IOC_MAGIC, 8, u_int32_t)
++/**
++ * @brief Set Tuner-Status parameters
++ */
++#define DVBLO_SET_TUNER_STATUS		_IOW(DVBLO_IOC_MAGIC, 8, u_int32_t)
++/**
++ * @brief Set FE-Info 
++ */
++#define DVBLO_GET_FRONTEND_INFO		_IOR(DVBLO_IOC_MAGIC, 9, struct dvb_frontend_info)
++/**
++ * @brief Set FE-Info 
++ */
++#define DVBLO_SET_FRONTEND_INFO		_IOW(DVBLO_IOC_MAGIC, 9, struct dvb_frontend_info)
++
++#ifndef WIN32 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,18)
++/**
++ * @brief Set Tuner-Info 
++ */
++#define DVBLO_GET_TUNER_INFO		_IOR(DVBLO_IOC_MAGIC, 10, struct dvb_tuner_info)
++/**
++ * @brief Set Tuner-Info 
++ */
++#define DVBLO_SET_TUNER_INFO		_IOW(DVBLO_IOC_MAGIC, 10, struct dvb_tuner_info)
++#endif /*  */
++/**
++ * @brief Get list of PIDS
++ */
++#define DVBLO_GET_PIDLIST		_IOR(DVBLO_IOC_MAGIC, 20, dvblo_pids_t)
++/**
++ * @brief Pass through of private data
++ */
++#define DVBLO_GET_PRIVATE	_IOR(DVBLO_IOC_MAGIC, 40, dvblo_private_t)
++/**
++ * @brief Pass through of private data
++ */
++#define DVBLO_SET_PRIVATE	_IOW(DVBLO_IOC_MAGIC, 40, dvblo_private_t)
++/**
++ * @brief Get CA_CAPS including slot_info
++ */
++#define DVBLO_GET_CA_CAPS	_IOR(DVBLO_IOC_MAGIC, 80, dvblo_cacaps_t)
++/**
++ * @brief Set CA_CAPS including slot_info
++ */
++#define DVBLO_SET_CA_CAPS	_IOW(DVBLO_IOC_MAGIC, 80, dvblo_cacaps_t)
++/**
++ * @brief Get TPDU
++ */
++#define DVBLO_GET_TPDU		_IOR(DVBLO_IOC_MAGIC, 81, dvblo_tpdu_t)
++/**
++ * @brief Send TPDU
++ */
++#define DVBLO_SET_TPDU		_IOW(DVBLO_IOC_MAGIC, 81, dvblo_tpdu_t)
++
++#endif /* _DVBLO_IOCTL_H_ */
++#endif
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_util.c v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_util.c
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_util.c	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_util.c	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,38 @@
++#include <linux/errno.h>
++
++#include "dvblo_util.h"
++
++static short ns_h2i (char c)
++{
++	if (c >= '0' && c <= '9')
++		return (short) (c - '0');
++	if (c >= 'A' && c <= 'F')
++		return (short) (c - 'A' + 10);
++	if (c >= 'a' && c <= 'f')
++		return (short) (c - 'a' + 10);
++	return -1;
++}
++
++int dvblo_parse_mac (const char *macstr, u8 * mac_out)
++{
++	int i, j;
++	short byte1, byte0;
++
++	if (macstr == NULL || macstr == NULL)
++		return -EINVAL;
++	j = 0;
++	for (i = 0; i < 6; i++) {
++		if ((byte1 = ns_h2i (macstr[j++])) < 0)
++			return -EINVAL;
++		if ((byte0 = ns_h2i (macstr[j++])) < 0)
++			return -EINVAL;
++		mac_out[i] = (unsigned char) (byte1 * 16 + byte0);
++		if (i < 5) {
++			if (macstr[j] == ':' || macstr[j] == '-')
++				j++;
++			else
++				return -EINVAL;
++		}
++	}
++	return 0;
++}
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_util.h v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_util.h
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/dvblo_util.h	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/dvblo_util.h	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,45 @@
++/* dvbloop - A DVB Loopback Device
++ * Copyright (C) 2006 Christian Praehauser, Deti Fliegl
++ -----------------------------------------
++ * File: dvblo_char.h
++ * Desc: Char device support for dvblo
++ * Date: October 2006
++ * Author: Christian Praehauser <cpreahaus@cosy.sbg.ac.at>, Deti Fliegl <deti@fliegl.de>
++ *
++ * This file is released under the GPLv2.
++ */
++
++#ifndef _DVBLO_UTIL_H_
++#define _DVBLO_UTIL_H_
++
++#include <linux/types.h>
++int dvblo_parse_mac (const char *macstr, u8 * mac_out);
++
++#if 0
++/**
++ * Ring buffer implementation
++ * @todo maybe use kfifo which is provided by Linux kernels >= 2.6.10
++ */
++struct dvblo_ringbuf
++{
++	u8 *buf;
++	size_t size;
++	unsigned int wr;
++	unsigned int rd;
++};
++typedef struct dvblo_ringbuf dvblo_ringbuf_t;
++static inline int dvblo_rb_alloc (size_t size, dvblo_ringbuf_t * rb_out)
++{
++	rb_out->buf = kmalloc (size, GFP_KERNEL);
++	if (rb_out->buf == NULL)
++		return -ENOMEM;
++
++	else {
++		rb_out->size = size;
++		rb_out->in = rb_out->out = 0;
++	}
++	return 0;
++}
++static inline ssize_t dvblo_rb_write (dvblo_ringbuf_t * rb_out,
++#endif				/*  */
++#endif				/* _DVBLO_UTIL_H_ */
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/Kconfig v4l-dvb/linux/drivers/media/dvb/dvbloop/Kconfig
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/Kconfig	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/Kconfig	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,5 @@
++config DVB_DVBLOOP
++	tristate "dvbloop device"
++	depends on DVB_CORE 
++	help
++	  Say Y if you own such a device and want to use it.
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/Makefile v4l-dvb/linux/drivers/media/dvb/dvbloop/Makefile
+--- v4l-dvb-hg/linux/drivers/media/dvb/dvbloop/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/dvbloop/Makefile	2010-01-21 22:22:10.000000000 +0100
+@@ -0,0 +1,4 @@
++obj-$(CONFIG_DVB_DVBLOOP) += dvbloop.o
++dvbloop-objs := dvblo.o dvblo_adap.o dvblo_adap_fe.o dvblo_char.o dvblo_util.o dvblo_adap_ca.o
++
++EXTRA_CFLAGS += -Idrivers/media/dvb/dvb-core/
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/Kconfig v4l-dvb/linux/drivers/media/dvb/Kconfig
+--- v4l-dvb-hg/linux/drivers/media/dvb/Kconfig	2010-01-21 22:21:46.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/Kconfig	2010-01-21 22:22:10.000000000 +0100
+@@ -37,6 +37,10 @@
+ 
+ if DVB_CAPTURE_DRIVERS && DVB_CORE
+ 
++comment "Support dvbloop driver"
++        depends on DVB_CORE && PCI && I2C
++	source "drivers/media/dvb/dvbloop/Kconfig"
++
+ comment "Supported SAA7146 based PCI Adapters"
+ 	depends on DVB_CORE && PCI && I2C
+ source "drivers/media/dvb/ttpci/Kconfig"
+diff -Nur v4l-dvb-hg/linux/drivers/media/dvb/Makefile v4l-dvb/linux/drivers/media/dvb/Makefile
+--- v4l-dvb-hg/linux/drivers/media/dvb/Makefile	2010-01-21 22:21:46.000000000 +0100
++++ v4l-dvb/linux/drivers/media/dvb/Makefile	2010-01-21 22:22:44.000000000 +0100
+@@ -14,8 +14,9 @@
+ 		siano/		\
+ 		dm1105/		\
+ 		pt1/		\
+		mantis/		\
+		smi2032/	\
+-		ngene/
++		ngene/		\
++		dvbloop/
+ 
+ obj-$(CONFIG_DVB_FIREDTV)	+= firewire/

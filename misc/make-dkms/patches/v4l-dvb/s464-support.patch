@@ -1,0 +1,140 @@
+diff -rupN v4l-dvb/linux/drivers/media/dvb/frontends/ds3000.c v4l-dvb-tevii.patch/linux/drivers/media/dvb/frontends/ds3000.c
+--- v4l-dvb/linux/drivers/media/dvb/frontends/ds3000.c	2010-10-10 13:31:48.877805692 +0200
++++ v4l-dvb-tevii.patch/linux/drivers/media/dvb/frontends/ds3000.c	2010-10-10 13:41:38.525804964 +0200
+@@ -1041,6 +1041,8 @@ static int ds3000_tune(struct dvb_fronte
+ 	state->dnxt.frequency = c->frequency;
+ 	state->dnxt.rolloff = 2; /* fixme */
+ 	state->dnxt.fec = c->fec_inner;
++	if (state->config->set_ts_params)
++		state->config->set_ts_params(fe, 0);
+ 
+ 	ret = ds3000_set_inversion(state, p->inversion);
+ 	if (ret !=  0)
+diff -rupN v4l-dvb/linux/drivers/media/dvb/frontends/ds3000.h v4l-dvb-tevii.patch/linux/drivers/media/dvb/frontends/ds3000.h
+--- v4l-dvb/linux/drivers/media/dvb/frontends/ds3000.h	2010-10-10 13:31:48.877805692 +0200
++++ v4l-dvb-tevii.patch/linux/drivers/media/dvb/frontends/ds3000.h	2010-10-10 13:43:58.693805224 +0200
+@@ -27,6 +27,8 @@
+ struct ds3000_config {
+ 	/* the demodulator's i2c address */
+ 	u8 demod_address;
++	/* Set device param to start dma */
++	int (*set_ts_params)(struct dvb_frontend *fe, int is_punctured);
+ };
+ 
+ #if defined(CONFIG_DVB_DS3000) || \
+diff -rupN v4l-dvb/linux/drivers/media/video/cx88/cx88-cards.c v4l-dvb-tevii.patch/linux/drivers/media/video/cx88/cx88-cards.c
+--- v4l-dvb/linux/drivers/media/video/cx88/cx88-cards.c	2010-10-10 13:31:49.249805744 +0200
++++ v4l-dvb-tevii.patch/linux/drivers/media/video/cx88/cx88-cards.c	2010-10-10 13:48:03.449805028 +0200
+@@ -1967,6 +1967,18 @@ static const struct cx88_board cx88_boar
+ 		} },
+ 		.mpeg           = CX88_MPEG_DVB,
+ 	},
++	[CX88_BOARD_TEVII_S464] = {
++		.name           = "TeVii S464 DVB-S/S2",
++		.tuner_type     = UNSET,
++		.radio_type     = UNSET,
++		.tuner_addr     = ADDR_UNSET,
++		.radio_addr     = ADDR_UNSET,
++		.input          = {{
++			.type   = CX88_VMUX_DVB,
++			.vmux   = 0,
++		} },
++		.mpeg           = CX88_MPEG_DVB,
++	},
+ 	[CX88_BOARD_OMICOM_SS4_PCI] = {
+ 		.name           = "Omicom SS4 DVB-S/S2 PCI",
+ 		.tuner_type     = UNSET,
+@@ -2531,6 +2543,10 @@ static const struct cx88_subid cx88_subi
+ 		.subdevice = 0x9022,
+ 		.card      = CX88_BOARD_TEVII_S460,
+ 	}, {
++		.subvendor = 0xd464,
++		.subdevice = 0x9022,
++		.card      = CX88_BOARD_TEVII_S464,
++	}, {
+ 		.subvendor = 0xA044,
+ 		.subdevice = 0x2011,
+ 		.card      = CX88_BOARD_OMICOM_SS4_PCI,
+@@ -3279,6 +3295,7 @@ static void cx88_card_setup(struct cx88_
+ 	}
+ 	case  CX88_BOARD_TEVII_S420:
+ 	case  CX88_BOARD_TEVII_S460:
++	case  CX88_BOARD_TEVII_S464:
+ 	case  CX88_BOARD_OMICOM_SS4_PCI:
+ 	case  CX88_BOARD_TBS_8910:
+ 	case  CX88_BOARD_TBS_8920:
+diff -rupN v4l-dvb/linux/drivers/media/video/cx88/cx88-dvb.c v4l-dvb-tevii.patch/linux/drivers/media/video/cx88/cx88-dvb.c
+--- v4l-dvb/linux/drivers/media/video/cx88/cx88-dvb.c	2010-10-10 13:31:49.257806024 +0200
++++ v4l-dvb-tevii.patch/linux/drivers/media/video/cx88/cx88-dvb.c	2010-10-10 13:58:01.317806502 +0200
+@@ -57,6 +57,7 @@
+ #include "stv0900.h"
+ #include "stb6100.h"
+ #include "stb6100_proc.h"
++#include "ds3000.h"
+ 
+ MODULE_DESCRIPTION("driver for cx2388x based DVB cards");
+ MODULE_AUTHOR("Chris Pascoe <c.pascoe@itee.uq.edu.au>");
+@@ -620,6 +621,19 @@ static struct cx24116_config tevii_s460_
+ 	.reset_device  = cx24116_reset_device,
+ };
+ 
++static int ds3000_set_ts_param(struct dvb_frontend *fe, int is_punctured)
++{
++	struct cx8802_dev *dev = fe->dvb->priv;
++	dev->ts_gen_cntrl = 4;
++	
++	return 0;
++}
++
++static struct ds3000_config tevii_ds3000_config = {
++	.demod_address = 0x68,
++	.set_ts_params = ds3000_set_ts_param,
++};
++
+ static struct stv0900_config prof_7301_stv0900_config = {
+ 	.demod_address = 0x6a,
+ /*	demod_mode = 0,*/
+@@ -1353,6 +1367,13 @@ static int dvb_register(struct cx8802_de
+ 		if (fe0->dvb.frontend != NULL)
+ 			fe0->dvb.frontend->ops.set_voltage = tevii_dvbs_set_voltage;
+ 		break;
++	case CX88_BOARD_TEVII_S464:
++		fe0->dvb.frontend = dvb_attach(ds3000_attach,
++					       &tevii_ds3000_config,
++					       &core->i2c_adap);
++		if (fe0->dvb.frontend != NULL)
++			fe0->dvb.frontend->ops.set_voltage = tevii_dvbs_set_voltage;
++		break;
+ 	case CX88_BOARD_OMICOM_SS4_PCI:
+ 	case CX88_BOARD_TBS_8920:
+ 	case CX88_BOARD_PROF_7300:
+diff -rupN v4l-dvb/linux/drivers/media/video/cx88/cx88.h v4l-dvb-tevii.patch/linux/drivers/media/video/cx88/cx88.h
+--- v4l-dvb/linux/drivers/media/video/cx88/cx88.h	2010-10-10 13:31:49.277806422 +0200
++++ v4l-dvb-tevii.patch/linux/drivers/media/video/cx88/cx88.h	2010-10-10 14:00:57.229804665 +0200
+@@ -241,6 +241,7 @@ extern struct sram_channel cx88_sram_cha
+ #define CX88_BOARD_WINFAST_DTV2000H_J      82
+ #define CX88_BOARD_PROF_7301               83
+ #define CX88_BOARD_SAMSUNG_SMT_7020        84
++#define CX88_BOARD_TEVII_S464              85
+ 
+ enum cx88_itype {
+ 	CX88_VMUX_COMPOSITE1 = 1,
+diff -rupN v4l-dvb/linux/drivers/media/video/cx88/cx88-input.c v4l-dvb-tevii.patch/linux/drivers/media/video/cx88/cx88-input.c
+--- v4l-dvb/linux/drivers/media/video/cx88/cx88-input.c	2010-10-10 13:31:49.261805704 +0200
++++ v4l-dvb-tevii.patch/linux/drivers/media/video/cx88/cx88-input.c	2010-10-10 13:59:50.961805110 +0200
+@@ -371,6 +371,7 @@ int cx88_ir_init(struct cx88_core *core,
+ 		ir_type = IR_TYPE_NEC;
+ 		ir->sampling = 0xff00; /* address */
+ 		break;
++	case CX88_BOARD_TEVII_S464:
+ 	case CX88_BOARD_TEVII_S460:
+ 	case CX88_BOARD_TEVII_S420:
+ 		ir_codes = RC_MAP_TEVII_NEC;
+@@ -524,6 +525,7 @@ void cx88_ir_irq(struct cx88_core *core)
+ 
+ 	/* decode it */
+ 	switch (core->boardnr) {
++	case CX88_BOARD_TEVII_S464:
+ 	case CX88_BOARD_TEVII_S460:
+ 	case CX88_BOARD_TEVII_S420:
+ 	case CX88_BOARD_TERRATEC_CINERGY_1400_DVB_T1:

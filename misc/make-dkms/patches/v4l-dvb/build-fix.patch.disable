@@ -1,0 +1,21 @@
+diff -Nru v4l-dvb/linux/drivers/media/IR/ir-raw-event.c v4l-dvb-changed/linux/drivers/media/IR/ir-raw-event.c
+--- v4l-dvb/linux/drivers/media/IR/ir-raw-event.c	2010-05-13 14:48:38.406616412 +0200
++++ v4l-dvb-changed/linux/drivers/media/IR/ir-raw-event.c	2010-05-13 15:38:25.183198672 +0200
+@@ -61,7 +61,7 @@
+ 	struct ir_raw_event_ctrl *raw =
+ 		container_of(work, struct ir_raw_event_ctrl, rx_work);
+ 
+-	while (kfifo_out(&raw->kfifo, &ev, sizeof(ev)) == sizeof(ev))
++	while (kfifo_put(&raw->kfifo, &ev, sizeof(ev)) == sizeof(ev))
+ 		RUN_DECODER(decode, raw->input_dev, ev);
+ }
+ 
+@@ -128,7 +128,7 @@
+ 	if (!ir->raw)
+ 		return -EINVAL;
+ 
+-	if (kfifo_in(&ir->raw->kfifo, ev, sizeof(*ev)) != sizeof(*ev))
++	if (kfifo_get(&ir->raw->kfifo, ev, sizeof(*ev)) != sizeof(*ev))
+ 		return -ENOMEM;
+ 
+ 	return 0;

@@ -1,0 +1,4 @@
+DEBIAN_PACKAGE-dkms (MODULE_VERSION) lucid; urgency=low
+  * Automatically packaged by DKMS.
+
+ -- Steffen Barszus <steffenbpunkt@gmail.com>  DATE_STAMP

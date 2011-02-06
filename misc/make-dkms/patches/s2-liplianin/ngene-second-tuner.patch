@@ -1,0 +1,21 @@
+--- a/linux/drivers/media/dvb/frontends/stv090x.c	Sun Dec 12 16:47:41 2010 +0100
++++ b/linux/drivers/media/dvb/frontends/stv090x.c	Mon Dec 13 02:55:02 2010 +0100
+@@ -3626,10 +3626,12 @@
+ 		STV090x_SETFIELD_Px(reg, DVBS2_ENABLE_FIELD, 1);
+ 		if (STV090x_WRITE_DEMOD(state, DMDCFGMD, reg) < 0)
+ 			goto err;
+-		if (STV090x_WRITE_DEMOD(state, ACLC, 0) < 0)
+-			goto err;
+-		if (STV090x_WRITE_DEMOD(state, BCLC, 0) < 0)
+-			goto err;
++		if (state->internal->dev_ver >= 0x30) {
++			if (STV090x_WRITE_DEMOD(state, ACLC, 0) < 0)
++				goto err;
++			if (STV090x_WRITE_DEMOD(state, BCLC, 0) < 0)
++				goto err;
++		}
+ 		if (state->frame_len == STV090x_LONG_FRAME) {
+ 			reg = STV090x_READ_DEMOD(state, DMDMODCOD);
+ 			modcod = STV090x_GETFIELD_Px(reg, DEMOD_MODCOD_FIELD);
+
+

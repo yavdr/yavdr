@@ -11,16 +11,25 @@
 # make sure linux-headers is installed 
 # and adapt to the kernel you like to compile for
 ########################
-KERNEL=2.6.31-21-generic
+
+KERNEL=2.6.32-28-generic
+if [ -z "$KERNEL" ]; then
+    if [ ! -z "$2" ]; then
+    	KERNEL="$2"
+    else
+        KERNEL="`uname -r`"
+    fi
+fi
 
 case $1 in 
-   s2liplianin|v4l-dvb) 
+   s2-liplianin|v4l-dvb) 
            REPO=$1
 	   ;;
    clean)
-           [ -e tmp.* ] && rm -rf tmp.*
-           [ -e temp-build ] && rm -rf temp-build
-           [ -e dkms.conf.* ] && rm dkms.conf.*
+           rm -rf tmp.* &> /dev/null || /bin/true 
+           rm -rf temp-build &> /dev/null || /bin/true 
+           rm dkms.conf.* &> /dev/null || /bin/true
+
            exit 0
            ;;
    *)
@@ -37,23 +46,28 @@ cat <<EOF > dkms.conf.$REPO
 PACKAGE_NAME=$REPO
 PACKAGE_VERSION=$VERSION
 AUTOINSTALL=y
-MAKE[0]="make -j2"
+MAKE[0]="make -j5 VER=\$kernelver"
 EOF
 
 PATCHCOUNT=0
 for PATCH in ${PATCHES[@]} ; do 
 echo "PATCH[$PATCHCOUNT]=`basename $PATCH`" >> dkms.conf.$REPO
+if [ -f "${PATCH}.match" ]; then
+    echo "PATCH_MATCH[$PATCHCOUNT]=\"`cat ${PATCH}.match`\"" >> dkms.conf.$REPO
+fi
 PATCHCOUNT=$(( $PATCHCOUNT + 1 ))
 done 
 
 # temporary build
 if [ ! -d temp-build ]; then
     cp -r repositories/$REPO temp-build
-    for PATCH in ${PATCHES[@]} ; do 
-        echo "Patching $PATCH ... "
-        patch -d temp-build -p1 < $PATCH
+    for PATCH in ${PATCHES[@]} ; do
+        if [ ! -f "${PATCH}.match" ] || echo "$KERNEL" | egrep -q "`cat ${PATCH}.match`"; then
+            echo "Patching $PATCH ... "
+            patch -d temp-build -p1 < $PATCH
+        fi
     done
-    make -j2 -C temp-build KERNELRELEASE=$KERNEL
+    make -j5 -C temp-build KERNELRELEASE=$KERNEL VER=$KERNEL
 fi
 
 cd temp-build
@@ -96,9 +110,11 @@ dkms --sourcetree $srctree --dkmstree $dkmstree add -m ${REPO} -v $VERSION -k $K
 dkms --sourcetree $srctree --dkmstree $dkmstree build -m ${REPO} -v $VERSION -k $KERNEL
 # build debian source package
 dkms --sourcetree $srctree --dkmstree $dkmstree mkdsc -m ${REPO} -v $VERSION -k $KERNEL
+cp $dkmstree/${REPO}/$VERSION/dsc/* ./packages/dsc/
 
-# copy generated package
-cp $dkmstree/${REPO}/$VERSION/dsc/* .
+# mkdeb
+#dkms --sourcetree $srctree --dkmstree $dkmstree mkdeb -m ${REPO} -v $VERSION -k $KERNEL
+#cp $dkmstree/${REPO}/$VERSION/deb/* ./packages/deb/
 
 # upload to ppa
-dput ppa:the-vdr-team/vdr-devel $REPO-*.changes
+dput ppa:yavdr/testing-vdr ./packages/dsc/$REPO-*.changes
