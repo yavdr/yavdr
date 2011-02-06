@@ -70,7 +70,7 @@ class channelImport{
                 $update_data = array();
                 foreach ($params as $key => $value){
                     if ($value != $row[$key] && $key !== "last_changed"  && $key !== "label"){
-                        $changes[] = "Parameter <b>$key</b>: from '".$row[$key]. "' to '". $value."'";
+                        $changes[] = "<b>$key</b>: '".$row[$key]. "' to '". $value."'</br>";
                         $update_data[] = "$key = ".$this->dbh->quote( $value);
                     }
                 }
@@ -225,8 +225,10 @@ class channelImport{
         if ($this->numChanAdded + $this->numChanChanged > 0){
             //FIXME: avoid static sat sources !!!! avoid updating just one C and one T!!!
             $this->updateAllLabelsOfSource("S19.2E");
-            $this->updateAllLabelsOfSource("C[".$this->cableSourceType."]");
-            $this->updateAllLabelsOfSource("T[".$this->terrSourceType."]");
+            if ($this->cableSourceType != "none")
+                $this->updateAllLabelsOfSource("C[".$this->cableSourceType."]");
+            if ($this->terrSourceType != "none")
+                $this->updateAllLabelsOfSource("T[".$this->terrSourceType."]");
         }
         else{
             print "No need for label update.\n";

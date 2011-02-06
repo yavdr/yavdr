@@ -35,8 +35,13 @@ class HTMLOutputRenderer{
         $this->config = config::getInstance();
         $this->exportpath = $this->config->getValue("path").$this->config->getValue("exportfolder")."/html/";
 
-        $this->writeNiceHTMLPage();
-        $this->writeChangelog();
+        $this->writeNiceHTMLPage("S19.2E", "de");
+        $this->writeNiceHTMLPage("S19.2E", "at");
+        $this->writeNiceHTMLPage("S19.2E", "ch");
+        $this->writeNiceHTMLPage("C[Germany_KabelBW]", "de");
+        $this->writeChangelog("S19.2E");
+        $this->writeChangelog("S28.2E");
+        $this->writeChangelog("C[Germany_KabelBW]");
     }
 
     /*
@@ -52,31 +57,18 @@ class HTMLOutputRenderer{
     die();
     */
 
+    public function writeChangelog($source){
 
-
-    public function writeChangelog(){
-
-        $sqlquery="SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, update_description FROM channel_update_log";
+        $sqlquery=
+            "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, update_description ".
+            "FROM channel_update_log WHERE combined_id LIKE '".$source."%' ORDER BY timestamp DESC LIMIT 100";
         $result = $this->dbh->query($sqlquery);
         if ($result === false)
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
-        $buffer = '
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Channel changelog</title>
-		<style>
-			body { font-family: Arial, sans-serif; font-size: 0.8em; background-color: #dddddd;}
-			table { font-family: Arial, sans-serif; font-size: 0.8em; background-color: white; border-collapse:collapse;}
-			td { border: 1px solid black; padding: 2px;}
-		</style>
-	</head>
-	<body>
-	    <h1>Changelog</h1>
+        $header = preg_replace("/\[PAGE_TITLE\]/","Changelog",file_get_contents("templates/html_header.html"));
+
+        $buffer = $header.'
+	    <h1>Changelog for '.$source.' (Last 100 changes)</h1><p>Last updated on: '. date("D M j G:i:s T Y").'</p>
         <table>';
         foreach ($result as $row) {
             $buffer.="<tr><td>".
@@ -87,36 +79,27 @@ class HTMLOutputRenderer{
 			"</td></tr>\n";
         }
         $buffer .= "<table></body></html>";
-        file_put_contents($this->exportpath . "changelog.html", $buffer );
+        file_put_contents($this->exportpath . "changelog_".$source.".html", $buffer );
     }
 
     //assembles all pre-written channel lists from hdd into one html page
-    public function writeNiceHTMLPage(){
-
-        $nice_html_output = '
-        <?xml version="1.0" encoding="utf-8"?>
-        <!DOCTYPE html
-             PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-        	<head>
-        		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        		<title>Nice channel lists</title>
-        		<style>
-        			body { font-family: Arial, sans-serif; font-size: 0.8em; background-color: #dddddd;}
-        			pre { border: 1px solid black; padding: 5px; background-color: white; overflow: auto;}
-        		</style>
-        	</head>
-        	<body>
+    public function writeNiceHTMLPage($source, $language){
+        $title = 'Essential channels for '.$source.' (Language/Region: '.$language.')';
+        $header = preg_replace("/\[PAGE_TITLE\]/",$title,file_get_contents("templates/html_header.html"));
+        $nice_html_output =
+            $header.
+        	'<h1>'.$title.'</h1>
+        	<p>Last updated on:'. date("D M j G:i:s T Y").'</p>
         ';
         $dirname = $this->config->getValue("path").$this->config->getValue("exportfolder")."/raw";
         $dir = new DirectoryIterator( $dirname );
         foreach ($dir as $fileinfo) {
-            if ( $fileinfo->isFile() && substr($fileinfo->getFilename(),0, 18) == "channels.S19.2E.de"){// && !$fileinfo->isDot()){
+            $prefix= "channels_".$source."_".$language;
+            if ( $fileinfo->isFile() && substr($fileinfo->getFilename(),0, strlen($prefix)) == $prefix){// && !$fileinfo->isDot()){
                 //echo $fileinfo->getFilename() . "\n";
                 $infofile = $dirname."/". $fileinfo->getFilename();
                 if (file_exists( $infofile )){
-                    $nice_html_output .= "<pre>". file_get_contents( $infofile ) ."</pre>\n";
+                    $nice_html_output .= "<h2>".$fileinfo->getFilename()."</h2>\n<pre>". file_get_contents( $infofile ) ."</pre>\n";
                 }
             }
         }
@@ -125,7 +108,7 @@ class HTMLOutputRenderer{
         <html>
         ";
 
-        file_put_contents($this->exportpath . "nice_channels.html", $nice_html_output );
+        file_put_contents($this->exportpath . "channels_".$language."_".$source.".html", $nice_html_output );
     }
 
 }
