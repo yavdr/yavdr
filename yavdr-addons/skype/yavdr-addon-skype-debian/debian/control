@@ -1,0 +1,13 @@
+Source: yavdr-addon-skype
+Section: misc
+Priority: optional
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 3.9.1
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-addon-skype
+Architecture: all
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, skype
+Description: yavdr-addon-skype 
+ yavdr-addon-skype

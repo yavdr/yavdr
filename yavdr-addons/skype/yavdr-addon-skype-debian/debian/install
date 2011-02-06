@@ -1,0 +1,4 @@
+events/*		usr/share/yavdr/events/
+templates/*		usr/share/yavdr/templates/
+images/*		usr/share/yavdr/images/
+

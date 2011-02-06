@@ -1,0 +1,6 @@
+yavdr-addon-skype (0.3.0.2609-1yavdr1) lucid; urgency=low
+
+  * build 
+  * Switch to dpkg-source 3.0 (quilt) format
+
+ -- Holger Schvestka <hotzenplotz5@gmx.de>  Mon, 26 May 2010 10:19:06 +0200

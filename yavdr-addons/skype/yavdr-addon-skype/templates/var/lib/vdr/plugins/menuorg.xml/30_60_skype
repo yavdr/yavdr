@@ -1,0 +1,1 @@
+        <command name="Skype" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=skype &amp;> /dev/null " />
