@@ -25,10 +25,14 @@
 //input: reads channel.conf from path and put channels into db
 require_once 'class.config.php';
 require_once 'class.dbConnection.php';
+require_once 'class.channelIterator.php';
 require_once 'class.channelImport.php';
+require_once 'class.channelListWriter.php';
+require_once 'class.rawOutputRenderer.php';
 require_once 'class.HTMLOutputRenderer.php';
 
 importFromAllChannelSources();
+$x =new rawOutputRenderer();
 $x =new HTMLOutputRenderer();
 
 function importFromAllChannelSources(){

@@ -27,6 +27,7 @@ ini_set("display_errors", E_ALL);
 require_once 'class.config.php';
 require_once 'class.dbConnection.php';
 require_once 'class.channelImport.php';
+require_once 'class.rawOutputRenderer.php';
 require_once 'class.HTMLOutputRenderer.php';
 
 $config = config::getInstance();
@@ -58,6 +59,7 @@ if (is_file( $checkpatch."info.txt" ) && $_FILES["channels"]["name"] == "channel
     $x = new channelImport();
     $x-> importChannelsConfFile($checkpatch, $cableProvider, "none");
     $x->updateAllLabels();
+    $x =new rawOutputRenderer();
     $x =new HTMLOutputRenderer();
     unset($x);
 }

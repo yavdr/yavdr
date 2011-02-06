@@ -23,7 +23,7 @@
 */
 
 require_once 'config.php';
-require_once 'include.groups.php';
+require_once 'class.channelGroupingRulesStore.php';
 
 class config {
 

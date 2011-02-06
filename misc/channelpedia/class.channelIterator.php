@@ -40,7 +40,7 @@ class channelIterator{
             $where = "label = ". $this->dbh->quote($label). " AND ";
 
         $sqlquery="SELECT * FROM channels WHERE $where source = ". $this->dbh->quote($source) . " ORDER BY " . $orderby;
-        echo "$label: $sqlquery\n";
+        //echo "$label: $sqlquery\n";
         $this->result = $this->dbh->query($sqlquery);
         if ($this->result === false)
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);

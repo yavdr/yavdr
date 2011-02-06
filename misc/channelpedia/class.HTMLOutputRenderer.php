@@ -39,6 +39,21 @@ class HTMLOutputRenderer{
         $this->writeChangelog();
     }
 
+    /*
+    $y = new channelIterator("", "S19.2E");
+    while ($y->moveToNextChannel() !== false){
+        if ($y->transponderChanged())
+            print ": ### ".$y->getCurrentTransponderInfo()." ###\n";
+        $channel = $y->getCurrentChannelString();
+        print $channel."\n";
+    }
+    print "Number of channels processed: " . $y->getCurrentChannelCount() . "\n";
+    unset($y);
+    die();
+    */
+
+
+
     public function writeChangelog(){
 
         $sqlquery="SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, update_description FROM channel_update_log";

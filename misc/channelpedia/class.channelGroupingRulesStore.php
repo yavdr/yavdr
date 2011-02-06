@@ -196,6 +196,28 @@ $x->updateLabelsOfChannelSelection( $label = "_long.all", $source = "S28.2E", $c
 $x->updateLabelsOfChannelSelection( $label = "_long.C_Germany_KabelBW", $source = CABLE_PROVIDER);
 */
 
+        /*
 
+        function createEssentialListsFRA( $source, $x ){
+
+            $x->updateLabelsOfChannelSelection(
+                $label = "fra.FTA.TV",
+                $source = "S19.2E",
+                $caidMode = 1,
+                $mediaType = 1,
+                $language = "fra",
+                $orderby = "UPPER(name) ASC"
+            );
+            $x->updateLabelsOfChannelSelection(
+                $label = "_long.fra.scrambled.TV",
+                $source = "S19.2E",
+                $caidMode = 2,
+                $mediaType = 1,
+                $language = "fra",
+                $orderby="UPPER(name) ASC",
+                $customwhere = ""
+            );
+        }
+        */
 }
 ?>

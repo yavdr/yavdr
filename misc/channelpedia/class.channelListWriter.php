@@ -34,7 +34,7 @@ class channelListWriter extends channelIterator{
         if ($label == "_complete")
             $this->addTransponderDelimiters = true;
         $config = config::getInstance();
-        $gpath = $config->getValue("path"). $config->getValue("exportfolder")."/raw";
+        $gpath = $config->getValue("path"). $config->getValue("exportfolder")."/raw/";
         $groupname = $source. '_' . $label;
         $this->filename = $gpath . 'channels_' . $groupname . '.conf';
     }
@@ -56,7 +56,7 @@ class channelListWriter extends channelIterator{
     }
 
     private function openFile(){
-        print "writing to file $this->filename\n";
+        //print "writing to file $this->filename\n";
         @unlink($this->filename);
         $this->filehandle = fopen ($this->filename, "w");
     }
