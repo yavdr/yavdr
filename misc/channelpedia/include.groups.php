@@ -31,7 +31,10 @@ define("SWITZERLAND", " (UPPER(name) LIKE '% CH' OR LOWER(name) LIKE '% Schweiz'
 
 define("FILTER_ASTRA1_FTA", " AND ((tid != '1092' AND tid != '1113' AND provider != '-') OR (name = 'DMAX')) AND provider != 'SKY' ");
 
-$groups = array(
+class channelGroupingRulesStore{
+
+static public function getRules(){
+    return array(
 
     "de.FTA.SDTV.Public" => array(
 
@@ -150,7 +153,7 @@ $groups = array(
         "customwhere" => FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL . "AND ". SWITZERLAND. "AND ". DE_PRIVATE_PRO7_RTL
     )
 );
-
+}
 
 /*
 $x->updateLabelsOfChannelSelection(
@@ -194,5 +197,5 @@ $x->updateLabelsOfChannelSelection( $label = "_long.C_Germany_KabelBW", $source 
 */
 
 
-
+}
 ?>

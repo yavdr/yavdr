@@ -22,14 +22,14 @@
 *
 */
 
-
 ini_set("display_errors", E_ALL);
 
+require_once 'class.config.php';
+require_once 'class.dbConnection.php';
+require_once 'class.channelImport.php';
+require_once 'class.HTMLOutputRenderer.php';
 
-require_once 'config.php';
-require_once 'class.cpbasics.php';
-require_once 'class.cpinput.php';
-
+$config = config::getInstance();
 
 if ( !array_key_exists('SERVER_SOFTWARE',$_SERVER))
     die ("Script can't be called from cli environment.\n");
@@ -41,19 +41,24 @@ $user = $_POST["user"];
 if ( $user == "" || strstr($user,".") || strstr($user,"/") )
     die("illegal user value");
 
-if (is_file( PATH."sources/$user/info.txt" ) && $_FILES["channels"]["name"] == "channels.conf"){
-    print move_uploaded_file($_FILES["channels"]["tmp_name"], PATH."sources/$user/channels.conf" );
+$checkpatch = $config->getValue("path"). "sources/$user/";
+
+if (is_file( $checkpatch."info.txt" ) && $_FILES["channels"]["name"] == "channels.conf"){
+    print move_uploaded_file($_FILES["channels"]["tmp_name"], $checkpatch."channels.conf" );
     print "upload successful.\n";
     //quick'n'dirty approach
     //now trigger the import of the newly uploaded channels.conf file
     $cableProvider = "";
-    $infofile = PATH."sources/$user/info.txt";
+    $infofile = $checkpatch."info.txt";
     if (file_exists( $infofile )){
         $info = file_get_contents( $infofile);
         $cableProvider = $info; //FIXME
     }
     //print $info ."/". $infofile ."/".  $cableProvider."\n";
-    $x = new cpInput(PATH, PATH."sources/$user/", $cableProvider, "none");
+    $x = new channelImport();
+    $x-> importChannelsConfFile($checkpatch, $cableProvider, "none");
+    $x->updateAllLabels();
+    $x =new HTMLOutputRenderer();
     unset($x);
 }
 else

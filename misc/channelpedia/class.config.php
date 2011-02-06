@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011 Henning Pingel
+*  (c) 2010 Henning Pingel
 *  All rights reserved
 *
 *  This script is part of the yaVDR project. yaVDR is
@@ -22,12 +22,34 @@
 *
 */
 
-require_once 'class.cpbasics.php';
 require_once 'config.php';
+require_once 'include.groups.php';
 
-//init db: delete db and re-create it with empty tables
-require_once 'class.cpinitdb.php';
-$x = new cpDBInit(PATH);
+class config {
 
-print "end of init.\n"
+    private static $instance = null;
+
+    protected function __construct(){
+    }
+
+    private function __clone(){}
+
+    public static function getInstance(){
+        if ( self::$instance == null){
+            self::$instance = new config();
+        }
+        return self::$instance;
+    }
+
+    public function getValue($key){
+        $value = null;
+        if ( $key == "path")
+            $value = PATH;
+        elseif ($key == "exportfolder")
+            $value = EXPORTFOLDER;
+        elseif ($key == "groups")
+            $value = channelGroupingRulesStore::getRules();
+        return $value;
+    }
+}
 ?>

@@ -23,29 +23,32 @@
 */
 
 //input: reads channel.conf from path and put channels into db
-require_once 'config.php';
-require_once 'class.cpbasics.php';
-require_once 'class.cpinput.php';
+require_once 'class.config.php';
+require_once 'class.dbConnection.php';
+require_once 'class.channelImport.php';
+require_once 'class.HTMLOutputRenderer.php';
 
 importFromAllChannelSources();
+$x =new HTMLOutputRenderer();
 
 function importFromAllChannelSources(){
-
-    $dir = new DirectoryIterator( PATH."sources/" );
-
+    $config = config::getInstance();
+    $dir = new DirectoryIterator( $config->getValue("path")."sources/" );
+    $x = new channelImport();
     foreach ($dir as $fileinfo) {
         if ( $fileinfo->isDir() && !$fileinfo->isDot()){
             //echo $fileinfo->getFilename() . "\n";
             $cableProvider = "";
-            $infofile = PATH."sources/". $fileinfo->getFilename() ."/info.txt";
+            $infofile = $config->getValue("path")."sources/". $fileinfo->getFilename() ."/info.txt";
             if (file_exists( $infofile )){
                 $info = file_get_contents( $infofile);
                 $cableProvider = $info; //FIXME
             }
             //print $info ."/". $infofile ."/".  $cableProvider."\n";
-            $x = new cpInput(PATH, PATH."sources/". $fileinfo->getFilename()."/", $cableProvider, "none");
-            unset($x);
+            $x->importChannelsConfFile( $fileinfo->getFilename(), $cableProvider, "none" );
         }
     }
+    $x->updateAllLabels();
+    unset($x);
 }
 ?>

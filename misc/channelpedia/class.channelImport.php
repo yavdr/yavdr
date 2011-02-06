@@ -22,25 +22,32 @@
 *
 */
 
-class cpInput extends cpBasics {
+class channelImport{
 
     private
         $cableSourceType,
         $terrSourceType,
         $existingChannelBuffer,
-        $sourcepath;
+        $dbh,
+        $config,
+        $numChanAdded = 0,
+        $numChanChanged = 0;
 
-    function __construct($path, $sourcepath, $cableSourceType, $terrSourceType){
-        parent::__construct($path);
-        $this->connect();
-        $this->cableSourceType = $cableSourceType;
-        $this->terrSourceType = $terrSourceType;
-        $this->sourcepath = $sourcepath;
-        $this->existingChannelBuffer = array();
-        $this->insertChannelsConfIntoDB();
-        $this->updateExistingChannels();
+    function __construct(){
+        $this->config = config::getInstance();
+        $db = dbConnection::getInstance();
+        $this->dbh = $db->getDBHandle();
     }
 
+    public function importChannelsConfFile($username, $cableSourceType, $terrSourceType){
+        print "Processing channels.conf of user $username\n";
+        $this->cableSourceType = $cableSourceType;
+        $this->terrSourceType = $terrSourceType;
+        $this->existingChannelBuffer = array();
+        $this->insertChannelsConfIntoDB( $this->config->getValue("path")."sources/$username/" );
+        $this->updateExistingChannels();
+        print "Summary: Channels added: $this->numChanAdded / Channels modified: $this->numChanChanged\n";
+    }
     /*
      * tries to update all channel data of the channels
      * listed in array existingChannelBuffer
@@ -69,7 +76,7 @@ class cpInput extends cpBasics {
                 }
                 $update_data[] = "last_changed = ".time();
                 if (count ($changes) != 0){
-                    print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
+                    //print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
                     $statement = "UPDATE channels SET ".implode(", " , $update_data)." WHERE source = ".
                         $this->dbh->quote( $params["source"] )." AND nid = ".
                         $this->dbh->quote( $params["nid"] )." AND tid = ".
@@ -81,9 +88,9 @@ class cpInput extends cpBasics {
                            $this->dbh->quote( implode(", ",$changes)).", ".
                            time().
                          " );";
-                    print "$statement\n";
+                    //print "$statement\n";
                     $query = $this->dbh->exec($statement);
-                    //$query = $this->dbh->exec($statement2);
+                    $this->numChanChanged++;
                 }
                 else{
                     //print "channel unchanged.\n";
@@ -98,23 +105,23 @@ class cpInput extends cpBasics {
      * adds channel lines that seem correct to the db
      */
 
-    private function insertChannelsConfIntoDB(){
-        $filename = $this->sourcepath . 'channels.conf';
+    private function insertChannelsConfIntoDB($sourcepath){
+        $filename = $sourcepath . 'channels.conf';
         if (file_exists($filename)) {
             $handle = fopen ($filename, "r");
             $counter = 1;
             $cgroup = "";
             $query = $this->dbh->exec("BEGIN TRANSACTION");
             while (!feof($handle)) {
-                print "try to add channel $counter : ";
+                //$msg_prefix = "try to add channel $counter : ";
                 $buffer = fgets($handle, 4096);
                 $buffer = rtrim( $buffer, "\n");
                 if (substr($buffer,0,1) == ":"){
                    $cgroup = ltrim($buffer,":");
-                   print "Skipping a group delimiter.\n";
+                   //print $msg_prefix."Skipping a group delimiter.\n";
                 }
                 elseif($buffer == ""){
-                    print "illegal channel: ignoring empty line.\n";
+                    //print $msg_prefix . "illegal channel: ignoring empty line.\n";
                 }
                 else{
                     $counter++;
@@ -122,13 +129,14 @@ class cpInput extends cpBasics {
                     if ($params !== false)
                         if (false === $this->insertChannelIntoDB ($params)){
                             $this->existingChannelBuffer[] = $params;
-                            print "already exists.\n";
+                            //print $msg_prefix . "already exists.\n";
                         }
                         else{
-                            print "added successfully.\n";
+                            $this->numChanAdded++;
+                            //print $msg_prefix . "added successfully.\n";
                         }
                     else{
-                        die("illegal channel.\n");
+                        print($msg_prefix . "illegal channel: $buffer.\n");
                     }
                 }
             }
@@ -211,6 +219,73 @@ class cpInput extends cpBasics {
             "label"           => "",
             "last_changed"    => time()
         );
+    }
+
+    public function updateAllLabels(){
+        if ($this->numChanAdded + $this->numChanChanged > 0){
+            //FIXME: avoid static sat sources !!!! avoid updating just one C and one T!!!
+            $this->updateAllLabelsOfSource("S19.2E");
+            $this->updateAllLabelsOfSource("C[".$this->cableSourceType."]");
+            $this->updateAllLabelsOfSource("T[".$this->terrSourceType."]");
+        }
+        else{
+            print "No need for label update.\n";
+        }
+    }
+
+    private function updateAllLabelsOfSource( $source ){
+
+        foreach ($this->config->getValue("groups") as $label => $details){
+            $this->updateLabelsOfChannelSelection(
+                $label,
+                $source,
+                $caidMode    = $details["caidMode"],
+                $mediaType   = $details["mediaType"],
+                $language    = $details["language"],
+                $customwhere = $details["customwhere"]
+            );
+        }
+    }
+
+    /*
+     * tags specific channels in the db
+     *
+     * label (string, used in file name of newly generated channels file, use it to distinguish between different channels files)
+     * source (string, satellite position, cable, terrestial, empty string means: show all. Example: "S28.2E", "S19.2E", "C", no lists allowed)
+     * caidMode (0=show all CAIDs including FTA, 1= show only channels FTA channels, 2 = show only encrypted channels)
+     * mediaType (0=show all media types, 1=show only TV channels, 2=show only radio channels, 3=show only other strange non-radio non-tv channels)
+     * language (string with comma separated list of languages that should be displayed, empty string means all languages)
+     */
+
+    public function updateLabelsOfChannelSelection(
+        $label,
+        $source = "",
+        $caidMode = 0,
+        $mediaType = 0,
+        $language = "",
+        $customwhere =""
+    ){
+        $where = array();
+
+        if ($source != "")
+            $where[] = "source = ". $this->dbh->quote( $source );
+
+        if ($caidMode != 0)
+            $where[] = "caid ". ($caidMode === 2 ? "!= '0'": "= '0'");
+
+        if ($mediaType != 0)
+            $where[] = "vpid ". ($mediaType === 1 ? "!= '0'": "= '0'");
+
+        if ($language != "")
+            $where[] = "apid LIKE '%=$language%'";
+
+        //update label tag in the selected channels
+        if (count($where) > 0)
+            $where = "WHERE " . implode( $where, " AND " ) . $customwhere;
+
+        $sqlquery="UPDATE channels SET label=". $this->dbh->quote($label) ." $where";
+        $result = $this->dbh->query($sqlquery);
+        print "Updating labels for channels belonging to $source / $label.\n";
     }
 }
 ?>
