@@ -27,7 +27,8 @@ class HTMLOutputRenderer{
     private
         $dbh,
         $exportpath,
-        $config;
+        $config,
+        $linklist = array();
 
     function __construct(){
         $db = dbConnection::getInstance();
@@ -42,6 +43,7 @@ class HTMLOutputRenderer{
         $this->writeChangelog("S19.2E");
         $this->writeChangelog("S28.2E");
         $this->writeChangelog("C[Germany_KabelBW]");
+        $this->renderIndexPage();
     }
 
     /*
@@ -65,10 +67,11 @@ class HTMLOutputRenderer{
         $result = $this->dbh->query($sqlquery);
         if ($result === false)
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
-        $header = preg_replace("/\[PAGE_TITLE\]/","Changelog",file_get_contents("templates/html_header.html"));
+        $pagetitle = 'Changelog for '.$source.' (Last 100 changes)';
+        $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
 
         $buffer = $header.'
-	    <h1>Changelog for '.$source.' (Last 100 changes)</h1><p>Last updated on: '. date("D M j G:i:s T Y").'</p>
+	    <h1>'.$pagetitle.'</h1><p>Last updated on: '. date("D M j G:i:s T Y").'</p>
         <table>';
         foreach ($result as $row) {
             $buffer.="<tr><td>".
@@ -79,17 +82,19 @@ class HTMLOutputRenderer{
 			"</td></tr>\n";
         }
         $buffer .= "<table></body></html>";
-        file_put_contents($this->exportpath . "changelog_".$source.".html", $buffer );
+        $filename = "changelog_".$source.".html";
+        $this->linklist[$pagetitle] = $filename;
+        file_put_contents($this->exportpath . $filename, $buffer );
     }
 
     //assembles all pre-written channel lists from hdd into one html page
     public function writeNiceHTMLPage($source, $language){
-        $title = 'Essential channels for '.$source.' (Language/Region: '.$language.')';
-        $header = preg_replace("/\[PAGE_TITLE\]/",$title,file_get_contents("templates/html_header.html"));
+        $pagetitle = 'Essential channels for '.$source.' (Language/Region: '.$language.')';
+        $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
         $nice_html_output =
             $header.
-        	'<h1>'.$title.'</h1>
-        	<p>Last updated on:'. date("D M j G:i:s T Y").'</p>
+        	'<h1>'.$pagetitle.'</h1>
+        	<p>Last updated on: '. date("D M j G:i:s T Y").'</p>
         ';
         $dirname = $this->config->getValue("path").$this->config->getValue("exportfolder")."/raw";
         $dir = new DirectoryIterator( $dirname );
@@ -108,7 +113,30 @@ class HTMLOutputRenderer{
         <html>
         ";
 
-        file_put_contents($this->exportpath . "channels_".$language."_".$source.".html", $nice_html_output );
+        $filename = "channels_".$language."_".$source.".html";
+        $this->linklist[$pagetitle] = $filename;
+        file_put_contents($this->exportpath . $filename, $nice_html_output );
+    }
+
+
+    private function renderIndexPage(){
+        $pagetitle = "Channelpedia - Overview";
+        $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
+        $nice_html_output =
+            $header.
+        	'<h1>'.$pagetitle.'</h1>
+        	<p>Last updated on: '. date("D M j G:i:s T Y").'</p><ul>
+        ';
+        foreach ($this->linklist as $title => $url){
+            $nice_html_output .= '<li><a href="'.$url.'">'.$title.'</a></li>';
+        }
+
+        $nice_html_output .= "</ul>
+        	</body>
+        <html>
+        ";
+        file_put_contents($this->exportpath . "index.html", $nice_html_output );
+
     }
 
 }
