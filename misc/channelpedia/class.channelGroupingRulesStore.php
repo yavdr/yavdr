@@ -36,7 +36,16 @@ class channelGroupingRulesStore{
 static public function getRules(){
     return array(
 
-    "de.FTA.SDTV.Public" => array(
+    "de.01.FTA.HDTV.Public" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => " AND " . HD_CHANNEL. " AND ".DE_PUBLIC_PROVIDER
+    ),
+
+    "de.02.FTA.SDTV.Public" => array(
 
         "caidMode" => 1,
         "mediaType" => 1,
@@ -50,7 +59,7 @@ static public function getRules(){
             ") "
     ),
 
-    "de.FTA.SDTV.Public_Regional" => array(
+    "de.03.FTA.SDTV.Public_Regional" => array(
 
         "caidMode" => 1,
         "mediaType" => 1,
@@ -62,16 +71,7 @@ static public function getRules(){
             " AND provider = 'ARD' AND NOT ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' ) "
     ),
 
-    "de.FTA.HDTV.Public" => array(
-
-        "caidMode" => 1,
-        "mediaType" => 1,
-        "language" => "deu",
-        "orderby" => "UPPER(name) ASC",
-        "customwhere" => " AND " . HD_CHANNEL. " AND ".DE_PUBLIC_PROVIDER
-    ),
-
-    "de.FTA.HDTV.Private" => array(
+    "de.04.FTA.HDTV.Private" => array(
 
         "caidMode" => 1,
         "mediaType" => 1,
@@ -80,7 +80,7 @@ static public function getRules(){
         "customwhere" => "AND ". HD_CHANNEL. " AND NOT (" . DE_PUBLIC_PROVIDER . " OR ".AUSTRIA." " . " OR ".SWITZERLAND.")"
     ),
 
-    "de.FTA.SDTV.Private" => array(
+    "de.05.FTA.SDTV.Private" => array(
 
         "caidMode" => 1,
         "mediaType" => 1,
@@ -89,7 +89,7 @@ static public function getRules(){
         "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . HD_CHANNEL . " OR ".AUSTRIA." OR ".SWITZERLAND.")"
     ),
 
-    "de.FTA.SDTV.Rest_Private" => array(
+    "de.06.FTA.SDTV.Rest_Private" => array(
 
         "caidMode" => 1,
         "mediaType" => 1,
@@ -99,7 +99,25 @@ static public function getRules(){
             FILTER_ASTRA1_FTA . " AND NOT (". HD_CHANNEL . " OR ".DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
     ),
 
-    "de.FTA.Radio.ARD_ZDF" => array(
+    "de.07.SKY.SDTV" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" =>"UPPER(name) ASC",
+        "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND NOT " . HD_CHANNEL
+    ),
+
+    "de.08.SKY.HDTV" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" =>"UPPER(name) ASC",
+        "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND " . HD_CHANNEL
+    ),
+
+    "de.09.FTA.Radio.ARD_ZDF" => array(
 
         "caidMode" => 1,
         "mediaType" => 2,
@@ -108,31 +126,13 @@ static public function getRules(){
         "customwhere" => " AND ".DE_PUBLIC_PROVIDER
     ),
 
-    "de.FTA.Radio.Private" => array(
+    "de.10.FTA.Radio.Private" => array(
 
         "caidMode" => 1,
         "mediaType" => 2,
         "language" => "deu",
         "orderby" =>"UPPER(name) ASC",
         "customwhere" => " AND NOT ".DE_PUBLIC_PROVIDER
-    ),
-
-    "de.SKY.SDTV" => array(
-
-        "caidMode" => 2,
-        "mediaType" => 1,
-        "language" => "deu",
-        "orderby" =>"UPPER(name) ASC",
-        "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND UPPER(name) NOT " . HD_CHANNEL
-    ),
-
-    "de.SKY.HDTV" => array(
-
-        "caidMode" => 2,
-        "mediaType" => 1,
-        "language" => "deu",
-        "orderby" =>"UPPER(name) ASC",
-        "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND " . HD_CHANNEL
     ),
 
     "at.FTA.SDTV.Private" => array(

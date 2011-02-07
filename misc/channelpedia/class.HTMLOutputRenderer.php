@@ -98,17 +98,27 @@ class HTMLOutputRenderer{
         ';
         $dirname = $this->config->getValue("path").$this->config->getValue("exportfolder")."/raw";
         $dir = new DirectoryIterator( $dirname );
+        $dirs = array();
         foreach ($dir as $fileinfo) {
             $prefix= "channels_".$source."_".$language;
             if ( $fileinfo->isFile() && substr($fileinfo->getFilename(),0, strlen($prefix)) == $prefix){// && !$fileinfo->isDot()){
                 //echo $fileinfo->getFilename() . "\n";
                 $infofile = $dirname."/". $fileinfo->getFilename();
                 if (file_exists( $infofile )){
-                    $nice_html_output .= "<h2>".$fileinfo->getFilename()."</h2>\n<pre>". file_get_contents( $infofile ) ."</pre>\n";
+                    $dirs[ $fileinfo->getFilename() ] = $infofile;
                 }
             }
         }
-        $nice_html_output .= "
+        ksort($dirs);
+        $nice_html_body = "";
+        $nice_html_linklist = "";
+        foreach ($dirs as $filename => $filepath) {
+            $nice_html_body .=
+                '<h2><a name ="'.htmlspecialchars($filename).'">'.htmlspecialchars($filename)."</a></h2>\n".
+                "<pre>". htmlspecialchars(file_get_contents( $filepath )) ."</pre>\n";
+            $nice_html_linklist .= '<li><a href="#'.htmlspecialchars($filename).'">'.htmlspecialchars($filename).'</a></li>';
+        }
+        $nice_html_output .= "<h2>Overview</h2><ul>" . $nice_html_linklist . "</ul>\n". $nice_html_body. "
         	</body>
         <html>
         ";

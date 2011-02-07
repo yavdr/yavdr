@@ -127,7 +127,7 @@ class channelImport{
                     $counter++;
                     $params = $this->getParamArray($buffer);
                     if ($params !== false)
-                        if (false === $this->insertChannelIntoDB ($params)){
+                        if (false === $this->insertChannelIntoDB ($params, $buffer)){
                             $this->existingChannelBuffer[] = $params;
                             //print $msg_prefix . "already exists.\n";
                         }
@@ -151,7 +151,7 @@ class channelImport{
      * that are used for insert
      */
 
-    private function insertChannelIntoDB ($params){
+    private function insertChannelIntoDB ($params, $rawstring){
         $success = true;
         $unique_channel_id = $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"];
         foreach ($params as $key => $value)
@@ -162,7 +162,7 @@ class channelImport{
         $sqltext .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp) VALUES ( ".
             $this->dbh->quote( $unique_channel_id ).", ".
             $params["name"].", ".
-            $this->dbh->quote( "Added new channel." ).", ".
+            $this->dbh->quote( "<b>New channel added:</b>" . $rawstring ).", ".
             time().
             " );";
         $query = $this->dbh->exec($sqltext);
@@ -221,8 +221,8 @@ class channelImport{
         );
     }
 
-    public function updateAllLabels(){
-        if ($this->numChanAdded + $this->numChanChanged > 0){
+    public function updateAllLabels( $forceUpdate = false){
+        if ($this->numChanAdded + $this->numChanChanged > 0 || $forceUpdate){
             //FIXME: avoid static sat sources !!!! avoid updating just one C and one T!!!
             $this->updateAllLabelsOfSource("S19.2E");
             if ($this->cableSourceType != "none")

@@ -52,7 +52,7 @@ function importFromAllChannelSources(){
             $x->importChannelsConfFile( $fileinfo->getFilename(), $cableProvider, "none" );
         }
     }
-    $x->updateAllLabels();
+    $x->updateAllLabels(true);
     unset($x);
 }
 ?>
