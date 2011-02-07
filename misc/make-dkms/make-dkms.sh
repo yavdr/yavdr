@@ -36,10 +36,15 @@ case $1 in
            exit 1
            ;;
 esac
+if [ "$REPO" = "s2-liplianin" ]; then 
+    VERSION=0~`/bin/date --utc +%0Y%0m%0d`.`hg identify -n repositories/$REPO | cut -d'+' -f1`
+else 
+    VERSION=0~`/bin/date --utc +%0Y%0m%0d`.git`cat repositories/$REPO/.git/refs/heads/master`
+fi
 
-VERSION=0~`/bin/date --utc +%0Y%0m%0d`.`hg identify -n repositories/$REPO | cut -d'+' -f1`
 
-PATCHES=( `find patches/$REPO/* -name *.patch` )
+
+PATCHES=( `find patches/$REPO/* -name *.patch | tac` )
 
 # generate dkms.conf
 cat <<EOF > dkms.conf.$REPO

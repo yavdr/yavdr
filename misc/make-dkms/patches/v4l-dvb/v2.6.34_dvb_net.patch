@@ -1,0 +1,40 @@
+diff -r 5254948f88c4 linux/drivers/media/dvb/dvb-core/dvb_net.c
+--- a/linux/drivers/media/dvb/dvb-core/dvb_net.c	Sun Oct 17 19:59:28 2010 -0200
++++ b/linux/drivers/media/dvb/dvb-core/dvb_net.c	Sun Oct 17 20:09:51 2010 -0200
+@@ -1119,14 +1119,14 @@
+ }
+ 
+ 
+-static int dvb_set_mc_filter(struct net_device *dev, unsigned char *addr)
++static int dvb_set_mc_filter (struct net_device *dev, struct dev_mc_list *mc)
+ {
+ 	struct dvb_net_priv *priv = netdev_priv(dev);
+ 
+ 	if (priv->multi_num == DVB_NET_MULTICAST_MAX)
+ 		return -ENOMEM;
+ 
+-	memcpy(priv->multi_macs[priv->multi_num], addr, ETH_ALEN);
++	memcpy(priv->multi_macs[priv->multi_num], mc->dmi_addr, 6);
+ 
+ 	priv->multi_num++;
+ 	return 0;
+@@ -1150,16 +1150,15 @@
+ 		dprintk("%s: allmulti mode\n", dev->name);
+ 		priv->rx_mode = RX_MODE_ALL_MULTI;
+ 	} else if (!netdev_mc_empty(dev)) {
+-		struct netdev_hw_addr *ha;
+-
++		struct dev_mc_list *mc;
+ 		dprintk("%s: set_mc_list, %d entries\n",
+ 			dev->name, netdev_mc_count(dev));
+ 
+ 		priv->rx_mode = RX_MODE_MULTI;
+ 		priv->multi_num = 0;
+ 
+-		netdev_for_each_mc_addr(ha, dev)
+-			dvb_set_mc_filter(dev, ha->addr);
++		netdev_for_each_mc_addr(mc, dev)
++			dvb_set_mc_filter(dev, mc);
+ 	}
+ 
+ 	netif_addr_unlock_bh(dev);

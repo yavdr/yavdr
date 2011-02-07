@@ -1,0 +1,540 @@
+diff -r c4cd3d2e5902 linux/drivers/media/rc/rc-core-priv.h
+--- a/linux/drivers/media/rc/rc-core-priv.h	Mon Nov 29 08:40:01 2010 -0200
++++ b/linux/drivers/media/rc/rc-core-priv.h	Mon Nov 29 08:42:43 2010 -0200
+@@ -35,7 +35,7 @@ struct ir_raw_event_ctrl {
+ 	struct list_head		list;		/* to keep track of raw clients */
+ 	struct task_struct		*thread;
+ 	spinlock_t			lock;
+-	struct kfifo			kfifo;		/* fifo for the pulse/space durations */
++	struct kfifo			*kfifo;		/* fifo for the pulse/space durations */
+ 	ktime_t				last_event;	/* when last event occurred */
+ 	enum raw_event_type		last_type;	/* last event type */
+ 	struct rc_dev			*dev;		/* pointer to the parent rc_dev */
+diff -r c4cd3d2e5902 linux/drivers/media/rc/ir-raw.c
+--- a/linux/drivers/media/rc/ir-raw.c	Mon Nov 29 08:40:01 2010 -0200
++++ b/linux/drivers/media/rc/ir-raw.c	Mon Nov 29 08:42:43 2010 -0200
+@@ -44,7 +44,7 @@ static int ir_raw_event_thread(void *dat
+ 	while (!kthread_should_stop()) {
+ 
+ 		spin_lock_irq(&raw->lock);
+-		retval = kfifo_out(&raw->kfifo, &ev, sizeof(ev));
++		retval = __kfifo_get(raw->kfifo, (void *)&ev, sizeof(ev));
+ 
+ 		if (!retval) {
+ 			set_current_state(TASK_INTERRUPTIBLE);
+@@ -90,7 +90,7 @@ int ir_raw_event_store(struct rc_dev *de
+ 	IR_dprintk(2, "sample: (%05dus %s)\n",
+ 		   TO_US(ev->duration), TO_STR(ev->pulse));
+ 
+-	if (kfifo_in(&dev->raw->kfifo, ev, sizeof(*ev)) != sizeof(*ev))
++	if (__kfifo_put(dev->raw->kfifo, (void *)ev, sizeof(*ev)) != sizeof(*ev))
+ 		return -ENOMEM;
+ 
+ 	return 0;
+@@ -259,11 +259,11 @@ int ir_raw_event_register(struct rc_dev 
+ 
+ 	dev->raw->dev = dev;
+ 	dev->raw->enabled_protocols = ~0;
+-	rc = kfifo_alloc(&dev->raw->kfifo,
+-			 sizeof(struct ir_raw_event) * MAX_IR_EVENT_SIZE,
+-			 GFP_KERNEL);
+-	if (rc < 0)
++	dev->raw->kfifo = kfifo_alloc(sizeof(s64) * MAX_IR_EVENT_SIZE, GFP_KERNEL, NULL);
++	if (IS_ERR(dev->raw->kfifo)) {
++		rc = PTR_ERR(dev->raw->kfifo);
+ 		goto out;
++	}
+ 
+ 	spin_lock_init(&dev->raw->lock);
+ 	dev->raw->thread = kthread_run(ir_raw_event_thread, dev->raw,
+@@ -305,7 +305,7 @@ void ir_raw_event_unregister(struct rc_d
+ 			handler->raw_unregister(dev);
+ 	mutex_unlock(&ir_raw_handler_lock);
+ 
+-	kfifo_free(&dev->raw->kfifo);
++	kfifo_free(dev->raw->kfifo);
+ 	kfree(dev->raw);
+ 	dev->raw = NULL;
+ }
+diff -r c4cd3d2e5902 linux/drivers/media/video/cx23885/cx23888-ir.c
+--- a/linux/drivers/media/video/cx23885/cx23888-ir.c	Mon Nov 29 08:40:01 2010 -0200
++++ b/linux/drivers/media/video/cx23885/cx23888-ir.c	Mon Nov 29 08:42:43 2010 -0200
+@@ -138,7 +138,7 @@ struct cx23888_ir_state {
+ 	atomic_t rxclk_divider;
+ 	atomic_t rx_invert;
+ 
+-	struct kfifo rx_kfifo;
++	struct kfifo *rx_kfifo;
+ 	spinlock_t rx_kfifo_lock;
+ 
+ 	struct v4l2_subdev_ir_parameters tx_params;
+@@ -540,7 +540,6 @@ static int cx23888_ir_irq_handler(struct
+ {
+ 	struct cx23888_ir_state *state = to_state(sd);
+ 	struct cx23885_dev *dev = state->dev;
+-	unsigned long flags;
+ 
+ 	u32 cntrl = cx23888_ir_read4(dev, CX23888_IR_CNTRL_REG);
+ 	u32 irqen = cx23888_ir_read4(dev, CX23888_IR_IRQEN_REG);
+@@ -613,10 +612,9 @@ static int cx23888_ir_irq_handler(struct
+ 			}
+ 			if (i == 0)
+ 				break;
+-			j = i * sizeof(union cx23888_ir_fifo_rec);
+-			k = kfifo_in_locked(&state->rx_kfifo,
+-				      (unsigned char *) rx_data, j,
+-				      &state->rx_kfifo_lock);
++			j = i * sizeof(u32);
++			k = kfifo_put(state->rx_kfifo,
++				      (unsigned char *) rx_data, j);
+ 			if (k != j)
+ 				kror++; /* rx_kfifo over run */
+ 		}
+@@ -653,10 +651,8 @@ static int cx23888_ir_irq_handler(struct
+ 		*handled = true;
+ 	}
+ 
+-	spin_lock_irqsave(&state->rx_kfifo_lock, flags);
+-	if (kfifo_len(&state->rx_kfifo) >= CX23888_IR_RX_KFIFO_SIZE / 2)
++	if (kfifo_len(state->rx_kfifo) >= CX23888_IR_RX_KFIFO_SIZE / 2)
+ 		events |= V4L2_SUBDEV_IR_RX_FIFO_SERVICE_REQ;
+-	spin_unlock_irqrestore(&state->rx_kfifo_lock, flags);
+ 
+ 	if (events)
+ 		v4l2_subdev_notify(sd, V4L2_SUBDEV_IR_RX_NOTIFY, &events);
+@@ -682,7 +678,7 @@ static int cx23888_ir_rx_read(struct v4l
+ 		return 0;
+ 	}
+ 
+-	n = kfifo_out_locked(&state->rx_kfifo, buf, n, &state->rx_kfifo_lock);
++	n = kfifo_get(state->rx_kfifo, buf, n);
+ 
+ 	n /= sizeof(union cx23888_ir_fifo_rec);
+ 	*num = n * sizeof(union cx23888_ir_fifo_rec);
+@@ -817,12 +813,7 @@ static int cx23888_ir_rx_s_parameters(st
+ 	o->interrupt_enable = p->interrupt_enable;
+ 	o->enable = p->enable;
+ 	if (p->enable) {
+-		unsigned long flags;
+-
+-		spin_lock_irqsave(&state->rx_kfifo_lock, flags);
+-		kfifo_reset(&state->rx_kfifo);
+-		/* reset tx_fifo too if there is one... */
+-		spin_unlock_irqrestore(&state->rx_kfifo_lock, flags);
++		kfifo_reset(state->rx_kfifo);
+ 		if (p->interrupt_enable)
+ 			irqenable_rx(dev, IRQEN_RSE | IRQEN_RTE | IRQEN_ROE);
+ 		control_rx_enable(dev, p->enable);
+@@ -1210,8 +1201,10 @@ int cx23888_ir_probe(struct cx23885_dev 
+ 		return -ENOMEM;
+ 
+ 	spin_lock_init(&state->rx_kfifo_lock);
+-	if (kfifo_alloc(&state->rx_kfifo, CX23888_IR_RX_KFIFO_SIZE, GFP_KERNEL))
+-		return -ENOMEM;
++	state->rx_kfifo = kfifo_alloc(CX23888_IR_RX_KFIFO_SIZE, GFP_KERNEL,
++				      &state->rx_kfifo_lock);
++	if (IS_ERR(state->rx_kfifo))
++		return IS_ERR(state->rx_kfifo);
+ 
+ 	state->dev = dev;
+ 	state->id = V4L2_IDENT_CX23888_IR;
+@@ -1243,7 +1236,7 @@ int cx23888_ir_probe(struct cx23885_dev 
+ 		       sizeof(struct v4l2_subdev_ir_parameters));
+ 		v4l2_subdev_call(sd, ir, tx_s_parameters, &default_params);
+ 	} else {
+-		kfifo_free(&state->rx_kfifo);
++		kfifo_free(state->rx_kfifo);
+ 	}
+ 	return ret;
+ }
+@@ -1262,7 +1255,7 @@ int cx23888_ir_remove(struct cx23885_dev
+ 
+ 	state = to_state(sd);
+ 	v4l2_device_unregister_subdev(sd);
+-	kfifo_free(&state->rx_kfifo);
++	kfifo_free(state->rx_kfifo);
+ 	kfree(state);
+ 	/* Nothing more to free() as state held the actual v4l2_subdev object */
+ 	return 0;
+diff -r c4cd3d2e5902 linux/drivers/media/video/cx25840/cx25840-ir.c
+--- a/linux/drivers/media/video/cx25840/cx25840-ir.c	Mon Nov 29 08:40:01 2010 -0200
++++ b/linux/drivers/media/video/cx25840/cx25840-ir.c	Mon Nov 29 08:42:43 2010 -0200
+@@ -116,7 +116,7 @@ struct cx25840_ir_state {
+ 	atomic_t rxclk_divider;
+ 	atomic_t rx_invert;
+ 
+-	struct kfifo rx_kfifo;
++	struct kfifo *rx_kfifo;
+ 	spinlock_t rx_kfifo_lock; /* protect Rx data kfifo */
+ 
+ 	struct v4l2_subdev_ir_parameters tx_params;
+@@ -525,7 +525,6 @@ int cx25840_ir_irq_handler(struct v4l2_s
+ 	struct cx25840_state *state = to_state(sd);
+ 	struct cx25840_ir_state *ir_state = to_ir_state(sd);
+ 	struct i2c_client *c = NULL;
+-	unsigned long flags;
+ 
+ 	union cx25840_ir_fifo_rec rx_data[FIFO_RX_DEPTH];
+ 	unsigned int i, j, k;
+@@ -611,9 +610,8 @@ int cx25840_ir_irq_handler(struct v4l2_s
+ 			if (i == 0)
+ 				break;
+ 			j = i * sizeof(union cx25840_ir_fifo_rec);
+-			k = kfifo_in_locked(&ir_state->rx_kfifo,
+-					    (unsigned char *) rx_data, j,
+-					    &ir_state->rx_kfifo_lock);
++			k = kfifo_put(ir_state->rx_kfifo,
++					    (unsigned char *) rx_data, j);
+ 			if (k != j)
+ 				kror++; /* rx_kfifo over run */
+ 		}
+@@ -649,10 +647,8 @@ int cx25840_ir_irq_handler(struct v4l2_s
+ 		cx25840_write4(c, CX25840_IR_CNTRL_REG, cntrl);
+ 		*handled = true;
+ 	}
+-	spin_lock_irqsave(&ir_state->rx_kfifo_lock, flags);
+-	if (kfifo_len(&ir_state->rx_kfifo) >= CX25840_IR_RX_KFIFO_SIZE / 2)
++	if (kfifo_len(ir_state->rx_kfifo) >= CX25840_IR_RX_KFIFO_SIZE / 2)
+ 		events |= V4L2_SUBDEV_IR_RX_FIFO_SERVICE_REQ;
+-	spin_unlock_irqrestore(&ir_state->rx_kfifo_lock, flags);
+ 
+ 	if (events)
+ 		v4l2_subdev_notify(sd, V4L2_SUBDEV_IR_RX_NOTIFY, &events);
+@@ -683,8 +679,7 @@ static int cx25840_ir_rx_read(struct v4l
+ 		return 0;
+ 	}
+ 
+-	n = kfifo_out_locked(&ir_state->rx_kfifo, buf, n,
+-			     &ir_state->rx_kfifo_lock);
++	n = kfifo_get(ir_state->rx_kfifo, buf, n);
+ 
+ 	n /= sizeof(union cx25840_ir_fifo_rec);
+ 	*num = n * sizeof(union cx25840_ir_fifo_rec);
+@@ -836,11 +831,7 @@ static int cx25840_ir_rx_s_parameters(st
+ 	o->interrupt_enable = p->interrupt_enable;
+ 	o->enable = p->enable;
+ 	if (p->enable) {
+-		unsigned long flags;
+-
+-		spin_lock_irqsave(&ir_state->rx_kfifo_lock, flags);
+-		kfifo_reset(&ir_state->rx_kfifo);
+-		spin_unlock_irqrestore(&ir_state->rx_kfifo_lock, flags);
++		kfifo_reset(ir_state->rx_kfifo);
+ 		if (p->interrupt_enable)
+ 			irqenable_rx(sd, IRQEN_RSE | IRQEN_RTE | IRQEN_ROE);
+ 		control_rx_enable(c, p->enable);
+@@ -1234,8 +1225,9 @@ int cx25840_ir_probe(struct v4l2_subdev 
+ 		return -ENOMEM;
+ 
+ 	spin_lock_init(&ir_state->rx_kfifo_lock);
+-	if (kfifo_alloc(&ir_state->rx_kfifo,
+-			CX25840_IR_RX_KFIFO_SIZE, GFP_KERNEL)) {
++	ir_state->rx_kfifo = kfifo_alloc(CX25840_IR_RX_KFIFO_SIZE, GFP_KERNEL,
++				      &ir_state->rx_kfifo_lock);
++	if (IS_ERR(ir_state->rx_kfifo)) {
+ 		kfree(ir_state);
+ 		return -ENOMEM;
+ 	}
+@@ -1273,7 +1265,7 @@ int cx25840_ir_remove(struct v4l2_subdev
+ 	cx25840_ir_rx_shutdown(sd);
+ 	cx25840_ir_tx_shutdown(sd);
+ 
+-	kfifo_free(&ir_state->rx_kfifo);
++	kfifo_free(ir_state->rx_kfifo);
+ 	kfree(ir_state);
+ 	state->ir_state = NULL;
+ 	return 0;
+diff -r c4cd3d2e5902 linux/drivers/media/video/meye.c
+--- a/linux/drivers/media/video/meye.c	Mon Nov 29 08:40:01 2010 -0200
++++ b/linux/drivers/media/video/meye.c	Mon Nov 29 08:42:43 2010 -0200
+@@ -802,8 +802,8 @@ again:
+ 		return IRQ_HANDLED;
+ 
+ 	if (meye.mchip_mode == MCHIP_HIC_MODE_CONT_OUT) {
+-		if (kfifo_out_locked(&meye.grabq, (unsigned char *)&reqnr,
+-			      sizeof(int), &meye.grabq_lock) != sizeof(int)) {
++		if (kfifo_get(meye.grabq, (unsigned char *)&reqnr,
++			      sizeof(int)) != sizeof(int)) {
+ 			mchip_free_frame();
+ 			return IRQ_HANDLED;
+ 		}
+@@ -813,8 +813,7 @@ again:
+ 		meye.grab_buffer[reqnr].state = MEYE_BUF_DONE;
+ 		do_gettimeofday(&meye.grab_buffer[reqnr].timestamp);
+ 		meye.grab_buffer[reqnr].sequence = sequence++;
+-		kfifo_in_locked(&meye.doneq, (unsigned char *)&reqnr,
+-				sizeof(int), &meye.doneq_lock);
++		kfifo_put(meye.doneq, (unsigned char *)&reqnr, sizeof(int));
+ 		wake_up_interruptible(&meye.proc_list);
+ 	} else {
+ 		int size;
+@@ -823,8 +822,8 @@ again:
+ 			mchip_free_frame();
+ 			goto again;
+ 		}
+-		if (kfifo_out_locked(&meye.grabq, (unsigned char *)&reqnr,
+-			      sizeof(int), &meye.grabq_lock) != sizeof(int)) {
++		if (kfifo_get(meye.grabq, (unsigned char *)&reqnr,
++			      sizeof(int)) != sizeof(int)) {
+ 			mchip_free_frame();
+ 			goto again;
+ 		}
+@@ -834,8 +833,7 @@ again:
+ 		meye.grab_buffer[reqnr].state = MEYE_BUF_DONE;
+ 		do_gettimeofday(&meye.grab_buffer[reqnr].timestamp);
+ 		meye.grab_buffer[reqnr].sequence = sequence++;
+-		kfifo_in_locked(&meye.doneq, (unsigned char *)&reqnr,
+-				sizeof(int), &meye.doneq_lock);
++		kfifo_put(meye.doneq, (unsigned char *)&reqnr, sizeof(int));
+ 		wake_up_interruptible(&meye.proc_list);
+ 	}
+ 	mchip_free_frame();
+@@ -863,8 +861,8 @@ static int meye_open(struct file *file)
+ 
+ 	for (i = 0; i < MEYE_MAX_BUFNBRS; i++)
+ 		meye.grab_buffer[i].state = MEYE_BUF_UNUSED;
+-	kfifo_reset(&meye.grabq);
+-	kfifo_reset(&meye.doneq);
++	kfifo_reset(meye.grabq);
++	kfifo_reset(meye.doneq);
+ 	return 0;
+ }
+ 
+@@ -937,8 +935,7 @@ static int meyeioc_qbuf_capt(int *nb)
+ 		mchip_cont_compression_start();
+ 
+ 	meye.grab_buffer[*nb].state = MEYE_BUF_USING;
+-	kfifo_in_locked(&meye.grabq, (unsigned char *)nb, sizeof(int),
+-			 &meye.grabq_lock);
++	kfifo_put(meye.grabq, (unsigned char *)nb, sizeof(int));
+ 	mutex_unlock(&meye.lock);
+ 
+ 	return 0;
+@@ -970,9 +967,7 @@ static int meyeioc_sync(struct file *fil
+ 		/* fall through */
+ 	case MEYE_BUF_DONE:
+ 		meye.grab_buffer[*i].state = MEYE_BUF_UNUSED;
+-		if (kfifo_out_locked(&meye.doneq, (unsigned char *)&unused,
+-				sizeof(int), &meye.doneq_lock) != sizeof(int))
+-					break;
++		kfifo_get(meye.doneq, (unsigned char *)&unused, sizeof(int));
+ 	}
+ 	*i = meye.grab_buffer[*i].size;
+ 	mutex_unlock(&meye.lock);
+@@ -1459,8 +1454,7 @@ static int vidioc_qbuf(struct file *file
+ 	buf->flags |= V4L2_BUF_FLAG_QUEUED;
+ 	buf->flags &= ~V4L2_BUF_FLAG_DONE;
+ 	meye.grab_buffer[buf->index].state = MEYE_BUF_USING;
+-	kfifo_in_locked(&meye.grabq, (unsigned char *)&buf->index,
+-			sizeof(int), &meye.grabq_lock);
++	kfifo_put(meye.grabq, (unsigned char *)&buf->index, sizeof(int));
+ 	mutex_unlock(&meye.lock);
+ 
+ 	return 0;
+@@ -1475,19 +1469,19 @@ static int vidioc_dqbuf(struct file *fil
+ 
+ 	mutex_lock(&meye.lock);
+ 
+-	if (kfifo_len(&meye.doneq) == 0 && file->f_flags & O_NONBLOCK) {
++	if (kfifo_len(meye.doneq) == 0 && file->f_flags & O_NONBLOCK) {
+ 		mutex_unlock(&meye.lock);
+ 		return -EAGAIN;
+ 	}
+ 
+ 	if (wait_event_interruptible(meye.proc_list,
+-				     kfifo_len(&meye.doneq) != 0) < 0) {
++				     kfifo_len(meye.doneq) != 0) < 0) {
+ 		mutex_unlock(&meye.lock);
+ 		return -EINTR;
+ 	}
+ 
+-	if (!kfifo_out_locked(&meye.doneq, (unsigned char *)&reqnr,
+-		       sizeof(int), &meye.doneq_lock)) {
++	if (!kfifo_get(meye.doneq, (unsigned char *)&reqnr,
++		       sizeof(int))) {
+ 		mutex_unlock(&meye.lock);
+ 		return -EBUSY;
+ 	}
+@@ -1537,8 +1531,8 @@ static int vidioc_streamoff(struct file 
+ {
+ 	mutex_lock(&meye.lock);
+ 	mchip_hic_stop();
+-	kfifo_reset(&meye.grabq);
+-	kfifo_reset(&meye.doneq);
++	kfifo_reset(meye.grabq);
++	kfifo_reset(meye.doneq);
+ 
+ 	for (i = 0; i < MEYE_MAX_BUFNBRS; i++)
+ 		meye.grab_buffer[i].state = MEYE_BUF_UNUSED;
+@@ -1580,7 +1574,7 @@ static unsigned int meye_poll(struct fil
+ 
+ 	mutex_lock(&meye.lock);
+ 	poll_wait(file, &meye.proc_list, wait);
+-	if (kfifo_len(&meye.doneq))
++	if (kfifo_len(meye.doneq))
+ 		res = POLLIN | POLLRDNORM;
+ 	mutex_unlock(&meye.lock);
+ 	return res;
+@@ -1759,14 +1753,16 @@ static int __devinit meye_probe(struct p
+ 	}
+ 
+ 	spin_lock_init(&meye.grabq_lock);
+-	if (kfifo_alloc(&meye.grabq, sizeof(int) * MEYE_MAX_BUFNBRS,
+-				GFP_KERNEL)) {
++	meye.grabq = kfifo_alloc(sizeof(int) * MEYE_MAX_BUFNBRS, GFP_KERNEL,
++				 &meye.grabq_lock);
++	if (IS_ERR(meye.grabq)) {
+ 		v4l2_err(v4l2_dev, "fifo allocation failed\n");
+ 		goto outkfifoalloc1;
+ 	}
+ 	spin_lock_init(&meye.doneq_lock);
+-	if (kfifo_alloc(&meye.doneq, sizeof(int) * MEYE_MAX_BUFNBRS,
+-				GFP_KERNEL)) {
++	meye.doneq = kfifo_alloc(sizeof(int) * MEYE_MAX_BUFNBRS, GFP_KERNEL,
++				 &meye.doneq_lock);
++	if (IS_ERR(meye.doneq)) {
+ 		v4l2_err(v4l2_dev, "fifo allocation failed\n");
+ 		goto outkfifoalloc2;
+ 	}
+@@ -1877,9 +1873,9 @@ outregions:
+ outenabledev:
+ 	sony_pic_camera_command(SONY_PIC_COMMAND_SETCAMERA, 0);
+ outsonypienable:
+-	kfifo_free(&meye.doneq);
++	kfifo_free(meye.doneq);
+ outkfifoalloc2:
+-	kfifo_free(&meye.grabq);
++	kfifo_free(meye.grabq);
+ outkfifoalloc1:
+ 	vfree(meye.grab_temp);
+ outvmalloc:
+@@ -1910,8 +1906,8 @@ static void __devexit meye_remove(struct
+ 
+ 	sony_pic_camera_command(SONY_PIC_COMMAND_SETCAMERA, 0);
+ 
+-	kfifo_free(&meye.doneq);
+-	kfifo_free(&meye.grabq);
++	kfifo_free(meye.doneq);
++	kfifo_free(meye.grabq);
+ 
+ 	vfree(meye.grab_temp);
+ 
+diff -r c4cd3d2e5902 linux/drivers/media/video/meye.h
+--- a/linux/drivers/media/video/meye.h	Mon Nov 29 08:40:01 2010 -0200
++++ b/linux/drivers/media/video/meye.h	Mon Nov 29 08:42:43 2010 -0200
+@@ -304,9 +304,9 @@ struct meye {
+ 	struct meye_grab_buffer grab_buffer[MEYE_MAX_BUFNBRS];
+ 	int vma_use_count[MEYE_MAX_BUFNBRS]; /* mmap count */
+ 	struct mutex lock;		/* mutex for open/mmap... */
+-	struct kfifo grabq;		/* queue for buffers to be grabbed */
++	struct kfifo *grabq;		/* queue for buffers to be grabbed */
+ 	spinlock_t grabq_lock;		/* lock protecting the queue */
+-	struct kfifo doneq;		/* queue for grabbed buffers */
++	struct kfifo *doneq;		/* queue for grabbed buffers */
+ 	spinlock_t doneq_lock;		/* lock protecting the queue */
+ 	wait_queue_head_t proc_list;	/* wait queue */
+ 	struct video_device *vdev;	/* video device parameters */
+diff -r c4cd3d2e5902 linux/include/media/lirc_dev.h
+--- a/linux/include/media/lirc_dev.h	Mon Nov 29 08:40:01 2010 -0200
++++ b/linux/include/media/lirc_dev.h	Mon Nov 29 08:42:43 2010 -0200
+@@ -28,19 +28,15 @@ struct lirc_buffer {
+ 	unsigned int size; /* in chunks */
+ 	/* Using chunks instead of bytes pretends to simplify boundary checking
+ 	 * And should allow for some performance fine tunning later */
+-	struct kfifo fifo;
++	struct kfifo *fifo;
+ 	u8 fifo_initialized;
+ };
+ 
+ static inline void lirc_buffer_clear(struct lirc_buffer *buf)
+ {
+-	unsigned long flags;
+-
+-	if (buf->fifo_initialized) {
+-		spin_lock_irqsave(&buf->fifo_lock, flags);
+-		kfifo_reset(&buf->fifo);
+-		spin_unlock_irqrestore(&buf->fifo_lock, flags);
+-	} else
++	if (buf->fifo)
++		kfifo_reset(buf->fifo);
++	else
+ 		WARN(1, "calling %s on an uninitialized lirc_buffer\n",
+ 		     __func__);
+ }
+@@ -49,25 +45,23 @@ static inline int lirc_buffer_init(struc
+ 				    unsigned int chunk_size,
+ 				    unsigned int size)
+ {
+-	int ret;
+-
+ 	init_waitqueue_head(&buf->wait_poll);
+ 	spin_lock_init(&buf->fifo_lock);
+ 	buf->chunk_size = chunk_size;
+ 	buf->size = size;
+-	ret = kfifo_alloc(&buf->fifo, size * chunk_size, GFP_KERNEL);
+-	if (ret == 0)
+-		buf->fifo_initialized = 1;
++	buf->fifo = kfifo_alloc(size * chunk_size, GFP_KERNEL,
++				&buf->fifo_lock);
++	if (IS_ERR(buf->fifo))
++		return IS_ERR(buf->fifo);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static inline void lirc_buffer_free(struct lirc_buffer *buf)
+ {
+-	if (buf->fifo_initialized) {
+-		kfifo_free(&buf->fifo);
+-		buf->fifo_initialized = 0;
+-	} else
++	if (buf->fifo)
++		kfifo_free(buf->fifo);
++	else
+ 		WARN(1, "calling %s on an uninitialized lirc_buffer\n",
+ 		     __func__);
+ }
+@@ -75,11 +69,8 @@ static inline void lirc_buffer_free(stru
+ static inline int lirc_buffer_len(struct lirc_buffer *buf)
+ {
+ 	int len;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&buf->fifo_lock, flags);
+-	len = kfifo_len(&buf->fifo);
+-	spin_unlock_irqrestore(&buf->fifo_lock, flags);
++	len = kfifo_len(buf->fifo);
+ 
+ 	return len;
+ }
+@@ -102,24 +93,19 @@ static inline int lirc_buffer_available(
+ static inline unsigned int lirc_buffer_read(struct lirc_buffer *buf,
+ 					    unsigned char *dest)
+ {
+-	unsigned int ret = 0;
++	if (lirc_buffer_len(buf) >= buf->chunk_size)
++		kfifo_get(buf->fifo, dest, buf->chunk_size);
+ 
+-	if (lirc_buffer_len(buf) >= buf->chunk_size)
+-		ret = kfifo_out_locked(&buf->fifo, dest, buf->chunk_size,
+-				       &buf->fifo_lock);
+-	return ret;
++	return 0;
+ 
+ }
+ 
+ static inline unsigned int lirc_buffer_write(struct lirc_buffer *buf,
+ 					     unsigned char *orig)
+ {
+-	unsigned int ret;
++	kfifo_put(buf->fifo, orig, buf->chunk_size);
+ 
+-	ret = kfifo_in_locked(&buf->fifo, orig, buf->chunk_size,
+-			      &buf->fifo_lock);
+-
+-	return ret;
++	return 0;
+ }
+ 
+ struct lirc_driver {

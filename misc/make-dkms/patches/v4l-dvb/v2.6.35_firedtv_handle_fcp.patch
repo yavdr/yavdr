@@ -1,0 +1,16 @@
+diff -r 22cb011c456d linux/drivers/media/dvb/firewire/firedtv-fw.c
+--- a/linux/drivers/media/dvb/firewire/firedtv-fw.c	Tue Oct 26 14:18:02 2010 -0200
++++ b/linux/drivers/media/dvb/firewire/firedtv-fw.c	Wed Oct 27 21:35:30 2010 -0200
+@@ -193,9 +193,9 @@
+ };
+ 
+ static void handle_fcp(struct fw_card *card, struct fw_request *request,
+-		       int tcode, int destination, int source, int generation,
+-		       unsigned long long offset, void *payload, size_t length,
+-		       void *callback_data)
++                       int tcode, int destination, int source, int generation,
++                       int speed, unsigned long long offset,
++                       void *payload, size_t length, void *callback_data)
+ {
+ 	struct firedtv *f, *fdtv = NULL;
+ 	struct fw_device *device;

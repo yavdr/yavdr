@@ -1,0 +1,22 @@
+diff -r a0ea01e58ec5 linux/drivers/media/rc/imon.c
+--- a/linux/drivers/media/rc/imon.c	Wed Oct 27 20:58:38 2010 -0200
++++ b/linux/drivers/media/rc/imon.c	Wed Oct 27 21:07:04 2010 -0200
+@@ -26,6 +26,7 @@
+  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  */
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ":%s: " fmt, __func__
+ 
+ #include <linux/errno.h>
+diff -r a0ea01e58ec5 linux/drivers/media/dvb/frontends/tua6100.c
+--- a/linux/drivers/media/dvb/frontends/tua6100.c	Wed Oct 27 20:58:38 2010 -0200
++++ b/linux/drivers/media/dvb/frontends/tua6100.c	Wed Oct 27 21:07:04 2010 -0200
+@@ -80,6 +80,7 @@
+ 	struct i2c_msg msg1 = { .addr = priv->i2c_address, .flags = 0, .buf = reg1, .len = 4 };
+ 	struct i2c_msg msg2 = { .addr = priv->i2c_address, .flags = 0, .buf = reg2, .len = 3 };
+ 
++#undef _P
+ #define _R 4
+ #define _P 32
+ #define _ri 4000000

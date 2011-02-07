@@ -1,0 +1,112 @@
+diff --git a/linux/drivers/media/video/bt8xx/bttv-input.c b/linux/drivers/media/video/bt8xx/bttv-input.c
+--- a/linux/drivers/media/video/bt8xx/bttv-input.c
++++ b/linux/drivers/media/video/bt8xx/bttv-input.c
+@@ -401,7 +401,7 @@ void __devinit init_bttv_i2c_ir(struct b
+ 		 * That's why we probe 0x1a (~0x34) first. CB
+ 		 */
+ 
+-		i2c_new_probed_device(&btv->c.i2c_adap, &info, addr_list, NULL);
++		i2c_new_probed_device(&btv->c.i2c_adap, &info, addr_list);
+ 		return;
+ 	}
+ 
+diff --git a/linux/drivers/media/video/cx18/cx18-i2c.c b/linux/drivers/media/video/cx18/cx18-i2c.c
+--- a/linux/drivers/media/video/cx18/cx18-i2c.c
++++ b/linux/drivers/media/video/cx18/cx18-i2c.c
+@@ -104,7 +104,7 @@ static int cx18_i2c_new_ir(struct cx18 *
+ 		break;
+ 	}
+ 
+-	return i2c_new_probed_device(adap, &info, addr_list, NULL) == NULL ?
++	return i2c_new_probed_device(adap, &info, addr_list) == NULL ?
+ 	       -1 : 0;
+ }
+ 
+diff --git a/linux/drivers/media/video/cx23885/cx23885-i2c.c b/linux/drivers/media/video/cx23885/cx23885-i2c.c
+--- a/linux/drivers/media/video/cx23885/cx23885-i2c.c
++++ b/linux/drivers/media/video/cx23885/cx23885-i2c.c
+@@ -354,7 +354,8 @@ int cx23885_i2c_register(struct cx23885_
+ 	} else
+ 		printk(KERN_WARNING "%s: i2c bus %d register FAILED\n",
+ 			dev->name, bus->nr);
+-
++#if 0
++	/* This probe function won't work on older devices */
+ 	/* Instantiate the IR receiver device, if present */
+ 	if (0 == bus->i2c_rc) {
+ 		struct i2c_board_info info;
+@@ -369,7 +370,7 @@ int cx23885_i2c_register(struct cx23885_
+ 		i2c_new_probed_device(&bus->i2c_adap, &info, addr_list,
+ 				      i2c_probe_func_quick_read);
+ 	}
+-
++#endif
+ 	return bus->i2c_rc;
+ }
+ 
+diff --git a/linux/drivers/media/video/em28xx/em28xx-cards.c b/linux/drivers/media/video/em28xx/em28xx-cards.c
+--- a/linux/drivers/media/video/em28xx/em28xx-cards.c
++++ b/linux/drivers/media/video/em28xx/em28xx-cards.c
+@@ -2446,7 +2446,7 @@ void em28xx_register_i2c_ir(struct em28x
+ 
+ 	if (dev->init_data.name)
+ 		info.platform_data = &dev->init_data;
+-	i2c_new_probed_device(&dev->i2c_adap, &info, addr_list, NULL);
++	i2c_new_probed_device(&dev->i2c_adap, &info, addr_list);
+ }
+ 
+ void em28xx_card_setup(struct em28xx *dev)
+diff --git a/linux/drivers/media/video/ivtv/ivtv-i2c.c b/linux/drivers/media/video/ivtv/ivtv-i2c.c
+--- a/linux/drivers/media/video/ivtv/ivtv-i2c.c
++++ b/linux/drivers/media/video/ivtv/ivtv-i2c.c
+@@ -186,7 +186,7 @@ static int ivtv_i2c_new_ir(struct ivtv *
+ 			return -1;
+ 		memset(&info, 0, sizeof(struct i2c_board_info));
+ 		strlcpy(info.type, type, I2C_NAME_SIZE);
+-		return i2c_new_probed_device(adap, &info, addr_list, NULL)
++		return i2c_new_probed_device(adap, &info, addr_list)
+ 							   == NULL ? -1 : 0;
+ 	}
+ 
+@@ -231,7 +231,7 @@ static int ivtv_i2c_new_ir(struct ivtv *
+ 	info.platform_data = init_data;
+ 	strlcpy(info.type, type, I2C_NAME_SIZE);
+ 
+-	return i2c_new_probed_device(adap, &info, addr_list, NULL) == NULL ?
++	return i2c_new_probed_device(adap, &info, addr_list) == NULL ?
+ 	       -1 : 0;
+ }
+ 
+@@ -258,7 +258,7 @@ struct i2c_client *ivtv_i2c_new_ir_legac
+ 
+ 	memset(&info, 0, sizeof(struct i2c_board_info));
+ 	strlcpy(info.type, "ir_video", I2C_NAME_SIZE);
+-	return i2c_new_probed_device(&itv->i2c_adap, &info, addr_list, NULL);
++	return i2c_new_probed_device(&itv->i2c_adap, &info, addr_list);
+ }
+ 
+ int ivtv_i2c_register(struct ivtv *itv, unsigned idx)
+diff --git a/linux/drivers/media/video/v4l2-common.c b/linux/drivers/media/video/v4l2-common.c
+--- a/linux/drivers/media/video/v4l2-common.c
++++ b/linux/drivers/media/video/v4l2-common.c
+@@ -380,8 +380,7 @@ struct v4l2_subdev *v4l2_i2c_new_subdev_
+ 
+ 	/* Create the i2c client */
+ 	if (info->addr == 0 && probe_addrs)
+-		client = i2c_new_probed_device(adapter, info, probe_addrs,
+-					       NULL);
++		client = i2c_new_probed_device(adapter, info, probe_addrs);
+ 	else
+ 		client = i2c_new_device(adapter, info);
+ 
+--- a/linux/drivers/media/video/hdpvr/hdpvr-i2c.c	2011-02-07 21:30:19.592701508 +0100
++++ b/linux/drivers/media/video/hdpvr/hdpvr-i2c.c	2011-02-07 21:30:42.463212136 +0100
+@@ -59,7 +59,7 @@ static int hdpvr_new_i2c_ir(struct hdpvr
+ 		break;
+ 	}
+ 
+-	return i2c_new_probed_device(adap, &info, addr_list, NULL) == NULL ?
++	return i2c_new_probed_device(adap, &info, addr_list) == NULL ?
+ 	       -1 : 0;
+ }
+ 

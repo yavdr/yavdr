@@ -1,0 +1,12 @@
+diff --git a/linux/drivers/media/video/videobuf2-memops.c b/linux/drivers/media/video/videobuf2-memops.c
+index 053c157..c47f56e 100644
+--- a/linux/drivers/media/video/videobuf2-memops.c
++++ b/linux/drivers/media/video/videobuf2-memops.c
+@@ -52,7 +52,6 @@ struct vm_area_struct *vb2_get_vma(struct vm_area_struct *vma)
+ 
+ 	vma_copy->vm_mm = NULL;
+ 	vma_copy->vm_next = NULL;
+-	vma_copy->vm_prev = NULL;
+ 
+ 	return vma_copy;
+ }
