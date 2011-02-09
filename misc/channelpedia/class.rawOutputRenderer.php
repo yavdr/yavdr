@@ -37,11 +37,18 @@ class rawOutputRenderer {
         $y->writeFile();
         $y = new channelListWriter("_complete", "C[".CABLE_PROVIDER."]");
         $y->writeFile();
+        $y = new channelListWriter("_complete", "C[Germany_wilhelmTel]");
+        $y->writeFile();
+        $y = new channelListWriter("_complete", "C[Germany_kabelDeutschland]");
+        $y->writeFile();
+
         unset($y);
 
         //selections
         $this->writeAllChannelSelections2Disk("S19.2E");
         $this->writeAllChannelSelections2Disk("C[".CABLE_PROVIDER."]");
+        $this->writeAllChannelSelections2Disk("C[Germany_wilhelmTel]");
+        $this->writeAllChannelSelections2Disk("C[Germany_kabelDeutschland]");
     }
 
     private function writeAllChannelSelections2Disk( $source){

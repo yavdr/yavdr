@@ -136,7 +136,7 @@ class channelImport{
                             //print $msg_prefix . "added successfully.\n";
                         }
                     else{
-                        print($msg_prefix . "illegal channel: $buffer.\n");
+                        print $msg_prefix . "illegal channel: $buffer.\n";
                     }
                 }
             }

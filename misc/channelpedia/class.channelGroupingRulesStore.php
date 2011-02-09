@@ -89,6 +89,28 @@ static public function getRules(){
         "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . HD_CHANNEL . " OR ".AUSTRIA." OR ".SWITZERLAND.")"
     ),
 
+    //kabelDeutschland
+    "de.05.DigitalFree.SDTV.Private" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => "AND provider = 'Digital Free' AND NOT " . HD_CHANNEL
+    ),
+
+
+    //kabelDeutschland
+    "de.06.KDHome.SDTV.Private" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => "AND provider = 'KD Home' AND NOT " . HD_CHANNEL
+    ),
+
+
     "de.06.FTA.SDTV.Rest_Private" => array(
 
         "caidMode" => 1,

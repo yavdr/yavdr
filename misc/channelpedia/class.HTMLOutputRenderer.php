@@ -39,10 +39,15 @@ class HTMLOutputRenderer{
         $this->writeNiceHTMLPage("S19.2E", "de");
         $this->writeNiceHTMLPage("S19.2E", "at");
         $this->writeNiceHTMLPage("S19.2E", "ch");
+        $this->writeNiceHTMLPage("C[Germany_kabelDeutschland]", "de");
         $this->writeNiceHTMLPage("C[Germany_KabelBW]", "de");
+        $this->writeNiceHTMLPage("C[Germany_wilhelmTel]", "de");
+        
         $this->writeChangelog("S19.2E");
         $this->writeChangelog("S28.2E");
         $this->writeChangelog("C[Germany_KabelBW]");
+        $this->writeChangelog("C[Germany_wilhelmTel]");
+        $this->writeChangelog("C[Germany_kabelDeutschland]");
         $this->renderIndexPage();
     }
 

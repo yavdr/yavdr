@@ -50,9 +50,9 @@ function importFromAllChannelSources(){
             }
             //print $info ."/". $infofile ."/".  $cableProvider."\n";
             $x->importChannelsConfFile( $fileinfo->getFilename(), $cableProvider, "none" );
+            $x->updateAllLabels(true);
         }
     }
-    $x->updateAllLabels(true);
     unset($x);
 }
 ?>
