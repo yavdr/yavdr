@@ -68,7 +68,7 @@ class HTMLOutputRenderer{
 
         $sqlquery=
             "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, importance, update_description ".
-            "FROM channel_update_log WHERE combined_id LIKE '".$source."%' ORDER BY timestamp DESC LIMIT 100";
+            "FROM channel_update_log WHERE combined_id LIKE ".$this->dbh->quote($source."%")." ORDER BY timestamp DESC LIMIT 100";
         $result = $this->dbh->query($sqlquery);
         if ($result === false)
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
@@ -79,12 +79,16 @@ class HTMLOutputRenderer{
 	    <h1>'.$pagetitle.'</h1><p>Last updated on: '. date("D M j G:i:s T Y").'</p>
         <table>';
         foreach ($result as $row) {
+            $delimiter = strpos( $row["update_description"], ":");
+            $desc = "<b>" .
+                htmlspecialchars( substr( $row["update_description"],0, $delimiter)) . "</b>" .
+                htmlspecialchars( substr( $row["update_description"], $delimiter));
             $class = "changelog_row_style_".$row["importance"];
             $buffer.='<tr class="'.$class.'"><td>'.
-            $row["datestamp"]. "</td><td>".
-            $row["name"]. "</td><td>".
-            $row["combined_id"]. "</td><td>".
-            $row["update_description"] .
+            htmlspecialchars( $row["datestamp"] ). "</td><td>".
+            htmlspecialchars( $row["name"] ). "</td><td>".
+            htmlspecialchars( $row["combined_id"] ). "</td><td>".
+            $desc.
             "</td></tr>\n";
         }
         $buffer .= "<table></body></html>";
@@ -99,7 +103,7 @@ class HTMLOutputRenderer{
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
         $nice_html_output =
             $header.
-            '<h1>'.$pagetitle.'</h1>
+            '<h1>'.htmlspecialchars( $pagetitle).'</h1>
             <p>Last updated on: '. date("D M j G:i:s T Y").'</p>
         ';
         $dirname = $this->config->getValue("path").$this->config->getValue("exportfolder")."/raw";
@@ -140,11 +144,11 @@ class HTMLOutputRenderer{
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
         $nice_html_output =
             $header.
-        	'<h1>'.$pagetitle.'</h1>
+        	'<h1>'.htmlspecialchars( $pagetitle ).'</h1>
         	<p>Last updated on: '. date("D M j G:i:s T Y").'</p><ul>
         ';
         foreach ($this->linklist as $title => $url){
-            $nice_html_output .= '<li><a href="'.$url.'">'.$title.'</a></li>';
+            $nice_html_output .= '<li><a href="'.urlencode( $url ).'">'.htmlspecialchars( $title ).'</a></li>';
         }
 
         $nice_html_output .= "</ul>

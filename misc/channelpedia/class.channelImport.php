@@ -75,9 +75,9 @@ class channelImport{
                 $importance = 0;
                 foreach ($params as $key => $value){
                     if ($value != $row[$key]  && substr($key,0,2) !== "x_" ){
-                        if ($key != "apid" && $key != "vpid")
+                        if ($key != "apid" && $key != "vpid" && $key != "caid")
                             $importance = 1;
-                        $changes[] = "<b>$key</b>: '".$row[$key]. "' to '". $value."'</br>";
+                        $changes[] = "$key: '".$row[$key]. "' to '". $value."'</br>";
                         $update_data[] = "$key = ".$this->dbh->quote( $value);
                     }
                 }
@@ -178,7 +178,7 @@ class channelImport{
         $sqltext .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp, importance) VALUES ( ".
             $this->dbh->quote( $unique_channel_id ).", ".
             $params["name"].", ".
-            $this->dbh->quote( "<b>New channel added:</b> " . $rawstring ).", ".
+            $this->dbh->quote( "New channel added: " . $rawstring ).", ".
             time().", 1".
             " );";
         $query = $this->dbh->exec($sqltext);
