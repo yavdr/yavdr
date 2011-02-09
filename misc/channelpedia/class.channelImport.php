@@ -30,6 +30,7 @@ class channelImport{
         $existingChannelBuffer,
         $dbh,
         $config,
+        $numChanChecked = 0,
         $numChanAdded = 0,
         $numChanChanged = 0;
 
@@ -40,13 +41,16 @@ class channelImport{
     }
 
     public function importChannelsConfFile($username, $cableSourceType, $terrSourceType){
+        $this->numChanChecked = 0;
+        $this->numChanAdded = 0;
+        $this->numChanChanged = 0;
         print "Processing channels.conf of user $username\n";
         $this->cableSourceType = $cableSourceType;
         $this->terrSourceType = $terrSourceType;
         $this->existingChannelBuffer = array();
         $this->insertChannelsConfIntoDB( $this->config->getValue("path")."sources/$username/" );
         $this->updateExistingChannels();
-        print "Summary: Channels added: $this->numChanAdded / Channels modified: $this->numChanChanged\n";
+        print "Summary: Channels checked: $this->numChanChecked / Channels added: $this->numChanAdded / Channels modified: $this->numChanChanged\n";
     }
     /*
      * tries to update all channel data of the channels
@@ -68,13 +72,16 @@ class channelImport{
             foreach ($result as $row){
                 $changes = array();
                 $update_data = array();
+                $importance = 0;
                 foreach ($params as $key => $value){
-                    if ($value != $row[$key] && $key !== "last_changed"  && $key !== "label"){
+                    if ($value != $row[$key]  && substr($key,0,2) !== "x_" ){
+                        if ($key != "apid" && $key != "vpid")
+                            $importance = 1;
                         $changes[] = "<b>$key</b>: '".$row[$key]. "' to '". $value."'</br>";
                         $update_data[] = "$key = ".$this->dbh->quote( $value);
                     }
                 }
-                $update_data[] = "last_changed = ".time();
+                $update_data[] = "x_last_changed = ".time();
                 if (count ($changes) != 0){
                     //print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
                     $statement = "UPDATE channels SET ".implode(", " , $update_data)." WHERE source = ".
@@ -82,14 +89,22 @@ class channelImport{
                         $this->dbh->quote( $params["nid"] )." AND tid = ".
                         $this->dbh->quote( $params["tid"])." AND sid = ".
                         $this->dbh->quote( $params["sid"])."; ";
-                    $statement .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp) VALUES
+                    $statement .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp, importance) VALUES
                         ( ".$this->dbh->quote( $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"]).",
                          ".$this->dbh->quote( $params["name"]).", ".
                            $this->dbh->quote( implode(", ",$changes)).", ".
-                           time().
+                           time(). ", ".
+                           $importance.
                          " );";
                     //print "$statement\n";
                     $query = $this->dbh->exec($statement);
+                    if (!$query) {
+                        $errorinfo = $this->dbh->errorInfo();
+                        print "$statement\n";
+                        echo "\nPDO::errorInfo():\n";
+                        print_r($this->dbh->errorInfo());
+                        die("db error on insert\n");
+                    }
                     $this->numChanChanged++;
                 }
                 else{
@@ -124,6 +139,7 @@ class channelImport{
                     //print $msg_prefix . "illegal channel: ignoring empty line.\n";
                 }
                 else{
+                    $this->numChanChecked++;
                     $counter++;
                     $params = $this->getParamArray($buffer);
                     if ($params !== false)
@@ -159,11 +175,11 @@ class channelImport{
         $columns = implode( ", ", array_keys($params) );
         $values = implode( ", ", array_values($params) );
         $sqltext = "INSERT INTO channels ( " . $columns . " ) VALUES ( " . $values . " );";
-        $sqltext .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp) VALUES ( ".
+        $sqltext .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp, importance) VALUES ( ".
             $this->dbh->quote( $unique_channel_id ).", ".
             $params["name"].", ".
-            $this->dbh->quote( "<b>New channel added:</b>" . $rawstring ).", ".
-            time().
+            $this->dbh->quote( "<b>New channel added:</b> " . $rawstring ).", ".
+            time().", 1".
             " );";
         $query = $this->dbh->exec($sqltext);
         if (!$query) {
@@ -216,8 +232,8 @@ class channelImport{
             "nid"             => $details[10],
             "tid"             => $details[11],
             "rid"             => $details[12],
-            "label"           => "",
-            "last_changed"    => time()
+            "x_label"         => "",
+            "x_last_changed"  => time()
         );
     }
 
@@ -285,7 +301,7 @@ class channelImport{
         if (count($where) > 0)
             $where = "WHERE " . implode( $where, " AND " ) . $customwhere;
 
-        $sqlquery="UPDATE channels SET label=". $this->dbh->quote($label) ." $where";
+        $sqlquery="UPDATE channels SET x_label=". $this->dbh->quote($label) ." $where";
         $result = $this->dbh->query($sqlquery);
         print "Updating labels for channels belonging to $source / $label.\n";
     }

@@ -42,7 +42,7 @@ class HTMLOutputRenderer{
         $this->writeNiceHTMLPage("C[Germany_kabelDeutschland]", "de");
         $this->writeNiceHTMLPage("C[Germany_KabelBW]", "de");
         $this->writeNiceHTMLPage("C[Germany_wilhelmTel]", "de");
-        
+
         $this->writeChangelog("S19.2E");
         $this->writeChangelog("S28.2E");
         $this->writeChangelog("C[Germany_KabelBW]");
@@ -67,7 +67,7 @@ class HTMLOutputRenderer{
     public function writeChangelog($source){
 
         $sqlquery=
-            "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, update_description ".
+            "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, importance, update_description ".
             "FROM channel_update_log WHERE combined_id LIKE '".$source."%' ORDER BY timestamp DESC LIMIT 100";
         $result = $this->dbh->query($sqlquery);
         if ($result === false)
@@ -79,12 +79,13 @@ class HTMLOutputRenderer{
 	    <h1>'.$pagetitle.'</h1><p>Last updated on: '. date("D M j G:i:s T Y").'</p>
         <table>';
         foreach ($result as $row) {
-            $buffer.="<tr><td>".
+            $class = "changelog_row_style_".$row["importance"];
+            $buffer.='<tr class="'.$class.'"><td>'.
             $row["datestamp"]. "</td><td>".
-			$row["name"]. "</td><td>".
-			$row["combined_id"]. "</td><td>".
-			$row["update_description"] .
-			"</td></tr>\n";
+            $row["name"]. "</td><td>".
+            $row["combined_id"]. "</td><td>".
+            $row["update_description"] .
+            "</td></tr>\n";
         }
         $buffer .= "<table></body></html>";
         $filename = "changelog_".$source.".html";
@@ -98,8 +99,8 @@ class HTMLOutputRenderer{
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
         $nice_html_output =
             $header.
-        	'<h1>'.$pagetitle.'</h1>
-        	<p>Last updated on: '. date("D M j G:i:s T Y").'</p>
+            '<h1>'.$pagetitle.'</h1>
+            <p>Last updated on: '. date("D M j G:i:s T Y").'</p>
         ';
         $dirname = $this->config->getValue("path").$this->config->getValue("exportfolder")."/raw";
         $dir = new DirectoryIterator( $dirname );

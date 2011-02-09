@@ -31,9 +31,11 @@ require_once 'class.channelListWriter.php';
 require_once 'class.rawOutputRenderer.php';
 require_once 'class.HTMLOutputRenderer.php';
 
+if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
 importFromAllChannelSources();
 $x =new rawOutputRenderer();
 $x =new HTMLOutputRenderer();
+if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
 
 function importFromAllChannelSources(){
     $config = config::getInstance();
@@ -46,7 +48,7 @@ function importFromAllChannelSources(){
             $infofile = $config->getValue("path")."sources/". $fileinfo->getFilename() ."/info.txt";
             if (file_exists( $infofile )){
                 $info = file_get_contents( $infofile);
-                $cableProvider = $info; //FIXME
+                $cableProvider = trim($info); //FIXME
             }
             //print $info ."/". $infofile ."/".  $cableProvider."\n";
             $x->importChannelsConfFile( $fileinfo->getFilename(), $cableProvider, "none" );

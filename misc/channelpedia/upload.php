@@ -58,7 +58,7 @@ if (is_file( $checkpath."info.txt" ) && $_FILES["channels"]["name"] == "channels
     $infofile = $checkpath."info.txt";
     if (file_exists( $infofile )){
         $info = file_get_contents( $infofile);
-        $cableProvider = $info; //FIXME
+        $cableProvider = trim($info); //FIXME
     }
     //print $info ."/". $infofile ."/".  $cableProvider."\n";
     $x = new channelImport();

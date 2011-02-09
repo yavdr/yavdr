@@ -37,7 +37,7 @@ class channelIterator{
 
         $where = "";
         if ($label != "_complete")
-            $where = "label = ". $this->dbh->quote($label). " AND ";
+            $where = "x_label = ". $this->dbh->quote($label). " AND ";
 
         $sqlquery="SELECT * FROM channels WHERE $where source = ". $this->dbh->quote($source) . " ORDER BY " . $orderby;
         //echo "$label: $sqlquery\n";
