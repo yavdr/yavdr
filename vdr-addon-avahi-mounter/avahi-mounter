@@ -234,6 +234,9 @@ class Config:
 		self.audio   = self.__getDir(_("Music"))
 		self.picture = self.__getDir(_("Picture"))
 		self.misc    = self.__getDir(_("Miscellaneous"))
+		self.__link("/srv/audio", "%s%s" % (self.audio, "local"))
+		self.__link("/srv/video", "%s%s" % (self.video, "local"))
+		self.__link("/srv/picture", "%s%s" % (self.picture, "local"))
 	
 	def __getDir(self, name):
 		__dir = self.media + '/' + name + '/'
@@ -244,6 +247,17 @@ class Config:
 				syslog("unable to make dir: %s" % strerror)
 				raise
 		return __dir
+
+	def __link(self,source,target):
+		try:
+			os.remove(target)
+		except OSError as (errno, strerror):
+			if errno != 2:
+				syslog("I/O error({0}): {1}".format(errno,strerror))
+		try:
+			os.symlink(source,target)
+		except OSError as (errno, strerror):
+			syslog("I/O error({0}): {1}".format(errno,strerror))
 
 	def get(self, section, key, default=None):
 		try:
