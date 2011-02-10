@@ -127,7 +127,16 @@ static public function getRules(){
         "mediaType" => 1,
         "language" => "deu",
         "orderby" =>"UPPER(name) ASC",
-        "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND NOT " . HD_CHANNEL
+        "customwhere" => " AND name NOT LIKE '% - %'  AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND NOT " . HD_CHANNEL
+    ),
+
+    "de.07.SKY.SDTV2" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" =>"UPPER(name) ASC",
+        "customwhere" => " AND (name LIKE '% - %' OR name = 'Spieldaten') AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND NOT " . HD_CHANNEL
     ),
 
     "de.08.SKY.HDTV" => array(
@@ -173,8 +182,55 @@ static public function getRules(){
         "language" => "deu",
         "orderby" => "UPPER(name) ASC",
         "customwhere" => FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL . "AND ". SWITZERLAND. "AND ". DE_PRIVATE_PRO7_RTL
-    )
-);
+    ),
+
+    "eng.01.FTA.HDTV.BBC" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "eng",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => " AND upper(name) LIKE '%BBC%' AND ". HD_CHANNEL
+    ),
+
+    "eng.02.FTA.SDTV.BBC" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "eng",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => " AND upper(name) LIKE '%BBC%' AND NOT ". HD_CHANNEL
+    ),
+
+    "eng.03.FTA.HDTV.ITV" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "eng",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => " AND upper(name) LIKE '%ITV%' AND ". HD_CHANNEL
+    ),
+
+    "eng.04.FTA.SDTV.ITV" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "eng",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => " AND upper(name) LIKE '%ITV%' AND NOT ". HD_CHANNEL
+    ),
+
+    "eng.10.FTA.Radio.BBC" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 2,
+        "language" => "eng",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => " AND upper(name) LIKE '%BBC%' "
+    ),
+
+
+    );
 }
 
 /*

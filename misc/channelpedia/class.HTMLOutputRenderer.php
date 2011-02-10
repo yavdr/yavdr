@@ -39,10 +39,12 @@ class HTMLOutputRenderer{
         $this->writeNiceHTMLPage("S19.2E", "de");
         $this->writeNiceHTMLPage("S19.2E", "at");
         $this->writeNiceHTMLPage("S19.2E", "ch");
+        $this->writeNiceHTMLPage("S28.2E", "eng");
         $this->writeNiceHTMLPage("C[Germany_kabelDeutschland]", "de");
         $this->writeNiceHTMLPage("C[Germany_KabelBW]", "de");
         $this->writeNiceHTMLPage("C[Germany_wilhelmTel]", "de");
 
+        $this->writeChangelog("", 1 ); //general changelog for all sources
         $this->writeChangelog("S19.2E");
         $this->writeChangelog("S28.2E");
         $this->writeChangelog("C[Germany_KabelBW]");
@@ -64,11 +66,24 @@ class HTMLOutputRenderer{
     die();
     */
 
-    public function writeChangelog($source){
+    public function writeChangelog($source, $importance = 0){
+
+        $where = array();
+        $wherestring = "";
+        if ($source != "")
+            $where[] = " combined_id LIKE ".$this->dbh->quote( $source."%" ) . " ";
+        else
+            $source = "all_sources";
+        if ($importance === 1 ){
+        	$where[] = " importance = $importance ";
+    	}
+    	if (count($where) > 0){
+    	    $wherestring = "WHERE ". implode(" AND ", $where);
+    	}
 
         $sqlquery=
             "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, importance, update_description ".
-            "FROM channel_update_log WHERE combined_id LIKE ".$this->dbh->quote($source."%")." ORDER BY timestamp DESC LIMIT 100";
+            "FROM channel_update_log $wherestring ORDER BY timestamp DESC LIMIT 100";
         $result = $this->dbh->query($sqlquery);
         if ($result === false)
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
@@ -79,10 +94,14 @@ class HTMLOutputRenderer{
 	    <h1>'.$pagetitle.'</h1><p>Last updated on: '. date("D M j G:i:s T Y").'</p>
         <table>';
         foreach ($result as $row) {
-            $delimiter = strpos( $row["update_description"], ":");
-            $desc = "<b>" .
-                htmlspecialchars( substr( $row["update_description"],0, $delimiter)) . "</b>" .
-                htmlspecialchars( substr( $row["update_description"], $delimiter));
+            $desclist = explode("\n", $row["update_description"]);
+            $desc = "";
+            foreach ($desclist as $descitem){
+                $delimiter = strpos( $row["update_description"], ":");
+                $desc .= "<b>" .
+                    htmlspecialchars( substr( $row["update_description"],0, $delimiter)) . "</b>" .
+                    htmlspecialchars( substr( $row["update_description"], $delimiter)) . "</br>";
+            }
             $class = "changelog_row_style_".$row["importance"];
             $buffer.='<tr class="'.$class.'"><td>'.
             htmlspecialchars( $row["datestamp"] ). "</td><td>".

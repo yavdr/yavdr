@@ -46,6 +46,7 @@ class rawOutputRenderer {
 
         //selections
         $this->writeAllChannelSelections2Disk("S19.2E");
+        $this->writeAllChannelSelections2Disk("S28.2E");
         $this->writeAllChannelSelections2Disk("C[".CABLE_PROVIDER."]");
         $this->writeAllChannelSelections2Disk("C[Germany_wilhelmTel]");
         $this->writeAllChannelSelections2Disk("C[Germany_kabelDeutschland]");

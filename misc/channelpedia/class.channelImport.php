@@ -77,7 +77,7 @@ class channelImport{
                     if ($value != $row[$key]  && substr($key,0,2) !== "x_" ){
                         if ($key != "apid" && $key != "vpid" && $key != "caid")
                             $importance = 1;
-                        $changes[] = "$key: '".$row[$key]. "' to '". $value."'</br>";
+                        $changes[] = "$key: '".$row[$key]. "' to '". $value."'";
                         $update_data[] = "$key = ".$this->dbh->quote( $value);
                     }
                 }
@@ -92,7 +92,7 @@ class channelImport{
                     $statement .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp, importance) VALUES
                         ( ".$this->dbh->quote( $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"]).",
                          ".$this->dbh->quote( $params["name"]).", ".
-                           $this->dbh->quote( implode(", ",$changes)).", ".
+                           $this->dbh->quote( implode("\n",$changes)).", ".
                            time(). ", ".
                            $importance.
                          " );";
@@ -241,6 +241,7 @@ class channelImport{
         if ($this->numChanAdded + $this->numChanChanged > 0 || $forceUpdate){
             //FIXME: avoid static sat sources !!!! avoid updating just one C and one T!!!
             $this->updateAllLabelsOfSource("S19.2E");
+            $this->updateAllLabelsOfSource("S28.2E");
             if ($this->cableSourceType != "none")
                 $this->updateAllLabelsOfSource("C[".$this->cableSourceType."]");
             if ($this->terrSourceType != "none")
