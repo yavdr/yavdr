@@ -1,6 +1,6 @@
 
-CFLAGS=-g -fPIC -I..  -I/opt/include/
-LDLIBS=-L/usr/lib/yavdr -lyavdrdb -lneo_utl -lmcsimple -L /opt/lib/
+CFLAGS=-g -fPIC -I.. 
+LDLIBS=-L/usr/lib/yavdr -lyavdrdb -lneo_utl -lmcsimple -L/opt/lib
 all: scansundtek
 
 .c.o:
