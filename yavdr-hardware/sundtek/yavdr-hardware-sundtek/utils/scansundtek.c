@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "sundtek/mcsimple.h"
+#include <sundtek/mcsimple.h>
 
 #include <yavdr/db-utils/dbset.h>
 #include <yavdr/db-utils/dbremove.h>
@@ -100,20 +100,19 @@ int main() {
 			dbset("system.hardware.sundtek.found.%i=%s", n, device->serial);
 
 			char *dummy;
-			if (asprintf(&dummy, "system.hardware.sundtek.%s.info.ip=%s", serial, ip) >= 0)
+			if (asprintf(&dummy, "system.hardware.sundtek.%s.info.ip", serial) >= 0)
 			{
 				dbremove(dummy);
 				free(dummy);
 			}
 
-			if (asprintf(&dummy, "system.hardware.sundtek.%s.info.id=%s", serial, id) >= 0)
-			{
-				dbremove(dummy);
-				free(dummy);
-			}
+			dbset("system.hardware.sundtek.%s.info.id=%s", serial, i);
 			dbset("system.hardware.sundtek.%s.info.devicename=%s", device->serial, device->devicename);
 			dbset("system.hardware.sundtek.%s.info.capabilities=%u", device->serial, device->capabilities);
+			dbset("system.hardware.sundtek.%s.mounted=0", device->serial);
 			//dbset("system.hardware.sundtek.%s.info.serial=%s", device->serial, device->serial);
+		} else {
+			dbset("system.hardware.sundtek.%s.mounted=1", device->serial);
 		}
 		free(device);
 //		} while((device=net_device_enum(fd, &i, ++d))!=0);
