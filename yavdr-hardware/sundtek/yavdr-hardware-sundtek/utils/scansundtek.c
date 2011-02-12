@@ -59,6 +59,9 @@ int main() {
 	uint32_t *cap;
 	int n = 0;
 
+	//uint32_t test = 1;
+	//dbset("system.hardware.sundtek.%s.info.capabilities=%x", "123", test);
+
 	//TODO: Cleanup hdf
 	dbremove("system.hardware.sundtek.found");
 
@@ -75,7 +78,7 @@ int main() {
 		dbset("system.hardware.sundtek.%s.info.ip=%s", serial, ip);
 		dbset("system.hardware.sundtek.%s.info.id=%s", serial, id);
 		dbset("system.hardware.sundtek.%s.info.devicename=%s", serial, name);
-		dbset("system.hardware.sundtek.%s.info.capabilities=%x", serial, cap);
+		dbset("system.hardware.sundtek.%s.info.capabilities=%x", serial, &cap);
 		//dbset("system.hardware.sundtek.%s.info.serial=%s", serial, serial);
 
 		ip=NULL;
