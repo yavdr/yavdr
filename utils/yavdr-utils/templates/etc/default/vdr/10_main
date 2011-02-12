@@ -12,5 +12,5 @@ ENABLE_SHUTDOWN=1
 
 # Options that will be passed to vdr's commandline
 # for example: OPTIONS="-w 15"
-OPTIONS="-w 60"
+OPTIONS="-w 0"
 

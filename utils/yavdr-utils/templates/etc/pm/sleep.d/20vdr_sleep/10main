@@ -29,6 +29,7 @@ case $1 in
          for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
          start vdr-exit-1 EXEC=load
          start vdr-frontend
+         svdrpsend hitk ok
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."
          ;;
