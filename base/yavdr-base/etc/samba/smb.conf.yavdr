@@ -16,4 +16,7 @@
    force user = vdr
 # Die Daten werden lokal mit diesen Dateizugehörigkeiten abgelegt
    force group = vdr
-
+   
+# symlinks werden verfolgt
+   follow symlinks = yes
+   wide links = yes
