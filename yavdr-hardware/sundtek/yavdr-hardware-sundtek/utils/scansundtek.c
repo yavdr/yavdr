@@ -109,7 +109,7 @@ int main() {
 				free(dummy);
 			}
 
-			dbset("system.hardware.sundtek.%s.info.id=%i", serial, i);
+			dbset("system.hardware.sundtek.%s.info.id=%i", device->serial, i);
 			dbset("system.hardware.sundtek.%s.info.devicename=%s", device->serial, device->devicename);
 			dbset("system.hardware.sundtek.%s.info.capabilities=%x", device->serial, device->capabilities);
 			dbset("system.hardware.sundtek.%s.mounted=0", device->serial);
