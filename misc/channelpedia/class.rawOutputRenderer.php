@@ -56,8 +56,10 @@ class rawOutputRenderer {
         foreach ( channelGroupingRulesStore::getRules() as $label => $details){
             $y = new channelListWriter( $label, $source, $details["orderby"] );
             $y->writeFile();
-            unset($y);
         }
+        $y = new channelListWriter( "", $source );
+        $y->writeFile();
+        unset($y);
     }
 }
 

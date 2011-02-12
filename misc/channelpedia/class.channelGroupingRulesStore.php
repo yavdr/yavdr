@@ -29,7 +29,7 @@ define("DE_PUBLIC_PROVIDER", " (provider LIKE 'ARD%' OR provider = 'ZDFvision' O
 define("AUSTRIA", " (LOWER(name) LIKE '%sterreich' OR LOWER(name) LIKE '% austria' OR UPPER(name) LIKE '% A') ");
 define("SWITZERLAND", " (UPPER(name) LIKE '% CH' OR LOWER(name) LIKE '% Schweiz' OR UPPER(name) LIKE 'SF%') ");
 
-define("FILTER_ASTRA1_FTA", " AND ((tid != '1092' AND tid != '1113' AND provider != '-') OR (name = 'DMAX')) AND provider != 'SKY' ");
+define("FILTER_ASTRA1_FTA", " ((tid != '1092' AND tid != '1113' AND provider != '-') OR (name = 'DMAX')) AND provider != 'SKY' ");
 
 class channelGroupingRulesStore{
 
@@ -89,7 +89,7 @@ static public function getRules(){
         "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . HD_CHANNEL . " OR ".AUSTRIA." OR ".SWITZERLAND.")"
     ),
 
-    //kabelDeutschland
+    //kabelDeutschland only
     "de.05.DigitalFree.SDTV.Private" => array(
 
         "caidMode" => 2,
@@ -100,7 +100,7 @@ static public function getRules(){
     ),
 
 
-    //kabelDeutschland
+    //kabelDeutschland only
     "de.06.KDHome.SDTV.Private" => array(
 
         "caidMode" => 2,
@@ -111,14 +111,24 @@ static public function getRules(){
     ),
 
 
-    "de.06.FTA.SDTV.Rest_Private" => array(
+    "de.06.FTA.SDTV.Private2" => array(
 
         "caidMode" => 1,
         "mediaType" => 1,
         "language" => "deu",
         "orderby" =>"UPPER(name) ASC",
         "customwhere" =>
-            FILTER_ASTRA1_FTA . " AND NOT (". HD_CHANNEL . " OR ".DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
+            " AND ". FILTER_ASTRA1_FTA . " AND NOT (". HD_CHANNEL . " OR ".DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
+    ),
+
+    "de.06.FTA.SDTV.Private3" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" =>"UPPER(name) ASC",
+        "customwhere" =>
+            " AND NOT ". FILTER_ASTRA1_FTA . " AND NOT (". HD_CHANNEL . " OR ".DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
     ),
 
     "de.07.SKY.SDTV" => array(
@@ -127,7 +137,7 @@ static public function getRules(){
         "mediaType" => 1,
         "language" => "deu",
         "orderby" =>"UPPER(name) ASC",
-        "customwhere" => " AND name NOT LIKE '% - %'  AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND NOT " . HD_CHANNEL
+        "customwhere" => " AND name NOT LIKE '% - %'  AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND name != '.' AND NOT " . HD_CHANNEL
     ),
 
     "de.07.SKY.SDTV2" => array(
@@ -136,7 +146,7 @@ static public function getRules(){
         "mediaType" => 1,
         "language" => "deu",
         "orderby" =>"UPPER(name) ASC",
-        "customwhere" => " AND (name LIKE '% - %' OR name = 'Spieldaten') AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND NOT " . HD_CHANNEL
+        "customwhere" => " AND (name LIKE '% - %' OR name = 'Spieldaten' OR name = '.') AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND NOT " . HD_CHANNEL
     ),
 
     "de.08.SKY.HDTV" => array(
@@ -172,7 +182,7 @@ static public function getRules(){
         "mediaType" => 1,
         "language" => "deu",
         "orderby" => "UPPER(name) ASC",
-        "customwhere" => FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL. "AND ". AUSTRIA. "AND ". DE_PRIVATE_PRO7_RTL
+        "customwhere" => " AND ". FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL. "AND ". AUSTRIA. "AND ". DE_PRIVATE_PRO7_RTL
     ),
 
     "ch.FTA.SDTV.Private" => array(
@@ -181,7 +191,7 @@ static public function getRules(){
         "mediaType" => 1,
         "language" => "deu",
         "orderby" => "UPPER(name) ASC",
-        "customwhere" => FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL . "AND ". SWITZERLAND. "AND ". DE_PRIVATE_PRO7_RTL
+        "customwhere" =>  " AND ". FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL . "AND ". SWITZERLAND. "AND ". DE_PRIVATE_PRO7_RTL
     ),
 
     "eng.01.FTA.HDTV.BBC" => array(

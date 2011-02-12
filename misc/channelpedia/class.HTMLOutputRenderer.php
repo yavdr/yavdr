@@ -36,6 +36,14 @@ class HTMLOutputRenderer{
         $this->config = config::getInstance();
         $this->exportpath = $this->config->getValue("path").$this->config->getValue("exportfolder")."/html/";
 
+        $this->addDividerTitle("Complete lists (grouped by transponder)");
+        $this->addCompleteListLink( "S19.2E" );
+        $this->addCompleteListLink( "S28.2E" );
+        $this->addCompleteListLink("C[Germany_KabelBW]");
+        $this->addCompleteListLink("C[Germany_wilhelmTel]");
+        $this->addCompleteListLink("C[Germany_kabelDeutschland]");
+
+        $this->addDividerTitle("Essential channels (pre-sorted lists)");
         $this->writeNiceHTMLPage("S19.2E", "de");
         $this->writeNiceHTMLPage("S19.2E", "at");
         $this->writeNiceHTMLPage("S19.2E", "ch");
@@ -44,14 +52,40 @@ class HTMLOutputRenderer{
         $this->writeNiceHTMLPage("C[Germany_KabelBW]", "de");
         $this->writeNiceHTMLPage("C[Germany_wilhelmTel]", "de");
 
+        $this->addDividerTitle("Changelog");
         $this->writeChangelog("", 1 ); //general changelog for all sources
         $this->writeChangelog("S19.2E");
         $this->writeChangelog("S28.2E");
         $this->writeChangelog("C[Germany_KabelBW]");
         $this->writeChangelog("C[Germany_wilhelmTel]");
         $this->writeChangelog("C[Germany_kabelDeutschland]");
+
+        $this->addDividerTitle("(Yet) Uncategorized channels (grouped by transponder)");
+        $this->addUncategorizedListLink( "S19.2E" );
+        $this->addUncategorizedListLink( "S28.2E" );
+        $this->addUncategorizedListLink("C[Germany_KabelBW]");
+        $this->addUncategorizedListLink("C[Germany_wilhelmTel]");
+        $this->addUncategorizedListLink("C[Germany_kabelDeutschland]");
+
         $this->renderIndexPage();
     }
+
+    private function addCompleteListLink( $source ){
+        $pagetitle = "Complete channel list of $source";
+        $filename = "../raw/channels_".$source."__complete.conf";
+        $this->linklist[$pagetitle] = $filename;
+    }
+
+    private function addUncategorizedListLink( $source ){
+        $pagetitle = "List of uncategorized channels of $source";
+        $filename = "../raw/channels_".$source."_uncategorized.conf";
+        $this->linklist[$pagetitle] = $filename;
+    }
+
+    private function addDividerTitle( $title ){
+        $this->linklist[$title] = "";
+    }
+
 
     /*
     $y = new channelIterator("", "S19.2E");
@@ -87,7 +121,7 @@ class HTMLOutputRenderer{
         $result = $this->dbh->query($sqlquery);
         if ($result === false)
             die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
-        $pagetitle = 'Changelog for '.$source.' (Last 100 changes)';
+        $pagetitle = 'Changelog for '.$source.'';
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
 
         $buffer = $header.'
@@ -97,10 +131,10 @@ class HTMLOutputRenderer{
             $desclist = explode("\n", $row["update_description"]);
             $desc = "";
             foreach ($desclist as $descitem){
-                $delimiter = strpos( $row["update_description"], ":");
+                $delimiter = strpos( $descitem, ":");
                 $desc .= "<b>" .
-                    htmlspecialchars( substr( $row["update_description"],0, $delimiter)) . "</b>" .
-                    htmlspecialchars( substr( $row["update_description"], $delimiter)) . "</br>";
+                    htmlspecialchars( substr( $descitem,0, $delimiter)) . "</b>" .
+                    htmlspecialchars( substr( $descitem, $delimiter)) . "</br>";
             }
             $class = "changelog_row_style_".$row["importance"];
             $buffer.='<tr class="'.$class.'"><td>'.
@@ -118,7 +152,7 @@ class HTMLOutputRenderer{
 
     //assembles all pre-written channel lists from hdd into one html page
     public function writeNiceHTMLPage($source, $language){
-        $pagetitle = 'Essential channels for '.$source.' (Language/Region: '.$language.')';
+        $pagetitle = ''.$source.' (Language/Region: '.$language.')';
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
         $nice_html_output =
             $header.
@@ -157,7 +191,6 @@ class HTMLOutputRenderer{
         file_put_contents($this->exportpath . $filename, $nice_html_output );
     }
 
-
     private function renderIndexPage(){
         $pagetitle = "Channelpedia - Overview";
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
@@ -167,7 +200,10 @@ class HTMLOutputRenderer{
         	<p>Last updated on: '. date("D M j G:i:s T Y").'</p><ul>
         ';
         foreach ($this->linklist as $title => $url){
-            $nice_html_output .= '<li><a href="'.urlencode( $url ).'">'.htmlspecialchars( $title ).'</a></li>';
+           if ($url != "")
+              $nice_html_output .= '<li><a href="'. htmlspecialchars( $url ) .'">'.htmlspecialchars( $title ).'</a></li>';
+           else
+              $nice_html_output .= '</ul><h2>'.htmlspecialchars( $title ).'</h2><ul>';
         }
 
         $nice_html_output .= "</ul>
