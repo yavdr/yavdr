@@ -20,14 +20,15 @@ esac
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
-         stop vdr || /bin/true
-         stop logo-stop || /bin/true
+         stop vdr-frontend
+         start vdr-exit-1 EXEC=unload
          ;;
      thaw|resume)
          # reload dvb-driver at resume
          start logo-start
          for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
-         start vdr-exit-1
+         start vdr-exit-1 EXEC=load
+         start vdr-frontend
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."
          ;;
