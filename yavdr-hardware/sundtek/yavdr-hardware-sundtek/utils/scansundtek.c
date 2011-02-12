@@ -75,7 +75,7 @@ int main() {
 		dbset("system.hardware.sundtek.%s.info.ip=%s", serial, ip);
 		dbset("system.hardware.sundtek.%s.info.id=%s", serial, id);
 		dbset("system.hardware.sundtek.%s.info.devicename=%s", serial, name);
-		dbset("system.hardware.sundtek.%s.info.capabilities=%u", serial, cap);
+		dbset("system.hardware.sundtek.%s.info.capabilities=%x", serial, cap);
 		//dbset("system.hardware.sundtek.%s.info.serial=%s", serial, serial);
 
 		ip=NULL;
@@ -95,7 +95,7 @@ int main() {
     //while((device=net_device_enum(fd, &i, d))!=0) {  // multi frontend support???
 	//	do {
     while((device=net_device_enum(fd, &i, d))!=0) {
-		if (device->capabilities & (uint32_t)MEDIA_REMOTE_DEVICE == 0) {
+		if ((device->capabilities & (uint32_t)MEDIA_REMOTE_DEVICE) == 0) {
 			// mark serial as available
 			dbset("system.hardware.sundtek.found.%i=%s", n, device->serial);
 
@@ -108,7 +108,7 @@ int main() {
 
 			dbset("system.hardware.sundtek.%s.info.id=%s", serial, i);
 			dbset("system.hardware.sundtek.%s.info.devicename=%s", device->serial, device->devicename);
-			dbset("system.hardware.sundtek.%s.info.capabilities=%u", device->serial, device->capabilities);
+			dbset("system.hardware.sundtek.%s.info.capabilities=%x", device->serial, device->capabilities);
 			dbset("system.hardware.sundtek.%s.mounted=0", device->serial);
 			//dbset("system.hardware.sundtek.%s.info.serial=%s", device->serial, device->serial);
 		} else {
