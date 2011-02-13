@@ -7,7 +7,7 @@ extern "C" {
 #include <ClearSilver.h>
 };
 
-#include "../common.h"
+#include <yavdr/common.h>
 
 using namespace std;
 </%pre><& authenticate@yavdrweb ><%cpp>
