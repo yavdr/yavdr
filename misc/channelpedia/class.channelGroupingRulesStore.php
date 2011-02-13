@@ -158,7 +158,16 @@ static public function getRules(){
         "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '') AND name != '.' AND " . HD_CHANNEL
     ),
 
-    "de.09.FTA.Radio.ARD_ZDF" => array(
+    "de.09.HD+.HDTV.Private" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" =>"UPPER(name) ASC",
+        "customwhere" => " AND (UPPER(provider) = 'BETADIGITAL' OR UPPER(provider) = 'CBC' OR UPPER(provider) = 'PROSIEBENSAT.1' ) AND " . HD_CHANNEL
+    ),
+
+    "de.20.FTA.Radio.ARD_ZDF" => array(
 
         "caidMode" => 1,
         "mediaType" => 2,
@@ -167,7 +176,7 @@ static public function getRules(){
         "customwhere" => " AND ".DE_PUBLIC_PROVIDER
     ),
 
-    "de.10.FTA.Radio.Private" => array(
+    "de.21.FTA.Radio.Private" => array(
 
         "caidMode" => 1,
         "mediaType" => 2,
@@ -176,7 +185,25 @@ static public function getRules(){
         "customwhere" => " AND NOT ".DE_PUBLIC_PROVIDER
     ),
 
-    "at.FTA.SDTV.Private" => array(
+    "at.01.scrambled.HDTV.ORF" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => " AND " . HD_CHANNEL. "AND UPPER(provider) = 'ORF'"
+    ),
+
+    "at.02.scrambled.SDTV.ORF" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "deu",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" => " AND NOT " . HD_CHANNEL . "AND UPPER(provider) = 'ORF'"
+    ),
+
+    "at.03.FTA.SDTV.Private" => array(
 
         "caidMode" => 1,
         "mediaType" => 1,
@@ -192,6 +219,114 @@ static public function getRules(){
         "language" => "deu",
         "orderby" => "UPPER(name) ASC",
         "customwhere" =>  " AND ". FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL . "AND ". SWITZERLAND. "AND ". DE_PRIVATE_PRO7_RTL
+    ),
+
+    "es.FTA.SDTV.diverse" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "esl",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND NOT ". HD_CHANNEL
+    ),
+
+    "es.FTA.HDTV.diverse" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "esl",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND ". HD_CHANNEL
+    ),
+
+    "es.scrambled.SDTV.diverse" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "esl",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND NOT ". HD_CHANNEL
+    ),
+
+    "es.scrambled.HDTV.diverse" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "esl",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND ". HD_CHANNEL
+    ),
+
+    "pl.FTA.SDTV.diverse" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "pol",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND NOT ". HD_CHANNEL
+    ),
+
+    "pl.FTA.HDTV.diverse" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "pol",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND ". HD_CHANNEL
+    ),
+
+    "pl.scrambled.SDTV.diverse" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "pol",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND NOT ". HD_CHANNEL
+    ),
+
+    "pl.scrambled.HDTV.diverse" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "pol",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND ". HD_CHANNEL
+    ),
+
+    "fr.FTA.SDTV.diverse" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "fra",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND NOT ". HD_CHANNEL
+    ),
+
+    "fr.FTA.HDTV.diverse" => array(
+
+        "caidMode" => 1,
+        "mediaType" => 1,
+        "language" => "fra",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND ". HD_CHANNEL
+    ),
+
+    "fr.scrambled.SDTV.diverse" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "fra",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND NOT ". HD_CHANNEL
+    ),
+
+    "fr.scrambled.HDTV.diverse" => array(
+
+        "caidMode" => 2,
+        "mediaType" => 1,
+        "language" => "fra",
+        "orderby" => "UPPER(name) ASC",
+        "customwhere" =>  "AND ". HD_CHANNEL
     ),
 
     "eng.01.FTA.HDTV.BBC" => array(

@@ -32,10 +32,10 @@ class channelListWriter extends channelIterator{
     function __construct($label = "_complete", $source, $orderby = "frequency, modulation, provider, name ASC"){
         parent::__construct($label, $source, $orderby);
         if ($label == "_complete")
-            $this->addTransponderDelimiters = true;           
+            $this->addTransponderDelimiters = true;
         else if ($label == ""){
             $label = "uncategorized";
-            $this->addTransponderDelimiters = true;           
+            $this->addTransponderDelimiters = true;
         }
         $config = config::getInstance();
         $gpath = $config->getValue("path"). $config->getValue("exportfolder")."/raw/";

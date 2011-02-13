@@ -49,6 +49,17 @@ class config {
             $value = EXPORTFOLDER;
         elseif ($key == "groups")
             $value = channelGroupingRulesStore::getRules();
+        elseif ($key == "sat_positions")
+            $value = array( "S19.2E", "S28.2E");
+        elseif ($key == "cable_providers")
+            $value = array(
+                "Germany_KabelBW",
+                "Germany_wilhelmTel",
+                "Germany_kabelDeutschland",
+            );
+        elseif ($key == "terr_providers"){
+            $value = array();
+        }
         return $value;
     }
 }

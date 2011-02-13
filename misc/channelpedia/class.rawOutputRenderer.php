@@ -25,31 +25,33 @@
 class rawOutputRenderer {
 
     function __construct(){
-
-
-        //FIXME: don't limit this to hepi's own channel sources!!!
-        define("CABLE_PROVIDER","Germany_KabelBW");
+        $this->config = config::getInstance();
 
         //for all existing sources, write unfiltered channels.conf lists to disc
-        $y = new channelListWriter("_complete", "S19.2E");
-        $y->writeFile();
-        $y = new channelListWriter("_complete", "S28.2E");
-        $y->writeFile();
-        $y = new channelListWriter("_complete", "C[".CABLE_PROVIDER."]");
-        $y->writeFile();
-        $y = new channelListWriter("_complete", "C[Germany_wilhelmTel]");
-        $y->writeFile();
-        $y = new channelListWriter("_complete", "C[Germany_kabelDeutschland]");
-        $y->writeFile();
-
+        foreach ($this->config->getValue("sat_positions") as $sat){
+            $y = new channelListWriter("_complete", $sat);
+            $y->writeFile();
+        }
+        foreach ($this->config->getValue("cable_providers") as $cablep){
+            $y = new channelListWriter("_complete", "C[$cablep]");
+            $y->writeFile();
+        }
+        foreach ($this->config->getValue("terr_providers") as $terrp){
+            $y = new channelListWriter("_complete", "T[$terrp]");
+            $y->writeFile();
+        }
         unset($y);
 
         //selections
-        $this->writeAllChannelSelections2Disk("S19.2E");
-        $this->writeAllChannelSelections2Disk("S28.2E");
-        $this->writeAllChannelSelections2Disk("C[".CABLE_PROVIDER."]");
-        $this->writeAllChannelSelections2Disk("C[Germany_wilhelmTel]");
-        $this->writeAllChannelSelections2Disk("C[Germany_kabelDeutschland]");
+        foreach ($this->config->getValue("sat_positions") as $sat){
+            $this->writeAllChannelSelections2Disk( $sat );
+        }
+        foreach ($this->config->getValue("cable_providers") as $cablep){
+            $this->writeAllChannelSelections2Disk( "C[$cablep]" );
+        }
+        foreach ($this->config->getValue("terr_providers") as $terrp){
+            $this->writeAllChannelSelections2Disk( "T[$terrp]" );
+        }
     }
 
     private function writeAllChannelSelections2Disk( $source){

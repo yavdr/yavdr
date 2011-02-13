@@ -37,35 +37,59 @@ class HTMLOutputRenderer{
         $this->exportpath = $this->config->getValue("path").$this->config->getValue("exportfolder")."/html/";
 
         $this->addDividerTitle("Complete lists (grouped by transponder)");
-        $this->addCompleteListLink( "S19.2E" );
-        $this->addCompleteListLink( "S28.2E" );
-        $this->addCompleteListLink("C[Germany_KabelBW]");
-        $this->addCompleteListLink("C[Germany_wilhelmTel]");
-        $this->addCompleteListLink("C[Germany_kabelDeutschland]");
+
+        foreach ($this->config->getValue("sat_positions") as $sat){
+            $this->addCompleteListLink( $sat );
+        }
+        foreach ($this->config->getValue("cable_providers") as $cablep){
+            $this->addCompleteListLink( "C[$cablep]" );
+        }
+        foreach ($this->config->getValue("terr_providers") as $terrp){
+            $this->addCompleteListLink("T[$terrp]");
+        }
 
         $this->addDividerTitle("Essential channels (pre-sorted lists)");
-        $this->writeNiceHTMLPage("S19.2E", "de");
-        $this->writeNiceHTMLPage("S19.2E", "at");
-        $this->writeNiceHTMLPage("S19.2E", "ch");
-        $this->writeNiceHTMLPage("S28.2E", "eng");
-        $this->writeNiceHTMLPage("C[Germany_kabelDeutschland]", "de");
-        $this->writeNiceHTMLPage("C[Germany_KabelBW]", "de");
-        $this->writeNiceHTMLPage("C[Germany_wilhelmTel]", "de");
+
+        //FIXME: Don't store this like this
+        $source_languages = array(
+            "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl"),
+            "S28.2E" => array( "en")
+        );
+
+        foreach ($this->config->getValue("sat_positions") as $sat){
+            foreach ($source_languages[$sat] as $language)
+                $this->writeNiceHTMLPage( $sat, $language );
+        }
+        foreach ($this->config->getValue("cable_providers") as $cablep){
+            $this->writeNiceHTMLPage( "C[$cablep]", "de" );
+        }
+        foreach ($this->config->getValue("terr_providers") as $terrp){
+            $this->writeNiceHTMLPage("T[$terrp]", "de");
+        }
 
         $this->addDividerTitle("Changelog");
         $this->writeChangelog("", 1 ); //general changelog for all sources
-        $this->writeChangelog("S19.2E");
-        $this->writeChangelog("S28.2E");
-        $this->writeChangelog("C[Germany_KabelBW]");
-        $this->writeChangelog("C[Germany_wilhelmTel]");
-        $this->writeChangelog("C[Germany_kabelDeutschland]");
+        foreach ($this->config->getValue("sat_positions") as $sat){
+            $this->writeChangelog( $sat );
+        }
+        foreach ($this->config->getValue("cable_providers") as $cablep){
+            $this->writeChangelog( "C[$cablep]" );
+        }
+        foreach ($this->config->getValue("terr_providers") as $terrp){
+            $this->writeChangelog("T[$terrp]");
+        }
+
 
         $this->addDividerTitle("(Yet) Uncategorized channels (grouped by transponder)");
-        $this->addUncategorizedListLink( "S19.2E" );
-        $this->addUncategorizedListLink( "S28.2E" );
-        $this->addUncategorizedListLink("C[Germany_KabelBW]");
-        $this->addUncategorizedListLink("C[Germany_wilhelmTel]");
-        $this->addUncategorizedListLink("C[Germany_kabelDeutschland]");
+        foreach ($this->config->getValue("sat_positions") as $sat){
+            $this->addUncategorizedListLink( $sat );
+        }
+        foreach ($this->config->getValue("cable_providers") as $cablep){
+            $this->addUncategorizedListLink( "C[$cablep]" );
+        }
+        foreach ($this->config->getValue("terr_providers") as $terrp){
+            $this->addUncategorizedListLink("T[$terrp]");
+        }
 
         $this->renderIndexPage();
     }
@@ -88,6 +112,8 @@ class HTMLOutputRenderer{
 
 
     /*
+     *
+     * example for usage of channel iterator
     $y = new channelIterator("", "S19.2E");
     while ($y->moveToNextChannel() !== false){
         if ($y->transponderChanged())
@@ -125,8 +151,7 @@ class HTMLOutputRenderer{
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
 
         $buffer = $header.'
-	    <h1>'.$pagetitle.'</h1><p>Last updated on: '. date("D M j G:i:s T Y").'</p>
-        <table>';
+	    <h1>'.$pagetitle.'</h1><p>Last updated on: '. date("D M j G:i:s T Y")."</p>\n<table>\n";
         foreach ($result as $row) {
             $desclist = explode("\n", $row["update_description"]);
             $desc = "";
@@ -134,7 +159,7 @@ class HTMLOutputRenderer{
                 $delimiter = strpos( $descitem, ":");
                 $desc .= "<b>" .
                     htmlspecialchars( substr( $descitem,0, $delimiter)) . "</b>" .
-                    htmlspecialchars( substr( $descitem, $delimiter)) . "</br>";
+                    htmlspecialchars( substr( $descitem, $delimiter)) . "<br/>";
             }
             $class = "changelog_row_style_".$row["importance"];
             $buffer.='<tr class="'.$class.'"><td>'.
@@ -144,7 +169,7 @@ class HTMLOutputRenderer{
             $desc.
             "</td></tr>\n";
         }
-        $buffer .= "<table></body></html>";
+        $buffer .= "<table>\n</body>\n</html>";
         $filename = "changelog_".$source.".html";
         $this->linklist[$pagetitle] = $filename;
         file_put_contents($this->exportpath . $filename, $buffer );

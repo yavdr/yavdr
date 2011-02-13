@@ -240,14 +240,17 @@ class channelImport{
     public function updateAllLabels( $forceUpdate = false){
         if ($this->numChanAdded + $this->numChanChanged > 0 || $forceUpdate){
             //FIXME: avoid static sat sources !!!! avoid updating just one C and one T!!!
-            $this->updateAllLabelsOfSource("S19.2E");
-            $this->updateAllLabelsOfSource("S28.2E");
-            if ($this->cableSourceType != "none")
-                $this->updateAllLabelsOfSource("C[".$this->cableSourceType."]");
-            if ($this->terrSourceType != "none")
-                $this->updateAllLabelsOfSource("T[".$this->terrSourceType."]");
+            foreach ($this->config->getValue("sat_positions") as $sat){
+                $this->updateAllLabelsOfSource($sat);
+            }
+            foreach ($this->config->getValue("cable_providers") as $cablep){
+                $this->updateAllLabelsOfSource("C[$cablep]");
+            }
+            foreach ($this->config->getValue("terr_providers") as $terrp){
+                $this->updateAllLabelsOfSource("T[$terrp]");
+            }
         }
-        else{
+	    else{
             print "No need for label update.\n";
         }
     }
