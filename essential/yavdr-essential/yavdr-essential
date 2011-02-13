@@ -43,6 +43,7 @@ vdr-addon-lifeguard
 vdr-genindex
 vdr-plugin-channellists
 vdr-plugin-dummydevice
+vdr-plugin-dynamite
 vdr-plugin-epgsearch
 vdr-plugin-extrecmenu
 vdr-plugin-femon
@@ -87,3 +88,4 @@ uswsusp
 udisks-automounter
 vdpauinfo
 openbox
+linux-backports-modules-alsa-lucid-generic
