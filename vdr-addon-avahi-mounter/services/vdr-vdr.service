@@ -5,7 +5,7 @@
 <service>
        <type>_nfs._tcp</type>
        <port>2049</port>
-       <txt-record>path=/srv/vdr/video.00</txt-record> ## path to shared Folder
+       <txt-record>path=/srv/share/vdr</txt-record> ## path to shared Folder
        <txt-record>subtype=vdr</txt-record> ## subtype
 </service>
 </service-group>
