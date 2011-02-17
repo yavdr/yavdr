@@ -1,0 +1,7 @@
+script
+    /opt/bin/mediaclient --start
+end script
+
+post-stop script
+    /opt/bin/mediaclient --shutdown
+end script
