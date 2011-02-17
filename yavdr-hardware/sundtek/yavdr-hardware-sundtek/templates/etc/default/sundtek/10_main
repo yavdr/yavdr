@@ -1,0 +1,16 @@
+# enable network support
+#
+# default:
+# ENABLE_NETWORK=0
+ENABLE_NETWORK=1
+
+# mount remote sundteks on startup
+# multiple mounts sperated by space
+# unavailable remote devices will be ignored
+#
+# default:
+# MOUNT_SUNDTEK=""
+#
+# example:
+# MOUNT_SUNDTEK="dock.local:0 dock.local:1 localhost:0"
+MOUNT_SUNDTEK="localhost:0"

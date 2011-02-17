@@ -31,8 +31,8 @@ if [ "$1" = "ATTACH" ]; then
         # holgerr: sundtek needs additional time to start up
         sleep 2
         
-        dbset "system.hardware.sundtek.adapter=$ADAPTER"
-        MODE="$(dbget system.hardware.sundtek.mode)"
+        dbset "system.hardware.sundtek.$DEVID.adapter=$ADAPTER"
+        MODE="$(dbget system.hardware.sundtek.$DEVID.mode)"
         if [ -n "$MODE" ]; then
           logger -t "sundtek" set mode $MODE
           /opt/bin/mediaclient -d /dev/dvb/adapter$ADAPTER/frontend0 -D $MODE -m $MODE
@@ -44,8 +44,8 @@ if [ "$1" = "ATTACH" ]; then
     fi
 elif [ "$1" = "DETACH" ]; then
     logger -t "sundtek" detached device $2
-    dbset "system.hardware.sundtek.adapter=removed"
+    dbset "system.hardware.sundtek.$2.adapter=removed"
 elif [ "$1" = "PRESENT" ]; then
     logger -t "sundtek" adapter is present
-    dbset "system.hardware.sundtek.adapter=present"
+    dbset "system.hardware.sundtek.$2.adapter=present"
 fi

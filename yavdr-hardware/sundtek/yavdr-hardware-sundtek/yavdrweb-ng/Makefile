@@ -1,4 +1,4 @@
-YAVDRWEBDIR=../../../../utils/yavdr-utils/yavdrweb-ng/
+YAVDRWEBDIR=../../../../webfrontend/yavdr-webfrontend/yavdrweb-ng/
 
 all: sundtek.so
 
@@ -19,9 +19,10 @@ sundtek.so: get_dvb.o set_dvb.o
 EXTRA_ENV+="PATH=$$PATH:/usr/bin"
 ECPPC=env ${EXTRA_ENV} ecppc -v
 TNTNET=env ${EXTRA_ENV} tntnet
-CXXFLAGS+=-I/usr/include -I/usr/include/yavdr/yavdrweb-ng -I/usr/include/ClearSilver -fPIC -O2
-CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl -fPIC -O2
-LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl
+CXXFLAGS+=-I/usr/include -I/usr/include/yavdr -I/usr/include/ClearSilver -I/usr/include/sundtek -fPIC -g #-O2
+#LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lneo_cs -lpam -lXNVCtrl -lX11 -lXext -ljson -lboost_regex -L/usr/lib/yavdr -lyavdrdb -lsvdrp -lyavdrutils
+
+LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -ljson -L/opt/lib/ -lmediaclient -lmcsimple 
 
 .ecpp.cpp:
 	${ECPPC} ${ECPPFLAGS} ${ECPPFLAGS_CPP} $<

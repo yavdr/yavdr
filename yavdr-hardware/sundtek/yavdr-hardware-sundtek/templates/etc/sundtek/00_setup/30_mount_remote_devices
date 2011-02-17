@@ -1,0 +1,6 @@
+# try to mount devices 
+if [ -n "$MOUNT_SUNDTEK" ]; then
+        for i in $MOUNT_SUNDTEK; do
+                /opt/bin/mediaclient --mount=$i
+        done
+fi
