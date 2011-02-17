@@ -189,6 +189,7 @@ int main(int argc, char *argv[]) {
 	char *devid = NULL;
 	char *serial = NULL;
 	int n = 0;
+	int count = 0;
 
 	obj = media_scan_network(TRUE, NETWORK_SCAN_TIME);
 	uint32_t *cap;
@@ -225,7 +226,7 @@ int main(int argc, char *argv[]) {
 				trim(_serial);
 
 				// mark serial as available
-				dbset("system.hardware.sundtek.found.%i=%s", n, _serial);
+				dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
 				media_scan_info(obj, n, "devicename", (void**) &name);
 				if (verbose)
 					printf("%s", name);
@@ -280,7 +281,7 @@ int main(int argc, char *argv[]) {
 		trim(_serial);
 		if ((device->capabilities & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) {
 			// mark serial as available
-			dbset("system.hardware.sundtek.found.%i=%s", n, _serial);
+			dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
 
 			char *dummy;
 			if (asprintf(&dummy, "system.hardware.sundtek.%s.info.ip", _serial) >= 0) {
