@@ -33,8 +33,8 @@ require_once 'class.HTMLOutputRenderer.php';
 
 if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
 importFromAllChannelSources();
-$x =new rawOutputRenderer();
-$x =new HTMLOutputRenderer();
+$x = new rawOutputRenderer();
+$x = new HTMLOutputRenderer();
 if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
 
 function importFromAllChannelSources(){
@@ -52,9 +52,9 @@ function importFromAllChannelSources(){
             }
             //print $info ."/". $infofile ."/".  $cableProvider."\n";
             $x->importChannelsConfFile( $fileinfo->getFilename(), $cableProvider, "none" );
-            $x->updateAllLabels(true);
         }
     }
+    $x->updateAllLabels();
     unset($x);
 }
 ?>

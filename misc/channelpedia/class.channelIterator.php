@@ -33,22 +33,18 @@ class channelIterator{
 
     function __construct( $label, $source, $orderby = "frequency, modulation, provider, name ASC"){
         $db = dbConnection::getInstance();
-        $this->dbh = $db->getDBHandle();
 
-        $where = "";
+        $where = array();
+        $where["source"] = $source;
         if ($label != "_complete")
-            $where = "x_label = ". $this->dbh->quote($label). " AND ";
-
-        $sqlquery="SELECT * FROM channels WHERE $where source = ". $this->dbh->quote($source) . " ORDER BY " . $orderby;
-        //echo "$label: $sqlquery\n";
-        $this->result = $this->dbh->query($sqlquery);
-        if ($this->result === false)
-            die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
+            $where["x_label"] = $label;
+        $this->result = $db->query2("SELECT * FROM channels", $where, true, $orderby);
     }
 
     public function moveToNextChannel(){
         $this->channel = false;
         if (!$this->result === false){
+            //FIXME: encapsulate access to result fetch
             $this->channel = $this->result->fetch(PDO::FETCH_ASSOC);
         }
         if ($this->channel === false){

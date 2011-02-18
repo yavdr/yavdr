@@ -53,9 +53,9 @@ class config {
             $value = array( "S19.2E", "S28.2E");
         elseif ($key == "cable_providers")
             $value = array(
-                "Germany_KabelBW",
-                "Germany_wilhelmTel",
-                "Germany_kabelDeutschland",
+                "de_KabelBW",
+                "de_WilhelmTel",
+                "de_KabelDeutschland",
             );
         elseif ($key == "terr_providers"){
             $value = array();

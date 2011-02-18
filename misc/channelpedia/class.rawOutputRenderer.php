@@ -55,10 +55,34 @@ class rawOutputRenderer {
     }
 
     private function writeAllChannelSelections2Disk( $source){
-        foreach ( channelGroupingRulesStore::getRules() as $label => $details){
-            $y = new channelListWriter( $label, $source, $details["orderby"] );
-            $y->writeFile();
+        $sourcetype = substr($source, 0, 1);
+        foreach ( channelGroupingRulesStore::getRules() as $title => $config){
+            if ( $sourcetype == "S"){
+                if ( $config["validForSatellites"] === "all" || ( is_array( $config["validForSatellites"] ) && in_array( $source, $config["validForSatellites"], true)) ){
+                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source, $groupsettings["orderby"] );
+                        $y->writeFile();
+                    }
+                }
+            }
+            elseif ( $sourcetype == "C"){
+                if ( $config["validForCableProviders"] === "all" || ( is_array( $config["validForCableProviders"] ) && in_array( $source, $config["validForCableProviders"], true)) ){
+                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source, $groupsettings["orderby"] );
+                        $y->writeFile();
+                    }
+                }
+            }
+            elseif ( $sourcetype == "T"){
+                if ( $config["validForTerrProviders"] === "all" || ( is_array( $config["validForTerrProviders"] ) && in_array( $source, $config["validForTerrProviders"], true)) ){
+                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source, $groupsettings["orderby"] );
+                        $y->writeFile();
+                    }
+                }
+            }
         }
+        //also write a complete channels.conf for this source grouped by transponders, containing all existing channels
         $y = new channelListWriter( "", $source );
         $y->writeFile();
         unset($y);

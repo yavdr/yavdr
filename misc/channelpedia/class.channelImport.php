@@ -28,22 +28,27 @@ class channelImport{
         $cableSourceType,
         $terrSourceType,
         $existingChannelBuffer,
-        $dbh,
+        $db,
         $config,
         $numChanChecked = 0,
         $numChanAdded = 0,
-        $numChanChanged = 0;
+        $numChanChanged = 0,
+        $foundSatellites = array(),
+        $cableProviderPresent = false,
+        $terrProviderPresent = false;
 
     function __construct(){
         $this->config = config::getInstance();
-        $db = dbConnection::getInstance();
-        $this->dbh = $db->getDBHandle();
+        $this->db = dbConnection::getInstance();
     }
 
     public function importChannelsConfFile($username, $cableSourceType, $terrSourceType){
         $this->numChanChecked = 0;
         $this->numChanAdded = 0;
         $this->numChanChanged = 0;
+        $this->foundSatellites = array();
+        $this->cableProviderPresent = false;
+        $this->terrProviderPresent = false;
         print "Processing channels.conf of user $username\n";
         $this->cableSourceType = $cableSourceType;
         $this->terrSourceType = $terrSourceType;
@@ -52,6 +57,16 @@ class channelImport{
         $this->updateExistingChannels();
         print "Summary: Channels checked: $this->numChanChecked / Channels added: $this->numChanAdded / Channels modified: $this->numChanChanged\n";
     }
+
+    private function getWhereArray( $wherelist, $params ){
+        $where_array = array();
+        foreach ( explode(",", $wherelist) as $key ){
+            $key = trim($key);
+            $where_array[$key] = $params[$key];
+        }
+        return $where_array;
+    }
+
     /*
      * tries to update all channel data of the channels
      * listed in array existingChannelBuffer
@@ -61,14 +76,8 @@ class channelImport{
 
         foreach ($this->existingChannelBuffer as $params){
             //print "checking channel ".$params["name"]." for changes: ";
-            $sqlquery = "SELECT * FROM channels WHERE source = ".
-                $this->dbh->quote( $params["source"])." AND nid = ".
-                $this->dbh->quote( $params["nid"])." AND tid = ".
-                $this->dbh->quote( $params["tid"])." AND sid = ".
-                $this->dbh->quote( $params["sid"]);
-            $result = $this->dbh->query($sqlquery);
-            if ($result === false) die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
-            $query = $this->dbh->exec("BEGIN TRANSACTION");
+            $result = $this->db->query2( "SELECT * FROM channels", $this->getWhereArray( "source, nid, tid, sid", $params ) );
+            $query = $this->db->exec("BEGIN TRANSACTION");
             foreach ($result as $row){
                 $changes = array();
                 $update_data = array();
@@ -84,34 +93,26 @@ class channelImport{
                 $update_data[] = "x_last_changed = ".time();
                 if (count ($changes) != 0){
                     //print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
-                    $statement = "UPDATE channels SET ".implode(", " , $update_data)." WHERE source = ".
-                        $this->dbh->quote( $params["source"] )." AND nid = ".
-                        $this->dbh->quote( $params["nid"] )." AND tid = ".
-                        $this->dbh->quote( $params["tid"])." AND sid = ".
-                        $this->dbh->quote( $params["sid"])."; ";
-                    $statement .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp, importance) VALUES
-                        ( ".$this->dbh->quote( $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"]).",
-                         ".$this->dbh->quote( $params["name"]).", ".
-                           $this->dbh->quote( implode("\n",$changes)).", ".
-                           time(). ", ".
-                           $importance.
-                         " );";
-                    //print "$statement\n";
-                    $query = $this->dbh->exec($statement);
-                    if (!$query) {
-                        $errorinfo = $this->dbh->errorInfo();
-                        print "$statement\n";
-                        echo "\nPDO::errorInfo():\n";
-                        print_r($this->dbh->errorInfo());
-                        die("db error on insert\n");
-                    }
+                    $query = $this->db->exec2(
+                        "UPDATE channels SET ".implode(", " , $update_data),
+                        $this->getWhereArray( "source, nid, tid, sid", $params )
+                    );
+                    $query = $this->db->insert( "channel_update_log",
+                        array(
+                            "combined_id"        => $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"],
+                            "name"               => $params["name"],
+                            "update_description" => implode("\n",$changes),
+                            "timestamp"          => time(),
+                            "importance"         => $importance
+                        )
+                    );
                     $this->numChanChanged++;
                 }
                 else{
                     //print "channel unchanged.\n";
                 }
             }
-            $query = $this->dbh->exec("COMMIT TRANSACTION");
+            $query = $this->db->exec("COMMIT TRANSACTION");
         }
     }
 
@@ -126,7 +127,7 @@ class channelImport{
             $handle = fopen ($filename, "r");
             $counter = 1;
             $cgroup = "";
-            $query = $this->dbh->exec("BEGIN TRANSACTION");
+            $query = $this->db->exec("BEGIN TRANSACTION");
             while (!feof($handle)) {
                 //$msg_prefix = "try to add channel $counter : ";
                 $buffer = fgets($handle, 4096);
@@ -157,7 +158,7 @@ class channelImport{
                 }
             }
             fclose ($handle);
-            $query = $this->dbh->exec("COMMIT TRANSACTION");
+            $query = $this->db->exec("COMMIT TRANSACTION");
         }
     }
 
@@ -169,30 +170,29 @@ class channelImport{
 
     private function insertChannelIntoDB ($params, $rawstring){
         $success = true;
-        $unique_channel_id = $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"];
-        foreach ($params as $key => $value)
-            $params[$key]=$this->dbh->quote( $value );
-        $columns = implode( ", ", array_keys($params) );
-        $values = implode( ", ", array_values($params) );
-        $sqltext = "INSERT INTO channels ( " . $columns . " ) VALUES ( " . $values . " );";
-        $sqltext .= "INSERT INTO channel_update_log (combined_id, name, update_description, timestamp, importance) VALUES ( ".
-            $this->dbh->quote( $unique_channel_id ).", ".
-            $params["name"].", ".
-            $this->dbh->quote( "New channel added: " . $rawstring ).", ".
-            time().", 1".
-            " );";
-        $query = $this->dbh->exec($sqltext);
-        if (!$query) {
-            //19 = channel already exists
-            $errorinfo = $this->dbh->errorInfo();
-            if ($errorinfo[1] == 19)
-                $success = false;
-            else{
-                print "$sqltext\n";
-                echo "\nPDO::errorInfo():\n";
-                print_r($this->dbh->errorInfo());
-                die("db error on insert\n");
-            }
+
+        $sourcetype = substr($params["source"], 0, 1);
+        if ($sourcetype == "S"){
+            $this->foundSatellites[$params["source"]] = true;
+        }
+        if ($sourcetype == "C"){
+            $this->cableProviderPresent = true;
+        }
+        if ($sourcetype == "T"){
+            $this->terrProviderPresent = true;
+        }
+
+        $query = $this->db->insert( "channels", $params);
+        //19 = channel already exists, could'nt be inserted
+        if ($query != 19) {
+            $insert_params = array(
+                "combined_id" => $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"],
+                "name" => $params["name"],
+                "update_description" => "New channel added: " . $rawstring,
+                "timestamp" => time(),
+                "importance" => "1"
+            );
+            $query = $this->db->insert( "channel_update_log", $insert_params);
         }
         return $success;
     }
@@ -237,9 +237,26 @@ class channelImport{
         );
     }
 
-    public function updateAllLabels( $forceUpdate = false){
-        if ($this->numChanAdded + $this->numChanChanged > 0 || $forceUpdate){
-            //FIXME: avoid static sat sources !!!! avoid updating just one C and one T!!!
+    public function updateNecessaryLabels(){
+        if ($this->numChanAdded + $this->numChanChanged > 0){
+            foreach ($this->foundSatellites as $sat => $dummy){
+                $this->updateAllLabelsOfSource($sat);
+            }
+            if ($this->cableProviderPresent)
+                $this->updateAllLabelsOfSource("C[".$this->cableSourceType."]");
+            if ($this->terrProviderPresent)
+                $this->updateAllLabelsOfSource("T[".$this->terrSourceType."]");
+        }
+        else{
+            print "No need for label update.\n";
+        }
+    }
+
+    public function updateAllLabels(){
+            //reset all labels in DB to empty strings before updating them
+            $sqlquery = "UPDATE channels SET x_label=''";
+            $result = $this->db->query($sqlquery);
+
             foreach ($this->config->getValue("sat_positions") as $sat){
                 $this->updateAllLabelsOfSource($sat);
             }
@@ -249,23 +266,56 @@ class channelImport{
             foreach ($this->config->getValue("terr_providers") as $terrp){
                 $this->updateAllLabelsOfSource("T[$terrp]");
             }
-        }
-	    else{
-            print "No need for label update.\n";
-        }
     }
 
     private function updateAllLabelsOfSource( $source ){
-
-        foreach ($this->config->getValue("groups") as $label => $details){
-            $this->updateLabelsOfChannelSelection(
-                $label,
-                $source,
-                $caidMode    = $details["caidMode"],
-                $mediaType   = $details["mediaType"],
-                $language    = $details["language"],
-                $customwhere = $details["customwhere"]
-            );
+        $sourcetype = substr($source, 0, 1);
+        foreach ( channelGroupingRulesStore::getRules() as $title => $config){
+            if ( $sourcetype == "S"){
+                if ( $config["validForSatellites"] === "all" || ( is_array( $config["validForSatellites"] ) && in_array( $source, $config["validForSatellites"], true)) ){
+                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                        $this->updateLabelsOfChannelSelection(
+                            $label = $config["country"] . "." . $grouptitle,
+                            $source,
+                            $caidMode    = $groupsettings["caidMode"],
+                            $mediaType   = $groupsettings["mediaType"],
+                            $language    = $config["lang"],
+                            $customwhere = $groupsettings["customwhere"],
+                            $title
+                        );
+                    }
+                }
+            }
+            elseif ( $sourcetype == "C"){
+                if ( $config["validForCableProviders"] === "all" || ( is_array( $config["validForCableProviders"] ) && in_array( $source, $config["validForCableProviders"], true)) ){
+                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                        $this->updateLabelsOfChannelSelection(
+                            $label = $config["country"] . "." . $grouptitle,
+                            $source,
+                            $caidMode    = $groupsettings["caidMode"],
+                            $mediaType   = $groupsettings["mediaType"],
+                            $language    = $config["lang"],
+                            $customwhere = $groupsettings["customwhere"],
+                            $title
+                        );
+                    }
+                }
+            }
+            elseif ( $sourcetype == "T"){
+                if ( $config["validForTerrProviders"] === "all" || ( is_array( $config["validForTerrProviders"] ) && in_array( $source, $config["validForTerrProviders"], true)) ){
+                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                        $this->updateLabelsOfChannelSelection(
+                            $label = $config["country"] . "." . $grouptitle,
+                            $source,
+                            $caidMode    = $groupsettings["caidMode"],
+                            $mediaType   = $groupsettings["mediaType"],
+                            $language    = $config["lang"],
+                            $customwhere = $groupsettings["customwhere"],
+                            $title
+                        );
+                    }
+                }
+            }
         }
     }
 
@@ -285,12 +335,13 @@ class channelImport{
         $caidMode = 0,
         $mediaType = 0,
         $language = "",
-        $customwhere =""
+        $customwhere = "",
+        $title = ""
     ){
         $where = array();
 
         if ($source != "")
-            $where[] = "source = ". $this->dbh->quote( $source );
+            $where[] = "source = ". $this->db->quote( $source );
 
         if ($caidMode != 0)
             $where[] = "caid ". ($caidMode === 2 ? "!= '0'": "= '0'");
@@ -302,12 +353,25 @@ class channelImport{
             $where[] = "apid LIKE '%=$language%'";
 
         //update label tag in the selected channels
-        if (count($where) > 0)
+        if (count($where) > 0){
             $where = "WHERE " . implode( $where, " AND " ) . $customwhere;
+            $where2 = $where . " AND ";
+            $where .= " AND x_label = ''";
+        }
+        else {
+            $where2 = "WHERE ";
+            $where .= "WHERE x_label = ''";
+        }
 
-        $sqlquery="UPDATE channels SET x_label=". $this->dbh->quote($label) ." $where";
-        $result = $this->dbh->query($sqlquery);
-        print "Updating labels for channels belonging to $source / $label.\n";
+        $sqlquery = "SELECT * FROM channels $where2 x_label != '' AND x_label != ". $this->db->quote($label);
+        $result = $this->db->query($sqlquery);
+        foreach ($result as $row){
+            print "*** Warning: Channel '".$row["name"]."' is already tagged with '".$row["x_label"]."' and will now be tagged with '$label'\n";
+        }
+
+        $sqlquery = "UPDATE channels SET x_label=". $this->db->quote($label) ." $where";
+        $result = $this->db->query($sqlquery);
+        print "Updating labels for channels belonging to $title / $source / $label.\n";
     }
 }
 ?>

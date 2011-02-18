@@ -25,14 +25,13 @@
 class HTMLOutputRenderer{
 
     private
-        $dbh,
+        $db,
         $exportpath,
         $config,
         $linklist = array();
 
     function __construct(){
-        $db = dbConnection::getInstance();
-        $this->dbh = $db->getDBHandle();
+        $this->db = dbConnection::getInstance();
         $this->config = config::getInstance();
         $this->exportpath = $this->config->getValue("path").$this->config->getValue("exportfolder")."/html/";
 
@@ -131,7 +130,7 @@ class HTMLOutputRenderer{
         $where = array();
         $wherestring = "";
         if ($source != "")
-            $where[] = " combined_id LIKE ".$this->dbh->quote( $source."%" ) . " ";
+            $where[] = " combined_id LIKE ".$this->db->quote( $source."%" ) . " ";
         else
             $source = "all_sources";
         if ($importance === 1 ){
@@ -144,9 +143,7 @@ class HTMLOutputRenderer{
         $sqlquery=
             "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, importance, update_description ".
             "FROM channel_update_log $wherestring ORDER BY timestamp DESC LIMIT 100";
-        $result = $this->dbh->query($sqlquery);
-        if ($result === false)
-            die("\nDB-Error: " . $this->dbh->errorCode() . " / " . $sqlquery);
+        $result = $this->db->query($sqlquery);
         $pagetitle = 'Changelog for '.$source.'';
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
 
