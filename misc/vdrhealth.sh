@@ -73,6 +73,12 @@ function init {
 
     let COUNT=$COUNT*2
 
+    let VDR_DVB_DEVICE_COUNT_DYNAMITE=$COUNT
+    VDR_DESCR[ $VDR_DVB_DEVICE_COUNT_DYNAMITE ]="Show DVB device changes observed by dynamite plugin"
+    VDR_REGEX[ $VDR_DVB_DEVICE_COUNT_DYNAMITE ]="dynamite:"
+
+    let COUNT=$COUNT*2
+
     let VDR_DVB_DEVICE_DETAILS=$COUNT
     VDR_DESCR[ $VDR_DVB_DEVICE_DETAILS ]="Show details about DVB devices found"
     VDR_REGEX[ $VDR_DVB_DEVICE_DETAILS ]="frontend .+ provides"
@@ -80,7 +86,7 @@ function init {
     let COUNT=$COUNT*2
 
     let VDR_FRONTEND_TIMEOUTS=$COUNT
-    VDR_DESCR[ $VDR_FRONTEND_TIMEOUTS ]="Show details about frontend timeouts"
+    VDR_DESCR[ $VDR_FRONTEND_TIMEOUTS ]="Show details about frontend timeouts (non-existing channels?)"
     VDR_REGEX[ $VDR_FRONTEND_TIMEOUTS ]="frontend .*? timed out while tuning to channel"
 
     let COUNT=$COUNT*2
@@ -92,10 +98,10 @@ function init {
     let MAX_VDR_ID=$COUNT
 
     #example: Maximum Loglevel including all stuff, this line should contain ALL options available
-    let LOGLEVEL_VDR_MAX=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + $VDR_DVB_DEVICE_DETAILS + $VDR_FRONTEND_TIMEOUTS + $VDR_RECORDINGS)
+    let LOGLEVEL_VDR_MAX=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + VDR_DVB_DEVICE_COUNT_DYNAMITE + $VDR_DVB_DEVICE_DETAILS + $VDR_FRONTEND_TIMEOUTS + $VDR_RECORDINGS)
 
     #useful example setting
-    let LOGLEVEL_VDR=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + $VDR_DVB_DEVICE_DETAILS)
+    let LOGLEVEL_VDR=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + VDR_DVB_DEVICE_COUNT_DYNAMITE + $VDR_DVB_DEVICE_DETAILS)
     LOGLEVEL_KERNEL=3
     LOGLEVEL_DVB=1
     LOGLEVEL_VDRSXFE=0
