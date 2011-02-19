@@ -16,4 +16,5 @@ if [ "x$(dbget system.hardware.nvidia.detected)" = "x1" ]; then
       /usr/bin/nvidia-settings --config /etc/yavdr/nvidia-settings --load-config-only
    fi
 fi
+setxkbmap
 end script
