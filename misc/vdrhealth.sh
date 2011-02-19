@@ -98,10 +98,10 @@ function init {
     let MAX_VDR_ID=$COUNT
 
     #example: Maximum Loglevel including all stuff, this line should contain ALL options available
-    let LOGLEVEL_VDR_MAX=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + VDR_DVB_DEVICE_COUNT_DYNAMITE + $VDR_DVB_DEVICE_DETAILS + $VDR_FRONTEND_TIMEOUTS + $VDR_RECORDINGS)
+    let LOGLEVEL_VDR_MAX=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + $VDR_DVB_DEVICE_COUNT_DYNAMITE + $VDR_DVB_DEVICE_DETAILS + $VDR_FRONTEND_TIMEOUTS + $VDR_RECORDINGS)
 
     #useful example setting
-    let LOGLEVEL_VDR=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + VDR_DVB_DEVICE_COUNT_DYNAMITE + $VDR_DVB_DEVICE_DETAILS)
+    let LOGLEVEL_VDR=($VDR_FATAL_EXIT + $VDR_START + $VDR_STOP + $VDR_DVB_DEVICE_COUNT + $VDR_DVB_DEVICE_COUNT_DYNAMITE + $VDR_DVB_DEVICE_DETAILS)
     LOGLEVEL_KERNEL=3
     LOGLEVEL_DVB=1
     LOGLEVEL_VDRSXFE=0
@@ -282,7 +282,7 @@ function main {
     echo "*****************************************************************"
     echo "Output file: $OUTPUTFILE"
     echo "*****************************************************************"
-    echo "Please wait..."
+    echo "Please wait... (this can take a while)"
     #exit
     if [ -e /var/log/syslog.7.gz ]; then
         grepIt "/var/log/syslog.7.gz"
