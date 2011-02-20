@@ -69,9 +69,11 @@ elif [ "$1" == "--unload" ]; then
                 exit 1
             fi
         done
-        for MOD in ${MODULES[$i]} ; do 
-            rmmod $MOD
-        done
+        if [ ! "${MODULES[$i]}" = "" ]; then 
+            for MOD in ${MODULES[$i]} ; do 
+                rmmod $MOD
+            done
+        fi
     done
 elif [ "$1" == "--load" ]; then 
    cat /tmp/.dvbdevicelist | while read LINE ; do 
