@@ -57,8 +57,7 @@ system {
 #define TRUE 1
 #define NETWORK_SCAN_TIME 700
 
-char *
-trim(char *s) {
+char *trim(char *s) {
 	char *end;
 	while (isspace(*s)) {
 		s++;
@@ -79,13 +78,54 @@ trim(char *s) {
 	return s;
 }
 
-static int verbose = 0;
-
-static char * dummySerials[] = {
+static char *dummySerials[] = {
 	"123456", // test sample dvb-c/t
 	"123456789ABCD",// dumnmy serial for earlier sticks
 	NULL
 };
+
+void convertSerial(char *dst, char *src) {
+	strcpy(dst, src);
+	trim(dst);
+}
+
+int isDummySerial(char *serial) {
+	int i = 0;
+	int isDummySerial = 0;
+	while(dummySerials[i] != NULL) {
+		if (strcmp(serial, dummySerials[i]) == 0) {
+			isDummySerial = 1;
+			break;
+		}
+		i++;
+	}
+
+	return isDummySerial;
+}
+
+void capabilities2hdf(uint32_t cap, char* prefix) {
+	dbset("%s.info.capabilities.value=%u", prefix, cap);
+
+	dbset("%s.info.capabilities.analog_tv=%i", prefix, (cap & MEDIA_ANALOG_TV) > 0);
+	dbset("%s.info.capabilities.dvbt=%i", prefix, (cap & MEDIA_DVBT) > 0);
+	dbset("%s.info.capabilities.dvbc=%i", prefix, (cap & MEDIA_DVBC) > 0);
+	//dbset("%s.info.capabilities.isdbt=%i", prefix, (cap & MEDIA_ISDBT) > 0);
+	//dbset("%s.info.capabilities.audio=%i", prefix, (cap & MEDIA_AUDIO) > 0);
+	//dbset("%s.info.capabilities.vbi=%i", prefix, (cap & MEDIA_VBI) > 0);
+	dbset("%s.info.capabilities.radio=%i", prefix, (cap & MEDIA_RADIO) > 0);
+	dbset("%s.info.capabilities.atsc=%i", prefix, (cap & MEDIA_ATSC) > 0);
+	//dbset("%s.info.capabilities.dvrreader=%i", prefix, (cap & MEDIA_DVR_READER) > 0);
+	//dbset("%s.info.capabilities.demux=%i", prefix, (cap & MEDIA_DEMUX) > 0);
+	dbset("%s.info.capabilities.remote=%i", prefix, (cap & MEDIA_REMOTE) > 0);
+	//dbset("%s.info.capabilities.alsad=%i", prefix, (cap & MEDIA_ALSAD) > 0);
+	//dbset("%s.info.capabilities.oss=%i", prefix, (cap & MEDIA_OSS) > 0);
+	//dbset("%s.info.capabilities.rds=%i", prefix, (cap & MEDIA_RDS) > 0);
+	dbset("%s.info.capabilities.digitalci=%i", prefix, (cap & MEDIA_DIGITAL_CI) > 0);
+	dbset("%s.info.capabilities.digitalca=%i", prefix, (cap & MEDIA_DIGITAL_CA) > 0);
+	dbset("%s.info.capabilities.dvbs2=%i", prefix, (cap & MEDIA_DVBS2) > 0);
+}
+
+static int verbose = 0;
 
 int main(int argc, char *argv[]) {
 	int c;
@@ -222,8 +262,16 @@ int main(int argc, char *argv[]) {
 			if ((*cap & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) { // ignore remote dev
 				media_scan_info(obj, n, "serial", (void**) &serial);
 
-				strcpy(_serial, serial);
-				trim(_serial);
+				convertSerial(_serial, serial);
+				if (isDummySerial(_serial) == 1) {
+					strcat(_serial, "-");
+					strcat(_serial, ip);
+
+					  unsigned int i = 0;
+					  while(_serial[i]) {
+					     if (_serial[i] == '.') serial[i] = '_';
+					  }
+				}
 
 				// mark serial as available
 				dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
@@ -231,11 +279,17 @@ int main(int argc, char *argv[]) {
 				if (verbose)
 					printf("%s", name);
 
-				dbset("system.hardware.sundtek.%s.info.ip=%s", _serial, ip);
-				dbset("system.hardware.sundtek.%s.info.id=%s", _serial, id);
-				dbset("system.hardware.sundtek.%s.info.devicename=%s", _serial, name);
-				dbset("system.hardware.sundtek.%s.info.capabilities=%i", _serial, *cap);
-				//dbset("system.hardware.sundtek.%s.info.serial=%s", serial, serial);
+				char *prefix;
+				if (asprintf(&prefix, "system.hardware.sundtek.%s", _serial) >= 0) {
+					dbset("%s.info.ip=%s", prefix, ip);
+					dbset("%s.info.id=%s", prefix, id);
+					dbset("%s.info.devicename=%s", prefix, name);
+
+					//dbset("system.hardware.sundtek.%s.info.serial=%s", serial, serial);
+					capabilities2hdf(*cap, prefix);
+
+					free(prefix);
+				}
 
 				char *dummy;
 				if (asprintf(&dummy, "system.hardware.sundtek.%s.frontend", _serial) >= 0) {
@@ -263,6 +317,7 @@ int main(int argc, char *argv[]) {
 		printf("\nlocal scan:\n");
 
 	int d = i = 0;
+	int localId = 0;
 	int fd;
 	struct media_device_enum *device;
 	fd = net_connect();
@@ -272,43 +327,57 @@ int main(int argc, char *argv[]) {
 		return fd;
 	}
 
-	//while((device=net_device_enum(fd, &i, d))!=0) {  // multi frontend support???
-	//	do {
-	while ((device = net_device_enum(fd, &i, d)) != 0) {
-		if (verbose)
-			printf("\tdevice found - %s", device->devicename);
-		strcpy(_serial, device->serial);
-		trim(_serial);
-		if ((device->capabilities & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) {
-			// mark serial as available
-			dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
-
-			char *dummy;
-			if (asprintf(&dummy, "system.hardware.sundtek.%s.info.ip", _serial) >= 0) {
-				dbremove(dummy);
-				free(dummy);
-			}
-
-			dbset("system.hardware.sundtek.%s.info.id=%i", _serial, i);
-			dbset("system.hardware.sundtek.%s.info.devicename=%s", _serial, device->devicename);
-			dbset("system.hardware.sundtek.%s.info.capabilities=%i", _serial, device->capabilities);
-			if (asprintf(&dummy, "system.hardware.sundtek.%s.mounted", _serial) >= 0) {
-				dbremove(dummy);
-				free(dummy);
-			}
-			//dbset("system.hardware.sundtek.%s.info.serial=%s", device->serial, device->serial);
-		} else {
+	while((device=net_device_enum(fd, &i, d))!=0) {  // multi frontend support???
+		do {
+//	while ((device = net_device_enum(fd, &i, d)) != 0) {
 			if (verbose)
-				printf(" - mounted device");
-			dbset("system.hardware.sundtek.%s.mounted=1", _serial);
-		}
-		dbset("system.hardware.sundtek.%s.frontend=%s", _serial, device->frontend_node);
-		free(device);
-		if (verbose)
-			printf("\n");
+				printf("\tdevice found - %s", device->devicename);
 
-		//	} while((device=net_device_enum(fd, &i, ++d))!=0);
-		//	d=0;
+			if ((device->capabilities & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) {
+				convertSerial(_serial, device->serial);
+				if (isDummySerial(_serial) == 1) {
+					strcat(_serial, "_127_0_0_1");
+				}
+
+				// mark serial as available
+				dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
+
+				char *dummy;
+				char *prefix;
+
+				if (asprintf(&prefix, "system.hardware.sundtek.%s", _serial) >= 0) {
+					if (asprintf(&dummy, "%s.info.ip", prefix) >= 0) {
+						dbremove(dummy);
+						free(dummy);
+					}
+
+					dbset("%s.info.id=%i", prefix, localId);
+					dbset("%s.info.devicename=%s", prefix, device->devicename);
+
+
+					//dbset("system.hardware.sundtek.%s.info.serial=%s", serial, serial);
+					capabilities2hdf(device->capabilities, prefix);
+
+					free(prefix);
+				}
+
+				if (asprintf(&dummy, "system.hardware.sundtek.%s.mounted", _serial) >= 0) {
+					dbremove(dummy);
+					free(dummy);
+				}
+				//dbset("system.hardware.sundtek.%s.info.serial=%s", device->serial, device->serial);
+			} else {
+				if (verbose)
+					printf(" - mounted device");
+				dbset("system.hardware.sundtek.%s.mounted=1", _serial);
+			}
+			dbset("system.hardware.sundtek.%s.frontend=%s", _serial, device->frontend_node);
+			free(device);
+			if (verbose)
+				printf("\n");
+
+			} while((device=net_device_enum(fd, &i, ++d))!=0);
+		d=0;
 		i++;
 		n++;
 	}
