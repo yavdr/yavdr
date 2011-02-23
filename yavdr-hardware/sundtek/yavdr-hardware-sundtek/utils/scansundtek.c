@@ -1,5 +1,3 @@
-//sundtek network scan:
-
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -148,16 +146,6 @@ int main(int argc, char *argv[]) {
 			break;
 
 		switch (c) {
-		case 0:
-			/* If this option set a flag, do nothing else now. */
-			if (long_options[option_index].flag != 0)
-				break;
-			printf("option %s", long_options[option_index].name);
-			if (optarg)
-				printf(" with arg %s", optarg);
-			printf("\n");
-			break;
-
 		case 'v':
 			verbose = 1;
 			break;
