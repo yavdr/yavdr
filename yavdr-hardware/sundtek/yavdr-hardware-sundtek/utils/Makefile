@@ -1,13 +1,13 @@
 
 CFLAGS=-g -fPIC -I.. 
 LDLIBS=-L/usr/lib/yavdr -lyavdrdb -lneo_utl -lmcsimple -L/opt/lib
-all: scansundtek adapter
+all: scansundtek sundtekadapter
 
 .c.o:
 	${C} ${CFLAGS} -c $<
 	
 clean:
-	@rm -rf scansundtek adapter *.o
+	@rm -rf scansundtek sundtekadapter *.o
 
 install:
-	@install scansundtek $(DESTDIR)/usr/bin/
+	@install scansundtek sundtekadapter $(DESTDIR)/usr/bin/
