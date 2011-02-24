@@ -21,13 +21,14 @@ case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
          stop vdr-frontend
-         start vdr-exit-1 EXEC=unload
+         for dev in `find /dev/dvb/adapter?/frontend?` ; do svdrpsend plug dynamite DETD $dev ; done
+         dvb-driver --unload
          ;;
      thaw|resume)
          # reload dvb-driver at resume
+         for dev in `dvb-driver --load 2> /dev/null` ; do svdrpsend plug dynamite ATTD $dev ; done
          start logo-start
          for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
-         start vdr-exit-1 EXEC=load
          start vdr-frontend
          svdrpsend hitk ok
          ;;
