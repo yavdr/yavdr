@@ -20,17 +20,12 @@ esac
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
-         stop vdr-frontend
-         for dev in `find /dev/dvb/adapter?/frontend?` ; do svdrpsend plug dynamite DETD $dev ; done
-         dvb-driver --unload
+         initctl emit s3-suspend
          ;;
      thaw|resume)
-         # reload dvb-driver at resume
-         for dev in `dvb-driver --load 2> /dev/null` ; do svdrpsend plug dynamite ATTD $dev ; done
-         start logo-start
+         echo "vdr is going to wakeup"
+         initctl emit s3-resume
          for INTERFACE in `ifquery --list`; do restart network-interface INTERFACE=$INTERFACE ; done
-         start vdr-frontend
-         svdrpsend hitk ok
          ;;
      *)  echo "Irgendwer ruft mich total falsch auf."
          ;;

@@ -1,4 +1,4 @@
-script
+pre-start script
     /opt/bin/mediaclient --start
 end script
 

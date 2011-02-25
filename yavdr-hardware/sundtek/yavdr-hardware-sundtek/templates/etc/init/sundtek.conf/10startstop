@@ -1,2 +1,2 @@
-start on local-filesystems  #mounted MOUNTPOINT=/ reicht nicht
-stop on runlevel [016]
+start on (local-filesystems or s3-resume)
+stop on (runlevel [016] or stopped dvb-driver)

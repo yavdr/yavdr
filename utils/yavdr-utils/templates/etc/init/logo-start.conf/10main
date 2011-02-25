@@ -1,5 +1,5 @@
-start on (openbox-started or starting vdr)
-stop on starting vdr-frontend
+start on (openbox-started or s3-resume)
+stop on (started vdr-frontend or started logo-stop)
 
 
 env DISPLAY=:1
