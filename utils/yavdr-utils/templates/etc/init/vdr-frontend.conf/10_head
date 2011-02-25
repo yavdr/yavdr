@@ -5,8 +5,8 @@ description     "yavdr-frontend"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
 <?cs if:((!?vdr.frontend || vdr.frontend != "headless") && (vdr.frontend != "xbmc")) ?>
-start on ((started vdr and stopped openbox-tools and sound-card-added) or vdr-frontend-restart)
-stop on (stopping vdr or stopping openbox)
+start on ((started vdr and stopped openbox-tools) or vdr-frontend-restart or s3-resume)
+stop on stopping vdr or s3-suspend or stopping openbox
 
 nice -10
 respawn
