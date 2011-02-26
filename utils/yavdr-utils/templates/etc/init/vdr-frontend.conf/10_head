@@ -10,4 +10,7 @@ stop on stopping vdr or s3-suspend or stopping openbox
 
 nice -10
 respawn
+
+env HOME=/var/lib/vdr
+#env XINE_BUFFER_LOG=1
 <?cs /if ?>
