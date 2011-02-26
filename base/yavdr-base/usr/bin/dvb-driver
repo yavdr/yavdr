@@ -1,7 +1,7 @@
 #!/bin/bash
 
 get-module-list () {
-    for MOD in $(modprobe --show-depends ${1//*=} | sed -e's/insmod //g'| tac) 
+    for MOD in $(modprobe --show-depends ${1} | sed -e's/insmod //g'| tac) 
     do 
         basename $MOD .ko
     done |  tr '\n' ' '
