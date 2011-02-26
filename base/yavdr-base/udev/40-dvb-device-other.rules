@@ -1,0 +1,1 @@
+KERNEL=="dvb?.frontend?", SUBSYSTEM!="usb", ATTRS{modalias}=="*", ENV{DVBMODULE}="%s{modalias}"

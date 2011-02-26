@@ -1,0 +1,4 @@
+#!/bin/bash
+MODULE=$(grep -i "usb:v${1}p${2}*" /lib/modules/`uname -r`/modules.alias)
+echo "${MODULE//* }"
+
