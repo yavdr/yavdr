@@ -365,7 +365,7 @@ int main(int argc, char *argv[])
   if (optind < argc)
   {
     setlocale(LC_ALL, "");
-    bindtextdomain("yavdr", "/usr/share/yavdr/locale");
+//    bindtextdomain("yavdr", "/usr/share/yavdr/locale");
     textdomain("yavdr");
 
     if (!output)
