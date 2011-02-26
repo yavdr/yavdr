@@ -33,8 +33,8 @@ get_devices () {
 
         if [ -e "/sys/class/dvb/dvb${ADAPTER_NO}.frontend${FRONTEND_NO}/device/uevent" ]; then
             DEVICE[$NO]="$DEV"
-            MODALIAS=$(grep MODALIAS /sys/class/dvb/dvb${ADAPTER_NO}.${FRONTEND}/device/uevent)
-            MODULES[$NO]=$(clean-module-list $(get-module-list $MODALIAS))
+            MODALIAS=$(udevadm info --query=env -n $DEV | grep DVBMODULE)
+            MODULES[$NO]=$(clean-module-list $(get-module-list ${MODALIAS//DVBMODULE=}))
             ALL_MODULES[$NO]=$(get-module-list $MODALIAS)
         else
             DEVICE[$NO]="$DEV"
@@ -57,6 +57,7 @@ elif [ "$1" == "--list-all" ]; then
    done
 elif [ "$1" == "--unload" ]; then 
     get_devices
+    rm -f /tmp/.dvbdevicelist
     for (( i=0 ; i < ${#DEVICE[@]} ; i++ )) ; do
         echo "${DEVICE[$i]}:${MODULES[$i]}" >> /tmp/.dvbdevicelist
         COUNT=0
