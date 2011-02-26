@@ -1,1 +1,1 @@
-KERNEL=="dvb?.frontend?", SUBSYSTEM=="usb", ATTRS{vendor}=="*", ATTRS{device}=="*", PROGRAM="dvbmon_helper %s{idVendor} %s{idProduct}" , ENV{DVBMODULE}="%c"
+KERNEL=="dvb?.frontend?", SUBSYSTEM=="usb", ATTRS{idVendor}=="*", ATTRS{idProduct}=="*", PROGRAM="dvbmon_helper %s{idVendor} %s{idProduct}" , ENV{DVBMODULE}="%c"
