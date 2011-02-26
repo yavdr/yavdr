@@ -1,6 +1,10 @@
+# ignore usb devices
+SUBSYSTEMS=="usb", GOTO="end"
+
 # fill DVBMODULE with modalias or module name for frontend
-KERNEL=="dvb?.frontend?", SUBSYSTEMS=="pci", ATTRS{modalias}=="*", ENV{DVBMODULE}="%s{modalias}"
+KERNEL=="dvb?.frontend?", ATTRS{modalias}=="*", ENV{DVBMODULE}="%s{modalias}"
 
 # switch on monitoring SkyStar 2 2.6
 ENV{DVBMODULE}=="pci:v000013D0d00002103sv000013D0sd00002103bc02sc80i00", ENV{dynamite_timeout}="10", ENV{dynamite_timeout_handler_arg}="%E{DVBMODULE}"
 
+LABEL="end"
