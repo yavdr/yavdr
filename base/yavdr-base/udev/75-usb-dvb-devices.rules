@@ -1,1 +1,2 @@
-KERNEL=="dvb?.frontend?", SUBSYSTEM=="usb", ATTRS{idVendor}=="*", ATTRS{idProduct}=="*", PROGRAM="dvbmon_helper %s{idVendor} %s{idProduct}" , ENV{DVBMODULE}="%c"
+# restart vdr if dvb device added after vdr is running
+KERNEL=="dvb?.frontend?", SUBSYSTEMS=="usb", ATTRS{vendor}=="*", ATTRS{device}=="*", PROGRAM="dvbmon_helper %s{vendor} %s{device}" , ENV{DVBMODULE}="%c"
