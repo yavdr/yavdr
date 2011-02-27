@@ -35,7 +35,7 @@ get_devices () {
             DEVICE[$NO]="$DEV"
             MODALIAS=$(udevadm info --query=env -n $DEV | grep DVBMODULE)
             MODULES[$NO]=$(clean-module-list $(get-module-list ${MODALIAS//DVBMODULE=}))
-            ALL_MODULES[$NO]=$(get-module-list $MODALIAS)
+            ALL_MODULES[$NO]=$(get-module-list ${MODALIAS//DVBMODULE=})
         else
             DEVICE[$NO]="$DEV"
         fi
