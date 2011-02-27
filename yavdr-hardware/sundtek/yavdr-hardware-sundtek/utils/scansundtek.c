@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <syslog.h>
 
 #include <sys/socket.h>
 #include <sys/ioctl.h>
@@ -13,6 +14,16 @@
 
 #include <yavdr/db-utils/dbset.h>
 #include <yavdr/db-utils/dbremove.h>
+
+static char *dummySerials[] = {
+	"123456", // test sample dvb-c/t
+	"123456789ABCD",// dumnmy serial for earlier sticks
+	NULL
+};
+
+
+static int verbose = 0;
+static int attach = -1;
 
 
 /*
@@ -76,12 +87,6 @@ char *trim(char *s) {
 	return s;
 }
 
-static char *dummySerials[] = {
-	"123456", // test sample dvb-c/t
-	"123456789ABCD",// dumnmy serial for earlier sticks
-	NULL
-};
-
 void convertSerial(char *dst, char *src) {
 	strcpy(dst, src);
 	trim(dst);
@@ -123,23 +128,84 @@ void capabilities2hdf(uint32_t cap, char* prefix) {
 	dbset("%s.info.capabilities.dvbs2=%i", prefix, (cap & MEDIA_DVBS2) > 0);
 }
 
-static int verbose = 0;
+void writeDevice2HDF(struct media_device_enum *device, int *count) {
+	char _serial[100];
+
+	if (verbose) {
+		syslog(LOG_ERR, "device found - %s", device->devicename);
+		printf("\tdevice found - %s", device->devicename);
+	}
+	convertSerial(_serial, device->serial);
+	if (isDummySerial(_serial) == 1) {
+		strcat(_serial, "_127_0_0_1");
+	}
+
+	if ((device->capabilities & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) {
+		// mark serial as available
+		dbset("system.hardware.sundtek.found.%i=%s", (*count)++, _serial);
+
+		char *dummy;
+		char *prefix;
+
+		if (asprintf(&prefix, "system.hardware.sundtek.%s", _serial) >= 0) {
+			if (asprintf(&dummy, "%s.info.ip", prefix) >= 0) { // a remote dev ist now a lokal on
+				dbremove(dummy);
+				free(dummy);
+			}
+
+			dbset("%s.info.id=%i", prefix, device->id);
+			dbset("%s.info.devicename=%s", prefix, device->devicename);
+
+			dbset("system.hardware.sundtek.%s.info.serial=%s", _serial, device->serial);
+			capabilities2hdf(device->capabilities, prefix);
+
+			free(prefix);
+		}
+
+		if (asprintf(&dummy, "system.hardware.sundtek.%s.mounted", _serial) >= 0) {
+			dbremove(dummy);
+			free(dummy);
+		}
+		//dbset("system.hardware.sundtek.%s.info.serial=%s", device->serial, device->serial);
+	} else {
+		if (verbose) {
+			syslog(LOG_ERR, "mounted device %s", device->devicename);
+			printf(" - mounted device");
+		}
+		dbset("system.hardware.sundtek.%s.mounted=1", _serial);
+	}
+	dbset("system.hardware.sundtek.%s.frontend=%s", _serial, device->frontend_node);
+	free(device);
+	if (verbose)
+		printf("\n");
+
+}
 
 int main(int argc, char *argv[]) {
 	int c;
 
 	char _serial[100];
+	int32_t deviceId = -1;
 
+	openlog(argv[0], LOG_PID | LOG_CONS, LOG_USER);
+	syslog(LOG_ERR, "started");
+	int j = 0;
+	for ( j = 0; j < argc; j++) {
+		syslog(LOG_ERR, "param %i: %s", j, argv[j]);
+	}
 	while (1) {
 		static struct option long_options[] = {
 			/* These options set a flag. */
 			{ "verbose", no_argument, &verbose, 1 },
+			{ "attach", no_argument, &attach, 1 },
+			{ "detach", no_argument, &attach, 0 },
+			{ "device", required_argument, 0, 'd'},
 			{ 0, 0, 0, 0 }
 		};
 		/* getopt_long stores the option index here. */
 		int option_index = 0;
 
-		c = getopt_long(argc, argv, "bv", long_options, &option_index);
+		c = getopt_long(argc, argv, "vd:a", long_options, &option_index);
 
 		/* Detect the end of the options. */
 		if (c == -1)
@@ -149,7 +215,11 @@ int main(int argc, char *argv[]) {
 		case 'v':
 			verbose = 1;
 			break;
-
+		case 'd':
+			syslog(LOG_ERR, "looking for ID %s\n", optarg);
+			deviceId = strtol(optarg, NULL, 10);
+			syslog(LOG_ERR, "looking for ID %i\n", deviceId);
+			break;
 			/*
 			 case 'b':
 			 puts("option -b\n");
@@ -175,6 +245,8 @@ int main(int argc, char *argv[]) {
 			 abort();*/
 		}
 	}
+
+
 
 	struct ifreq *ifr;
 	struct ifconf ifc;
@@ -219,159 +291,150 @@ int main(int argc, char *argv[]) {
 	int n = 0;
 	int count = 0;
 
-	obj = media_scan_network(TRUE, NETWORK_SCAN_TIME);
-	uint32_t *cap;
-
-	//TODO: Cleanup hdf
-	dbremove("system.hardware.sundtek.found");
-
-	if (verbose)
-		printf("network scan:\n");
-	// scan network
-	while (media_scan_info(obj, n, "ip", (void**) &ip) == 0) {
-		media_scan_info(obj, n, "id", (void**) &id);
-		if (verbose)
-			printf("\tdevice found at %s:%s - ", ip, id);
-
-		// checking local interfaces
-		int isLocal = 0;
-		for (i = 0; i < numif; i++) {
-			struct ifreq *r = &ifr[i];
-			struct sockaddr_in *sin = (struct sockaddr_in *) &r->ifr_addr;
-
-			if (strcmp(ip, inet_ntoa(sin->sin_addr)) == 0) {
-				isLocal = 1;
-				break;
-			}
-		}
-
-		if (!isLocal) {
-			media_scan_info(obj, n, "capabilities", (void**) &cap);
-			if ((*cap & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) { // ignore remote dev
-				media_scan_info(obj, n, "serial", (void**) &serial);
-
-				convertSerial(_serial, serial);
-				if (isDummySerial(_serial) == 1) {
-					strcat(_serial, "-");
-					strcat(_serial, ip);
-
-					  unsigned int i = 0;
-					  while(_serial[i]) {
-					     if (_serial[i] == '.') serial[i] = '_';
-					  }
-				}
-
-				// mark serial as available
-				dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
-				media_scan_info(obj, n, "devicename", (void**) &name);
-				if (verbose)
-					printf("%s", name);
-
-				char *prefix;
-				if (asprintf(&prefix, "system.hardware.sundtek.%s", _serial) >= 0) {
-					dbset("%s.info.ip=%s", prefix, ip);
-					dbset("%s.info.id=%s", prefix, id);
-					dbset("%s.info.devicename=%s", prefix, name);
-
-					//dbset("system.hardware.sundtek.%s.info.serial=%s", serial, serial);
-					capabilities2hdf(*cap, prefix);
-
-					free(prefix);
-				}
-
-				char *dummy;
-				if (asprintf(&dummy, "system.hardware.sundtek.%s.frontend", _serial) >= 0) {
-					dbremove(dummy);
-					free(dummy);
-				}
-			} else {
-				if (verbose)
-					printf("ignored remote mounted device");
-			}
-		} else {
-			if (verbose)
-				printf("ignored local device");
-		}
-		if (verbose)
-			printf("\n");
-
-		n++;
-	}
-	media_scan_free(&obj);
-	free(ifr);
-
-	// local scan
-	if (verbose)
-		printf("\nlocal scan:\n");
-
 	int d = i = 0;
 	int localId = 0;
 	int fd;
 	struct media_device_enum *device;
-	fd = net_connect();
-	if (fd < 0) {
+
+	// scan for all devices
+	if (deviceId == -1) {
+		obj = media_scan_network(TRUE, NETWORK_SCAN_TIME);
+		uint32_t *cap;
+
+		//TODO: Cleanup hdf
+		dbremove("system.hardware.sundtek.found");
+
 		if (verbose)
-				printf("\tcan't connect to daemon!\n");
-		return fd;
-	}
+			printf("network scan:\n");
+		// scan network
+		while (media_scan_info(obj, n, "ip", (void**) &ip) == 0) {
+			media_scan_info(obj, n, "id", (void**) &id);
+			if (verbose) {
+				syslog(LOG_ERR, "\tdevice found at %s:%s - ", ip, id);
+				printf("\tdevice found at %s:%s - ", ip, id);
+			}
+			// checking local interfaces
+			int isLocal = 0;
+			for (i = 0; i < numif; i++) {
+				struct ifreq *r = &ifr[i];
+				struct sockaddr_in *sin = (struct sockaddr_in *) &r->ifr_addr;
 
-	while((device=net_device_enum(fd, &i, d))!=0) {  // multi frontend support???
-		do {
-//	while ((device = net_device_enum(fd, &i, d)) != 0) {
-			if (verbose)
-				printf("\tdevice found - %s", device->devicename);
-
-			if ((device->capabilities & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) {
-				convertSerial(_serial, device->serial);
-				if (isDummySerial(_serial) == 1) {
-					strcat(_serial, "_127_0_0_1");
+				if (strcmp(ip, inet_ntoa(sin->sin_addr)) == 0) {
+					isLocal = 1;
+					break;
 				}
+			}
 
-				// mark serial as available
-				dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
+			if (!isLocal) {
+				media_scan_info(obj, n, "capabilities", (void**) &cap);
+				if ((*cap & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) { // ignore remote dev
+					media_scan_info(obj, n, "serial", (void**) &serial);
 
-				char *dummy;
-				char *prefix;
+					convertSerial(_serial, serial);
+					if (isDummySerial(_serial) == 1) {
+						strcat(_serial, "-");
+						strcat(_serial, ip);
 
-				if (asprintf(&prefix, "system.hardware.sundtek.%s", _serial) >= 0) {
-					if (asprintf(&dummy, "%s.info.ip", prefix) >= 0) {
+						  unsigned int i = 0;
+						  while(_serial[i]) {
+							 if (_serial[i] == '.') serial[i] = '_';
+						  }
+					}
+
+					// mark serial as available
+					dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
+					media_scan_info(obj, n, "devicename", (void**) &name);
+					if (verbose) {
+						syslog(LOG_ERR, "device found at %s:%s - ", ip, id);
+						printf("%s", name);
+					}
+					char *prefix;
+					if (asprintf(&prefix, "system.hardware.sundtek.%s", _serial) >= 0) {
+						dbset("%s.info.ip=%s", prefix, ip);
+						dbset("%s.info.id=%s", prefix, id);
+						dbset("%s.info.devicename=%s", prefix, name);
+
+						dbset("system.hardware.sundtek.%s.info.serial=%s", _serial, serial);
+						capabilities2hdf(*cap, prefix);
+
+						free(prefix);
+					}
+
+					char *dummy;
+					if (asprintf(&dummy, "system.hardware.sundtek.%s.frontend", _serial) >= 0) {
 						dbremove(dummy);
 						free(dummy);
 					}
-
-					dbset("%s.info.id=%i", prefix, localId);
-					dbset("%s.info.devicename=%s", prefix, device->devicename);
-
-
-					//dbset("system.hardware.sundtek.%s.info.serial=%s", serial, serial);
-					capabilities2hdf(device->capabilities, prefix);
-
-					free(prefix);
+				} else {
+					if (verbose) {
+						syslog(LOG_ERR, "ignored remote mounted device");
+						printf("ignored remote mounted device");
+					}
 				}
-
-				if (asprintf(&dummy, "system.hardware.sundtek.%s.mounted", _serial) >= 0) {
-					dbremove(dummy);
-					free(dummy);
-				}
-				//dbset("system.hardware.sundtek.%s.info.serial=%s", device->serial, device->serial);
 			} else {
-				if (verbose)
-					printf(" - mounted device");
-				dbset("system.hardware.sundtek.%s.mounted=1", _serial);
+				if (verbose) {
+					syslog(LOG_ERR, "ignored local device");
+					printf("ignored local device");
+				}
 			}
-			dbset("system.hardware.sundtek.%s.frontend=%s", _serial, device->frontend_node);
-			free(device);
 			if (verbose)
 				printf("\n");
 
-			} while((device=net_device_enum(fd, &i, ++d))!=0);
-		d=0;
-		i++;
-		n++;
-	}
-	net_close(fd);
-	if (verbose)
-		printf("\n");
+			n++;
+		}
+		media_scan_free(&obj);
+		free(ifr);
 
+		// local scan
+		if (verbose)
+			printf("\nlocal scan:\n");
+
+		fd = net_connect();
+		if (fd < 0) {
+			if (verbose)
+					printf("\tcan't connect to daemon!\n");
+			return fd;
+		}
+
+		while((device=net_device_enum(fd, &i, d))!=0) {  // multi frontend support???
+			do {
+	//	while ((device = net_device_enum(fd, &i, d)) != 0) {
+
+				writeDevice2HDF(device, &count);
+
+			} while((device=net_device_enum(fd, &i, ++d))!=0);
+			d=0;
+			i++;
+			n++;
+		}
+		net_close(fd);
+		if (verbose)
+			printf("\n");
+	} else {
+		if (attach == 1) { // new device is attached
+
+			fd = net_connect();
+			if (fd < 0) {
+				if (verbose)
+						printf("\tcan't connect to daemon!\n");
+				return fd;
+			}
+
+			while((device=net_device_enum(fd, &i, d))!=0) {  // multi frontend support???
+				do {
+					if (device->id == deviceId) {
+						writeDevice2HDF(device, &count);
+					}
+				}while((device=net_device_enum(fd, &i, ++d))!=0);
+				d=0;
+				i++;
+				n++;
+			}
+			net_close(fd);
+
+		} else if (attach == 0) { // device is detached
+
+		}
+	}
 	return 0;
 }
