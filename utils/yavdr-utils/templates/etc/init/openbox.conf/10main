@@ -3,21 +3,8 @@ start on stopped displaydevice
 stop on runlevel [016]
 
 respawn
-
 env DISPLAY=:1
-export DISPLAY
-
 env XORGCONFIG=/etc/X11/xorg.conf.yavdr
-export XORGCONFIG
-
-# fix tearing and snow ?
-env __GL_SYNC_TO_VBLANK=1
-export __GL_SYNC_TO_VBLANK
-env __GL_SYNC_DISPLAY_DEVICE="<?cs var:system.x11.display.default ?>"
-export __GL_SYNC_DISPLAY_DEVICE
-env VDPAU_NVIDIA_NO_OVERLAY=1
-export VDPAU_NVIDIA_NO_OVERLAY
-
 
 script
 # D-bus
