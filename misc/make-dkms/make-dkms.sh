@@ -12,6 +12,54 @@
 # and adapt to the kernel you like to compile for
 ########################
 
+update-v4l () {
+echo "v4l-dvb: Update started"
+# BEWARE this is more a notepad to remamber what has to be done, if it works you are lucky !!!
+if [ -d updates/v4l-dvb -a -d updates/media_build ]; then 
+    cd updates/v4l-dvb
+    git pull
+    cd ..
+else 
+    cd updates/
+    git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git v4l-dvb
+    cd v4l-dvb
+    git remote add linuxtv git://linuxtv.org/media_tree.git
+    git remote update
+    git checkout -b media-master remotes/linuxtv/staging/for_v2.6.39
+    git clone git://linuxtv.org/media_build.git
+fi
+
+cd media_build/linux
+make tar DIR=../../v4l-dvb &> /dev/null
+make untar &> /dev/null
+cd ..
+rm -rf ../../repositories/v4l-dvb/
+mkdir ../../repositories/v4l-dvb
+tar c * --exclude=".hg" --exclude ".git" | tar x -C ../../repositories/v4l-dvb
+VERSION=git`cat .git/refs/heads/master`
+cd ../..
+echo $VERSION > repositories/v4l-dvb.version
+echo "v4l-dvb: Update ended. Now: $VERSION"
+}
+
+update-s2-liplianin () {
+echo "s2-liplianin: Update started"
+if [ -d updates/s2-liplianin ]; then 
+     cd updates/s2-liplianin
+     hg pull
+     hg update
+     cd ..
+else 
+     hg clone http://mercurial.intuxication.org/hg/s2-liplianin
+fi 
+rm -rf ../repositories/s2-liplianin
+tar c s2-liplianin --exclude=".hg" --exclude ".git" | tar x -C ../repositories/
+VERSION=`hg identify -n s2-liplianin | cut -d'+' -f1`
+echo $VERSION > ../repositories/s2-liplianin.version
+cd ..
+echo "s2-liplianin: Update ended. Now: $VERSION"
+}
+
 KERNEL=2.6.32-28-generic
 if [ -z "$KERNEL" ]; then
     if [ ! -z "$2" ]; then
@@ -32,16 +80,20 @@ case $1 in
 
            exit 0
            ;;
+   update) 
+           echo -n "BEWARE: the code to do this has more note pad quality. Stop here "
+           read BLA
+           mkdir -p updates
+           update-v4l
+           update-s2-liplianin
+           exit 0
+           ;;
    *)
            exit 1
            ;;
 esac
-if [ "$REPO" = "s2-liplianin" ]; then 
-    VERSION=0~`/bin/date --utc +%0Y%0m%0d`.`hg identify -n repositories/$REPO | cut -d'+' -f1`
-else 
-    VERSION=0~`/bin/date --utc +%0Y%0m%0d`.git`cat repositories/$REPO/.git/refs/heads/master`
-fi
 
+VERSION=0~`/bin/date --utc +%0Y%0m%0d`.$(cat repositories/$REPO.version)
 
 
 PATCHES=( `find patches/$REPO/* -name *.patch | tac` )
