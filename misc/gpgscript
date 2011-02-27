@@ -1,0 +1,4 @@
+#!/bin/bash
+gpg --batch --quiet --passphrase-file ~/.gnupg/passphrase \
+--clearsign --armor --textmode
+
