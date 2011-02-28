@@ -9,6 +9,7 @@ avahi-discover
 build-essential
 cpufrequtils
 ethtool
+eventlircd
 firefox
 graphtft-fe
 irserver
@@ -39,8 +40,8 @@ update-manager-core
 ureadahead
 vdr
 vdr-addon-acpiwakeup
-vdr-addon-noad
 vdr-addon-lifeguard
+vdr-addon-markad
 vdr-genindex
 vdr-plugin-channellists
 vdr-plugin-dummydevice
@@ -62,6 +63,7 @@ vdr-plugin-control
 vdr-skin-pearlhd
 vdr-skins-speciallogos
 vdr-tft-anthraize
+vdr-tft-narrowhd
 vdr-tft-pearlhd
 vdr-tft-standard
 vdr-xpmlogos
