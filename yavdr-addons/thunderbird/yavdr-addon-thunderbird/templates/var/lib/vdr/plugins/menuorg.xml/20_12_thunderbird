@@ -1,0 +1,1 @@
+        <command name="Thunderbird-Mail" execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=thunderbird &amp;> /dev/null " />
