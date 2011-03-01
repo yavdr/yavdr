@@ -88,21 +88,17 @@ class ZeroconfBrowser(object):
 	def resolved(self, interface, protocol, name, type,
 				 domain, host, aprotocol, address,
 				 port, txt, flags):
+		syslog("Resolved type %s on %s" % (type, host))
 		if self.localhost == host.split(".")[0]: return
-		path = []
-		subtype = []
-		for t in txt:
-			x = "".join((chr(c) for c in t))
-			(key, value) = x.split("=")
-			if key == "path":
-				path = value
-			elif key == "subtype":
-				subtype = value
-
-		mount = Mount(host, path, subtype)
-		mount.create()
-		self.mounts[name] = mount
-		syslog("Service resolved: %s:%s nach %s" % (host, path, name))
+		if type == '_nfs._tcp':
+			mount = Mount(host, txt)
+			mount.use()
+			self.mounts[name] = mount
+		elif type == '_dvb._tcp':
+			device = DvbDevice(host, txt)
+			device.use()
+			self.mounts[name] = device
+		syslog("Service resolved: %s nach %s" % (host, name))
 		
 	def resolve_error(self, exception):
 		syslog("Resolution error:", exception)
@@ -114,17 +110,24 @@ class ZeroconfBrowser(object):
 		with self.lock:
 			mount = self.mounts.get(name, None)
 			if mount is not None:
-				mount.remove()
+				mount.unuse()
 				del self.mounts[name]
 				#syslog("Service removed: %s" % (name))
-
-
 	def allfornow(self):
 		syslog("allfornow")
 
 class Mount:
-	def __init__(self, host, path, subtype):
+	def __init__(self, host, txt):
 		syslog("Mount created")
+		path = []
+		subtype = []
+		for t in txt:
+			x = "".join((chr(c) for c in t))
+			(key, value) = x.split("=")
+			if key == "path":
+				path = value
+			elif key == "subtype":
+				subtype = value
 		self.subtype = subtype
 		self.remote = host + ":" + path
 		if subtype == "vdr":
@@ -140,7 +143,7 @@ class Mount:
 		self.local += host.split('.')[0]
 		syslog("media is %s for %s:%s" % (self.local, host, path))
 
-	def create(self):
+	def use(self):
 		syslog("create")
 		p1 = subprocess.Popen(["mount"], stdout=subprocess.PIPE)
 		mounts = subprocess.Popen(["grep", "type nfs"],
@@ -171,15 +174,43 @@ class Mount:
 		time.sleep(3)
 		os.utime("/srv/vdr/video.00/.update", None)
 
-	def remove(self):
-		try:
-			os.remove(self.vdr)
-		except OSError as (errno, strerror):
-			if errno != 2:
-				syslog("I/O error({0}): {1}".format(errno, strerror))
+	def unuse(self):
 		subprocess.Popen(["umount", self.local])
-		# os.rmdir(self.local)
+		os.rmdir(self.local)
 		self.notify()
+
+class DvbDevice:
+	def __init__(self, host, txt):
+		syslog("DvbDevice created")
+		device = []
+		serial = []
+		for t in txt:
+			x = "".join((chr(c) for c in t))
+			(key, value) = x.split("=")
+			if key == "id":
+				device = value
+			elif key == "serial":
+				serial = value
+		self.__use = "mount_sundtek.sh --host=%s --id=%s --serial=%s" % (host, device, serial)		
+		self.__unuse = "unmount_sundtek.sh --host=%s --id=%s --serial=%s" % (host, device, serial)		
+
+		syslog("dvbdevice on %s with %s:%s" % (host, device, serial))
+
+	def use(self):
+		syslog("create dvb")
+		try:
+			subprocess.call(self.__use)
+		except OSError as (errno, strerror):
+			syslog("unable to mount: %s" % strerror)
+			return
+
+	def unuse(self):
+		syslog("remove dvb")
+		try:
+			subprocess.call(self.__unuse)
+		except OSError as (errno, strerror):
+			syslog("unable to mount: %s" % strerror)
+			return
 
 class StaticMounter:
 	def __init__(self):
@@ -288,5 +319,6 @@ staticMounter()
 # start main loop
 browser = ZeroconfBrowser()
 browser.browse('_nfs._tcp')
+browser.browse('_dvb._tcp')
 browser()
 
