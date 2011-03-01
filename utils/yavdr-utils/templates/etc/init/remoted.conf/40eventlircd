@@ -1,0 +1,24 @@
+<?cs if:(system.remoted == "eventlircd") ?>
+# Starts Eventlircd daemon.
+#
+# Eventlircd is used to control different
+# infrared receivers and transceivers.
+
+description     "Eventlircd Daemon"
+author          "Gerald Dachs <gda@dachsweb.de>"
+
+start on filesystem
+stop on runlevel [016]
+
+respawn
+
+script
+test -f /usr/sbin/eventlircd || exit 0
+mkdir -p /var/run/lirc
+
+modprobe uinput
+
+exec /usr/sbin/eventlircd -f
+end script
+<?cs /if ?>
+
