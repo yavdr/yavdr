@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if ! grep -q "^[^#]*uinput" /etc/modules; then
+    echo "uinput" >>/etc/modules
+fi
