@@ -4,7 +4,7 @@
 # Eventlircd is used to control different
 # infrared receivers and transceivers.
 
-description     "Eventlircd Daemon"
+description     "Eventlirc Daemon"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
 start on filesystem
