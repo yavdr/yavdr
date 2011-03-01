@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/sbin/initctl emit -n start-xorg xorg_driver=$xorg_driver
+

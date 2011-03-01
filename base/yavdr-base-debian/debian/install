@@ -1,5 +1,5 @@
 udev/*.rules		/lib/udev/rules.d
-udev/usb_dvb_module	/lib/udev
+udev/helper/*		/lib/udev
 etc
 usr
 images/animation/*.png	usr/share/yavdr/images/animation/

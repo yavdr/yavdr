@@ -1,10 +1,11 @@
 <?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
-start on stopped displaydevice
+start on start-xorg
 stop on runlevel [016]
 
 respawn
 env DISPLAY=:1
 env XORGCONFIG=/etc/X11/xorg.conf.yavdr
+env xorg_driver
 
 script
 # D-bus
