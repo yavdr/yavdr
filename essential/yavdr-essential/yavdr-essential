@@ -41,7 +41,6 @@ ureadahead
 vdr
 vdr-addon-acpiwakeup
 vdr-addon-lifeguard
-vdr-addon-markad
 vdr-genindex
 vdr-plugin-channellists
 vdr-plugin-dummydevice
@@ -52,6 +51,7 @@ vdr-plugin-femon
 vdr-plugin-graphtft
 vdr-plugin-iptv
 vdr-plugin-live
+vdr-plugin-markad
 vdr-plugin-menuorg
 vdr-plugin-streamdev-server
 vdr-plugin-vnsiserver
