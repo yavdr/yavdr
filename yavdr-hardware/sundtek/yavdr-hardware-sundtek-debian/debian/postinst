@@ -3,6 +3,7 @@
 case "$1" in
     configure)
        process-template --mode=755 /etc/yavdr/init/dvb-last.d/sundtek
+       process-template /etc/default/vdr
 	   signal-event sundtek-hardware
 #	   cp /tmp/sundtek_installer_development.sh /usr/share/doc/yavdr-installer-sundtek
 #	   rm -f /tmp/sundtek_installer_development.sh
