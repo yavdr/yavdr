@@ -13,4 +13,3 @@ clean:
 install:
 	@mkdir -p $(DESTDIR)/usr/include/yavdr
 	@mkdir -p $(DESTDIR)/usr/lib/yavdr
-	@cp libyavdrutils.a $(DESTDIR)/usr/lib/yavdr
