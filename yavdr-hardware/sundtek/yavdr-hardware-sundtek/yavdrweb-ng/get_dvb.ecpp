@@ -2,15 +2,36 @@
 #include <stdlib.h>
 #include <string>
 #include <ctype.h>
+#include <cstring>
+#include <tr1/unordered_map>
 
 extern "C" {
-#include <ClearSilver.h>
+	#include <ClearSilver.h>
+	#include "mcsimple.h"
 };
 
 #include <yavdr/common.h>
+#include <jsoncpp/json.h>
 
 using namespace std;
-</%pre><& authenticate@yavdrweb ><%cpp>
+using namespace std::tr1;
+
+struct sundtekDevice {
+	char *ip;
+	char *id;
+	char *name;
+	char *serial;
+	uint32_t *cap;
+};
+
+// Zwei  typedefs zur Abkürzung
+typedef unordered_map<string, sundtekDevice*> DeviceMapType; 
+typedef DeviceMapType::value_type ValuePair;
+
+</%pre><& authenticate@yavdrweb ><%shared>
+
+</%shared><%cpp>
+
 HDF *hdf = NULL;
 NEOERR *err;
 if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
@@ -20,9 +41,48 @@ if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)
 }
 else
 {
+	void *obj;
+	obj = media_scan_network(TRUE, 700);
+	int i = 0;
+	char *ip=NULL;
+	sundtekDevice *remoteDevice;
+	Json::Value json;
+	DeviceMapType map;
+	
+	media_scan_info(obj, i, "ip", (void**)&ip);
+	while (ip != NULL) {
+		printf("ip: %s\n", ip);
+		
+		remoteDevice = new sundtekDevice;
+
+		media_scan_info(obj, i, "capabilities", (void**)&remoteDevice->cap);
+		
+		if ((*remoteDevice->cap & MEDIA_REMOTE_DEVICE) != MEDIA_REMOTE_DEVICE) {
+			remoteDevice->ip = ip;
+			media_scan_info(obj, i, "id", (void**)&remoteDevice->id);
+			media_scan_info(obj, i, "devicename", (void**)&remoteDevice->name);
+			media_scan_info(obj, i, "serial", (void**)&remoteDevice->serial);
+			
+			map[remoteDevice->serial] = remoteDevice;
+			break;
+		}
+		ip = NULL;
+		media_scan_info(obj, ++i, "ip", (void**)&ip);
+	}
+	
+	media_scan_free(&obj);
+	/*
 	string value = hdf_get_value(hdf, "system.hardware.sundtek.mode", "");
 	reply.out() << value;
-
+	 */
+	
+	for( DeviceMapType::const_iterator i = map.begin(), e = map.end() ; i != e ; ++i ) { 
+		json[i->first]["ip"] = i->second->ip;
+		json[i->first]["id"] = i->second->id;
+		json[i->first]["name"] = i->second->name;
+		json[i->first]["capabilities"] = *i->second->cap;
+	} 
+	reply.out() << json;
 	hdf_destroy(&hdf);
 }
 </%cpp>

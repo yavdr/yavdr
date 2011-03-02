@@ -187,12 +187,9 @@ int main(int argc, char *argv[]) {
 	char _serial[100];
 	int32_t deviceId = -1;
 
-	openlog(argv[0], LOG_PID | LOG_CONS, LOG_USER);
+	openlog("scansundtek", LOG_PID | LOG_CONS, LOG_USER);
 	syslog(LOG_ERR, "started");
-	int j = 0;
-	for ( j = 0; j < argc; j++) {
-		syslog(LOG_ERR, "param %i: %s", j, argv[j]);
-	}
+
 	while (1) {
 		static struct option long_options[] = {
 			/* These options set a flag. */
@@ -332,12 +329,13 @@ int main(int argc, char *argv[]) {
 
 					convertSerial(_serial, serial);
 					if (isDummySerial(_serial) == 1) {
-						strcat(_serial, "-");
+						strcat(_serial, "_");
 						strcat(_serial, ip);
 
 						  unsigned int i = 0;
 						  while(_serial[i]) {
-							 if (_serial[i] == '.') serial[i] = '_';
+							 if (_serial[i] == '.') _serial[i] = '_';
+							 i++;
 						  }
 					}
 
@@ -396,6 +394,7 @@ int main(int argc, char *argv[]) {
 			return fd;
 		}
 
+		i = 0;
 		while((device=net_device_enum(fd, &i, d))!=0) {  // multi frontend support???
 			do {
 	//	while ((device = net_device_enum(fd, &i, d)) != 0) {

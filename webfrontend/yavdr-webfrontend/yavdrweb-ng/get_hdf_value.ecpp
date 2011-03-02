@@ -70,7 +70,8 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json, bool includeLength) {
     "system.wakeup.method",
     "system.wakeup.methods_available",
     "system.wakeup.disable_usb",
-	"vdr.epg.charset_override"
+	"vdr.epg.charset_override",
+	"system.hardware.sundtek"
   };
   
   bool validRequest = false;

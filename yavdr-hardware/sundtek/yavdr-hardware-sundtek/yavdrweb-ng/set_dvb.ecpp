@@ -8,6 +8,7 @@ extern "C" {
 };
 
 #include <yavdr/common.h>
+#include <jsoncpp/json.h>
 
 using namespace std;
 </%pre><& authenticate@yavdrweb ><%args>

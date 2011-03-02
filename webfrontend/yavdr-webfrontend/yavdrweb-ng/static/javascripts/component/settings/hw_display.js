@@ -175,7 +175,6 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       items: checkboxes
     });
 
-
     display.doLayout();
   },
   onModelineSelect: function(combo, record) {
