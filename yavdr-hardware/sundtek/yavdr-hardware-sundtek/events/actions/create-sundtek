@@ -3,4 +3,5 @@
 process-template --mode 755 /usr/bin/sundtek.bash
 process-template --mode 755 /etc/yavdr/init/dvb-last.d/sundtek
 process-template /etc/init/sundtek.conf
+process-template /etc/default/vdr
 restart tntnet
