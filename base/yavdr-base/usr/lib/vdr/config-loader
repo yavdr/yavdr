@@ -7,6 +7,9 @@
 # /etc/default/vdr !!!
 #
 
+# Daemon ( e.g. vdr or vdr-dbg)
+DAEMON="/usr/bin/vdr"
+
 # Lirc-Socket
 LIRC="/var/run/lirc/lircd"
 
