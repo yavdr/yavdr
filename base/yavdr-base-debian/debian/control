@@ -14,8 +14,4 @@ Conflicts: yavdr-startup, yavdr-utils (<< 0.3.0.2556)
 Description: scripts for startup, shutdown and s3
   scripts for startup, shutdown and s3 for yaVDR
 
-Package: yavdr-startup
-Depends: yavdr-base
-Architecture: all
-Section: misc
-Description: transitional dummy package
+
