@@ -1,5 +1,7 @@
 <?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
-start on start-xorg
+start on (filesystem and \
+          started dbus and \
+          (start-xorg or stopped udevtrigger))
 stop on runlevel [016]
 
 respawn
