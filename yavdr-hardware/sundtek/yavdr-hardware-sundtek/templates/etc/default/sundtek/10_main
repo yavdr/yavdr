@@ -13,4 +13,4 @@ ENABLE_NETWORK=1
 #
 # example:
 # MOUNT_SUNDTEK="dock.local:0 dock.local:1 localhost:0"
-MOUNT_SUNDTEK="localhost:0"
+MOUNT_SUNDTEK=""

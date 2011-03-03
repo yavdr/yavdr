@@ -1,0 +1,35 @@
+#!/bin/bash
+
+while getopts "d:" opt; do
+  case $opt in
+    d)
+      DEVID=$OPTARG 
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
+
+if [ "$(dbget system.hardware.sundtek.enablenetwork)" = "1" ]; then
+    if [ -n "$DEVID" ]; then
+      TS=`date`
+      (
+      cat <<EOF
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+
+<service-group>
+    <name replace-wildcards="yes">sundtek remote device $DEVID at %h</name>
+    <service>
+        <type>_dvb._tcp</type>
+        <port>9234</port>
+    <txt-record>id=$DEVID</txt-record>
+        <txt-record>serial=$SERIAL</txt-record>
+        <txt-record>ts=`date`</txt-record>
+    </service>
+</service-group>
+EOF
+      ) > /etc/avahi/services/sundtek-$DEVID.service
+    fi
+fi
