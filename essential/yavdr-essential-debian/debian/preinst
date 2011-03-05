@@ -2,7 +2,7 @@
 
 case "$1" in
     configure)
-	dpkg-divert --remove /etc/issue
+#	dpkg-divert --remove /etc/issue
 
         ;;
 esac
