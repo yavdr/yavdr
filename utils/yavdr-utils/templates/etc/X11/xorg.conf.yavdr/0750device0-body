@@ -11,5 +11,4 @@
     Option         "TwinView" "0"
     Option         "DynamicTwinView" "0"
     Option         "OnDemandVBlankinterrupts" "on"
-    Option         "ColorSpace" "YCbCr444"
     Option         "FlatPanelProperties" "Scaling = Native"
