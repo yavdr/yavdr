@@ -28,5 +28,18 @@ YaVDR.SelectionList = Ext.extend(Ext.DataView, {
       }
     }
     this.hiddenField.setValue(view.selection.data.key).fireEvent('change', this.hiddenField, view.selection.data.key);
+  },
+
+  // private
+  onDisable : function(){
+      this.el.mask();
+      YaVDR.SelectionList.superclass.onDisable.call(this);
+  },
+
+  // private
+  onEnable : function(){
+      this.el.unmask();
+      YaVDR.SelectionList.superclass.onEnable.call(this);
   }
+
 });
