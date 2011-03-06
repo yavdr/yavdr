@@ -17,6 +17,10 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
       base: this
     });
 
+    this.eventlircdForm = new YaVDR.Component.Settings.HwRemote.EventLircd({
+      base: this
+    });
+
     this.items = [
       new YaVDR.Component.Item({
         title: _('LIRC'),
@@ -31,6 +35,10 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
       new YaVDR.Component.Item({
         title: _('IRServer'),
         items: this.irserverForm
+      }),
+      new YaVDR.Component.Item({
+        title: _('EventLircd'),
+        items: this.eventlircdForm
       })
     ];
     YaVDR.Component.Settings.HwRemote.superclass.initComponent.call(this);
@@ -68,6 +76,7 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
         this.lircForm.active.setValue(this.data.currentRemoted == 'lircd');
         this.inputlircForm.active.setValue(this.data.currentRemoted == 'inputlirc');
         this.irserverForm.active.setValue(this.data.currentRemoted == 'irserver');
+        this.eventlircdForm.active.setValue(this.data.currentRemoted == 'eventlircd');
       }
     });
     this.inputlircForm.reloadReceiver();
@@ -141,6 +150,7 @@ YaVDR.Component.Settings.HwRemote.LIRC = Ext.extend(YaVDR.Default.Form, {
           if (checked) {
             this.base.irserverForm.active.setValue(false);
             this.base.inputlircForm.active.setValue(false);
+            this.base.eventlircdForm.active.setValue(false);
             this.getFooterToolbar().getComponent('save').enable();
             this.serialPort.enable();
             this.driver.enable();
@@ -187,6 +197,7 @@ YaVDR.Component.Settings.HwRemote.InputLIRC = Ext.extend(YaVDR.Default.Form, {
           if (checked) {
             this.base.irserverForm.active.setValue(false);
             this.base.lircForm.active.setValue(false);
+            this.base.eventlircdForm.active.setValue(false);
             this.getFooterToolbar().getComponent('reload').enable();
             this.getFooterToolbar().getComponent('save').enable();
             this.receiver.enable();
@@ -283,6 +294,7 @@ YaVDR.Component.Settings.HwRemote.IrServer = Ext.extend(YaVDR.Default.Form, {
           if (checked) {
             this.base.lircForm.active.setValue(false);
             this.base.inputlircForm.active.setValue(false);
+            this.base.eventlircdForm.active.setValue(false);
             this.getFooterToolbar().getComponent('save').enable();
           } else {
             this.getFooterToolbar().getComponent('save').disable();
@@ -303,6 +315,47 @@ YaVDR.Component.Settings.HwRemote.IrServer = Ext.extend(YaVDR.Default.Form, {
   doSave: function() {
     this.getForm().submit({
       url: '/admin/set_irserver'
+    })
+  },
+  doLoad: function() {
+    this.base.doLoad.call(this.base);
+  }
+});
+
+YaVDR.Component.Settings.HwRemote.EventLircd = Ext.extend(YaVDR.Default.Form, {
+  initComponent: function() {
+
+    this.active = new Ext.form.Radio({
+      name: 'remotetype',
+      fieldLabel: _('Activate EventLircd'),
+      inputValue: 'eventlircd',
+      listeners: {
+        scope: this,
+        check: function(cb, checked) {
+          if (checked) {
+            this.base.lircForm.active.setValue(false);
+            this.base.inputlircForm.active.setValue(false);
+            this.base.irserverForm.active.setValue(false);
+            this.getFooterToolbar().getComponent('save').enable();
+          } else {
+            this.getFooterToolbar().getComponent('save').disable();
+          }
+        }
+      }
+    });
+
+    this.items = [
+      this.active
+    ];
+
+    YaVDR.Component.Settings.HwRemote.EventLircd.superclass.initComponent.call(this);
+    this.getFooterToolbar().getComponent('save').disable();
+    // own handler -> so disable auto load
+    this.un('render', this.doLoad);
+  },
+  doSave: function() {
+    this.getForm().submit({
+      url: '/admin/set_eventlircd'
     })
   },
   doLoad: function() {
