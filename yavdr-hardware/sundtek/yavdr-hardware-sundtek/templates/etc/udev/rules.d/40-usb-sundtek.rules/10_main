@@ -1,5 +1,0 @@
-# activate persistance
-SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Sundtek" , RUN+="/usr/bin/yavdr-persist %p"
-
-# signal sundtek is plugged in
-SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Sundtek" , RUN+="/usr/bin/sundtek.bash PRESENT"

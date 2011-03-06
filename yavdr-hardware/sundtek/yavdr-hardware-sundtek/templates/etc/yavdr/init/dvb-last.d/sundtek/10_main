@@ -1,5 +1,0 @@
-while [ "`dbget system.hardware.sundtek.adapter`" = "present" ]; do
-  sleep 0.5
-done
-
-exit 0
