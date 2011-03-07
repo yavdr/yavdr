@@ -1,2 +1,2 @@
-start on start on ((local-filesystems or s3-resume) and net-device-up IFACE!=lo)
+start on ((local-filesystems or s3-resume) and net-device-up IFACE!=lo)
 stop on runlevel [016]
