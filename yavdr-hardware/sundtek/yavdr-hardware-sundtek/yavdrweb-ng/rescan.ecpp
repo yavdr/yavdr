@@ -1,0 +1,31 @@
+<%pre>
+#include <stdlib.h>
+#include <string>
+#include <ctype.h>
+
+extern "C" {
+#include <yavdr/db-utils/dbset.h>
+#include <yavdr/db-utils/dbremove.h>
+};
+
+#include <yavdr/common.h>
+
+using namespace std;
+</%pre><& authenticate@yavdrweb ><%args>
+signal_params = "";
+</%args><%cpp>
+
+string success = "false";
+int ret = 0;
+
+string cmd = "/usr/bin/signal-event rescan-sundtek";
+if (signal_params != "") {
+	cmd += " " + signal_params;
+}
+
+ret = system( cmd.c_str() );
+success = "true"; //TODO: use ret to find out if we were successful.
+</%cpp> {
+	success: <$success$>,
+	result: <$ret$>
+}

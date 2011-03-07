@@ -31,7 +31,8 @@ Ext.apply(YaVDR, {
       icon: Ext.MessageBox.ERROR
     });
   },
-
+  syncTS : 0,
+  
   syncSession: function() {
     Ext.Ajax.request({
       url: 'session',
@@ -40,14 +41,34 @@ Ext.apply(YaVDR, {
       scope: this,
       success: function(xhr) {
         var data = Ext.util.JSON.decode(xhr.responseText);
-
-
-        Ext.getBody().unmask();
+        if (Ext.getBody().isMasked()) {
+          Ext.getBody().unmask();
+        }
+        if (typeof data.update != "undefined") {
+          Ext.iterate(data.update, function(key, item) {
+            var ts = parseInt(item);
+            if (ts > YaVDR.syncTS) {
+              YaVDR.syncTS = ts;
+              
+              var panel =  Ext.getCmp('yavdr-content').getComponent(key);
+              if (panel) {
+                if (typeof panel.doReload != "undefined") {
+                  panel.doReload();
+                } else if (typeof panel.doLoad != "undefined") {
+                  panel.doLoad();
+                }
+              }
+            }
+          });
+        }
       },
       failure: function() {
         if (!Ext.getBody().isMasked()) {
           Ext.getBody().mask('VDR seams to be switched off or webserver is stopped.', 'x-mask-offline');
         }
+      },
+      params: {
+        ts: YaVDR.syncTS
       }
     });
   },

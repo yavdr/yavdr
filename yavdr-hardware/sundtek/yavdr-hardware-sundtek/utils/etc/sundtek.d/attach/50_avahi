@@ -7,15 +7,20 @@ while getopts "d:" opt; do
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
+      exit 1
       ;;
   esac
 done
 
-if [ "$(dbget system.hardware.sundtek.enablenetwork)" = "1" ]; then
-    if [ -n "$DEVID" ]; then
-      TS=`date`
-      (
-      cat <<EOF
+AVAHI_DAEMON_START=1
+if [ -f /etc/default/avahi-daemon ]; then
+  . /etc/default/avahi-daemon
+fi
+
+if [ "X${AVAHI_DAEMON_START}" = "X1" -a -n "$DEVID" -a "X`dbget system.hardware.sundtek.enablenetwork`" = "X1" ]; then
+  TS=`date`
+  (
+  cat <<EOF
 <?xml version="1.0" standalone='no'?>
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 
@@ -24,12 +29,11 @@ if [ "$(dbget system.hardware.sundtek.enablenetwork)" = "1" ]; then
     <service>
         <type>_dvb._tcp</type>
         <port>9234</port>
-    <txt-record>id=$DEVID</txt-record>
+        <txt-record>id=$DEVID</txt-record>
         <txt-record>serial=$SERIAL</txt-record>
         <txt-record>ts=`date`</txt-record>
     </service>
 </service-group>
 EOF
-      ) > /etc/avahi/services/sundtek-$DEVID.service
-    fi
+  ) > /etc/avahi/services/sundtek-$DEVID.service
 fi

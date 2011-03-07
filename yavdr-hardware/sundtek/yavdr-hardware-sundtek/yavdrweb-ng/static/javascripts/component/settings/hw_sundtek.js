@@ -1,17 +1,21 @@
 YaVDR.Component.Settings.HwSundtek = Ext.extend(YaVDR.Component, {
-	itemId: 'settings-hw-sundtek',
-	description: 'You can configure your sundtek DVB hardware here.',
-	title: 'Sundtek',
-	initComponent: function() {
-		this.items = [
-			new YaVDR.Component.Item({
-				title: 'Sundtek Settings',
-				style: 'margin-bottom: 5px',
-				items: new YaVDR.Component.Settings.HwSundtek.Hardware
-			})
-		];
-		YaVDR.Component.Settings.HwAudio.superclass.initComponent.call(this);
-	}
+  itemId: 'settings_hw_sundtek',
+  description: 'You can configure your sundtek DVB hardware here.',
+  title: 'Sundtek',
+  initComponent: function() {
+	this.sundtek = new YaVDR.Component.Settings.HwSundtek.Hardware;
+	this.items = [
+	  new YaVDR.Component.Item({
+		title: 'Sundtek Settings',
+		style: 'margin-bottom: 5px',
+		items: this.sundtek
+	  })
+	];
+	YaVDR.Component.Settings.HwAudio.superclass.initComponent.call(this);
+  },
+  doReload: function() {
+	this.sundtek.doLoad();  
+  }
 });
 YaVDR.registerComponent(YaVDR.Component.Settings.HwSundtek);
 
@@ -86,7 +90,7 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
             name: 'enablenetwork',
             xtype: 'checkbox',
             fieldLabel: _('Network-Support'),
-            boxLabel: 'enabled',
+            boxLabel: _('allow deviced to be mounted remotely'),
             inputValue: 1,
             listeners: {
               scope: this,
@@ -109,35 +113,24 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
     })
   },
   onCheckNetwork: function(cb, checked) {
-    for (index = 0; index < 3; index++) {
-      var displayFieldset = this.getComponent('display_' + index);
-      if (displayFieldset) {
-        if (checked) {
-          if (displayFieldset.getComponent('primary').getValue() == '1') {
-            displayFieldset.getComponent('secondary').show().disable().setValue(false);
-          } else {
-            displayFieldset.getComponent('secondary').show().enable();
-          }
-        } else {
-          displayFieldset.getComponent('secondary').hide().disable().setValue(false);
-        }
-      }
-    }
   },
   renderSundtek: function(item, serial, found) {
     var items = [];
     
     if (item.info.capabilities.dvbc == "1" && item.info.capabilities.dvbt == "1") {
       var selectionHidden = new Ext.form.Hidden({
-        name: 'mode|' + serial,
-        value: 'none'
+        name: 'mode_' + serial,
+        value: 'none',
+        disabled: !found
       });
 
+      items.push(selectionHidden);  
       items.push(new YaVDR.SelectionList({
         fieldLabel: _('DVB-Mode'),
         hiddenField: selectionHidden,
         tpl: this.sundtekTpl,
-        store: this.sundtekStore
+        store: this.sundtekStore,
+        disabled: !found
       }));      
     }
     
@@ -146,13 +139,14 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
         xtype: 'checkbox',
         fieldLabel: _('mount device'),
         name: 'mount|' + serial,
-        value: '0'
+        value: '0',
+        disabled: !found
       });
       
       items.push({
         disabled: true,
-        itemId: 'mounted|' + serial,
-        name: 'mounted|' + serial,
+        itemId: 'mounted_' + serial,
+        name: 'mounted_' + serial,
         xtype: 'checkbox',
         fieldLabel: _('mounted'),
         boxLabel: 'yes',
@@ -161,6 +155,13 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
         //  scope: this,
         //  check: this.onMountedCheck
         //}
+      });
+    }
+    
+    if (!found) {
+      items.push({
+        xtype: 'button',
+        text: _('remove this configuration')
       });
     }
 /*
@@ -257,61 +258,65 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
       value: parseInt(item.overscan)
     });
 */
-    this.insert(1, {
+    this.insert(this.items.length, {
       //index: index,
       itemData: item,
       itemId: 'sundtek_' + serial,
       title: item.info.devicename + (typeof item.info.ip != "undefined"?' @ ' + item.info.ip + ':' + item.info.id:_(' (local)')),
-      items: items,
-      disabled: !found
+      items: items
     });
 
   },
   doLoad: function() {
     Ext.Ajax.request({
-      url: '/admin/get_hdf_value?hdftree=system.hardware.sundtek',
+      url: '/sundtek/get_dvb',
       method: 'GET',
       scope: this,
       success: function(xhr) {
         var sundtekData = Ext.decode(xhr.responseText);
         var basic = this.getComponent('basic');
 
-        Ext.iterate(sundtekData.sundtek, function(key, item) {
-          if (key != 'found' && key != 'length') {
-            var sundtek = this.getComponent('sundtek_' + key);
-            if (sundtek) {
-              sundtek.destroy();
-            }
-            var found = false;
-            if (typeof sundtekData.sundtek.found != "undefined") {
-              for(index = 0; index < sundtekData.sundtek.found.length; index++) {
-                var foundIndex = sundtekData.sundtek.found[index];
-                if (key == foundIndex) {
-                  found = true;
-                  break;
-                }
+        var notfound = new Array();
+        Ext.iterate(sundtekData.sundtek.stick, function(key, item) {
+          var sundtek = this.getComponent('sundtek_' + key);
+          if (sundtek) {
+            sundtek.destroy();
+          }
+          var found = false;
+          if (typeof sundtekData.sundtek.found != "undefined") {
+            Ext.iterate(sundtekData.sundtek.found, function(index, foundIndex) {
+              if (key == foundIndex) {
+                found = true;
               }
-            }
-            this.renderSundtek.call(this, item, key, found);              
+            });
+          }
+          if (found) {
+            this.renderSundtek.call(this, item, key, true);
+          } else {
+            notfound[notfound.length] = new Array(item, key);
           }
         }, this);
 
+        for(i = 0; i < notfound.length; i++) {
+          this.renderSundtek.call(this, notfound[i][0], notfound[i][1], false);
+        }
         this.doLayout();
 
-        // Setzte Deinterlacer Settings
+        // Setzte networking setting
         basic.getComponent('enablenetwork').setValue(sundtekData.sundtek.enablenetwork);
       }
     });
   },
   doRescan: function() {
-      Ext.getBody().mask(_('Rescan display. Displays may flicker.'), 'x-mask-loading');
+      Ext.getBody().mask(_('Rescan for sundtek devices.'), 'x-mask-loading');
 
       Ext.Ajax.request({
-        url: '/admin/set_signal?signal=rescan-display',
+        url: '/sundtek/rescan',
         timeout: 3000,
         method: 'GET',
         scope: this,
         success: function(xhr) {
+          this.doLoad();
           Ext.getBody().unmask();
         },
         failure:function() {
@@ -321,4 +326,4 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
   }
 });
 
-YaVDR.Component.Settings.addMenu('hw', 'settings-hw-sundtek', 'Sundtek', null);
+YaVDR.Component.Settings.addMenu('hw', 'settings_hw_sundtek', 'Sundtek', '/static/images/icons/sundteklogo.png');

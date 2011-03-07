@@ -12,7 +12,7 @@ testdeploy: all
 	@cp -pfr static /tmp/yavdrweb
 	@cp -pfr ../templates /tmp/yavdrweb
 	
-sundtek.so: get_dvb.o set_dvb.o
+sundtek.so: get_dvb.o set_dvb.o rescan.o
 	${CXX} -o $@ $^ ${LDFLAGS}
 
 .SUFFIXES: .ecpp .gif .jpg .css .js .cpp .png

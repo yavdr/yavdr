@@ -1,13 +1,11 @@
 LOCDIR   = ./locale
-CFLAGS=-g -fPIC -I.. -I/usr/include/NVCtrl -I/usr/share/doc/nvidia-settings/examples/samples -DLOCDIR=\"$(LOCDIR)\" 
-LDLIBS=-lXNVCtrl -lXext -L/usr/lib/yavdr -lyavdrdb -lneo_utl -lX11
+CFLAGS=-g -fPIC -I.. -DLOCDIR=\"$(LOCDIR)\" 
+LDLIBS=-L/usr/lib/yavdr -lyavdrdb -lneo_utl -lX11
 
-all: getdevices
-
-dvb-test.o: ../common.h
+all: signalsession
 
 clean:
-	@rm -rf getdevices *.o
+	@rm -rf signalsession *.o
 
 install:
-	@install getdevices $(DESTDIR)/usr/bin/
+	@install signalsession $(DESTDIR)/usr/bin/

@@ -1,11 +1,20 @@
 <%pre>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <string>
 #include <jsoncpp/json.h>
 
+extern "C" {
+	#include <ClearSilver.h>
+};
+
+#include <yavdr/common.h>
+
 using namespace std;
-</%pre><& authenticate ><%cpp>
+</%pre><& authenticate ><%args>
+long int ts;
+</%args><%cpp>
 	reply.setHeader ("Cache-Control", "no-cache", false);
 	reply.setHeader ("Content-Type", "application/json", false);
 
@@ -24,7 +33,36 @@ using namespace std;
 		json["daemons"]["xbmc"]["status"]  = 1;
 		free(dummy);
 	}
-
+	
+    HDF *hdf = NULL;
+    NEOERR *err;
+    
+    if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+	{
+		reply.out() << "Error on hdf_read_file.";
+		nerr_log_error(err);
+	}
+	else
+	{
+		HDF *start = hdf_get_obj(hdf, (char *)"webfrontend.session.update");
+		if (start != NULL) {
+			int found = 0;
+			Json::Value update;
+			HDF *child = start->child;
+			while (child != NULL) {
+				printf("%li - %s", ts, child->value);
+				if (atol(child->value) > ts) {
+					printf(" - yes");
+					found = 1;
+					update[child->name] = atoi(child->value);
+				}
+				printf("\n");
+				child = child->next;
+			}
+			if (found == 1)
+				json["update"] = update;
+		}
+	}
 	reply.out() << json;
 
 </%cpp>

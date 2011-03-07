@@ -147,7 +147,7 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 		char *dummy;
 		char *prefix;
 
-		if (asprintf(&prefix, "system.hardware.sundtek.%s", _serial) >= 0) {
+		if (asprintf(&prefix, "system.hardware.sundtek.stick.%s", _serial) >= 0) {
 			if (asprintf(&dummy, "%s.info.ip", prefix) >= 0) { // a remote dev ist now a lokal on
 				dbremove(dummy);
 				free(dummy);
@@ -156,25 +156,27 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 			dbset("%s.info.id=%i", prefix, device->id);
 			dbset("%s.info.devicename=%s", prefix, device->devicename);
 
-			dbset("system.hardware.sundtek.%s.info.serial=%s", _serial, device->serial);
+			dbset("%s.info.serial=%s", prefix, device->serial);
 			capabilities2hdf(device->capabilities, prefix);
+
+			if (asprintf(&dummy, "%s.mounted", prefix) >= 0) {
+				dbremove(dummy);
+				free(dummy);
+			}
 
 			free(prefix);
 		}
 
-		if (asprintf(&dummy, "system.hardware.sundtek.%s.mounted", _serial) >= 0) {
-			dbremove(dummy);
-			free(dummy);
-		}
+
 		//dbset("system.hardware.sundtek.%s.info.serial=%s", device->serial, device->serial);
 	} else {
 		if (verbose) {
 			syslog(LOG_ERR, "mounted device %s", device->devicename);
 			printf(" - mounted device");
 		}
-		dbset("system.hardware.sundtek.%s.mounted=1", _serial);
+		dbset("system.hardware.sundtek.stick.%s.mounted=1", _serial);
 	}
-	dbset("system.hardware.sundtek.%s.frontend=%s", _serial, device->frontend_node);
+	dbset("system.hardware.sundtek.stick.%s.frontend=%s", _serial, device->frontend_node);
 	free(device);
 	if (verbose)
 		printf("\n");
@@ -347,21 +349,21 @@ int main(int argc, char *argv[]) {
 						printf("%s", name);
 					}
 					char *prefix;
-					if (asprintf(&prefix, "system.hardware.sundtek.%s", _serial) >= 0) {
+					if (asprintf(&prefix, "system.hardware.sundtek.stick.%s", _serial) >= 0) {
 						dbset("%s.info.ip=%s", prefix, ip);
 						dbset("%s.info.id=%s", prefix, id);
 						dbset("%s.info.devicename=%s", prefix, name);
 
-						dbset("system.hardware.sundtek.%s.info.serial=%s", _serial, serial);
+						dbset("%s.info.serial=%s", prefix, serial);
 						capabilities2hdf(*cap, prefix);
 
-						free(prefix);
-					}
+						char *dummy;
+						if (asprintf(&dummy, "%s.frontend", prefix) >= 0) {
+							dbremove(dummy);
+							free(dummy);
+						}
 
-					char *dummy;
-					if (asprintf(&dummy, "system.hardware.sundtek.%s.frontend", _serial) >= 0) {
-						dbremove(dummy);
-						free(dummy);
+						free(prefix);
 					}
 				} else {
 					if (verbose) {

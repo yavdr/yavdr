@@ -2,6 +2,8 @@
     <!-- 400_session -->
     <script type="text/javascript">
     Ext.onReady(function() {
+      YaVDR.syncTS = Math.floor(new Date().getTime() / 1000);
+      
       Ext.TaskMgr.start({
         run: YaVDR.syncSession,
         interval: 5000
