@@ -50,13 +50,10 @@ long int ts;
 			Json::Value update;
 			HDF *child = start->child;
 			while (child != NULL) {
-				printf("%li - %s", ts, child->value);
 				if (atol(child->value) > ts) {
-					printf(" - yes");
 					found = 1;
 					update[child->name] = atoi(child->value);
 				}
-				printf("\n");
 				child = child->next;
 			}
 			if (found == 1)
