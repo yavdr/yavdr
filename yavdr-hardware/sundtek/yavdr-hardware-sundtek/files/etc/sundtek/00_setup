@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -x
+
+MEDIACLIENT=/opt/bin/mediaclient
+ENABLE_NETWORK=0
+MOUNT_SUNDTEK=""
+
+[ -x "$MEDIACLIENT" ] || exit 0
+
+[ -r /etc/default/sundtek ] && . /etc/default/sundtek
+
+# enable network 
+if [ "x$ENABLE_NETWORK" = "x1" -a "X`dbget system.hardware.sundtek.enablenetwork`" = "X1" ]; then
+    /opt/bin/mediaclient --enablenetwork=on
+else
+    /opt/bin/mediaclient --enablenetwork=off
+fi
+
+# try to mounT devices
+
+if [ -n "$MOUNT_SUNDTEK" ]; then
+    for i in $MOUNT_SUNDTEK; do
+        /opt/bin/mediaclient --mount=$i
+    done
+fi
