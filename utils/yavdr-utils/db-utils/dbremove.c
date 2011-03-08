@@ -20,7 +20,7 @@ int dbremove(const char *tree) {
 		if ((fd = open(YAVDRDB, O_RDONLY)) == -1) {
 			ret = -2;
 		} else {
-			flock(fd, LOCK_SH);
+			flock(fd, LOCK_EX);
 			err = hdf_read_file(hdf, YAVDRDB);
 			if (err && !nerr_handle(&err, NERR_NOT_FOUND)) {
 				nerr_log_error(err);
@@ -28,19 +28,18 @@ int dbremove(const char *tree) {
 			} else {
 				// ignore error. If not found -> is removed
 				err = hdf_remove_tree(hdf, tree);
-          			if (err != STATUS_OK)
-          			{
-            				nerr_log_error(err);
-            				ret = -4;
-          			} else {
-          				err = hdf_write_file(hdf, YAVDRDB);
-          				if (err != STATUS_OK)
-          				{
-            					nerr_log_error(err);
-            					ret = -5;
-          				}
+				if (err != STATUS_OK)
+				{
+					nerr_log_error(err);
+					ret = -4;
+				} else {
+					err = hdf_write_file(hdf, YAVDRDB);
+					if (err != STATUS_OK)
+					{
+						nerr_log_error(err);
+						ret = -5;
+					}
 				}
-
 			}
 			flock(fd, LOCK_UN);
 			close(fd);
