@@ -15,6 +15,8 @@ if [ remove = "$1" ]; then
       --divert /etc/rsyslog.conf.dontremove /etc/rsyslog.conf
    dpkg-divert --package yavdr-base --remove --rename \
       --divert /etc/init/rsyslog.conf.dontremove /etc/init/rsyslog.conf
+   dpkg-divert --package yavdr-base --remove --rename \
+      --divert /etc/eventlircd.d/03_05a4_9881.evmap.dontremove /etc/eventlircd.d/03_05a4_9881.evmap
 fi
 
 #DEBHELPER#
