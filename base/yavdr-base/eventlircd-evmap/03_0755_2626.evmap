@@ -12,6 +12,7 @@
  KEY_PLAYPAUSE       = KEY_PLAYPAUSE   # Play (also used for Pause)
 #KEY_PLAYPAUSE       = KEY_PLAYPAUSE   # Pause (also used for Play)
  shift+KEY_8         = KEY_SUBTITLE
+ shift+KEY_3         = KEY_TEXT
  ctrl+shift+KEY_B    = KEY_REWIND      # Reverse
  ctrl+shift+KEY_F    = KEY_FORWARD     # Forward
  KEY_PREVIOUSSONG    = KEY_PREVIOUS    # Pre-track
