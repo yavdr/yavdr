@@ -176,7 +176,7 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 		}
 		dbset("system.hardware.sundtek.stick.%s.mounted=1", _serial);
 	}
-	dbset("system.hardware.sundtek.stick.%s.frontend=%s", _serial, device->frontend_node);
+	dbset("system.hardware.sundtek.frontend.%i=%s", device->id, device->frontend_node);
 	free(device);
 	if (verbose)
 		printf("\n");
@@ -302,6 +302,7 @@ int main(int argc, char *argv[]) {
 
 		//TODO: Cleanup hdf
 		dbremove("system.hardware.sundtek.found");
+		dbremove("system.hardware.sundtek.frontend");
 
 		if (verbose)
 			printf("network scan:\n");
@@ -357,12 +358,6 @@ int main(int argc, char *argv[]) {
 						dbset("%s.info.serial=%s", prefix, serial);
 						capabilities2hdf(*cap, prefix);
 
-						char *dummy;
-						if (asprintf(&dummy, "%s.frontend", prefix) >= 0) {
-							dbremove(dummy);
-							free(dummy);
-						}
-
 						free(prefix);
 					}
 				} else {
@@ -399,10 +394,7 @@ int main(int argc, char *argv[]) {
 		i = 0;
 		while((device=net_device_enum(fd, &i, d))!=0) {  // multi frontend support???
 			do {
-	//	while ((device = net_device_enum(fd, &i, d)) != 0) {
-
 				writeDevice2HDF(device, &count);
-
 			} while((device=net_device_enum(fd, &i, ++d))!=0);
 			d=0;
 			i++;

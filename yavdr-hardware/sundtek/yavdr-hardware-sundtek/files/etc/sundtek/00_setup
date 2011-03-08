@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 MEDIACLIENT=/opt/bin/mediaclient
 ENABLE_NETWORK=0
 MOUNT_SUNDTEK=""

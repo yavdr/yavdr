@@ -12,6 +12,6 @@ while getopts "d:" opt; do
   esac
 done
 
-DEV=/usr/bin/sundtekadapter -d $DEVID
+DEV=`/usr/bin/sundtekadapter -d $DEVID`
 
 /usr/bin/svdrpsend plug dynamite attd $DEV

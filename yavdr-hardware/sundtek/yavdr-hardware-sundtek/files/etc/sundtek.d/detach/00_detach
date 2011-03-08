@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -x
+
+while getopts "d:" opt; do
+  case $opt in
+    d)
+      DEVID=$OPTARG 
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+DEV=`/usr/bin/dbget system.hardware.sundtek.frontend.$DEVID`
+
+if [ -n "$DEV" ]; then
+  /usr/bin/svdrpsend plug dynamite detd $DEV
+fi
+
+/usr/bin/dbremove system.hardware.sundtek.frontend.$DEVID
