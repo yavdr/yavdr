@@ -1,4 +1,4 @@
-SUBDIRS = yavdrweb-ng utils
+SUBDIRS = yavdrweb-ng utils files
 .PHONY: $(SUBDIRS)
 
 ALL = $(addsuffix -all,$(SUBDIRS))
