@@ -12,4 +12,4 @@ while getopts "d:" opt; do
   esac
 done
 
-/usr/bin/scansundtek
+run-parts --verbose -a "-d" -a "$DEVID" /etc/sundtek.d/detach

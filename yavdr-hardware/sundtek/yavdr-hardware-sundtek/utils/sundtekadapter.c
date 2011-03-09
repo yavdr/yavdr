@@ -10,6 +10,7 @@
 
 int main(int argc, char *argv[]) {
 	int32_t deviceId = -1;
+	int output = 1;
 	int c;
 
 	while (1) {
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]) {
 		/* getopt_long stores the option index here. */
 		int option_index = 0;
 
-		c = getopt_long(argc, argv, "d:", long_options, &option_index);
+		c = getopt_long(argc, argv, "d:fs", long_options, &option_index);
 
 		/* Detect the end of the options. */
 		if (c == -1)
@@ -31,7 +32,12 @@ int main(int argc, char *argv[]) {
 		case 'd':
 			deviceId = strtol(optarg, NULL, 10);
 			break;
-
+		case 'f':
+			output = 1;
+			break;
+		case 's':
+			output = 2;
+			break;
 			/*
 			 case 'b':
 			 puts("option -b\n");
@@ -70,7 +76,14 @@ int main(int argc, char *argv[]) {
 		do {
 			if (deviceId >= 0) {
 				if (device->id == deviceId) {
-					printf("%s\n", device->frontend_node);
+					switch (output) {
+					case 1:
+						printf("%s\n", device->frontend_node);
+						break;
+					case 2:
+						printf("%s\n", device->serial);
+						break;
+					}
 				}
 			} else {
 				printf("%u: %s\n", device->id, device->frontend_node);

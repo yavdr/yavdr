@@ -95,7 +95,7 @@ class ZeroconfBrowser(object):
 			mount.use()
 			self.mounts[name] = mount
 		elif type == '_dvb._tcp':
-			device = DvbDevice(host, txt)
+			device = DvbDevice(address, txt)
 			device.use()
 			self.mounts[name] = device
 		syslog("Service resolved: %s nach %s" % (host, name))
@@ -191,10 +191,10 @@ class DvbDevice:
 				device = value
 			elif key == "serial":
 				serial = value
-		self.__use = "mount_sundtek.sh --host=%s --id=%s --serial=%s" % (host, device, serial)		
-		self.__unuse = "unmount_sundtek.sh --host=%s --id=%s --serial=%s" % (host, device, serial)		
+		self.__use = "/usr/bin/mount_sundtek.sh -h %s -d %s -s %s" % (host, device, serial)		
+		self.__unuse = "/usr/bin/unmount_sundtek.sh -h %s -d %s -s %s" % (host, device, serial)		
 
-		syslog("dvbdevice on %s with %s:%s" % (host, device, serial))
+		syslog("dvbdevice on %s:%s (serial %s)" % (host, device, serial))
 
 	def use(self):
 		syslog("create dvb")
@@ -209,7 +209,7 @@ class DvbDevice:
 		try:
 			subprocess.call(self.__unuse)
 		except OSError as (errno, strerror):
-			syslog("unable to mount: %s" % strerror)
+			syslog("unable to unmount: %s" % strerror)
 			return
 
 class StaticMounter:

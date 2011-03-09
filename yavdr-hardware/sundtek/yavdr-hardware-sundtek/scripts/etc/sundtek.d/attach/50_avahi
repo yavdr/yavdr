@@ -18,9 +18,10 @@ if [ -f /etc/default/avahi-daemon ]; then
 fi
 
 if [ "X${AVAHI_DAEMON_START}" = "X1" -a -n "$DEVID" -a "X`dbget system.hardware.sundtek.enablenetwork`" = "X1" ]; then
-  TS=`date`
-  (
-  cat <<EOF
+  SERIAL=`/usr/bin/sundtekadapter -d $DEVID -s`
+  if [ "X`dbget system.hardware.sundtek.stick.$SERIAL.info.ip`" = "X" ]; then
+    (
+    cat <<EOF
 <?xml version="1.0" standalone='no'?>
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 
@@ -35,5 +36,6 @@ if [ "X${AVAHI_DAEMON_START}" = "X1" -a -n "$DEVID" -a "X`dbget system.hardware.
     </service>
 </service-group>
 EOF
-  ) > /etc/avahi/services/sundtek-$DEVID.service
+    ) > /etc/avahi/services/sundtek-$DEVID.service
+  fi
 fi

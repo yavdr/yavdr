@@ -1,9 +1,16 @@
 #!/bin/bash
 
-while getopts "d:" opt; do
+
+while getopts "d:s:h:" opt; do
   case $opt in
     d)
       DEVID=$OPTARG 
+      ;;
+    h)
+      HOST=$OPTARG 
+      ;;
+    s)
+      SERIAL=$OPTARG 
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -12,6 +19,4 @@ while getopts "d:" opt; do
   esac
 done
 
-DEV=`/usr/bin/sundtekadapter -d $DEVID`
-
-/usr/bin/svdrpsend plug dynamite attd $DEV
+/usr/bin/scansundtek
