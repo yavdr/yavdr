@@ -1,27 +1,31 @@
 #!/bin/bash
 
+apt-get install python-software-proberties
+add-apt-repository ppa:yavdr/main
+add-apt-repository ppa:traxanos/yavdr-unstable
+
 #apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9A6F2FD5
 
-cat <<EOF >/etc/apt/sources.list.d/yavdr.list 
-deb http://ppa.launchpad.net/yavdr/testing-vdr/ubuntu lucid main
-deb http://ppa.launchpad.net/yavdr/testing-xbmc/ubuntu lucid main
-deb http://ppa.launchpad.net/yavdr/testing-yavdr/ubuntu lucid main
-
-deb-src http://ppa.launchpad.net/yavdr/testing-vdr/ubuntu lucid main
-deb-src http://ppa.launchpad.net/yavdr/testing-xbmc/ubuntu lucid main
-deb-src http://ppa.launchpad.net/yavdr/testing-yavdr/ubuntu lucid main
-EOF
-cat <<EOF | apt-key add -
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: SKS 1.0.10
-
-mI0ES6ftrQEEAPBGGmhTutCu9k2ZqTOcJSZEsSTVtDAL8MlDCG/P93O21DuwMzR83+fyRV//
-RkeFFpDu8au0yIxgnjWi0KKws+WhiM3jixFOlJL02MGa5c8sG6UBZBIirsKBxr66zMxhwjoo
-3TQ5QnwL2Tw5SZO6a/smiRr8+4PtBfw+YwuMwfVnABEBAAG0FExhdW5jaHBhZCBzdGFibGUt
-dmRyiLYEEwECACAFAkun7a0CGwMGCwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRAnKizhgQOz
-YJoiBACKu6aHe4Axq35XTCCGamlAtlkbMK5Ghex5y4NSyjEZNHsCzMv+IKxenZ1lhiHvDYKW
-UHBXRwd2qV+E66Mr3mxo96V1QiKHng2EqhZLLMFisAPO4/IlYRHIqTOpyrG0gpM1MkvXbR2Z
-BE5o78RSDnN53Zpr3nc5J2veEJSbowC7Jg==
-=Jk9g
------END PGP PUBLIC KEY BLOCK-----
-EOF
+# cat <<EOF >/etc/apt/sources.list.d/yavdr.list
+# deb http://ppa.launchpad.net/yavdr/testing-vdr/ubuntu lucid main
+# deb http://ppa.launchpad.net/yavdr/testing-xbmc/ubuntu lucid main
+# deb http://ppa.launchpad.net/yavdr/testing-yavdr/ubuntu lucid main
+#
+# deb-src http://ppa.launchpad.net/yavdr/testing-vdr/ubuntu lucid main
+# deb-src http://ppa.launchpad.net/yavdr/testing-xbmc/ubuntu lucid main
+# deb-src http://ppa.launchpad.net/yavdr/testing-yavdr/ubuntu lucid main
+# EOF
+# cat <<EOF | apt-key add -
+# -----BEGIN PGP PUBLIC KEY BLOCK-----
+# Version: SKS 1.0.10
+#
+# mI0ES6ftrQEEAPBGGmhTutCu9k2ZqTOcJSZEsSTVtDAL8MlDCG/P93O21DuwMzR83+fyRV//
+# RkeFFpDu8au0yIxgnjWi0KKws+WhiM3jixFOlJL02MGa5c8sG6UBZBIirsKBxr66zMxhwjoo
+# 3TQ5QnwL2Tw5SZO6a/smiRr8+4PtBfw+YwuMwfVnABEBAAG0FExhdW5jaHBhZCBzdGFibGUt
+# dmRyiLYEEwECACAFAkun7a0CGwMGCwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRAnKizhgQOz
+# YJoiBACKu6aHe4Axq35XTCCGamlAtlkbMK5Ghex5y4NSyjEZNHsCzMv+IKxenZ1lhiHvDYKW
+# UHBXRwd2qV+E66Mr3mxo96V1QiKHng2EqhZLLMFisAPO4/IlYRHIqTOpyrG0gpM1MkvXbR2Z
+# BE5o78RSDnN53Zpr3nc5J2veEJSbowC7Jg==
+# =Jk9g
+# -----END PGP PUBLIC KEY BLOCK-----
+# EOF
