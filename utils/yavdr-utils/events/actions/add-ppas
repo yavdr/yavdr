@@ -3,6 +3,9 @@
 apt-get install python-software-proberties
 add-apt-repository ppa:yavdr/main
 add-apt-repository ppa:traxanos/yavdr-unstable
+add-apt-repository ppa:team-xbmc/ppa
+sed s/natty/maverick/  /etc/apt/sources.list.d/team-xbmc-ppa-natty.list > /tmp/xbmc && cat /tmp/xbmc > /etc/apt/sources.list.d/team-xbmc-ppa-natty.list
+
 
 #apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9A6F2FD5
 
