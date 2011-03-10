@@ -28,279 +28,286 @@ __all__ = ["ZeroconfBrowser"]
 
 
 class ZeroconfBrowser(object):
-	def __init__(self, loop=None):
-		self.localhost = socket.gethostname()
-		self.local_loop = False
-		if loop is None:
-			gobject.threads_init()
-			loop = DBusGMainLoop()
-			self.local_loop = True
-		self.bus = dbus.SystemBus(mainloop=loop)
+    def __init__(self, loop=None):
+        self.localhost = socket.gethostname()
+        self.local_loop = False
+        if loop is None:
+            gobject.threads_init()
+            loop = DBusGMainLoop()
+            self.local_loop = True
+        self.bus = dbus.SystemBus(mainloop=loop)
 
-		self.server = dbus.Interface(
-			self.bus.get_object(avahi.DBUS_NAME, '/'),
-			'org.freedesktop.Avahi.Server')
+        self.server = dbus.Interface(
+            self.bus.get_object(avahi.DBUS_NAME, '/'),
+            'org.freedesktop.Avahi.Server')
 
-		self.lock = threading.Lock()
-		self.mounts = {}
-		syslog("initialized zeroconf browser on %s" % self.localhost)
+        self.lock = threading.Lock()
+        self.mounts = {}
+        syslog("initialized zeroconf browser on %s" % self.localhost)
 
-	def __call__(self):
-		if self.local_loop:
-			gobject.MainLoop().run()
-		syslog("main loop started")
+    def __call__(self):
+        if self.local_loop:
+            gobject.MainLoop().run()
+        syslog("main loop started")
 
-	def browse(self,
-		   type,
-		   interface=avahi.IF_UNSPEC,
-		   protocol=avahi.PROTO_UNSPEC,
-		   domain='local',
-		   flags=dbus.UInt32(0)):
-		syslog("browse")
-		with self.lock:
-			sbrowser = dbus.Interface(
-				self.bus.get_object(
-					avahi.DBUS_NAME,
-					self.server.ServiceBrowserNew(
-						interface,
-						protocol,
-						type,
-						domain,
-						flags)
-					),
-				avahi.DBUS_INTERFACE_SERVICE_BROWSER)
+    def browse(self,
+           type,
+           interface=avahi.IF_UNSPEC,
+           protocol=avahi.PROTO_UNSPEC,
+           domain='local',
+           flags=dbus.UInt32(0)):
+        syslog("browse")
+        with self.lock:
+            sbrowser = dbus.Interface(
+                self.bus.get_object(
+                    avahi.DBUS_NAME,
+                    self.server.ServiceBrowserNew(
+                        interface,
+                        protocol,
+                        type,
+                        domain,
+                        flags)
+                    ),
+                avahi.DBUS_INTERFACE_SERVICE_BROWSER)
 
-			sbrowser.connect_to_signal("ItemNew", self.resolve)
-			sbrowser.connect_to_signal("ItemRemove", self.removal)
-			sbrowser.connect_to_signal("AllForNow", self.allfornow)
-			sbrowser.connect_to_signal("Failure", self.browse_error)
-			syslog("connected_to_signals")
+            sbrowser.connect_to_signal("ItemNew", self.resolve)
+            sbrowser.connect_to_signal("ItemRemove", self.removal)
+            sbrowser.connect_to_signal("AllForNow", self.allfornow)
+            sbrowser.connect_to_signal("Failure", self.browse_error)
+            syslog("connected_to_signals")
 
-	def resolve(self, interface, protocol, name,
-				type, domain, aprotocol, flags=dbus.UInt32(0)):
-		#syslog("Service found async:", interface, protocol, name, type, domain, flags)
-		with self.lock:
-			self.server.ResolveService(
-				interface, protocol, name,
-				type, domain, avahi.PROTO_UNSPEC, dbus.UInt32(0), 
-				reply_handler=self.resolved, error_handler=self.resolve_error)
+    def resolve(self, interface, protocol, name,
+                type, domain, aprotocol, flags=dbus.UInt32(0)):
+        #syslog("Service found async:", interface, protocol, name, type, domain, flags)
+        with self.lock:
+            self.server.ResolveService(
+                interface, protocol, name,
+                type, domain, avahi.PROTO_UNSPEC, dbus.UInt32(0), 
+                reply_handler=self.resolved, error_handler=self.resolve_error)
 
-	def resolved(self, interface, protocol, name, type,
-				 domain, host, aprotocol, address,
-				 port, txt, flags):
-		syslog("Resolved type %s on %s" % (type, host))
-		if self.localhost == host.split(".")[0]: return
-		if type == '_nfs._tcp':
-			mount = Mount(host, txt)
-			mount.use()
-			self.mounts[name] = mount
-		elif type == '_dvb._tcp':
-			device = DvbDevice(address, txt)
-			device.use()
-			self.mounts[name] = device
-		syslog("Service resolved: %s nach %s" % (host, name))
-		
-	def resolve_error(self, exception):
-		syslog("Resolution error:", exception)
+    def resolved(self, interface, protocol, name, type,
+                 domain, host, aprotocol, address,
+                 port, txt, flags):
+        syslog("Resolved type %s on %s" % (type, host))
+        if self.localhost == host.split(".")[0]: return
+        if type == '_nfs._tcp':
+            mount = Mount(host, txt)
+            mount.use()
+            self.mounts[name] = mount
+        elif type == '_dvb._tcp':
+            device = DvbDevice(host, txt)
+            device.use()
+            self.mounts[name] = device
+        syslog("Service resolved: %s nach %s" % (host, name))
+        
+    def resolve_error(self, exception):
+        syslog("Resolution error:", exception)
 
-	def browse_error(self, *args, **kwargs):
-		syslog("Browse Error:", args, kwargs)
+    def browse_error(self, *args, **kwargs):
+        syslog("Browse Error:", args, kwargs)
 
-	def removal(self, interface, protocol, name, type, domain, flags):
-		with self.lock:
-			mount = self.mounts.get(name, None)
-			if mount is not None:
-				mount.unuse()
-				del self.mounts[name]
-				#syslog("Service removed: %s" % (name))
-	def allfornow(self):
-		syslog("allfornow")
+    def removal(self, interface, protocol, name, type, domain, flags):
+        with self.lock:
+            mount = self.mounts.get(name, None)
+            if mount is not None:
+                mount.unuse()
+                del self.mounts[name]
+                #syslog("Service removed: %s" % (name))
+    def allfornow(self):
+        syslog("allfornow")
 
 class Mount:
-	def __init__(self, host, txt):
-		syslog("Mount created")
-		path = []
-		subtype = []
-		for t in txt:
-			x = "".join((chr(c) for c in t))
-			(key, value) = x.split("=")
-			if key == "path":
-				path = value
-			elif key == "subtype":
-				subtype = value
-		self.subtype = subtype
-		self.remote = host + ":" + path
-		if subtype == "vdr":
-			self.local = config.vdr + '/'
-		elif subtype == "video":
-			self.local = config.video
-		elif subtype == "audio":
-			self.local = config.audio
-		elif subtype == "picture":
-			self.local = config.picture
-		else:
-			self.local = config.misc
-		self.local += host.split('.')[0]
-		syslog("media is %s for %s:%s" % (self.local, host, path))
+    def __init__(self, host, txt):
+        syslog("Mount created")
+        path = []
+        subtype = []
+        for t in txt:
+            x = "".join((chr(c) for c in t))
+            (key, value) = x.split("=")
+            if key == "path":
+                path = value
+            elif key == "subtype":
+                subtype = value
+        self.subtype = subtype
+        self.remote = host + ":" + path
+        if subtype == "vdr":
+            self.local = config.vdr + '/'
+        elif subtype == "video":
+            self.local = config.video
+        elif subtype == "audio":
+            self.local = config.audio
+        elif subtype == "picture":
+            self.local = config.picture
+        else:
+            self.local = config.misc
+        self.local += host.split('.')[0]
+        syslog("media is %s for %s:%s" % (self.local, host, path))
 
-	def use(self):
-		syslog("create")
-		p1 = subprocess.Popen(["mount"], stdout=subprocess.PIPE)
-		mounts = subprocess.Popen(["grep", "type nfs"],
-					  stdin=p1.stdout,
-					  stdout=subprocess.PIPE).communicate()[0]
-		for path in mounts.split('\n'):
-			syslog("compare %s" % path)
-			if len(path) != 0 and path.split()[2] == self.local:
-				return
-		try:
-			os.makedirs(self.local)
-		except OSError as (errno, strerror):
-			if errno != 17:
-				syslog("unable to make dir: %s" % strerror)
-				return
-		try:
-			subprocess.call(['/bin/mount',
-					 '-t', 'nfs',
-					 self.remote,
-					 self.local])
-		except OSError as (errno, strerror):
-			syslog("unable to mount: %s" % strerror)
-			return
-		if self.subtype == "vdr":
-			self.notify()
+    def use(self):
+        syslog("create")
+        p1 = subprocess.Popen(["mount"], stdout=subprocess.PIPE)
+        mounts = subprocess.Popen(["grep", "type nfs"],
+                      stdin=p1.stdout,
+                      stdout=subprocess.PIPE).communicate()[0]
+        for path in mounts.split('\n'):
+            syslog("compare %s" % path)
+            if len(path) != 0 and path.split()[2] == self.local:
+                return
+        try:
+            os.makedirs(self.local)
+        except OSError as (errno, strerror):
+            if errno != 17:
+                syslog("unable to make dir: %s" % strerror)
+                return
+        try:
+            subprocess.call(['/bin/mount',
+                     '-t', 'nfs',
+                     self.remote,
+                     self.local])
+        except OSError as (errno, strerror):
+            syslog("unable to mount: %s" % strerror)
+            return
+        if self.subtype == "vdr":
+            self.notify()
 
-	def notify(self):
-		time.sleep(3)
-		os.utime("/srv/vdr/video.00/.update", None)
+    def notify(self):
+        time.sleep(3)
+        os.utime("/srv/vdr/video.00/.update", None)
 
-	def unuse(self):
-		subprocess.Popen(["umount", self.local])
-		os.rmdir(self.local)
-		self.notify()
+    def unuse(self):
+        subprocess.Popen(["umount", self.local])
+        os.rmdir(self.local)
+        self.notify()
 
 class DvbDevice:
-	def __init__(self, host, txt):
-		syslog("DvbDevice created")
-		device = []
-		serial = []
-		for t in txt:
-			x = "".join((chr(c) for c in t))
-			(key, value) = x.split("=")
-			if key == "id":
-				device = value
-			elif key == "serial":
-				serial = value
-		self.__use = "/usr/bin/mount_sundtek.sh -h %s -d %s -s %s" % (host, device, serial)		
-		self.__unuse = "/usr/bin/unmount_sundtek.sh -h %s -d %s -s %s" % (host, device, serial)		
+    def __init__(self, host, txt):
+        syslog("DvbDevice created")
+        device = []
+        serial = []
+        for t in txt:
+            x = "".join((chr(c) for c in t))
+            (key, value) = x.split("=")
+            if key == "id":
+                device = value
+            elif key == "serial":
+                serial = value
+        self.__host = host
+        self.__device = device
+        self.__serial = serial
 
-		syslog("dvbdevice on %s:%s (serial %s)" % (host, device, serial))
+        syslog("dvbdevice on %s:%s (serial %s)" % (host, device, serial))
 
-	def use(self):
-		syslog("create dvb")
-		try:
-			subprocess.call(self.__use)
-		except OSError as (errno, strerror):
-			syslog("unable to mount: %s" % strerror)
-			return
+    def use(self):
+        syslog("create dvb")
+        try:
+            subprocess.call(["/usr/bin/mount_sundtek.sh", 
+                 "-h", self.__host,
+                 "-d", self.__device,
+                 "-s", self.__serial])
+        except OSError as (errno, strerror):
+            syslog("unable to mount: %s" % strerror)
+            return
 
-	def unuse(self):
-		syslog("remove dvb")
-		try:
-			subprocess.call(self.__unuse)
-		except OSError as (errno, strerror):
-			syslog("unable to unmount: %s" % strerror)
-			return
+    def unuse(self):
+        syslog("remove dvb")
+        try:
+            subprocess.call(["/usr/bin/unmount_sundtek.sh", 
+                 "-h", self.__host,
+                 "-d", self.__device,
+                 "-s", self.__serial])
+        except OSError as (errno, strerror):
+            syslog("unable to unmount: %s" % strerror)
+            return
 
 class StaticMounter:
-	def __init__(self):
-		self.hdf_path = "system.net.media.video"
-		self.vdr = config.get('dir','vdr')
-		syslog("mount static to %s" % self.vdr)
+    def __init__(self):
+        self.hdf_path = "system.net.media.video"
+        self.vdr = config.get('dir','vdr')
+        syslog("mount static to %s" % self.vdr)
 
-	def __call__(self):
-		for i in range(0,999):
-			path = "%s.%03d" % (self.hdf_path, i)
-			dest = subprocess.Popen(["dbget",path],
-						stdout=subprocess.PIPE).communicate()[0]
-			if "%s" % dest != '':
-				self.mount(dest, i)
-			else:
-				return
+    def __call__(self):
+        for i in range(0,999):
+            path = "%s.%03d" % (self.hdf_path, i)
+            dest = subprocess.Popen(["dbget",path],
+                        stdout=subprocess.PIPE).communicate()[0]
+            if "%s" % dest != '':
+                self.mount(dest, i)
+            else:
+                return
 
-	def mount(self, dest, idx):
-		syslog("establish static mount: %s" % dest)
-		(host, path) = dest.split(':')
-		localpath = "%s/%s.%03d" % (self.vdr, host, idx)
-		syslog("localpath: %s" % localpath)
-		try:
-			os.makedirs(localpath)
-		except OSError as (errno, strerror):
-			if errno != 17:
-				syslog("unable to make dir: %s" % strerror)
-				return
-		try:
-			subprocess.call(['/bin/mount',
-					 '-t', 'nfs',
-					 dest ,
-					 localpath])
-		except OSError as (errno, strerror):
-			syslog("unable to mount: %s" % strerror)
+    def mount(self, dest, idx):
+        syslog("establish static mount: %s" % dest)
+        (host, path) = dest.split(':')
+        localpath = "%s/%s.%03d" % (self.vdr, host, idx)
+        syslog("localpath: %s" % localpath)
+        try:
+            os.makedirs(localpath)
+        except OSError as (errno, strerror):
+            if errno != 17:
+                syslog("unable to make dir: %s" % strerror)
+                return
+        try:
+            subprocess.call(['/bin/mount',
+                     '-t', 'nfs',
+                     dest ,
+                     localpath])
+        except OSError as (errno, strerror):
+            syslog("unable to mount: %s" % strerror)
 
 class Config:
-	def __init__(self):
-		self.values = {}
-		self.config = ConfigParser.ConfigParser()
-		self.config.readfp(open('/etc/default/avahi-mounter'))
-		self.config.read(['/var/lib/vdr/.avahi-mounter',
-				  os.path.expanduser('~vdr/.avahi-mounter')])
-		if self.config.getboolean("base", "enabled") is not True:
-			syslog("avahi-mounter is disabled")
-			sys.exit()
-		# preset some values
-		self.vdr = self.config.get('dir','vdr','/srv/vdr/video.00')
-		self.media = self.config.get('dir','media','/media')
-		self.record  = self.__getDir(_("Record")) 
-		self.video   = self.__getDir(_("Video"))
-		self.audio   = self.__getDir(_("Music"))
-		self.picture = self.__getDir(_("Picture"))
-		self.misc    = self.__getDir(_("Miscellaneous"))
-		self.__link("/srv/audio", "%s%s" % (self.audio, "local"))
-		self.__link("/srv/video", "%s%s" % (self.video, "local"))
-		self.__link("/srv/picture", "%s%s" % (self.picture, "local"))
-	
-	def __getDir(self, name):
-		__dir = self.media + '/' + name + '/'
-		try:
-			os.makedirs(__dir)
-		except OSError as (errno, strerror):
-			if errno != 17:
-				syslog("unable to make dir: %s" % strerror)
-				raise
-		return __dir
+    def __init__(self):
+        self.values = {}
+        self.config = ConfigParser.ConfigParser()
+        self.config.readfp(open('/etc/default/avahi-mounter'))
+        self.config.read(['/var/lib/vdr/.avahi-mounter',
+                  os.path.expanduser('~vdr/.avahi-mounter')])
+        if self.config.getboolean("base", "enabled") is not True:
+            syslog("avahi-mounter is disabled")
+            sys.exit()
+        # preset some values
+        self.vdr = self.config.get('dir','vdr','/srv/vdr/video.00')
+        self.media = self.config.get('dir','media','/media')
+        self.record  = self.__getDir(_("Record")) 
+        self.video   = self.__getDir(_("Video"))
+        self.audio   = self.__getDir(_("Music"))
+        self.picture = self.__getDir(_("Picture"))
+        self.misc    = self.__getDir(_("Miscellaneous"))
+        self.__link("/srv/audio", "%s%s" % (self.audio, "local"))
+        self.__link("/srv/video", "%s%s" % (self.video, "local"))
+        self.__link("/srv/picture", "%s%s" % (self.picture, "local"))
+    
+    def __getDir(self, name):
+        __dir = self.media + '/' + name + '/'
+        try:
+            os.makedirs(__dir)
+        except OSError as (errno, strerror):
+            if errno != 17:
+                syslog("unable to make dir: %s" % strerror)
+                raise
+        return __dir
 
-	def __link(self,source,target):
-		try:
-			os.remove(target)
-		except OSError as (errno, strerror):
-			if errno != 2:
-				syslog("I/O error({0}): {1}".format(errno,strerror))
-		try:
-			os.symlink(source,target)
-		except OSError as (errno, strerror):
-			syslog("I/O error({0}): {1}".format(errno,strerror))
+    def __link(self,source,target):
+        try:
+            os.remove(target)
+        except OSError as (errno, strerror):
+            if errno != 2:
+                syslog("I/O error({0}): {1}".format(errno,strerror))
+        try:
+            os.symlink(source,target)
+        except OSError as (errno, strerror):
+            syslog("I/O error({0}): {1}".format(errno,strerror))
 
-	def get(self, section, key, default=None):
-		try:
-			idx = "%s_%s" % (section, key)
-			if not idx in self.values:
-				self.value = self.config.get(section, key)
-				if self.value is None:
-					self.value = default
-				self.values[idx] = self.value
-			return self.values[idx]
-		except ConfigParser.NoSectionError or ConfigParser.NoOptionError:
-			syslog("request for non-existing option: [%s].%s" % (section, key))
+    def get(self, section, key, default=None):
+        try:
+            idx = "%s_%s" % (section, key)
+            if not idx in self.values:
+                self.value = self.config.get(section, key)
+                if self.value is None:
+                    self.value = default
+                self.values[idx] = self.value
+            return self.values[idx]
+        except ConfigParser.NoSectionError or ConfigParser.NoOptionError:
+            syslog("request for non-existing option: [%s].%s" % (section, key))
 
 
 # initialize gettext
