@@ -1,9 +1,15 @@
 #!/bin/bash
 
-while getopts "d:" opt; do
+while getopts "d:s:h:" opt; do
   case $opt in
     d)
       DEVID=$OPTARG 
+      ;;
+    h)
+      HOST=$OPTARG 
+      ;;
+    s)
+      SERIAL=$OPTARG 
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -12,10 +18,15 @@ while getopts "d:" opt; do
   esac
 done
 
-DEV=`/usr/bin/dbget system.hardware.sundtek.frontend.$DEVID`
+LOCALID=`/usr/bin/dbget system.hardware.sundtek.stick.$SERIAL.mounted`
 
-if [ -n "$DEV" ]; then
-  /usr/bin/svdrpsend plug dynamite detd $DEV
+if [ -n "$LOCALID" ]; then
+    DEV=`/usr/bin/dbget system.hardware.sundtek.frontend.$LOCALID`
+    
+    if [ -n "$DEV" ]; then
+      /usr/bin/svdrpsend plug dynamite detd $DEV
+    fi
+    
+    /usr/bin/dbremove system.hardware.sundtek.frontend.$LOCALID
+    /usr/bin/dbremove system.hardware.sundtek.stick.$SERIAL.mounted
 fi
-
-/usr/bin/dbremove system.hardware.sundtek.frontend.$DEVID

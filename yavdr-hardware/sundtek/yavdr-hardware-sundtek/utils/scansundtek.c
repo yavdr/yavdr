@@ -175,7 +175,7 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 			syslog(LOG_ERR, "mounted device %s", device->devicename);
 			printf(" - mounted device");
 		}
-		dbset("system.hardware.sundtek.stick.%s.mounted=1", _serial);
+		dbset("system.hardware.sundtek.stick.%s.mounted=%i", _serial, device->id);
 	}
 	dbset("system.hardware.sundtek.frontend.%i=%s", device->id, device->frontend_node);
 	free(device);

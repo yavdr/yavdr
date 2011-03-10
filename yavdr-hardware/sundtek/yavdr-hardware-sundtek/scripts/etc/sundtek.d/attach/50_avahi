@@ -27,7 +27,7 @@ if [ "X${AVAHI_DAEMON_START}" = "X1" -a -n "$DEVID" -a "X`dbget system.hardware.
 
 <service-group>
     <name replace-wildcards="yes">sundtek remote device $DEVID at %h</name>
-    <service>
+    <service protocol="ipv4">
         <type>_dvb._tcp</type>
         <port>9234</port>
         <txt-record>id=$DEVID</txt-record>

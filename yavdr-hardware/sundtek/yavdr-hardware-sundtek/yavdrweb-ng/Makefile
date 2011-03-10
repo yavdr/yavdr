@@ -45,6 +45,7 @@ clean:
 	
 install:
 #	@install -d $(DESTDIR)/usr/lib/yavdrweb
+	@mkdir -p $(DESTDIR)/usr/lib/yavdrweb
 	@install sundtek.so $(DESTDIR)/usr/lib/yavdrweb/
 #	@install -d $(DESTDIR)/etc/tntnet.d
 	@cp -pr static $(DESTDIR)/usr/lib/yavdrweb

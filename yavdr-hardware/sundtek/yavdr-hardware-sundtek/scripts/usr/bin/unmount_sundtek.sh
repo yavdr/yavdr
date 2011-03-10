@@ -18,4 +18,4 @@ while getopts "d:s:h:" opt; do
   esac
 done
 
-run-parts --verbose -a "-h" -a "$HOST" -a "d" -a "$DEVID" -a "-s" -a "$SERIAL" /etc/sundtek.d/unmount
+run-parts --verbose -a "-h" -a "$HOST" -a "-d" -a "$DEVID" -a "-s" -a "$SERIAL" /etc/sundtek.d/unmount
