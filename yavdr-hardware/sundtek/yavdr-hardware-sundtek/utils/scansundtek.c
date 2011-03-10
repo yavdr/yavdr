@@ -33,34 +33,40 @@ static int attach = -1;
 system {
   hardware {
     sundtek {
-      enablenetwork = 1         // enable networking
-      found {                   // found sundteks at scan time
-        0 = 123456
-        1 = 1234ds
+      enablenetwork = 1  <- aktiviert networking
+      stick {
+        123456 {
+          info {
+            ip = 192.x.x.x
+            id = 0
+            devicename = Sundtek MediaTV Digital Home
+            serial = 123456
+            capabilities {
+              value = 1030
+              analog_tv = 0
+              dvbt = 1
+              dvbc = 1
+              radio = 0
+              atsc = 0
+              remote = 1
+              digitalci = 0
+              digitalca = 0
+              dvbs2 = 0
+            }
+          }
+          mount = 1 <- mounte diese dev, wenn remote gefunden.
+        }
       }
-      123456 {                  // a remote dev
-        mode = DVB-C
-        info {
-          ip = dock
-          id = 0
-          devicename =
-          serial = 123456
-          capabilities = 6
-        }
-        mount = 1
-      }                         // a lokal dev
-      1234ds = {
-        mode = DVB-S2
-        info {
-          devicename =
-          serial = 123456789ABCD
-          capabilities = 12001
-        }
-        mount = 1               // will be ignored because of lokal dev
+      found {
+        0 = 123456
+      }
+      frontend {
+        0 = /dev/dvb/adapter0/frontend0
       }
     }
   }
 }
+
  *
  */
 #define TRUE 1
