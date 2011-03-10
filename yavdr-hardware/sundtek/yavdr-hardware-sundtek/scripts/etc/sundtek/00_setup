@@ -5,7 +5,7 @@ ENABLE_NETWORK=0
 MOUNT_SUNDTEK=""
 
 # rm avahi service files
-rm -f /etc/avahi/services/sundtek*.servce
+rm -f /etc/avahi/services/sundtek*.service
 
 [ -x "$MEDIACLIENT" ] || exit 0
 
