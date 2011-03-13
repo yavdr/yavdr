@@ -16,7 +16,7 @@ script
 test -f /usr/sbin/eventlircd || exit 0
 mkdir -p /var/run/lirc
 
-modprobe uinput
+/sbin/modprobe uinput || /bin/true
 
 exec /usr/sbin/eventlircd -f
 end script

@@ -1,0 +1,1 @@
+KERNEL=="ttyUSB0", DRIVER=="ftdi_sio", ATTRS{interface}=="IRTrans USB", ACTION=="add",  RUN+="/sbin/initctl emit --no-wait start-irserver"

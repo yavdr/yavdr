@@ -1,4 +1,4 @@
-SUBDIRS = common db-utils process-template signal-event dvb-test
+SUBDIRS = common db-utils process-template signal-event dvb-test irserver2uinput
 .PHONY: $(SUBDIRS)
 
 ALL = $(addsuffix -all,$(SUBDIRS))
