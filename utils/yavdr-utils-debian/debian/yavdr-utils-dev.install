@@ -1,6 +1,7 @@
 common/make_dirs.h	usr/include/yavdr/common
 common.h		usr/include/yavdr
 db-utils/dbset.h	usr/include/yavdr/db-utils
+db-utils/dbget.h    usr/include/yavdr/db-utils
 db-utils/dbremove.h	usr/include/yavdr/db-utils
 common/make_dirs.h	usr/include/yavdr
 db-utils/libyavdrdb.a	usr/lib/yavdr
