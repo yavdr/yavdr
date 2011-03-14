@@ -1,6 +1,5 @@
 udev/*.rules		/lib/udev/rules.d
 udev/helper/*		/lib/udev
-eventlircd-evmap/*	/etc/eventlircd.d
 etc
 usr
 images/animation/*.png	usr/share/yavdr/images/animation/
