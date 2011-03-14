@@ -5,4 +5,6 @@ if [ remove = "$1" ]; then
       --divert /etc/firefox/profile/prefs.js.dontremove /etc/firefox/profile/prefs.js
    dpkg-divert --package yavdr-utils --remove --rename \
       --divert /etc/logrotate.conf.dontremove /etc/logrotate.conf
+   dpkg-divert --package yavdr-utils --remove --rename \
+      --divert /etc/init/rsyslog.conf.dontremove /etc/init/rsyslog.conf
 fi

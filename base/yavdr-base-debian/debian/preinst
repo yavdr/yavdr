@@ -12,7 +12,6 @@ if [ install = "$1" -o upgrade = "$1" ]; then
       --divert /var/lib/vdr/plugins/xine/noSignal16x9.mpg.dontremove /var/lib/vdr/plugins/xine/noSignal16x9.mpg
    dpkg-divert --package yavdr-base --add --rename \
       --divert /usr/share/libxine1-xvdr/nosignal.mpg.dontremove /usr/share/libxine1-xvdr/nosignal.mpg
-   dpkg-divert --package yavdr-base --add --rename \
-      --divert /etc/init/rsyslog.conf.dontremove /etc/init/rsyslog.conf
+
 fi
 
