@@ -12,8 +12,6 @@ if [ remove = "$1" ]; then
    dpkg-divert --package yavdr-base --remove --rename \
       --divert /usr/share/libxine1-xvdr/nosignal.mpg.dontremove /usr/share/libxine1-xvdr/nosignal.mpg
    dpkg-divert --package yavdr-base --remove --rename \
-      --divert /etc/rsyslog.conf.dontremove /etc/rsyslog.conf
-   dpkg-divert --package yavdr-base --remove --rename \
       --divert /etc/init/rsyslog.conf.dontremove /etc/init/rsyslog.conf
 fi
 
