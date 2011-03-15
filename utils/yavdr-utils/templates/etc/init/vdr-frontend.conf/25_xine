@@ -18,6 +18,6 @@ if [ "$USE_AUTOCROP" = "1" ]; then
 fi
 
 while [ ! -e /tmp/vdr-xine/stream ] ; do sleep 0.1 ; done
-exec su -c "/usr/bin/xine $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes &> /tmp/vdr-frontend.log" vdr
+exec su -c "/usr/bin/xine $XINEOPTS vdr:/var/run/vdr-xine/stream#demux:mpeg_pes &> /tmp/vdr-frontend.log" vdr
 end script
 <?cs /if ?>
