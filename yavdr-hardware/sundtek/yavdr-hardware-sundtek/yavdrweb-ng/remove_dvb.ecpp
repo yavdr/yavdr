@@ -1,0 +1,17 @@
+<%pre>
+#include <string>
+
+extern "C" {
+	#include <yavdr/db-utils/dbremove.h>
+};
+
+using namespace std;
+</%pre><& authenticate@yavdrweb ><%args>
+string serial;
+</%args><%cpp>
+
+dbremove((char *)("system.hardware.sundtek.stick." + serial).c_str());
+
+</%cpp>{
+    success: true
+}

@@ -3,8 +3,11 @@
 #include <string>
 #include <ctype.h>
 
+
 extern "C" {
-#include <ClearSilver.h>
+	#include <yavdr/db-utils/dbset.h>
+	#include <yavdr/db-utils/dbget.h>
+	#include <yavdr/db-utils/dbremove.h>
 };
 
 #include <yavdr/common.h>
@@ -12,35 +15,46 @@ extern "C" {
 
 using namespace std;
 </%pre><& authenticate@yavdrweb ><%args>
-  mode;
+string serials[];
+string enablenetwork;
 </%args><%cpp>
 
 string success = "false";
 
-NEOERR *err;
-HDF *hdf = NULL;
-if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
-{
-	nerr_log_error(err);
+if (enablenetwork == "1") {
+	dbset((char *)"system.hardware.sundtek.enablenetwork=1");
 } else {
-	if ((mode == "DVBC") || (mode == "DVBT"))
-	{
-
-		err = hdf_set_valuef(hdf, "system.hardware.sundtek.mode=%s", mode.c_str());
-		/*if (err != STATUS_OK){
-		}*/
-	} else {
-		err = hdf_remove_tree(hdf, "system.hardware.sundtek.mode");
-	}
-	err = hdf_write_file(hdf, YAVDRDB);
-	if (err != STATUS_OK)
-	{
-		nerr_log_error(err);
-	}
-	hdf_destroy(&hdf);
-
-    success = "true"; //TODO: use ret to find out if we were successful.
+	dbremove((char *)"system.hardware.sundtek.enablenetwork");
 }
+
+for (serials_type::const_iterator it = serials.begin(); it != serials.end(); ++it) {
+	string serial = (*it);
+	
+	string isDBVT = dbget((char *)("system.hardware.sundtek.stick." + serial + ".info.capabilities.dvbt").c_str(), (char *)"0");
+	string isDBVC = dbget((char *)("system.hardware.sundtek.stick." + serial + ".info.capabilities.dvbc").c_str(), (char *)"0");
+	
+	if ("1" == isDBVT && "1" == isDBVC) {
+		string mode = qparam[serial + "|mode"];
+
+		if (mode == "DVBT") {
+			dbset(("system.hardware.sundtek.stick." + serial + ".mode=DVBT").c_str());
+		} else if (mode == "DVBC") {
+			dbset(("system.hardware.sundtek.stick." + serial + ".mode=DVBC").c_str());
+		} else
+			dbremove(("system.hardware.sundtek.stick." + serial + ".mode").c_str());
+	}
+	
+	string remoteIP = dbget((char *)("system.hardware.sundtek.stick." + serial + ".info.ip").c_str(), (char *)"");
+	if (remoteIP != "") {
+		string mount = qparam[serial + "|mount+ "];
+		if (mount == "1") {
+			dbset(("system.hardware.sundtek.stick." + serial + ".mount=1").c_str());
+		} else {
+			dbremove(("system.hardware.sundtek.stick." + serial + ".mount").c_str());
+		}
+	}
+}
+success = "true"; //TODO: use ret to find out if we were successful.
 
 </%cpp>{
     success: <$success$>
