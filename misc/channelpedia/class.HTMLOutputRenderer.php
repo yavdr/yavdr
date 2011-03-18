@@ -166,7 +166,7 @@ class HTMLOutputRenderer{
             $desc.
             "</td></tr>\n";
         }
-        $buffer .= "<table>\n</body>\n</html>";
+        $buffer .= "<table>\n".file_get_contents("templates/html_footer.html");
         $filename = "changelog_".$source.".html";
         $this->linklist[$pagetitle] = $filename;
         file_put_contents($this->exportpath . $filename, $buffer );
@@ -203,10 +203,11 @@ class HTMLOutputRenderer{
                 "<pre>". htmlspecialchars(file_get_contents( $filepath )) ."</pre>\n";
             $nice_html_linklist .= '<li><a href="#'.htmlspecialchars($filename).'">'.htmlspecialchars($filename).'</a></li>';
         }
-        $nice_html_output .= "<h2>Overview</h2><ul>" . $nice_html_linklist . "</ul>\n". $nice_html_body. "
-        	</body>
-        <html>
-        ";
+        $nice_html_output .=
+        	"<h2>Overview</h2><ul>" .
+            $nice_html_linklist . "</ul>\n".
+            $nice_html_body.
+            file_get_contents("templates/html_footer.html");
 
         $filename = "channels_".$language."_".$source.".html";
         $this->linklist[$pagetitle] = $filename;
@@ -228,10 +229,7 @@ class HTMLOutputRenderer{
               $nice_html_output .= '</ul><h2>'.htmlspecialchars( $title ).'</h2><ul>';
         }
 
-        $nice_html_output .= "</ul>
-        	</body>
-        <html>
-        ";
+        $nice_html_output .= "</ul>".file_get_contents("templates/html_footer.html");
         file_put_contents($this->exportpath . "index.html", $nice_html_output );
 
     }
