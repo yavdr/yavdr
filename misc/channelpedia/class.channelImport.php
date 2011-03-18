@@ -87,7 +87,7 @@ class channelImport{
                         if ($key != "apid" && $key != "vpid" && $key != "caid")
                             $importance = 1;
                         $changes[] = "$key: '".$row[$key]. "' to '". $value."'";
-                        $update_data[] = "$key = ".$this->dbh->quote( $value);
+                        $update_data[] = "$key = ".$this->db->quote( $value);
                     }
                 }
                 $update_data[] = "x_last_changed = ".time();
@@ -193,6 +193,9 @@ class channelImport{
                 "importance" => "1"
             );
             $query = $this->db->insert( "channel_update_log", $insert_params);
+        }
+        else{
+            $success = false;
         }
         return $success;
     }

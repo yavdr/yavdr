@@ -198,9 +198,10 @@ class HTMLOutputRenderer{
         $nice_html_body = "";
         $nice_html_linklist = "";
         foreach ($dirs as $filename => $filepath) {
+            $prestyle = (strstr($filename, "FTA") === false  || strstr($filename, "scrambled") !== false) ? ' class = "scrambled" ' : '';
             $nice_html_body .=
-                '<h2><a name ="'.htmlspecialchars($filename).'">'.htmlspecialchars($filename)."</a></h2>\n".
-                "<pre>". htmlspecialchars(file_get_contents( $filepath )) ."</pre>\n";
+                '<h2'.$prestyle.'><a name ="'.htmlspecialchars($filename).'">'.htmlspecialchars($filename)."</a></h2>\n".
+                "<pre".$prestyle.">". htmlspecialchars(file_get_contents( $filepath )) ."</pre>\n";
             $nice_html_linklist .= '<li><a href="#'.htmlspecialchars($filename).'">'.htmlspecialchars($filename).'</a></li>';
         }
         $nice_html_output .=

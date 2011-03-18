@@ -220,7 +220,7 @@ static public function getRules(){
             "validForTerrProviders" => array(),
             "groups" => array(
 
-                "01.BBC.HDTV" => array(
+                "01.BBC.HDTV.FTA" => array(
 
                     "caidMode" => 1,
                     "mediaType" => 1,
@@ -228,7 +228,7 @@ static public function getRules(){
                     "customwhere" => " AND upper(name) LIKE '%BBC%' AND ". HD_CHANNEL
                 ),
 
-                "02.BBC.SDTV" => array(
+                "02.BBC.SDTV.FTA" => array(
 
                     "caidMode" => 1,
                     "mediaType" => 1,
@@ -316,7 +316,7 @@ static public function getRules(){
                     "customwhere" => " AND ". HD_CHANNEL
                 ),
 
-                "10.scrambeld.SDTV" => array(
+                "10.scrambled.SDTV" => array(
 
                     "caidMode" => 2,
                     "mediaType" => 1,
