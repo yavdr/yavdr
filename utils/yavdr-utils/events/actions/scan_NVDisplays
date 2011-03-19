@@ -1,0 +1,6 @@
+#!/bin/bash
+
+process-template /etc/X11/xorg.conf.refresh
+
+export XORGCONFIG=/etc/X11/xorg.conf.refresh
+xinit /usr/bin/getNVdisplays -- :1 vt9

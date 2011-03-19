@@ -1,2 +1,0 @@
-<?cs if:(system.x11.dualhead.enabled == "1") ?>Section "Monitor"
-

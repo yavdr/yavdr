@@ -199,8 +199,7 @@ else
 									0, // display_mask
 									NV_CTRL_ENABLED_DISPLAYS,
 									&enabled_devices);
-							//							printf("   Display Device Mask (Enabled)   : 0x%08x\n",
-							//									enabled_devices);
+							//printf("   Display Device Mask (Enabled)   : 0x%08x\n", enabled_devices);
 
 							/* List all display devices on this X Screen */
 							for (mask = 1; mask < (1 << 24); mask <<= 1) {
@@ -456,8 +455,6 @@ else
 										displays[nDisplayDevice]["current"]["defaultfreq"] = "";
 										displays[nDisplayDevice]["current"]["id"] = tokens[2] + "x" + tokens[6];
 									}
-
-
 
 /*
 									// test
