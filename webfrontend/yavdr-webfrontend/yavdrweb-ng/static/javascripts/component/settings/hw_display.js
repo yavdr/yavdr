@@ -34,70 +34,9 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 		icon: '/icons/fugue/monitor--plus.png'
 	  }
 	];
-	this.items = [
-      {
-        itemId: 'basic',
-        title: _('Basic settings'),
-        items: [
-          {
-            disabled: true,
-            itemId: 'x11_dualhead',
-            name: 'x11_dualhead',
-            xtype: 'checkbox',
-            fieldLabel: _('Dual-Head Mode'),
-            boxLabel: 'enabled',
-            inputValue: 1,
-            listeners: {
-              scope: this,
-              check: this.onDualHeadCheck
-            }
-          },
-          {
-            itemId: 'x11_graphtft',
-            name: 'x11_graphtft',
-            xtype: 'checkbox',
-            fieldLabel: _('GraphTFT'),
-            boxLabel: 'enabled',
-            inputValue: 1,
-            disabled: true
-          }
-        ]
-      },
-      {
-        itemId: 'xine',
-        title: _('Xine settings'),
-        items: [
-          new YaVDR.EasyComboBox({
-            itemId: 'deinterlacer_hd',
-            name: 'deinterlacer_hd',
-            data: [
-              ['bob'],
-              ['half temporal'],
-              ['half temporal_spatial'],
-              ['temporal'],
-              ['temporal_spatial']
-            ],
-            fieldLabel: _('Xine HD deinterlacer') + ' <small/>(' + _('default') + ': bob)</small>',
-            inputValue: 'bob'
-          }),
-          new YaVDR.EasyComboBox({
-            itemId: 'deinterlacer_sd',
-            name: 'deinterlacer_sd',
-            data: [
-              ['bob'],
-              ['half temporal'],
-              ['half temporal_spatial'],
-              ['temporal'],
-              ['temporal_spatial']
-            ],
-            fieldLabel: _('Xine SD deinterlacer') + ' <small/>(' + _('default') + ': temporal)</small>',
-            inputValue: 'temporal'
-          })
-        ]
-      }];
+	this.items = [];
 
-      YaVDR.Component.Settings.HwDisplay.Display.superclass.initComponent.call(this);
-	  this.getComponent('basic').getComponent('x11_dualhead').on('check', this.onCheckDualHead, this);
+    YaVDR.Component.Settings.HwDisplay.Display.superclass.initComponent.call(this);
   },
   doSave: function() {
     this.getForm().submit({
@@ -327,9 +266,72 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
       scope: this,
       success: function(xhr) {
         var displayData = Ext.decode(xhr.responseText);
-        var basic = this.getComponent('basic');
-        var xine = this.getComponent('xine');
+        this.removeAll(true);
+        
+        var basic = new Ext.form.FieldSet({
+          itemId: 'basic',
+          title: _('Basic settings'),
+          items: [
+            {
+              disabled: true,
+              itemId: 'x11_dualhead',
+              name: 'x11_dualhead',
+              xtype: 'checkbox',
+              fieldLabel: _('Dual-Head Mode'),
+              boxLabel: 'enabled',
+              inputValue: 1,
+              listeners: {
+                scope: this,
+                check: this.onDualHeadCheck
+              }
+            },
+            {
+              itemId: 'x11_graphtft',
+              name: 'x11_graphtft',
+              xtype: 'checkbox',
+              fieldLabel: _('GraphTFT'),
+              boxLabel: 'enabled',
+              inputValue: 1,
+              disabled: true
+            }
+          ]
+        });
 
+        var xine = new Ext.form.FieldSet({
+          itemId: 'xine',
+          title: _('Xine settings'),
+          items: [
+            new YaVDR.EasyComboBox({
+              itemId: 'deinterlacer_hd',
+              name: 'deinterlacer_hd',
+              data: [
+                ['bob'],
+                ['half temporal'],
+                ['half temporal_spatial'],
+                ['temporal'],
+                ['temporal_spatial']
+              ],
+              fieldLabel: _('Xine HD deinterlacer') + ' <small/>(' + _('default') + ': bob)</small>',
+              inputValue: 'bob'
+            }),
+            new YaVDR.EasyComboBox({
+              itemId: 'deinterlacer_sd',
+              name: 'deinterlacer_sd',
+              data: [
+                ['bob'],
+                ['half temporal'],
+                ['half temporal_spatial'],
+                ['temporal'],
+                ['temporal_spatial']
+              ],
+              fieldLabel: _('Xine SD deinterlacer') + ' <small/>(' + _('default') + ': temporal)</small>',
+              inputValue: 'temporal'
+            })
+          ]
+        });
+        
+        this.add(basic);
+        
         if (typeof displayData.system.x11.displays != "undefined") {
           Ext.each(displayData.system.x11.displays, function(item, index) {
             var display = this.getComponent('display_' + index);
@@ -339,6 +341,8 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
             this.renderDisplay.call(this, item, index);
           }, this);
         }
+
+        this.add(xine);
 
         this.doLayout();
 
