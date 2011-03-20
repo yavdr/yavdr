@@ -97,11 +97,17 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
     }
 
     if (typeof display.itemData.current.defaultfreq != 'undefined' &&
-      display.itemData.current.id == record.data.id) {
-      defaultFrequency.setValue(display.itemData.current.defaultfreq);
+        display.itemData.current.id == record.data.id) {
+      if (display.itemData.current.defaultfreq != 'nvidia-auto-select')
+        defaultFrequency.setValue(display.itemData.current.defaultfreq);
+      else
+        defaultFrequency.setValue('auto rate');
     } else {
-      // select first
-      defaultFrequency.setValue(defaultFrequency.store.getAt(0).data.id);
+      if (display.itemData.current.defaultfreq != 'nvidia-auto-select') {
+        // select first
+        defaultFrequency.setValue(defaultFrequency.store.getAt(0).data.id);
+      } else
+        defaultFrequency.setValue('auto rate');
     }
     display.insert(5, defaultFrequency);
 
@@ -352,15 +358,12 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
           //|| (yavdrwebGlobalInfo.devmode == "1")
           ) {
 
-          // Aktivere CB
-          basic.getComponent('x11_dualhead').enable();
-
           // Wenn ja aktivere CheckBoxen
           var dualhead = displayData.system.x11.dualhead.enabled;
-          if (dualhead == '0' || dualhead == '1') basic.getComponent('x11_dualhead').setValue(dualhead == '1');
+          basic.getComponent('x11_dualhead').enable().setValue(dualhead == '1');
 
           var graphtft = displayData.vdr.plugin.graphtft.enabled;
-          if (graphtft == '0' || graphtft == '1') basic.getComponent('x11_graphtft').setValue(graphtft == '1');
+          basic.getComponent('x11_graphtft').enable().setValue(graphtft == '1');
         } else {
           // Disable Checkox und Update Texts
           basic.getComponent('x11_dualhead').disable().setBoxLabel('deaktiviert (< 2 Bildschirme gefunden)');
