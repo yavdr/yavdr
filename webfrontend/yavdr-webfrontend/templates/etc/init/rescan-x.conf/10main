@@ -1,4 +1,0 @@
-env XORGCONFIG=/etc/X11/xorg.conf.rescan
-export XORGCONFIG
-
-exec /usr/bin/X :0 vt9
