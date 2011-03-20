@@ -30,17 +30,18 @@ class channelListWriter extends channelIterator{
         $addTransponderDelimiters = false;
 
     function __construct($label = "_complete", $source, $orderby = "UPPER(name) ASC"){
+        $xlabel = $label;
         if ($label == "_complete"){
             $this->addTransponderDelimiters = true;
             $orderby = "frequency, modulation, provider, name ASC";
         }
-        else if ($label == "")
+        else if ($label == "uncategorized")
         {
-            $label = "uncategorized";
             $this->addTransponderDelimiters = true;
             $orderby = "frequency, modulation, provider, name ASC";
+            $xlabel="";
         }
-        parent::__construct($label, $source, $orderby);
+        parent::__construct($xlabel, $source, $orderby);
         $config = config::getInstance();
         $gpath = $config->getValue("path"). $config->getValue("exportfolder")."/raw/";
         $groupname = $source. '_' . $label;
@@ -70,9 +71,12 @@ class channelListWriter extends channelIterator{
     }
 
     private function closeFile(){
-        if ($this->filehandle != null)
+        if ($this->filehandle != null){
             if (fclose($this->filehandle) === false)
                 die("Error on file close.");
+        }
+        else
+            print "channelListWriter: $this->filename was not written - it is empty!\n";
     }
 }
 

@@ -83,7 +83,7 @@ class rawOutputRenderer {
             }
         }
         //also write a complete channels.conf for this source grouped by transponders, containing all existing channels
-        $y = new channelListWriter( "", $source );
+        $y = new channelListWriter( "uncategorized", $source );
         $y->writeFile();
         unset($y);
     }
