@@ -377,6 +377,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 	    method: 'GET',
 	    scope: this,
 	    success: function(xhr) {
+	      this.doLoad();
 	      Ext.getBody().unmask();
 	    },
 	    failure:function() {
