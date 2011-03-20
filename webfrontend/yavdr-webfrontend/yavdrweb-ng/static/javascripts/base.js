@@ -41,9 +41,10 @@ Ext.apply(YaVDR, {
       scope: this,
       success: function(xhr) {
         var data = Ext.util.JSON.decode(xhr.responseText);
-        if (Ext.getBody().isMasked()) {
+        if (Ext.getBody().isMasked() && this.fail) {
           Ext.getBody().unmask();
         }
+        this.fail = false;
         if (typeof data.update != "undefined") {
           Ext.iterate(data.update, function(key, item) {
             var ts = parseInt(item);
@@ -65,6 +66,7 @@ Ext.apply(YaVDR, {
       failure: function() {
         if (!Ext.getBody().isMasked()) {
           Ext.getBody().mask('VDR seams to be switched off or webserver is stopped.', 'x-mask-offline');
+          this.fail = true;
         }
       },
       params: {

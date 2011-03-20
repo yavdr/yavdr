@@ -373,7 +373,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 
       Ext.Ajax.request({
 	    url: '/admin/set_signal?signal=rescan-display',
-	    timeout: 3000,
+	    timeout: 120000,
 	    method: 'GET',
 	    scope: this,
 	    success: function(xhr) {
@@ -381,6 +381,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 	    },
 	    failure:function() {
 	      Ext.getBody().unmask();
+	      Ext.Msg.alert(_('Rescan display failed.'));
 	    }
 	  });
 	  

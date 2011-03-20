@@ -98,12 +98,11 @@ int main(int argc, char *argv[])
         }
     }
 
-    /*
     if (nDisplayDevice > 1) { // more than one screen found
     	dbset("system.x11.dualhead.enabled=1");
     } else {
     	dbset("system.x11.dualhead.enabled=0");
-    }*/
+    }
 
     char *dummy;
     for (; nDisplayDevice <= 3; nDisplayDevice++) {
