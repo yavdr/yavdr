@@ -29,14 +29,18 @@ class channelListWriter extends channelIterator{
         $filename = "",
         $addTransponderDelimiters = false;
 
-    function __construct($label = "_complete", $source, $orderby = "frequency, modulation, provider, name ASC"){
-        parent::__construct($label, $source, $orderby);
-        if ($label == "_complete")
+    function __construct($label = "_complete", $source, $orderby = "UPPER(name) ASC"){
+        if ($label == "_complete"){
             $this->addTransponderDelimiters = true;
-        else if ($label == ""){
+            $orderby = "frequency, modulation, provider, name ASC";
+        }
+        else if ($label == "")
+        {
             $label = "uncategorized";
             $this->addTransponderDelimiters = true;
+            $orderby = "frequency, modulation, provider, name ASC";
         }
+        parent::__construct($label, $source, $orderby);
         $config = config::getInstance();
         $gpath = $config->getValue("path"). $config->getValue("exportfolder")."/raw/";
         $groupname = $source. '_' . $label;
