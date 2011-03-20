@@ -120,7 +120,6 @@ static public function getRules(){
         "customwhere" =>  "AND ". HD_CHANNEL
     ),
 
-
     );
 */
 

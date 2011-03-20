@@ -35,6 +35,32 @@ class HTMLOutputRenderer{
         $this->config = config::getInstance();
         $this->exportpath = $this->config->getValue("path").$this->config->getValue("exportfolder")."/html/";
 
+        //FIXME: Don't store this like this
+        $source_languages = array(
+            "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl"),
+            "S28.2E" => array( "en")
+        );
+
+        $this->addDividerTitle("Essential channels (pre-sorted lists)");
+
+        foreach ($this->config->getValue("sat_positions") as $sat){
+            $this->addDividerTitle($sat);
+            foreach ($source_languages[$sat] as $language)
+                $this->writeNiceHTMLPage( $sat, $language );
+            $this->linklist[$sat."-close"] = "close";
+        }
+        foreach ($this->config->getValue("cable_providers") as $cablep){
+            $this->addDividerTitle($cablep);
+            $this->writeNiceHTMLPage( "C[$cablep]", "de" );
+            $this->linklist[$cablep."-close"] = "close";
+        }
+        foreach ($this->config->getValue("terr_providers") as $terrp){
+            $this->addDividerTitle($terrp);
+            $this->writeNiceHTMLPage("T[$terrp]", "de");
+            $this->linklist[$terrp."-close"] = "close";
+        }
+
+        $this->linklist["essential-close"] = "close";
         $this->addDividerTitle("Complete lists (grouped by transponder)");
 
         foreach ($this->config->getValue("sat_positions") as $sat){
@@ -46,27 +72,9 @@ class HTMLOutputRenderer{
         foreach ($this->config->getValue("terr_providers") as $terrp){
             $this->addCompleteListLink("T[$terrp]");
         }
-
-        $this->addDividerTitle("Essential channels (pre-sorted lists)");
-
-        //FIXME: Don't store this like this
-        $source_languages = array(
-            "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl"),
-            "S28.2E" => array( "en")
-        );
-
-        foreach ($this->config->getValue("sat_positions") as $sat){
-            foreach ($source_languages[$sat] as $language)
-                $this->writeNiceHTMLPage( $sat, $language );
-        }
-        foreach ($this->config->getValue("cable_providers") as $cablep){
-            $this->writeNiceHTMLPage( "C[$cablep]", "de" );
-        }
-        foreach ($this->config->getValue("terr_providers") as $terrp){
-            $this->writeNiceHTMLPage("T[$terrp]", "de");
-        }
-
+        $this->linklist["presorted"] = "close";
         $this->addDividerTitle("Changelog");
+
         $this->writeChangelog("", 1 ); //general changelog for all sources
         foreach ($this->config->getValue("sat_positions") as $sat){
             $this->writeChangelog( $sat );
@@ -77,9 +85,9 @@ class HTMLOutputRenderer{
         foreach ($this->config->getValue("terr_providers") as $terrp){
             $this->writeChangelog("T[$terrp]");
         }
-
-
+        $this->linklist["changelog"] = "close";
         $this->addDividerTitle("(Yet) Uncategorized channels (grouped by transponder)");
+
         foreach ($this->config->getValue("sat_positions") as $sat){
             $this->addUncategorizedListLink( $sat );
         }
@@ -89,6 +97,8 @@ class HTMLOutputRenderer{
         foreach ($this->config->getValue("terr_providers") as $terrp){
             $this->addUncategorizedListLink("T[$terrp]");
         }
+
+        $this->linklist["uncategorized"] = "close";
 
         $this->renderIndexPage();
     }
@@ -211,7 +221,7 @@ class HTMLOutputRenderer{
             file_get_contents("templates/html_footer.html");
 
         $filename = "channels_".$language."_".$source.".html";
-        $this->linklist[$pagetitle] = $filename;
+        $this->linklist[$source . " - ". $language] = $filename;
         file_put_contents($this->exportpath . $filename, $nice_html_output );
     }
 
@@ -224,13 +234,16 @@ class HTMLOutputRenderer{
         	<p>Last updated on: '. date("D M j G:i:s T Y").'</p><ul>
         ';
         foreach ($this->linklist as $title => $url){
-           if ($url != "")
-              $nice_html_output .= '<li><a href="'. htmlspecialchars( $url ) .'">'.htmlspecialchars( $title ).'</a></li>';
+
+           if($url == "")
+              $nice_html_output .= '<li><b>'.htmlspecialchars( $title ).'</b></li><ul>';
+           elseif($url == "close")
+              $nice_html_output .= '</ul>';
            else
-              $nice_html_output .= '</ul><h2>'.htmlspecialchars( $title ).'</h2><ul>';
+              $nice_html_output .= '<li><a href="'. htmlspecialchars( $url ) .'">'.htmlspecialchars( $title ).'</a></li>';
         }
 
-        $nice_html_output .= "</ul>".file_get_contents("templates/html_footer.html");
+        $nice_html_output .= "</ul>\n".file_get_contents("templates/html_footer.html");
         file_put_contents($this->exportpath . "index.html", $nice_html_output );
 
     }
