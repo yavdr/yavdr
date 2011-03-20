@@ -60,7 +60,7 @@ class rawOutputRenderer {
             if ( $sourcetype == "S"){
                 if ( $config["validForSatellites"] === "all" || ( is_array( $config["validForSatellites"] ) && in_array( $source, $config["validForSatellites"], true)) ){
                     foreach ($config["groups"] as $grouptitle => $groupsettings){
-                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source, $groupsettings["orderby"] );
+                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source);
                         $y->writeFile();
                     }
                 }
@@ -68,7 +68,7 @@ class rawOutputRenderer {
             elseif ( $sourcetype == "C"){
                 if ( $config["validForCableProviders"] === "all" || ( is_array( $config["validForCableProviders"] ) && in_array( $source, $config["validForCableProviders"], true)) ){
                     foreach ($config["groups"] as $grouptitle => $groupsettings){
-                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source, $groupsettings["orderby"] );
+                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source);
                         $y->writeFile();
                     }
                 }
@@ -76,7 +76,7 @@ class rawOutputRenderer {
             elseif ( $sourcetype == "T"){
                 if ( $config["validForTerrProviders"] === "all" || ( is_array( $config["validForTerrProviders"] ) && in_array( $source, $config["validForTerrProviders"], true)) ){
                     foreach ($config["groups"] as $grouptitle => $groupsettings){
-                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source, $groupsettings["orderby"] );
+                        $y = new channelListWriter( $config["country"] . "." . $grouptitle, $source);
                         $y->writeFile();
                     }
                 }
