@@ -1,2 +1,8 @@
 device_attach=/usr/bin/sundtek.bash ATTACH DEVID
 device_detach=/usr/bin/sundtek.bash DETACH DEVID
+<?cs each:item = system.hardware.sundtek.stick ?><?cs if:(item.mode) ?>
+[<?cs name:item ?>]
+device_attach=/usr/bin/sundtek.bash ATTACH DEVID
+device_detach=/usr/bin/sundtek.bash DETACH DEVID
+<?cs if:(item.info.capabilities.dvbt == "1" && item.info.capabilities.dvbc == "1" )?>initial_dvb_mode=<?cs var:item.mode?><?cs /if ?><?cs /if ?>
+<?cs /each ?>
