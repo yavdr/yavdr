@@ -8,11 +8,11 @@
 # it off.
 
 <?cs if:(!?system.shutdown || system.shutdown == "s3") ?> 
-if grep -q "S3" /proc/acpi/sleep ; then
+if grep -q "mem" /sys/power/state ; then
 	echo "SHUTDOWNCMD=\"/sbin/initctl --quiet emit --no-wait init-s3\""
 fi
 <?cs elif:(system.shutdown == "s4") ?>
-if grep -q "S4" /proc/acpi/sleep ; then
+if grep -q "disk" /sys/power/state ; then
     echo "SHUTDOWNCMD=\"service vdr stop ; /sbin/initctl --quiet emit --no-wait init-s4\""
 fi
 <?cs elif:(system.shutdown == "s5") ?>
