@@ -25,7 +25,7 @@ class GermanyEssentials {
                     "caidMode" => 1,
                     "mediaType" => 1,
                     "customwhere" =>
-                        " AND NOT ".HD_CHANNEL. " AND UPPER(name) NOT LIKE '%TEST-%' ".
+                        " AND NOT ".HD_CHANNEL.
                         "AND ( ".
                         "(provider = 'ARD' AND ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' )) ".
                         " OR provider = 'ZDFvision' OR provider = 'ZDF vision'".
@@ -37,7 +37,6 @@ class GermanyEssentials {
                     "mediaType" => 1,
                     "customwhere" =>
                         " AND NOT ".HD_CHANNEL.
-                        " AND UPPER(name) NOT LIKE '%TEST-%'".
                         " AND provider = 'ARD' AND NOT ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' ) "
                 ),
 

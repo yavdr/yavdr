@@ -43,6 +43,18 @@ class PolandSatEssentials {
                     "mediaType" => 1,
                     "customwhere" =>  "AND ". HD_CHANNEL
                 ),
+
+                "05.FTA.radio" => array(
+
+                    "caidMode" => 1,
+                    "mediaType" => 2,
+                ),
+
+                "06.scrambled.radio" => array(
+
+                    "caidMode" => 2,
+                    "mediaType" => 2,
+                ),
             )
         );
     }

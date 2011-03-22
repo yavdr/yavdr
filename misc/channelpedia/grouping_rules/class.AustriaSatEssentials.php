@@ -42,7 +42,20 @@ class AustriaSatEssentials {
                     "caidMode" => 1,
                     "mediaType" => 2,
                     "customwhere" => " AND UPPER(provider) = 'ORF'"
-                )
+                ),
+/* FIXME: radio channels with language deu are already grabbed by the de list...
+                "05.FTA.radio" => array(
+
+                    "caidMode" => 1,
+                    "mediaType" => 2,
+                ),
+
+                "06.scrambled.radio" => array(
+
+                    "caidMode" => 2,
+                    "mediaType" => 2,
+                ),
+*/
             )
         );
     }
