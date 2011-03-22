@@ -34,6 +34,7 @@ class AustriaSatEssentials {
 
                     "caidMode" => 1,
                     "mediaType" => 1,
+                    "languageOverrule" => "", // needed for RTL2
                     "customwhere" => " AND ". FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL. "AND ". AUSTRIA. "AND ". DE_PRIVATE_PRO7_RTL
                 ),
 

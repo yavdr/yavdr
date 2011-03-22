@@ -56,6 +56,7 @@ class config {
                 "de_KabelBW",
                 "de_WilhelmTel",
                 "de_KabelDeutschland",
+                "de_UnityMediaNRW"
             );
         elseif ($key == "terr_providers"){
             $value = array();

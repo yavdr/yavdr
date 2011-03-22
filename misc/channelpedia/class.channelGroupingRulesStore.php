@@ -26,6 +26,7 @@ require_once 'grouping_rules/class.GermanyEssentials.php';
 require_once 'grouping_rules/class.GermanySatNonEssentials.php';
 require_once 'grouping_rules/class.GermanyKabelDeutschland.php';
 require_once 'grouping_rules/class.GermanyWilhelmTel.php';
+require_once 'grouping_rules/class.GermanyUnityMedia.php';
 require_once 'grouping_rules/class.UKIrelandEssentials.php';
 require_once 'grouping_rules/class.AustriaSatEssentials.php';
 require_once 'grouping_rules/class.SwitzerlandSatEssentials.php';
@@ -33,7 +34,7 @@ require_once 'grouping_rules/class.SpainSatEssentials.php';
 
 define("HD_CHANNEL"," UPPER(name) LIKE '% HD%' ");
 
-define("DE_PRIVATE_PRO7_RTL"," (provider = 'ProSiebenSat.1' OR provider='Pro7 & Sat.1' OR provider = 'RTL World' OR provider = 'RTL') ");
+define("DE_PRIVATE_PRO7_RTL"," (provider = 'ProSiebenSat.1' OR provider='Pro7 & Sat.1' OR provider = 'RTL World' OR provider = 'RTL' OR provider='MTV Networks') ");
 define("DE_PUBLIC_PROVIDER", " (provider LIKE 'ARD%' OR provider = 'ZDFvision' OR provider = 'ZDF vision') ");
 
 define("AUSTRIA", " (LOWER(name) LIKE '%sterreich' OR LOWER(name) LIKE '% austria' OR UPPER(name) LIKE '% A') ");
@@ -49,6 +50,7 @@ static public function getRules(){
         "GermanySatNonEssential" => GermanySatNonEssentials::getRules(),
         "GermanyKabelDeutschland" => GermanyKabelDeutschland::getRules(),
         "GermanyWilhelmTel" => GermanyWilhelmTel::getRules(),
+        "GermanyUnityMedia" => GermanyUnityMedia::getRules(),
         "UKIrelandEssentials" => UKIrelandEssentials::getRules(),
         "AustriaSatEssentials" => AustriaSatEssentials::getRules(),
         "SwitzerlandSatEssentials" => SwitzerlandSatEssentials::getRules(),

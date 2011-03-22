@@ -98,6 +98,12 @@ class GermanyEssentials {
                     "mediaType" => 2,
                     "customwhere" => " AND NOT provider = 'ORF' AND NOT  ".DE_PUBLIC_PROVIDER
                 ),
+                //provider undefined only wilhelm.tel --> sky
+                "22.SKY.Radio" => array(
+                    "caidMode" => 2,
+                    "mediaType" => 2,
+                    "customwhere" => " AND (UPPER(provider) LIKE 'SKY' OR provider = '' OR provider = 'undefined') AND NOT " . HD_CHANNEL
+                ),
             )
         );//end of Germany Essentials
 

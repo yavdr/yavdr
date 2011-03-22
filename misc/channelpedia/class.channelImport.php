@@ -282,7 +282,7 @@ class channelImport{
                             $source,
                             $caidMode    = $groupsettings["caidMode"],
                             $mediaType   = $groupsettings["mediaType"],
-                            $language    = $config["lang"],
+                            $language    = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
                             $customwhere = $groupsettings["customwhere"],
                             $title
                         );
@@ -297,7 +297,7 @@ class channelImport{
                             $source,
                             $caidMode    = $groupsettings["caidMode"],
                             $mediaType   = $groupsettings["mediaType"],
-                            $language    = $config["lang"],
+                            $language    = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
                             $customwhere = $groupsettings["customwhere"],
                             $title
                         );
@@ -312,7 +312,7 @@ class channelImport{
                             $source,
                             $caidMode    = $groupsettings["caidMode"],
                             $mediaType   = $groupsettings["mediaType"],
-                            $language    = $config["lang"],
+                            $language    = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
                             $customwhere = $groupsettings["customwhere"],
                             $title
                         );
