@@ -30,11 +30,10 @@ class GermanyUnityMedia {
                 ),
                 "21.Radio.SDTV.UnityDigital" => array(
 
-                    "caidMode" => 0,
-                    "mediaType" => 0,
+                    "caidMode" => 2,
+                    "mediaType" => 2,
                     "languageOverrule" => "",
-                    "customwhere" => "AND provider LIKE '%Choice%'"
-                	//"customwhere" => "AND provider = 'UnityDigital TV - Music Choice'"
+                    "customwhere" => "AND provider = 'UnityDigital TV - Music Choice'"
                 ),
             )
         );

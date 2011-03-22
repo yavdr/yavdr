@@ -31,6 +31,8 @@ require_once 'grouping_rules/class.UKIrelandEssentials.php';
 require_once 'grouping_rules/class.AustriaSatEssentials.php';
 require_once 'grouping_rules/class.SwitzerlandSatEssentials.php';
 require_once 'grouping_rules/class.SpainSatEssentials.php';
+require_once 'grouping_rules/class.PolandSatEssentials.php';
+require_once 'grouping_rules/class.FranceSatEssentials.php';
 
 define("HD_CHANNEL"," UPPER(name) LIKE '% HD%' ");
 
@@ -44,149 +46,20 @@ define("FILTER_ASTRA1_FTA", " ((tid != '1092' AND tid != '1113' AND provider != 
 
 class channelGroupingRulesStore{
 
-static public function getRules(){
-    return array(
-        "GermanyEssentials" => GermanyEssentials::getRules(),
-        "GermanySatNonEssential" => GermanySatNonEssentials::getRules(),
-        "GermanyKabelDeutschland" => GermanyKabelDeutschland::getRules(),
-        "GermanyWilhelmTel" => GermanyWilhelmTel::getRules(),
-        "GermanyUnityMedia" => GermanyUnityMedia::getRules(),
-        "UKIrelandEssentials" => UKIrelandEssentials::getRules(),
-        "AustriaSatEssentials" => AustriaSatEssentials::getRules(),
-        "SwitzerlandSatEssentials" => SwitzerlandSatEssentials::getRules(),
-        "SpainSatEssentials" => SpainSatEssentials::getRules(),
-    );
-/*
-//...
-    "pl.FTA.SDTV.diverse" => array(
-
-        "caidMode" => 1,
-        "mediaType" => 1,
-        "language" => "pol",
-        "customwhere" =>  "AND NOT ". HD_CHANNEL
-    ),
-
-    "pl.FTA.HDTV.diverse" => array(
-
-        "caidMode" => 1,
-        "mediaType" => 1,
-        "language" => "pol",
-        "customwhere" =>  "AND ". HD_CHANNEL
-    ),
-
-    "pl.scrambled.SDTV.diverse" => array(
-
-        "caidMode" => 2,
-        "mediaType" => 1,
-        "language" => "pol",
-        "customwhere" =>  "AND NOT ". HD_CHANNEL
-    ),
-
-    "pl.scrambled.HDTV.diverse" => array(
-
-        "caidMode" => 2,
-        "mediaType" => 1,
-        "language" => "pol",
-        "customwhere" =>  "AND ". HD_CHANNEL
-    ),
-
-    "fr.FTA.SDTV.diverse" => array(
-
-        "caidMode" => 1,
-        "mediaType" => 1,
-        "language" => "fra",
-        "customwhere" =>  "AND NOT ". HD_CHANNEL
-    ),
-
-    "fr.FTA.HDTV.diverse" => array(
-
-        "caidMode" => 1,
-        "mediaType" => 1,
-        "language" => "fra",
-        "customwhere" =>  "AND ". HD_CHANNEL
-    ),
-
-    "fr.scrambled.SDTV.diverse" => array(
-
-        "caidMode" => 2,
-        "mediaType" => 1,
-        "language" => "fra",
-        "customwhere" =>  "AND NOT ". HD_CHANNEL
-    ),
-
-    "fr.scrambled.HDTV.diverse" => array(
-
-        "caidMode" => 2,
-        "mediaType" => 1,
-        "language" => "fra",
-        "customwhere" =>  "AND ". HD_CHANNEL
-    ),
-
-    );
-*/
-
-}
-/*
-$x->updateLabelsOfChannelSelection(
-    $label = "FTA.rubbish",
-    $source = "S19.2E",
-    $caidMode = 1,
-    $mediaType = 1,
-    $language = "deu",
-    $customwhere =" AND (tid = '1092' OR tid = '1113' OR provider = '-' OR provider = 'SKY') "
-    );
-
-
-$x->updateLabelsOfChannelSelection(
-    $label = "at.FTA.Radio.ORF",
-    $source = "S19.2E",
-    $caidMode = 1,
-    $mediaType = 2,
-    $language = "deu",
-    $customwhere = " AND provider = 'ORF' "
-    );
-
-
-
-$x->updateLabelsOfChannelSelection(
-    $label = "_long.FTA.radio",
-    $source = "S28.2E",
-    $caidMode = 1,
-    $mediaType=2,
-    $language = "",
-    $orderby="UPPER(name) ASC"
-    );
-
-$x->updateLabelsOfChannelSelection( $label = "_long.FTA.tv", $source = "S28.2E", $caidMode = 1, $mediaType=1, $language = "", $orderby="UPPER(name) ASC");
-$x->updateLabelsOfChannelSelection( $label = "_long.complete", $source = "S19.2E", $caidMode = 0, $mediaType = 0, $language = "" );
-$x->updateLabelsOfChannelSelection( $label = "_long.FTA", $source = "S19.2E", $caidMode = 1, $mediaType = 0, $language = "");
-$x->updateLabelsOfChannelSelection( $label = "_long.scrambled", $source = "S28.2E", $caidMode = 2);
-$x->updateLabelsOfChannelSelection( $label = "_long.all", $source = "S28.2E", $caidMode = 0);
-$x->updateLabelsOfChannelSelection( $label = "_long.C_Germany_KabelBW", $source = CABLE_PROVIDER);
-*/
-
-        /*
-
-        function createEssentialListsFRA( $source, $x ){
-
-            $x->updateLabelsOfChannelSelection(
-                $label = "fra.FTA.TV",
-                $source = "S19.2E",
-                $caidMode = 1,
-                $mediaType = 1,
-                $language = "fra",
-                $orderby = "UPPER(name) ASC"
-            );
-            $x->updateLabelsOfChannelSelection(
-                $label = "_long.fra.scrambled.TV",
-                $source = "S19.2E",
-                $caidMode = 2,
-                $mediaType = 1,
-                $language = "fra",
-                $orderby="UPPER(name) ASC",
-                $customwhere = ""
-            );
-        }
-        */
+    static public function getRules(){
+        return array(
+            "GermanyEssentials" => GermanyEssentials::getRules(),
+            "GermanySatNonEssential" => GermanySatNonEssentials::getRules(),
+            "GermanyKabelDeutschland" => GermanyKabelDeutschland::getRules(),
+            "GermanyWilhelmTel" => GermanyWilhelmTel::getRules(),
+            "GermanyUnityMedia" => GermanyUnityMedia::getRules(),
+            "UKIrelandEssentials" => UKIrelandEssentials::getRules(),
+            "AustriaSatEssentials" => AustriaSatEssentials::getRules(),
+            "SwitzerlandSatEssentials" => SwitzerlandSatEssentials::getRules(),
+            "SpainSatEssentials" => SpainSatEssentials::getRules(),
+            "PolandSatEssentials" => PolandSatEssentials::getRules(),
+            "FranceSatEssentials" => FranceSatEssentials::getRules(),
+        );
+    }
 }
 ?>
