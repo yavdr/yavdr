@@ -109,7 +109,7 @@ class GermanyEssentials {
                 "21.FTA.Radio.Private" => array(
                     "caidMode" => 1,
                     "mediaType" => 2,
-                    "customwhere" => " AND NOT provider = 'ORF' AND NOT  ".DE_PUBLIC_PROVIDER
+                    "customwhere" => " AND NOT provider = 'ORF' AND NOT  ".DE_PUBLIC_PROVIDER . "AND NOT " . AUSTRIA
                 ),
                 //provider undefined only wilhelm.tel --> sky
                 "22.SKY.Radio" => array(
