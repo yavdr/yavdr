@@ -85,13 +85,33 @@
              td { border: 1px solid black; padding: 2px; }
              
              ul li {
+                padding: 10px 0px 2px 0px;
+                font-size: 1.35em;
+                color: #4E78B1;
+             }
+             ul ul li {
                 padding: 2px 0px 2px 0px;
+                font-size: 1.15em;
+                color: #4E78B1;
              }
-             ul ul ul ul li a{
+             
+             ul ul li a, ul ul ul ul li a{
                 font-weight: bold;
-                text-decoration: none;
-                display: inline;
+                /*text-decoration: none;*/
+                color: orange;
              }
+             
+             p.warning{
+                 border: 1px solid red; 
+                 background-color: pink; 
+                 color:red; 
+                 font-weight: bold; 
+                 text-align: center;
+                -moz-border-radius: 10px;
+                 border-radius: 10px;
+                 padding: 2px;
+             }
+             
          </style>
      </head>
      <body>
@@ -107,5 +127,5 @@
             <div id="mainwrap">
             <div id="contentwrap">
                 <p style="text-align: center;"><a href="index.html">Channelpedia Home</a> | <a href="http://www.yavdr.org" target="_blank">yaVDR project</a></p>
-                <p style="color:red; font-weight: bold; text-align: center;">Under construction! Alpha version! Buggy! Incomplete! Unreliable! Use only for testing purposes!</p>
+                <p class="warning">Under construction! Alpha version! Buggy! Incomplete! Unreliable! Use only for testing purposes!</p>
 

@@ -48,6 +48,7 @@ class HTMLOutputRenderer{
             $this->addDividerTitle($sat);
             foreach ($source_languages[$sat] as $language)
                 $this->writeNiceHTMLPage( $sat, $language );
+            $this->addUncategorizedListLink( $sat );
             $this->closeHierarchy();
         }
         $this->closeHierarchy();
@@ -55,6 +56,7 @@ class HTMLOutputRenderer{
         foreach ($this->config->getValue("cable_providers") as $cablep){
             $this->addDividerTitle($cablep);
             $this->writeNiceHTMLPage( "C[$cablep]", "de" );
+            $this->addUncategorizedListLink( "C[$cablep]" );
             $this->closeHierarchy();
             }
         $this->closeHierarchy();
@@ -62,6 +64,7 @@ class HTMLOutputRenderer{
         foreach ($this->config->getValue("terr_providers") as $terrp){
             $this->addDividerTitle($terrp);
             $this->writeNiceHTMLPage("T[$terrp]", "de");
+            $this->addUncategorizedListLink("T[$terrp]");
             $this->closeHierarchy();
         }
         $this->closeHierarchy();
@@ -91,8 +94,8 @@ class HTMLOutputRenderer{
             $this->writeChangelog("T[$terrp]");
         }
         $this->closeHierarchy();
+/*
         $this->addDividerTitle("(Yet) Uncategorized channels (grouped by transponder)");
-
         foreach ($this->config->getValue("sat_positions") as $sat){
             $this->addUncategorizedListLink( $sat );
         }
@@ -103,7 +106,7 @@ class HTMLOutputRenderer{
             $this->addUncategorizedListLink("T[$terrp]");
         }
         $this->closeHierarchy();
-
+*/
         $this->renderIndexPage();
     }
 
@@ -114,7 +117,7 @@ class HTMLOutputRenderer{
 
     private function addUncategorizedListLink( $source ){
         $filename = "../raw/channels_".$source."_uncategorized.conf";
-        $this->addToOverview("Uncategorized $source", $filename);
+        $this->addToOverview("uncategorized rest", $filename);
     }
 
     private function addDividerTitle( $title ){
@@ -239,18 +242,19 @@ class HTMLOutputRenderer{
         $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
         $nice_html_output =
             $header.
-        	'<h1>'.htmlspecialchars( $pagetitle ).'</h1>
-        	<p>Last updated on: '. date("D M j G:i:s T Y").'</p><ul>
+            '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
+            <p>Last updated on: '. date("D M j G:i:s T Y").'</p>
+            <ul>
         ';
         foreach ($this->linklist as $line){
            $title = $line[0];
            $url = $line[1];
            if($url == "")
-              $nice_html_output .= '<li><b>'.htmlspecialchars( $title ).'</b></li><ul>';
+              $nice_html_output .= '<li><b>'.htmlspecialchars( $title )."</b></li>\n<ul>";
            elseif($url == "close")
-              $nice_html_output .= '</ul>';
+              $nice_html_output .= "</ul>\n";
            else
-              $nice_html_output .= '<li><a href="'. htmlspecialchars( $url ) .'">'.htmlspecialchars( $title ).'</a></li>';
+              $nice_html_output .= '<li><a href="'. htmlspecialchars( $url ) .'">'.htmlspecialchars( $title )."</a></li>\n";
         }
 
         $nice_html_output .= "</ul>\n".file_get_contents("templates/html_footer.html");
