@@ -204,7 +204,7 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
             name: 'enablenetwork',
             xtype: 'checkbox',
             fieldLabel: _('Network-Support'),
-            boxLabel: _('allow deviced to be mounted remotely'),
+            boxLabel: _('allows devices to be mounted remotely'),
             inputValue: 1,
             checked: sundtekData.sundtek.enablenetwork == "1"
 //            listeners: {
