@@ -36,18 +36,19 @@ class SwitzerlandSatEssentials {
                     "customwhere" =>  "AND ". HD_CHANNEL
                 ),
 
+/*only causes problems...
                 "04.scrambled.SDTV.diverse" => array(
 
                     "caidMode" => 2,
                     "mediaType" => 1,
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL
+                    "customwhere" =>  "AND NOT ". HD_CHANNEL . " AND NOT ". FRANCE_CSAT
                 ),
-
+*/
                 "05.scrambled.HDTV.diverse" => array(
 
                     "caidMode" => 2,
                     "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL
+                    "customwhere" =>  "AND ". HD_CHANNEL . " AND NOT ". FRANCE_CSAT
                 ),
 /* FIXME: radio channels with language deu are already grabbed by the de list...
 

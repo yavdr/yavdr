@@ -1,7 +1,7 @@
 <?php
 
 
-class PolandSatEssentials {
+class NetherlandsSatEssentials {
 
     function __construct(){
 
@@ -9,8 +9,8 @@ class PolandSatEssentials {
 
     function getRules(){
         return array(
-            "country" => "pl",
-            "lang" => "pol", //this is the language code used in the channels audio description
+            "country" => "nl",
+            "lang" => "dut", //this is the language code used in the channels audio description
             "validForSatellites" => array( "S19.2E"),
             "validForCableProviders" => array(),//none
             "validForTerrProviders" => array(),//none
@@ -57,6 +57,7 @@ class PolandSatEssentials {
                     "mediaType" => 2,
                     "customwhere" => ""
                 ),
+
             )
         );
     }

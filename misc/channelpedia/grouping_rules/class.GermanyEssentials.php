@@ -60,27 +60,41 @@ class GermanyEssentials {
                         " AND ". FILTER_ASTRA1_FTA . " AND NOT (". HD_CHANNEL . " OR ".DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND." OR UPPER(provider) = 'UNDEFINED') "
                 ),
 
+                "07.SKY.HDTV.scrambled" => array(
+                    "caidMode" => 2,
+                    "mediaType" => 1,
+                    "languageOverrule" => "", //ESPN America HD is in English!
+                    "customwhere" => " AND (UPPER(provider) = 'SKY') AND name != '.' AND " . HD_CHANNEL
+                    //OR provider = '' OR UPPER(provider) = 'UNDEFINED'
+                ),
+
                 //provider undefined only wilhelm.tel --> sky
-                "07.SKY.SDTV" => array(
+                "08.SKY.SDTV.scrambled" => array(
                     "caidMode" => 2,
                     "mediaType" => 1,
                     "customwhere" => " AND name NOT LIKE '% - %' AND name != 'Spieldaten' AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND name != '.' AND NOT " . HD_CHANNEL
                 ),
 
                 //provider undefined only wilhelm.tel --> sky
-                "07.SKY.SDTV2" => array(
+                "09.SKY.SDTV2.scrambled" => array(
                     "caidMode" => 2,
                     "mediaType" => 1,
                     "customwhere" => " AND (name LIKE '% - %' OR name = 'Spieldaten' OR name = '.') AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND NOT " . HD_CHANNEL
                 ),
 
-                "08.SKY.HDTV" => array(
-                    "caidMode" => 2,
+                "10.SKY.HDTV.FTA" => array(
+                    "caidMode" => 1,
                     "mediaType" => 1,
-                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR UPPER(provider) = 'UNDEFINED') AND name != '.' AND " . HD_CHANNEL
+                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND " . HD_CHANNEL
                 ),
 
-                "09.HD+.HDTV.Private" => array(
+                "11.SKY.SDTV.FTA" => array(
+                    "caidMode" => 1,
+                    "mediaType" => 1,
+                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND NOT " . HD_CHANNEL
+                ),
+
+                "15.HD+.HDTV.Private" => array(
                     "caidMode" => 2,
                     "mediaType" => 1,
                     "customwhere" => " AND (UPPER(provider) = 'BETADIGITAL' OR UPPER(provider) = 'CBC' OR UPPER(provider) = 'PROSIEBENSAT.1' ) AND " . HD_CHANNEL

@@ -33,14 +33,18 @@ require_once 'grouping_rules/class.SwitzerlandSatEssentials.php';
 require_once 'grouping_rules/class.SpainSatEssentials.php';
 require_once 'grouping_rules/class.PolandSatEssentials.php';
 require_once 'grouping_rules/class.FranceSatEssentials.php';
+require_once 'grouping_rules/class.NetherlandsSatEssentials.php';
 
 define("HD_CHANNEL"," UPPER(name) LIKE '% HD%' ");
 
 define("DE_PRIVATE_PRO7_RTL"," (provider = 'ProSiebenSat.1' OR provider='Pro7 & Sat.1' OR provider = 'RTL World' OR provider = 'RTL' OR provider='MTV Networks') ");
 define("DE_PUBLIC_PROVIDER", " (provider LIKE 'ARD%' OR provider = 'ZDFvision' OR provider = 'ZDF vision') ");
 
-define("AUSTRIA", " (LOWER(name) LIKE '%sterreich' OR LOWER(name) LIKE '% austria' OR UPPER(name) LIKE '% A') ");
+define("AUSTRIA", " (LOWER(name) LIKE '%sterreich' OR LOWER(name) LIKE '%austria%' OR UPPER(name) LIKE '% A') ");
 define("SWITZERLAND", " (UPPER(name) LIKE '% CH' OR LOWER(name) LIKE '% Schweiz' OR UPPER(name) LIKE 'SF%') ");
+define("FRANCE_CSAT", " (upper(provider)='CSAT') ");
+define("SPAIN_DIGITALPLUS", " (UPPER(provider) = 'DIGITAL +' OR UPPER(provider) = 'DIGITAL+') ");
+
 
 define("FILTER_ASTRA1_FTA", " ((tid != '1092' AND tid != '1113' AND provider != '-') OR (name = 'DMAX')) AND provider != 'SKY' ");
 
@@ -59,6 +63,7 @@ class channelGroupingRulesStore{
             "SpainSatEssentials" => SpainSatEssentials::getRules(),
             "PolandSatEssentials" => PolandSatEssentials::getRules(),
             "FranceSatEssentials" => FranceSatEssentials::getRules(),
+        	"NetherlandsSatEssentials" => NetherlandsSatEssentials::getRules(),
         );
     }
 }

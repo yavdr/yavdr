@@ -37,7 +37,7 @@ class HTMLOutputRenderer{
 
         //FIXME: Don't store this like this
         $source_languages = array(
-            "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl"),
+            "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl"),
             "S28.2E" => array( "en")
         );
 

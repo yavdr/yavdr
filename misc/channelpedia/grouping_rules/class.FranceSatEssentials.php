@@ -44,16 +44,43 @@ class FranceSatEssentials {
                     "customwhere" =>  "AND ". HD_CHANNEL
                 ),
 
-                "05.FTA.radio" => array(
+                "05.FTA.SDTV.more_CSAT" => array(
+
+                    "caidMode" => 0,
+                    "mediaType" => 1,
+                    "languageOverrule" => "", //for CSAT
+                    "customwhere" =>  "AND NOT ". HD_CHANNEL . " AND ". FRANCE_CSAT
+                ),
+
+                "06.scrambled.SDTV.more_CSAT" => array(
+
+                    "caidMode" => 2,
+                    "mediaType" => 1,
+                    "languageOverrule" => "", //for CSAT
+                	"customwhere" =>  "AND NOT ". HD_CHANNEL . " AND ". FRANCE_CSAT
+                ),
+
+
+                "20.FTA.radio" => array(
 
                     "caidMode" => 1,
                     "mediaType" => 2,
+                    "customwhere" => ""
                 ),
 
-                "06.scrambled.radio" => array(
+                "21.scrambled.radio" => array(
 
                     "caidMode" => 2,
                     "mediaType" => 2,
+                    "customwhere" => ""
+                ),
+
+                "22.CSAT.radio" => array(
+
+                    "caidMode" => 1,
+                    "mediaType" => 2,
+                    "languageOverrule" => "", //for CSAT
+                    "customwhere" => " AND ". FRANCE_CSAT
                 ),
 
             )
