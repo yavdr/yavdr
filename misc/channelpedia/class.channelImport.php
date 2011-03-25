@@ -175,12 +175,14 @@ class channelImport{
         if ($sourcetype == "S"){
             $this->foundSatellites[$params["source"]] = true;
         }
-        if ($sourcetype == "C"){
+        elseif ($sourcetype == "C"){
             $this->cableProviderPresent = true;
         }
-        if ($sourcetype == "T"){
+        elseif ($sourcetype == "T"){
             $this->terrProviderPresent = true;
         }
+        else
+            return false;
 
         $query = $this->db->insert( "channels", $params);
         //19 = channel already exists, could'nt be inserted
@@ -215,10 +217,13 @@ class channelImport{
             $cname = $cnamedetails[0];
             $cprovider = $cnamedetails[1];
         }
-        if ($details[3] == "C")
+        $sourcetype = substr($details[3], 0, 1);
+        if ($sourcetype == "C")
             $details[3] .= '['.$this->cableSourceType.']';
-        else if ($details[3] == "T")
+        elseif ($sourcetype == "T")
             $details[3] .= '['.$this->terrSourceType.']';
+        elseif ($sourcetype != "S")
+            return false;
 
         return array(
             "name"            => $cname,

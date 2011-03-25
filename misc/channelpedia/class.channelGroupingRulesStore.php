@@ -27,6 +27,7 @@ require_once 'grouping_rules/class.GermanySatNonEssentials.php';
 require_once 'grouping_rules/class.GermanyKabelDeutschland.php';
 require_once 'grouping_rules/class.GermanyWilhelmTel.php';
 require_once 'grouping_rules/class.GermanyUnityMedia.php';
+require_once 'grouping_rules/class.GermanyTeleColumbus.php';
 require_once 'grouping_rules/class.UKIrelandEssentials.php';
 require_once 'grouping_rules/class.AustriaSatEssentials.php';
 require_once 'grouping_rules/class.SwitzerlandSatEssentials.php';
@@ -63,7 +64,8 @@ class channelGroupingRulesStore{
             "SpainSatEssentials" => SpainSatEssentials::getRules(),
             "PolandSatEssentials" => PolandSatEssentials::getRules(),
             "FranceSatEssentials" => FranceSatEssentials::getRules(),
-        	"NetherlandsSatEssentials" => NetherlandsSatEssentials::getRules(),
+            "NetherlandsSatEssentials" => NetherlandsSatEssentials::getRules(),
+            "GermanyTeleColumbus" => GermanyTeleColumbus::getRules(),
         );
     }
 }
