@@ -28,7 +28,7 @@ class GermanyUnityMedia {
                     "mediaType" => 1,
                     "customwhere" => "AND provider = 'Kino auf Abruf'"
                 ),
-                "21.Radio.SDTV.UnityDigital" => array(
+                "31.Radio.SDTV.UnityDigital" => array(
 
                     "caidMode" => 2,
                     "mediaType" => 2,

@@ -64,6 +64,7 @@ class UKIrelandEssentials {
 
                     "caidMode" => 1,
                     "mediaType" => 1,
+                    "languageOverrule" => "", //only because of brand new c4 hd fta (march 2011) with missing lang stuff
                     "customwhere" => " AND ".UK_C4." AND ". HD_CHANNEL
                 ),
 
