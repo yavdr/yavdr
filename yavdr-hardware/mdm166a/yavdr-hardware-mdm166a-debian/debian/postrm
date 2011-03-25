@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ remove = "$1" ]; then 
+       [ -f /var/lib/yavdrdb.hdf ] && signal-event post-upgrade
+fi 
+
+#DEBHELPER#

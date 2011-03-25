@@ -1,0 +1,3 @@
+etc/udev/rules.d
+etc/lcdproc
+usr/share/yavdr/templates/etc/init/xbmc.conf

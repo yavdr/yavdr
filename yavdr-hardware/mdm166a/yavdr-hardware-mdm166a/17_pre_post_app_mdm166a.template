@@ -1,0 +1,31 @@
+<?cs if:(vdr.frontend != "xbmc") ?>
+pre-start script
+GUISETTINGS=/var/lib/vdr/.xbmc/userdata/guisettings.xml
+HASLCD=false
+
+if pidof -s LCDd; then
+  HASLCD=true
+fi
+
+if [ ! -e $GUISETTINGS ]; then
+  cp /usr/share/xbmc/guisettings.xml $GUISETTINGS
+fi
+
+/bin/sed -i -e "s/<haslcd>[^<]*<\/haslcd>/<haslcd>$HASLCD<\/haslcd>/" $GUISETTINGS
+/bin/chown vdr:vdr $GUISETTINGS
+
+if [ ! -z $STANDALONE ] ; then
+  touch /tmp/.standalone || /bin/true
+fi
+
+/usr/bin/svdrpsend remo off || /bin/true
+/usr/bin/svdrpsend plug targvfd off || /bin/true
+end script
+
+post-stop script
+/bin/rm -f /tmp/.standalone || /bin/true
+/usr/bin/svdrpsend plug targvfd on || /bin/true
+/usr/bin/svdrpsend remo on || /bin/true
+/sbin/initctl emit --no-wait vdr-frontend-restart
+end script
+<?cs /if ?>
