@@ -67,6 +67,10 @@ class channelIterator{
         return $this->channel;
     }
 
+    public function getCurrentChannelArrayKeys(){
+        return array_keys($this->channel);
+    }
+
     public function getCurrentChannelString(){
         $provider = "";
         if ($this->channel["provider"] != "")

@@ -199,20 +199,52 @@ class HTMLOutputRenderer{
         );
 
         foreach($labels as $row => $cols){
+            $html_table = "";
             $x = new channelIterator($cols["x_label"], $source, $orderby = "UPPER(name) ASC");
-            $prestyle = (strstr($cols["x_label"], "FTA") === false  || strstr($cols["x_label"], "scrambled") !== false) ? ' class = "scrambled" ' : '';
+            $shortlabel =
+            preg_match ( "/.*?\.\d*?\.(.*)/" , $cols["x_label"], $shortlabelparts );
+            if (count($shortlabelparts) == 2)
+                $shortlabel =$shortlabelparts[1];
+            else
+                $shortlabel = $cols["x_label"];
+            $prestyle = (strstr($shortlabel, "FTA") === false  || strstr($shortlabel, "scrambled") !== false) ? ' class = "scrambled" ' : '';
+            $escaped_shortlabel = htmlspecialchars($shortlabel);
             $nice_html_body .=
-                '<h2'.$prestyle.'><a name ="'.htmlspecialchars($cols["x_label"]).'">'.htmlspecialchars($cols["x_label"])."</a></h2>\n".
-                "<pre".$prestyle.">\n";
+                '<h2'.$prestyle.'>'.
+                '<a name ="'.$escaped_shortlabel.'">'.$escaped_shortlabel . " (" . $cols["channelcount"] . ' channels)</a>'.
+                "</h2>\n".
+                "<h3>VDR channel format</h3>\n<pre".$prestyle.">";
             while ($x->moveToNextChannel() !== false){
+                if ($html_table == ""){
+                    $html_table = "<h3>Table view</h3>\n<div class=\"tablecontainer\"><table>\n<tr>";
+                    foreach ($x->getCurrentChannelArrayKeys() as $header){
+                        $html_table .= '<th class="'.htmlspecialchars($header).'">'.htmlspecialchars(ucfirst($header))."</th>\n";
+                    }
+                    $html_table .= "</tr>\n";
+                }
                 $nice_html_body .= htmlspecialchars( $x->getCurrentChannelString())."\n";
+                $html_table .= "<tr".$prestyle.">\n";
+                foreach ($x->getCurrentChannelArray() as $param => $value){
+                    if ($param == "apid"){
+                        $value = str_replace ( array(",",";"), ",<br/>", htmlspecialchars($value ));
+                    }
+                    elseif ($param == "x_last_changed"){
+                        $value = date("D, d M Y H:i:s", $value);
+                    }
+                    else
+                        $value = htmlspecialchars($value);
+                    $html_table .= '<td class="'.htmlspecialchars($param).'">'.$value."</td>\n";
+                }
+                $html_table .= "</tr>\n";
             }
-            $nice_html_body .= "</pre>\n";
-            $nice_html_linklist .= '<li><a href="#'.htmlspecialchars($cols["x_label"]).'">'.htmlspecialchars($cols["x_label"]).'</a></li>';
+            $html_table .= "</table></div>";
+            //$nice_html_body .= "</pre>\n";
+            $nice_html_body .= "</pre>\n".$html_table;
+            $nice_html_linklist .= '<li><a href="#'.$escaped_shortlabel.'">'.$escaped_shortlabel. " (" . $cols["channelcount"] . " channels)</a></li>\n";
         }
 
         $nice_html_output .=
-            "<h2>Overview</h2><ul>" .
+            "<h2>Overview</h2><ul class=\"overview\">" .
             $nice_html_linklist . "</ul>\n".
             $nice_html_body.
             file_get_contents("templates/html_footer.html");
