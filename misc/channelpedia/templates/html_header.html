@@ -81,7 +81,7 @@
              }
              
              table { font-family: Arial, sans-serif; font-size: 0.8em; background-color: white; border-collapse:collapse; width: 900px;}
-             tr.changelog_row_style_1 { background-color: LightSalmon; }
+             tr.changelog_row_style_1 { background-color: #dfe8f6; }
              td { border: 1px solid black; padding: 2px; }
              
              ul li {
@@ -93,12 +93,29 @@
                 padding: 2px 0px 2px 0px;
                 font-size: 1.15em;
                 color: #4E78B1;
+                margin: 2px;
              }
-             
+
+            ul ul ul ul li{
+                display: inline;
+                float: left;
+            }
+            
              ul ul li a, ul ul ul ul li a{
                 font-weight: bold;
-                /*text-decoration: none;*/
+                text-decoration: none;
                 color: orange;
+                background-color: Moccasin;
+                margin: 2px;
+                padding: 1px 5px 1px 5px;
+                border: 1px solid orange;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+             }
+
+              ul ul li a:hover, ul ul ul ul li a:hover{
+                background-color: orange;
+                color: red;
              }
              
              p.warning{

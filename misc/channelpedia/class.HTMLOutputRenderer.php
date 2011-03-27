@@ -94,19 +94,6 @@ class HTMLOutputRenderer{
             $this->writeChangelog("T[$terrp]");
         }
         $this->closeHierarchy();
-/*
-        $this->addDividerTitle("(Yet) Uncategorized channels (grouped by transponder)");
-        foreach ($this->config->getValue("sat_positions") as $sat){
-            $this->addUncategorizedListLink( $sat );
-        }
-        foreach ($this->config->getValue("cable_providers") as $cablep){
-            $this->addUncategorizedListLink( "C[$cablep]" );
-        }
-        foreach ($this->config->getValue("terr_providers") as $terrp){
-            $this->addUncategorizedListLink("T[$terrp]");
-        }
-        $this->closeHierarchy();
-*/
         $this->renderIndexPage();
     }
 
@@ -197,37 +184,35 @@ class HTMLOutputRenderer{
     //assembles all pre-written channel lists from hdd into one html page
     public function writeNiceHTMLPage($source, $language){
         $pagetitle = ''.$source.' (Language/Region: '.$language.')';
-        $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
+        $header = preg_replace( "/\[PAGE_TITLE\]/", $pagetitle, file_get_contents("templates/html_header.html") );
         $nice_html_output =
             $header.
-            '<h1>'.htmlspecialchars( $pagetitle).'</h1>
-            <p>Last updated on: '. date("D M j G:i:s T Y").'</p>
-        ';
-        $dirname = $this->config->getValue("path").$this->config->getValue("exportfolder")."/raw";
-        $dir = new DirectoryIterator( $dirname );
-        $dirs = array();
-        foreach ($dir as $fileinfo) {
-            $prefix= "channels_".$source."_".$language;
-            if ( $fileinfo->isFile() && substr($fileinfo->getFilename(),0, strlen($prefix)) == $prefix){// && !$fileinfo->isDot()){
-                //echo $fileinfo->getFilename() . "\n";
-                $infofile = $dirname."/". $fileinfo->getFilename();
-                if (file_exists( $infofile )){
-                    $dirs[ $fileinfo->getFilename() ] = $infofile;
-                }
-            }
-        }
-        ksort($dirs);
+            '<h1>'.htmlspecialchars( $pagetitle)."</h1>\n
+            <p>Last updated on: ". date("D M j G:i:s T Y")."</p>\n";
         $nice_html_body = "";
         $nice_html_linklist = "";
-        foreach ($dirs as $filename => $filepath) {
-            $prestyle = (strstr($filename, "FTA") === false  || strstr($filename, "scrambled") !== false) ? ' class = "scrambled" ' : '';
+
+        $labels = $this->db->query(
+            "SELECT x_label, count(*) AS channelcount FROM channels ".
+            "WHERE source = ".$this->db->quote($source)." AND x_label LIKE ".$this->db->quote($language."%")." ".
+            "GROUP BY x_label ORDER BY x_label"
+        );
+
+        foreach($labels as $row => $cols){
+            $x = new channelIterator($cols["x_label"], $source, $orderby = "UPPER(name) ASC");
+            $prestyle = (strstr($cols["x_label"], "FTA") === false  || strstr($cols["x_label"], "scrambled") !== false) ? ' class = "scrambled" ' : '';
             $nice_html_body .=
-                '<h2'.$prestyle.'><a name ="'.htmlspecialchars($filename).'">'.htmlspecialchars($filename)."</a></h2>\n".
-                "<pre".$prestyle.">". htmlspecialchars(file_get_contents( $filepath )) ."</pre>\n";
-            $nice_html_linklist .= '<li><a href="#'.htmlspecialchars($filename).'">'.htmlspecialchars($filename).'</a></li>';
+                '<h2'.$prestyle.'><a name ="'.htmlspecialchars($cols["x_label"]).'">'.htmlspecialchars($cols["x_label"])."</a></h2>\n".
+                "<pre".$prestyle.">\n";
+            while ($x->moveToNextChannel() !== false){
+                $nice_html_body .= htmlspecialchars( $x->getCurrentChannelString())."\n";
+            }
+            $nice_html_body .= "</pre>\n";
+            $nice_html_linklist .= '<li><a href="#'.htmlspecialchars($cols["x_label"]).'">'.htmlspecialchars($cols["x_label"]).'</a></li>';
         }
+
         $nice_html_output .=
-        	"<h2>Overview</h2><ul>" .
+            "<h2>Overview</h2><ul>" .
             $nice_html_linklist . "</ul>\n".
             $nice_html_body.
             file_get_contents("templates/html_footer.html");
@@ -250,14 +235,14 @@ class HTMLOutputRenderer{
            $title = $line[0];
            $url = $line[1];
            if($url == "")
-              $nice_html_output .= '<li><b>'.htmlspecialchars( $title )."</b></li>\n<ul>";
+               $nice_html_output .= '<li><b>'.htmlspecialchars( $title )."</b></li>\n<ul>";
            elseif($url == "close")
-              $nice_html_output .= "</ul>\n";
+               $nice_html_output .= "<br clear=\"all\" /></ul>\n";
            else
               $nice_html_output .= '<li><a href="'. htmlspecialchars( $url ) .'">'.htmlspecialchars( $title )."</a></li>\n";
         }
 
-        $nice_html_output .= "</ul>\n".file_get_contents("templates/html_footer.html");
+        $nice_html_output .= "<br clear=\"all\" /></ul>\n".file_get_contents("templates/html_footer.html");
         file_put_contents($this->exportpath . "index.html", $nice_html_output );
 
     }

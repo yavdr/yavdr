@@ -62,9 +62,12 @@ if (is_file( $checkpath."info.txt" ) && $_FILES["channels"]["name"] == "channels
     }
     //print $info ."/". $infofile ."/".  $cableProvider."\n";
     $x = new channelImport();
-    $x-> importChannelsConfFile($user, $cableProvider, "none");
+    $x->importChannelsConfFile($user, $cableProvider, "none");
     $x->updateNecessaryLabels();
+
     $x =new rawOutputRenderer();
+    $x->writeRawOutput();
+
     $x =new HTMLOutputRenderer();
     unset($x);
 }

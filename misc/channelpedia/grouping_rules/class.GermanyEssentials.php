@@ -100,6 +100,34 @@ class GermanyEssentials {
                     "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND NOT " . HD_CHANNEL
                 ),
 
+                "25.MTVNetworksEurope.HDTV.FTA" => array(
+                    "caidMode" => 1,
+                    "mediaType" => 1,
+                    "languageOverrule" => "",
+                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE' AND " . HD_CHANNEL
+                ),
+
+                "26.MTVNetworksEurope.SDTV.FTA" => array(
+                    "caidMode" => 1,
+                    "mediaType" => 1,
+                    "languageOverrule" => "",
+                	"customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE' AND NOT " . HD_CHANNEL
+                ),
+
+                "27.MTVNetworksEurope.HDTV.scrambled" => array(
+                    "caidMode" => 2,
+                    "mediaType" => 1,
+                    "languageOverrule" => "",
+                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE' AND " . HD_CHANNEL
+                ),
+
+                "28.MTVNetworksEurope.SDTV.scrambled" => array(
+                    "caidMode" => 2,
+                    "mediaType" => 1,
+                    "languageOverrule" => "",
+                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE' AND NOT " . HD_CHANNEL
+                ),
+
                 "30.FTA.Radio.ARD_ZDF" => array(
                     "caidMode" => 1,
                     "mediaType" => 2,

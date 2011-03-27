@@ -58,6 +58,7 @@ class channelGroupingRulesStore{
             "GermanyKabelDeutschland" => GermanyKabelDeutschland::getRules(),
             "GermanyWilhelmTel" => GermanyWilhelmTel::getRules(),
             "GermanyUnityMedia" => GermanyUnityMedia::getRules(),
+            "GermanyTeleColumbus" => GermanyTeleColumbus::getRules(),
             "UKIrelandEssentials" => UKIrelandEssentials::getRules(),
             "AustriaSatEssentials" => AustriaSatEssentials::getRules(),
             "SwitzerlandSatEssentials" => SwitzerlandSatEssentials::getRules(),
@@ -65,7 +66,6 @@ class channelGroupingRulesStore{
             "PolandSatEssentials" => PolandSatEssentials::getRules(),
             "FranceSatEssentials" => FranceSatEssentials::getRules(),
             "NetherlandsSatEssentials" => NetherlandsSatEssentials::getRules(),
-            "GermanyTeleColumbus" => GermanyTeleColumbus::getRules(),
         );
     }
 }

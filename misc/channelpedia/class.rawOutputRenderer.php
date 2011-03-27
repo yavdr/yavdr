@@ -26,7 +26,9 @@ class rawOutputRenderer {
 
     function __construct(){
         $this->config = config::getInstance();
+    }
 
+    public function writeRawOutput(){
         //for all existing sources, write unfiltered channels.conf lists to disc
         foreach ($this->config->getValue("sat_positions") as $sat){
             $y = new channelListWriter("_complete", $sat);
@@ -44,13 +46,16 @@ class rawOutputRenderer {
 
         //selections
         foreach ($this->config->getValue("sat_positions") as $sat){
-            $this->writeAllChannelSelections2Disk( $sat );
+            //$this->writeAllChannelSelections2Disk( $sat );
+            $this->writeAllUncategorizedChannels2Disk( $sat );
         }
         foreach ($this->config->getValue("cable_providers") as $cablep){
-            $this->writeAllChannelSelections2Disk( "C[$cablep]" );
+            //$this->writeAllChannelSelections2Disk( "C[$cablep]" );
+            $this->writeAllUncategorizedChannels2Disk( "C[$cablep]" );
         }
         foreach ($this->config->getValue("terr_providers") as $terrp){
-            $this->writeAllChannelSelections2Disk( "T[$terrp]" );
+            //$this->writeAllChannelSelections2Disk( "T[$terrp]" );
+            $this->writeAllUncategorizedChannels2Disk( "T[$terrp]" );
         }
     }
 
@@ -82,6 +87,9 @@ class rawOutputRenderer {
                 }
             }
         }
+    }
+
+    private function writeAllUncategorizedChannels2Disk( $source){
         //also write a complete channels.conf for this source grouped by transponders, containing all existing channels
         $y = new channelListWriter( "uncategorized", $source );
         $y->writeFile();

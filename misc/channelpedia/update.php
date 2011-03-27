@@ -33,7 +33,10 @@ require_once 'class.HTMLOutputRenderer.php';
 
 if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
 importFromAllChannelSources();
+
 $x = new rawOutputRenderer();
+$x->writeRawOutput();
+
 $x = new HTMLOutputRenderer();
 if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
 
