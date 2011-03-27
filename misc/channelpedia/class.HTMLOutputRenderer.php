@@ -225,7 +225,7 @@ class HTMLOutputRenderer{
                 $nice_html_body .= htmlspecialchars( $x->getCurrentChannelString())."\n";
                 $html_table .= "<tr".$prestyle.">\n";
                 foreach ($x->getCurrentChannelArray() as $param => $value){
-                    if ($param == "apid"){
+                    if ($param == "apid" || $param == "caid"){
                         $value = str_replace ( array(",",";"), ",<br/>", htmlspecialchars($value ));
                     }
                     elseif ($param == "x_last_changed"){
@@ -238,8 +238,8 @@ class HTMLOutputRenderer{
                 $html_table .= "</tr>\n";
             }
             $html_table .= "</table></div>";
-            //$nice_html_body .= "</pre>\n";
-            $nice_html_body .= "</pre>\n".$html_table;
+            $nice_html_body .= "</pre>\n";
+            //$nice_html_body .= "</pre>\n".$html_table;
             $nice_html_linklist .= '<li><a href="#'.$escaped_shortlabel.'">'.$escaped_shortlabel. " (" . $cols["channelcount"] . " channels)</a></li>\n";
         }
 
