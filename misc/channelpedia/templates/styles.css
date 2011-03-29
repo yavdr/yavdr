@@ -82,9 +82,10 @@ pre.scrambled{
 
 div.tablecontainer{
     width: 900px;
+    overflow: auto;
     /*max-height: 600px;
     height: auto;
-    overflow: auto;*/
+    */
 }
  
 table { 
@@ -92,7 +93,6 @@ table {
     font-size: 0.8em; 
     background-color: white; 
     border-collapse:collapse; 
-    width: 900px;
 }
 
 tr.changelog_row_style_1 { 
@@ -106,6 +106,10 @@ td,th {
 
 th{
     color: #4E78B1;
+    background-color: #dfe8f6; 
+}
+
+td.source{
     background-color: #dfe8f6; 
 }
 

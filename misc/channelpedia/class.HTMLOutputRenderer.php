@@ -44,9 +44,12 @@ class HTMLOutputRenderer{
         $this->exportpath = $this->config->getValue("path").$this->config->getValue("exportfolder")."/html/";
 
         //FIXME: Don't store this like this
-        $source_languages = array(
+        $source_languages_sat = array(
             "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl"),
             "S28.2E" => array( "en")
+        );
+        $source_languages_cable = array(
+            "at_salzburg-ag" => array( "de")//TODO: improve this!
         );
 
         $this->addDividerTitle("Essential channels (pre-sorted lists)");
@@ -54,7 +57,7 @@ class HTMLOutputRenderer{
         $this->addDividerTitle("Satellite positions");
         foreach ($this->config->getValue("sat_positions") as $sat){
             $this->addDividerTitle($sat);
-            foreach ($source_languages[$sat] as $language)
+            foreach ($source_languages_sat[$sat] as $language)
                 $this->writeNiceHTMLPage( $sat, $language );
             $this->addUncategorizedListLink( $sat );
             $this->closeHierarchy();
@@ -63,7 +66,12 @@ class HTMLOutputRenderer{
         $this->addDividerTitle("Cable providers");
         foreach ($this->config->getValue("cable_providers") as $cablep){
             $this->addDividerTitle($cablep);
-            $this->writeNiceHTMLPage( "C[$cablep]", "de" );
+            if (!array_key_exists($cablep, $source_languages_cable)){
+                $this->writeNiceHTMLPage( "C[$cablep]", "de" ); //FIXME: stupid fallback default
+            }
+            else
+                foreach ($source_languages_cable[$cablep] as $language)
+                    $this->writeNiceHTMLPage( "C[$cablep]", $language );
             $this->addUncategorizedListLink( "C[$cablep]" );
             $this->closeHierarchy();
             }
@@ -102,6 +110,9 @@ class HTMLOutputRenderer{
             $this->writeChangelog("T[$terrp]");
         }
         $this->closeHierarchy();
+
+        $this->renderDEComparison();
+
         $this->renderIndexPage();
     }
 
@@ -217,7 +228,6 @@ class HTMLOutputRenderer{
 
         foreach($labels as $row => $cols){
             $html_table = "";
-            $x = new channelIterator($cols["x_label"], $source, $orderby = "UPPER(name) ASC");
             $shortlabel =
             preg_match ( "/.*?\.\d*?\.(.*)/" , $cols["x_label"], $shortlabelparts );
             if (count($shortlabelparts) == 2)
@@ -231,6 +241,8 @@ class HTMLOutputRenderer{
                 '<a name ="'.$escaped_shortlabel.'">'.$escaped_shortlabel . " (" . $cols["channelcount"] . ' channels)</a>'.
                 "</h2>\n".
                 "<h3>VDR channel format</h3>\n<pre".$prestyle.">";
+            $x = new channelIterator();
+            $x->init1($cols["x_label"], $source, $orderby = "UPPER(name) ASC");
             while ($x->moveToNextChannel() !== false){
                 if ($html_table == ""){
                     $html_table = "<h3>Table view</h3>\n<div class=\"tablecontainer\"><table>\n<tr>";
@@ -269,6 +281,50 @@ class HTMLOutputRenderer{
         $filename = "channels_".$language."_".$source.".html";
         $this->addToOverview( $language, $filename );
         file_put_contents($this->exportpath . $filename, $nice_html_output );
+    }
+
+    private function renderDEComparison(){
+        $pagetitle = "Comparisons: Parameter of German channels at different providers";
+        $nice_html_output =
+            $this->getHTMLHeader($pagetitle).
+            '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
+            <p>Last updated on: '. date("D M j G:i:s T Y").'</p>';
+        $html_table = "";
+        $x = new channelIterator();
+        $x->init2( "SELECT * FROM channels WHERE x_label LIKE 'de.%' AND lower(x_label) LIKE '%public%' ORDER by x_label ASC, lower(name) ASC, source ASC");
+        $lastname = "";
+        while ($x->moveToNextChannel() !== false){
+            $carray = $x->getCurrentChannelArray();
+            if (strtolower($carray["name"]) != strtolower($lastname)){
+                if ($lastname != ""){
+                    $html_table .= "</table>\n</div>\n";
+                }
+                $html_table .= "<h2>".htmlspecialchars($carray["name"])."</h2>\n<h3>Table view</h3>\n<div class=\"tablecontainer\"><table>\n<tr>";
+                foreach ($x->getCurrentChannelArrayKeys() as $header){
+                    $html_table .= '<th class="'.htmlspecialchars($header).'">'.htmlspecialchars(ucfirst($header))."</th>\n";
+                }
+                $html_table .= "</tr>\n";
+            }
+            $html_table .= "<tr>\n";
+            foreach ($carray as $param => $value){
+                if ($param == "apid" || $param == "caid"){
+                    $value = str_replace ( array(",",";"), ",<br/>", htmlspecialchars($value ));
+                }
+                elseif ($param == "x_last_changed"){
+                    $value = date("D, d M Y H:i:s", $value);
+                }
+                else
+                    $value = htmlspecialchars($value);
+                $html_table .= '<td class="'.htmlspecialchars($param).'">'.$value."</td>\n";
+            }
+            $html_table .= "</tr>\n";
+            $lastname = $carray["name"];
+        }
+        $html_table .= "</table></div>\n";
+        $nice_html_output .=
+            $html_table .
+            $this->getHTMLFooter();
+        file_put_contents($this->exportpath . "parameter_comparison_de.html", $nice_html_output );
     }
 
     private function renderIndexPage(){

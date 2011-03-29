@@ -33,7 +33,7 @@ class AustriaSatEssentials {
             "country" => "at",
             "lang" => "deu", //this is the language code used in the channels audio description
             "validForSatellites" => array( "S19.2E"),
-            "validForCableProviders" => array(),//none
+            "validForCableProviders" => array("at_salzburg-ag"),
             "validForTerrProviders" => array(),//none
             "groups" => array(
 

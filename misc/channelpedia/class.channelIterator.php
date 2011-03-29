@@ -25,20 +25,28 @@
 class channelIterator{
 
     private
+        $db,
         $result = false,
         $channel = false,
         $count = 0,
         $lastFrequency = "",
         $transponderChanged = true;
 
-    function __construct( $label, $source, $orderby = "frequency, modulation, provider, name ASC"){
-        $db = dbConnection::getInstance();
+    function __construct(){
+        $this->db = dbConnection::getInstance();
+    }
 
+    public function init1( $label, $source, $orderby = "frequency, modulation, provider, name ASC"){
         $where = array();
         $where["source"] = $source;
         if ($label != "_complete")
             $where["x_label"] = $label;
-        $this->result = $db->query2("SELECT * FROM channels", $where, true, $orderby);
+        $this->result = $this->db->query2("SELECT * FROM channels", $where, true, $orderby);
+    }
+
+    public function init2( $statement ){
+        $db = dbConnection::getInstance();
+        $this->result = $this->db->query($statement);
     }
 
     public function moveToNextChannel(){
