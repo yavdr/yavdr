@@ -1,0 +1,7 @@
+#!/bin/sh                                                                                                               
+                                                                                                                        
+if [ remove = "$1" ]; then 
+/usr/bin/signal-event addons-update
+fi
+
+#DEBHELPER#
