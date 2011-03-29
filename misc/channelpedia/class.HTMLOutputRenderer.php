@@ -26,14 +26,17 @@ class HTMLOutputRenderer{
 
     const
         stylesheet = "templates/styles.css",
-        htmlHeaderTemplate = "templates/html_header.html";
+        htmlHeaderTemplate = "templates/html_header.html",
+        htmlFooterTemplate = "templates/html_footer.html",
+        htmlCustomFooterTemplate = "templates/html_custom_footer.html";
 
     private
         $db,
         $exportpath,
         $config,
         $linklist = array(),
-        $html_header_template = "";
+        $html_header_template = "",
+        $html_footer_template = "";
 
     function __construct(){
         $this->db = dbConnection::getInstance();
@@ -115,6 +118,18 @@ class HTMLOutputRenderer{
         return preg_replace( "/\[PAGE_TITLE\]/", htmlspecialchars($pagetitle), $this->html_header_template );
     }
 
+    private function getHTMLFooter(){
+        if ( $this->html_footer_template == ""){
+            $customfooter = "";
+            if (file_exists("templates/html_custom_footer.html")){
+                $customfooter = file_get_contents( HTMLOutputRenderer::htmlCustomFooterTemplate);
+            }
+            $this->html_footer_template =
+                preg_replace( "/\[CUSTOM_FOOTER\]/", $customfooter, file_get_contents( HTMLOutputRenderer::htmlFooterTemplate) );
+        }
+        return $this->html_footer_template;
+    }
+
     private function addCompleteListLink( $source ){
         $filename = "../raw/channels_".$source."__complete.conf";
         $this->addToOverview("$source - complete", $filename);
@@ -178,7 +193,7 @@ class HTMLOutputRenderer{
             $desc.
             "</td></tr>\n";
         }
-        $buffer .= "<table>\n".file_get_contents("templates/html_footer.html");
+        $buffer .= "<table>\n".$this->getHTMLFooter();
         $filename = "changelog_".$source.".html";
         $this->addToOverview($pagetitle, $filename);
         file_put_contents($this->exportpath . $filename, $buffer );
@@ -249,7 +264,7 @@ class HTMLOutputRenderer{
             "<h2>Overview</h2><ul class=\"overview\">" .
             $nice_html_linklist . "</ul>\n".
             $nice_html_body.
-            file_get_contents("templates/html_footer.html");
+            $this->getHTMLFooter();
 
         $filename = "channels_".$language."_".$source.".html";
         $this->addToOverview( $language, $filename );
@@ -275,7 +290,7 @@ class HTMLOutputRenderer{
               $nice_html_output .= '<li><a href="'. htmlspecialchars( $url ) .'">'.htmlspecialchars( $title )."</a></li>\n";
         }
 
-        $nice_html_output .= "<br clear=\"all\" /></ul>\n".file_get_contents("templates/html_footer.html");
+        $nice_html_output .= "<br clear=\"all\" /></ul>\n".$this->getHTMLFooter();
         file_put_contents($this->exportpath . "index.html", $nice_html_output );
 
     }
