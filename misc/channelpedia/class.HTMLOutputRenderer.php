@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Henning Pingel
+*  (c) 2011 Henning Pingel
 *  All rights reserved
 *
 *  This script is part of the yaVDR project. yaVDR is
@@ -24,11 +24,16 @@
 
 class HTMLOutputRenderer{
 
+    const
+        stylesheet = "templates/styles.css",
+        htmlHeaderTemplate = "templates/html_header.html";
+
     private
         $db,
         $exportpath,
         $config,
-        $linklist = array();
+        $linklist = array(),
+        $html_header_template = "";
 
     function __construct(){
         $this->db = dbConnection::getInstance();
@@ -97,6 +102,19 @@ class HTMLOutputRenderer{
         $this->renderIndexPage();
     }
 
+    private function getHTMLHeader($pagetitle){
+        if ( $this->html_header_template == ""){
+            //prepare html header template + stylesheet include
+            $stylefile = "styles_". md5( file_get_contents( HTMLOutputRenderer::stylesheet ) ). ".css";
+            $this->html_header_template =
+                preg_replace( "/\[STYLESHEET\]/", $stylefile, file_get_contents( HTMLOutputRenderer::htmlHeaderTemplate));
+            //TODO: delete old stylesheet files before copying new one
+            if (!file_exists($this->exportpath . $stylefile))
+                copy( HTMLOutputRenderer::stylesheet, $this->exportpath . $stylefile );
+        }
+        return preg_replace( "/\[PAGE_TITLE\]/", htmlspecialchars($pagetitle), $this->html_header_template );
+    }
+
     private function addCompleteListLink( $source ){
         $filename = "../raw/channels_".$source."__complete.conf";
         $this->addToOverview("$source - complete", $filename);
@@ -119,21 +137,6 @@ class HTMLOutputRenderer{
         $this->linklist[] = array( "", "close");
     }
 
-    /*
-     *
-     * example for usage of channel iterator
-    $y = new channelIterator("", "S19.2E");
-    while ($y->moveToNextChannel() !== false){
-        if ($y->transponderChanged())
-            print ": ### ".$y->getCurrentTransponderInfo()." ###\n";
-        $channel = $y->getCurrentChannelString();
-        print $channel."\n";
-    }
-    print "Number of channels processed: " . $y->getCurrentChannelCount() . "\n";
-    unset($y);
-    die();
-    */
-
     public function writeChangelog($source, $importance = 0){
 
         $where = array();
@@ -144,20 +147,20 @@ class HTMLOutputRenderer{
             $source = "all_sources";
         if ($importance === 1 ){
         	$where[] = " importance = $importance ";
-    	}
-    	if (count($where) > 0){
-    	    $wherestring = "WHERE ". implode(" AND ", $where);
-    	}
+        }
+        if (count($where) > 0){
+            $wherestring = "WHERE ". implode(" AND ", $where);
+        }
 
         $sqlquery=
             "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, importance, update_description ".
             "FROM channel_update_log $wherestring ORDER BY timestamp DESC LIMIT 100";
         $result = $this->db->query($sqlquery);
         $pagetitle = 'Changelog for '.$source.'';
-        $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
+        $buffer =
+            $this->getHTMLHeader($pagetitle)."\n".
+            '<h1>'.htmlspecialchars($pagetitle).'</h1><p>Last updated on: '. date("D M j G:i:s T Y")."</p>\n<table>\n";
 
-        $buffer = $header.'
-	    <h1>'.$pagetitle.'</h1><p>Last updated on: '. date("D M j G:i:s T Y")."</p>\n<table>\n";
         foreach ($result as $row) {
             $desclist = explode("\n", $row["update_description"]);
             $desc = "";
@@ -184,9 +187,8 @@ class HTMLOutputRenderer{
     //assembles all pre-written channel lists from hdd into one html page
     public function writeNiceHTMLPage($source, $language){
         $pagetitle = ''.$source.' (Language/Region: '.$language.')';
-        $header = preg_replace( "/\[PAGE_TITLE\]/", $pagetitle, file_get_contents("templates/html_header.html") );
         $nice_html_output =
-            $header.
+            $this->getHTMLHeader($pagetitle).
             '<h1>'.htmlspecialchars( $pagetitle)."</h1>\n
             <p>Last updated on: ". date("D M j G:i:s T Y")."</p>\n";
         $nice_html_body = "";
@@ -256,9 +258,8 @@ class HTMLOutputRenderer{
 
     private function renderIndexPage(){
         $pagetitle = "Channelpedia - Overview";
-        $header = preg_replace("/\[PAGE_TITLE\]/",$pagetitle,file_get_contents("templates/html_header.html"));
         $nice_html_output =
-            $header.
+            $this->getHTMLHeader($pagetitle).
             '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
             <p>Last updated on: '. date("D M j G:i:s T Y").'</p>
             <ul>
