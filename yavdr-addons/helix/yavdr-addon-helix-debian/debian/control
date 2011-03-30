@@ -1,0 +1,13 @@
+Source: yavdr-addon-helix
+Section: misc
+Priority: optional
+Maintainer: Arno Esser <arno.esser@dachsweb.de>
+Uploaders: Holger Schvestka <hotzenplotz5@gmx.de>
+Standards-Version: 0.0.1
+Build-Depends: debhelper (>= 7), cdbs
+
+Package: yavdr-addon-helix
+Architecture: all
+Depends: ${yavdr-startup},${misc:Depends}, yavdr-utils, openjdk-6-jre, libopenal1, unzip
+Description: yavdr-addon-helix
+ yavdr-addon-helix

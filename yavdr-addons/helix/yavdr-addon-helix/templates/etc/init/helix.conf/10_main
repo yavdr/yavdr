@@ -1,0 +1,18 @@
+description     "heli-x"
+author          "Arno Esser <arno.esser@gmx.de>"
+
+pre-start script
+/usr/bin/svdrpsend remo off || /bin/true
+if [ ! -z $STANDALONE ] ; then
+  touch /tmp/.standalone || /bin/true
+fi
+end script
+
+post-stop script
+/bin/rm -f /tmp/.standalone || /bin/true
+/usr/bin/svdrpsend remo on || /bin/true
+/sbin/initctl emit --no-wait vdr-frontend-restart
+end script
+
+exec su -c "/opt/HELI-X30/runHELI-X.sh" vdr
+

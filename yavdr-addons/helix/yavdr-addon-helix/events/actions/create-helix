@@ -1,0 +1,6 @@
+#!/bin/bash
+
+process-template /etc/init/helix.conf
+process-template /etc/openal/alsoft.conf
+process-template /var/lib/vdr/.openalrc
+

@@ -1,0 +1,3 @@
+(define devices '(alsa))
+(define alsa-out-device iec958)
+(define speaker-num 5)
