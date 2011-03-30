@@ -1,7 +1,11 @@
 #!/bin/sh                                                                                                               
                                                                                                                         
 if [ remove = "$1" ]; then 
-/usr/bin/signal-event addons-update
+	/usr/bin/signal-event addons-update
+
+	rm -rf /opt/HELI-X30
+	rm -f /opt/HELI-X30.zip
+
 fi
 
 #DEBHELPER#

@@ -2,6 +2,7 @@
 
 if [ install = "$1" -o upgrade = "$1" ]; then 
 	cd /opt        
+	rm -f /opt/HELI-X30.zip
 	wget http://www.heli-x.info/30/HELI-X30.zip
 	unzip HELI-X30.zip
 	chown -R vdr.vdr HELI-X30
