@@ -6,6 +6,7 @@ msgstr ""
 "PO-Revision-Date: 2010-08-14 22:01+0200\n"
 "Last-Translator: Volker Richert <richert@addmore.de>\n"
 "Language-Team: fr <bugs@yavdr.com>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -61,671 +62,684 @@ msgstr "Redémarrer le Système"
 msgid "Shutdown system"
 msgstr "Eteindre le Système"
 
-msgid "web.meta_lang.local"
-msgstr "Francais"
-
-msgid "web.meta_lang.int"
-msgstr "French"
-
-msgid "web.meta_lang.key"
-msgstr "fr"
-
-msgid "web.menutabs.vdr.title"
-msgstr "Votre VDR"
-
-msgid "web.menutabs.vdr.tabtip"
-msgstr "Configuration des paramètres de base de votre VDR"
-
-msgid "web.menutabs.vdr.content"
-msgstr "Bienvenue sur l 'interface Web de yaVDR!"
-
-msgid "web.menutabs.system.title"
-msgstr "Système"
-
-msgid "web.menutabs.system.tabtip"
-msgstr "Configuration des paramètres de base du système"
-
-msgid "web.menutabs.system.content"
-msgstr "Bienvenue sur l 'interface Web de yaVDR!"
-
-msgid "web.menutabs.demos.title"
-msgstr "Démos"
-
-msgid "web.menutabs.demos.tabtip"
-msgstr "Validation de principe, démonstrations de nouvelles caractéristiques, peut être utilisé à des fins de test"
-
-msgid "web.menutabs.demos.content"
-msgstr "Validation de principe, démonstrations de nouvelles caractéristiques, peut être utilisé à des fins de test"
-
-msgid "web.menutabs.development.title"
-msgstr "Développement"
-
-msgid "web.menutabs.development.tabtip"
-msgstr "Nouvelles fonctionnalités qui sont en cours de développement, ne les utilisez pas. Ils ne fonctionnent pas correctement pour le moment."
-
-msgid "web.menutabs.development.content"
-msgstr "Nouvelles fonctionnalités qui sont en cours de développement, ne les utilisez pas. Ils ne fonctionnent pas correctement pour le moment."
-
-msgid "web.menutabs.diagnose.title"
-msgstr "Diagnostiquer"
-
-msgid "web.menutabs.diagnose.tabtip"
-msgstr "Restez informé sur l 'état du système, le suivi des problèmes"
-
-msgid "web.menutabs.diagnose.content"
-msgstr "Accès aux fichiers des logs importants et aux fichiers de configuration"
-
-msgid "web.standardform.button.save"
-msgstr "Enregistrer"
-
-msgid "web.standardform.messagebox_caption.message"
-msgstr "Message"
-
-msgid "web.standardform.messagebox_caption.error"
-msgstr "Erreur"
-
-msgid "web.standardform.messagebox_caption.wait"
-msgstr "Patienter S 'il vous plait..."
-
-msgid "web.remote.menutab.title"
-msgstr "Télécommande"
-
-msgid "web.remote.menutab.tabtip"
-msgstr "Télécommande-Paramètres (Récepteur de la télécommande)"
-
-msgid "web.remote.menutab.panel_title"
-msgstr "Récepteur de la télécommande"
-
-msgid "web.remote.help"
-msgstr "Il ya 3 différents serveurs LIRC compatibles supportés pour le moment. S 'il vous plaît choisissez celui qui convient le mieux pour votre appareil. <br /><h1>LIRC</h1><br /><br /> Celui-ci convient pour la plupart des appareils. S 'il vous plaît renseignez-vous, pour savoir quel pilote est supporté par votre appareil. Vous devez choisir le bon pilote pour votre périphérique et dans certain cas son pilote pour le port-série (Attric, montage perso et d 'autres dispositifs similaires), vous devez choisir le bon port série. <br /> <br /><h1>Input Lirc</h1><br /><br /> Certaines cartes DVB comprenne un récepteur de télécommande. La plupart d 'entre eux, ainsi que certains périphériques USB sont disponibles en tant que dispositifs dite d 'entrée. Vous avez seulement besoin de choisir le bon périphérique dans la liste déroulante. <br /><br /><h1>Irserver</h1><br /><br /> Certains cas d 'HTPC (par exemple OrigenAE) ont inclus un récepteur de télécommande , qui ne peut être utilisé qu 'avec irserver. Il vous suffit de l 'activer et de l 'enregistrer ensuite."
-
-msgid "web.lirc.menutab.title"
-msgstr "LIRC"
-
-msgid "web.lirc.menutab.tabtip"
-msgstr "Lirc-Paramètres (Récepteur de la télécommande)"
-
-msgid "web.lirc.menutab.panel_title"
-msgstr "Récepteur de la télécommande (LIRC)"
-
-msgid "web.lirc.help"
-msgstr "Lorsque vous appuyez sur le bouton \"Enregistrer\" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur LIRC. Si vous n 'avez pas affecté les boutons de votre télécommande (via remote.conf), VDR vous offrira à travers l 'OSD, étape par étape, la configuration de chaque touche de votre télécommande. Cette boîte de dialogue disparaîtra après quelques secondes si aucune touche de la télécommande n 'est pressée. Vous pouvez relancer le dialogue en appuyant simplement sur \"Enregistrer\"."
-
-msgid "web.lirc.combobox.tooltip.driver"
-msgstr "Pilote"
-
-msgid "web.lirc.combobox.tooltip.lirc_driver"
-msgstr "LIRC Pilote"
-
-msgid "web.lirc.combobox.emptytext"
-msgstr "S 'il vous plaît choisissez un récepteur pour votre télécommande..."
-
-msgid "web.lirc.combobox.label"
-msgstr "Recepteur"
-
-msgid "web.lirc.serial_radiogroup.label"
-msgstr "Interface Série"
-
-msgid "web.lirc.serial_radiogroup.boxlabel_none"
-msgstr "aucun"
-
-msgid "web.lirc.submit.waitmsg"
-msgstr "Les paramètres LIRC sont enregistrés."
-
-msgid "web.lirc.submit.success"
-msgstr "Les paramètres ont été correctement enregistrés."
-
-msgid "web.lirc.submit.failure"
-msgstr "Erreur pendant l 'enregistrement des paramètres. S 'il vous plaît essayez de nouveau."
-
-msgid "web.lirc.error.json_decode"
-msgstr "Impossible de décoder la liste de récepteur JSON"
-
-msgid "web.inputlirc.menutab.title"
-msgstr "Inputlirc"
-
-msgid "web.inputlirc.menutab.tabtip"
-msgstr "Inputlirc-Paramètres (Récepteur de la télécommande)"
-
-msgid "web.inputlirc.menutab.panel_title"
-msgstr "Récepteur de la télécommande (LIRC)"
-
-msgid "web.inputlirc.help"
-msgstr "S 'il vous plaît Choisissez votre récepteur dans la liste ci-dessus. Lorsque vous appuyez sur le bouton \"Enregistrer\" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur Inputlirc."
-
-msgid "web.inputlirc.combobox.tooltip.driver"
-msgstr "Pilote"
-
-msgid "web.inputlirc.combobox.tooltip.lirc_driver"
-msgstr "Inputlirc Pilote"
-
-msgid "web.inputlirc.combobox.emptytext"
-msgstr "S 'il vous plaît choisissez un récepteur pour votre télécommande..."
-
-msgid "web.inputlirc.combobox.label"
-msgstr "Récepteur"
-
-msgid "web.inputlirc.submit.waitmsg"
-msgstr "Les paramètres du récepteur Inputlirc sont enregistrés."
-
-msgid "web.inputlirc.submit.success"
-msgstr "Les paramètres ont été correctement enregistrés."
-
-msgid "web.inputlirc.submit.failure"
-msgstr "Erreur pendant l 'enregistrement des paramètres. S 'il vous plaît essayez de nouveau."
-
-msgid "web.inputlirc.error.json_decode"
-msgstr "Impossible de décoder la liste de récepteur JSON"
-
-msgid "web.irserver.menutab.title"
-msgstr "IRServer"
-
-msgid "web.irserver.menutab.tabtip"
-msgstr "IRServer-Paramètres (Récepteur de la télécommande)"
-
-msgid "web.irserver.menutab.panel_title"
-msgstr "Récepteur de la télécommande (IRServer)"
-
-msgid "web.irserver.help"
-msgstr "Lorsque vous appuyez sur le bouton \"Enregistrer\" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur IRServer."
-
-msgid "web.irserver.combobox.tooltip.driver"
-msgstr "Pilote"
-
-msgid "web.irserver.combobox.tooltip.lirc_driver"
-msgstr "IRDriver Pilote"
-
-msgid "web.irserver.combobox.emptytext"
-msgstr "S 'il vous plaît choisissez un récepteur pour votre télécommande..."
-
-msgid "web.irserver.combobox.label"
-msgstr "Récepteur"
-
-msgid "web.irserver.submit.waitmsg"
-msgstr "Les paramètres IRServer vont maintenant être enregistrés."
-
-msgid "web.irserver.submit.success"
-msgstr "Les paramètres ont été correctement enregistrés."
-
-msgid "web.irserver.submit.failure"
-msgstr "Erreur pendant l 'enregistrement des paramètres. S 'il vous plaît essayez de nouveau."
-
-msgid "web.irserver.error.json_decode"
-msgstr "Impossible de décoder la liste de récepteur JSON"
-
-msgid "web.channels.menutab.title"
-msgstr "Liste des Chaînes"
-
-msgid "web.channels.menutab.tabtip"
-msgstr "Réglages des chaînes (modifs et tri des radios et chaînes de télévision)"
-
-msgid "web.channels.menutab.panel_title"
+msgid "Recordings_on_"
 msgstr ""
 
-msgid "web.channels.grid_header.cnumber"
-msgstr "N°"
+#, fuzzy
+msgid "Videos_on_"
+msgstr "Vidéo"
 
-msgid "web.channels.grid_header.cname"
-msgstr "Nom de la chaîne"
+msgid "Music_on_"
+msgstr ""
 
-msgid "web.channels.grid_header.cprovider"
-msgstr "Fournisseur"
+msgid "Pictures_on_"
+msgstr ""
 
-msgid "web.channels.grid_header.cstr"
-msgstr "Séquence Complete de la Chaîne"
+msgid "Miscellaneous_on_"
+msgstr ""
 
-msgid "web.channels.grid_title"
-msgstr "Liste des Chaînes (toute radio et chaînes de TV)"
+#~ msgid "web.meta_lang.local"
+#~ msgstr "Francais"
 
-msgid "web.frontend.menutab.title"
-msgstr "VDR Interface"
+#~ msgid "web.meta_lang.int"
+#~ msgstr "French"
 
-msgid "web.frontend.menutab.tabtip"
-msgstr "Basculer entre l 'interface xine et xineliboutput"
+#~ msgid "web.meta_lang.key"
+#~ msgstr "fr"
 
-msgid "web.frontend.menutab.panel_title"
-msgstr "VDR Interface"
+#~ msgid "web.menutabs.vdr.title"
+#~ msgstr "Votre VDR"
 
-msgid "web.frontend.label"
-msgstr "Choix de l 'interface"
+#~ msgid "web.menutabs.vdr.tabtip"
+#~ msgstr "Configuration des paramètres de base de votre VDR"
 
-msgid "web.frontend.button_label"
-msgstr "Appliquer les paramètres de l 'interface"
+#~ msgid "web.menutabs.vdr.content"
+#~ msgstr "Bienvenue sur l 'interface Web de yaVDR!"
 
-msgid "web.frontend.submit.waitmsg"
-msgstr "Les paramètres de l 'interface ont été modifiés."
+#~ msgid "web.menutabs.system.title"
+#~ msgstr "Système"
 
-msgid "web.frontend.submit.success"
-msgstr "Succès."
+#~ msgid "web.menutabs.system.tabtip"
+#~ msgstr "Configuration des paramètres de base du système"
 
-msgid "web.frontend.submit.failure"
-msgstr "Échec."
+#~ msgid "web.menutabs.system.content"
+#~ msgstr "Bienvenue sur l 'interface Web de yaVDR!"
 
-msgid "web.shutdown.menutab.title"
-msgstr "Extinction"
+#~ msgid "web.menutabs.demos.title"
+#~ msgstr "Démos"
 
-msgid "web.shutdown.menutab.tabtip"
-msgstr "Choix entre différentes méthodes d 'extinction"
+#~ msgid "web.menutabs.demos.tabtip"
+#~ msgstr "Validation de principe, démonstrations de nouvelles caractéristiques, peut être utilisé à des fins de test"
 
-msgid "web.shutdown.menutab.panel_title"
-msgstr "VDR Extinction"
+#~ msgid "web.menutabs.demos.content"
+#~ msgstr "Validation de principe, démonstrations de nouvelles caractéristiques, peut être utilisé à des fins de test"
 
-msgid "web.shutdown.label"
-msgstr "Choisisser l 'extinction"
+#~ msgid "web.menutabs.development.title"
+#~ msgstr "Développement"
 
-msgid "web.shutdown.button_label"
-msgstr "Appliquer les paramètres d 'extinction"
+#~ msgid "web.menutabs.development.tabtip"
+#~ msgstr "Nouvelles fonctionnalités qui sont en cours de développement, ne les utilisez pas. Ils ne fonctionnent pas correctement pour le moment."
 
-msgid "web.shutdown.submit.waitmsg"
-msgstr "Les paramètres d 'extinction ont été modifiés."
+#~ msgid "web.menutabs.development.content"
+#~ msgstr "Nouvelles fonctionnalités qui sont en cours de développement, ne les utilisez pas. Ils ne fonctionnent pas correctement pour le moment."
 
-msgid "web.shutdown.submit.success"
-msgstr "Succès."
+#~ msgid "web.menutabs.diagnose.title"
+#~ msgstr "Diagnostiquer"
 
-msgid "web.shutdown.submit.failure"
-msgstr "Echec."
+#~ msgid "web.menutabs.diagnose.tabtip"
+#~ msgstr "Restez informé sur l 'état du système, le suivi des problèmes"
 
-msgid "web.shutdown.items.s3"
-msgstr "suspend to RAM"
+#~ msgid "web.menutabs.diagnose.content"
+#~ msgstr "Accès aux fichiers des logs importants et aux fichiers de configuration"
 
-msgid "web.shutdown.items.s3unavailable"
-msgstr "suspend to RAM (unavailable)"
+#~ msgid "web.standardform.button.save"
+#~ msgstr "Enregistrer"
 
-msgid "web.shutdown.items.s4"
-msgstr "suspend to DISK"
+#~ msgid "web.standardform.messagebox_caption.message"
+#~ msgstr "Message"
 
-msgid "web.shutdown.items.s4unavailable"
-msgstr "suspend to DISK  (unavailable)"
+#~ msgid "web.standardform.messagebox_caption.error"
+#~ msgstr "Erreur"
 
-msgid "web.shutdown.items.s5"
-msgstr "extinction"
+#~ msgid "web.standardform.messagebox_caption.wait"
+#~ msgstr "Patienter S 'il vous plait..."
 
-msgid "web.shutdown.items.reboot"
-msgstr "redémarrage \"PowerOff\" kernel"
+#~ msgid "web.remote.menutab.title"
+#~ msgstr "Télécommande"
 
-msgid "web.upload.menutab.title"
-msgstr "VDR Configue Import"
+#~ msgid "web.remote.menutab.tabtip"
+#~ msgstr "Télécommande-Paramètres (Récepteur de la télécommande)"
 
-msgid "web.upload.menutab.tabtip"
-msgstr "Importez votre configuration existante de VDR"
+#~ msgid "web.remote.menutab.panel_title"
+#~ msgstr "Récepteur de la télécommande"
 
-msgid "web.upload.menutab.panel_title"
-msgstr "VDR Configue Import (la version importée supprime la version existante)"
+#~ msgid "web.remote.help"
+#~ msgstr "Il ya 3 différents serveurs LIRC compatibles supportés pour le moment. S 'il vous plaît choisissez celui qui convient le mieux pour votre appareil. <br /><h1>LIRC</h1><br /><br /> Celui-ci convient pour la plupart des appareils. S 'il vous plaît renseignez-vous, pour savoir quel pilote est supporté par votre appareil. Vous devez choisir le bon pilote pour votre périphérique et dans certain cas son pilote pour le port-série (Attric, montage perso et d 'autres dispositifs similaires), vous devez choisir le bon port série. <br /> <br /><h1>Input Lirc</h1><br /><br /> Certaines cartes DVB comprenne un récepteur de télécommande. La plupart d 'entre eux, ainsi que certains périphériques USB sont disponibles en tant que dispositifs dite d 'entrée. Vous avez seulement besoin de choisir le bon périphérique dans la liste déroulante. <br /><br /><h1>Irserver</h1><br /><br /> Certains cas d 'HTPC (par exemple OrigenAE) ont inclus un récepteur de télécommande , qui ne peut être utilisé qu 'avec irserver. Il vous suffit de l 'activer et de l 'enregistrer ensuite."
 
-msgid "web.upload.button_label"
-msgstr "Import"
+#~ msgid "web.lirc.menutab.title"
+#~ msgstr "LIRC"
 
-msgid "web.upload.submit.waitmsg"
-msgstr "Le fichier est en cours d 'importation."
+#~ msgid "web.lirc.menutab.tabtip"
+#~ msgstr "Lirc-Paramètres (Récepteur de la télécommande)"
 
-msgid "web.upload.submit.success"
-msgstr "Le fichier a été importé avec succès."
+#~ msgid "web.lirc.menutab.panel_title"
+#~ msgstr "Récepteur de la télécommande (LIRC)"
 
-msgid "web.upload.submit.failure"
-msgstr "Un problème est survenu durant l 'importation."
+#~ msgid "web.lirc.help"
+#~ msgstr "Lorsque vous appuyez sur le bouton \"Enregistrer\" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur LIRC. Si vous n 'avez pas affecté les boutons de votre télécommande (via remote.conf), VDR vous offrira à travers l 'OSD, étape par étape, la configuration de chaque touche de votre télécommande. Cette boîte de dialogue disparaîtra après quelques secondes si aucune touche de la télécommande n 'est pressée. Vous pouvez relancer le dialogue en appuyant simplement sur \"Enregistrer\"."
 
-msgid "web.system.menutab.title"
-msgstr "Systeme"
+#~ msgid "web.lirc.combobox.tooltip.driver"
+#~ msgstr "Pilote"
 
-msgid "web.system.menutab.tabtip"
-msgstr "Redémarrez VDR ou l 'ensemble du système."
+#~ msgid "web.lirc.combobox.tooltip.lirc_driver"
+#~ msgstr "LIRC Pilote"
 
-msgid "web.system.menutab.panel_title"
-msgstr "Systeme Commandes"
+#~ msgid "web.lirc.combobox.emptytext"
+#~ msgstr "S 'il vous plaît choisissez un récepteur pour votre télécommande..."
 
-msgid "web.system.vdr_restart.label"
-msgstr "Redémarrez VDR"
+#~ msgid "web.lirc.combobox.label"
+#~ msgstr "Recepteur"
 
-msgid "web.system.vdr_restart.submit.waitmsg"
-msgstr "Le signal pour redémarrer VDR a été envoyé."
+#~ msgid "web.lirc.serial_radiogroup.label"
+#~ msgstr "Interface Série"
 
-msgid "web.system.vdr_restart.submit.success"
-msgstr "VDR va maintenant redémarrer."
+#~ msgid "web.lirc.serial_radiogroup.boxlabel_none"
+#~ msgstr "aucun"
 
-msgid "web.system.vdr_restart.submit.failure"
-msgstr "Problème sur le signal d 'envoi. S 'il vous plaît essayez de nouveau."
+#~ msgid "web.lirc.submit.waitmsg"
+#~ msgstr "Les paramètres LIRC sont enregistrés."
 
-msgid "web.system.kill_xbmc.label"
-msgstr "Tuer XBMC (Si bloquer)"
+#~ msgid "web.lirc.submit.success"
+#~ msgstr "Les paramètres ont été correctement enregistrés."
 
-msgid "web.system.kill_xbmc.submit.waitmsg"
-msgstr "Le signal pour arrêter XBMC a été envoyé."
+#~ msgid "web.lirc.submit.failure"
+#~ msgstr "Erreur pendant l 'enregistrement des paramètres. S 'il vous plaît essayez de nouveau."
 
-msgid "web.system.kill_xbmc.submit.success"
-msgstr "XBMC est arrêté."
+#~ msgid "web.lirc.error.json_decode"
+#~ msgstr "Impossible de décoder la liste de récepteur JSON"
 
-msgid "web.system.kill_xbmc.submit.failure"
-msgstr "Problème sur le signal d 'envoi. S 'il vous plaît essayez de nouveau."
+#~ msgid "web.inputlirc.menutab.title"
+#~ msgstr "Inputlirc"
 
-msgid "web.system.system_restart.label"
-msgstr "Redémarrer la machine (Attention: pas de demande de confirmation!)"
+#~ msgid "web.inputlirc.menutab.tabtip"
+#~ msgstr "Inputlirc-Paramètres (Récepteur de la télécommande)"
 
-msgid "web.system.system_restart.submit.waitmsg"
-msgstr "Le signal de redémarrage a été envoyé."
+#~ msgid "web.inputlirc.menutab.panel_title"
+#~ msgstr "Récepteur de la télécommande (LIRC)"
 
-msgid "web.system.system_restart.submit.success"
-msgstr "La machine va maintenant redémarrer."
+#~ msgid "web.inputlirc.help"
+#~ msgstr "S 'il vous plaît Choisissez votre récepteur dans la liste ci-dessus. Lorsque vous appuyez sur le bouton \"Enregistrer\" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur Inputlirc."
 
-msgid "web.system.system_restart.submit.failure"
-msgstr "Problème sur le signal d 'envoi. S 'il vous plaît essayez de nouveau."
+#~ msgid "web.inputlirc.combobox.tooltip.driver"
+#~ msgstr "Pilote"
 
-msgid "web.network.menutab.title"
-msgstr "Réseau"
+#~ msgid "web.inputlirc.combobox.tooltip.lirc_driver"
+#~ msgstr "Inputlirc Pilote"
 
-msgid "web.network.menutab.tabtip"
-msgstr "Entretien du réseau"
+#~ msgid "web.inputlirc.combobox.emptytext"
+#~ msgstr "S 'il vous plaît choisissez un récepteur pour votre télécommande..."
 
-msgid "web.network.menutab.panel_title"
-msgstr "Réseau configuration"
+#~ msgid "web.inputlirc.combobox.label"
+#~ msgstr "Récepteur"
 
-msgid "web.network.nfs.help"
-msgstr "Définir les partages NFS depuis d 'autres hôtes qui devraient être utilisés par VDR. Les répertoires doivent être qualifiés comme \"serveur: / chemin\". Le bouton \"Appliquer\" soutient effectivement les modifications de votre configuration locale. VDR les utilisera au prochain redémarrage."
+#~ msgid "web.inputlirc.submit.waitmsg"
+#~ msgstr "Les paramètres du récepteur Inputlirc sont enregistrés."
 
-msgid "web.network.nfs.menutab.title"
-msgstr "NFS"
+#~ msgid "web.inputlirc.submit.success"
+#~ msgstr "Les paramètres ont été correctement enregistrés."
 
-msgid "web.network.nfs.menutab.tabtip"
-msgstr "Entretien des montages NFS et partages"
+#~ msgid "web.inputlirc.submit.failure"
+#~ msgstr "Erreur pendant l 'enregistrement des paramètres. S 'il vous plaît essayez de nouveau."
 
-msgid "web.network.nfs.labels.newDir"
-msgstr "Répertoire à distance"
+#~ msgid "web.inputlirc.error.json_decode"
+#~ msgstr "Impossible de décoder la liste de récepteur JSON"
 
-msgid "web.network.nfs.labels.add"
-msgstr "Ajouter"
+#~ msgid "web.irserver.menutab.title"
+#~ msgstr "IRServer"
 
-msgid "web.network.nfs.labels.edit"
-msgstr "Editer"
+#~ msgid "web.irserver.menutab.tabtip"
+#~ msgstr "IRServer-Paramètres (Récepteur de la télécommande)"
 
-msgid "web.network.nfs.labels._delete"
-msgstr "Supprimer"
+#~ msgid "web.irserver.menutab.panel_title"
+#~ msgstr "Récepteur de la télécommande (IRServer)"
 
-msgid "web.network.nfs.labels.apply"
-msgstr "Appliquer"
+#~ msgid "web.irserver.help"
+#~ msgstr "Lorsque vous appuyez sur le bouton \"Enregistrer\" VDR sera redémarré pour prendre en compte les nouveaux paramètres du récepteur IRServer."
 
-msgid "web.network.samba.menutab.title"
-msgstr "Samba"
+#~ msgid "web.irserver.combobox.tooltip.driver"
+#~ msgstr "Pilote"
 
-msgid "web.network.samba.menutab.tabtip"
-msgstr "Maintenir les partages Samba"
+#~ msgid "web.irserver.combobox.tooltip.lirc_driver"
+#~ msgstr "IRDriver Pilote"
 
-msgid "web.nvidia.menutab.title"
-msgstr "Nvidia"
+#~ msgid "web.irserver.combobox.emptytext"
+#~ msgstr "S 'il vous plaît choisissez un récepteur pour votre télécommande..."
 
-msgid "web.nvidia.menutab.tabtip"
-msgstr "Entretien des paramètres Nvidia"
+#~ msgid "web.irserver.combobox.label"
+#~ msgstr "Récepteur"
 
-msgid "web.nvidia.menutab.panel_title"
-msgstr "Nvidia configuration"
+#~ msgid "web.irserver.submit.waitmsg"
+#~ msgstr "Les paramètres IRServer vont maintenant être enregistrés."
 
-msgid "web.nvidia.overscan_slider_label"
-msgstr "Nvidia compensation Overscan"
+#~ msgid "web.irserver.submit.success"
+#~ msgstr "Les paramètres ont été correctement enregistrés."
 
-msgid "web.nvidia.button_label"
-msgstr "Appliquer la valeur"
+#~ msgid "web.irserver.submit.failure"
+#~ msgstr "Erreur pendant l 'enregistrement des paramètres. S 'il vous plaît essayez de nouveau."
 
-msgid "web.nvidia.submit.waitmsg"
-msgstr "Nvidia overscan paramètres mis à jour."
+#~ msgid "web.irserver.error.json_decode"
+#~ msgstr "Impossible de décoder la liste de récepteur JSON"
 
-msgid "web.nvidia.submit.success"
-msgstr "Succès."
+#~ msgid "web.channels.menutab.title"
+#~ msgstr "Liste des Chaînes"
 
-msgid "web.nvidia.submit.failure"
-msgstr "Echec."
+#~ msgid "web.channels.menutab.tabtip"
+#~ msgstr "Réglages des chaînes (modifs et tri des radios et chaînes de télévision)"
 
-msgid "web.webfrontend.menutab.title"
-msgstr "Web Interface"
+#~ msgid "web.channels.grid_header.cnumber"
+#~ msgstr "N°"
 
-msgid "web.webfrontend.menutab.tabtip"
-msgstr "Configure l 'apparance de l 'interface web"
+#~ msgid "web.channels.grid_header.cname"
+#~ msgstr "Nom de la chaîne"
 
-msgid "web.webfrontend.menutab.panel_title"
-msgstr "Web Interface Paramètres"
+#~ msgid "web.channels.grid_header.cprovider"
+#~ msgstr "Fournisseur"
 
-msgid "web.webfrontend.label"
-msgstr "Choisisser le langage de l 'interface web"
+#~ msgid "web.channels.grid_header.cstr"
+#~ msgstr "Séquence Complete de la Chaîne"
 
-msgid "web.webfrontend.button_label"
-msgstr "Appliquer les paramètres du langage"
+#~ msgid "web.channels.grid_title"
+#~ msgstr "Liste des Chaînes (toute radio et chaînes de TV)"
 
-msgid "web.webfrontend.submit.waitmsg"
-msgstr "La langue de l 'interface Web à été mise à jour."
+#~ msgid "web.frontend.menutab.title"
+#~ msgstr "VDR Interface"
 
-msgid "web.webfrontend.submit.success"
-msgstr "Succès. S 'il vous plaît pressez F5 pour recharger l 'interface web avec la nouvelle langue."
+#~ msgid "web.frontend.menutab.tabtip"
+#~ msgstr "Basculer entre l 'interface xine et xineliboutput"
 
-msgid "web.webfrontend.submit.failure"
-msgstr "Echec."
+#~ msgid "web.frontend.menutab.panel_title"
+#~ msgstr "VDR Interface"
 
-msgid "web.diagnose.toolbar.button.refresh"
-msgstr "Rafraichir"
+#~ msgid "web.frontend.label"
+#~ msgstr "Choix de l 'interface"
 
-msgid "web.diagnose.toolbar.button.refresh_tooltip"
-msgstr "S 'il vous plaît cliquer sur ce bouton pour rafraîchir le contenu de la fenêtre."
+#~ msgid "web.frontend.button_label"
+#~ msgstr "Appliquer les paramètres de l 'interface"
 
-msgid "web.diagnose.toolbar.button.jumpdown"
-msgstr "Bas de page"
+#~ msgid "web.frontend.submit.waitmsg"
+#~ msgstr "Les paramètres de l 'interface ont été modifiés."
 
-msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
-msgstr "S 'il vous plaît cliquer sur ce bouton pour sauter en bas de page."
+#~ msgid "web.frontend.submit.success"
+#~ msgstr "Succès."
 
-msgid "web.diagnose.section.system_info.title"
-msgstr "Information Systeme"
+#~ msgid "web.frontend.submit.failure"
+#~ msgstr "Échec."
 
-msgid "web.diagnose.section.system_info.description"
-msgstr "L 'état du réseau, la charge du système, l 'utilisation des fichiers système, le kernel"
+#~ msgid "web.shutdown.menutab.title"
+#~ msgstr "Extinction"
 
-msgid "web.diagnose.section.system_info.ifconfig"
-msgstr "L 'état du réseau"
+#~ msgid "web.shutdown.menutab.tabtip"
+#~ msgstr "Choix entre différentes méthodes d 'extinction"
 
-msgid "web.diagnose.section.system_info.top"
-msgstr "La charge du système"
+#~ msgid "web.shutdown.menutab.panel_title"
+#~ msgstr "VDR Extinction"
 
-msgid "web.diagnose.section.system_info.dmesg"
-msgstr "Kernel"
+#~ msgid "web.shutdown.label"
+#~ msgstr "Choisisser l 'extinction"
 
-msgid "web.diagnose.section.system_info.df"
-msgstr "L 'utilisation des fichiers système"
+#~ msgid "web.shutdown.button_label"
+#~ msgstr "Appliquer les paramètres d 'extinction"
 
-msgid "web.diagnose.section.system_logs.title"
-msgstr "Logs des Fichiers Systeme"
+#~ msgid "web.shutdown.submit.waitmsg"
+#~ msgstr "Les paramètres d 'extinction ont été modifiés."
 
-msgid "web.diagnose.section.system_logs.description"
-msgstr "Les fichiers des logs importants"
+#~ msgid "web.shutdown.submit.success"
+#~ msgstr "Succès."
 
-msgid "web.diagnose.section.xbmc.title"
-msgstr "Logs des Fichiers d 'XBMC"
+#~ msgid "web.shutdown.submit.failure"
+#~ msgstr "Echec."
 
-msgid "web.diagnose.section.xbmc.description"
-msgstr "Trouver la cause des plantages d 'XBMC ou autres problèmes"
+#~ msgid "web.shutdown.items.s3"
+#~ msgstr "suspend to RAM"
 
-msgid "web.diagnose.section.lirc.title"
-msgstr "LIRC Configuration"
+#~ msgid "web.shutdown.items.s3unavailable"
+#~ msgstr "suspend to RAM (unavailable)"
 
-msgid "web.diagnose.section.lirc.description"
-msgstr "Vérifiez la configuration actuelle de LIRC"
+#~ msgid "web.shutdown.items.s4"
+#~ msgstr "suspend to DISK"
 
-msgid "web.diagnose.section.vdr.title"
-msgstr "VDR Configuration"
+#~ msgid "web.shutdown.items.s4unavailable"
+#~ msgstr "suspend to DISK  (unavailable)"
 
-msgid "web.diagnose.section.vdr.description"
-msgstr "Vérifiez la configuration actuelle de VDR"
+#~ msgid "web.shutdown.items.s5"
+#~ msgstr "extinction"
 
-msgid "web.diagnose.section.xorg.title"
-msgstr "X-Serveur"
+#~ msgid "web.shutdown.items.reboot"
+#~ msgstr "redémarrage \"PowerOff\" kernel"
 
-msgid "web.diagnose.section.xorg.description"
-msgstr "Vérifiez la configuration actuelle de X"
+#~ msgid "web.upload.menutab.title"
+#~ msgstr "VDR Configue Import"
 
-msgid "web.diagnose.section.sound.title"
-msgstr "Son (ALSA)"
+#~ msgid "web.upload.menutab.tabtip"
+#~ msgstr "Importez votre configuration existante de VDR"
 
-msgid "web.diagnose.section.sound.description"
-msgstr "Résoudre les problèmes de son (numérique / sortie analogique)"
+#~ msgid "web.upload.menutab.panel_title"
+#~ msgstr "VDR Configue Import (la version importée supprime la version existante)"
 
-msgid "web.diagnose.section.packages.title"
-msgstr "Paquets"
+#~ msgid "web.upload.button_label"
+#~ msgstr "Import"
 
-msgid "web.diagnose.section.packages.description"
-msgstr "Vérifier quels paquets et versions sont installés"
+#~ msgid "web.upload.submit.waitmsg"
+#~ msgstr "Le fichier est en cours d 'importation."
 
-msgid "web.diagnose.section.yavdr.title"
-msgstr "yaVDR-Utils"
+#~ msgid "web.upload.submit.success"
+#~ msgstr "Le fichier a été importé avec succès."
 
-msgid "web.diagnose.section.yavdr.description"
-msgstr "Résoudre les problèmes de l 'interface web yaVDR (base de données  serveur web)"
+#~ msgid "web.upload.submit.failure"
+#~ msgstr "Un problème est survenu durant l 'importation."
 
-msgid "web.packages.menutab.title"
-msgstr "yaVDR-Paquets"
+#~ msgid "web.system.menutab.title"
+#~ msgstr "Systeme"
 
-msgid "web.packages.menutab.tabtip"
-msgstr "Vérifier quels paquets et versions sont installés"
+#~ msgid "web.system.menutab.tabtip"
+#~ msgstr "Redémarrez VDR ou l 'ensemble du système."
 
-msgid "web.packages.menutab.panel_title"
-msgstr "yaVDR-Paquets"
+#~ msgid "web.system.menutab.panel_title"
+#~ msgstr "Systeme Commandes"
 
-msgid "web.timeout.menutab.title"
-msgstr "GRUB délai"
+#~ msgid "web.system.vdr_restart.label"
+#~ msgstr "Redémarrez VDR"
 
-msgid "web.timeout.menutab.tabtip"
-msgstr "Fixer le délai de GRUB"
+#~ msgid "web.system.vdr_restart.submit.waitmsg"
+#~ msgstr "Le signal pour redémarrer VDR a été envoyé."
 
-msgid "web.timeout.menutab.panel_title"
-msgstr "GRUB délai"
+#~ msgid "web.system.vdr_restart.submit.success"
+#~ msgstr "VDR va maintenant redémarrer."
 
-msgid "web.timeout.label"
-msgstr "Choisir le délai"
+#~ msgid "web.system.vdr_restart.submit.failure"
+#~ msgstr "Problème sur le signal d 'envoi. S 'il vous plaît essayez de nouveau."
 
-msgid "web.timeout.button_label"
-msgstr "Appliquer le délai"
+#~ msgid "web.system.kill_xbmc.label"
+#~ msgstr "Tuer XBMC (Si bloquer)"
 
-msgid "web.timeout.submit.waitmsg"
-msgstr "Le paramètre du délai est mis à jour."
+#~ msgid "web.system.kill_xbmc.submit.waitmsg"
+#~ msgstr "Le signal pour arrêter XBMC a été envoyé."
 
-msgid "web.timeout.submit.success"
-msgstr "Succès."
+#~ msgid "web.system.kill_xbmc.submit.success"
+#~ msgstr "XBMC est arrêté."
 
-msgid "web.timeout.submit.failure"
-msgstr "Echec."
+#~ msgid "web.system.kill_xbmc.submit.failure"
+#~ msgstr "Problème sur le signal d 'envoi. S 'il vous plaît essayez de nouveau."
 
-msgid "web.timeout.maxText"
-msgstr "La valeur maximum de ce champ est (0)"
+#~ msgid "web.system.system_restart.label"
+#~ msgstr "Redémarrer la machine (Attention: pas de demande de confirmation!)"
 
-msgid "web.timeout.minText"
-msgstr "La valeur minimum de ce champ est (0)"
+#~ msgid "web.system.system_restart.submit.waitmsg"
+#~ msgstr "Le signal de redémarrage a été envoyé."
 
-msgid "web.x11.menutab.title"
-msgstr "paramètres d 'affichage"
+#~ msgid "web.system.system_restart.submit.success"
+#~ msgstr "La machine va maintenant redémarrer."
 
-msgid "web.x11.menutab.tabtip"
-msgstr "paramètres d 'affichage"
+#~ msgid "web.system.system_restart.submit.failure"
+#~ msgstr "Problème sur le signal d 'envoi. S 'il vous plaît essayez de nouveau."
 
-msgid "web.x11.menutab.panel_title"
-msgstr "paramètres d 'affichage"
+#~ msgid "web.network.menutab.title"
+#~ msgstr "Réseau"
 
-msgid "web.x11.graphtft.label"
-msgstr "graphTFT"
+#~ msgid "web.network.menutab.tabtip"
+#~ msgstr "Entretien du réseau"
 
-msgid "web.x11.graphtft.boxlabel"
-msgstr "activer"
+#~ msgid "web.network.menutab.panel_title"
+#~ msgstr "Réseau configuration"
 
-msgid "web.x11.deinterlacer_hd.label"
-msgstr "Xine-HD-Désentrelacement  (défaut bob)"
+#~ msgid "web.network.nfs.help"
+#~ msgstr "Définir les partages NFS depuis d 'autres hôtes qui devraient être utilisés par VDR. Les répertoires doivent être qualifiés comme \"serveur: / chemin\". Le bouton \"Appliquer\" soutient effectivement les modifications de votre configuration locale. VDR les utilisera au prochain redémarrage."
 
-msgid "web.x11.deinterlacer_sd.label"
-msgstr "Xine-SD-Désentrelacement  (défaut temporal)"
+#~ msgid "web.network.nfs.menutab.title"
+#~ msgstr "NFS"
 
-msgid "web.x11.button_label"
-msgstr "Appliquer les paramètres d 'affichage"
+#~ msgid "web.network.nfs.menutab.tabtip"
+#~ msgstr "Entretien des montages NFS et partages"
 
-msgid "web.x11.submit.waitmsg"
-msgstr "Paramètres d 'affichage mis à jour."
+#~ msgid "web.network.nfs.labels.newDir"
+#~ msgstr "Répertoire à distance"
 
-msgid "web.x11.submit.success"
-msgstr "Succès."
+#~ msgid "web.network.nfs.labels.add"
+#~ msgstr "Ajouter"
 
-msgid "web.x11.submit.failure"
-msgstr "Echec."
+#~ msgid "web.network.nfs.labels.edit"
+#~ msgstr "Editer"
 
-msgid "web.x11.dualhead.label"
-msgstr "double écran"
+#~ msgid "web.network.nfs.labels._delete"
+#~ msgstr "Supprimer"
 
-msgid "web.x11.dualhead.boxlabel"
-msgstr "activer"
+#~ msgid "web.network.nfs.labels.apply"
+#~ msgstr "Appliquer"
 
-msgid "web.x11.dualhead.boxlabelunavailable"
-msgstr "desactivé (< 2 ecrans trouvés)"
+#~ msgid "web.network.samba.menutab.title"
+#~ msgstr "Samba"
 
-msgid "web.x11.dualhead.switch_label"
-msgstr "changer d 'écran pour l 'interface VDR"
+#~ msgid "web.network.samba.menutab.tabtip"
+#~ msgstr "Maintenir les partages Samba"
 
-msgid "web.x11.primary"
-msgstr "primaire"
+#~ msgid "web.nvidia.menutab.title"
+#~ msgstr "Nvidia"
 
-msgid "web.x11.secondary"
-msgstr "secondaire"
+#~ msgid "web.nvidia.menutab.tabtip"
+#~ msgstr "Entretien des paramètres Nvidia"
 
-msgid "web.x11.modeline"
-msgstr "modeline actuelle"
+#~ msgid "web.nvidia.menutab.panel_title"
+#~ msgstr "Nvidia configuration"
 
-msgid "web.x11.device"
-msgstr "dispositif"
+#~ msgid "web.nvidia.overscan_slider_label"
+#~ msgstr "Nvidia compensation Overscan"
 
-msgid "web.x11.resolution"
-msgstr "résolution"
+#~ msgid "web.nvidia.button_label"
+#~ msgstr "Appliquer la valeur"
 
-msgid "web.x11.select_res"
-msgstr "selectionner une résolution"
+#~ msgid "web.nvidia.submit.waitmsg"
+#~ msgstr "Nvidia overscan paramètres mis à jour."
 
-msgid "web.x11.enabled"
-msgstr "activer"
+#~ msgid "web.nvidia.submit.success"
+#~ msgstr "Succès."
 
-msgid "web.x11.disabled"
-msgstr "désactiver"
+#~ msgid "web.nvidia.submit.failure"
+#~ msgstr "Echec."
 
-msgid "web.sound.menutab.title"
-msgstr "Paramètres audio"
+#~ msgid "web.webfrontend.menutab.title"
+#~ msgstr "Web Interface"
 
-msgid "web.sound.menutab.tabtip"
-msgstr "Paramètres audio"
+#~ msgid "web.webfrontend.menutab.tabtip"
+#~ msgstr "Configure l 'apparance de l 'interface web"
 
-msgid "web.sound.menutab.panel_title"
-msgstr "Paramètres audio"
+#~ msgid "web.webfrontend.menutab.panel_title"
+#~ msgstr "Web Interface Paramètres"
 
-msgid "web.sound.button_label"
-msgstr "Appliquer les paramètres audio"
+#~ msgid "web.webfrontend.label"
+#~ msgstr "Choisisser le langage de l 'interface web"
 
-msgid "web.sound.submit.waitmsg"
-msgstr "Paramètres audio mis à jour."
+#~ msgid "web.webfrontend.button_label"
+#~ msgstr "Appliquer les paramètres du langage"
 
-msgid "web.sound.submit.success"
-msgstr "Succès."
+#~ msgid "web.webfrontend.submit.waitmsg"
+#~ msgstr "La langue de l 'interface Web à été mise à jour."
 
-msgid "web.sound.submit.failure"
-msgstr "Echec."
+#~ msgid "web.webfrontend.submit.success"
+#~ msgstr "Succès. S 'il vous plaît pressez F5 pour recharger l 'interface web avec la nouvelle langue."
 
-msgid "web.sound.label"
-msgstr "Paramètres audio"
+#~ msgid "web.webfrontend.submit.failure"
+#~ msgstr "Echec."
 
-msgid "web.lifeguard.menutab.title"
-msgstr "VDR-Lifeguard"
+#~ msgid "web.diagnose.toolbar.button.refresh"
+#~ msgstr "Rafraichir"
 
-msgid "web.lifeguard.menutab.tabtip"
-msgstr "Paramètres Lifeguard"
+#~ msgid "web.diagnose.toolbar.button.refresh_tooltip"
+#~ msgstr "S 'il vous plaît cliquer sur ce bouton pour rafraîchir le contenu de la fenêtre."
 
-msgid "web.lifeguard.menutab.panel_title"
-msgstr "Paramètres Lifeguard"
+#~ msgid "web.diagnose.toolbar.button.jumpdown"
+#~ msgstr "Bas de page"
 
-msgid "web.lifeguard.button_label"
-msgstr "Appliquer les paramètres Lifeguard"
+#~ msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
+#~ msgstr "S 'il vous plaît cliquer sur ce bouton pour sauter en bas de page."
 
-msgid "web.lifeguard.submit.waitmsg"
-msgstr "Paramètres de Lifeguard mis à jour."
+#~ msgid "web.diagnose.section.system_info.title"
+#~ msgstr "Information Systeme"
 
-msgid "web.lifeguard.submit.success"
-msgstr "Succès."
+#~ msgid "web.diagnose.section.system_info.description"
+#~ msgstr "L 'état du réseau, la charge du système, l 'utilisation des fichiers système, le kernel"
 
-msgid "web.lifeguard.submit.failure"
-msgstr "Echec."
+#~ msgid "web.diagnose.section.system_info.ifconfig"
+#~ msgstr "L 'état du réseau"
 
-msgid "web.lifeguard.label"
-msgstr "VDR-Lifeguard Paramètres"
+#~ msgid "web.diagnose.section.system_info.top"
+#~ msgstr "La charge du système"
+
+#~ msgid "web.diagnose.section.system_info.dmesg"
+#~ msgstr "Kernel"
+
+#~ msgid "web.diagnose.section.system_info.df"
+#~ msgstr "L 'utilisation des fichiers système"
+
+#~ msgid "web.diagnose.section.system_logs.title"
+#~ msgstr "Logs des Fichiers Systeme"
+
+#~ msgid "web.diagnose.section.system_logs.description"
+#~ msgstr "Les fichiers des logs importants"
+
+#~ msgid "web.diagnose.section.xbmc.title"
+#~ msgstr "Logs des Fichiers d 'XBMC"
+
+#~ msgid "web.diagnose.section.xbmc.description"
+#~ msgstr "Trouver la cause des plantages d 'XBMC ou autres problèmes"
+
+#~ msgid "web.diagnose.section.lirc.title"
+#~ msgstr "LIRC Configuration"
+
+#~ msgid "web.diagnose.section.lirc.description"
+#~ msgstr "Vérifiez la configuration actuelle de LIRC"
+
+#~ msgid "web.diagnose.section.vdr.title"
+#~ msgstr "VDR Configuration"
+
+#~ msgid "web.diagnose.section.vdr.description"
+#~ msgstr "Vérifiez la configuration actuelle de VDR"
+
+#~ msgid "web.diagnose.section.xorg.title"
+#~ msgstr "X-Serveur"
+
+#~ msgid "web.diagnose.section.xorg.description"
+#~ msgstr "Vérifiez la configuration actuelle de X"
+
+#~ msgid "web.diagnose.section.sound.title"
+#~ msgstr "Son (ALSA)"
+
+#~ msgid "web.diagnose.section.sound.description"
+#~ msgstr "Résoudre les problèmes de son (numérique / sortie analogique)"
+
+#~ msgid "web.diagnose.section.packages.title"
+#~ msgstr "Paquets"
+
+#~ msgid "web.diagnose.section.packages.description"
+#~ msgstr "Vérifier quels paquets et versions sont installés"
+
+#~ msgid "web.diagnose.section.yavdr.title"
+#~ msgstr "yaVDR-Utils"
+
+#~ msgid "web.diagnose.section.yavdr.description"
+#~ msgstr "Résoudre les problèmes de l 'interface web yaVDR (base de données  serveur web)"
+
+#~ msgid "web.packages.menutab.title"
+#~ msgstr "yaVDR-Paquets"
+
+#~ msgid "web.packages.menutab.tabtip"
+#~ msgstr "Vérifier quels paquets et versions sont installés"
+
+#~ msgid "web.packages.menutab.panel_title"
+#~ msgstr "yaVDR-Paquets"
+
+#~ msgid "web.timeout.menutab.title"
+#~ msgstr "GRUB délai"
+
+#~ msgid "web.timeout.menutab.tabtip"
+#~ msgstr "Fixer le délai de GRUB"
+
+#~ msgid "web.timeout.menutab.panel_title"
+#~ msgstr "GRUB délai"
+
+#~ msgid "web.timeout.label"
+#~ msgstr "Choisir le délai"
+
+#~ msgid "web.timeout.button_label"
+#~ msgstr "Appliquer le délai"
+
+#~ msgid "web.timeout.submit.waitmsg"
+#~ msgstr "Le paramètre du délai est mis à jour."
+
+#~ msgid "web.timeout.submit.success"
+#~ msgstr "Succès."
+
+#~ msgid "web.timeout.submit.failure"
+#~ msgstr "Echec."
+
+#~ msgid "web.timeout.maxText"
+#~ msgstr "La valeur maximum de ce champ est (0)"
+
+#~ msgid "web.timeout.minText"
+#~ msgstr "La valeur minimum de ce champ est (0)"
+
+#~ msgid "web.x11.menutab.title"
+#~ msgstr "paramètres d 'affichage"
+
+#~ msgid "web.x11.menutab.tabtip"
+#~ msgstr "paramètres d 'affichage"
+
+#~ msgid "web.x11.menutab.panel_title"
+#~ msgstr "paramètres d 'affichage"
+
+#~ msgid "web.x11.graphtft.label"
+#~ msgstr "graphTFT"
+
+#~ msgid "web.x11.graphtft.boxlabel"
+#~ msgstr "activer"
+
+#~ msgid "web.x11.deinterlacer_hd.label"
+#~ msgstr "Xine-HD-Désentrelacement  (défaut bob)"
+
+#~ msgid "web.x11.deinterlacer_sd.label"
+#~ msgstr "Xine-SD-Désentrelacement  (défaut temporal)"
+
+#~ msgid "web.x11.button_label"
+#~ msgstr "Appliquer les paramètres d 'affichage"
+
+#~ msgid "web.x11.submit.waitmsg"
+#~ msgstr "Paramètres d 'affichage mis à jour."
+
+#~ msgid "web.x11.submit.success"
+#~ msgstr "Succès."
+
+#~ msgid "web.x11.submit.failure"
+#~ msgstr "Echec."
+
+#~ msgid "web.x11.dualhead.label"
+#~ msgstr "double écran"
+
+#~ msgid "web.x11.dualhead.boxlabel"
+#~ msgstr "activer"
+
+#~ msgid "web.x11.dualhead.boxlabelunavailable"
+#~ msgstr "desactivé (< 2 ecrans trouvés)"
+
+#~ msgid "web.x11.dualhead.switch_label"
+#~ msgstr "changer d 'écran pour l 'interface VDR"
+
+#~ msgid "web.x11.primary"
+#~ msgstr "primaire"
+
+#~ msgid "web.x11.secondary"
+#~ msgstr "secondaire"
+
+#~ msgid "web.x11.modeline"
+#~ msgstr "modeline actuelle"
+
+#~ msgid "web.x11.device"
+#~ msgstr "dispositif"
+
+#~ msgid "web.x11.resolution"
+#~ msgstr "résolution"
+
+#~ msgid "web.x11.select_res"
+#~ msgstr "selectionner une résolution"
+
+#~ msgid "web.x11.enabled"
+#~ msgstr "activer"
+
+#~ msgid "web.x11.disabled"
+#~ msgstr "désactiver"
+
+#~ msgid "web.sound.menutab.title"
+#~ msgstr "Paramètres audio"
+
+#~ msgid "web.sound.menutab.tabtip"
+#~ msgstr "Paramètres audio"
+
+#~ msgid "web.sound.menutab.panel_title"
+#~ msgstr "Paramètres audio"
+
+#~ msgid "web.sound.button_label"
+#~ msgstr "Appliquer les paramètres audio"
+
+#~ msgid "web.sound.submit.waitmsg"
+#~ msgstr "Paramètres audio mis à jour."
+
+#~ msgid "web.sound.submit.success"
+#~ msgstr "Succès."
+
+#~ msgid "web.sound.submit.failure"
+#~ msgstr "Echec."
+
+#~ msgid "web.sound.label"
+#~ msgstr "Paramètres audio"
+
+#~ msgid "web.lifeguard.menutab.title"
+#~ msgstr "VDR-Lifeguard"
+
+#~ msgid "web.lifeguard.menutab.tabtip"
+#~ msgstr "Paramètres Lifeguard"
+
+#~ msgid "web.lifeguard.menutab.panel_title"
+#~ msgstr "Paramètres Lifeguard"
+
+#~ msgid "web.lifeguard.button_label"
+#~ msgstr "Appliquer les paramètres Lifeguard"
+
+#~ msgid "web.lifeguard.submit.waitmsg"
+#~ msgstr "Paramètres de Lifeguard mis à jour."
+
+#~ msgid "web.lifeguard.submit.success"
+#~ msgstr "Succès."
+
+#~ msgid "web.lifeguard.submit.failure"
+#~ msgstr "Echec."
+
+#~ msgid "web.lifeguard.label"
+#~ msgstr "VDR-Lifeguard Paramètres"

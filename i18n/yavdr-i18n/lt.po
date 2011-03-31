@@ -6,59 +6,75 @@ msgstr ""
 "PO-Revision-Date: 2010-08-14 21:56+0200\n"
 "Last-Translator: Holger Schvestka <hotzenplotz5@gmx.de>\n"
 "Language-Team: de <translate@yavdr.com>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Timer" 
-msgstr "Laikmatis" 
+msgid "Timer"
+msgstr "Laikmatis"
 
-msgid "Video" 
+msgid "Video"
 msgstr "Video"
 
-msgid "Applications" 
-msgstr "Programos" 
+msgid "Applications"
+msgstr "Programos"
 
-msgid "Web" 
-msgstr "Naršymas internete" 
+msgid "Web"
+msgstr "Naršymas internete"
 
-msgid "Internet" 
-msgstr "Internetas" 
+msgid "Internet"
+msgstr "Internetas"
 
-msgid "Media" 
-msgstr "Media" 
+msgid "Media"
+msgstr "Media"
 
-msgid "XBMC on graphtft Display" 
-msgstr "XBMC grafiniam ekrane" 
+msgid "XBMC on graphtft Display"
+msgstr "XBMC grafiniam ekrane"
 
-msgid "Games" 
-msgstr "Žaidimai" 
+msgid "Games"
+msgstr "Žaidimai"
 
-msgid "Tools" 
-msgstr "Įrankiai" 
+msgid "Tools"
+msgstr "Įrankiai"
 
-msgid "Xterm" 
-msgstr "X terminalas" 
+msgid "Xterm"
+msgstr "X terminalas"
 
-msgid "System" 
-msgstr "Sistama" 
+msgid "System"
+msgstr "Sistama"
 
-msgid "Commands" 
-msgstr "Komandos" 
+msgid "Commands"
+msgstr "Komandos"
 
-msgid "Safely remove usb mass storage" 
-msgstr "Saugiai ištraukite usb atmintinę" 
+msgid "Safely remove usb mass storage"
+msgstr "Saugiai ištraukite usb atmintinę"
 
-msgid "Update vdr recordings list" 
-msgstr "Atnaujinti vdr įrašų sąrašą" 
+msgid "Update vdr recordings list"
+msgstr "Atnaujinti vdr įrašų sąrašą"
 
-msgid "Restart vdr" 
-msgstr "Perkrauti vdr" 
+msgid "Restart vdr"
+msgstr "Perkrauti vdr"
 
-msgid "Reboot system" 
-msgstr "Perkrauti sistemą" 
+msgid "Reboot system"
+msgstr "Perkrauti sistemą"
 
-msgid "Shutdown system" 
-msgstr "Išjungti sistemą" 
+msgid "Shutdown system"
+msgstr "Išjungti sistemą"
 
+msgid "Recordings_on_"
+msgstr ""
+
+#, fuzzy
+msgid "Videos_on_"
+msgstr "Video"
+
+msgid "Music_on_"
+msgstr ""
+
+msgid "Pictures_on_"
+msgstr ""
+
+msgid "Miscellaneous_on_"
+msgstr ""

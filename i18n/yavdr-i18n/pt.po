@@ -11,6 +11,7 @@ msgstr ""
 "PO-Revision-Date: 2010-10-04 14:50-0000\n"
 "Last-Translator: hudo <hudokkow@gmail.com>\n"
 "Language-Team: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -67,3 +68,19 @@ msgstr "Reiniciar sistema"
 
 msgid "Shutdown system"
 msgstr "Desligar sistema"
+
+msgid "Recordings_on_"
+msgstr ""
+
+#, fuzzy
+msgid "Videos_on_"
+msgstr "Vídeo"
+
+msgid "Music_on_"
+msgstr ""
+
+msgid "Pictures_on_"
+msgstr ""
+
+msgid "Miscellaneous_on_"
+msgstr ""

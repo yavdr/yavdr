@@ -6,683 +6,190 @@ msgstr ""
 "PO-Revision-Date: 2010-08-14 21:58+0200\n"
 "Last-Translator: Volker Richert <richert@addmore.de>\n"
 "Language-Team: en <bugs@yavdr.com>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "web.meta_lang.local"
-msgstr "Englisch"
+# begin web frontend
+msgid "_yaVDR Paket Installer"
+msgstr "yaVDR Paket Installer"
 
-msgid "web.meta_lang.int"
-msgstr "English"
+msgid "_Send to PasteBin"
+msgstr "Send to PasteBin"
 
-msgid "web.meta_lang.key"
-msgstr "en"
+msgid "_Recordings"
+msgstr "Recordings"
 
-msgid "web.menutabs.vdr.title"
-msgstr "Your VDR"
+msgid "_Timer"
+msgstr "Timer"
 
-msgid "web.menutabs.vdr.tabtip"
-msgstr "Configuration of basic settings of your VDR"
+msgid "_Settings"
+msgstr "Settings"
 
-msgid "web.menutabs.vdr.content"
-msgstr "Welcome to the yaVDR Web Frontend!"
+msgid "_Here you can configure your VDR and applications around it."
+msgstr "Here you can configure your VDR and applications around it."
 
-msgid "web.menutabs.system.title"
+msgid "_Timers"
+msgstr "Timers"
+
+msgid "_General"
+msgstr "General"
+
+msgid "_Channels"
+msgstr "Channels"
+
+msgid "_Remote control settings"
+msgstr "Remote control settings"
+
+msgid "_Audio configuration"
+msgstr "Audio configuration"
+
+msgid "_Display settings"
+msgstr "Display settings"
+
+msgid "_System"
 msgstr "System"
 
-msgid "web.menutabs.system.tabtip"
-msgstr "Configuration of basic settings of the system"
-
-msgid "web.menutabs.system.content"
-msgstr "Welcome to the yaVDR Web Frontend!"
-
-msgid "web.menutabs.demos.title"
-msgstr "Demos"
-
-msgid "web.menutabs.demos.tabtip"
-msgstr "Proof of concept, demos of possible new features, can be used for testing purposes"
-
-msgid "web.menutabs.demos.content"
-msgstr "Proof of concept, demos of possible new features, can be used for testing purposes"
-
-msgid "web.menutabs.development.title"
-msgstr "Development"
-
-msgid "web.menutabs.development.tabtip"
-msgstr "New features that are under construction, don 't use them. They don 't work properly yet."
-
-msgid "web.menutabs.development.content"
-msgstr "New features that are under construction, don 't use them. They don 't work properly yet."
-
-msgid "web.menutabs.diagnose.title"
-msgstr "Diagnostics"
-
-msgid "web.menutabs.diagnose.tabtip"
-msgstr "Stay informed about your system status, track problems"
-
-msgid "web.menutabs.diagnose.content"
-msgstr "Access to important log files and configuration files"
-
-msgid "web.standardform.button.save"
-msgstr "Save"
-
-msgid "web.standardform.messagebox_caption.message"
-msgstr "Message"
-
-msgid "web.standardform.messagebox_caption.error"
-msgstr "Error"
-
-msgid "web.standardform.messagebox_caption.wait"
-msgstr "Please wait..."
-
-msgid "web.remote.menutab.title"
-msgstr "Remotes"
-
-msgid "web.remote.menutab.tabtip"
-msgstr "Remote-Settings (Remote Control Receiver)"
-
-msgid "web.remote.menutab.panel_title"
-msgstr "Remote Control Receiver"
-
-msgid "web.remote.help"
-msgstr "There are 3 different LIRC compatible servers supported at the moment. Please choose the one, which is fitting your device best. <br /><h1>LIRC</h1><br /><br /> This is supporting most devices. Please inform yourself, what driver is supporting your device. You have to choose the correct driver for your device and in case its a homebrew-serial port device (Attric, self-build and other similar devices) you need to choose the correct serial port.<br /><br /><h1>Input Lirc</h1><br /><br /> Some DVB cards include a remote control receiver. Most of them as well as some USB devices are made available as so called input devices. You only need to choose the correct device from the drop  down.<br /><br /><h1>Irserver</h1><br /><br /> Some HTPC cases (for instance OrigenAE) have included remote control receiver, which can only be used with irserver. You only need to enable it and save it afterwards."
-
-msgid "web.lirc.menutab.title"
-msgstr "LIRC"
-
-msgid "web.lirc.menutab.tabtip"
-msgstr "Lirc-Settings (Remote Control Receiver)"
-
-msgid "web.lirc.menutab.panel_title"
-msgstr "Remote Control Receiver (LIRC)"
-
-msgid "web.lirc.help"
-msgstr "When you press the button \"Save\" VDR will be restarted to notify VDR about the changed LIRC receiver settings. If you haven 't assigned the buttons of your remote control (via remote.conf) VDR will offer you a step-by-step dialog on the OSD to learn the button assignment of your remote control from you. This dialog disappears after a few seconds if no key on the remote control was pressed. You can restart the dialog by simply pressing \"Save\" again."
-
-msgid "web.lirc.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.lirc.combobox.tooltip.lirc_driver"
-msgstr "LIRC Driver"
-
-msgid "web.lirc.combobox.emptytext"
-msgstr "Please choose a receiver for your remote control..."
-
-msgid "web.lirc.combobox.label"
-msgstr "Receiver"
-
-msgid "web.lirc.serial_radiogroup.label"
-msgstr "Serial Interface"
-
-msgid "web.lirc.serial_radiogroup.boxlabel_none"
-msgstr "none"
-
-msgid "web.lirc.submit.waitmsg"
-msgstr "LIRC receiver settings are being saved."
-
-msgid "web.lirc.submit.success"
-msgstr "The settings were successfully saved."
-
-msgid "web.lirc.submit.failure"
-msgstr "Error on saving settings. Please try again."
-
-msgid "web.lirc.error.json_decode"
-msgstr "Could not decode JSON receiver list"
-
-msgid "web.inputlirc.menutab.title"
-msgstr "Inputlirc"
-
-msgid "web.inputlirc.menutab.tabtip"
-msgstr "Inputlirc-Settings (Remote Control Receiver)"
-
-msgid "web.inputlirc.menutab.panel_title"
-msgstr "Remote Control Receiver (LIRC)"
-
-msgid "web.inputlirc.help"
-msgstr "Please Choose your Remote Receiver from above list. When you press the button \"Save\" VDR will be restarted to notify VDR about the changed inputlirc receiver settings."
-
-msgid "web.inputlirc.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.inputlirc.combobox.tooltip.lirc_driver"
-msgstr "Inputlirc Driver"
-
-msgid "web.inputlirc.combobox.emptytext"
-msgstr "Please choose a receiver for your remote control..."
-
-msgid "web.inputlirc.combobox.label"
-msgstr "Receiver"
-
-msgid "web.inputlirc.submit.waitmsg"
-msgstr "Inputlirc receiver settings are being saved."
-
-msgid "web.inputlirc.submit.success"
-msgstr "The settings were successfully saved."
-
-msgid "web.inputlirc.submit.failure"
-msgstr "Error on saving settings. Please try again."
-
-msgid "web.inputlirc.error.json_decode"
-msgstr "Could not decode JSON receiver list"
-
-msgid "web.irserver.menutab.title"
-msgstr "IRServer"
-
-msgid "web.irserver.menutab.tabtip"
-msgstr "IRServer-Settings (Remote Control Receiver)"
-
-msgid "web.irserver.menutab.panel_title"
-msgstr "Remote Control Receiver (IRServer)"
-
-msgid "web.irserver.help"
-msgstr "When you press the button \"Save\" VDR will be restarted to notify VDR about the changed IRServer receiver settings."
-
-msgid "web.irserver.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.irserver.combobox.tooltip.lirc_driver"
-msgstr "IRDriver Driver"
-
-msgid "web.irserver.combobox.emptytext"
-msgstr "Please choose a receiver for your remote control..."
-
-msgid "web.irserver.combobox.label"
-msgstr "Receiver"
-
-msgid "web.irserver.submit.waitmsg"
-msgstr "IRServer receiver settings are being saved."
-
-msgid "web.irserver.submit.success"
-msgstr "The settings were successfully saved."
-
-msgid "web.irserver.submit.failure"
-msgstr "Error on saving settings. Please try again."
-
-msgid "web.irserver.error.json_decode"
-msgstr "Could not decode JSON receiver list"
-
-msgid "web.channels.menutab.title"
-msgstr "Channel List (SVDRP)"
-
-msgid "web.channels.menutab.tabtip"
-msgstr "Channel settings (Maintain and sort radio and TV channels)"
-
-msgid "web.channels.menutab.panel_title"
-msgstr ""
-
-msgid "web.channels.grid_header.cnumber"
-msgstr "No"
-
-msgid "web.channels.grid_header.cname"
-msgstr "Channel Name"
-
-msgid "web.channels.grid_header.cprovider"
-msgstr "Provider"
-
-msgid "web.channels.grid_header.cstr"
-msgstr "Complete Channel String"
-
-msgid "web.channels.grid_title"
-msgstr "Channel List (all radio and TV channels)"
-
-msgid "web.frontend.menutab.title"
-msgstr "VDR Frontend"
-
-msgid "web.frontend.menutab.tabtip"
-msgstr "Switch between xine and xineliboutput frontend"
-
-msgid "web.frontend.menutab.panel_title"
-msgstr "VDR Frontend"
-
-msgid "web.frontend.label"
-msgstr "Choose frontend"
-
-msgid "web.frontend.button_label"
-msgstr "Apply frontend settings"
-
-msgid "web.frontend.submit.waitmsg"
-msgstr "Frontend settings are updated."
-
-msgid "web.frontend.submit.success"
-msgstr "Success."
-
-msgid "web.frontend.submit.failure"
-msgstr "Failure."
-
-msgid "web.shutdown.menutab.title"
-msgstr "Shutdown"
-
-msgid "web.shutdown.menutab.tabtip"
-msgstr "Switch between different shutdown methods"
-
-msgid "web.shutdown.menutab.panel_title"
-msgstr "VDR Shutdown"
-
-msgid "web.shutdown.label"
-msgstr "Choose shutdown"
-
-msgid "web.shutdown.button_label"
-msgstr "Apply shutdown settings"
-
-msgid "web.shutdown.submit.waitmsg"
-msgstr "Shutdown settings are updated."
-
-msgid "web.shutdown.submit.success"
-msgstr "Success."
-
-msgid "web.shutdown.submit.failure"
-msgstr "Failure."
-
-msgid "web.shutdown.items.s3"
-msgstr "suspend to RAM"
-
-msgid "web.shutdown.items.s3unavailable"
-msgstr "suspend to RAM (unavailable)"
-
-msgid "web.shutdown.items.s4"
-msgstr "suspend to DISK"
-
-msgid "web.shutdown.items.s4unavailable"
-msgstr "suspend to DISK  (unavailable)"
-
-msgid "web.shutdown.items.s5"
-msgstr "shutdown"
-
-msgid "web.shutdown.items.reboot"
-msgstr "reboot \"PowerOff\" kernel"
-
-msgid "web.upload.menutab.title"
-msgstr "VDR Config Upload"
-
-msgid "web.upload.menutab.tabtip"
-msgstr "Upload your existing VDR configuration"
-
-msgid "web.upload.menutab.panel_title"
-msgstr "VDR Config Upload (the uploaded version overwrites the existing version)"
-
-msgid "web.upload.button_label"
-msgstr "Upload"
-
-msgid "web.upload.submit.waitmsg"
-msgstr "File is being uploaded."
-
-msgid "web.upload.submit.success"
-msgstr "File was uploaded successfully."
-
-msgid "web.upload.submit.failure"
-msgstr "There was a problem during file upload."
-
-msgid "web.system.menutab.title"
-msgstr "System"
-
-msgid "web.system.menutab.tabtip"
-msgstr "Restart VDR or the whole system"
-
-msgid "web.system.menutab.panel_title"
-msgstr "System Commands"
-
-msgid "web.system.vdr_restart.label"
-msgstr "Restart VDR backend"
-
-msgid "web.system.vdr_restart.submit.waitmsg"
-msgstr "The signal to restart VDR is being sent."
-
-msgid "web.system.vdr_restart.submit.success"
-msgstr "VDR will restart now."
-
-msgid "web.system.vdr_restart.submit.failure"
-msgstr "Problem on sending signal. Please try again."
-
-msgid "web.system.kill_xbmc.label"
-msgstr "Kill XBMC (if frozen)"
-
-msgid "web.system.kill_xbmc.submit.waitmsg"
-msgstr "The signal to stop XBMC is being sent."
-
-msgid "web.system.kill_xbmc.submit.success"
-msgstr "XBMC was stopped."
-
-msgid "web.system.kill_xbmc.submit.failure"
-msgstr "Problem on sending signal. Please try again."
-
-msgid "web.system.system_restart.label"
-msgstr "Reboot machine (Caution: Not asking for confirmation!)"
-
-msgid "web.system.system_restart.submit.waitmsg"
-msgstr "The signal to reboot is being sent."
-
-msgid "web.system.system_restart.submit.success"
-msgstr "The machine will reboot now."
-
-msgid "web.system.system_restart.submit.failure"
-msgstr "Problem on sending signal. Please try again."
-
-msgid "web.network.menutab.title"
+msgid "_Network"
 msgstr "Network"
 
-msgid "web.network.menutab.tabtip"
-msgstr "Maintain network"
-
-msgid "web.network.menutab.panel_title"
-msgstr "Network configuration"
-
-msgid "web.network.nfs.help"
-msgstr "Define the nfs shares from other hosts that should be used from VDR. Directories have to be qualified like \"server:/path\". The button \"Apply\" actually submits the changes to your local configuration. VDR uses them after next restart."
-
-msgid "web.network.nfs.menutab.title"
-msgstr "NFS"
-
-msgid "web.network.nfs.menutab.tabtip"
-msgstr "Maintain NFS mounts and shares"
-
-msgid "web.network.nfs.labels.newDir"
-msgstr "Remote directory"
-
-msgid "web.network.nfs.labels.add"
-msgstr "Add"
-
-msgid "web.network.nfs.labels.edit"
-msgstr "Edit"
-
-msgid "web.network.nfs.labels._delete"
-msgstr "Remove"
-
-msgid "web.network.nfs.labels.apply"
-msgstr "Apply"
-
-msgid "web.network.samba.menutab.title"
-msgstr "Samba"
-
-msgid "web.network.samba.menutab.tabtip"
-msgstr "Maintain samba shares"
-
-msgid "web.nvidia.menutab.title"
-msgstr "Nvidia"
-
-msgid "web.nvidia.menutab.tabtip"
-msgstr "Maintain Nvidia settings"
-
-msgid "web.nvidia.menutab.panel_title"
-msgstr "Nvidia configuration"
-
-msgid "web.nvidia.overscan_slider_label"
-msgstr "Nvidia Overscan compensation"
-
-msgid "web.nvidia.button_label"
-msgstr "Apply value"
-
-msgid "web.nvidia.submit.waitmsg"
-msgstr "Nvidia overscan settings are updated."
-
-msgid "web.nvidia.submit.success"
-msgstr "Success."
-
-msgid "web.nvidia.submit.failure"
-msgstr "Failure."
-
-msgid "web.webfrontend.menutab.title"
-msgstr "Web Frontend"
-
-msgid "web.webfrontend.menutab.tabtip"
-msgstr "Configure the appearance of the web frontend"
-
-msgid "web.webfrontend.menutab.panel_title"
-msgstr "Web Frontend Settings"
-
-msgid "web.webfrontend.label"
-msgstr "Choose web frontend language"
-
-msgid "web.webfrontend.button_label"
-msgstr "Apply language settings"
-
-msgid "web.webfrontend.submit.waitmsg"
-msgstr "Web frontend language settings are updated."
-
-msgid "web.webfrontend.submit.success"
-msgstr "Success. Do you want to reload the web frontend now with the new language settings?"
-
-msgid "web.webfrontend.submit.failure"
-msgstr "Failure."
-
-msgid "web.diagnose.toolbar.button.refresh"
-msgstr "Refresh"
-
-msgid "web.diagnose.toolbar.button.refresh_tooltip"
-msgstr "Please click this button to refresh the content of this panel."
-
-msgid "web.diagnose.toolbar.button.jumpdown"
-msgstr "Jump to end of panel"
-
-msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
-msgstr "Please click this button to jump to the end of this panel."
-
-msgid "web.diagnose.section.system_info.title"
-msgstr "System information"
-
-msgid "web.diagnose.section.system_info.description"
-msgstr "Network status, system load, file system usage, kernel"
-
-msgid "web.diagnose.section.system_info.ifconfig"
-msgstr "Network Status"
-
-msgid "web.diagnose.section.system_info.top"
-msgstr "System Load"
-
-msgid "web.diagnose.section.system_info.dmesg"
-msgstr "Kernel"
-
-msgid "web.diagnose.section.system_info.df"
-msgstr "File System Usage"
-
-msgid "web.diagnose.section.system_logs.title"
-msgstr "System Logfiles"
-
-msgid "web.diagnose.section.system_logs.description"
-msgstr "Important system Logfiles"
-
-msgid "web.diagnose.section.xbmc.title"
-msgstr "XBMC log files"
-
-msgid "web.diagnose.section.xbmc.description"
-msgstr "Find the reason for XBMC crashes or other XBMC problems"
-
-msgid "web.diagnose.section.lirc.title"
-msgstr "LIRC Configuration"
-
-msgid "web.diagnose.section.lirc.description"
-msgstr "Check the current configuration of LIRC"
-
-msgid "web.diagnose.section.vdr.title"
-msgstr "VDR Configuration"
-
-msgid "web.diagnose.section.vdr.description"
-msgstr "Check the current configuration of VDR"
-
-msgid "web.diagnose.section.xorg.title"
-msgstr "X-Server"
-
-msgid "web.diagnose.section.xorg.description"
-msgstr "Check the current configuration of X"
-
-msgid "web.diagnose.section.sound.title"
-msgstr "Sound (ALSA)"
-
-msgid "web.diagnose.section.sound.description"
-msgstr "Troubleshoot sound problems (digital / analog output)"
-
-msgid "web.diagnose.section.packages.title"
+msgid "_Packages"
 msgstr "Packages"
 
-msgid "web.diagnose.section.packages.description"
-msgstr "Check which packages and package versions are installed"
+msgid "_Edit configurations"
+msgstr "Edit configurations"
 
-msgid "web.diagnose.section.yavdr.title"
-msgstr "yaVDR-Utils"
+msgid "_Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+msgstr "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
 
-msgid "web.diagnose.section.yavdr.description"
-msgstr "Troubleshoot problems with the yaVDR web frontend (database  web server)"
+msgid "_Switch temporarily to second screen"
+msgstr "Switch temporarily to second screen"
 
-msgid "web.packages.menutab.title"
-msgstr "yaVDR-Packages"
+msgid "_Reboot computer"
+msgstr "Reboot computer"
 
-msgid "web.packages.menutab.tabtip"
-msgstr "Check which packages and package versions are installed"
+msgid "_Kill XBMC"
+msgstr "Kill XBMC"
 
-msgid "web.packages.menutab.panel_title"
-msgstr "yaVDR-Packages"
+msgid "_Restart VDR"
+msgstr "Restart VDR"
 
-msgid "web.timeout.menutab.title"
-msgstr "GRUB Timeout"
+msgid "_System information"
+msgstr "System information"
 
-msgid "web.timeout.menutab.tabtip"
-msgstr "Set GRUB Timeout"
+msgid "_System log files"
+msgstr "System log files"
 
-msgid "web.timeout.menutab.panel_title"
-msgstr "GRUB Timeout"
+msgid "_XBMC crash log"
+msgstr "XBMC crash log"
 
-msgid "web.timeout.label"
-msgstr "Choose timeout"
+msgid "_LIRC configuration"
+msgstr "LIRC configuration"
 
-msgid "web.timeout.button_label"
-msgstr "Apply timeout settings"
+msgid "_VDR configuration"
+msgstr "VDR configuration"
 
-msgid "web.timeout.submit.waitmsg"
-msgstr "Timeout settings are updated."
+msgid "_Xorg server"
+msgstr "Xorg server"
 
-msgid "web.timeout.submit.success"
-msgstr "Success."
+msgid "_Sound (ALSA)"
+msgstr "Sound (ALSA)"
 
-msgid "web.timeout.submit.failure"
-msgstr "Failure."
+msgid "_yaVDR database"
+msgstr "yaVDR database"
 
-msgid "web.timeout.maxText"
-msgstr "The maximum value for this field is {0}"
+msgid "_Here you can make general setting for and around VDR."
+msgstr "Here you can make general setting for and around VDR."
 
-msgid "web.timeout.minText"
-msgstr "The minimum value for this field is {0}"
+msgid "_Name of the group"
+msgstr "Name of the group"
 
-msgid "web.x11.menutab.title"
-msgstr "Display Settings"
+msgid "_generated channels.conf"
+msgstr "generated channels.conf"
 
-msgid "web.x11.menutab.tabtip"
-msgstr "Display Settings"
+msgid "_In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
+msgstr "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
 
-msgid "web.x11.menutab.panel_title"
-msgstr "Display Settings"
+msgid "_Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
+msgstr "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
 
-msgid "web.x11.graphtft.label"
-msgstr "graphTFT"
+msgid "_Here you can configure your display settings."
+msgstr "Here you can configure your display settings."
 
-msgid "web.x11.graphtft.boxlabel"
-msgstr "activated"
+msgid "_Default frequency"
+msgstr "Default frequency"
 
-msgid "web.x11.deinterlacer_hd.label"
-msgstr "Xine-HD-Deinterlacer (default bob)"
+msgid "_General system settings are made here."
+msgstr "General system settings are made here."
 
-msgid "web.x11.deinterlacer_sd.label"
-msgstr "Xine-SD-Deinterlacer (default temporal)"
+msgid "_VDR basic configuration"
+msgstr "VDR basic configuration"
 
-msgid "web.x11.button_label"
-msgstr "Apply display settings"
+msgid "_Xorg server log"
+msgstr "Xorg server log"
 
-msgid "web.x11.submit.waitmsg"
-msgstr "Display settings are updated."
+msgid "_ALSA status information"
+msgstr "ALSA status information"
 
-msgid "web.x11.submit.success"
-msgstr "Success."
+msgid "_Package information"
+msgstr "Package information"
 
-msgid "web.x11.submit.failure"
-msgstr "Failure."
+msgid "_Dashboard"
+msgstr "Dashboard"
 
-msgid "web.x11.dualhead.label"
-msgstr "dual head"
+msgid "_VDR"
+msgstr "VDR"
 
-msgid "web.x11.dualhead.boxlabel"
-msgstr "activated"
+msgid "_Hardware"
+msgstr "Hardware"
 
-msgid "web.x11.dualhead.boxlabelunavailable"
-msgstr "disabled (< 2 screens found)"
+msgid "_Introduction"
+msgstr "Introduction"
 
-msgid "web.x11.dualhead.switch_label"
-msgstr "switch head of vdr frontend"
+msgid "_General settings"
+msgstr "General settings"
 
-msgid "web.x11.primary"
-msgstr "primary"
+msgid "_This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
+msgstr "This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
 
-msgid "web.x11.secondary"
-msgstr "secondary"
+msgid "_This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
+msgstr "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
 
-msgid "web.x11.modeline"
-msgstr "current modeline"
+msgid "_If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
+msgstr "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
 
-msgid "web.x11.device"
-msgstr "device"
+msgid "_You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
+msgstr "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
 
-msgid "web.x11.resolution"
-msgstr "resolution"
+msgid "_Video Output"
+msgstr "Video Output"
 
-msgid "web.x11.select_res"
-msgstr "select resolution"
+msgid "_Cancel"
+msgstr "Cancel"
 
-msgid "web.x11.enabled"
-msgstr "enabled"
+msgid "_Save"
+msgstr "Save"
 
-msgid "web.x11.disabled"
-msgstr "disabled"
+msgid "_Lifeguard monitoring items"
+msgstr "Lifeguard monitoring items"
 
-msgid "web.sound.menutab.title"
-msgstr "Sound Settings"
+msgid "_Lifeguard"
+msgstr "Lifeguard"
 
-msgid "web.sound.menutab.tabtip"
-msgstr "Sound Settings"
+msgid "_VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
+msgstr "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
 
-msgid "web.sound.menutab.panel_title"
-msgstr "Sound Settings"
+msgid "_EPG"
+msgstr "EPG"
 
-msgid "web.sound.button_label"
-msgstr "Apply sound settings"
+msgid "_Override incorrect not DVB compliant EPG Encoding, as send by Sky"
+msgstr "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
 
-msgid "web.sound.submit.waitmsg"
-msgstr "Sound settings are updated."
+msgid "_Charset override"
+msgstr "Charset override"
 
-msgid "web.sound.submit.success"
-msgstr "Success."
-
-msgid "web.sound.submit.failure"
-msgstr "Failure."
-
-msgid "web.sound.label"
-msgstr "sound setting"
-
-msgid "web.lifeguard.help"
-msgstr "Check whether VDR should shutdown the machine Perform various tests specified by the user when VDR wants to shutdown the machine. Shutdown is postponed if any of the tests indicate, that there are other processes that should not be interrupted. Enable here the processes, which VDR shoud not interrupt. Nothing selected is similar to deaktivate VDR-Lifeguard"
-
-msgid "web.lifeguard.menutab.title"
-msgstr "VDR-Lifeguard"
-
-msgid "web.lifeguard.menutab.tabtip"
-msgstr "Lifeguard Settings"
-
-msgid "web.lifeguard.menutab.panel_title"
-msgstr "Lifeguard Settings"
-
-msgid "web.lifeguard.button_label"
-msgstr "Apply Lifeguard settings"
-
-msgid "web.lifeguard.submit.waitmsg"
-msgstr "Lifeguard settings are updated."
-
-msgid "web.lifeguard.submit.success"
-msgstr "Success."
-
-msgid "web.lifeguard.submit.failure"
-msgstr "Failure."
-
-msgid "web.lifeguard.label"
-msgstr "VDR-Lifeguard settings"
-
-#: begin avahi-mounter
+# begin avahi-mounter
 msgid "Recordings_on_"
 msgstr "Recordings_on_"
 
@@ -697,5 +204,3 @@ msgstr "Pictures_on_"
 
 msgid "Miscellaneous_on_"
 msgstr "Miscellaneous_on_"
-#: end avahi-mounter
-

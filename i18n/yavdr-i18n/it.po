@@ -6,6 +6,7 @@ msgstr ""
 "PO-Revision-Date: 2010-11-28 16:59+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team: it <LL@li.org>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -65,635 +66,6 @@ msgstr "Riavvia sistema"
 msgid "Shutdown system"
 msgstr "Arresta sistema"
 
-
-msgid "web.meta_lang.local"
-msgstr "Italiano"
-
-msgid "web.meta_lang.int"
-msgstr "Italian"
-
-msgid "web.meta_lang.key"
-msgstr "it"
-
-msgid "web.menutabs.vdr.title"
-msgstr "VDR"
-
-msgid "web.menutabs.vdr.tabtip"
-msgstr "Configurazione delle impostazioni base di VDR"
-
-msgid "web.menutabs.vdr.content"
-msgstr "Benvenuto nell'interfaccia Web di yaVDR!"
-
-msgid "web.menutabs.system.title"
-msgstr "Sistema"
-
-msgid "web.menutabs.system.tabtip"
-msgstr "Configurazione delle impostazioni base del sistema"
-
-msgid "web.menutabs.system.content"
-msgstr "Benvenuto nell'interfaccia Web di yaVDR!"
-
-msgid "web.menutabs.demos.title"
-msgstr "Dimostrazioni"
-
-msgid "web.menutabs.demos.tabtip"
-msgstr "Prove di concetto e dimostrazioni di possibili nuove funzioni che si possono usare a scopo dimostrativo"
-
-msgid "web.menutabs.demos.content"
-msgstr "Prove di concetto e dimostrazioni di possibili nuove funzioni che si possono usare a scopo dimostrativo"
-
-msgid "web.menutabs.development.title"
-msgstr "Sviluppo"
-
-msgid "web.menutabs.development.tabtip"
-msgstr "Nuovi funzioni che sono in costruzione, non usarle. Ancora non funzionano correttamente."
-
-msgid "web.menutabs.development.content"
-msgstr "Nuovi funzioni che sono in costruzione, non usarle. Ancora non funzionano correttamente."
-
-msgid "web.menutabs.diagnose.title"
-msgstr "Diagnostica"
-
-msgid "web.menutabs.diagnose.tabtip"
-msgstr "Rimani informato sullo stato del sistema e i problemi rilevati"
-
-msgid "web.menutabs.diagnose.content"
-msgstr "Accesso ai file di log importanti e ai file di configurazione"
-
-msgid "web.standardform.button.save"
-msgstr "Salva"
-
-msgid "web.standardform.messagebox_caption.message"
-msgstr "Messaggio"
-
-msgid "web.standardform.messagebox_caption.error"
-msgstr "Errore"
-
-msgid "web.standardform.messagebox_caption.wait"
-msgstr "Attendere prego..."
-
-msgid "web.remote.menutab.title"
-msgstr "Telecomando"
-
-msgid "web.remote.menutab.tabtip"
-msgstr "Impostazioni telecomando (ricevitore telecomando)"
-
-msgid "web.remote.menutab.panel_title"
-msgstr "Ricevitore telecomando"
-
-msgid "web.remote.help"
-msgstr "Al momento esistono 3 diversi server LIRC compatibili che sono supportati. Scegli quello che meglio si adatta al tuo dispositivo. <br /><h1>LIRC</h1><br /><br /> Supporta la maggior parte dei dispositivi. Informati sul driver supportato. Devi scegliere il driver corretto del dispositivo e nel caso si tratti di una porta seriale autocostruita (Attric, autocostruito e dispositivi simili) devi scegliere la porta seriale corretta.<br /><br /><h1>Ingresso LIRC</h1><br /><br /> Alcune schede DVB includono un ricevitore del telecomando. Alcuni di essi, come i dispositivi USB vengono resi disponibili come i cosiddetti dispositivi di ingresso. Devi soltanto scegliere il dispositivo corretto dal menu a tendina.<br /><br /><h1>Irserver</h1><br /><br /> Alcuni HTPC (per esempio OrigenAE) hanno incluso un ricevitore del telecomando, che può essere usato solo con irserver. Devi soltanto abilitarlo e salvare le impostazioni."
-
-msgid "web.lirc.menutab.title"
-msgstr "LIRC"
-
-msgid "web.lirc.menutab.tabtip"
-msgstr "Opzioni LIRC (ricevitore telecomando)"
-
-msgid "web.lirc.menutab.panel_title"
-msgstr "Ricevitore telecomando (LIRC)"
-
-msgid "web.lirc.help"
-msgstr "Quando premi il pulsante \"Salva\" il programma si riavvierà per notificare a VDR le modifiche del ricevitore del telecomando LIRC. Se non hai assegnato i tasti al tuo telecomando (tramite remote.conf) VDR mostrerà una schermata passo a passo nell'OSD per l'apprendimento dei tasti del telecomando. Questa schermata sparirà dopo pochi secondi se nessun tasto del telecomando viene premuto. Puoi riavviare la schermata semplicemente premendo ancora il tasto \"Salva\"."
-
-msgid "web.lirc.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.lirc.combobox.tooltip.lirc_driver"
-msgstr "Driver LIRC"
-
-msgid "web.lirc.combobox.emptytext"
-msgstr "Seleziona il ricevitore del telecomando..."
-
-msgid "web.lirc.combobox.label"
-msgstr "Ricevitore"
-
-msgid "web.lirc.serial_radiogroup.label"
-msgstr "Interfaccia seriale"
-
-msgid "web.lirc.serial_radiogroup.boxlabel_none"
-msgstr "nessuna"
-
-msgid "web.lirc.submit.waitmsg"
-msgstr "Salvataggio impostazioni ricevitore LIRC."
-
-msgid "web.lirc.submit.success"
-msgstr "Impostazioni salvate con successo."
-
-msgid "web.lirc.submit.failure"
-msgstr "Impossibile salvare le impostazioni. Riprova ancora."
-
-msgid "web.lirc.error.json_decode"
-msgstr "Impossibile decodificare la lista JSON del ricevitore"
-
-msgid "web.inputlirc.menutab.title"
-msgstr "Ingresso LIRC"
-
-msgid "web.inputlirc.menutab.tabtip"
-msgstr "Impostazioni ingresso LIRC (ricevitore telecomando)"
-
-msgid "web.inputlirc.menutab.panel_title"
-msgstr "Ricevitore telecomando (LIRC)"
-
-msgid "web.inputlirc.help"
-msgstr "Seleziona il ricevitore del telecomando dal precedente elenco. Quando premi il pulsante \"Salva\" il programma si riavvierà per notificare a VDR le modifiche del ricevitore di ingresso LIRC."
-
-msgid "web.inputlirc.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.inputlirc.combobox.tooltip.lirc_driver"
-msgstr "Driver ingresso LIRC"
-
-msgid "web.inputlirc.combobox.emptytext"
-msgstr "Seleziona il ricevitore del telecomando..."
-
-msgid "web.inputlirc.combobox.label"
-msgstr "Ricevitore"
-
-msgid "web.inputlirc.submit.waitmsg"
-msgstr "Salvataggio impostazioni ricevitore di ingresso LIRC."
-
-msgid "web.inputlirc.submit.success"
-msgstr "Impostazioni salvate con successo."
-
-msgid "web.inputlirc.submit.failure"
-msgstr "Impossibile salvare le impostazioni. Riprova ancora."
-
-msgid "web.inputlirc.error.json_decode"
-msgstr "Impossibile decodificare la lista JSON del ricevitore"
-
-msgid "web.irserver.menutab.title"
-msgstr "IRServer"
-
-msgid "web.irserver.menutab.tabtip"
-msgstr "Impostazioni IRServer (ricevitore telecomando)"
-
-msgid "web.irserver.menutab.panel_title"
-msgstr "Ricevitore telecomando (IRServer)"
-
-msgid "web.irserver.help"
-msgstr "Quando premi il pulsante \"Salva\" il programma si riavvierà per notificare a VDR le modifiche del ricevitore IRServer."
-
-msgid "web.irserver.combobox.tooltip.driver"
-msgstr "Driver"
-
-msgid "web.irserver.combobox.tooltip.lirc_driver"
-msgstr "Driver IRDriver"
-
-msgid "web.irserver.combobox.emptytext"
-msgstr "Seleziona il ricevitore del telecomando..."
-
-msgid "web.irserver.combobox.label"
-msgstr "Ricevitore"
-
-msgid "web.irserver.submit.waitmsg"
-msgstr "Salvataggio impostazioni ricevitore IRServer."
-
-msgid "web.irserver.submit.success"
-msgstr "Impostazioni salvate con successo."
-
-msgid "web.irserver.submit.failure"
-msgstr "Impossibile salvare le impostazioni. Riprova ancora."
-
-msgid "web.irserver.error.json_decode"
-msgstr "Impossibile decodificare la lista JSON del ricevitore"
-
-msgid "web.channels.menutab.title"
-msgstr "Lista canali (SVDRP)"
-
-msgid "web.channels.menutab.tabtip"
-msgstr "Impostazioni canali (gestisci e ordina i canali radio e TV)"
-
-msgid "web.channels.menutab.panel_title"
-msgstr ""
-
-msgid "web.channels.grid_header.cid"
-msgstr "N°"
-
-msgid "web.channels.grid_header.cname"
-msgstr "Nome canale"
-
-msgid "web.channels.grid_header.cstr"
-msgstr "Stringa completa canale"
-
-msgid "web.channels.grid_title"
-msgstr "Lista canali (tutti i canali radio e TV)"
-
-msgid "web.frontend.menutab.title"
-msgstr "Interfaccia VDR"
-
-msgid "web.frontend.menutab.tabtip"
-msgstr "Alterna tra le interfacce Xine e Xineliboutput"
-
-msgid "web.frontend.menutab.panel_title"
-msgstr "Interfaccia VDR"
-
-msgid "web.frontend.label"
-msgstr "Seleziona interfaccia"
-
-msgid "web.frontend.button_label"
-msgstr "Applica impostazioni interfaccia"
-
-msgid "web.frontend.submit.waitmsg"
-msgstr "Aggiornamento impostazioni interfaccia."
-
-msgid "web.frontend.submit.success"
-msgstr "Completato con successo."
-
-msgid "web.frontend.submit.failure"
-msgstr "Aggiornamento fallito."
-
-msgid "web.shutdown.menutab.title"
-msgstr "Spegnimento"
-
-msgid "web.shutdown.menutab.tabtip"
-msgstr "Seleziona tra i diversi metodi di spegnimento"
-
-msgid "web.shutdown.menutab.panel_title"
-msgstr "Spegnimento VDR"
-
-msgid "web.shutdown.label"
-msgstr "Seleziona spegnimento"
-
-msgid "web.shutdown.button_label"
-msgstr "Applica impostazioni spegnimento"
-
-msgid "web.shutdown.submit.waitmsg"
-msgstr "Aggiornamento impostazioni spegnimento."
-
-msgid "web.shutdown.submit.success"
-msgstr "Completato con successo."
-
-msgid "web.shutdown.submit.failure"
-msgstr "Aggiornamento fallito."
-
-msgid "web.shutdown.items.s3"
-msgstr "sospensione su RAM"
-
-msgid "web.shutdown.items.s3unavailable"
-msgstr "sospensione su RAM (non disponibile)"
-
-msgid "web.shutdown.items.s4"
-msgstr "sospensione su DISCO"
-
-msgid "web.shutdown.items.s4unavailable"
-msgstr "sospensione su DISCO (non disponibile)"
-
-msgid "web.shutdown.items.s5"
-msgstr "spegnimento"
-
-msgid "web.shutdown.items.reboot"
-msgstr "riavvio kernel con \"PowerOff\""
-
-msgid "web.upload.menutab.title"
-msgstr "Carica configurazione VDR"
-
-msgid "web.upload.menutab.tabtip"
-msgstr "Carica una configurazione di VDR esistente"
-
-msgid "web.upload.menutab.panel_title"
-msgstr "Carica configurazione VDR (la versione caricata sovrascrive la versione esistente)"
-
-msgid "web.upload.button_label"
-msgstr "Carica"
-
-msgid "web.upload.submit.waitmsg"
-msgstr "Caricamento file."
-
-msgid "web.upload.submit.success"
-msgstr "File caricato con successo."
-
-msgid "web.upload.submit.failure"
-msgstr "Si è verificato un errore durante il caricamento."
-
-msgid "web.system.menutab.title"
-msgstr "Sistema"
-
-msgid "web.system.menutab.tabtip"
-msgstr "Riavvia VDR o l'intero sistema"
-
-msgid "web.system.menutab.panel_title"
-msgstr "Comandi di sistema"
-
-msgid "web.system.vdr_restart.label"
-msgstr "Riavvia VDR"
-
-msgid "web.system.vdr_restart.submit.waitmsg"
-msgstr "Il segnale di riavvio VDR è stato inviato."
-
-msgid "web.system.vdr_restart.submit.success"
-msgstr "VDR si riavvierà adesso."
-
-msgid "web.system.vdr_restart.submit.failure"
-msgstr "Problemi con l'invio del segnale. Riprova."
-
-msgid "web.system.kill_xbmc.label"
-msgstr "Termina XBMC (se bloccato)"
-
-msgid "web.system.kill_xbmc.submit.waitmsg"
-msgstr "Il segnale per fermare XBMC è stato inviato."
-
-msgid "web.system.kill_xbmc.submit.success"
-msgstr "XBMC è stato fermato."
-
-msgid "web.system.kill_xbmc.submit.failure"
-msgstr "Problemi con l'invio del segnale. Riprova."
-
-msgid "web.system.system_restart.label"
-msgstr "Riavvia il computer (Attenzione: nessuna richiesta di conferma!)"
-
-msgid "web.system.system_restart.submit.waitmsg"
-msgstr "Il segnale per riavviare il computer è stato inviato."
-
-msgid "web.system.system_restart.submit.success"
-msgstr "Il computer si riavvierà adesso."
-
-msgid "web.system.system_restart.submit.failure"
-msgstr "Problemi con l'invio del segnale. Riprova."
-
-msgid "web.network.menutab.title"
-msgstr "Rete"
-
-msgid "web.network.menutab.tabtip"
-msgstr "Gestione rete"
-
-msgid "web.network.menutab.panel_title"
-msgstr "Configurazione rete"
-
-msgid "web.network.nfs.help"
-msgstr "Definisci le condivisioni NFS di altri sistemi che dovrebbero essere usate da VDR. Le directory devono avere questa struttura \"server:/percorso\". Il pulsante \"Applica\" salva effettivamente le modifiche nella configurazione locale ma queste vengono applicate SOLO al prossimo riavvio di VDR."
-
-msgid "web.network.nfs.menutab.title"
-msgstr "NFS"
-
-msgid "web.network.nfs.menutab.tabtip"
-msgstr "Gestione mount NFS e condivisioni"
-
-msgid "web.network.nfs.labels.newDir"
-msgstr "Directory remota"
-
-msgid "web.network.nfs.labels.add"
-msgstr "Aggiungi"
-
-msgid "web.network.nfs.labels.edit"
-msgstr "Modifica"
-
-msgid "web.network.nfs.labels._delete"
-msgstr "Elimina"
-
-msgid "web.network.nfs.labels.apply"
-msgstr "Applica"
-
-msgid "web.network.samba.menutab.title"
-msgstr "Samba"
-
-msgid "web.network.samba.menutab.tabtip"
-msgstr "Mantieni condivisioni Samba"
-
-msgid "web.nvidia.menutab.title"
-msgstr "NVIDIA"
-
-msgid "web.nvidia.menutab.tabtip"
-msgstr "Gestione impostazioni NVIDIA"
-
-msgid "web.nvidia.menutab.panel_title"
-msgstr "Configurazione NVIDIA"
-
-msgid "web.nvidia.overscan_slider_label"
-msgstr "Compensazione Overscan NVIDIA"
-
-msgid "web.nvidia.button_label"
-msgstr "Applica impostazioni overscan"
-
-msgid "web.nvidia.submit.waitmsg"
-msgstr "Aggiornamento impostazioni overscan NVIDIA."
-
-msgid "web.nvidia.submit.success"
-msgstr "Completato con successo."
-
-msgid "web.nvidia.submit.failure"
-msgstr "Aggiornamento fallito."
-
-msgid "web.webfrontend.menutab.title"
-msgstr "Interfaccia Web"
-
-msgid "web.webfrontend.menutab.tabtip"
-msgstr "Configura l'aspetto dell'interfaccia web"
-
-msgid "web.webfrontend.menutab.panel_title"
-msgstr "Impostazioni interfaccia Web"
-
-msgid "web.webfrontend.label"
-msgstr "Seleziona lingua interfaccia web"
-
-msgid "web.webfrontend.button_label"
-msgstr "Applica impostazioni lingua"
-
-msgid "web.webfrontend.submit.waitmsg"
-msgstr "Aggiornamento impostazioni lingua interfaccia web."
-
-msgid "web.webfrontend.submit.success"
-msgstr "Completato con successo. Premi F5 per ricaricare l'interfaccia web con le impostazioni della nuova lingua."
-
-msgid "web.webfrontend.submit.failure"
-msgstr "Aggiornamento fallito."
-
-msgid "web.diagnose.toolbar.button.refresh"
-msgstr "Aggiorna"
-
-msgid "web.diagnose.toolbar.button.refresh_tooltip"
-msgstr "Fai click su questo pulsante per aggiornare il contenuto del pannello."
-
-msgid "web.diagnose.toolbar.button.jumpdown"
-msgstr "Vai alla fine del pannello"
-
-msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
-msgstr "Fai click su questo pulsante per andare alla fine del pannello."
-
-msgid "web.diagnose.section.system_info.title"
-msgstr "Informazioni di sistema"
-
-msgid "web.diagnose.section.system_info.description"
-msgstr "Stato rete, utilizzo sistema, utilizzo file system, kernel"
-
-msgid "web.diagnose.section.system_info.ifconfig"
-msgstr "Stato rete"
-
-msgid "web.diagnose.section.system_info.top"
-msgstr "Utilizzo sistema"
-
-msgid "web.diagnose.section.system_info.dmesg"
-msgstr "Kernel"
-
-msgid "web.diagnose.section.system_info.df"
-msgstr "Utilizzo file System"
-
-msgid "web.diagnose.section.system_logs.title"
-msgstr "File log di sistema"
-
-msgid "web.diagnose.section.system_logs.description"
-msgstr "File log di sistema importanti"
-
-msgid "web.diagnose.section.xbmc.title"
-msgstr "Blocchi XBMC"
-
-msgid "web.diagnose.section.xbmc.description"
-msgstr "Trova il motivo dei blocchi di XBMC o altri problemi di XBMC"
-
-msgid "web.diagnose.section.lirc.title"
-msgstr "Configurazione LIRC"
-
-msgid "web.diagnose.section.lirc.description"
-msgstr "Verifica la configurazione attuale di LIRC"
-
-msgid "web.diagnose.section.vdr.title"
-msgstr "Configurazione VDR"
-
-msgid "web.diagnose.section.vdr.description"
-msgstr "Verifica la configurazione attuale di VDR"
-
-msgid "web.diagnose.section.xorg.title"
-msgstr "Server X"
-
-msgid "web.diagnose.section.xorg.description"
-msgstr "Verifica la configurazione attuale del server X"
-
-msgid "web.diagnose.section.sound.title"
-msgstr "Suono (ALSA)"
-
-msgid "web.diagnose.section.sound.description"
-msgstr "Risolvi i problemi sonori (uscita digitale / analogica)"
-
-msgid "web.diagnose.section.packages.title"
-msgstr "Pacchetti"
-
-msgid "web.diagnose.section.packages.description"
-msgstr "Verifica quali pacchetti e versioni dei pacchetti sono installati"
-
-msgid "web.diagnose.section.yavdr.title"
-msgstr "Strumenti yaVDR"
-
-msgid "web.diagnose.section.yavdr.description"
-msgstr "Risolvi i problemi con l'interfaccia web di yaVDR (database e server web)"
-
-msgid "web.timeout.menutab.title"
-msgstr "Ritardo GRUB"
-
-msgid "web.timeout.menutab.tabtip"
-msgstr "Imposta ritardo GRUB"
-
-msgid "web.timeout.menutab.panel_title"
-msgstr "Ritardo GRUB"
-
-msgid "web.timeout.label"
-msgstr "Scegli ritardo"
-
-msgid "web.timeout.button_label"
-msgstr "Applica impostazioni di ritardo"
-
-msgid "web.timeout.submit.waitmsg"
-msgstr "Aggiornamento impostazioni ritardo."
-
-msgid "web.timeout.submit.success"
-msgstr "Completato con successo."
-
-msgid "web.timeout.submit.failure"
-msgstr "Aggiornamento fallito."
-
-msgid "web.timeout.maxText"
-msgstr "Il valore massimo di questo campo è {0}"
-
-msgid "web.timeout.minText"
-msgstr "Il valore minimo di questo campo è {0}"
-
-msgid "web.x11.menutab.title"
-msgstr "Impostazioni Video"
-
-msgid "web.x11.menutab.tabtip"
-msgstr "Impostazioni Video"
-
-msgid "web.x11.menutab.panel_title"
-msgstr "Impostazioni Video"
-
-msgid "web.x11.graphtft.label"
-msgstr "GraphTFT"
-
-msgid "web.x11.graphtft.boxlabel"
-msgstr "attivato"
-
-msgid "web.x11.button_label"
-msgstr "Applica impostazioni video"
-
-msgid "web.x11.submit.waitmsg"
-msgstr "Aggiornamento impostazioni video."
-
-msgid "web.x11.submit.success"
-msgstr "Completato con successo."
-
-msgid "web.x11.submit.failure"
-msgstr "Aggiornamento fallito."
-
-msgid "web.x11.dualhead.label"
-msgstr "Doppio schermo"
-
-msgid "web.x11.dualhead.boxlabel"
-msgstr "attivato"
-
-msgid "web.x11.dualhead.boxlabelunavailable"
-msgstr "disabilitato (< 2 schermi trovati)"
-
-msgid "web.x11.dualhead.switch_label"
-msgstr "cambia schermo del frontend di VDR"
-
-msgid "web.x11.primary"
-msgstr "primario"
-
-msgid "web.x11.secondary"
-msgstr "secondario"
-
-msgid "web.x11.modeline"
-msgstr "modeline attuale"
-
-msgid "web.x11.device"
-msgstr "dispositivo"
-
-msgid "web.x11.resolution"
-msgstr "risoluzione"
-
-msgid "web.x11.select_res"
-msgstr "seleziona risoluzione"
-
-msgid "web.x11.enabled"
-msgstr "abilitato"
-
-msgid "web.x11.disabled"
-msgstr "disabilitato"
-
-msgid "web.sound.menutab.title"
-msgstr "Impostazioni Audio"
-
-msgid "web.sound.menutab.tabtip"
-msgstr "Impostazioni Audio"
-
-msgid "web.sound.menutab.panel_title"
-msgstr "Impostazioni Audio"
-
-msgid "web.sound.button_label"
-msgstr "Applica impostazioni audio"
-
-msgid "web.sound.submit.waitmsg"
-msgstr "Aggiornamento impostazioni audio."
-
-msgid "web.sound.submit.success"
-msgstr "Completato con successo."
-
-msgid "web.sound.submit.failure"
-msgstr "Aggiornamento fallito."
-
-msgid "web.sound.label"
-msgstr "Impostazioni audio"
-
-#: begin avahi-mounter
 msgid "Recordings_on_"
 msgstr "Registrazioni_attivo_"
 
@@ -709,4 +81,626 @@ msgstr "Immagini_attivo_"
 msgid "Miscellaneous_on_"
 msgstr "Generici_attivo_"
 
-#: end avahi-mounter
+#~ msgid "web.meta_lang.local"
+#~ msgstr "Italiano"
+
+#~ msgid "web.meta_lang.int"
+#~ msgstr "Italian"
+
+#~ msgid "web.meta_lang.key"
+#~ msgstr "it"
+
+#~ msgid "web.menutabs.vdr.title"
+#~ msgstr "VDR"
+
+#~ msgid "web.menutabs.vdr.tabtip"
+#~ msgstr "Configurazione delle impostazioni base di VDR"
+
+#~ msgid "web.menutabs.vdr.content"
+#~ msgstr "Benvenuto nell'interfaccia Web di yaVDR!"
+
+#~ msgid "web.menutabs.system.title"
+#~ msgstr "Sistema"
+
+#~ msgid "web.menutabs.system.tabtip"
+#~ msgstr "Configurazione delle impostazioni base del sistema"
+
+#~ msgid "web.menutabs.system.content"
+#~ msgstr "Benvenuto nell'interfaccia Web di yaVDR!"
+
+#~ msgid "web.menutabs.demos.title"
+#~ msgstr "Dimostrazioni"
+
+#~ msgid "web.menutabs.demos.tabtip"
+#~ msgstr "Prove di concetto e dimostrazioni di possibili nuove funzioni che si possono usare a scopo dimostrativo"
+
+#~ msgid "web.menutabs.demos.content"
+#~ msgstr "Prove di concetto e dimostrazioni di possibili nuove funzioni che si possono usare a scopo dimostrativo"
+
+#~ msgid "web.menutabs.development.title"
+#~ msgstr "Sviluppo"
+
+#~ msgid "web.menutabs.development.tabtip"
+#~ msgstr "Nuovi funzioni che sono in costruzione, non usarle. Ancora non funzionano correttamente."
+
+#~ msgid "web.menutabs.development.content"
+#~ msgstr "Nuovi funzioni che sono in costruzione, non usarle. Ancora non funzionano correttamente."
+
+#~ msgid "web.menutabs.diagnose.title"
+#~ msgstr "Diagnostica"
+
+#~ msgid "web.menutabs.diagnose.tabtip"
+#~ msgstr "Rimani informato sullo stato del sistema e i problemi rilevati"
+
+#~ msgid "web.menutabs.diagnose.content"
+#~ msgstr "Accesso ai file di log importanti e ai file di configurazione"
+
+#~ msgid "web.standardform.button.save"
+#~ msgstr "Salva"
+
+#~ msgid "web.standardform.messagebox_caption.message"
+#~ msgstr "Messaggio"
+
+#~ msgid "web.standardform.messagebox_caption.error"
+#~ msgstr "Errore"
+
+#~ msgid "web.standardform.messagebox_caption.wait"
+#~ msgstr "Attendere prego..."
+
+#~ msgid "web.remote.menutab.title"
+#~ msgstr "Telecomando"
+
+#~ msgid "web.remote.menutab.tabtip"
+#~ msgstr "Impostazioni telecomando (ricevitore telecomando)"
+
+#~ msgid "web.remote.menutab.panel_title"
+#~ msgstr "Ricevitore telecomando"
+
+#~ msgid "web.remote.help"
+#~ msgstr "Al momento esistono 3 diversi server LIRC compatibili che sono supportati. Scegli quello che meglio si adatta al tuo dispositivo. <br /><h1>LIRC</h1><br /><br /> Supporta la maggior parte dei dispositivi. Informati sul driver supportato. Devi scegliere il driver corretto del dispositivo e nel caso si tratti di una porta seriale autocostruita (Attric, autocostruito e dispositivi simili) devi scegliere la porta seriale corretta.<br /><br /><h1>Ingresso LIRC</h1><br /><br /> Alcune schede DVB includono un ricevitore del telecomando. Alcuni di essi, come i dispositivi USB vengono resi disponibili come i cosiddetti dispositivi di ingresso. Devi soltanto scegliere il dispositivo corretto dal menu a tendina.<br /><br /><h1>Irserver</h1><br /><br /> Alcuni HTPC (per esempio OrigenAE) hanno incluso un ricevitore del telecomando, che può essere usato solo con irserver. Devi soltanto abilitarlo e salvare le impostazioni."
+
+#~ msgid "web.lirc.menutab.title"
+#~ msgstr "LIRC"
+
+#~ msgid "web.lirc.menutab.tabtip"
+#~ msgstr "Opzioni LIRC (ricevitore telecomando)"
+
+#~ msgid "web.lirc.menutab.panel_title"
+#~ msgstr "Ricevitore telecomando (LIRC)"
+
+#~ msgid "web.lirc.help"
+#~ msgstr "Quando premi il pulsante \"Salva\" il programma si riavvierà per notificare a VDR le modifiche del ricevitore del telecomando LIRC. Se non hai assegnato i tasti al tuo telecomando (tramite remote.conf) VDR mostrerà una schermata passo a passo nell'OSD per l'apprendimento dei tasti del telecomando. Questa schermata sparirà dopo pochi secondi se nessun tasto del telecomando viene premuto. Puoi riavviare la schermata semplicemente premendo ancora il tasto \"Salva\"."
+
+#~ msgid "web.lirc.combobox.tooltip.driver"
+#~ msgstr "Driver"
+
+#~ msgid "web.lirc.combobox.tooltip.lirc_driver"
+#~ msgstr "Driver LIRC"
+
+#~ msgid "web.lirc.combobox.emptytext"
+#~ msgstr "Seleziona il ricevitore del telecomando..."
+
+#~ msgid "web.lirc.combobox.label"
+#~ msgstr "Ricevitore"
+
+#~ msgid "web.lirc.serial_radiogroup.label"
+#~ msgstr "Interfaccia seriale"
+
+#~ msgid "web.lirc.serial_radiogroup.boxlabel_none"
+#~ msgstr "nessuna"
+
+#~ msgid "web.lirc.submit.waitmsg"
+#~ msgstr "Salvataggio impostazioni ricevitore LIRC."
+
+#~ msgid "web.lirc.submit.success"
+#~ msgstr "Impostazioni salvate con successo."
+
+#~ msgid "web.lirc.submit.failure"
+#~ msgstr "Impossibile salvare le impostazioni. Riprova ancora."
+
+#~ msgid "web.lirc.error.json_decode"
+#~ msgstr "Impossibile decodificare la lista JSON del ricevitore"
+
+#~ msgid "web.inputlirc.menutab.title"
+#~ msgstr "Ingresso LIRC"
+
+#~ msgid "web.inputlirc.menutab.tabtip"
+#~ msgstr "Impostazioni ingresso LIRC (ricevitore telecomando)"
+
+#~ msgid "web.inputlirc.menutab.panel_title"
+#~ msgstr "Ricevitore telecomando (LIRC)"
+
+#~ msgid "web.inputlirc.help"
+#~ msgstr "Seleziona il ricevitore del telecomando dal precedente elenco. Quando premi il pulsante \"Salva\" il programma si riavvierà per notificare a VDR le modifiche del ricevitore di ingresso LIRC."
+
+#~ msgid "web.inputlirc.combobox.tooltip.driver"
+#~ msgstr "Driver"
+
+#~ msgid "web.inputlirc.combobox.tooltip.lirc_driver"
+#~ msgstr "Driver ingresso LIRC"
+
+#~ msgid "web.inputlirc.combobox.emptytext"
+#~ msgstr "Seleziona il ricevitore del telecomando..."
+
+#~ msgid "web.inputlirc.combobox.label"
+#~ msgstr "Ricevitore"
+
+#~ msgid "web.inputlirc.submit.waitmsg"
+#~ msgstr "Salvataggio impostazioni ricevitore di ingresso LIRC."
+
+#~ msgid "web.inputlirc.submit.success"
+#~ msgstr "Impostazioni salvate con successo."
+
+#~ msgid "web.inputlirc.submit.failure"
+#~ msgstr "Impossibile salvare le impostazioni. Riprova ancora."
+
+#~ msgid "web.inputlirc.error.json_decode"
+#~ msgstr "Impossibile decodificare la lista JSON del ricevitore"
+
+#~ msgid "web.irserver.menutab.title"
+#~ msgstr "IRServer"
+
+#~ msgid "web.irserver.menutab.tabtip"
+#~ msgstr "Impostazioni IRServer (ricevitore telecomando)"
+
+#~ msgid "web.irserver.menutab.panel_title"
+#~ msgstr "Ricevitore telecomando (IRServer)"
+
+#~ msgid "web.irserver.help"
+#~ msgstr "Quando premi il pulsante \"Salva\" il programma si riavvierà per notificare a VDR le modifiche del ricevitore IRServer."
+
+#~ msgid "web.irserver.combobox.tooltip.driver"
+#~ msgstr "Driver"
+
+#~ msgid "web.irserver.combobox.tooltip.lirc_driver"
+#~ msgstr "Driver IRDriver"
+
+#~ msgid "web.irserver.combobox.emptytext"
+#~ msgstr "Seleziona il ricevitore del telecomando..."
+
+#~ msgid "web.irserver.combobox.label"
+#~ msgstr "Ricevitore"
+
+#~ msgid "web.irserver.submit.waitmsg"
+#~ msgstr "Salvataggio impostazioni ricevitore IRServer."
+
+#~ msgid "web.irserver.submit.success"
+#~ msgstr "Impostazioni salvate con successo."
+
+#~ msgid "web.irserver.submit.failure"
+#~ msgstr "Impossibile salvare le impostazioni. Riprova ancora."
+
+#~ msgid "web.irserver.error.json_decode"
+#~ msgstr "Impossibile decodificare la lista JSON del ricevitore"
+
+#~ msgid "web.channels.menutab.title"
+#~ msgstr "Lista canali (SVDRP)"
+
+#~ msgid "web.channels.menutab.tabtip"
+#~ msgstr "Impostazioni canali (gestisci e ordina i canali radio e TV)"
+
+#~ msgid "web.channels.grid_header.cid"
+#~ msgstr "N°"
+
+#~ msgid "web.channels.grid_header.cname"
+#~ msgstr "Nome canale"
+
+#~ msgid "web.channels.grid_header.cstr"
+#~ msgstr "Stringa completa canale"
+
+#~ msgid "web.channels.grid_title"
+#~ msgstr "Lista canali (tutti i canali radio e TV)"
+
+#~ msgid "web.frontend.menutab.title"
+#~ msgstr "Interfaccia VDR"
+
+#~ msgid "web.frontend.menutab.tabtip"
+#~ msgstr "Alterna tra le interfacce Xine e Xineliboutput"
+
+#~ msgid "web.frontend.menutab.panel_title"
+#~ msgstr "Interfaccia VDR"
+
+#~ msgid "web.frontend.label"
+#~ msgstr "Seleziona interfaccia"
+
+#~ msgid "web.frontend.button_label"
+#~ msgstr "Applica impostazioni interfaccia"
+
+#~ msgid "web.frontend.submit.waitmsg"
+#~ msgstr "Aggiornamento impostazioni interfaccia."
+
+#~ msgid "web.frontend.submit.success"
+#~ msgstr "Completato con successo."
+
+#~ msgid "web.frontend.submit.failure"
+#~ msgstr "Aggiornamento fallito."
+
+#~ msgid "web.shutdown.menutab.title"
+#~ msgstr "Spegnimento"
+
+#~ msgid "web.shutdown.menutab.tabtip"
+#~ msgstr "Seleziona tra i diversi metodi di spegnimento"
+
+#~ msgid "web.shutdown.menutab.panel_title"
+#~ msgstr "Spegnimento VDR"
+
+#~ msgid "web.shutdown.label"
+#~ msgstr "Seleziona spegnimento"
+
+#~ msgid "web.shutdown.button_label"
+#~ msgstr "Applica impostazioni spegnimento"
+
+#~ msgid "web.shutdown.submit.waitmsg"
+#~ msgstr "Aggiornamento impostazioni spegnimento."
+
+#~ msgid "web.shutdown.submit.success"
+#~ msgstr "Completato con successo."
+
+#~ msgid "web.shutdown.submit.failure"
+#~ msgstr "Aggiornamento fallito."
+
+#~ msgid "web.shutdown.items.s3"
+#~ msgstr "sospensione su RAM"
+
+#~ msgid "web.shutdown.items.s3unavailable"
+#~ msgstr "sospensione su RAM (non disponibile)"
+
+#~ msgid "web.shutdown.items.s4"
+#~ msgstr "sospensione su DISCO"
+
+#~ msgid "web.shutdown.items.s4unavailable"
+#~ msgstr "sospensione su DISCO (non disponibile)"
+
+#~ msgid "web.shutdown.items.s5"
+#~ msgstr "spegnimento"
+
+#~ msgid "web.shutdown.items.reboot"
+#~ msgstr "riavvio kernel con \"PowerOff\""
+
+#~ msgid "web.upload.menutab.title"
+#~ msgstr "Carica configurazione VDR"
+
+#~ msgid "web.upload.menutab.tabtip"
+#~ msgstr "Carica una configurazione di VDR esistente"
+
+#~ msgid "web.upload.menutab.panel_title"
+#~ msgstr "Carica configurazione VDR (la versione caricata sovrascrive la versione esistente)"
+
+#~ msgid "web.upload.button_label"
+#~ msgstr "Carica"
+
+#~ msgid "web.upload.submit.waitmsg"
+#~ msgstr "Caricamento file."
+
+#~ msgid "web.upload.submit.success"
+#~ msgstr "File caricato con successo."
+
+#~ msgid "web.upload.submit.failure"
+#~ msgstr "Si è verificato un errore durante il caricamento."
+
+#~ msgid "web.system.menutab.title"
+#~ msgstr "Sistema"
+
+#~ msgid "web.system.menutab.tabtip"
+#~ msgstr "Riavvia VDR o l'intero sistema"
+
+#~ msgid "web.system.menutab.panel_title"
+#~ msgstr "Comandi di sistema"
+
+#~ msgid "web.system.vdr_restart.label"
+#~ msgstr "Riavvia VDR"
+
+#~ msgid "web.system.vdr_restart.submit.waitmsg"
+#~ msgstr "Il segnale di riavvio VDR è stato inviato."
+
+#~ msgid "web.system.vdr_restart.submit.success"
+#~ msgstr "VDR si riavvierà adesso."
+
+#~ msgid "web.system.vdr_restart.submit.failure"
+#~ msgstr "Problemi con l'invio del segnale. Riprova."
+
+#~ msgid "web.system.kill_xbmc.label"
+#~ msgstr "Termina XBMC (se bloccato)"
+
+#~ msgid "web.system.kill_xbmc.submit.waitmsg"
+#~ msgstr "Il segnale per fermare XBMC è stato inviato."
+
+#~ msgid "web.system.kill_xbmc.submit.success"
+#~ msgstr "XBMC è stato fermato."
+
+#~ msgid "web.system.kill_xbmc.submit.failure"
+#~ msgstr "Problemi con l'invio del segnale. Riprova."
+
+#~ msgid "web.system.system_restart.label"
+#~ msgstr "Riavvia il computer (Attenzione: nessuna richiesta di conferma!)"
+
+#~ msgid "web.system.system_restart.submit.waitmsg"
+#~ msgstr "Il segnale per riavviare il computer è stato inviato."
+
+#~ msgid "web.system.system_restart.submit.success"
+#~ msgstr "Il computer si riavvierà adesso."
+
+#~ msgid "web.system.system_restart.submit.failure"
+#~ msgstr "Problemi con l'invio del segnale. Riprova."
+
+#~ msgid "web.network.menutab.title"
+#~ msgstr "Rete"
+
+#~ msgid "web.network.menutab.tabtip"
+#~ msgstr "Gestione rete"
+
+#~ msgid "web.network.menutab.panel_title"
+#~ msgstr "Configurazione rete"
+
+#~ msgid "web.network.nfs.help"
+#~ msgstr "Definisci le condivisioni NFS di altri sistemi che dovrebbero essere usate da VDR. Le directory devono avere questa struttura \"server:/percorso\". Il pulsante \"Applica\" salva effettivamente le modifiche nella configurazione locale ma queste vengono applicate SOLO al prossimo riavvio di VDR."
+
+#~ msgid "web.network.nfs.menutab.title"
+#~ msgstr "NFS"
+
+#~ msgid "web.network.nfs.menutab.tabtip"
+#~ msgstr "Gestione mount NFS e condivisioni"
+
+#~ msgid "web.network.nfs.labels.newDir"
+#~ msgstr "Directory remota"
+
+#~ msgid "web.network.nfs.labels.add"
+#~ msgstr "Aggiungi"
+
+#~ msgid "web.network.nfs.labels.edit"
+#~ msgstr "Modifica"
+
+#~ msgid "web.network.nfs.labels._delete"
+#~ msgstr "Elimina"
+
+#~ msgid "web.network.nfs.labels.apply"
+#~ msgstr "Applica"
+
+#~ msgid "web.network.samba.menutab.title"
+#~ msgstr "Samba"
+
+#~ msgid "web.network.samba.menutab.tabtip"
+#~ msgstr "Mantieni condivisioni Samba"
+
+#~ msgid "web.nvidia.menutab.title"
+#~ msgstr "NVIDIA"
+
+#~ msgid "web.nvidia.menutab.tabtip"
+#~ msgstr "Gestione impostazioni NVIDIA"
+
+#~ msgid "web.nvidia.menutab.panel_title"
+#~ msgstr "Configurazione NVIDIA"
+
+#~ msgid "web.nvidia.overscan_slider_label"
+#~ msgstr "Compensazione Overscan NVIDIA"
+
+#~ msgid "web.nvidia.button_label"
+#~ msgstr "Applica impostazioni overscan"
+
+#~ msgid "web.nvidia.submit.waitmsg"
+#~ msgstr "Aggiornamento impostazioni overscan NVIDIA."
+
+#~ msgid "web.nvidia.submit.success"
+#~ msgstr "Completato con successo."
+
+#~ msgid "web.nvidia.submit.failure"
+#~ msgstr "Aggiornamento fallito."
+
+#~ msgid "web.webfrontend.menutab.title"
+#~ msgstr "Interfaccia Web"
+
+#~ msgid "web.webfrontend.menutab.tabtip"
+#~ msgstr "Configura l'aspetto dell'interfaccia web"
+
+#~ msgid "web.webfrontend.menutab.panel_title"
+#~ msgstr "Impostazioni interfaccia Web"
+
+#~ msgid "web.webfrontend.label"
+#~ msgstr "Seleziona lingua interfaccia web"
+
+#~ msgid "web.webfrontend.button_label"
+#~ msgstr "Applica impostazioni lingua"
+
+#~ msgid "web.webfrontend.submit.waitmsg"
+#~ msgstr "Aggiornamento impostazioni lingua interfaccia web."
+
+#~ msgid "web.webfrontend.submit.success"
+#~ msgstr "Completato con successo. Premi F5 per ricaricare l'interfaccia web con le impostazioni della nuova lingua."
+
+#~ msgid "web.webfrontend.submit.failure"
+#~ msgstr "Aggiornamento fallito."
+
+#~ msgid "web.diagnose.toolbar.button.refresh"
+#~ msgstr "Aggiorna"
+
+#~ msgid "web.diagnose.toolbar.button.refresh_tooltip"
+#~ msgstr "Fai click su questo pulsante per aggiornare il contenuto del pannello."
+
+#~ msgid "web.diagnose.toolbar.button.jumpdown"
+#~ msgstr "Vai alla fine del pannello"
+
+#~ msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
+#~ msgstr "Fai click su questo pulsante per andare alla fine del pannello."
+
+#~ msgid "web.diagnose.section.system_info.title"
+#~ msgstr "Informazioni di sistema"
+
+#~ msgid "web.diagnose.section.system_info.description"
+#~ msgstr "Stato rete, utilizzo sistema, utilizzo file system, kernel"
+
+#~ msgid "web.diagnose.section.system_info.ifconfig"
+#~ msgstr "Stato rete"
+
+#~ msgid "web.diagnose.section.system_info.top"
+#~ msgstr "Utilizzo sistema"
+
+#~ msgid "web.diagnose.section.system_info.dmesg"
+#~ msgstr "Kernel"
+
+#~ msgid "web.diagnose.section.system_info.df"
+#~ msgstr "Utilizzo file System"
+
+#~ msgid "web.diagnose.section.system_logs.title"
+#~ msgstr "File log di sistema"
+
+#~ msgid "web.diagnose.section.system_logs.description"
+#~ msgstr "File log di sistema importanti"
+
+#~ msgid "web.diagnose.section.xbmc.title"
+#~ msgstr "Blocchi XBMC"
+
+#~ msgid "web.diagnose.section.xbmc.description"
+#~ msgstr "Trova il motivo dei blocchi di XBMC o altri problemi di XBMC"
+
+#~ msgid "web.diagnose.section.lirc.title"
+#~ msgstr "Configurazione LIRC"
+
+#~ msgid "web.diagnose.section.lirc.description"
+#~ msgstr "Verifica la configurazione attuale di LIRC"
+
+#~ msgid "web.diagnose.section.vdr.title"
+#~ msgstr "Configurazione VDR"
+
+#~ msgid "web.diagnose.section.vdr.description"
+#~ msgstr "Verifica la configurazione attuale di VDR"
+
+#~ msgid "web.diagnose.section.xorg.title"
+#~ msgstr "Server X"
+
+#~ msgid "web.diagnose.section.xorg.description"
+#~ msgstr "Verifica la configurazione attuale del server X"
+
+#~ msgid "web.diagnose.section.sound.title"
+#~ msgstr "Suono (ALSA)"
+
+#~ msgid "web.diagnose.section.sound.description"
+#~ msgstr "Risolvi i problemi sonori (uscita digitale / analogica)"
+
+#~ msgid "web.diagnose.section.packages.title"
+#~ msgstr "Pacchetti"
+
+#~ msgid "web.diagnose.section.packages.description"
+#~ msgstr "Verifica quali pacchetti e versioni dei pacchetti sono installati"
+
+#~ msgid "web.diagnose.section.yavdr.title"
+#~ msgstr "Strumenti yaVDR"
+
+#~ msgid "web.diagnose.section.yavdr.description"
+#~ msgstr "Risolvi i problemi con l'interfaccia web di yaVDR (database e server web)"
+
+#~ msgid "web.timeout.menutab.title"
+#~ msgstr "Ritardo GRUB"
+
+#~ msgid "web.timeout.menutab.tabtip"
+#~ msgstr "Imposta ritardo GRUB"
+
+#~ msgid "web.timeout.menutab.panel_title"
+#~ msgstr "Ritardo GRUB"
+
+#~ msgid "web.timeout.label"
+#~ msgstr "Scegli ritardo"
+
+#~ msgid "web.timeout.button_label"
+#~ msgstr "Applica impostazioni di ritardo"
+
+#~ msgid "web.timeout.submit.waitmsg"
+#~ msgstr "Aggiornamento impostazioni ritardo."
+
+#~ msgid "web.timeout.submit.success"
+#~ msgstr "Completato con successo."
+
+#~ msgid "web.timeout.submit.failure"
+#~ msgstr "Aggiornamento fallito."
+
+#~ msgid "web.timeout.maxText"
+#~ msgstr "Il valore massimo di questo campo è {0}"
+
+#~ msgid "web.timeout.minText"
+#~ msgstr "Il valore minimo di questo campo è {0}"
+
+#~ msgid "web.x11.menutab.title"
+#~ msgstr "Impostazioni Video"
+
+#~ msgid "web.x11.menutab.tabtip"
+#~ msgstr "Impostazioni Video"
+
+#~ msgid "web.x11.menutab.panel_title"
+#~ msgstr "Impostazioni Video"
+
+#~ msgid "web.x11.graphtft.label"
+#~ msgstr "GraphTFT"
+
+#~ msgid "web.x11.graphtft.boxlabel"
+#~ msgstr "attivato"
+
+#~ msgid "web.x11.button_label"
+#~ msgstr "Applica impostazioni video"
+
+#~ msgid "web.x11.submit.waitmsg"
+#~ msgstr "Aggiornamento impostazioni video."
+
+#~ msgid "web.x11.submit.success"
+#~ msgstr "Completato con successo."
+
+#~ msgid "web.x11.submit.failure"
+#~ msgstr "Aggiornamento fallito."
+
+#~ msgid "web.x11.dualhead.label"
+#~ msgstr "Doppio schermo"
+
+#~ msgid "web.x11.dualhead.boxlabel"
+#~ msgstr "attivato"
+
+#~ msgid "web.x11.dualhead.boxlabelunavailable"
+#~ msgstr "disabilitato (< 2 schermi trovati)"
+
+#~ msgid "web.x11.dualhead.switch_label"
+#~ msgstr "cambia schermo del frontend di VDR"
+
+#~ msgid "web.x11.primary"
+#~ msgstr "primario"
+
+#~ msgid "web.x11.secondary"
+#~ msgstr "secondario"
+
+#~ msgid "web.x11.modeline"
+#~ msgstr "modeline attuale"
+
+#~ msgid "web.x11.device"
+#~ msgstr "dispositivo"
+
+#~ msgid "web.x11.resolution"
+#~ msgstr "risoluzione"
+
+#~ msgid "web.x11.select_res"
+#~ msgstr "seleziona risoluzione"
+
+#~ msgid "web.x11.enabled"
+#~ msgstr "abilitato"
+
+#~ msgid "web.x11.disabled"
+#~ msgstr "disabilitato"
+
+#~ msgid "web.sound.menutab.title"
+#~ msgstr "Impostazioni Audio"
+
+#~ msgid "web.sound.menutab.tabtip"
+#~ msgstr "Impostazioni Audio"
+
+#~ msgid "web.sound.menutab.panel_title"
+#~ msgstr "Impostazioni Audio"
+
+#~ msgid "web.sound.button_label"
+#~ msgstr "Applica impostazioni audio"
+
+#~ msgid "web.sound.submit.waitmsg"
+#~ msgstr "Aggiornamento impostazioni audio."
+
+#~ msgid "web.sound.submit.success"
+#~ msgstr "Completato con successo."
+
+#~ msgid "web.sound.submit.failure"
+#~ msgstr "Aggiornamento fallito."
+
+#~ msgid "web.sound.label"
+#~ msgstr "Impostazioni audio"

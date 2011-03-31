@@ -6,6 +6,7 @@ msgstr ""
 "PO-Revision-Date: 2010-08-14 21:56+0200\n"
 "Last-Translator: Holger Schvestka <hotzenplotz5@gmx.de>\n"
 "Language-Team: de <translate@yavdr.com>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -62,637 +63,6 @@ msgstr "Rechner neu starten"
 msgid "Shutdown system"
 msgstr "System herunterfahren"
 
-msgid "Settings"
-msgstr "Einstellungen"
-
-msgid "web.meta_lang.local"
-msgstr "Deutsch"
-
-msgid "web.meta_lang.int"
-msgstr "German"
-
-msgid "web.meta_lang.key"
-msgstr "de"
-
-msgid "web.menutabs.vdr.title"
-msgstr "Ihr VDR"
-
-msgid "web.menutabs.vdr.tabtip"
-msgstr "Konfigurieren Sie die Grundeinstellungen rund um Ihren yaVDR"
-
-msgid "web.menutabs.vdr.content"
-msgstr "Willkommen im yaVDR Web-Frontend!"
-
-msgid "web.menutabs.system.title"
-msgstr "System"
-
-msgid "web.menutabs.system.tabtip"
-msgstr "Konfigurieren Sie die Grundeinstellungen des Systems"
-
-msgid "web.menutabs.system.content"
-msgstr "Konfigurieren Sie die Grundeinstellungen des Systems"
-
-msgid "web.menutabs.demos.title"
-msgstr "Demos"
-
-msgid "web.menutabs.demos.tabtip"
-msgstr "Machbarkeitsnachweis, Ausblick auf mögliche neue Features"
-
-msgid "web.menutabs.demos.content"
-msgstr "Machbarkeitsnachweis, Ausblick auf mögliche neue Features"
-
-msgid "web.menutabs.development.title"
-msgstr "Development"
-
-msgid "web.menutabs.development.tabtip"
-msgstr "Neue Funktionen die sich in Entwicklung befinden. Nicht benutzen, funktioniert noch nicht richtig."
-
-msgid "web.menutabs.development.content"
-msgstr "Neue Funktionen die sich in Entwicklung befinden. Nicht benutzen, funktioniert noch nicht richtig."
-
-msgid "web.menutabs.diagnose.title"
-msgstr "Diagnose"
-
-msgid "web.menutabs.diagnose.tabtip"
-msgstr "Informieren Sie sich über den Zustand des Systems, betreiben Sie Fehleranalyse"
-
-msgid "web.menutabs.diagnose.content"
-msgstr "Inhalte von wichtigen Logfiles und Konfigurationsdateien"
-
-msgid "web.standardform.button.save"
-msgstr "Speichern"
-
-msgid "web.standardform.messagebox_caption.message"
-msgstr "Hinweis"
-
-msgid "web.standardform.messagebox_caption.error"
-msgstr "Fehler"
-
-msgid "web.standardform.messagebox_caption.wait"
-msgstr "Bitte warten..."
-
-msgid "web.remote.menutab.title"
-msgstr "Fernbedienungen"
-
-msgid "web.remote.menutab.tabtip"
-msgstr "Einstellungen für Fernbedienungen (Remote Control Receiver)"
-
-msgid "web.remote.menutab.panel_title"
-msgstr "Einstellungen für Fernbedienungen"
-
-msgid "web.remote.help"
-msgstr "Um den Infrarot-Empfänger Ihrer Fernbedienung in Betrieb zu nehmen, wählen Sie LIRC oder einen der beiden zu LIRC kompatiblen Server (Inputlirc oder IRServer) aus. Sie sollten denjenigen Server auswählen, welcher am besten zu der von Ihnen verwendeten Hardware passt. Sobald Sie den Button \"Speichern\" drücken, wird die Anwendung VDR neu gestartet, um die Änderung zu übernehmen.<br />Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben, wird Ihnen direkt nach dem Neustart auf der Bildschirmanzeige (\"On-Screen-Display\") eine Anlernphase für Ihre Fernbedienung angeboten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie erneut auf den Button \"Speichern\" drücken."
-
-msgid "web.lirc.menutab.title"
-msgstr "LIRC"
-
-msgid "web.lirc.menutab.tabtip"
-msgstr "Lirc-Einstellungen (Fernbedienungs-Receiver)"
-
-msgid "web.lirc.menutab.panel_title"
-msgstr "Fernbedienungs-Empfänger (LIRC)"
-
-msgid "web.lirc.help"
-msgstr "Dieses unterstützt die meisten Geräte.<br />Zur Konfiguration ist es nötig zu wissen, welcher Treiber für das eigene Gerät benötigt wird.<br/>Wenn es ein serieller Empfänger ist, muss zusätzlich noch die verwendete serielle Schnittstelle ausgewählt werden."
-
-msgid "web.lirc.combobox.tooltip.driver"
-msgstr "Treiber"
-
-msgid "web.lirc.combobox.tooltip.lirc_driver"
-msgstr "LIRC-Treiber"
-
-msgid "web.lirc.combobox.emptytext"
-msgstr "Bitte Empfänger für Fernbedienung wählen..."
-
-msgid "web.lirc.combobox.label"
-msgstr "Empfänger"
-
-msgid "web.lirc.serial_radiogroup.label"
-msgstr "Serielle Schnittstelle"
-
-msgid "web.lirc.serial_radiogroup.boxlabel_none"
-msgstr "keine"
-
-msgid "web.lirc.submit.waitmsg"
-msgstr "Fernbedienungs-Einstellungen werden gespeichert."
-
-msgid "web.lirc.submit.success"
-msgstr "Ihre Auswahl wurde erfolgreich gespeichert."
-
-msgid "web.lirc.submit.failure"
-msgstr "Fehler beim Speichern. Bitte erneut versuchen."
-
-msgid "web.lirc.error.json_decode"
-msgstr "Konnte JSON Empfängerliste nicht dekodieren"
-
-msgid "web.inputlirc.menutab.title"
-msgstr "Inputlirc"
-
-msgid "web.inputlirc.menutab.tabtip"
-msgstr "Input-Lirc-Einstellungen (Remote Control Receiver)"
-
-msgid "web.inputlirc.menutab.panel_title"
-msgstr "Input-Lirc-Einstellungen für Fernbedienungen (Input-LIRC)"
-
-msgid "web.inputlirc.help"
-msgstr "Einige DVB Karten liefern einen Fernbedienungsempfänger mit. Viele dieser Empfänger, sowie einige USB Empfänger werden als sogenannte INPUT Geräte eingebunden. Hier muss nur der Fernbedienungsempfänger aus der Liste erkannter Geräte ausgewählt werden."
-
-msgid "web.inputlirc.combobox.tooltip.driver"
-msgstr "Treiber"
-
-msgid "web.inputlirc.combobox.tooltip.lirc_driver"
-msgstr "Inputlirc Treiber"
-
-msgid "web.inputlirc.combobox.emptytext"
-msgstr "Bitte Empfänger für Fernbedienung wählen..."
-
-msgid "web.inputlirc.combobox.label"
-msgstr "Empfänger"
-
-msgid "web.inputlirc.submit.waitmsg"
-msgstr "Fernbedienungs-Settings werden gespeichert."
-
-msgid "web.inputlirc.submit.success"
-msgstr "Ihre Auswahl wurde erfolgreich gespeichert."
-
-msgid "web.inputlirc.submit.failure"
-msgstr "Fehler beim Speichern. Bitte noch einmal versuchen."
-
-msgid "web.inputlirc.error.json_decode"
-msgstr "Konnte JSON Empfängerliste nicht dekodieren"
-
-msgid "web.irserver.menutab.title"
-msgstr "IRServer"
-
-msgid "web.irserver.menutab.tabtip"
-msgstr "IRServer-Einstellungen (Remote Control Receiver)"
-
-msgid "web.irserver.menutab.panel_title"
-msgstr "IRServer-Einstellungen für Fernbedienungen (IRServer)"
-
-msgid "web.irserver.help"
-msgstr "Einige HTPC-Gehäuse (z.B. OrigonAE) haben integrierte Infrarot-Empfänger, welche einen speziellen Server (Irserver) benötigen. Hier muss nur der Server aktiviert und anschließend gespeichert werden."
-
-msgid "web.irserver.combobox.tooltip.driver"
-msgstr "Treiber"
-
-msgid "web.irserver.combobox.tooltip.lirc_driver"
-msgstr "IRServer Treiber"
-
-msgid "web.irserver.combobox.emptytext"
-msgstr "Bitte Empfänger für Fernbedienung wählen..."
-
-msgid "web.irserver.combobox.label"
-msgstr "Empfänger"
-
-msgid "web.irserver.submit.waitmsg"
-msgstr "Fernbedienungs-Einstellungen werden gespeichert."
-
-msgid "web.irserver.submit.success"
-msgstr "Ihre Auswahl wurde erfolgreich gespeichert."
-
-msgid "web.irserver.submit.failure"
-msgstr "Fehler beim Speichern. Bitte noch einmal versuchen."
-
-msgid "web.irserver.error.json_decode"
-msgstr "Konnte JSON Empfängerliste nicht dekodieren"
-
-msgid "web.channels.menutab.title"
-msgstr "Kanal-Liste (SVDRP)"
-
-msgid "web.channels.menutab.tabtip"
-msgstr "Kanal-Einstellungen (Radio- und Fernsehkanäle pflegen und sortieren)"
-
-msgid "web.channels.menutab.panel_title"
-msgstr ""
-
-msgid "web.channels.grid_header.cid"
-msgstr "Nr."
-
-msgid "web.channels.grid_header.cname"
-msgstr "Kanal-Name"
-
-msgid "web.channels.grid_header.cstr"
-msgstr "Kompletter Kanal-String"
-
-msgid "web.channels.grid_title"
-msgstr "Kanal-Liste (alle Radio- und TV-Kanäle)"
-
-msgid "web.frontend.menutab.title"
-msgstr "VDR-Frontend w&auml;hlen"
-
-msgid "web.frontend.menutab.tabtip"
-msgstr "Wechseln Sie zwischen xine und xineliboutput"
-
-msgid "web.frontend.menutab.panel_title"
-msgstr "VDR-Frontend"
-
-msgid "web.frontend.label"
-msgstr "Gew&uuml;nschtes Frontend"
-
-msgid "web.frontend.button_label"
-msgstr "Frontend-Einstellung aktivieren"
-
-msgid "web.frontend.submit.waitmsg"
-msgstr "Frontend-Einstellungen werden aktualisiert."
-
-msgid "web.frontend.submit.success"
-msgstr "OK."
-
-msgid "web.frontend.submit.failure"
-msgstr "Fehler."
-
-msgid "web.shutdown.menutab.title"
-msgstr "VDR-Shutdown w&auml;hlen"
-
-msgid "web.shutdown.menutab.tabtip"
-msgstr "Wechseln Sie zwischen verschiedenen Shutdown-Methoden"
-
-msgid "web.shutdown.menutab.panel_title"
-msgstr "VDR-Shutdown"
-
-msgid "web.shutdown.label"
-msgstr "Gew&uuml;nschte Methode"
-
-msgid "web.shutdown.button_label"
-msgstr "Shutdown-Einstellung aktivieren"
-
-msgid "web.shutdown.submit.waitmsg"
-msgstr "Shutdown-Einstellungen werden aktualisiert."
-
-msgid "web.shutdown.submit.success"
-msgstr "OK."
-
-msgid "web.shutdown.submit.failure"
-msgstr "Fehler."
-
-msgid "web.shutdown.items.s3"
-msgstr "suspend to RAM"
-
-msgid "web.shutdown.items.s3unavailable"
-msgstr "suspend to RAM (nicht verfügbar)"
-
-msgid "web.shutdown.items.s4"
-msgstr "suspend to DISK"
-
-msgid "web.shutdown.items.s4unavailable"
-msgstr "suspend to DISK (nicht verfügbar)"
-
-msgid "web.shutdown.items.s5"
-msgstr "shutdown"
-
-msgid "web.shutdown.items.reboot"
-msgstr "reboot PowerOff-kernel"
-
-msgid "web.upload.menutab.title"
-msgstr "VDR-Konfig-Upload"
-
-msgid "web.upload.menutab.tabtip"
-msgstr "Laden Sie existierende VDR-Konfigurationsdateien hoch"
-
-msgid "web.upload.menutab.panel_title"
-msgstr "VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei)"
-
-msgid "web.upload.button_label"
-msgstr "Datei hochladen"
-
-msgid "web.upload.submit.waitmsg"
-msgstr "Konfigurationsdatei wird hochgeladen."
-
-msgid "web.upload.submit.success"
-msgstr "Datei wurde erfolgreich hochgeladen."
-
-msgid "web.upload.submit.failure"
-msgstr "Ein Problem beim Hochladen der Datei ist aufgetreten."
-
-msgid "web.system.menutab.title"
-msgstr "Wartung"
-
-msgid "web.system.menutab.tabtip"
-msgstr "Starten Sie den VDR oder den Rechner neu"
-
-msgid "web.system.menutab.panel_title"
-msgstr "Wartungs-Befehle"
-
-msgid "web.system.vdr_restart.label"
-msgstr "VDR Backend Neustarten!"
-
-msgid "web.system.vdr_restart.submit.waitmsg"
-msgstr "Das Signal zum Neustarten des VDR wird gesendet."
-
-msgid "web.system.vdr_restart.submit.success"
-msgstr "Der VDR wird jetzt neu gestartet."
-
-msgid "web.system.vdr_restart.submit.failure"
-msgstr "Problem beim Senden des Signals. Bitte erneut versuchen."
-
-msgid "web.system.kill_xbmc.label"
-msgstr "XBMC-Beendung erzwingen"
-
-msgid "web.system.kill_xbmc.submit.waitmsg"
-msgstr "Das Signal zum Beenden von XBMC wird gesendet."
-
-msgid "web.system.kill_xbmc.submit.success"
-msgstr "XBMC wird jetzt beendet."
-
-msgid "web.system.kill_xbmc.submit.failure"
-msgstr "Problem beim Senden des Signals. Bitte erneut versuchen."
-
-msgid "web.system.system_restart.label"
-msgstr "Rechner sofort neu starten! (Keine weitere Warnung)"
-
-msgid "web.system.system_restart.submit.waitmsg"
-msgstr "Das Signal zum Neustart wird gesendet."
-
-msgid "web.system.system_restart.submit.success"
-msgstr "Der Rechner wird jetzt neu gestartet."
-
-msgid "web.system.system_restart.submit.failure"
-msgstr "Problem beim Senden des Signals. Bitte erneut versuchen."
-
-msgid "web.network.menutab.title"
-msgstr "Netzwerk"
-
-msgid "web.network.menutab.tabtip"
-msgstr "Verwalten des Netzwerks"
-
-msgid "web.network.menutab.panel_title"
-msgstr "Netzwerkkonfiguration"
-
-msgid "web.network.nfs.help"
-msgstr "Hier können NFS Freigaben von anderen Hosts eingebunden werden. Die Verzeichnisse müssen in der Form \"host:/ein/verzeichnis\" eingegeben werden. Der Knopf \"Übernehmen\" trägt die Verzeichnisse in die lokale Konfiguration ein. Sie müssen den VDR Neustarten (Menü \"System\", Punkt \"Wartung\"), um die Änderungen zu aktivieren!"
-
-msgid "web.network.nfs.menutab.title"
-msgstr "NFS"
-
-msgid "web.network.nfs.menutab.tabtip"
-msgstr "Verwalten der NFS-Mounts und -Freigaben"
-
-msgid "web.network.nfs.labels.newDir"
-msgstr "Entferntes Verzeichnis"
-
-msgid "web.network.nfs.labels.add"
-msgstr "Hinzufügen"
-
-msgid "web.network.nfs.labels.edit"
-msgstr "Ändern"
-
-msgid "web.network.nfs.labels._delete"
-msgstr "Löschen"
-
-msgid "web.network.nfs.labels.apply"
-msgstr "Übernehmen"
-
-msgid "web.network.samba.menutab.title"
-msgstr "Samba"
-
-msgid "web.network.samba.menutab.tabtip"
-msgstr "Verwalten der Samba-Freigaben"
-
-msgid "web.nvidia.menutab.title"
-msgstr "Nvidia"
-
-msgid "web.nvidia.menutab.tabtip"
-msgstr "Nvidia-Einstellungen pflegen"
-
-msgid "web.nvidia.menutab.panel_title"
-msgstr "Nvidia-Konfiguration"
-
-msgid "web.nvidia.overscan_slider_label"
-msgstr "Nvidia Overscan-Kompensation"
-
-msgid "web.nvidia.button_label"
-msgstr "Wert anwenden"
-
-msgid "web.nvidia.submit.waitmsg"
-msgstr "Der Nvidia Overscan-Wert wird aktualisiert."
-
-msgid "web.nvidia.submit.success"
-msgstr "Erfolg."
-
-msgid "web.nvidia.submit.failure"
-msgstr "Fehler."
-
-msgid "web.webfrontend.menutab.title"
-msgstr "Web-Frontend"
-
-msgid "web.webfrontend.menutab.tabtip"
-msgstr "Das Erscheinungsbild des Web-Frontends anpassen."
-
-msgid "web.webfrontend.menutab.panel_title"
-msgstr "Web Frontend Einstellungen"
-
-msgid "web.webfrontend.label"
-msgstr "Wählen Sie die Sprache des Web Frontends"
-
-msgid "web.webfrontend.button_label"
-msgstr "Übernehmen"
-
-msgid "web.webfrontend.submit.waitmsg"
-msgstr "Die Spracheinstellungen für das Web-Frontend werden aktualisiert."
-
-msgid "web.webfrontend.submit.success"
-msgstr "Die Spracheinstellungen für das Web-Frontend wurden erfolgreich aktualisiert. Möchten Sie das Web-Frontend nun mit den neuen Spracheinstellungen neu laden?"
-
-msgid "web.webfrontend.submit.failure"
-msgstr "Fehler."
-
-msgid "web.diagnose.toolbar.button.refresh"
-msgstr "Aktualisieren"
-
-msgid "web.diagnose.toolbar.button.refresh_tooltip"
-msgstr "Klicken Sie hier, um den Inhalt der Seite zu aktualisieren."
-
-msgid "web.diagnose.toolbar.button.jumpdown"
-msgstr "Ans Ende springen"
-
-msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
-msgstr "Klicken Sie hier, um an das Endes des Inhalts dieser Seite zu springen."
-
-msgid "web.diagnose.section.system_info.title"
-msgstr "System-Informationen"
-
-msgid "web.diagnose.section.system_info.description"
-msgstr "Netzwerk-Status, Auslastung, Prozesse, Dateisystem-Belegung und Kernel"
-
-msgid "web.diagnose.section.system_info.ifconfig"
-msgstr "Netzwerkstatus"
-
-msgid "web.diagnose.section.system_info.top"
-msgstr "Systemauslastung"
-
-msgid "web.diagnose.section.system_info.dmesg"
-msgstr "Kernel"
-
-msgid "web.diagnose.section.system_info.df"
-msgstr "Dateisystem-Belegung"
-
-msgid "web.diagnose.section.system_logs.title"
-msgstr "System-Logfiles"
-
-msgid "web.diagnose.section.system_logs.description"
-msgstr "Wichtige System-Logfiles"
-
-msgid "web.diagnose.section.xbmc.title"
-msgstr "XBMC-Abstürze"
-
-msgid "web.diagnose.section.xbmc.description"
-msgstr "Finden Sie die Ursache für XBMC-Abstürze oder XBMC-Probleme"
-
-msgid "web.diagnose.section.lirc.title"
-msgstr "LIRC-Konfiguration"
-
-msgid "web.diagnose.section.lirc.description"
-msgstr "Informieren Sie sich über die aktuelle LIRC-Konfiguration"
-
-msgid "web.diagnose.section.vdr.title"
-msgstr "VDR-Konfiguration"
-
-msgid "web.diagnose.section.vdr.description"
-msgstr "Informieren Sie sich über die aktuelle VDR-Konfiguration"
-
-msgid "web.diagnose.section.xorg.title"
-msgstr "X-Server"
-
-msgid "web.diagnose.section.xorg.description"
-msgstr "Informieren Sie sich über die aktuelle X-Konfiguration"
-
-msgid "web.diagnose.section.sound.title"
-msgstr "Sound (ALSA)"
-
-msgid "web.diagnose.section.sound.description"
-msgstr "Digitalsound-Problemdiagnose (Digital-/Analog-Ausgabe)"
-
-msgid "web.diagnose.section.packages.title"
-msgstr "Pakete"
-
-msgid "web.diagnose.section.packages.description"
-msgstr "Überprüfen Sie, welche Pakete und Paketversionen installiert sind"
-
-msgid "web.diagnose.section.yavdr.title"
-msgstr "yaVDR-Utils"
-
-msgid "web.diagnose.section.yavdr.description"
-msgstr "yaVDR-Web-Frontend Diagnose (Datenbank  Webserver)"
-
-msgid "web.timeout.menutab.title"
-msgstr "GRUB Timeout"
-
-msgid "web.timeout.menutab.tabtip"
-msgstr "GRUB Timeout einstellen"
-
-msgid "web.timeout.menutab.panel_title"
-msgstr "GRUB Timeout"
-
-msgid "web.timeout.label"
-msgstr "Wähle Timeout"
-
-msgid "web.timeout.button_label"
-msgstr "Setze GRUB Timeout"
-
-msgid "web.timeout.submit.waitmsg"
-msgstr "Einstellungen werden aktualisiert."
-
-msgid "web.timeout.submit.success"
-msgstr "Erfolg."
-
-msgid "web.timeout.submit.failure"
-msgstr "Fehler."
-
-msgid "web.timeout.maxText"
-msgstr "Der Maximalwert ist {0}!"
-
-msgid "web.timeout.minText"
-msgstr "Der Minimalwert ist {0}!"
-
-msgid "web.x11.menutab.title"
-msgstr "Anzeige"
-
-msgid "web.x11.menutab.tabtip"
-msgstr "Anzeigeeinstellungen"
-
-msgid "web.x11.menutab.panel_title"
-msgstr "Anzeige"
-
-msgid "web.x11.graphtft.label"
-msgstr "GraphTFT"
-
-msgid "web.x11.graphtft.boxlabel"
-msgstr "aktiviert"
-
-msgid "web.x11.button_label"
-msgstr "Setze Anzeigeeinstellungen"
-
-msgid "web.x11.submit.waitmsg"
-msgstr "Einstellungen werden aktualisiert."
-
-msgid "web.x11.submit.success"
-msgstr "Erfolg."
-
-msgid "web.x11.submit.failure"
-msgstr "Fehler."
-
-msgid "web.x11.dualhead.label"
-msgstr "Zwei-Bildschirm Betrieb"
-
-msgid "web.x11.dualhead.boxlabel"
-msgstr "aktiviert"
-
-msgid "web.x11.dualhead.boxlabelunavailable"
-msgstr "deaktiviert (< 2 Bildschirme gefunden)"
-
-msgid "web.x11.dualhead.switch_label"
-msgstr "Wechsel des VDR-Frontends auf 2. Bildschirm"
-
-msgid "web.x11.primary"
-msgstr "primär"
-
-msgid "web.x11.secondary"
-msgstr "sekundär"
-
-msgid "web.x11.modeline"
-msgstr "aktuelle Auflösung"
-
-msgid "web.x11.device"
-msgstr "Gerät"
-
-msgid "web.x11.resolution"
-msgstr "Auflösung"
-
-msgid "web.x11.select_res"
-msgstr "wähle Auflösung"
-
-msgid "web.x11.enabled"
-msgstr "aktiviert"
-
-msgid "web.x11.disabled"
-msgstr "deaktiviert"
-
-msgid "web.sound.menutab.title"
-msgstr "Ton"
-
-msgid "web.sound.menutab.tabtip"
-msgstr "Ton-Konfiguration"
-
-msgid "web.sound.menutab.panel_title"
-msgstr "Ton"
-
-msgid "web.sound.button_label"
-msgstr "Setze Ton-Einstellungen"
-
-msgid "web.sound.submit.waitmsg"
-msgstr "Einstellungen werden aktualisiert."
-
-msgid "web.sound.submit.success"
-msgstr "Erfolg."
-
-msgid "web.sound.submit.failure"
-msgstr "Fehler."
-
-msgid "web.sound.label"
-msgstr "Ton-Konfiguration"
-
-#: begin avahi-mounter
 msgid "Recordings_on_"
 msgstr "Aufnahmen_auf_"
 
@@ -707,118 +77,744 @@ msgstr "Bilder_auf_"
 
 msgid "Miscellaneous_on_"
 msgstr "Sonstige_auf_"
-#: end avahi-mounter
 
-msgid "Send to PasteBin"
-msgstr "Senden an PasteBin"
+#~ msgid "Settings"
+#~ msgstr "Einstellungen"
 
-msgid "Recordings"
-msgstr "Aufnahmen"
+#~ msgid "web.meta_lang.local"
+#~ msgstr "Deutsch"
 
-msgid "Timers"
-msgstr "Timers"
+#~ msgid "web.meta_lang.int"
+#~ msgstr "German"
 
-msgid "General"
-msgstr "Allgemein"
+#~ msgid "web.meta_lang.key"
+#~ msgstr "de"
 
-msgid "Channels"
-msgstr "kanäle"
+#~ msgid "web.menutabs.vdr.title"
+#~ msgstr "Ihr VDR"
 
-msgid "Remote Control Settings"
-msgstr "Einstellung der Fernbedinung"
+#~ msgid "web.menutabs.vdr.tabtip"
+#~ msgstr "Konfigurieren Sie die Grundeinstellungen rund um Ihren yaVDR"
 
-msgid "Audio Configuration"
-msgstr "Audio-Einstellungen"
+#~ msgid "web.menutabs.vdr.content"
+#~ msgstr "Willkommen im yaVDR Web-Frontend!"
 
-msgid "Display Settings"
-msgstr "Anzeigeeinstellungen"
+#~ msgid "web.menutabs.system.title"
+#~ msgstr "System"
 
-msgid "Network"
-msgstr "Netzwerk"
+#~ msgid "web.menutabs.system.tabtip"
+#~ msgstr "Konfigurieren Sie die Grundeinstellungen des Systems"
 
-msgid "Packages"
-msgstr "Pakete"
+#~ msgid "web.menutabs.system.content"
+#~ msgstr "Konfigurieren Sie die Grundeinstellungen des Systems"
 
-msgid "Edit Configurations"
-msgstr "Einstellungen ändern"
+#~ msgid "web.menutabs.demos.title"
+#~ msgstr "Demos"
 
-msgid "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
-msgstr "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+#~ msgid "web.menutabs.demos.tabtip"
+#~ msgstr "Machbarkeitsnachweis, Ausblick auf mögliche neue Features"
 
-msgid "Switch temporary to second screen"
-msgstr "Vorübergehend auf 2. Anzeige umschalten"
+#~ msgid "web.menutabs.demos.content"
+#~ msgstr "Machbarkeitsnachweis, Ausblick auf mögliche neue Features"
 
-msgid "Reboot computer"
-msgstr "Rechner neu starten"
+#~ msgid "web.menutabs.development.title"
+#~ msgstr "Development"
 
-msgid "Kill XBMC"
-msgstr "XBMC beenden"
+#~ msgid "web.menutabs.development.tabtip"
+#~ msgstr "Neue Funktionen die sich in Entwicklung befinden. Nicht benutzen, funktioniert noch nicht richtig."
 
-msgid "Restart VDR"
-msgstr "VDR neu starten"
+#~ msgid "web.menutabs.development.content"
+#~ msgstr "Neue Funktionen die sich in Entwicklung befinden. Nicht benutzen, funktioniert noch nicht richtig."
 
-msgid "System Information"
-msgstr "System Information"
+#~ msgid "web.menutabs.diagnose.title"
+#~ msgstr "Diagnose"
 
-msgid "System log files"
-msgstr "System log files"
+#~ msgid "web.menutabs.diagnose.tabtip"
+#~ msgstr "Informieren Sie sich über den Zustand des Systems, betreiben Sie Fehleranalyse"
 
-msgid "XBMC crash log"
-msgstr "XBMC crash log"
+#~ msgid "web.menutabs.diagnose.content"
+#~ msgstr "Inhalte von wichtigen Logfiles und Konfigurationsdateien"
 
-msgid "LIRC configuration"
-msgstr "LIRC-Einstellungen"
+#~ msgid "web.standardform.button.save"
+#~ msgstr "Speichern"
 
-msgid "VDR configuration"
-msgstr "VDR-Einstellungen"
+#~ msgid "web.standardform.messagebox_caption.message"
+#~ msgstr "Hinweis"
 
-msgid "Xorg server"
-msgstr "Xorg-Aerver"
+#~ msgid "web.standardform.messagebox_caption.error"
+#~ msgstr "Fehler"
 
-msgid "Sound (ALSA)"
-msgstr "Audio (ALSA)"
+#~ msgid "web.standardform.messagebox_caption.wait"
+#~ msgstr "Bitte warten..."
 
-msgid "yaVDR database"
-msgstr "yaVDR Datenbank"
+#~ msgid "web.remote.menutab.title"
+#~ msgstr "Fernbedienungen"
 
-msgid "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
-msgstr "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
+#~ msgid "web.remote.menutab.tabtip"
+#~ msgstr "Einstellungen für Fernbedienungen (Remote Control Receiver)"
 
-msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ. ..."
-msgstr "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ. ..."
+#~ msgid "web.remote.menutab.panel_title"
+#~ msgstr "Einstellungen für Fernbedienungen"
 
-msgid "Here you can configure your display settings."
-msgstr "Here you can configure your display settings."
+#~ msgid "web.remote.help"
+#~ msgstr "Um den Infrarot-Empfänger Ihrer Fernbedienung in Betrieb zu nehmen, wählen Sie LIRC oder einen der beiden zu LIRC kompatiblen Server (Inputlirc oder IRServer) aus. Sie sollten denjenigen Server auswählen, welcher am besten zu der von Ihnen verwendeten Hardware passt. Sobald Sie den Button \"Speichern\" drücken, wird die Anwendung VDR neu gestartet, um die Änderung zu übernehmen.<br />Wenn Sie dem VDR noch keine Zuordnung der Fernbedienungstasten bekanntgegeben haben, wird Ihnen direkt nach dem Neustart auf der Bildschirmanzeige (\"On-Screen-Display\") eine Anlernphase für Ihre Fernbedienung angeboten. Die Anlernphase endet, wenn einige Sekunden lang keine Taste auf der Fernbedienung gedrückt wurde. Sie können die Anlernphase erneut starten, indem Sie erneut auf den Button \"Speichern\" drücken."
 
-msgid "default frequency"
-msgstr "Standardfrquenz"
+#~ msgid "web.lirc.menutab.title"
+#~ msgstr "LIRC"
 
-msgid "XBMC Crash log"
-msgstr "XBMC Crash log"
+#~ msgid "web.lirc.menutab.tabtip"
+#~ msgstr "Lirc-Einstellungen (Fernbedienungs-Receiver)"
 
-msgid "VDR basic configuration"
-msgstr "VDR Basis Einstellungen"
+#~ msgid "web.lirc.menutab.panel_title"
+#~ msgstr "Fernbedienungs-Empfänger (LIRC)"
 
-msgid "Xorg server log"
-msgstr "Xorg Server log"
+#~ msgid "web.lirc.help"
+#~ msgstr "Dieses unterstützt die meisten Geräte.<br />Zur Konfiguration ist es nötig zu wissen, welcher Treiber für das eigene Gerät benötigt wird.<br/>Wenn es ein serieller Empfänger ist, muss zusätzlich noch die verwendete serielle Schnittstelle ausgewählt werden."
 
-msgid "ALSA status information"
-msgstr "ALSA Status Informationen"
+#~ msgid "web.lirc.combobox.tooltip.driver"
+#~ msgstr "Treiber"
 
-msgid "Package information"
-msgstr "Pakteinformationen"
+#~ msgid "web.lirc.combobox.tooltip.lirc_driver"
+#~ msgstr "LIRC-Treiber"
 
-msgid "Program"
-msgstr "Programm"
+#~ msgid "web.lirc.combobox.emptytext"
+#~ msgstr "Bitte Empfänger für Fernbedienung wählen..."
 
-msgid "VDR"
-msgstr "VDR"
+#~ msgid "web.lirc.combobox.label"
+#~ msgstr "Empfänger"
 
-msgid "Name"
-msgstr "Name"
+#~ msgid "web.lirc.serial_radiogroup.label"
+#~ msgstr "Serielle Schnittstelle"
 
-msgid "Duration"
-msgstr "Dauer"
+#~ msgid "web.lirc.serial_radiogroup.boxlabel_none"
+#~ msgstr "keine"
 
-msgid "Start"
-msgstr "Start"
+#~ msgid "web.lirc.submit.waitmsg"
+#~ msgstr "Fernbedienungs-Einstellungen werden gespeichert."
+
+#~ msgid "web.lirc.submit.success"
+#~ msgstr "Ihre Auswahl wurde erfolgreich gespeichert."
+
+#~ msgid "web.lirc.submit.failure"
+#~ msgstr "Fehler beim Speichern. Bitte erneut versuchen."
+
+#~ msgid "web.lirc.error.json_decode"
+#~ msgstr "Konnte JSON Empfängerliste nicht dekodieren"
+
+#~ msgid "web.inputlirc.menutab.title"
+#~ msgstr "Inputlirc"
+
+#~ msgid "web.inputlirc.menutab.tabtip"
+#~ msgstr "Input-Lirc-Einstellungen (Remote Control Receiver)"
+
+#~ msgid "web.inputlirc.menutab.panel_title"
+#~ msgstr "Input-Lirc-Einstellungen für Fernbedienungen (Input-LIRC)"
+
+#~ msgid "web.inputlirc.help"
+#~ msgstr "Einige DVB Karten liefern einen Fernbedienungsempfänger mit. Viele dieser Empfänger, sowie einige USB Empfänger werden als sogenannte INPUT Geräte eingebunden. Hier muss nur der Fernbedienungsempfänger aus der Liste erkannter Geräte ausgewählt werden."
+
+#~ msgid "web.inputlirc.combobox.tooltip.driver"
+#~ msgstr "Treiber"
+
+#~ msgid "web.inputlirc.combobox.tooltip.lirc_driver"
+#~ msgstr "Inputlirc Treiber"
+
+#~ msgid "web.inputlirc.combobox.emptytext"
+#~ msgstr "Bitte Empfänger für Fernbedienung wählen..."
+
+#~ msgid "web.inputlirc.combobox.label"
+#~ msgstr "Empfänger"
+
+#~ msgid "web.inputlirc.submit.waitmsg"
+#~ msgstr "Fernbedienungs-Settings werden gespeichert."
+
+#~ msgid "web.inputlirc.submit.success"
+#~ msgstr "Ihre Auswahl wurde erfolgreich gespeichert."
+
+#~ msgid "web.inputlirc.submit.failure"
+#~ msgstr "Fehler beim Speichern. Bitte noch einmal versuchen."
+
+#~ msgid "web.inputlirc.error.json_decode"
+#~ msgstr "Konnte JSON Empfängerliste nicht dekodieren"
+
+#~ msgid "web.irserver.menutab.title"
+#~ msgstr "IRServer"
+
+#~ msgid "web.irserver.menutab.tabtip"
+#~ msgstr "IRServer-Einstellungen (Remote Control Receiver)"
+
+#~ msgid "web.irserver.menutab.panel_title"
+#~ msgstr "IRServer-Einstellungen für Fernbedienungen (IRServer)"
+
+#~ msgid "web.irserver.help"
+#~ msgstr "Einige HTPC-Gehäuse (z.B. OrigonAE) haben integrierte Infrarot-Empfänger, welche einen speziellen Server (Irserver) benötigen. Hier muss nur der Server aktiviert und anschließend gespeichert werden."
+
+#~ msgid "web.irserver.combobox.tooltip.driver"
+#~ msgstr "Treiber"
+
+#~ msgid "web.irserver.combobox.tooltip.lirc_driver"
+#~ msgstr "IRServer Treiber"
+
+#~ msgid "web.irserver.combobox.emptytext"
+#~ msgstr "Bitte Empfänger für Fernbedienung wählen..."
+
+#~ msgid "web.irserver.combobox.label"
+#~ msgstr "Empfänger"
+
+#~ msgid "web.irserver.submit.waitmsg"
+#~ msgstr "Fernbedienungs-Einstellungen werden gespeichert."
+
+#~ msgid "web.irserver.submit.success"
+#~ msgstr "Ihre Auswahl wurde erfolgreich gespeichert."
+
+#~ msgid "web.irserver.submit.failure"
+#~ msgstr "Fehler beim Speichern. Bitte noch einmal versuchen."
+
+#~ msgid "web.irserver.error.json_decode"
+#~ msgstr "Konnte JSON Empfängerliste nicht dekodieren"
+
+#~ msgid "web.channels.menutab.title"
+#~ msgstr "Kanal-Liste (SVDRP)"
+
+#~ msgid "web.channels.menutab.tabtip"
+#~ msgstr "Kanal-Einstellungen (Radio- und Fernsehkanäle pflegen und sortieren)"
+
+#~ msgid "web.channels.grid_header.cid"
+#~ msgstr "Nr."
+
+#~ msgid "web.channels.grid_header.cname"
+#~ msgstr "Kanal-Name"
+
+#~ msgid "web.channels.grid_header.cstr"
+#~ msgstr "Kompletter Kanal-String"
+
+#~ msgid "web.channels.grid_title"
+#~ msgstr "Kanal-Liste (alle Radio- und TV-Kanäle)"
+
+#~ msgid "web.frontend.menutab.title"
+#~ msgstr "VDR-Frontend w&auml;hlen"
+
+#~ msgid "web.frontend.menutab.tabtip"
+#~ msgstr "Wechseln Sie zwischen xine und xineliboutput"
+
+#~ msgid "web.frontend.menutab.panel_title"
+#~ msgstr "VDR-Frontend"
+
+#~ msgid "web.frontend.label"
+#~ msgstr "Gew&uuml;nschtes Frontend"
+
+#~ msgid "web.frontend.button_label"
+#~ msgstr "Frontend-Einstellung aktivieren"
+
+#~ msgid "web.frontend.submit.waitmsg"
+#~ msgstr "Frontend-Einstellungen werden aktualisiert."
+
+#~ msgid "web.frontend.submit.success"
+#~ msgstr "OK."
+
+#~ msgid "web.frontend.submit.failure"
+#~ msgstr "Fehler."
+
+#~ msgid "web.shutdown.menutab.title"
+#~ msgstr "VDR-Shutdown w&auml;hlen"
+
+#~ msgid "web.shutdown.menutab.tabtip"
+#~ msgstr "Wechseln Sie zwischen verschiedenen Shutdown-Methoden"
+
+#~ msgid "web.shutdown.menutab.panel_title"
+#~ msgstr "VDR-Shutdown"
+
+#~ msgid "web.shutdown.label"
+#~ msgstr "Gew&uuml;nschte Methode"
+
+#~ msgid "web.shutdown.button_label"
+#~ msgstr "Shutdown-Einstellung aktivieren"
+
+#~ msgid "web.shutdown.submit.waitmsg"
+#~ msgstr "Shutdown-Einstellungen werden aktualisiert."
+
+#~ msgid "web.shutdown.submit.success"
+#~ msgstr "OK."
+
+#~ msgid "web.shutdown.submit.failure"
+#~ msgstr "Fehler."
+
+#~ msgid "web.shutdown.items.s3"
+#~ msgstr "suspend to RAM"
+
+#~ msgid "web.shutdown.items.s3unavailable"
+#~ msgstr "suspend to RAM (nicht verfügbar)"
+
+#~ msgid "web.shutdown.items.s4"
+#~ msgstr "suspend to DISK"
+
+#~ msgid "web.shutdown.items.s4unavailable"
+#~ msgstr "suspend to DISK (nicht verfügbar)"
+
+#~ msgid "web.shutdown.items.s5"
+#~ msgstr "shutdown"
+
+#~ msgid "web.shutdown.items.reboot"
+#~ msgstr "reboot PowerOff-kernel"
+
+#~ msgid "web.upload.menutab.title"
+#~ msgstr "VDR-Konfig-Upload"
+
+#~ msgid "web.upload.menutab.tabtip"
+#~ msgstr "Laden Sie existierende VDR-Konfigurationsdateien hoch"
+
+#~ msgid "web.upload.menutab.panel_title"
+#~ msgstr "VDR-Konfig-Upload (der Upload überschreibt die bestehende Datei)"
+
+#~ msgid "web.upload.button_label"
+#~ msgstr "Datei hochladen"
+
+#~ msgid "web.upload.submit.waitmsg"
+#~ msgstr "Konfigurationsdatei wird hochgeladen."
+
+#~ msgid "web.upload.submit.success"
+#~ msgstr "Datei wurde erfolgreich hochgeladen."
+
+#~ msgid "web.upload.submit.failure"
+#~ msgstr "Ein Problem beim Hochladen der Datei ist aufgetreten."
+
+#~ msgid "web.system.menutab.title"
+#~ msgstr "Wartung"
+
+#~ msgid "web.system.menutab.tabtip"
+#~ msgstr "Starten Sie den VDR oder den Rechner neu"
+
+#~ msgid "web.system.menutab.panel_title"
+#~ msgstr "Wartungs-Befehle"
+
+#~ msgid "web.system.vdr_restart.label"
+#~ msgstr "VDR Backend Neustarten!"
+
+#~ msgid "web.system.vdr_restart.submit.waitmsg"
+#~ msgstr "Das Signal zum Neustarten des VDR wird gesendet."
+
+#~ msgid "web.system.vdr_restart.submit.success"
+#~ msgstr "Der VDR wird jetzt neu gestartet."
+
+#~ msgid "web.system.vdr_restart.submit.failure"
+#~ msgstr "Problem beim Senden des Signals. Bitte erneut versuchen."
+
+#~ msgid "web.system.kill_xbmc.label"
+#~ msgstr "XBMC-Beendung erzwingen"
+
+#~ msgid "web.system.kill_xbmc.submit.waitmsg"
+#~ msgstr "Das Signal zum Beenden von XBMC wird gesendet."
+
+#~ msgid "web.system.kill_xbmc.submit.success"
+#~ msgstr "XBMC wird jetzt beendet."
+
+#~ msgid "web.system.kill_xbmc.submit.failure"
+#~ msgstr "Problem beim Senden des Signals. Bitte erneut versuchen."
+
+#~ msgid "web.system.system_restart.label"
+#~ msgstr "Rechner sofort neu starten! (Keine weitere Warnung)"
+
+#~ msgid "web.system.system_restart.submit.waitmsg"
+#~ msgstr "Das Signal zum Neustart wird gesendet."
+
+#~ msgid "web.system.system_restart.submit.success"
+#~ msgstr "Der Rechner wird jetzt neu gestartet."
+
+#~ msgid "web.system.system_restart.submit.failure"
+#~ msgstr "Problem beim Senden des Signals. Bitte erneut versuchen."
+
+#~ msgid "web.network.menutab.title"
+#~ msgstr "Netzwerk"
+
+#~ msgid "web.network.menutab.tabtip"
+#~ msgstr "Verwalten des Netzwerks"
+
+#~ msgid "web.network.menutab.panel_title"
+#~ msgstr "Netzwerkkonfiguration"
+
+#~ msgid "web.network.nfs.help"
+#~ msgstr "Hier können NFS Freigaben von anderen Hosts eingebunden werden. Die Verzeichnisse müssen in der Form \"host:/ein/verzeichnis\" eingegeben werden. Der Knopf \"Übernehmen\" trägt die Verzeichnisse in die lokale Konfiguration ein. Sie müssen den VDR Neustarten (Menü \"System\", Punkt \"Wartung\"), um die Änderungen zu aktivieren!"
+
+#~ msgid "web.network.nfs.menutab.title"
+#~ msgstr "NFS"
+
+#~ msgid "web.network.nfs.menutab.tabtip"
+#~ msgstr "Verwalten der NFS-Mounts und -Freigaben"
+
+#~ msgid "web.network.nfs.labels.newDir"
+#~ msgstr "Entferntes Verzeichnis"
+
+#~ msgid "web.network.nfs.labels.add"
+#~ msgstr "Hinzufügen"
+
+#~ msgid "web.network.nfs.labels.edit"
+#~ msgstr "Ändern"
+
+#~ msgid "web.network.nfs.labels._delete"
+#~ msgstr "Löschen"
+
+#~ msgid "web.network.nfs.labels.apply"
+#~ msgstr "Übernehmen"
+
+#~ msgid "web.network.samba.menutab.title"
+#~ msgstr "Samba"
+
+#~ msgid "web.network.samba.menutab.tabtip"
+#~ msgstr "Verwalten der Samba-Freigaben"
+
+#~ msgid "web.nvidia.menutab.title"
+#~ msgstr "Nvidia"
+
+#~ msgid "web.nvidia.menutab.tabtip"
+#~ msgstr "Nvidia-Einstellungen pflegen"
+
+#~ msgid "web.nvidia.menutab.panel_title"
+#~ msgstr "Nvidia-Konfiguration"
+
+#~ msgid "web.nvidia.overscan_slider_label"
+#~ msgstr "Nvidia Overscan-Kompensation"
+
+#~ msgid "web.nvidia.button_label"
+#~ msgstr "Wert anwenden"
+
+#~ msgid "web.nvidia.submit.waitmsg"
+#~ msgstr "Der Nvidia Overscan-Wert wird aktualisiert."
+
+#~ msgid "web.nvidia.submit.success"
+#~ msgstr "Erfolg."
+
+#~ msgid "web.nvidia.submit.failure"
+#~ msgstr "Fehler."
+
+#~ msgid "web.webfrontend.menutab.title"
+#~ msgstr "Web-Frontend"
+
+#~ msgid "web.webfrontend.menutab.tabtip"
+#~ msgstr "Das Erscheinungsbild des Web-Frontends anpassen."
+
+#~ msgid "web.webfrontend.menutab.panel_title"
+#~ msgstr "Web Frontend Einstellungen"
+
+#~ msgid "web.webfrontend.label"
+#~ msgstr "Wählen Sie die Sprache des Web Frontends"
+
+#~ msgid "web.webfrontend.button_label"
+#~ msgstr "Übernehmen"
+
+#~ msgid "web.webfrontend.submit.waitmsg"
+#~ msgstr "Die Spracheinstellungen für das Web-Frontend werden aktualisiert."
+
+#~ msgid "web.webfrontend.submit.success"
+#~ msgstr "Die Spracheinstellungen für das Web-Frontend wurden erfolgreich aktualisiert. Möchten Sie das Web-Frontend nun mit den neuen Spracheinstellungen neu laden?"
+
+#~ msgid "web.webfrontend.submit.failure"
+#~ msgstr "Fehler."
+
+#~ msgid "web.diagnose.toolbar.button.refresh"
+#~ msgstr "Aktualisieren"
+
+#~ msgid "web.diagnose.toolbar.button.refresh_tooltip"
+#~ msgstr "Klicken Sie hier, um den Inhalt der Seite zu aktualisieren."
+
+#~ msgid "web.diagnose.toolbar.button.jumpdown"
+#~ msgstr "Ans Ende springen"
+
+#~ msgid "web.diagnose.toolbar.button.jumpdown_tooltip"
+#~ msgstr "Klicken Sie hier, um an das Endes des Inhalts dieser Seite zu springen."
+
+#~ msgid "web.diagnose.section.system_info.title"
+#~ msgstr "System-Informationen"
+
+#~ msgid "web.diagnose.section.system_info.description"
+#~ msgstr "Netzwerk-Status, Auslastung, Prozesse, Dateisystem-Belegung und Kernel"
+
+#~ msgid "web.diagnose.section.system_info.ifconfig"
+#~ msgstr "Netzwerkstatus"
+
+#~ msgid "web.diagnose.section.system_info.top"
+#~ msgstr "Systemauslastung"
+
+#~ msgid "web.diagnose.section.system_info.dmesg"
+#~ msgstr "Kernel"
+
+#~ msgid "web.diagnose.section.system_info.df"
+#~ msgstr "Dateisystem-Belegung"
+
+#~ msgid "web.diagnose.section.system_logs.title"
+#~ msgstr "System-Logfiles"
+
+#~ msgid "web.diagnose.section.system_logs.description"
+#~ msgstr "Wichtige System-Logfiles"
+
+#~ msgid "web.diagnose.section.xbmc.title"
+#~ msgstr "XBMC-Abstürze"
+
+#~ msgid "web.diagnose.section.xbmc.description"
+#~ msgstr "Finden Sie die Ursache für XBMC-Abstürze oder XBMC-Probleme"
+
+#~ msgid "web.diagnose.section.lirc.title"
+#~ msgstr "LIRC-Konfiguration"
+
+#~ msgid "web.diagnose.section.lirc.description"
+#~ msgstr "Informieren Sie sich über die aktuelle LIRC-Konfiguration"
+
+#~ msgid "web.diagnose.section.vdr.title"
+#~ msgstr "VDR-Konfiguration"
+
+#~ msgid "web.diagnose.section.vdr.description"
+#~ msgstr "Informieren Sie sich über die aktuelle VDR-Konfiguration"
+
+#~ msgid "web.diagnose.section.xorg.title"
+#~ msgstr "X-Server"
+
+#~ msgid "web.diagnose.section.xorg.description"
+#~ msgstr "Informieren Sie sich über die aktuelle X-Konfiguration"
+
+#~ msgid "web.diagnose.section.sound.title"
+#~ msgstr "Sound (ALSA)"
+
+#~ msgid "web.diagnose.section.sound.description"
+#~ msgstr "Digitalsound-Problemdiagnose (Digital-/Analog-Ausgabe)"
+
+#~ msgid "web.diagnose.section.packages.title"
+#~ msgstr "Pakete"
+
+#~ msgid "web.diagnose.section.packages.description"
+#~ msgstr "Überprüfen Sie, welche Pakete und Paketversionen installiert sind"
+
+#~ msgid "web.diagnose.section.yavdr.title"
+#~ msgstr "yaVDR-Utils"
+
+#~ msgid "web.diagnose.section.yavdr.description"
+#~ msgstr "yaVDR-Web-Frontend Diagnose (Datenbank  Webserver)"
+
+#~ msgid "web.timeout.menutab.title"
+#~ msgstr "GRUB Timeout"
+
+#~ msgid "web.timeout.menutab.tabtip"
+#~ msgstr "GRUB Timeout einstellen"
+
+#~ msgid "web.timeout.menutab.panel_title"
+#~ msgstr "GRUB Timeout"
+
+#~ msgid "web.timeout.label"
+#~ msgstr "Wähle Timeout"
+
+#~ msgid "web.timeout.button_label"
+#~ msgstr "Setze GRUB Timeout"
+
+#~ msgid "web.timeout.submit.waitmsg"
+#~ msgstr "Einstellungen werden aktualisiert."
+
+#~ msgid "web.timeout.submit.success"
+#~ msgstr "Erfolg."
+
+#~ msgid "web.timeout.submit.failure"
+#~ msgstr "Fehler."
+
+#~ msgid "web.timeout.maxText"
+#~ msgstr "Der Maximalwert ist {0}!"
+
+#~ msgid "web.timeout.minText"
+#~ msgstr "Der Minimalwert ist {0}!"
+
+#~ msgid "web.x11.menutab.title"
+#~ msgstr "Anzeige"
+
+#~ msgid "web.x11.menutab.tabtip"
+#~ msgstr "Anzeigeeinstellungen"
+
+#~ msgid "web.x11.menutab.panel_title"
+#~ msgstr "Anzeige"
+
+#~ msgid "web.x11.graphtft.label"
+#~ msgstr "GraphTFT"
+
+#~ msgid "web.x11.graphtft.boxlabel"
+#~ msgstr "aktiviert"
+
+#~ msgid "web.x11.button_label"
+#~ msgstr "Setze Anzeigeeinstellungen"
+
+#~ msgid "web.x11.submit.waitmsg"
+#~ msgstr "Einstellungen werden aktualisiert."
+
+#~ msgid "web.x11.submit.success"
+#~ msgstr "Erfolg."
+
+#~ msgid "web.x11.submit.failure"
+#~ msgstr "Fehler."
+
+#~ msgid "web.x11.dualhead.label"
+#~ msgstr "Zwei-Bildschirm Betrieb"
+
+#~ msgid "web.x11.dualhead.boxlabel"
+#~ msgstr "aktiviert"
+
+#~ msgid "web.x11.dualhead.boxlabelunavailable"
+#~ msgstr "deaktiviert (< 2 Bildschirme gefunden)"
+
+#~ msgid "web.x11.dualhead.switch_label"
+#~ msgstr "Wechsel des VDR-Frontends auf 2. Bildschirm"
+
+#~ msgid "web.x11.primary"
+#~ msgstr "primär"
+
+#~ msgid "web.x11.secondary"
+#~ msgstr "sekundär"
+
+#~ msgid "web.x11.modeline"
+#~ msgstr "aktuelle Auflösung"
+
+#~ msgid "web.x11.device"
+#~ msgstr "Gerät"
+
+#~ msgid "web.x11.resolution"
+#~ msgstr "Auflösung"
+
+#~ msgid "web.x11.select_res"
+#~ msgstr "wähle Auflösung"
+
+#~ msgid "web.x11.enabled"
+#~ msgstr "aktiviert"
+
+#~ msgid "web.x11.disabled"
+#~ msgstr "deaktiviert"
+
+#~ msgid "web.sound.menutab.title"
+#~ msgstr "Ton"
+
+#~ msgid "web.sound.menutab.tabtip"
+#~ msgstr "Ton-Konfiguration"
+
+#~ msgid "web.sound.menutab.panel_title"
+#~ msgstr "Ton"
+
+#~ msgid "web.sound.button_label"
+#~ msgstr "Setze Ton-Einstellungen"
+
+#~ msgid "web.sound.submit.waitmsg"
+#~ msgstr "Einstellungen werden aktualisiert."
+
+#~ msgid "web.sound.submit.success"
+#~ msgstr "Erfolg."
+
+#~ msgid "web.sound.submit.failure"
+#~ msgstr "Fehler."
+
+#~ msgid "web.sound.label"
+#~ msgstr "Ton-Konfiguration"
+
+#~ msgid "Send to PasteBin"
+#~ msgstr "Senden an PasteBin"
+
+#~ msgid "Recordings"
+#~ msgstr "Aufnahmen"
+
+#~ msgid "Timers"
+#~ msgstr "Timers"
+
+#~ msgid "General"
+#~ msgstr "Allgemein"
+
+#~ msgid "Channels"
+#~ msgstr "kanäle"
+
+#~ msgid "Remote Control Settings"
+#~ msgstr "Einstellung der Fernbedinung"
+
+#~ msgid "Audio Configuration"
+#~ msgstr "Audio-Einstellungen"
+
+#~ msgid "Display Settings"
+#~ msgstr "Anzeigeeinstellungen"
+
+#~ msgid "Network"
+#~ msgstr "Netzwerk"
+
+#~ msgid "Packages"
+#~ msgstr "Pakete"
+
+#~ msgid "Edit Configurations"
+#~ msgstr "Einstellungen ändern"
+
+#~ msgid "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+#~ msgstr "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+
+#~ msgid "Switch temporary to second screen"
+#~ msgstr "Vorübergehend auf 2. Anzeige umschalten"
+
+#~ msgid "Reboot computer"
+#~ msgstr "Rechner neu starten"
+
+#~ msgid "Kill XBMC"
+#~ msgstr "XBMC beenden"
+
+#~ msgid "Restart VDR"
+#~ msgstr "VDR neu starten"
+
+#~ msgid "System Information"
+#~ msgstr "System Information"
+
+#~ msgid "System log files"
+#~ msgstr "System log files"
+
+#~ msgid "XBMC crash log"
+#~ msgstr "XBMC crash log"
+
+#~ msgid "LIRC configuration"
+#~ msgstr "LIRC-Einstellungen"
+
+#~ msgid "VDR configuration"
+#~ msgstr "VDR-Einstellungen"
+
+#~ msgid "Xorg server"
+#~ msgstr "Xorg-Aerver"
+
+#~ msgid "Sound (ALSA)"
+#~ msgstr "Audio (ALSA)"
+
+#~ msgid "yaVDR database"
+#~ msgstr "yaVDR Datenbank"
+
+#~ msgid "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
+#~ msgstr "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
+
+#~ msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ. ..."
+#~ msgstr "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ. ..."
+
+#~ msgid "Here you can configure your display settings."
+#~ msgstr "Here you can configure your display settings."
+
+#~ msgid "default frequency"
+#~ msgstr "Standardfrquenz"
+
+#~ msgid "XBMC Crash log"
+#~ msgstr "XBMC Crash log"
+
+#~ msgid "VDR basic configuration"
+#~ msgstr "VDR Basis Einstellungen"
+
+#~ msgid "Xorg server log"
+#~ msgstr "Xorg Server log"
+
+#~ msgid "ALSA status information"
+#~ msgstr "ALSA Status Informationen"
+
+#~ msgid "Package information"
+#~ msgstr "Pakteinformationen"
+
+#~ msgid "Program"
+#~ msgstr "Programm"
+
+#~ msgid "VDR"
+#~ msgstr "VDR"
+
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#~ msgid "Duration"
+#~ msgstr "Dauer"
+
+#~ msgid "Start"
+#~ msgstr "Start"
