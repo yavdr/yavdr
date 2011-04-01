@@ -1,2 +1,7 @@
   </head>
-  <body>
+  <body style="background-color: #DFE8F6; overflow-y: scroll; padding: 10px;">
+    <div id="yavdr-wrap" style="margin: 0px auto; border: 1px solid #DDD; width: 960px; background-color: #FFF; border-radius: 5px;">
+      <div id="yavdr-space" style="margin: 5px">
+        <div id="yavdr-main"></div>
+      </div>
+    </div>
