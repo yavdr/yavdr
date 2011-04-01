@@ -1,6 +1,8 @@
 YaVDR.Component.Settings.SystemNetwork = Ext.extend(YaVDR.Component, {
   itemId: 'settings-system-network',
   layout: 'border',
+  height: 500,
+  bodyStyle: 'background-color: #FFF',
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Header({

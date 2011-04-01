@@ -1,5 +1,7 @@
 YaVDR.Component.System.Diagnose = Ext.extend(YaVDR.Component, {
-  layout: 'border',
+//  layout: 'border',
+//  plain: true,
+//  height: 500,
   initComponent: function() {
 
     this.tabPanel = new Ext.TabPanel({ activeTab: 0 });
@@ -7,12 +9,13 @@ YaVDR.Component.System.Diagnose = Ext.extend(YaVDR.Component, {
     this.items = [
       new YaVDR.Component.Header({
         html: _('Diagnostics'),
-        region: 'north'
+//        region: 'north'
       }),
       {
         frame: true,
-        region: 'center',
-        layout: 'fit',
+autoHeight: true,
+//        region: 'center',
+//        layout: 'fit',
         title: this.subTitle,
         items: this.tabPanel
       }
@@ -38,7 +41,8 @@ YaVDR.Component.System.Diagnose = Ext.extend(YaVDR.Component, {
 YaVDR.Component.System.DiagnoseItem =  Ext.extend(Ext.Panel, {
   file: null,
   cmd: null,
-  autoScroll: true,
+  autoHeight: true,
+//  autoScroll: true,
   style: 'font-family: monospace; white-space: pre; font-size: 12px;',
   initComponent: function() {
     this.tbar = [

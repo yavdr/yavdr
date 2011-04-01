@@ -525,12 +525,11 @@ YaVDR.ChannelConfWindow = Ext.extend(Ext.Window, {
   }
 });
 
-YaVDR.Component.Settings.VdrChannels = Ext
-    .extend(
-    YaVDR.Component,
-  {
+YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
     itemId : 'settings-vdr-channels',
     layout : 'border',
+    bodyStyle: 'background-color: #FFF',
+    height: 500,
     initComponent : function() {
       this.initStore();
       this.initGrid();

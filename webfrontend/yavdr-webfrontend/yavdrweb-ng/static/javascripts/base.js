@@ -208,17 +208,18 @@ Ext.apply(YaVDR, {
 });
 
 YaVDR.Header = Ext.extend(Ext.Panel, {
-  height: 56,
-  style: "background: #000 url('/static/images/yavdr.gif') no-repeat right center;",
-  region: 'north',
-  border: false,
+  height: 60,
+  style: "background: #4E78B1 url('/static/images/yavdr-logo-blue-bg.png') no-repeat 780px center; border-radius: 4px; margin-bottom: 20px",
+//  margin: 100,
+//  region: 'north',
+//  border: false,
   layout: 'hbox',
   id: 'yavdr-menu',
   cls: 'yavdr-menu',
   baseCls:'x-plain',
   layoutConfig: {
-    align: 'middle',
-    padding:'0 5 0 5'
+    align: 'top',
+    padding:'20 5 0 10'
   },
   defaults: {
     iconAlign: 'center',
@@ -233,13 +234,15 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
     this.items = [
       {
         itemId: 'dashboard',
-        height: 50,
-        width: 50,
+//        height: 50,
+//        width: 50,
         tooltip: _('Dashboard'),
-        margins:'5 15 0 0',
-        cls: 'x-btn-menu',
-        scale: 'larger',
-        icon: '/static/images/menu_home.png'
+        text: _('Dashboard'),
+//        margins:'5 15 0 0',
+//        margins:'0 5 0 10',
+//        cls: 'x-btn-menu',
+//        scale: 'larger',
+//        icon: '/static/images/menu_home.png'
       },
 /*      {
         itemId: 'programm',
@@ -252,14 +255,13 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
         text: _('Recordings')
       },
       {
-
-        height: 50,
+//        height: 50,
         itemId: 'timer',
-        width: 50,
-        margins:'5 15 0 0',
-        cls: 'x-btn-menu',
-        scale: 'larger',
-        icon: '/static/images/menu_timer.png'
+//        width: 50,
+//        margins:'5 15 0 0',
+//        cls: 'x-btn-menu',
+//        scale: 'larger',
+//        icon: '/static/images/menu_timer.png'
       },
 */
       {
@@ -269,14 +271,15 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
         tooltip: _('Settings')
       },
       {
-        height: 50,
+//        height: 50,
         itemId: 'system',
-        width: 50,
-        margins:'5 15 0 0',
-        cls: 'x-btn-menu',
-        scale: 'larger',
-        icon: '/static/images/menu_system.png',
-        tooltip: _('System')
+//        width: 50,
+//        margins:'5 15 0 0',
+//        cls: 'x-btn-menu',
+//        scale: 'larger',
+//        icon: '/static/images/menu_system.png',
+        tooltip: _('System'),
+        text: _('System')
       }
     ];
 
@@ -287,7 +290,7 @@ YaVDR.Header = Ext.extend(Ext.Panel, {
 YaVDR.Body = Ext.extend(Ext.Panel, {
   id: 'yavdr-body',
   region: 'center',
-  layout: 'fit',
+  //layout: 'fit',
   activeItem: 0,
   border: true ,
   initComponent: function() {
@@ -299,7 +302,7 @@ YaVDR.Body = Ext.extend(Ext.Panel, {
         activeItem: 0,
         layout: 'card',
         defaults: {
-          autoScroll: true
+          //autoScroll: true
         }
       })
     ];
@@ -308,21 +311,21 @@ YaVDR.Body = Ext.extend(Ext.Panel, {
   }
 });
 
-YaVDR.Viewport = Ext.extend(Ext.Viewport, {
+YaVDR.Viewport = Ext.extend(Ext.Container, {
   id: 'yavdr',
-  layout: 'border',
+  renderTo: 'yavdr-main',
+  autoHeight: true,
   initComponent: function() {
-    this.items = [
+      this.items= [
       new YaVDR.Header({
-        //margins: '0 0 0 0'
+        margins: '5 5 0 5'
       }),
       new YaVDR.Body({
         border: false,
-        padding: 5
-        //margins: '5 5 5 5'
+        //padding: 5
+        margins: '5 5 5 5'
       })
-    ];
-
+    ]
     YaVDR.Viewport.superclass.initComponent.call(this);
   }
 });

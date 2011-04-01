@@ -20,6 +20,5 @@ YaVDR.Component.Header = Ext.extend(Ext.BoxComponent, {
 });
 
 YaVDR.Component.Item = Ext.extend(Ext.Panel, {
-  frame: true,
-  width: 690
+  frame: true
 });

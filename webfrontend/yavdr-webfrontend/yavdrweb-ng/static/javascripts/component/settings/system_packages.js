@@ -1,6 +1,8 @@
 YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
   itemId: 'settings-system-packages',
   layout: 'border',
+  bodyStyle: 'background-color: #FFF',
+  height: 500,
   initComponent: function() {
     this.initPackagesStore();
     this.initGridPanel();

@@ -1,6 +1,8 @@
 YaVDR.Component.Settings.SystemConfigEditor = Ext.extend(YaVDR.Component, {
   itemId: 'settings-system-config-editor',
   layout: 'border',
+  height: 500,
+  bodyStyle: 'background-color: #FFF',
   title: _('Settings'),
   initComponent: function() {
     this.items = [
