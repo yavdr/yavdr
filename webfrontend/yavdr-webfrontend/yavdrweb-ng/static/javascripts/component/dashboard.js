@@ -17,7 +17,7 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
 						height: 150,
 						anchor: '100%',
 						title: _('VDR'),
-						style: 'margin: 0 5px 5px 0 ',
+						style: 'margin: 0 5px 0px 0 ',
 						tools: [
 							{id: 'refresh'}
 						],
@@ -54,7 +54,7 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
 						tools: [
 							{id: 'refresh'}
 						],
-						style: 'margin: 0 0 5px 0 ',
+						style: 'margin: 0 0 0px 0 ',
 						html: '<b>Shutdown</b>: S3 (Disabled USB-Wakeup)<br> <b>CPU</b>: 10% - <b>RAM</b>: 1024MB (169 MG frei)<br><b>Soundausgabe</b>: HDMI + Analog<br>Achtung Demo Inhalt'
 					}//,
 					//new YaVDR.Component.Dashboard.Timers()
