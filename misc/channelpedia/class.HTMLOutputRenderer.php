@@ -220,13 +220,10 @@ class HTMLOutputRenderer{
         $nice_html_body = "";
         $nice_html_linklist = "";
 
-        $labels = $this->db->query(
-            "SELECT x_label, count(*) AS channelcount FROM channels ".
-            "WHERE source = ".$this->db->quote($source)." AND x_label LIKE ".$this->db->quote($language."%")." ".
-            "GROUP BY x_label ORDER BY x_label"
-        );
-
-        foreach($labels as $row => $cols){
+        $groupIterator = new channelGroupIterator();
+        $groupIterator->init($source, $language);
+        while ($groupIterator->moveToNextChannelGroup() !== false){
+            $cols = $groupIterator->getCurrentChannelGroupArray();
             $html_table = "";
             $shortlabel =
             preg_match ( "/.*?\.\d*?\.(.*)/" , $cols["x_label"], $shortlabelparts );
@@ -284,7 +281,7 @@ class HTMLOutputRenderer{
     }
 
     private function renderDEComparison(){
-        $pagetitle = "Comparisons: Parameter of German channels at different providers";
+        $pagetitle = "Comparison: Parameters of German public TV channels at different providers";
         $nice_html_output =
             $this->getHTMLHeader($pagetitle).
             '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
@@ -324,7 +321,11 @@ class HTMLOutputRenderer{
         $nice_html_output .=
             $html_table .
             $this->getHTMLFooter();
-        file_put_contents($this->exportpath . "parameter_comparison_de.html", $nice_html_output );
+        $filename = "parameter_comparison_de.html";
+        $this->addDividerTitle("Reports");
+        $this->addToOverview( "Comparison: Parameters of German public TV channels at different providers", $filename );
+        $this->closeHierarchy();
+        file_put_contents($this->exportpath . $filename, $nice_html_output );
     }
 
     private function renderIndexPage(){
