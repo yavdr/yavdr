@@ -22,6 +22,7 @@
 *
 */
 
+require_once 'grouping_rules/base/class.ruleBase.php';
 require_once 'grouping_rules/class.GermanyEssentials.php';
 require_once 'grouping_rules/class.GermanySatNonEssentials.php';
 require_once 'grouping_rules/class.GermanyKabelDeutschland.php';

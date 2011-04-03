@@ -22,7 +22,7 @@
 *
 */
 
-class GermanyWilhelmTel {
+class GermanyWilhelmTel extends ruleBase {
 
     function __construct(){
 
@@ -38,16 +38,17 @@ class GermanyWilhelmTel {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "25.wt_Pay-TV.SDTV.Private" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND provider = 'wt Pay-TV' AND NOT " . HD_CHANNEL
+                "wt_Pay-TV2" => array(
+                    "outputSortPriority" => 26,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND provider = 'wt Pay-TV'"
                 ),
-                "26.wt Pay-TV.HDTV.Private" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND provider = 'wt Pay-TV' AND " . HD_CHANNEL
+                "wt_Pay-TV" => array(
+                    "outputSortPriority" => 25,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => "AND provider = 'wt Pay-TV'"
                 )
             )
         );

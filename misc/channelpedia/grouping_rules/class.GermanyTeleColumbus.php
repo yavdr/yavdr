@@ -22,7 +22,7 @@
 *
 */
 
-class GermanyTeleColumbus {
+class GermanyTeleColumbus  extends ruleBase{
 
     function __construct(){
 
@@ -38,31 +38,32 @@ class GermanyTeleColumbus {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "04.TeleColumbus_Basis1.HDTV.scrambled" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND UPPER(provider) = 'BASIS 1' AND " . HD_CHANNEL
+                "TeleColumbus_Basis1" => array(
+                    "outputSortPriority" => 4,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => "AND UPPER(provider) = 'BASIS 1'"
                 ),
 
-                "05.TeleColumbus_Basis1.SDTV.scrambled" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND UPPER(provider) = 'BASIS 1' AND NOT " . HD_CHANNEL
-                ),
-                "06.TeleColumbus_KabelKiosk.HDTV.scrambled" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND UPPER(provider) = 'KABELKIOSK' AND " . HD_CHANNEL
+                "TeleColumbus_Basis1_b" => array(
+                    "outputSortPriority" => 5,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND UPPER(provider) = 'BASIS 1'"
                 ),
 
-                "07.TeleColumbus_KabelKiosk.SDTV.scrambled" => array(
+                "TeleColumbus_KabelKiosk" => array(
+                    "outputSortPriority" => 6,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => "AND UPPER(provider) = 'KABELKIOSK'"
+                ),
 
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND UPPER(provider) = 'KABELKIOSK' AND NOT " . HD_CHANNEL
+                "TeleColumbus_KabelKiosk_b" => array(
+                    "outputSortPriority" => 7,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND UPPER(provider) = 'KABELKIOSK'"
                 ),
             )
         );

@@ -22,16 +22,18 @@
 *
 */
 
-class minimal  extends ruleBase{
+class ruleBase{
 
-    function __construct(){
+    const
+        mediaTypeAll = 0,
+        mediaTypeTV = 1,
+        mediaTypeRadio = 2,
+        mediaTypeSDTV = 3,
+        mediaTypeHDTV = 4,
 
-    }
-
-    function getRules(){
-
-    }
-
+        caidModeAll = 0,
+        caidModeFTA = 1,
+        caidModeScrambled = 2;
 
 }
 

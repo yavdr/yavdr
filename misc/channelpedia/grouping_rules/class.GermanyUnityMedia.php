@@ -22,7 +22,7 @@
 *
 */
 
-class GermanyUnityMedia {
+class GermanyUnityMedia  extends ruleBase{
 
     function __construct(){
 
@@ -38,21 +38,24 @@ class GermanyUnityMedia {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "04.UnityDigitalTV_Private.SDTV.scrambled" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND provider = 'UnityDigitalTV' AND NOT " . HD_CHANNEL
+                "UnityDigitalTV_Private" => array(
+                    "outputSortPriority" => 4,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND provider = 'UnityDigitalTV'"
                 ),
-                "05.Kino_auf_Abruf.SDTV" => array(
 
-                    "caidMode" => 2,
-                    "mediaType" => 1,
+                "Kino_auf_Abruf" => array(
+                    "outputSortPriority" => 5,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => "AND provider = 'Kino auf Abruf'"
                 ),
-                "31.Radio.SDTV.UnityDigital" => array(
 
-                    "caidMode" => 2,
-                    "mediaType" => 2,
+                "UnityDigital" => array(
+                    "outputSortPriority" => 31,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
                     "languageOverrule" => "",
                     "customwhere" => "AND provider = 'UnityDigital TV - Music Choice'"
                 ),

@@ -22,7 +22,7 @@
 *
 */
 
-class GermanySatNonEssentials {
+class GermanySatNonEssentials  extends ruleBase{
 
     function __construct(){
 
@@ -37,17 +37,19 @@ class GermanySatNonEssentials {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "14.FTA.SDTV.Private3" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "Private3" => array(
+                    "outputSortPriority" => 14,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>
-                        " AND NOT ". FILTER_ASTRA1_FTA . " AND NOT (". HD_CHANNEL . " OR ".DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
+                        " AND NOT ". FILTER_ASTRA1_FTA . " AND NOT (". DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
                 ),
 
-                "11.scrambled.SDTV.Private" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . HD_CHANNEL . " OR ".AUSTRIA." OR ".SWITZERLAND.")"
+                "Private_4" => array(
+                    "outputSortPriority" => 11,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . AUSTRIA." OR ".SWITZERLAND.")"
                 ),
 
             )

@@ -22,7 +22,7 @@
 *
 */
 
-class GermanyKabelDeutschland {
+class GermanyKabelDeutschland  extends ruleBase{
 
     function __construct(){
 
@@ -38,16 +38,18 @@ class GermanyKabelDeutschland {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "05.DigitalFree.SDTV.Private" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND provider = 'Digital Free' AND NOT " . HD_CHANNEL
+                "DigitalFree_Private" => array(
+                    "outputSortPriority" => 5,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND provider = 'Digital Free'"
                 ),
-                "06.KDHome.SDTV.Private" => array(
 
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => "AND provider = 'KD Home' AND NOT " . HD_CHANNEL
+                "KDHome_Private" => array(
+                    "outputSortPriority" => 6,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND provider = 'KD Home'"
                 )
             )
         );

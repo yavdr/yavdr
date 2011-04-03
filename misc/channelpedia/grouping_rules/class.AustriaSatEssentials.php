@@ -22,7 +22,7 @@
 *
 */
 
-class AustriaSatEssentials {
+class AustriaSatEssentials extends ruleBase{
 
     function __construct(){
 
@@ -37,80 +37,82 @@ class AustriaSatEssentials {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "01.scrambled.HDTV.ORF" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND " . HD_CHANNEL. "AND UPPER(provider) = 'ORF'"
+                "ORF" => array(
+                    "outputSortPriority" => 1,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => "AND UPPER(provider) = 'ORF'"
                 ),
 
-                "02.scrambled.SDTV.ORF" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND NOT " . HD_CHANNEL . "AND UPPER(provider) = 'ORF'"
+                "ORF2" => array(
+                    "outputSortPriority" => 2,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND UPPER(provider) = 'ORF'"
                 ),
 
-                "03.FTA.SDTV.Private" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "Private" => array(
+                    "outputSortPriority" => 3,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "languageOverrule" => "", // needed for RTL2
-                    "customwhere" => "AND NOT ". HD_CHANNEL. "AND ". AUSTRIA. "AND (". DE_PRIVATE_PRO7_RTL . " OR UPPER(provider) LIKE '%AUSTRIA%')"
+                    "customwhere" => "AND ". AUSTRIA. "AND (". DE_PRIVATE_PRO7_RTL . " OR UPPER(provider) LIKE '%AUSTRIA%')"
                 ),
 
-                "04.scrambled.SDTV.Private" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
+                "Private2" => array(
+                    "outputSortPriority" => 4,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
                     "languageOverrule" => "", // needed for RTL2
-                    "customwhere" => "AND NOT ". HD_CHANNEL. "AND ". AUSTRIA. "AND (". DE_PRIVATE_PRO7_RTL . " OR UPPER(provider) LIKE '%AUSTRIA%')"
+                    "customwhere" => "AND ". AUSTRIA. "AND (". DE_PRIVATE_PRO7_RTL . " OR UPPER(provider) LIKE '%AUSTRIA%')"
                 ),
 
-                "05.FTA.SDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND (UPPER(provider) = 'SERVUSTV' OR ".AUSTRIA.") AND NOT ". HD_CHANNEL
+                "Diverse" => array(
+                    "outputSortPriority" => 5,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND (UPPER(provider) = 'SERVUSTV' OR ".AUSTRIA.")"
                 ),
 
-                "06.FTA.HDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND (UPPER(provider) = 'SERVUSTV' OR ".AUSTRIA.") AND ". HD_CHANNEL
+                "Diverse2" => array(
+                    "outputSortPriority" => 6,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND (UPPER(provider) = 'SERVUSTV' OR ".AUSTRIA.")"
                 ),
 
-                "10.FTA.Radio.ORF" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 2,
-                    "customwhere" => " AND UPPER(provider) = 'ORF'"
+                "ORF3" => array(
+                    "outputSortPriority" => 10,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
+                    "customwhere" => "AND UPPER(provider) = 'ORF'"
                 ),
 
-                "11.FTA.Radio.diverse" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                "Diverse3" => array(
+                    "outputSortPriority" => 11,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND " . AUSTRIA
                 ),
 
-
-                "12.scrambled.Radio.diverse" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 2,
+                "Diverse4" => array(
+                    "outputSortPriority" => 12,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND " . AUSTRIA
                 ),
 
 /* FIXME: radio channels with language deu are already grabbed by the de list...
-                "05.FTA.radio" => array(
+                "X" => array(
 
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
                 ),
 
-                "06.scrambled.radio" => array(
+                "Y" => array(
 
-                    "caidMode" => 2,
-                    "mediaType" => 2,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
                 ),
 */
             )

@@ -22,7 +22,7 @@
 *
 */
 
-class SpainSatEssentials {
+class SpainSatEssentials  extends ruleBase {
 
     function __construct(){
 
@@ -37,80 +37,79 @@ class SpainSatEssentials {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "01.FTA.HDTV.DigitalPlus" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "DigitalPlus" => array(
+                    "outputSortPriority" => 1,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "",
-                    "customwhere" =>  "AND ". HD_CHANNEL . " AND " . SPAIN_DIGITALPLUS
+                    "customwhere" =>  "AND " . SPAIN_DIGITALPLUS
                 ),
 
-                "02.FTA.SDTV.DigitalPlus" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "DigitalPlus2" => array(
+                    "outputSortPriority" => 2,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "languageOverrule" => "",
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL  . " AND " . SPAIN_DIGITALPLUS
+                    "customwhere" =>  "AND " . SPAIN_DIGITALPLUS
                 ),
 
-                "03.scrambled.HDTV.DigitalPlus" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
+                "DigitalPlus3" => array(
+                    "outputSortPriority" => 3,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "",
-                    "customwhere" =>  "AND ". HD_CHANNEL  . " AND " . SPAIN_DIGITALPLUS
+                    "customwhere" =>  "AND " . SPAIN_DIGITALPLUS
                 ),
 
-                "04.scrambled.SDTV.DigitalPlus" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
+                "DigitalPlus4" => array(
+                    "outputSortPriority" => 4,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
                     "languageOverrule" => "",
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL  . " AND " . SPAIN_DIGITALPLUS
+                    "customwhere" =>  "AND " . SPAIN_DIGITALPLUS
                 ),
 
-                "05.FTA.HDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL . " AND NOT " . SPAIN_DIGITALPLUS
+                "Diverse" => array(
+                    "outputSortPriority" => 5,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" =>  "AND NOT " . SPAIN_DIGITALPLUS
                 ),
 
-                "06.FTA.SDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL . " AND NOT " . SPAIN_DIGITALPLUS
+                "Diverse2" => array(
+                    "outputSortPriority" => 6,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" =>  "AND NOT " . SPAIN_DIGITALPLUS
                 ),
 
-                "07.scrambled.HDTV.diverse" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL . " AND NOT " . SPAIN_DIGITALPLUS
+                "Diverse3" => array(
+                    "outputSortPriority" => 7,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" =>  "AND NOT " . SPAIN_DIGITALPLUS
                 ),
 
-                "08.scrambled.SDTV.diverse" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL . " AND NOT " . SPAIN_DIGITALPLUS
+                "Diverse4" => array(
+                    "outputSortPriority" => 8,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" =>  "AND NOT " . SPAIN_DIGITALPLUS
                 ),
 
-                "10.FTA.radio" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                "Diverse5" => array(
+                    "outputSortPriority" => 10,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
 
-                "11.scrambled.radio" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 2,
+                "Diverse6" => array(
+                    "outputSortPriority" => 11,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
-
             )
         );
     }

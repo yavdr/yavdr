@@ -22,7 +22,7 @@
 *
 */
 
-class SwitzerlandSatEssentials {
+class SwitzerlandSatEssentials extends ruleBase {
 
     function __construct(){
 
@@ -37,52 +37,54 @@ class SwitzerlandSatEssentials {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "01.FTA.SDTV.Private" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  " AND ". FILTER_ASTRA1_FTA . "AND NOT ". HD_CHANNEL . "AND ". SWITZERLAND. "AND ". DE_PRIVATE_PRO7_RTL
-                ),
-                "02.FTA.SDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL
+                "Private" => array(
+                    "outputSortPriority" => 1,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" =>  " AND ". FILTER_ASTRA1_FTA . "AND ". SWITZERLAND. "AND ". DE_PRIVATE_PRO7_RTL
                 ),
 
-                "03.FTA.HDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL
+                "DiverseHD" => array(
+                    "outputSortPriority" => 2,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" =>  ""
                 ),
+
+                "Diverse" => array(
+                    "outputSortPriority" => 3,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" =>  ""
+                ),
+
 
 /*only causes problems...
-                "04.scrambled.SDTV.diverse" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
+                "scrambled.SDTV.diverse" => array(
+                    "outputSortPriority" => 4,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeTV,
                     "customwhere" =>  "AND NOT ". HD_CHANNEL . " AND NOT ". FRANCE_CSAT
                 ),
 */
-                "05.scrambled.HDTV.diverse" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL . " AND NOT ". FRANCE_CSAT
+                "DiverseHD2" => array(
+                    "outputSortPriority" => 5,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" =>  "AND NOT ". FRANCE_CSAT
                 ),
 /* FIXME: radio channels with language deu are already grabbed by the de list...
 
-                "06.FTA.radio" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                "FTA.radio" => array(
+                    "outputSortPriority" => 6,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
                 ),
 
-                "07.scrambled.radio" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 2,
+                "scrambled.radio" => array(
+                    "outputSortPriority" => 7,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
                 ),
 */
             )

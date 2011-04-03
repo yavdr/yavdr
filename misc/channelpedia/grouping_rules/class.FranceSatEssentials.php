@@ -22,7 +22,7 @@
 *
 */
 
-class FranceSatEssentials {
+class FranceSatEssentials  extends ruleBase{
 
     function __construct(){
 
@@ -37,73 +37,71 @@ class FranceSatEssentials {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "01.FTA.SDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL
+                "Diverse" => array(
+                    "outputSortPriority" => 1,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" =>  ""
                 ),
 
-                "02.FTA.HDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL
+                "Diverse2" => array(
+                    "outputSortPriority" => 2,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" =>  ""
                 ),
 
-                "03.scrambled.SDTV.diverse" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL
+                "Diverse3" => array(
+                    "outputSortPriority" => 3,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" =>  ""
                 ),
 
-                "04.scrambled.HDTV.diverse" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL
+                "Diverse4" => array(
+                    "outputSortPriority" => 4,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" =>  ""
                 ),
 
-                "05.FTA.SDTV.more_CSAT" => array(
-
+                "More_CSAT" => array(
+                    "outputSortPriority" => 5,
                     "caidMode" => 0,
-                    "mediaType" => 1,
-                    "languageOverrule" => "", //for CSAT
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL . " AND ". FRANCE_CSAT
-                ),
-
-                "06.scrambled.SDTV.more_CSAT" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "languageOverrule" => "", //for CSAT
-                	"customwhere" =>  "AND NOT ". HD_CHANNEL . " AND ". FRANCE_CSAT
-                ),
-
-
-                "20.FTA.radio" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 2,
-                    "customwhere" => ""
-                ),
-
-                "21.scrambled.radio" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 2,
-                    "customwhere" => ""
-                ),
-
-                "22.CSAT.radio" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                    "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "", //for CSAT
                     "customwhere" => " AND ". FRANCE_CSAT
                 ),
 
+                "More_CSAT2" => array(
+                    "outputSortPriority" => 6,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "languageOverrule" => "", //for CSAT
+                	"customwhere" =>  " AND ". FRANCE_CSAT
+                ),
+
+                "Diverse5" => array(
+                    "outputSortPriority" => 20,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
+                    "customwhere" => ""
+                ),
+
+                "Diverse6" => array(
+                    "outputSortPriority" => 21,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
+                    "customwhere" => ""
+                ),
+
+                "CSAT" => array(
+                    "outputSortPriority" => 22,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
+                    "languageOverrule" => "", //for CSAT
+                    "customwhere" => "AND ". FRANCE_CSAT
+                ),
             )
         );
     }

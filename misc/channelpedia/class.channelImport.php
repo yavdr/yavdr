@@ -24,6 +24,9 @@
 
 class channelImport{
 
+    const
+        hd_channel = " UPPER(name) LIKE '% HD%' ";
+
     private
         $cableSourceType,
         $terrSourceType,
@@ -122,6 +125,7 @@ class channelImport{
      */
 
     private function insertChannelsConfIntoDB($sourcepath){
+        $msg_prefix = "";
         $filename = $sourcepath . 'channels.conf';
         if (file_exists($filename)) {
             $handle = fopen ($filename, "r");
@@ -283,12 +287,13 @@ class channelImport{
                 if ( $config["validForSatellites"] === "all" || ( is_array( $config["validForSatellites"] ) && in_array( $source, $config["validForSatellites"], true)) ){
                     foreach ($config["groups"] as $grouptitle => $groupsettings){
                         $this->updateLabelsOfChannelSelection(
-                            $label = $config["country"] . "." . $grouptitle,
+                            $label = $config["country"] . "." . str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $grouptitle,
                             $source,
-                            $caidMode    = $groupsettings["caidMode"],
-                            $mediaType   = $groupsettings["mediaType"],
-                            $language    = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
-                            $customwhere = $groupsettings["customwhere"],
+                            $outputSortPriority = $groupsettings["outputSortPriority"],
+                            $caidMode           = $groupsettings["caidMode"],
+                            $mediaType          = $groupsettings["mediaType"],
+                            $language           = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
+                            $customwhere        = $groupsettings["customwhere"],
                             $title
                         );
                     }
@@ -298,12 +303,13 @@ class channelImport{
                 if ( $config["validForCableProviders"] === "all" || ( is_array( $config["validForCableProviders"] ) && in_array( $source, $config["validForCableProviders"], true)) ){
                     foreach ($config["groups"] as $grouptitle => $groupsettings){
                         $this->updateLabelsOfChannelSelection(
-                            $label = $config["country"] . "." . $grouptitle,
+                            $label = $config["country"] . ".". str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $grouptitle,
                             $source,
-                            $caidMode    = $groupsettings["caidMode"],
-                            $mediaType   = $groupsettings["mediaType"],
-                            $language    = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
-                            $customwhere = $groupsettings["customwhere"],
+                            $outputSortPriority = $groupsettings["outputSortPriority"],
+                            $caidMode           = $groupsettings["caidMode"],
+                            $mediaType          = $groupsettings["mediaType"],
+                            $language           = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
+                            $customwhere        = $groupsettings["customwhere"],
                             $title
                         );
                     }
@@ -313,12 +319,13 @@ class channelImport{
                 if ( $config["validForTerrProviders"] === "all" || ( is_array( $config["validForTerrProviders"] ) && in_array( $source, $config["validForTerrProviders"], true)) ){
                     foreach ($config["groups"] as $grouptitle => $groupsettings){
                         $this->updateLabelsOfChannelSelection(
-                            $label = $config["country"] . "." . $grouptitle,
+                            $label = $config["country"] . "." . str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $grouptitle,
                             $source,
-                            $caidMode    = $groupsettings["caidMode"],
-                            $mediaType   = $groupsettings["mediaType"],
-                            $language    = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
-                            $customwhere = $groupsettings["customwhere"],
+                            $outputSortPriority = $groupsettings["outputSortPriority"],
+                            $caidMode           = $groupsettings["caidMode"],
+                            $mediaType          = $groupsettings["mediaType"],
+                            $language           = array_key_exists ("languageOverrule",$groupsettings) ? $groupsettings["languageOverrule"] : $config["lang"],
+                            $customwhere        = $groupsettings["customwhere"],
                             $title
                         );
                     }
@@ -332,30 +339,74 @@ class channelImport{
      *
      * label (string, used in file name of newly generated channels file, use it to distinguish between different channels files)
      * source (string, satellite position, cable, terrestial, empty string means: show all. Example: "S28.2E", "S19.2E", "C", no lists allowed)
-     * caidMode (0=show all CAIDs including FTA, 1= show only channels FTA channels, 2 = show only encrypted channels)
-     * mediaType (0=show all media types, 1=show only TV channels, 2=show only radio channels, 3=show only other strange non-radio non-tv channels)
+     *
+     * caidMode
+     *     0 = show all CAIDs including FTA,
+     *     1 = show only channels FTA channels,
+     *     2 = show only encrypted channels)
+     *
+     * mediaType
+     *     0 = show all media types (radio + tv + other stuff),
+     *     1 = show only TV channels (both SDTV + HDTV),
+     *     2 = show only radio channels,
+     *     3 = show only SDTV channels,
+     *     4 = show only HDTV channel
+     *
      * language (string with comma separated list of languages that should be displayed, empty string means all languages)
      */
 
     public function updateLabelsOfChannelSelection(
         $label,
         $source = "",
+        $outputSortPriority = 0,
         $caidMode = 0,
         $mediaType = 0,
         $language = "",
         $customwhere = "",
         $title = ""
     ){
+        $label_suffixes = array();
         $where = array();
 
         if ($source != "")
             $where[] = "source = ". $this->db->quote( $source );
 
-        if ($caidMode != 0)
-            $where[] = "caid ". ($caidMode === 2 ? "!= '0'": "= '0'");
+        if ($caidMode != 0){
+            $where[] = "caid ". ($caidMode === 2 ? "!= '0'" : "= '0'");
+            $label_suffixes[] = ($caidMode === 2 ? "scrambled" : "FTA");
+        }
+        else{
+            $label_suffixes[] = "scrambled+FTA";
+        }
 
-        if ($mediaType != 0)
-            $where[] = "vpid ". ($mediaType === 1 ? "!= '0'": "= '0'");
+        switch ($mediaType) {
+            case 0:
+                $label_suffixes[] = "TV+Radio";
+                break;
+            case 1:
+                $where[] = "vpid != '0'";
+                $label_suffixes[] ="TV";
+                break;
+            case 2:
+                $where[] = "vpid = '0'";
+                $label_suffixes[] ="Radio";
+                break;
+            case 3:
+                $where[] = "vpid != '0'";
+                $where[] = "NOT " . channelImport::hd_channel;
+                $label_suffixes[] ="SDTV";
+                break;
+            case 4:
+                $where[] = "vpid != '0'";
+                $where[] = channelImport::hd_channel;
+                $label_suffixes[] ="HDTV";
+                break;
+        }
+
+        if (count($label_suffixes) > 0){
+            //$label = $label . " <div class=\"box\">".implode("</div><div class=\"box\">",$label_suffixes)."</div>";
+            $label = $label . " ".implode(" ",$label_suffixes)."";
+        }
 
         if ($language != "")
             $where[] = "apid LIKE '%=$language%'";
@@ -377,6 +428,7 @@ class channelImport{
             print "*** Notice: Channel '".$row["name"]."' is already tagged with '".$row["x_label"]."'. We just tried to tag it with '$label'\n";
         }
 
+        //now only update channels with EMPTY x_label field!
         $sqlquery = "UPDATE channels SET x_label=". $this->db->quote($label) ." $where";
         $result = $this->db->query($sqlquery);
         print "Updating labels for channels belonging to $title / $source / $label.\n";

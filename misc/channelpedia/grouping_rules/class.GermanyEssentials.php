@@ -22,7 +22,7 @@
 *
 */
 
-class GermanyEssentials {
+class GermanyEssentials  extends ruleBase{
 
     function __construct(){
 
@@ -37,141 +37,156 @@ class GermanyEssentials {
             "validForTerrProviders" => "all",
             "groups" => array(
 
-                "01.FTA.HDTV.Public" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND " . HD_CHANNEL. " AND ".DE_PUBLIC_PROVIDER
+                "Public" => array(
+                    "outputSortPriority" => 1,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => "AND ".DE_PUBLIC_PROVIDER
                 ),
 
-                "02.FTA.SDTV.Public" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "Public2" => array(
+                    "outputSortPriority" => 2,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>
-                        " AND NOT ".HD_CHANNEL.
                         "AND ( ".
                         "(provider = 'ARD' AND ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' )) ".
                         " OR provider = 'ZDFvision' OR provider = 'ZDF vision'".
                         ") "
                 ),
 
-                "03.FTA.SDTV.Public_Regional" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "Public_Regional" => array(
+                    "outputSortPriority" => 3,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>
-                        " AND NOT ".HD_CHANNEL.
-                        " AND provider = 'ARD' AND NOT ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' OR UPPER(name) LIKE '%TEST%') "
+                        "AND provider = 'ARD' AND NOT ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' OR UPPER(name) LIKE '%TEST%') "
                 ),
 
-                "10.FTA.HDTV.Private" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => "AND ". HD_CHANNEL. " AND NOT (" . DE_PUBLIC_PROVIDER . " OR ".AUSTRIA." " . " OR ".SWITZERLAND.")"
+                "Private" => array(
+                    "outputSortPriority" => 10,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => "AND NOT (" . DE_PUBLIC_PROVIDER . " OR ".AUSTRIA." " . " OR ".SWITZERLAND.")"
                 ),
 
-                "11.scrambled.HD+.HDTV.Private" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND (UPPER(provider) = 'BETADIGITAL' OR UPPER(provider) = 'CBC' OR UPPER(provider) = 'PROSIEBENSAT.1' ) AND " . HD_CHANNEL
+                "HD+" => array(
+                    "outputSortPriority" => 11,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND (UPPER(provider) = 'BETADIGITAL' OR UPPER(provider) = 'CBC' OR UPPER(provider) = 'PROSIEBENSAT.1' )"
                 ),
 
-                "12.FTA.SDTV.Private" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . HD_CHANNEL . " OR ".AUSTRIA." OR ".SWITZERLAND.")"
+                "Private_" => array(
+                    "outputSortPriority" => 12,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . AUSTRIA." OR ".SWITZERLAND.")"
                 ),
 
                 //provider undefined only wilhelm.tel --> sky
-                "13.FTA.SDTV.Private2" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "Private2" => array(
+                    "outputSortPriority" => 13,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>
-                        " AND ". FILTER_ASTRA1_FTA . " AND NOT (". HD_CHANNEL . " OR ".DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND." OR UPPER(provider) = 'UNDEFINED') AND NOT name = '.'"
+                        " AND ". FILTER_ASTRA1_FTA . " AND NOT (". DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND." OR UPPER(provider) = 'UNDEFINED') AND NOT name = '.'"
                 ),
 
-                "20.SKY.HDTV.scrambled" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
+                "sky_de" => array(
+                    "outputSortPriority" => 14,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "", //ESPN America HD is in English!
-                    "customwhere" => " AND (UPPER(provider) = 'SKY') AND name != '.' AND " . HD_CHANNEL
+                    "customwhere" => " AND (UPPER(provider) = 'SKY') AND name != '.'"
                     //OR provider = '' OR UPPER(provider) = 'UNDEFINED'
                 ),
 
                 //provider undefined only wilhelm.tel --> sky
-                "21.SKY.SDTV.scrambled" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND name NOT LIKE '% - %' AND name != 'Spieldaten' AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND name != '.' AND NOT " . HD_CHANNEL
+                "sky_de2" => array(
+                    "outputSortPriority" => 21,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND name NOT LIKE '% - %' AND name != 'Spieldaten' AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND name != '.'"
                 ),
 
                 //provider undefined only wilhelm.tel --> sky
-                "22.SKY.SDTV2.scrambled" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND (name LIKE '% - %' OR name = 'Spieldaten' OR name = '.') AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND NOT " . HD_CHANNEL
+                "sky_de3" => array(
+                    "outputSortPriority" => 22,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND (name LIKE '% - %' OR name = 'Spieldaten' OR name = '.') AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined')"
                 ),
 
-                "23.SKY.HDTV.FTA" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND " . HD_CHANNEL
+                "sky_de4" => array(
+                    "outputSortPriority" => 23,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined')"
                 ),
 
-                "24.SKY.SDTV.FTA" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND NOT " . HD_CHANNEL
+                "sky_de_5" => array(
+                    "outputSortPriority" => 24,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined')"
                 ),
 
-                "25.MTVNetworksEurope.HDTV.FTA" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "MTVNetworksEurope" => array(
+                    "outputSortPriority" => 25,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "",
-                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE' AND " . HD_CHANNEL
+                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE'"
                 ),
 
-                "26.MTVNetworksEurope.SDTV.FTA" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "MTVNetworksEurope2" => array(
+                    "outputSortPriority" => 26,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "languageOverrule" => "",
-                	"customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE' AND NOT " . HD_CHANNEL
+                	"customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE'"
                 ),
 
-                "27.MTVNetworksEurope.HDTV.scrambled" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
+                "MTVNetworksEurope3" => array(
+                    "outputSortPriority" => 27,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "",
-                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE' AND " . HD_CHANNEL
+                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE'"
                 ),
 
-                "28.MTVNetworksEurope.SDTV.scrambled" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 1,
+                "MTVNetworksEurope4" => array(
+                    "outputSortPriority" => 28,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
                     "languageOverrule" => "",
-                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE' AND NOT " . HD_CHANNEL
+                    "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE'"
                 ),
 
-                "30.FTA.Radio.ARD_ZDF" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                "ARD_ZDF" => array(
+                    "outputSortPriority" => 30,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND ".DE_PUBLIC_PROVIDER
                 ),
 
-                "31.FTA.Radio.Private" => array(
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                "Private__" => array(
+                    "outputSortPriority" => 31,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND NOT provider = 'ORF' AND NOT  ".DE_PUBLIC_PROVIDER . "AND NOT " . AUSTRIA
                 ),
                 //provider undefined only wilhelm.tel --> sky
-                "32.SKY.Radio" => array(
-                    "caidMode" => 2,
-                    "mediaType" => 2,
+                "sky_de___" => array(
+                    "outputSortPriority" => 32,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND (UPPER(provider) LIKE 'SKY' OR provider = '' OR provider = 'undefined')"
                 ),
             )
         );//end of Germany Essentials
-
     }
-
 }
 
 ?>

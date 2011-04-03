@@ -22,7 +22,7 @@
 *
 */
 
-class NetherlandsSatEssentials {
+class NetherlandsSatEssentials  extends ruleBase {
 
     function __construct(){
 
@@ -37,48 +37,47 @@ class NetherlandsSatEssentials {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "01.FTA.SDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL
+                "DiverseHD" => array(
+                    "outputSortPriority" => 1,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" =>  ""
                 ),
 
-                "02.FTA.HDTV.diverse" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL
+                "Diverse" => array(
+                    "outputSortPriority" => 2,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" =>  ""
                 ),
 
-                "03.scrambled.SDTV.diverse" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND NOT ". HD_CHANNEL
+                "Diverse2" => array(
+                    "outputSortPriority" => 3,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" =>  ""
                 ),
 
-                "04.scrambled.HDTV.diverse" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" =>  "AND ". HD_CHANNEL
+                "Diverse3" => array(
+                    "outputSortPriority" => 4,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" =>  ""
                 ),
 
-                "05.FTA.radio" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                "Diverse4" => array(
+                    "outputSortPriority" => 5,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
 
-                "06.scrambled.radio" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 2,
+                "Diverse5" => array(
+                    "outputSortPriority" => 6,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
-
             )
         );
     }

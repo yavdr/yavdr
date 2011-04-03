@@ -224,6 +224,7 @@ class HTMLOutputRenderer{
         $groupIterator->init($source, $language);
         while ($groupIterator->moveToNextChannelGroup() !== false){
             $cols = $groupIterator->getCurrentChannelGroupArray();
+            print "Processing channelgroup ".$cols["x_label"]."\n";
             $html_table = "";
             $shortlabel =
             preg_match ( "/.*?\.\d*?\.(.*)/" , $cols["x_label"], $shortlabelparts );

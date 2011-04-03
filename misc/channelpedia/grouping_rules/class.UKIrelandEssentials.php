@@ -25,7 +25,7 @@
 define("UK_ITV","(upper(name) LIKE '%ITV%' OR upper(name) LIKE 'STV%' OR upper(name) LIKE 'UTV%' )");
 define("UK_C4","(upper(name) LIKE 'CHANNEL 4%' OR upper(name) LIKE 'CHANNEL 5%' OR  upper(name) LIKE 'MORE4%' OR upper(name) LIKE 'FILM4%' OR upper(name) LIKE 'E4%' OR upper(name) LIKE 'S4C%') AND provider = 'BSkyB' ");
 
-class UKIrelandEssentials {
+class UKIrelandEssentials  extends ruleBase {
 
     function __construct(){
 
@@ -40,98 +40,98 @@ class UKIrelandEssentials {
             "validForTerrProviders" => array(),
             "groups" => array(
 
-                "01.BBC.HDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND upper(name) LIKE '%BBC%' AND ". HD_CHANNEL
+                "BBC freesat" => array(
+                    "outputSortPriority" => 1,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND upper(name) LIKE '%BBC%'"
                 ),
 
-                "02.BBC.SDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND (upper(name) LIKE '%BBC%' OR upper(name) = 'CBEEBIES') AND NOT ". HD_CHANNEL
+                "BBC2 freesat" => array(
+                    "outputSortPriority" => 2,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND (upper(name) LIKE '%BBC%' OR upper(name) = 'CBEEBIES')"
                 ),
 
-                "03.ITV.HDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND ".UK_ITV." AND ". HD_CHANNEL
+                "ITV freesat " => array(
+                    "outputSortPriority" => 3,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND ".UK_ITV
                 ),
 
-                "04.ITV.HDTV.scrambled" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND ".UK_ITV." AND ". HD_CHANNEL
+                "ITV" => array(
+                    "outputSortPriority" => 4,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND ".UK_ITV
                 ),
 
-                "05.ITV.SDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND ".UK_ITV." AND NOT ". HD_CHANNEL
+                "ITV freesat 2" => array(
+                    "outputSortPriority" => 5,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND ".UK_ITV
                 ),
 
-                "06.ITV.SDTV.scrambled" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND ".UK_ITV." AND NOT ". HD_CHANNEL
+                "ITV_" => array(
+                    "outputSortPriority" => 6,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND ".UK_ITV
                 ),
 
-                "10.Channel4Family.HDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "Channel4Family freesat" => array(
+                    "outputSortPriority" => 10,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "", //only because of brand new c4 hd fta (march 2011) with missing lang stuff
-                    "customwhere" => " AND ".UK_C4." AND ". HD_CHANNEL
+                    "customwhere" => " AND ".UK_C4
                 ),
 
-                "11.Channel4Family.HDTV.scrambled" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND ".UK_C4." AND ". HD_CHANNEL
+                "Channel4Family" => array(
+                    "outputSortPriority" => 11,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND ".UK_C4
                 ),
 
-                "12.Channel4Family.SDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND ".UK_C4."  AND NOT ". HD_CHANNEL
+                "Channel4Family freesat 2" => array(
+                    "outputSortPriority" => 12,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND ".UK_C4
                 ),
 
-                "13.Channel4Family.SDTV.scrambled" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND  ".UK_C4." AND NOT ". HD_CHANNEL
+                "Channel4Family 2" => array(
+                    "outputSortPriority" => 13,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND  ".UK_C4
                 ),
 
-                "20.Irish.SDTV.scrambled" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND (UPPER(name) LIKE 'RTE%' OR UPPER(name) LIKE 'TV3' OR UPPER(name) LIKE 'TG4' OR UPPER(name) LIKE 'SETANTA%') AND NOT ". HD_CHANNEL
+                "Irish" => array(
+                    "outputSortPriority" => 20,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND (UPPER(name) LIKE 'RTE%' OR UPPER(name) LIKE 'TV3' OR UPPER(name) LIKE 'TG4' OR UPPER(name) LIKE 'SETANTA%')"
                 ),
 
-                "30.Rest.HDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND ". HD_CHANNEL
+                "Rest" => array(
+                    "outputSortPriority" => 30,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => ""
                 ),
 
-                "31.freesat.SDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
+                "freesat" => array(
+                    "outputSortPriority" => 31,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => " AND (
                         UPPER(name) LIKE 'CBS %' OR
-                    	UPPER(name) LIKE 'ZONE %' OR
+                        UPPER(name) LIKE 'ZONE %' OR
                         UPPER(name) LIKE 'TRUE %' OR
                         UPPER(name) LIKE 'MOVIES4MEN%' OR
                         UPPER(name) LIKE 'MOV4MEN%' OR
@@ -139,61 +139,59 @@ class UKIrelandEssentials {
                         UPPER(name) LIKE 'FOOD NETWORK%' OR
                         UPPER(name) LIKE 'HORROR%' OR
                         UPPER(name) LIKE 'WEDDING TV%'
-                    ) AND NOT ". HD_CHANNEL
+                    )"
                 ),
 
-                "32.Rest.SDTV.FTA" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 1,
-                    "customwhere" => " AND NOT ". HD_CHANNEL
-                ),
-
-                "33.scrambled.HDTV" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND ". HD_CHANNEL
-                ),
-
-                "34.scrambled.SDTV" => array(
-
-                    "caidMode" => 2,
-                    "mediaType" => 1,
-                    "customwhere" => " AND NOT ". HD_CHANNEL
-                ),
-
-
-                "40.FTA.Radio.BBC" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 2,
-                    "customwhere" => " AND upper(name) LIKE '%BBC%' "
-                ),
-
-                "41.FTA.Radio.Irish_RTE" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 2,
-                    "customwhere" => " AND upper(name) LIKE 'RTE %' "
-                ),
-
-                "42.FTA.Radio.Rest" => array(
-
-                    "caidMode" => 1,
-                    "mediaType" => 2,
+                "Rest2" => array(
+                    "outputSortPriority" => 32,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => ""
                 ),
 
-                "43.scrambled.Radio" => array(
+                "sky_uk etc" => array(
+                    "outputSortPriority" => 33,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => ""
+                ),
 
-                    "caidMode" => 2,
-                    "mediaType" => 2,
+                "sky_uk etc 2" => array(
+                    "outputSortPriority" => 34,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => ""
+                ),
+
+                "BBC__" => array(
+                    "outputSortPriority" => 40,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
+                    "customwhere" => " AND upper(name) LIKE '%BBC%' "
+                ),
+
+                "Irish_RTE" => array(
+                    "outputSortPriority" => 41,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
+                    "customwhere" => " AND upper(name) LIKE 'RTE %' "
+                ),
+
+                "Rest____" => array(
+                    "outputSortPriority" => 42,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeRadio,
+                    "customwhere" => ""
+                ),
+
+                "Rest__________" => array(
+                    "outputSortPriority" => 43,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
             )
         );
-
     }
 
 }

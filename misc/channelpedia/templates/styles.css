@@ -73,6 +73,15 @@ pre {
     font-size: 1em;
 }
 
+div.box{
+  border: 1px solid black;
+  padding: 1px;
+  font-color: black;
+  font-size: 0.6em;
+  background-color: white;
+
+}
+
 tr.scrambled,
 tr.scrambled th,
 pre.scrambled{

@@ -41,7 +41,8 @@ class channelListWriter extends channelIterator{
             $orderby = "frequency, modulation, provider, name ASC";
             $xlabel="";
         }
-        parent::__construct($xlabel, $source, $orderby);
+        parent::__construct();
+        $this->init1($xlabel, $source, $orderby);
         $config = config::getInstance();
         $gpath = $config->getValue("path"). $config->getValue("exportfolder")."/raw/";
         $groupname = $source. '_' . $label;
