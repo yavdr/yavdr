@@ -107,7 +107,7 @@ else{
     bool validFileName = false;
     for (findex = 0; (findex < (sizeof(files) / sizeof(files[0]))) && !validFileName; findex++)
     {
-    	printf("testing %s\n", files[findex]);
+    	//printf("testing %s\n", files[findex]);
         if (wildcmp(files[findex], file.c_str()))
             validFileName = true;
     }

@@ -366,7 +366,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
           basic.getComponent('x11_graphtft').enable().setValue(graphtft == '1');
         } else {
           // Disable Checkox und Update Texts
-          basic.getComponent('x11_dualhead').disable().setBoxLabel('deaktiviert (< 2 Bildschirme gefunden)');
+          basic.getComponent('x11_dualhead').disable().setBoxLabel(_('diabled (less than 2 displays found)'));
         }
 
         // Setzte Deinterlacer Settings

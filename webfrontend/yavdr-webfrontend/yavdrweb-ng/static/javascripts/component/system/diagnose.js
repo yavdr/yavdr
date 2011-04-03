@@ -59,7 +59,7 @@ YaVDR.Component.System.DiagnoseItem =  Ext.extend(Ext.Panel, {
         handler: this.jumpDown
       },
       {
-        text: _('Sende to PasteBin'),
+        text: _('Send to PasteBin'),
         icon: '/static/images/icons/clipboard-paste-document-text.png',
         scope: this,
         handler: this.sendPasteBin

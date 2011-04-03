@@ -189,6 +189,345 @@ msgstr "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
 msgid "_Charset override"
 msgstr "Charset override"
 
+msgid "_Add new group"
+msgstr "Add new group"
+
+msgid "_Display channels.conf"
+msgstr "Display channels.conf"
+
+msgid "_Reload"
+msgstr "Reload"
+
+msgid "_Channel"
+msgstr "Channel"
+
+msgid "_Name"
+msgstr "Name"
+
+msgid "_Provider"
+msgstr "Provider"
+
+msgid "_loading channels"
+msgstr "loading channels"
+
+msgid "_Channel list"
+msgstr "Channel list"
+
+msgid "_Clipboard"
+msgstr "Clipboard"
+
+msgid "_Driver"
+msgstr "Driver"
+
+msgid "_LIRC driver"
+msgstr "LIRC driver"
+
+msgid "_HW-Default"
+msgstr "HW-Default"
+
+msgid "_Lircd-Conf"
+msgstr "Lircd-Conf"
+
+msgid "_Receiver"
+msgstr "Receiver"
+
+msgid "_Serial port"
+msgstr "Serial port"
+
+msgid "_Activate LIRC"
+msgstr "Activate LIRC"
+
+msgid "_Activate EventLircd"
+msgstr "Activate EventLircd"
+
+msgid "_LIRC"
+msgstr "LIRC"
+
+msgid "_EventLircd"
+msgstr "EventLircd"
+
+msgid "_Audio Settings"
+msgstr "Audio Settings"
+
+msgid "_Analog"
+msgstr "Analog"
+
+msgid "_Audio output will happen through the speaker/headphone plug"
+msgstr "Audio output will happen through the speaker/headphone plug"
+
+msgid "_Digital (Toslink/SPDIF)"
+msgstr "Digital (Toslink/SPDIF)"
+
+msgid "_Audio output will happen through Toslink/SPDIF."
+msgstr "Audio output will happen through Toslink/SPDIF."
+
+msgid "_HDMI-Stereo"
+msgstr "HDMI-Stereo"
+
+msgid "_Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
+msgstr "Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
+
+msgid "_HDMI-Analog"
+msgstr "HDMI-Analog"
+
+msgid "_Audio output will happen through HDMI and analog at the same time. HDMI will be stereo."
+msgstr "Audio output will happen through HDMI and analog at the same time. HDMI will be stereo."
+
+msgid "_HDMI-Passthrough"
+msgstr "HDMI-Passthrough"
+
+msgid "_Audio output will happen through HDMI with Pass Through."
+msgstr "Audio output will happen through HDMI with Pass Through."
+
+msgid "_Audio output"
+msgstr "Audio output"
+
+msgid "_Rescan displays"
+msgstr "Rescan displays"
+
+msgid "_Basic settings"
+msgstr "Basic settings"
+
+msgid "_Dual-Head Mode"
+msgstr "Dual-Head Mode"
+
+msgid "_GraphTFT"
+msgstr "GraphTFT"
+
+msgid "_Xine settings"
+msgstr "Xine settings"
+
+msgid "_Xine HD deinterlacer"
+msgstr "Xine HD deinterlacer"
+
+msgid "_default"
+msgstr "default"
+
+msgid "_Xine SD deinterlacer"
+msgstr "Xine SD deinterlacer"
+
+msgid "_Device"
+msgstr "Device"
+
+msgid "_Primary"
+msgstr "Primary"
+
+msgid "_Secondary"
+msgstr "Secondary"
+
+msgid "_Select resolution"
+msgstr "Select resolution"
+
+msgid "_Resolution"
+msgstr "Resolution"
+
+msgid "_Nvidia overscan compensation"
+msgstr "Nvidia overscan compensation"
+
+msgid "_Display"
+msgstr "Display"
+
+msgid "_rate"
+msgstr "rate"
+
+msgid "_Refresh rate"
+msgstr "Refresh rate"
+
+msgid "_diabled (less than 2 displays found)"
+msgstr "diabled (less than 2 displays found)"
+
+msgid "_Webfrontend language"
+msgstr "Webfrontend language"
+
+msgid "_Language"
+msgstr "Language"
+
+msgid "_Shutdown and wakeup"
+msgstr "Shutdown and wakeup"
+
+msgid "_Suspend to RAM"
+msgstr "Suspend to RAM"
+
+msgid "_Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
+msgstr "Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
+
+msgid "_Fake suspend to disk"
+msgstr "Fake suspend to disk"
+
+msgid "_Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
+msgstr "Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
+
+msgid "_Shutdown"
+msgstr "Shutdown"
+
+msgid "_This is the classical shutdown."
+msgstr "This is the classical shutdown."
+
+msgid "_reboot PowerOff-kernel"
+msgstr "reboot PowerOff-kernel"
+
+msgid "_Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
+msgstr "Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
+
+msgid "_Without timer wakeup."
+msgstr "Without timer wakeup."
+
+msgid "_ACPI timer wakeup. YaVDR default setting."
+msgstr "ACPI timer wakeup. YaVDR default setting."
+
+msgid "_You need a special nvram configuration to use it."
+msgstr "You need a special nvram configuration to use it."
+
+msgid "_Shutdown method"
+msgstr "Shutdown method"
+
+msgid "_Wakeup method"
+msgstr "Wakeup method"
+
+msgid "_Disable USB-wakeup"
+msgstr "Disable USB-wakeup"
+
+msgid "_Deactivate USB-wakeup, for incompatible hardware"
+msgstr "Deactivate USB-wakeup, for incompatible hardware"
+
+msgid "_Grub"
+msgstr "Grub"
+
+msgid "_Choose timeout in seconds:"
+msgstr "Choose timeout in seconds:"
+
+msgid "_The maximum is 10."
+msgstr "The maximum is 10."
+
+msgid "_The minimum is 0."
+msgstr "The minimum is 0."
+
+msgid "_Add"
+msgstr "Add"
+
+msgid "_Edit"
+msgstr "Edit"
+
+msgid "_Delete"
+msgstr "Delete"
+
+msgid "_You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
+msgstr "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
+
+msgid "_Package"
+msgstr "Package"
+
+msgid "_Version"
+msgstr "Version"
+
+msgid "_Maintainer"
+msgstr "Maintainer"
+
+msgid "_Description"
+msgstr "Description"
+
+msgid "_Please select a package to see additional details."
+msgstr "Please select a package to see additional details."
+
+msgid "_Package installer"
+msgstr "Package installer"
+
+msgid "_load new information from internet"
+msgstr "load new information from internet"
+
+msgid "_remove unneeded packages"
+msgstr "remove unneeded packages"
+
+msgid "_clears out the local repository of retrieved package file"
+msgstr "clears out the local repository of retrieved package file"
+
+msgid "_Configuration editor"
+msgstr "Configuration editor"
+
+msgid "_Choose a file:"
+msgstr "Choose a file:"
+
+msgid "_Mark content"
+msgstr "Mark content"
+
+msgid "_Please wait..."
+msgstr "Please wait..."
+
+msgid "_Commands"
+msgstr "Commands"
+
+msgid "_Diagnostics"
+msgstr "Diagnostics"
+
+msgid "_Execute command"
+msgstr "Execute command"
+
+msgid "_The command has been executed successfully"
+msgstr "The command has been executed successfully"
+
+msgid "_System load"
+msgstr "System load"
+
+msgid "_Refresh"
+msgstr "Refresh"
+
+msgid "_Go to the end"
+msgstr "Go to the end"
+
+msgid "_Network status"
+msgstr "Network status"
+
+msgid "_Filesystem usage"
+msgstr "Filesystem usage"
+
+msgid "_Kernel log"
+msgstr "Kernel log"
+
+msgid "_Webserver logfile"
+msgstr "Webserver logfile"
+
+msgid "_LIRC hardware configuration"
+msgstr "LIRC hardware configuration"
+
+msgid "_LIRCD configuration"
+msgstr "LIRCD configuration"
+
+msgid "_VDR setup.conf"
+msgstr "VDR setup.conf"
+
+msgid "_VDR remote.conf"
+msgstr "VDR remote.conf"
+
+msgid "_X-Server configuration (only if NVIDIA VDPAU present)"
+msgstr "X-Server configuration (only if NVIDIA VDPAU present)"
+
+msgid "_X-Server logfile"
+msgstr "X-Server logfile"
+
+msgid "_ALSA device list"
+msgstr "ALSA device list"
+
+msgid "_ALSA custom sound configuration"
+msgstr "ALSA custom sound configuration"
+
+msgid "_Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
+msgstr "Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
+
+msgid "_Apt history of recently installed packages"
+msgstr "Apt history of recently installed packages"
+
+msgid "_yaVDR DB"
+msgstr "yaVDR DB"
+
+msgid "_Saving"
+msgstr "Saving"
+
+msgid "_Data stored successfully."
+msgstr "Data stored successfully."
+
+msgid "_Execute command..."
+msgstr "Execute command..."
+
 # begin avahi-mounter
 msgid "Recordings_on_"
 msgstr "Recordings_on_"
