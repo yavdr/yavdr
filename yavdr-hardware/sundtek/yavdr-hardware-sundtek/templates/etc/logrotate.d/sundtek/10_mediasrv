@@ -1,0 +1,6 @@
+/var/log/mediasrv.log {
+    daily
+    rotate 7
+    compress
+    missingok
+}
