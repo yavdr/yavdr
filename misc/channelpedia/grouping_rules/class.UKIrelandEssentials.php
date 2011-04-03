@@ -188,7 +188,7 @@ class UKIrelandEssentials  extends ruleBase {
                 ),
 
                 array(
-                    "title" => "Irish RTE",
+                    "title" => "freesat Irish RTE",
                     "outputSortPriority" => 41,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
