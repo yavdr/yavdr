@@ -57,7 +57,6 @@ class channelgroupsResource extends Resource {
                 $jsonarray["result"] = array();
                 while ($groupIterator->moveToNextChannelGroup() !== false ){
                     if ($groupIterator->getCurrentChannelGroupCount() == $group){
-                        $cols = $groupIterator->getCurrentChannelGroupArray();
                         $values = $groupIterator->getCurrentChannelGroupArray();
                         $jsonarray["meta"][] = $values;
                         $channelIterator = new channelIterator();

@@ -11,10 +11,9 @@ require_once '../class.channelIterator.php';
 require_once '../resources/channelgroups.php';
 
 // handle request
-//$request = new Request();
-    $request = new Request(array(
-        'baseUri' => '/fileadmin/yavdr/restful'
-    ));
+$request = new Request(array(
+    'baseUri' => '/fileadmin/yavdr/restful'
+));
 
 $resource = $request->loadResource();
 try {
