@@ -38,13 +38,15 @@ class GermanyWilhelmTel extends ruleBase {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "wt_Pay-TV2" => array(
+                array(
+                    "title" => "Pay-TV2",
                     "outputSortPriority" => 26,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => "AND provider = 'wt Pay-TV'"
                 ),
-                "wt_Pay-TV" => array(
+                array(
+                    "title" => "Pay-TV",
                     "outputSortPriority" => 25,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,

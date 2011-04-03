@@ -37,7 +37,8 @@ class GermanySatNonEssentials  extends ruleBase{
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "Private3" => array(
+                array(
+                    "title" => "Private3",
                     "outputSortPriority" => 14,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
@@ -45,7 +46,8 @@ class GermanySatNonEssentials  extends ruleBase{
                         " AND NOT ". FILTER_ASTRA1_FTA . " AND NOT (". DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
                 ),
 
-                "Private_4" => array(
+                array(
+                    "title" => "Private",
                     "outputSortPriority" => 11,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,

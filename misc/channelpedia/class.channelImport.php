@@ -285,9 +285,9 @@ class channelImport{
         foreach ( channelGroupingRulesStore::getRules() as $title => $config){
             if ( $sourcetype == "S"){
                 if ( $config["validForSatellites"] === "all" || ( is_array( $config["validForSatellites"] ) && in_array( $source, $config["validForSatellites"], true)) ){
-                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                    foreach ($config["groups"] as $groupsettings){
                         $this->updateLabelsOfChannelSelection(
-                            $label = $config["country"] . "." . str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $grouptitle,
+                            $label = $config["country"] . "." . str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $groupsettings["title"],
                             $source,
                             $outputSortPriority = $groupsettings["outputSortPriority"],
                             $caidMode           = $groupsettings["caidMode"],
@@ -301,9 +301,9 @@ class channelImport{
             }
             elseif ( $sourcetype == "C"){
                 if ( $config["validForCableProviders"] === "all" || ( is_array( $config["validForCableProviders"] ) && in_array( $source, $config["validForCableProviders"], true)) ){
-                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                    foreach ($config["groups"] as $groupsettings){
                         $this->updateLabelsOfChannelSelection(
-                            $label = $config["country"] . ".". str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $grouptitle,
+                            $label = $config["country"] . ".". str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $groupsettings["title"],
                             $source,
                             $outputSortPriority = $groupsettings["outputSortPriority"],
                             $caidMode           = $groupsettings["caidMode"],
@@ -317,9 +317,9 @@ class channelImport{
             }
             elseif ( $sourcetype == "T"){
                 if ( $config["validForTerrProviders"] === "all" || ( is_array( $config["validForTerrProviders"] ) && in_array( $source, $config["validForTerrProviders"], true)) ){
-                    foreach ($config["groups"] as $grouptitle => $groupsettings){
+                    foreach ($config["groups"] as $groupsettings){
                         $this->updateLabelsOfChannelSelection(
-                            $label = $config["country"] . "." . str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $grouptitle,
+                            $label = $config["country"] . "." . str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $groupsettings["title"],
                             $source,
                             $outputSortPriority = $groupsettings["outputSortPriority"],
                             $caidMode           = $groupsettings["caidMode"],
@@ -371,14 +371,6 @@ class channelImport{
         if ($source != "")
             $where[] = "source = ". $this->db->quote( $source );
 
-        if ($caidMode != 0){
-            $where[] = "caid ". ($caidMode === 2 ? "!= '0'" : "= '0'");
-            $label_suffixes[] = ($caidMode === 2 ? "scrambled" : "FTA");
-        }
-        else{
-            $label_suffixes[] = "scrambled+FTA";
-        }
-
         switch ($mediaType) {
             case 0:
                 $label_suffixes[] = "TV+Radio";
@@ -401,6 +393,14 @@ class channelImport{
                 $where[] = channelImport::hd_channel;
                 $label_suffixes[] ="HDTV";
                 break;
+        }
+
+        if ($caidMode != 0){
+            $where[] = "caid ". ($caidMode === 2 ? "!= '0'" : "= '0'");
+            $label_suffixes[] = ($caidMode === 2 ? "scrambled" : "FTA");
+        }
+        else{
+            $label_suffixes[] = "scrambled+FTA";
         }
 
         if (count($label_suffixes) > 0){

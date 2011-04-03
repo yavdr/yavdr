@@ -37,21 +37,24 @@ class SwitzerlandSatEssentials extends ruleBase {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "Private" => array(
+                array(
+                    "title" => "Private",
                     "outputSortPriority" => 1,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>  " AND ". FILTER_ASTRA1_FTA . "AND ". SWITZERLAND. "AND ". DE_PRIVATE_PRO7_RTL
                 ),
 
-                "DiverseHD" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 2,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" =>  ""
                 ),
 
-                "Diverse" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 3,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
@@ -61,13 +64,15 @@ class SwitzerlandSatEssentials extends ruleBase {
 
 /*only causes problems...
                 "scrambled.SDTV.diverse" => array(
+                    "title" => ,
                     "outputSortPriority" => 4,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeTV,
                     "customwhere" =>  "AND NOT ". HD_CHANNEL . " AND NOT ". FRANCE_CSAT
                 ),
 */
-                "DiverseHD2" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 5,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
@@ -76,12 +81,14 @@ class SwitzerlandSatEssentials extends ruleBase {
 /* FIXME: radio channels with language deu are already grabbed by the de list...
 
                 "FTA.radio" => array(
+                    "title" => ,
                     "outputSortPriority" => 6,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                 ),
 
                 "scrambled.radio" => array(
+                    "title" => ,
                     "outputSortPriority" => 7,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeRadio,

@@ -40,93 +40,58 @@ class UKIrelandEssentials  extends ruleBase {
             "validForTerrProviders" => array(),
             "groups" => array(
 
-                "BBC freesat" => array(
+                array(
+                    "title" => "freesat BBC",
                     "outputSortPriority" => 1,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" => " AND upper(name) LIKE '%BBC%'"
                 ),
 
-                "BBC2 freesat" => array(
+                array(
+                    "title" => "freesat BBC",
                     "outputSortPriority" => 2,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => " AND (upper(name) LIKE '%BBC%' OR upper(name) = 'CBEEBIES')"
                 ),
 
-                "ITV freesat " => array(
+                array(
+                    "title" => "freesat ITV",
                     "outputSortPriority" => 3,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" => " AND ".UK_ITV
                 ),
 
-                "ITV" => array(
+                array(
+                    "title" => "freesat ITV",
                     "outputSortPriority" => 4,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" => " AND ".UK_ITV
-                ),
-
-                "ITV freesat 2" => array(
-                    "outputSortPriority" => 5,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => " AND ".UK_ITV
                 ),
 
-                "ITV_" => array(
-                    "outputSortPriority" => 6,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => " AND ".UK_ITV
-                ),
-
-                "Channel4Family freesat" => array(
-                    "outputSortPriority" => 10,
+                array(
+                    "title" => "freesat Channel4 Family",
+                    "outputSortPriority" => 5,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "", //only because of brand new c4 hd fta (march 2011) with missing lang stuff
                     "customwhere" => " AND ".UK_C4
                 ),
 
-                "Channel4Family" => array(
-                    "outputSortPriority" => 11,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" => " AND ".UK_C4
-                ),
-
-                "Channel4Family freesat 2" => array(
-                    "outputSortPriority" => 12,
+                array(
+                    "title" => "freesat Channel4Family",
+                    "outputSortPriority" => 6,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => " AND ".UK_C4
                 ),
 
-                "Channel4Family 2" => array(
-                    "outputSortPriority" => 13,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => " AND  ".UK_C4
-                ),
-
-                "Irish" => array(
-                    "outputSortPriority" => 20,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => " AND (UPPER(name) LIKE 'RTE%' OR UPPER(name) LIKE 'TV3' OR UPPER(name) LIKE 'TG4' OR UPPER(name) LIKE 'SETANTA%')"
-                ),
-
-                "Rest" => array(
-                    "outputSortPriority" => 30,
-                    "caidMode" => self::caidModeFTA,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" => ""
-                ),
-
-                "freesat" => array(
-                    "outputSortPriority" => 31,
+                array(
+                    "title" => "freesat Diverse",
+                    "outputSortPriority" => 7,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => " AND (
@@ -142,49 +107,104 @@ class UKIrelandEssentials  extends ruleBase {
                     )"
                 ),
 
-                "Rest2" => array(
-                    "outputSortPriority" => 32,
+                array(
+                    "title" => "Diverse",
+                    "outputSortPriority" => 8,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => ""
+                ),
+
+                array(
+                    "title" => "Diverse",
+                    "outputSortPriority" => 9,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => ""
                 ),
 
-                "sky_uk etc" => array(
-                    "outputSortPriority" => 33,
+                array(
+                    "title" => "ITV",
+                    "outputSortPriority" => 10,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND ".UK_ITV
+                ),
+
+                array(
+                    "title" => "ITV",
+                    "outputSortPriority" => 11,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND ".UK_ITV
+                ),
+
+                array(
+                    "title" => "Channel4Family",
+                    "outputSortPriority" => 12,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND ".UK_C4
+                ),
+
+                array(
+                    "title" => "Channel4Family",
+                    "outputSortPriority" => 13,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND  ".UK_C4
+                ),
+
+                array(
+                    "title" => "sky_uk etc",
+                    "outputSortPriority" => 20,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" => ""
                 ),
 
-                "sky_uk etc 2" => array(
-                    "outputSortPriority" => 34,
+                array(
+                    "title" => "sky_uk etc",
+                    "outputSortPriority" => 21,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => ""
                 ),
 
-                "BBC__" => array(
+                array(
+                    "title" => "Irish",
+                    "outputSortPriority" => 30,
+                    "caidMode" => self::caidModeScrambled,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND (UPPER(name) LIKE 'RTE%' OR UPPER(name) LIKE 'TV3' OR UPPER(name) LIKE 'TG4' OR UPPER(name) LIKE 'SETANTA%')"
+                ),
+
+                array(
+                    "title" => "freesat BBC",
                     "outputSortPriority" => 40,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND upper(name) LIKE '%BBC%' "
                 ),
 
-                "Irish_RTE" => array(
+                array(
+                    "title" => "Irish RTE",
                     "outputSortPriority" => 41,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND upper(name) LIKE 'RTE %' "
                 ),
 
-                "Rest____" => array(
+                array(
+                    "title" => "Rest",
                     "outputSortPriority" => 42,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
 
-                "Rest__________" => array(
+                array(
+                    "title" => "Rest",
                     "outputSortPriority" => 43,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeRadio,

@@ -37,7 +37,8 @@ class SpainSatEssentials  extends ruleBase {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "DigitalPlus" => array(
+                array(
+                    "title" => "DigitalPlus",
                     "outputSortPriority" => 1,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
@@ -45,7 +46,8 @@ class SpainSatEssentials  extends ruleBase {
                     "customwhere" =>  "AND " . SPAIN_DIGITALPLUS
                 ),
 
-                "DigitalPlus2" => array(
+                array(
+                    "title" => "DigitalPlus",
                     "outputSortPriority" => 2,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
@@ -53,7 +55,8 @@ class SpainSatEssentials  extends ruleBase {
                     "customwhere" =>  "AND " . SPAIN_DIGITALPLUS
                 ),
 
-                "DigitalPlus3" => array(
+                array(
+                    "title" => "DigitalPlus",
                     "outputSortPriority" => 3,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
@@ -61,7 +64,8 @@ class SpainSatEssentials  extends ruleBase {
                     "customwhere" =>  "AND " . SPAIN_DIGITALPLUS
                 ),
 
-                "DigitalPlus4" => array(
+                array(
+                    "title" => "DigitalPlus",
                     "outputSortPriority" => 4,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
@@ -69,42 +73,48 @@ class SpainSatEssentials  extends ruleBase {
                     "customwhere" =>  "AND " . SPAIN_DIGITALPLUS
                 ),
 
-                "Diverse" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 5,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" =>  "AND NOT " . SPAIN_DIGITALPLUS
                 ),
 
-                "Diverse2" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 6,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>  "AND NOT " . SPAIN_DIGITALPLUS
                 ),
 
-                "Diverse3" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 7,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" =>  "AND NOT " . SPAIN_DIGITALPLUS
                 ),
 
-                "Diverse4" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 8,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>  "AND NOT " . SPAIN_DIGITALPLUS
                 ),
 
-                "Diverse5" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 10,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
 
-                "Diverse6" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 11,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeRadio,

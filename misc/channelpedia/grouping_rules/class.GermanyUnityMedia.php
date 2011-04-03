@@ -38,21 +38,24 @@ class GermanyUnityMedia  extends ruleBase{
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "UnityDigitalTV_Private" => array(
+                array(
+                    "title" => "Private",
                     "outputSortPriority" => 4,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => "AND provider = 'UnityDigitalTV'"
                 ),
 
-                "Kino_auf_Abruf" => array(
+                array(
+                    "title" => "Kino auf Abruf",
                     "outputSortPriority" => 5,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => "AND provider = 'Kino auf Abruf'"
                 ),
 
-                "UnityDigital" => array(
+                array(
+                    "title" => "Music Choice",
                     "outputSortPriority" => 31,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeRadio,

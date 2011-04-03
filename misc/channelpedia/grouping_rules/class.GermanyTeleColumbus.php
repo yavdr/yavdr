@@ -38,28 +38,32 @@ class GermanyTeleColumbus  extends ruleBase{
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "TeleColumbus_Basis1" => array(
+                array(
+                    "title" => "Basis1",
                     "outputSortPriority" => 4,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" => "AND UPPER(provider) = 'BASIS 1'"
                 ),
 
-                "TeleColumbus_Basis1_b" => array(
+                array(
+                    "title" => "Basis1",
                     "outputSortPriority" => 5,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => "AND UPPER(provider) = 'BASIS 1'"
                 ),
 
-                "TeleColumbus_KabelKiosk" => array(
+                array(
+                    "title" => "KabelKiosk",
                     "outputSortPriority" => 6,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" => "AND UPPER(provider) = 'KABELKIOSK'"
                 ),
 
-                "TeleColumbus_KabelKiosk_b" => array(
+                array(
+                    "title" => "KabelKiosk",
                     "outputSortPriority" => 7,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,

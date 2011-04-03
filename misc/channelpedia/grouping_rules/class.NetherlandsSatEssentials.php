@@ -37,42 +37,48 @@ class NetherlandsSatEssentials  extends ruleBase {
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "DiverseHD" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 1,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" =>  ""
                 ),
 
-                "Diverse" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 2,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>  ""
                 ),
 
-                "Diverse2" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 3,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" =>  ""
                 ),
 
-                "Diverse3" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 4,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>  ""
                 ),
 
-                "Diverse4" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 5,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
 
-                "Diverse5" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 6,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeRadio,

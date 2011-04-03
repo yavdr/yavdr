@@ -37,14 +37,16 @@ class GermanyEssentials  extends ruleBase{
             "validForTerrProviders" => "all",
             "groups" => array(
 
-                "Public" => array(
+                array(
+                    "title" => "Public",
                     "outputSortPriority" => 1,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" => "AND ".DE_PUBLIC_PROVIDER
                 ),
 
-                "Public2" => array(
+                array(
+                    "title" => "Public",
                     "outputSortPriority" => 2,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
@@ -55,7 +57,8 @@ class GermanyEssentials  extends ruleBase{
                         ") "
                 ),
 
-                "Public_Regional" => array(
+                array(
+                    "title" => "Public_Regional",
                     "outputSortPriority" => 3,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
@@ -63,21 +66,24 @@ class GermanyEssentials  extends ruleBase{
                         "AND provider = 'ARD' AND NOT ( UPPER(name) LIKE '%ERSTE%' OR UPPER(name) LIKE '%EINS%' OR UPPER(name) LIKE '%ARTE%' OR UPPER(name) LIKE '%PHOENIX%' OR UPPER(name) LIKE '%TEST%') "
                 ),
 
-                "Private" => array(
+                array(
+                    "title" => "Private",
                     "outputSortPriority" => 10,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" => "AND NOT (" . DE_PUBLIC_PROVIDER . " OR ".AUSTRIA." " . " OR ".SWITZERLAND.")"
                 ),
 
-                "HD+" => array(
+                array(
+                    "title" => "Private HD+",
                     "outputSortPriority" => 11,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" => " AND (UPPER(provider) = 'BETADIGITAL' OR UPPER(provider) = 'CBC' OR UPPER(provider) = 'PROSIEBENSAT.1' )"
                 ),
 
-                "Private_" => array(
+                array(
+                    "title" => "Private",
                     "outputSortPriority" => 12,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
@@ -85,7 +91,8 @@ class GermanyEssentials  extends ruleBase{
                 ),
 
                 //provider undefined only wilhelm.tel --> sky
-                "Private2" => array(
+                array(
+                    "title" => "Private2",
                     "outputSortPriority" => 13,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
@@ -93,8 +100,25 @@ class GermanyEssentials  extends ruleBase{
                         " AND ". FILTER_ASTRA1_FTA . " AND NOT (". DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND." OR UPPER(provider) = 'UNDEFINED') AND NOT name = '.'"
                 ),
 
-                "sky_de" => array(
-                    "outputSortPriority" => 14,
+                array(
+                    "title" => "sky_de",
+                    "outputSortPriority" => 20,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeHDTV,
+                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined')"
+                ),
+
+                array(
+                    "title" => "sky_de",
+                    "outputSortPriority" => 21,
+                    "caidMode" => self::caidModeFTA,
+                    "mediaType" => self::mediaTypeSDTV,
+                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined')"
+                ),
+
+                array(
+                    "title" => "sky_de",
+                    "outputSortPriority" => 22,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
                     "languageOverrule" => "", //ESPN America HD is in English!
@@ -103,36 +127,25 @@ class GermanyEssentials  extends ruleBase{
                 ),
 
                 //provider undefined only wilhelm.tel --> sky
-                "sky_de2" => array(
-                    "outputSortPriority" => 21,
+                array(
+                    "title" => "sky_de",
+                    "outputSortPriority" => 23,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => " AND name NOT LIKE '% - %' AND name != 'Spieldaten' AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined') AND name != '.'"
                 ),
 
                 //provider undefined only wilhelm.tel --> sky
-                "sky_de3" => array(
-                    "outputSortPriority" => 22,
+                array(
+                    "title" => "sky_de",
+                    "outputSortPriority" => 24,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" => " AND (name LIKE '% - %' OR name = 'Spieldaten' OR name = '.') AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined')"
                 ),
 
-                "sky_de4" => array(
-                    "outputSortPriority" => 23,
-                    "caidMode" => self::caidModeFTA,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined')"
-                ),
-
-                "sky_de_5" => array(
-                    "outputSortPriority" => 24,
-                    "caidMode" => self::caidModeFTA,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => " AND (UPPER(provider) = 'SKY' OR provider = '' OR provider = 'undefined')"
-                ),
-
-                "MTVNetworksEurope" => array(
+                array(
+                    "title" => "MTVNetworksEurope",
                     "outputSortPriority" => 25,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
@@ -140,7 +153,8 @@ class GermanyEssentials  extends ruleBase{
                     "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE'"
                 ),
 
-                "MTVNetworksEurope2" => array(
+                array(
+                    "title" => "MTVNetworksEurope",
                     "outputSortPriority" => 26,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
@@ -148,7 +162,8 @@ class GermanyEssentials  extends ruleBase{
                 	"customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE'"
                 ),
 
-                "MTVNetworksEurope3" => array(
+                array(
+                    "title" => "MTVNetworksEurope",
                     "outputSortPriority" => 27,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
@@ -156,7 +171,8 @@ class GermanyEssentials  extends ruleBase{
                     "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE'"
                 ),
 
-                "MTVNetworksEurope4" => array(
+                array(
+                    "title" => "MTVNetworksEurope",
                     "outputSortPriority" => 28,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
@@ -164,21 +180,25 @@ class GermanyEssentials  extends ruleBase{
                     "customwhere" => " AND UPPER(provider) = 'MTV NETWORKS EUROPE'"
                 ),
 
-                "ARD_ZDF" => array(
+                array(
+                    "title" => "Public ARD ZDF",
                     "outputSortPriority" => 30,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND ".DE_PUBLIC_PROVIDER
                 ),
 
-                "Private__" => array(
+                array(
+                    "title" => "Private",
                     "outputSortPriority" => 31,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => " AND NOT provider = 'ORF' AND NOT  ".DE_PUBLIC_PROVIDER . "AND NOT " . AUSTRIA
                 ),
+
                 //provider undefined only wilhelm.tel --> sky
-                "sky_de___" => array(
+                array(
+                    "title" => "sky_de",
                     "outputSortPriority" => 32,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeRadio,

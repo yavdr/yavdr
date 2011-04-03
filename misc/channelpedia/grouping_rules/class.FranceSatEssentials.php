@@ -37,35 +37,40 @@ class FranceSatEssentials  extends ruleBase{
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
-                "Diverse" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 1,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>  ""
                 ),
 
-                "Diverse2" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 2,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" =>  ""
                 ),
 
-                "Diverse3" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 3,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
                     "customwhere" =>  ""
                 ),
 
-                "Diverse4" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 4,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeHDTV,
                     "customwhere" =>  ""
                 ),
 
-                "More_CSAT" => array(
+                array(
+                    "title" => "More_CSAT",
                     "outputSortPriority" => 5,
                     "caidMode" => 0,
                     "mediaType" => self::mediaTypeHDTV,
@@ -73,7 +78,8 @@ class FranceSatEssentials  extends ruleBase{
                     "customwhere" => " AND ". FRANCE_CSAT
                 ),
 
-                "More_CSAT2" => array(
+                array(
+                    "title" => "More_CSAT",
                     "outputSortPriority" => 6,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeSDTV,
@@ -81,21 +87,24 @@ class FranceSatEssentials  extends ruleBase{
                 	"customwhere" =>  " AND ". FRANCE_CSAT
                 ),
 
-                "Diverse5" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 20,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
 
-                "Diverse6" => array(
+                array(
+                    "title" => "Diverse",
                     "outputSortPriority" => 21,
                     "caidMode" => self::caidModeScrambled,
                     "mediaType" => self::mediaTypeRadio,
                     "customwhere" => ""
                 ),
 
-                "CSAT" => array(
+                array(
+                    "title" => "CSAT",
                     "outputSortPriority" => 22,
                     "caidMode" => self::caidModeFTA,
                     "mediaType" => self::mediaTypeRadio,
