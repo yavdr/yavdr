@@ -11,6 +11,58 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+
+msgid "Timer"
+msgstr "Timer"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Applications"
+msgstr "Applications"
+
+msgid "Web"
+msgstr "Web"
+
+msgid "Internet"
+msgstr "Internet"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "XBMC on graphtft Display"
+msgstr "XBMC on graphtft Display"
+
+msgid "Games"
+msgstr "Games"
+
+msgid "Tools"
+msgstr "Tools"
+
+msgid "Xterm"
+msgstr "Xterm"
+
+msgid "System"
+msgstr "System"
+
+msgid "Commands"
+msgstr "Commands"
+
+msgid "Safely remove usb mass storage"
+msgstr "Safely remove usb mass storage"
+
+msgid "Update vdr recordings list"
+msgstr "Update vdr recordings list"
+
+msgid "Restart vdr"
+msgstr "Restart vdr"
+
+msgid "Reboot system"
+msgstr "Reboot system"
+
+msgid "Shutdown system"
+msgstr "Shutdown system"
+
 # begin web frontend
 msgid "_yaVDR Paket Installer"
 msgstr "yaVDR Paket Installer"
