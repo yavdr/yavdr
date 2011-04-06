@@ -28,41 +28,42 @@ class GermanyUnityMedia  extends ruleBase{
 
     }
 
-    function getRules(){
+    function getConfig(){
         return array (
-
             "country" => "de",
             "lang" => "deu", //this is the language code used in the channels audio description
             "validForSatellites" => array(),
             "validForCableProviders" => array("C[de_UnityMediaNRW]"),
             "validForTerrProviders" => array(),//none
-            "groups" => array(
+        );
+    }
 
-                array(
-                    "title" => "Private",
-                    "outputSortPriority" => 4,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => "AND provider = 'UnityDigitalTV'"
-                ),
+    function getGroups(){
+        return array (
+            array(
+                "title" => "Private",
+                "outputSortPriority" => 4,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" => "AND provider = 'UnityDigitalTV'"
+            ),
 
-                array(
-                    "title" => "Kino auf Abruf",
-                    "outputSortPriority" => 5,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => "AND provider = 'Kino auf Abruf'"
-                ),
+            array(
+                "title" => "Kino auf Abruf",
+                "outputSortPriority" => 5,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" => "AND provider = 'Kino auf Abruf'"
+            ),
 
-                array(
-                    "title" => "Music Choice",
-                    "outputSortPriority" => 31,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeRadio,
-                    "languageOverrule" => "",
-                    "customwhere" => "AND provider = 'UnityDigital TV - Music Choice'"
-                ),
-            )
+            array(
+                "title" => "Music Choice",
+                "outputSortPriority" => 31,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeRadio,
+                "languageOverrule" => "",
+                "customwhere" => "AND provider = 'UnityDigital TV - Music Choice'"
+            ),
         );
     }
 

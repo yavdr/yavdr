@@ -28,35 +28,34 @@ class GermanyWilhelmTel extends ruleBase {
 
     }
 
-    function getRules(){
+    function getConfig(){
         return  array (
-
             "country" => "de",
             "lang" => "deu", //this is the language code used in the channels audio description
             "validForSatellites" => array(),
             "validForCableProviders" => array("C[de_WilhelmTel]"),
             "validForTerrProviders" => array(),//none
-            "groups" => array(
-
-                array(
-                    "title" => "Pay-TV2",
-                    "outputSortPriority" => 26,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => "AND provider = 'wt Pay-TV'"
-                ),
-                array(
-                    "title" => "Pay-TV",
-                    "outputSortPriority" => 25,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" => "AND provider = 'wt Pay-TV'"
-                )
-            )
         );
     }
 
-
+    function getGroups(){
+        return array (
+            array(
+                "title" => "Pay-TV2",
+                "outputSortPriority" => 26,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" => "AND provider = 'wt Pay-TV'"
+            ),
+            array(
+                "title" => "Pay-TV",
+                "outputSortPriority" => 25,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeHDTV,
+                "customwhere" => "AND provider = 'wt Pay-TV'"
+            )
+        );
+    }
 }
 
 ?>

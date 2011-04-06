@@ -28,9 +28,8 @@ class GermanyKabelDeutschland  extends ruleBase{
 
     }
 
-    function getRules(){
+    function getConfig(){
         return array (
-
             "country" => "de",
             "lang" => "deu", //this is the language code used in the channels audio description
             "validForSatellites" => array(),
@@ -39,23 +38,25 @@ class GermanyKabelDeutschland  extends ruleBase{
                 "C[de_KabelDeutschland_Nuernberg]"
             ),
             "validForTerrProviders" => array(),//none
-            "groups" => array(
+        );
+    }
 
-                array(
-                    "title" => "DigitalFree Private",
-                    "outputSortPriority" => 5,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => "AND provider = 'Digital Free'"
-                ),
+    function getGroups(){
+        return array (
+            array(
+                "title" => "DigitalFree Private",
+                "outputSortPriority" => 5,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" => "AND provider = 'Digital Free'"
+            ),
 
-                array(
-                    "title" => "KDHome Private",
-                    "outputSortPriority" => 6,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => "AND provider = 'KD Home'"
-                )
+            array(
+                "title" => "KDHome Private",
+                "outputSortPriority" => 6,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" => "AND provider = 'KD Home'"
             )
         );
     }

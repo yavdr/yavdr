@@ -293,10 +293,12 @@ class channelImport{
 
     private function updateAllLabelsOfSource( $source ){
         $sourcetype = substr($source, 0, 1);
-        foreach ( channelGroupingRulesStore::getRules() as $title => $config){
+        //foreach ( channelGroupingRulesStore::getRules() as $title => $config){
+        foreach ( channelGroupingRulesStore::getRuleProviders() as $title => $object){
+            $config = $object->getConfig();
             if ( $sourcetype == "S"){
                 if ( $config["validForSatellites"] === "all" || ( is_array( $config["validForSatellites"] ) && in_array( $source, $config["validForSatellites"], true)) ){
-                    foreach ($config["groups"] as $groupsettings){
+                    foreach ($object->getGroups() as $groupsettings){
                         $this->updateLabelsOfChannelSelection(
                             $label = $config["country"] . "." . str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $groupsettings["title"],
                             $source,
@@ -312,7 +314,7 @@ class channelImport{
             }
             elseif ( $sourcetype == "C"){
                 if ( $config["validForCableProviders"] === "all" || ( is_array( $config["validForCableProviders"] ) && in_array( $source, $config["validForCableProviders"], true)) ){
-                    foreach ($config["groups"] as $groupsettings){
+                    foreach ($object->getGroups() as $groupsettings){
                         $this->updateLabelsOfChannelSelection(
                             $label = $config["country"] . ".". str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $groupsettings["title"],
                             $source,
@@ -328,7 +330,7 @@ class channelImport{
             }
             elseif ( $sourcetype == "T"){
                 if ( $config["validForTerrProviders"] === "all" || ( is_array( $config["validForTerrProviders"] ) && in_array( $source, $config["validForTerrProviders"], true)) ){
-                    foreach ($config["groups"] as $groupsettings){
+                    foreach ($object->getGroups() as $groupsettings){
                         $this->updateLabelsOfChannelSelection(
                             $label = $config["country"] . "." . str_pad($groupsettings["outputSortPriority"], 2, "0", STR_PAD_LEFT) . "." . $groupsettings["title"],
                             $source,

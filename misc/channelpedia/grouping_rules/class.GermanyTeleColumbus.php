@@ -28,9 +28,8 @@ class GermanyTeleColumbus  extends ruleBase{
 
     }
 
-    function getRules(){
+    function getConfig(){
         return array (
-
             "country" => "de",
             "lang" => "deu", //this is the language code used in the channels audio description
             "validForSatellites" => array(),
@@ -39,40 +38,42 @@ class GermanyTeleColumbus  extends ruleBase{
                 "C[de_Primacom_Halberstadt]"
             ),
             "validForTerrProviders" => array(),//none
-            "groups" => array(
+        );
+    }
 
-                array(
-                    "title" => "Basis1",
-                    "outputSortPriority" => 4,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" => "AND UPPER(provider) = 'BASIS 1'"
-                ),
+    function getGroups(){
+        return array (
+            array(
+                "title" => "Basis1",
+                "outputSortPriority" => 4,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeHDTV,
+                "customwhere" => "AND UPPER(provider) = 'BASIS 1'"
+            ),
 
-                array(
-                    "title" => "Basis1",
-                    "outputSortPriority" => 5,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => "AND UPPER(provider) = 'BASIS 1'"
-                ),
+            array(
+                "title" => "Basis1",
+                "outputSortPriority" => 5,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" => "AND UPPER(provider) = 'BASIS 1'"
+            ),
 
-                array(
-                    "title" => "KabelKiosk",
-                    "outputSortPriority" => 6,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" => "AND UPPER(provider) = 'KABELKIOSK'"
-                ),
+            array(
+                "title" => "KabelKiosk",
+                "outputSortPriority" => 6,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeHDTV,
+                "customwhere" => "AND UPPER(provider) = 'KABELKIOSK'"
+            ),
 
-                array(
-                    "title" => "KabelKiosk",
-                    "outputSortPriority" => 7,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => "AND UPPER(provider) = 'KABELKIOSK'"
-                ),
-            )
+            array(
+                "title" => "KabelKiosk",
+                "outputSortPriority" => 7,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" => "AND UPPER(provider) = 'KABELKIOSK'"
+            ),
         );
     }
 

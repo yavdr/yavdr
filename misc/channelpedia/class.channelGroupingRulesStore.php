@@ -52,21 +52,21 @@ define("FILTER_ASTRA1_FTA", " ((tid != '1092' AND tid != '1113' AND provider != 
 
 class channelGroupingRulesStore{
 
-    static public function getRules(){
+    static public function getRuleProviders(){
         return array(
-            "GermanyEssentials" => GermanyEssentials::getRules(),
-            "GermanySatNonEssential" => GermanySatNonEssentials::getRules(),
-            "AustriaSatEssentials" => AustriaSatEssentials::getRules(),
-            "SwitzerlandSatEssentials" => SwitzerlandSatEssentials::getRules(),
-            "GermanyKabelDeutschland" => GermanyKabelDeutschland::getRules(),
-            "GermanyWilhelmTel" => GermanyWilhelmTel::getRules(),
-            "GermanyUnityMedia" => GermanyUnityMedia::getRules(),
-            "GermanyTeleColumbus" => GermanyTeleColumbus::getRules(),
-            "UKIrelandEssentials" => UKIrelandEssentials::getRules(),
-            "SpainSatEssentials" => SpainSatEssentials::getRules(),
-            "PolandSatEssentials" => PolandSatEssentials::getRules(),
-            "FranceSatEssentials" => FranceSatEssentials::getRules(),
-            "NetherlandsSatEssentials" => NetherlandsSatEssentials::getRules(),
+            "GermanyEssentials" => new GermanyEssentials(),
+            "GermanySatNonEssential" => new GermanySatNonEssentials(),
+            "AustriaSatEssentials" => new AustriaSatEssentials(),
+            "SwitzerlandSatEssentials" => new SwitzerlandSatEssentials(),
+            "GermanyKabelDeutschland" => new GermanyKabelDeutschland(),
+            "GermanyWilhelmTel" => new GermanyWilhelmTel(),
+            "GermanyUnityMedia" => new GermanyUnityMedia(),
+            "GermanyTeleColumbus" => new GermanyTeleColumbus(),
+            "UKIrelandEssentials" => new UKIrelandEssentials(),
+            "SpainSatEssentials" => new SpainSatEssentials(),
+            "PolandSatEssentials" => new PolandSatEssentials(),
+            "FranceSatEssentials" => new FranceSatEssentials(),
+            "NetherlandsSatEssentials" => new NetherlandsSatEssentials(),
         );
     }
 }

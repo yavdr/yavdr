@@ -28,33 +28,34 @@ class GermanySatNonEssentials  extends ruleBase{
 
     }
 
-    function getRules(){
+    function getConfig(){
         return array (
             "country" => "de",
             "lang" => "deu", //this is the language code used in the channels audio description
             "validForSatellites" => array( "S19.2E"),
             "validForCableProviders" => array(),//none
             "validForTerrProviders" => array(),//none
-            "groups" => array(
+        );
+    }
 
-                array(
-                    "title" => "Private3",
-                    "outputSortPriority" => 14,
-                    "caidMode" => self::caidModeFTA,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" =>
-                        " AND NOT ". FILTER_ASTRA1_FTA . " AND NOT (". DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
-                ),
+    function getGroups(){
+        return array (
+            array(
+                "title" => "Private3",
+                "outputSortPriority" => 14,
+                "caidMode" => self::caidModeFTA,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" =>
+                    " AND NOT ". FILTER_ASTRA1_FTA . " AND NOT (". DE_PUBLIC_PROVIDER. " OR ".DE_PRIVATE_PRO7_RTL." OR ".AUSTRIA." OR ".SWITZERLAND.") "
+            ),
 
-                array(
-                    "title" => "Private",
-                    "outputSortPriority" => 11,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . AUSTRIA." OR ".SWITZERLAND.")"
-                ),
-
-            )
+            array(
+                "title" => "Private",
+                "outputSortPriority" => 11,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" => "AND ".DE_PRIVATE_PRO7_RTL . "AND NOT (" . AUSTRIA." OR ".SWITZERLAND.")"
+            ),
         );
     }
 

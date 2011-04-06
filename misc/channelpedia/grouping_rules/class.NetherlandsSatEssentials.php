@@ -28,63 +28,65 @@ class NetherlandsSatEssentials  extends ruleBase {
 
     }
 
-    function getRules(){
+    function getConfig(){
         return array(
             "country" => "nl",
             "lang" => "dut", //this is the language code used in the channels audio description
             "validForSatellites" => array( "S19.2E"),
             "validForCableProviders" => array(),//none
             "validForTerrProviders" => array(),//none
-            "groups" => array(
+        );
+    }
 
-                array(
-                    "title" => "Diverse",
-                    "outputSortPriority" => 1,
-                    "caidMode" => self::caidModeFTA,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" =>  ""
-                ),
+    function getGroups(){
+        return array(
+            array(
+                "title" => "Diverse",
+                "outputSortPriority" => 1,
+                "caidMode" => self::caidModeFTA,
+                "mediaType" => self::mediaTypeHDTV,
+                "customwhere" =>  ""
+            ),
 
-                array(
-                    "title" => "Diverse",
-                    "outputSortPriority" => 2,
-                    "caidMode" => self::caidModeFTA,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" =>  ""
-                ),
+            array(
+                "title" => "Diverse",
+                "outputSortPriority" => 2,
+                "caidMode" => self::caidModeFTA,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" =>  ""
+            ),
 
-                array(
-                    "title" => "Diverse",
-                    "outputSortPriority" => 3,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeHDTV,
-                    "customwhere" =>  ""
-                ),
+            array(
+                "title" => "Diverse",
+                "outputSortPriority" => 3,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeHDTV,
+                "customwhere" =>  ""
+            ),
 
-                array(
-                    "title" => "Diverse",
-                    "outputSortPriority" => 4,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeSDTV,
-                    "customwhere" =>  ""
-                ),
+            array(
+                "title" => "Diverse",
+                "outputSortPriority" => 4,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeSDTV,
+                "customwhere" =>  ""
+            ),
 
-                array(
-                    "title" => "Diverse",
-                    "outputSortPriority" => 5,
-                    "caidMode" => self::caidModeFTA,
-                    "mediaType" => self::mediaTypeRadio,
-                    "customwhere" => ""
-                ),
+            array(
+                "title" => "Diverse",
+                "outputSortPriority" => 5,
+                "caidMode" => self::caidModeFTA,
+                "mediaType" => self::mediaTypeRadio,
+                "customwhere" => ""
+            ),
 
-                array(
-                    "title" => "Diverse",
-                    "outputSortPriority" => 6,
-                    "caidMode" => self::caidModeScrambled,
-                    "mediaType" => self::mediaTypeRadio,
-                    "customwhere" => ""
-                ),
-            )
+            array(
+                "title" => "Diverse",
+                "outputSortPriority" => 6,
+                "caidMode" => self::caidModeScrambled,
+                "mediaType" => self::mediaTypeRadio,
+                "customwhere" => ""
+            ),
         );
     }
 
