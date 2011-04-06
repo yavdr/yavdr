@@ -1,4 +1,4 @@
-<?cs if:(!?system.remoted || system.remoted == "lircd") ?>
+<?cs if:(system.remoted == "lircd") ?>
 # Starts LIRC daemon.
 #
 # LIRC is used to control different

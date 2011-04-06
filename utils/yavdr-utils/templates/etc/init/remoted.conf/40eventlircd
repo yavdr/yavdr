@@ -1,4 +1,4 @@
-<?cs if:(system.remoted == "eventlircd") ?>
+<?cs if:(!?system.remoted || system.remoted == "eventlircd") ?>
 # Starts Eventlircd daemon.
 #
 # Eventlircd is used to control different
