@@ -14,6 +14,7 @@ $(ALL):
 
 $(INSTALL):
 	$(MAKE) -C $(@:-install=) install
+	mkdir -p $(DESTDIR)/usr/share/yavdr
 	for f in events templates; do \
 	  cp -pr $$f $(DESTDIR)/usr/share/yavdr; done
 #	chmod +x $(DESTDIR)/usr/share/yavdr/events/actions/*
