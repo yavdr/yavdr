@@ -62,6 +62,7 @@ class HTMLOutputRenderer{
                 $this->writeNiceHTMLPage( $sat, $language );
             $this->addUncategorizedListLink( $sat );
             $this->renderGroupingHints( $sat );
+            $this->addCompleteListLink( $sat );
             $this->closeHierarchy();
         }
         $this->closeHierarchy();
@@ -76,6 +77,7 @@ class HTMLOutputRenderer{
                     $this->writeNiceHTMLPage( "C[$cablep]", $language );
             $this->addUncategorizedListLink( "C[$cablep]" );
             $this->renderGroupingHints( "C[$cablep]" );
+            $this->addCompleteListLink( "C[$cablep]" );
             $this->closeHierarchy();
             }
         $this->closeHierarchy();
@@ -83,23 +85,12 @@ class HTMLOutputRenderer{
         foreach ($this->config->getValue("terr_providers") as $terrp){
             $this->addDividerTitle($terrp);
             $this->writeNiceHTMLPage("T[$terrp]", "de");
-            $this->renderGroupingHints( "T[$cablep]" );
             $this->addUncategorizedListLink("T[$terrp]");
+            $this->renderGroupingHints( "T[$cablep]" );
+            $this->addCompleteListLink("T[$terrp]");
             $this->closeHierarchy();
         }
         $this->closeHierarchy();
-        $this->closeHierarchy();
-        $this->addDividerTitle("Complete lists (grouped by transponder)");
-
-        foreach ($this->config->getValue("sat_positions") as $sat){
-            $this->addCompleteListLink( $sat );
-        }
-        foreach ($this->config->getValue("cable_providers") as $cablep){
-            $this->addCompleteListLink( "C[$cablep]" );
-        }
-        foreach ($this->config->getValue("terr_providers") as $terrp){
-            $this->addCompleteListLink("T[$terrp]");
-        }
         $this->closeHierarchy();
         $this->addDividerTitle("Changelog");
 
@@ -147,7 +138,7 @@ class HTMLOutputRenderer{
 
     private function addCompleteListLink( $source ){
         $filename = "../raw/channels_".$source."__complete.conf";
-        $this->addToOverview("$source - complete", $filename);
+        $this->addToOverview("Complete", $filename);
     }
 
     private function addUncategorizedListLink( $source ){
@@ -351,7 +342,9 @@ class HTMLOutputRenderer{
             $nice_html_body .= "<h2>".htmlspecialchars($row["provider"]). " (" . htmlspecialchars($row["providercount"]) ." channels)</h2>\n<pre>\n";
             $x = new channelIterator();
             $x->init2( "SELECT * FROM channels ".
-                "WHERE x_label = '' AND provider = ".$this->db->quote($row["provider"])." ORDER by x_label ASC, lower(name) ASC, source ASC");
+                "WHERE source = ".$this->db->quote($source)." AND ".
+                "x_label = '' AND provider = ".$this->db->quote($row["provider"]).
+                " ORDER by x_label ASC, lower(name) ASC, source ASC");
             while ($x->moveToNextChannel() !== false){
                 $nice_html_body .= htmlspecialchars( $x->getCurrentChannelString())."\n";
             }

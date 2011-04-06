@@ -34,7 +34,10 @@ class GermanyTeleColumbus  extends ruleBase{
             "country" => "de",
             "lang" => "deu", //this is the language code used in the channels audio description
             "validForSatellites" => array(),
-            "validForCableProviders" => array("C[de_TeleColumbus_Magdeburg]"),
+            "validForCableProviders" => array(
+                "C[de_TeleColumbus_Magdeburg]",
+                "C[de_Primacom_Halberstadt]"
+            ),
             "validForTerrProviders" => array(),//none
             "groups" => array(
 
