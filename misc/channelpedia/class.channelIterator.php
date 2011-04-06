@@ -26,6 +26,7 @@ class channelIterator{
 
     private
         $db,
+        $config,
         $result = false,
         $channel = false,
         $count = 0,
@@ -34,6 +35,7 @@ class channelIterator{
 
     function __construct(){
         $this->db = dbConnection::getInstance();
+        $this->config = config::getInstance();
     }
 
     public function init1( $label, $source, $orderby = "frequency, modulation, provider, name ASC"){
@@ -80,32 +82,7 @@ class channelIterator{
     }
 
     public function getCurrentChannelString(){
-        $provider = "";
-        if ($this->channel["provider"] != "")
-            $provider = ";". $this->channel["provider"];
-
-        //remove meta provider info from cable ot terrestrial source string
-        $source = $this->channel["source"];
-        $sourcetest = strtoupper( substr($this->channel["source"],0,1));
-        if ($sourcetest == "C" || $sourcetest == "T")
-            $source = $sourcetest;
-
-        $rawstring =
-            $this->channel["name"] .
-            $provider . ":".
-            $this->channel["frequency"] . ":".
-            $this->channel["modulation"] . ":".
-            $source . ":".
-            $this->channel["symbolrate"] . ":".
-            $this->channel["vpid"] . ":".
-            $this->channel["apid"] . ":".
-            $this->channel["tpid"] . ":".
-            $this->channel["caid"] . ":".
-            $this->channel["sid"] . ":".
-            $this->channel["nid"] . ":".
-            $this->channel["tid"] . ":".
-            $this->channel["rid"];
-        return $rawstring;
+        return $this->config->channelArray2ChannelString($this->channel);
     }
 
     public function transponderChanged(){

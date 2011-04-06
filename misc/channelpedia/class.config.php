@@ -50,7 +50,11 @@ class config {
         elseif ($key == "groups")
             $value = channelGroupingRulesStore::getRules();
         elseif ($key == "sat_positions")
-            $value = array( "S19.2E", "S28.2E");
+            $value = array(
+                "S13E",
+                "S19.2E",
+                "S28.2E"
+            );
         elseif ($key == "cable_providers")
             $value = array(
                 "de_KabelBW",
@@ -66,5 +70,34 @@ class config {
         }
         return $value;
     }
+
+    public function channelArray2ChannelString($channel){
+        $provider = "";
+        if ($channel["provider"] != "")
+            $provider = ";". $channel["provider"];
+
+        //remove meta provider info from cable ot terrestrial source string
+        $source = $channel["source"];
+        $sourcetest = strtoupper( substr($channel["source"],0,1));
+        if ($sourcetest == "C" || $sourcetest == "T")
+            $source = $sourcetest;
+
+        return
+            $channel["name"] .
+            $provider . ":".
+            $channel["frequency"] . ":".
+            $channel["modulation"] . ":".
+            $source . ":".
+            $channel["symbolrate"] . ":".
+            $channel["vpid"] . ":".
+            $channel["apid"] . ":".
+            $channel["tpid"] . ":".
+            $channel["caid"] . ":".
+            $channel["sid"] . ":".
+            $channel["nid"] . ":".
+            $channel["tid"] . ":".
+            $channel["rid"];
+    }
+
 }
 ?>

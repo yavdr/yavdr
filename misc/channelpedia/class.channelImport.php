@@ -38,7 +38,8 @@ class channelImport{
         $numChanChanged = 0,
         $foundSatellites = array(),
         $cableProviderPresent = false,
-        $terrProviderPresent = false;
+        $terrProviderPresent = false,
+        $timestamp;
 
     function __construct(){
         $this->config = config::getInstance();
@@ -46,6 +47,7 @@ class channelImport{
     }
 
     public function importChannelsConfFile($username, $cableSourceType, $terrSourceType){
+        $this->timestamp = time();
         $this->numChanChecked = 0;
         $this->numChanAdded = 0;
         $this->numChanChanged = 0;
@@ -82,37 +84,45 @@ class channelImport{
             $result = $this->db->query2( "SELECT * FROM channels", $this->getWhereArray( "source, nid, tid, sid", $params ) );
             $query = $this->db->exec("BEGIN TRANSACTION");
             foreach ($result as $row){
-                $changes = array();
-                $update_data = array();
-                $importance = 0;
-                foreach ($params as $key => $value){
-                    if ($value != $row[$key]  && substr($key,0,2) !== "x_" ){
-                        if ($key != "apid" && $key != "vpid" && $key != "caid")
-                            $importance = 1;
-                        $changes[] = "$key: '".$row[$key]. "' to '". $value."'";
-                        $update_data[] = "$key = ".$this->db->quote( $value);
-                    }
-                }
-                $update_data[] = "x_last_changed = ".time();
-                if (count ($changes) != 0){
-                    //print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
-                    $query = $this->db->exec2(
-                        "UPDATE channels SET ".implode(", " , $update_data),
-                        $this->getWhereArray( "source, nid, tid, sid", $params )
-                    );
-                    $query = $this->db->insert( "channel_update_log",
-                        array(
-                            "combined_id"        => $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"],
-                            "name"               => $params["name"],
-                            "update_description" => implode("\n",$changes),
-                            "timestamp"          => time(),
-                            "importance"         => $importance
-                        )
-                    );
-                    $this->numChanChanged++;
+                if ($row["x_timestamp_added"] == $this->timestamp){
+                    print "ERROR: Trying to update channel ".$params["name"]." that was added earlier! Double channel entry!\n";
+                    print "To update: " . $this->config->channelArray2ChannelString($params) ."\n";
+                    print "Existing : " . $this->config->channelArray2ChannelString($row) ."\n";
+                    print "---\n";
                 }
                 else{
-                    //print "channel unchanged.\n";
+                    $changes = array();
+                    $update_data = array();
+                    $importance = 0;
+                    foreach ($params as $key => $value){
+                        if ($value != $row[$key]  && substr($key,0,2) !== "x_" ){
+                            if ($key != "apid" && $key != "vpid" && $key != "caid")
+                                $importance = 1;
+                            $changes[] = "$key: '".$row[$key]. "' to '". $value."'";
+                            $update_data[] = "$key = ".$this->db->quote( $value);
+                        }
+                    }
+                    $update_data[] = "x_last_changed = ".time();
+                    if (count ($changes) != 0){
+                        //print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
+                        $query = $this->db->exec2(
+                            "UPDATE channels SET ".implode(", " , $update_data),
+                            $this->getWhereArray( "source, nid, tid, sid", $params )
+                        );
+                        $query = $this->db->insert( "channel_update_log",
+                            array(
+                                "combined_id"        => $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"],
+                                "name"               => $params["name"],
+                                "update_description" => implode("\n",$changes),
+                                "timestamp"          => time(),
+                                "importance"         => $importance
+                            )
+                        );
+                        $this->numChanChanged++;
+                    }
+                    else{
+                        //print "channel unchanged.\n";
+                    }
                 }
             }
             $query = $this->db->exec("COMMIT TRANSACTION");
@@ -245,7 +255,8 @@ class channelImport{
             "tid"             => $details[11],
             "rid"             => $details[12],
             "x_label"         => "",
-            "x_last_changed"  => time()
+            "x_last_changed"  => time(),
+            "x_timestamp_added" => $this->timestamp
         );
     }
 

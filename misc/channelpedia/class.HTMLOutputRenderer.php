@@ -45,6 +45,7 @@ class HTMLOutputRenderer{
 
         //FIXME: Don't store this like this
         $source_languages_sat = array(
+            "S13E" => array(),
             "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl"),
             "S28.2E" => array( "en")
         );
@@ -60,6 +61,7 @@ class HTMLOutputRenderer{
             foreach ($source_languages_sat[$sat] as $language)
                 $this->writeNiceHTMLPage( $sat, $language );
             $this->addUncategorizedListLink( $sat );
+            $this->renderGroupingHints( $sat );
             $this->closeHierarchy();
         }
         $this->closeHierarchy();
@@ -73,6 +75,7 @@ class HTMLOutputRenderer{
                 foreach ($source_languages_cable[$cablep] as $language)
                     $this->writeNiceHTMLPage( "C[$cablep]", $language );
             $this->addUncategorizedListLink( "C[$cablep]" );
+            $this->renderGroupingHints( "C[$cablep]" );
             $this->closeHierarchy();
             }
         $this->closeHierarchy();
@@ -80,6 +83,7 @@ class HTMLOutputRenderer{
         foreach ($this->config->getValue("terr_providers") as $terrp){
             $this->addDividerTitle($terrp);
             $this->writeNiceHTMLPage("T[$terrp]", "de");
+            $this->renderGroupingHints( "T[$cablep]" );
             $this->addUncategorizedListLink("T[$terrp]");
             $this->closeHierarchy();
         }
@@ -326,6 +330,42 @@ class HTMLOutputRenderer{
         $this->addDividerTitle("Reports");
         $this->addToOverview( "Comparison: Parameters of German public TV channels at different providers", $filename );
         $this->closeHierarchy();
+        file_put_contents($this->exportpath . $filename, $nice_html_output );
+    }
+
+    private function renderGroupingHints($source){
+        $pagetitle = "Grouping hints for unsorted channels of ".$source;
+        $nice_html_output =
+            $this->getHTMLHeader($pagetitle).
+            '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
+            <p>Last updated on: '. date("D M j G:i:s T Y").'</p>';
+        $html_table = "<table><tr><th>Provider</th><th>Number of related channels</th></tr>\n";
+        $nice_html_body = "";
+        $result = $this->db->query(
+            "SELECT provider, COUNT(*) AS providercount FROM channels ".
+            "WHERE source = ".$this->db->quote($source).
+            " AND x_label = '' GROUP BY provider ORDER by providercount DESC"
+        );
+        foreach ($result as $row) {
+            $html_table .= "<tr><td>".htmlspecialchars($row["provider"])."</td><td>".htmlspecialchars($row["providercount"])."</td></tr>\n";
+            $nice_html_body .= "<h2>".htmlspecialchars($row["provider"]). " (" . htmlspecialchars($row["providercount"]) ." channels)</h2>\n<pre>\n";
+            $x = new channelIterator();
+            $x->init2( "SELECT * FROM channels ".
+                "WHERE x_label = '' AND provider = ".$this->db->quote($row["provider"])." ORDER by x_label ASC, lower(name) ASC, source ASC");
+            while ($x->moveToNextChannel() !== false){
+                $nice_html_body .= htmlspecialchars( $x->getCurrentChannelString())."\n";
+            }
+            $nice_html_body .= "</pre>";
+        }
+
+        $html_table .= "</table>\n";
+        $nice_html_output .=
+            $html_table .
+            $nice_html_body.
+            $this->getHTMLFooter();
+        $filename = "grouping_hints_".$source.".html";
+//        $this->addDividerTitle("Reports");
+        $this->addToOverview( "Grouping hints", $filename );
         file_put_contents($this->exportpath . $filename, $nice_html_output );
     }
 
