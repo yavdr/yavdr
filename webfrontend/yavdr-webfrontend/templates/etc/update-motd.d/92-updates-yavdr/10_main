@@ -1,0 +1,4 @@
+result=`/usr/lib/update-notifier/apt-check 2>&1`
+
+dbset system.updates.available=`echo $result | cut -f1 -d";"`
+dbset system.updates.security=`echo $result | cut -f2 -d";"`
