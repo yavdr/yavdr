@@ -1,0 +1,13 @@
+start on started vdr-frontend
+
+description     "check updates"
+author          "Volker Richert <richert@addmore.de>"
+
+task
+
+script
+
+sleep 30
+run-parts /etc/update-motd.d > /etc/motd
+
+end script
