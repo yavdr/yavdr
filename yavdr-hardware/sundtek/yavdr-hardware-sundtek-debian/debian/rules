@@ -38,13 +38,7 @@ install: build
 	# Add here commands to install the package into debian/yavdr-utils.
 	$(MAKE) DESTDIR=$(CURDIR)/debian/yavdr-hardware-sundtek install
 
-
-# Build architecture-independent files here.
-binary-indep: install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: install
+binary-common:
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
@@ -60,7 +54,16 @@ binary-arch: install
 	dh_md5sums
 	dh_builddeb
 
+# Build architecture-independent files here.
+binary-indep: build install
+	$(MAKE) -f debian/rules DH_OPTIONS=-i binary-common
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	$(MAKE) -f debian/rules DH_OPTIONS=-s binary-common
+
 binary: binary-indep binary-arch
+
 .PHONY: build clean binary-indep binary-arch binary install configure
 
 override_dh_fixperms:
