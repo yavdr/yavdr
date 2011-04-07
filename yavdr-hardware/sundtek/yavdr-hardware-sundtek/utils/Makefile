@@ -10,5 +10,6 @@ clean:
 	@rm -rf scansundtek sundtekadapter *.o
 
 install:
+	@mkdir -p $(DESTDIR)/usr/bin/
 	@install scansundtek sundtekadapter $(DESTDIR)/usr/bin/
 	
