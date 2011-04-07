@@ -30,30 +30,30 @@ class rawOutputRenderer {
 
     public function writeRawOutput(){
         //for all existing sources, write unfiltered channels.conf lists to disc
-        foreach ($this->config->getValue("sat_positions") as $sat){
+        foreach ($this->config->getValue("sat_positions") as $sat => $languages){
             $y = new channelListWriter("_complete", $sat);
             $y->writeFile();
         }
-        foreach ($this->config->getValue("cable_providers") as $cablep){
+        foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
             $y = new channelListWriter("_complete", "C[$cablep]");
             $y->writeFile();
         }
-        foreach ($this->config->getValue("terr_providers") as $terrp){
+        foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
             $y = new channelListWriter("_complete", "T[$terrp]");
             $y->writeFile();
         }
         unset($y);
 
         //selections
-        foreach ($this->config->getValue("sat_positions") as $sat){
+        foreach ($this->config->getValue("sat_positions") as $sat => $languages){
             //$this->writeAllChannelSelections2Disk( $sat );
             $this->writeAllUncategorizedChannels2Disk( $sat );
         }
-        foreach ($this->config->getValue("cable_providers") as $cablep){
+        foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
             //$this->writeAllChannelSelections2Disk( "C[$cablep]" );
             $this->writeAllUncategorizedChannels2Disk( "C[$cablep]" );
         }
-        foreach ($this->config->getValue("terr_providers") as $terrp){
+        foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
             //$this->writeAllChannelSelections2Disk( "T[$terrp]" );
             $this->writeAllUncategorizedChannels2Disk( "T[$terrp]" );
         }

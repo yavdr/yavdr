@@ -23,7 +23,6 @@
 */
 
 require_once 'config.php';
-require_once 'class.channelGroupingRulesStore.php';
 
 class config {
 
@@ -42,29 +41,29 @@ class config {
     }
 
     public function getValue($key){
+        $default_lang_de_cable_provider = array("de");
+
         $value = null;
         if ( $key == "path")
             $value = PATH;
         elseif ($key == "exportfolder")
             $value = EXPORTFOLDER;
-        elseif ($key == "groups")
-            $value = channelGroupingRulesStore::getRules();
         elseif ($key == "sat_positions")
             $value = array(
-                "S13E",
-                "S19.2E",
-                "S28.2E"
+                "S13E" => array(),
+                "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl" ),
+                "S28.2E" => array( "en" )
             );
         elseif ($key == "cable_providers")
             $value = array(
-                "de_KabelBW",
-                "de_KabelDeutschland_Speyer",
-                "de_KabelDeutschland_Nuernberg",
-                "de_Primacom_Halberstadt",
-                "de_TeleColumbus_Magdeburg",
-                "de_UnityMediaNRW",
-                "de_WilhelmTel",
-                "at_salzburg-ag"
+                "de_KabelBW" => $default_lang_de_cable_provider,
+                "de_KabelDeutschland_Speyer" => $default_lang_de_cable_provider,
+                "de_KabelDeutschland_Nuernberg" => $default_lang_de_cable_provider,
+                "de_Primacom_Halberstadt" => $default_lang_de_cable_provider,
+                "de_TeleColumbus_Magdeburg" => $default_lang_de_cable_provider,
+                "de_UnityMediaNRW" => $default_lang_de_cable_provider,
+                "de_WilhelmTel" => $default_lang_de_cable_provider,
+                "at_salzburg-ag" => $default_lang_de_cable_provider
             );
         elseif ($key == "terr_providers"){
             $value = array();

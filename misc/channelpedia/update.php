@@ -26,6 +26,7 @@
 require_once 'class.config.php';
 require_once 'class.dbConnection.php';
 require_once 'class.channelGroupIterator.php';
+require_once 'class.channelGroupingManager.php';
 require_once 'class.channelIterator.php';
 require_once 'class.channelImport.php';
 require_once 'class.channelListWriter.php';
@@ -60,7 +61,9 @@ function importFromAllChannelSources(){
             $x->importChannelsConfFile( $fileinfo->getFilename(), $cableProvider, "none" );
         }
     }
-    $x->updateAllLabels();
+    $labeller = new channelGroupingManager();
+    $labeller->updateAllLabels();
+    unset($labeller);
     unset($x);
 }
 ?>

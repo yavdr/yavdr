@@ -43,22 +43,12 @@ class HTMLOutputRenderer{
         $this->config = config::getInstance();
         $this->exportpath = $this->config->getValue("path").$this->config->getValue("exportfolder")."/html/";
 
-        //FIXME: Don't store this like this
-        $source_languages_sat = array(
-            "S13E" => array(),
-            "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl"),
-            "S28.2E" => array( "en")
-        );
-        $source_languages_cable = array(
-            "at_salzburg-ag" => array( "de")//TODO: improve this!
-        );
-
         $this->addDividerTitle("Essential channels (pre-sorted lists)");
 
         $this->addDividerTitle("Satellite positions");
-        foreach ($this->config->getValue("sat_positions") as $sat){
+        foreach ($this->config->getValue("sat_positions") as $sat => $languages){
             $this->addDividerTitle($sat);
-            foreach ($source_languages_sat[$sat] as $language)
+            foreach ($languages as $language)
                 $this->writeNiceHTMLPage( $sat, $language );
             $this->addUncategorizedListLink( $sat );
             $this->renderGroupingHints( $sat );
@@ -67,14 +57,10 @@ class HTMLOutputRenderer{
         }
         $this->closeHierarchy();
         $this->addDividerTitle("Cable providers");
-        foreach ($this->config->getValue("cable_providers") as $cablep){
+        foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
             $this->addDividerTitle($cablep);
-            if (!array_key_exists($cablep, $source_languages_cable)){
-                $this->writeNiceHTMLPage( "C[$cablep]", "de" ); //FIXME: stupid fallback default
-            }
-            else
-                foreach ($source_languages_cable[$cablep] as $language)
-                    $this->writeNiceHTMLPage( "C[$cablep]", $language );
+            foreach ($languages as $language)
+                $this->writeNiceHTMLPage( "C[$cablep]", $language );
             $this->addUncategorizedListLink( "C[$cablep]" );
             $this->renderGroupingHints( "C[$cablep]" );
             $this->addCompleteListLink( "C[$cablep]" );
@@ -82,9 +68,10 @@ class HTMLOutputRenderer{
             }
         $this->closeHierarchy();
         $this->addDividerTitle("Terrestrial providers");
-        foreach ($this->config->getValue("terr_providers") as $terrp){
+        foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
             $this->addDividerTitle($terrp);
-            $this->writeNiceHTMLPage("T[$terrp]", "de");
+            foreach ($languages as $language)
+                $this->writeNiceHTMLPage("T[$terrp]", $language);
             $this->addUncategorizedListLink("T[$terrp]");
             $this->renderGroupingHints( "T[$cablep]" );
             $this->addCompleteListLink("T[$terrp]");
@@ -95,13 +82,13 @@ class HTMLOutputRenderer{
         $this->addDividerTitle("Changelog");
 
         $this->writeChangelog("", 1 ); //general changelog for all sources
-        foreach ($this->config->getValue("sat_positions") as $sat){
+        foreach ($this->config->getValue("sat_positions") as $sat => $languages){
             $this->writeChangelog( $sat );
         }
-        foreach ($this->config->getValue("cable_providers") as $cablep){
+        foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
             $this->writeChangelog( "C[$cablep]" );
         }
-        foreach ($this->config->getValue("terr_providers") as $terrp){
+        foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
             $this->writeChangelog("T[$terrp]");
         }
         $this->closeHierarchy();
