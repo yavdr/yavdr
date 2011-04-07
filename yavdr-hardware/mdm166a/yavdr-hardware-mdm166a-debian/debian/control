@@ -7,7 +7,7 @@ Standards-Version: 3.9.1
 Build-Depends: cdbs, debhelper (>= 7.0.50~)
 
 Package: yavdr-hardware-mdm166a
-architecture: all
+architecture: any
 Depends: ${misc:Depends}, yavdr-utils, vdr-plugin-targavfd, lcdproc
 Description: yavdr-hardware-mdm166a package to install and configure a mdm166a LCD dispaly
  yavdr-hardware-mdm166a package to install and configure a mdm166a LCD display
