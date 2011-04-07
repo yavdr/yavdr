@@ -25,14 +25,6 @@
 ini_set("display_errors", E_ALL);
 
 require_once 'class.config.php';
-require_once 'class.dbConnection.php';
-require_once 'class.channelGroupingManager.php';
-require_once 'class.channelGroupIterator.php';
-require_once 'class.channelIterator.php';
-require_once 'class.channelImport.php';
-require_once 'class.channelListWriter.php';
-require_once 'class.rawOutputRenderer.php';
-require_once 'class.HTMLOutputRenderer.php';
 
 $config = config::getInstance();
 
