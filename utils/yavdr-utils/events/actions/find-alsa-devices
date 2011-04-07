@@ -12,14 +12,16 @@ if [ $(LANG=C aplay -l | grep -i $INTERFACE | wc -l) -eq 1 ]; then
   dbset system.hardware.alsa.${INTERFACE}.device=$DEVICE
 elif [ $(LANG=C aplay -l | grep -i $INTERFACE | wc -l) -eq 4 ]; then
   ELD="`grep -e "monitor_present.*1$" /proc/asound/card?/eld* | cut -d":" -f1`"
-  CARD="$(basename $(dirname $ELD))"; CARD=${CARD#card}
-  ELD=${ELD#*\#} ; ELD=${ELD//.*}
-  DEVICE=$(grep -e "^ *Device:.*" /proc/asound/card$CARD/codec\#${ELD})
-  DEVICE=${DEVICE#*device=}
+  if [ "x$ELD" != "x" ]; then
+    CARD="$(basename $(dirname $ELD))"; CARD=${CARD#card}
+    ELD=${ELD#*\#} ; ELD=${ELD//.*}
+    DEVICE=$(grep -e "^ *Device:.*" /proc/asound/card$CARD/codec\#${ELD})
+    DEVICE=${DEVICE#*device=}
 
-  # put them into db
-  dbset system.hardware.alsa.${INTERFACE}.card=$CARD
-  dbset system.hardware.alsa.${INTERFACE}.device=$DEVICE
+    # put them into db
+    dbset system.hardware.alsa.${INTERFACE}.card=$CARD
+    dbset system.hardware.alsa.${INTERFACE}.device=$DEVICE
+  fi
 fi
 done
 
