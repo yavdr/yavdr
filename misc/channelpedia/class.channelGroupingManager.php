@@ -22,6 +22,7 @@
 *
 */
 
+//TODO: autoload these rule files
 require_once 'grouping_rules/base/class.ruleBase.php';
 require_once 'grouping_rules/class.GermanyEssentials.php';
 require_once 'grouping_rules/class.GermanySatNonEssentials.php';
@@ -57,7 +58,18 @@ class channelGroupingManager{
         $config,
         $rulesets;
 
-    function __construct(){
+    private static $instance = null;
+
+    private function __clone(){}
+
+    public static function getInstance(){
+        if ( self::$instance == null){
+            self::$instance = new channelGroupingManager();
+        }
+        return self::$instance;
+    }
+
+    protected function __construct(){
         $this->config = config::getInstance();
         $this->db = dbConnection::getInstance();
         $this->rulesets = array(

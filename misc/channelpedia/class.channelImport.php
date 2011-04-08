@@ -261,7 +261,7 @@ class channelImport{
     }
 
     public function updateNecessaryLabels(){
-        $labeller = new channelGroupingManager();
+        $labeller = channelGroupingManager::getInstance();
         if ($this->numChanAdded + $this->numChanChanged > 0){
             foreach ($this->foundSatellites as $sat => $dummy){
                 $labeller->updateAllLabelsOfSource($sat);

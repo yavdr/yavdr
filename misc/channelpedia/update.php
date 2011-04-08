@@ -53,7 +53,7 @@ function importFromAllChannelSources(){
             $x->importChannelsConfFile( $fileinfo->getFilename(), $cableProvider, "none" );
         }
     }
-    $labeller = new channelGroupingManager();
+    $labeller = channelGroupingManager::getInstance();
     $labeller->updateAllLabels();
     unset($labeller);
     unset($x);
