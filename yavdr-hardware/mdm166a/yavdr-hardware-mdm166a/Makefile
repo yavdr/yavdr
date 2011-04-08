@@ -10,5 +10,6 @@ install:
 	install 14_comment_out_pre_post_app.template $(DESTDIR)/usr/share/yavdr/templates/etc/init/xbmc.conf/14_comment_out_pre_post_app_mdm166a
 	install 16_end_comment_out_pre_post_app.template $(DESTDIR)/usr/share/yavdr/templates/etc/init/xbmc.conf/14_end_comment_out_pre_post_app_mdm166a
 	install 17_pre_post_app_mdm166a.template $(DESTDIR)/usr/share/yavdr/templates/etc/init/xbmc.conf/17_pre_post_app_mdm166a
+
 clean:
 
