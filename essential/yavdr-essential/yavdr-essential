@@ -44,7 +44,9 @@ vdr
 vdr-addon-acpiwakeup
 vdr-addon-lifeguard
 vdr-genindex
+vdr-plugin-autostart
 vdr-plugin-channellists
+vdr-plugin-dbus2vdr
 vdr-plugin-dummydevice
 vdr-plugin-dynamite
 vdr-plugin-epgsearch
