@@ -53,6 +53,9 @@ class HTMLOutputRenderer{
             $this->addUncategorizedListLink( $sat );
             $this->renderGroupingHints( $sat );
             $this->addCompleteListLink( $sat );
+            if (in_array("de", $languages)){
+                $this->addEPGChannelmapLink( $sat );
+            }
             $this->closeHierarchy();
         }
         $this->closeHierarchy();
@@ -64,6 +67,9 @@ class HTMLOutputRenderer{
             $this->addUncategorizedListLink( "C[$cablep]" );
             $this->renderGroupingHints( "C[$cablep]" );
             $this->addCompleteListLink( "C[$cablep]" );
+            if (in_array("de", $languages)){
+                $this->addEPGChannelmapLink( "C[$cablep]" );
+            }
             $this->closeHierarchy();
             }
         $this->closeHierarchy();
@@ -75,6 +81,9 @@ class HTMLOutputRenderer{
             $this->addUncategorizedListLink("T[$terrp]");
             $this->renderGroupingHints( "T[$cablep]" );
             $this->addCompleteListLink("T[$terrp]");
+            if (in_array("de", $languages)){
+                $this->addEPGChannelmapLink( "T[$terrp]" );
+            }
             $this->closeHierarchy();
         }
         $this->closeHierarchy();
@@ -131,6 +140,13 @@ class HTMLOutputRenderer{
     private function addUncategorizedListLink( $source ){
         $filename = "../raw/channels_".$source."_uncategorized.conf";
         $this->addToOverview("uncategorized rest", $filename);
+    }
+
+    private function addEPGChannelmapLink( $source ){
+        $filename = "../raw/channelmaps/".$source.".epgdata2vdr_channelmap.conf";
+        $this->addToOverview("epgdata2vdr Channelmap", $filename);
+        $filename = "../raw/channelmaps/".$source.".tvm2vdr_channelmap.conf";
+        $this->addToOverview("tvm2vdr Channelmap", $filename);
     }
 
     private function addDividerTitle( $title ){
