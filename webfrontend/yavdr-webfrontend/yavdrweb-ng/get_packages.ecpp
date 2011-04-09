@@ -63,7 +63,17 @@ const char *files[] = {
 	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-xbmc_ubuntu_dists_lucid_main_binary-i386_Packages",
 	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_stable-yavdr_ubuntu_dists_lucid_main_binary-i386_Packages",
 	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_unstable-yavdr_ubuntu_dists_lucid_main_binary-i386_Packages",
-	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-yavdr_ubuntu_dists_lucid_main_binary-i386_Packages"
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-yavdr_ubuntu_dists_lucid_main_binary-i386_Packages",
+	
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_stable-vdr_ubuntu_dists_natty_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_unstable-vdr_ubuntu_dists_natty_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-vdr_ubuntu_dists_natty_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_stable-xbmc_ubuntu_dists_natty_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_unstable-xbmc_ubuntu_dists_natty_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-xbmc_ubuntu_dists_natty_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_stable-yavdr_ubuntu_dists_natty_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_unstable-yavdr_ubuntu_dists_natty_main_binary-i386_Packages",
+	"/var/lib/apt/lists/ppa.launchpad.net_yavdr_testing-yavdr_ubuntu_dists_natty_main_binary-i386_Packages"
 };
 
 const char *whitelist = "/etc/yavdr/package-whitelist.list";
