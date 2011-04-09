@@ -32,6 +32,7 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
   initComponent: function() {
 
     this.sundtekStore = new Ext.data.JsonStore({
+      idProperty: 'key',
       fields: [
         { name: 'key' },
         { type: 'boolean', name: 'disabled' },
@@ -124,7 +125,8 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
         disabled: !found,
         listeners: {
           afterrender: function(list) {
-            list.select('mode-selection-' + value);
+            var rec = this.store.getById(value);
+            list.select(rec);
           }
         }
       }));
@@ -195,8 +197,7 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
         var basic = this.getComponent('basic');
         this.removeAll(true);
         
-        this.insert(1, 
-            {
+        this.insert(1, {
           itemId: 'basic',
           title: _('Basic settings'),
           items: [{

@@ -46,7 +46,7 @@ for (serials_type::const_iterator it = serials.begin(); it != serials.end(); ++i
 	
 	string remoteIP = dbget((char *)("system.hardware.sundtek.stick." + serial + ".info.ip").c_str(), (char *)"");
 	if (remoteIP != "") {
-		string mount = qparam[serial + "|mount+ "];
+		string mount = qparam[serial + "|mount"];
 		if (mount == "1") {
 			dbset(("system.hardware.sundtek.stick." + serial + ".mount=1").c_str());
 		} else {
