@@ -121,17 +121,21 @@ class rawOutputRenderer {
         $map = "";
         foreach ($mapping as $channel => $epgid){
             $sqlquery=
-                "SELECT nid,tid,sid,provider FROM channels WHERE source = ".$db->quote($source)." ".
-                "AND UPPER(name) = " . $db->quote(strtoupper($channel)) . "";
+                "SELECT name, nid, tid, sid, provider FROM channels ".
+                "WHERE source = ".$db->quote($source)." ".
+                "AND vpid != '0' ".
+                "AND (UPPER(name) =" . $db->quote(strtoupper($channel)) . " ".
+                "OR UPPER(name) LIKE " . $db->quote(strtoupper($channel.'%')). " ".
+                ")";
             $result = $db->query($sqlquery);
             $idlist = array();
             $comments = array();
             foreach ($result as $row){
                 $idlist[] = $shortsource . "-" . $row["nid"] . "-" . $row["tid"] . "-" . $row["sid"];
-                $comments[] = $channel . ";" . $row["provider"];
+                $comments[] = $row["name"] . ";" . $row["provider"];
             }
             if (count($idlist) > 0 ){
-                $map .= $epgid . " = " . implode( ",", $idlist ) . " // ".implode( ", ", $comments )."\n";
+                $map .= $epgid . " = " . implode( ",", $idlist ) . " // searched: '".$channel. "' found: " .implode( ", ", $comments )."\n";
             }
         }
         if ($map != ""){
