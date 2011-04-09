@@ -123,7 +123,7 @@ class rawOutputRenderer {
             $sqlquery=
                 "SELECT * FROM channels ".
                 "WHERE source = ".$db->quote($source)." ".
-                "AND vpid != '0' ".
+                "AND vpid != '0' ". //only tv channels
                 "AND ( ".
                 "UPPER(name) =" . $db->quote(strtoupper($channel)) . " ".
                 "OR UPPER(name) =" . $db->quote(strtoupper($channel.' HD')) . " ".
