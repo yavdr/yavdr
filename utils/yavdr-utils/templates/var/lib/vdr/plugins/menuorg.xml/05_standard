@@ -13,5 +13,17 @@
         <plugin name="dvdselect" />
         <plugin name="dvd" />
         <plugin name="xineliboutput" />
+        <plugin name="mplayer" />
+        <plugin name="vcd" />
     </menu>
-
+    <menu name=<?cs call:quote(_("Audio")) ?>>
+        <plugin name="mp3" />
+        <plugin name="music" />
+        <plugin name="lastfm" />
+        <plugin name="radio" />
+        <plugin name="radiolist" />
+        <plugin name="cdda" />
+        <plugin name="cdplayer" />
+        <plugin name="karaoke" />
+        <plugin name="muggle" />
+    </menu>

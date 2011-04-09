@@ -6,3 +6,4 @@
          <plugin name="avolctl" />
          <plugin name="suspendoutput" />
          <plugin name="recstatus" />
+         <plugin name="dynamite" />
