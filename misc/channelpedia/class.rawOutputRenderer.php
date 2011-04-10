@@ -146,22 +146,20 @@ class rawOutputRenderer {
                 $idlist[] = $shortsource . "-" . $row["nid"] . "-" . $row["tid"] . "-" . $row["sid"];
                 $comments[] = $this->config->channelArray2ChannelString($row);
             }
-            $map .=
-                "//\n".
-                "//=======================================================\n".
-                "// '" . $origchannel . "' (" . $epgid . ")\n".
-                "//-------------------------------------------------------\n".
-                "//\n".
-                "//  ";
             if (count($idlist) > 0 ){
                 $map .=
+                    "//\n".
+                    "//=======================================================\n".
+                    "// '" . $origchannel . "' (" . $epgid . ")\n".
+                    "//-------------------------------------------------------\n".
+                    "//\n".
+                    "//  ".
                     "found matches:\n//    " .implode( "\n//    ", $comments )."\n//\n".
                     $epgid . " = " . implode( ",", $idlist )."\n"
                     ;
             }
             else{
-                $map .= "not found: unable to match in channels.conf.\n";
-                $notfoundlist[] = $origchannel;
+                $notfoundlist[] = $origchannel . " (" . $epgid . ")";
             }
         }
         if ($map != ""){
@@ -199,6 +197,9 @@ class rawOutputRenderer {
         case "ZDFneo":
             $channel = "ZDF_neo";
             break;
+        case "ZDFinfo":
+            $channel = "ZDFinfokanal";
+            break;
         case "SAT1":
             $channel = "SAT.1";
             break;
@@ -208,9 +209,11 @@ class rawOutputRenderer {
         case "S RTL":
             $channel = "Super RTL";
             break;
-
         case "RTL II":
             $channel = "RTL2";
+            break;
+        case "DSF":
+            $channel = "Sport1";
             break;
         case "VIVA":
             $channel = "VIVA Germany";
