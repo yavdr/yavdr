@@ -132,7 +132,7 @@ class rawOutputRenderer {
                 "SELECT * FROM channels ".
                 "WHERE source = ".$db->quote($source)." ".
                 "AND vpid != '0' ". //only tv channels
-                "AND x_label LIKE 'de.%' ".
+                "AND (x_label LIKE 'de.%' OR x_label LIKE 'at.%' OR x_label LIKE 'ch.%') ".
                 "AND ( ".
                 $querypart.
                 "OR UPPER(name) LIKE" . $db->quote(strtoupper($channel.' HD%')) . " ".
@@ -173,11 +173,15 @@ class rawOutputRenderer {
                 "// created on: ". date("D M j G:i:s T Y")."\n".
                 "// only valid for provider/source ". $source . "\n".
                 "//\n".
-                $map.
-                "//\n".
                 "//=======================================================\n".
-                "// complete list of unmatched channels:\n".
-                "// ".implode( ", ", $notfoundlist);
+                "// WARNING: We couldn't match the following channels:\n".
+                "// You have to care for them manually.\n".
+                "// Do these channels exist with your provider?\n".
+                "//  ".implode( "\n//  ", $notfoundlist).
+                "\n//\n".
+                $map.
+                "//\n";
+
             $gpath = $this->config->getValue("path"). $this->config->getValue("exportfolder")."/raw/channelmaps/";
             $filename = $gpath . $source . '.' . $epgservice . '2vdr_channelmap.conf';
             print "Writing channelmap $filename\n";
@@ -233,8 +237,9 @@ class rawOutputRenderer {
         case "BR":
             $channel = "Bayerisches FS %";
             break;
+        case "BR alpha":
         case "BR Alpha":
-            $channel = "BR-Alpha";
+            $channel = "BR-alpha";
             break;
         case "SKY Fußball Bundesliga"://do not use UTF-8 here!!!
             $channel = "SKY Bundesliga";
