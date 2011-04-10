@@ -122,23 +122,27 @@ class rawOutputRenderer {
         $notfoundlist = array();
         foreach ($mapping as $channel => $epgid){
             $origchannel = $channel;
-            $channel = $this->fixChannelName($channel);
-            if (substr($channel, -1, 1) == "%")
-                $querypart = "UPPER(name) LIKE" . $db->quote(strtoupper($channel)) . " ";
-            else
-                $querypart = "UPPER(name) =" . $db->quote(strtoupper($channel)) . " ";
-
+            $channelvariants = $this->fixChannelName($channel);
+            $queryparts = array();
+            foreach ($channelvariants as $channel){
+                if (substr($channel, -1, 1) == "%")
+                    $queryparts[] =
+                        "UPPER(name) LIKE" . $db->quote(strtoupper($channel)) . " ";
+                else
+                    $queryparts[] =
+                        "UPPER(name) =" . $db->quote(strtoupper($channel)) . " ".
+                        "OR UPPER(name) LIKE" . $db->quote(strtoupper($channel.' HD%')) . " ".
+                        "OR UPPER(name) LIKE " . $db->quote(strtoupper($channel.',%')). " ".
+                        "OR UPPER(name) LIKE " . $db->quote(strtoupper($channel.'.%')). " ";
+            }
             $sqlquery=
                 "SELECT * FROM channels ".
                 "WHERE source = ".$db->quote($source)." ".
                 "AND vpid != '0' ". //only tv channels
                 "AND (x_label LIKE 'de.%' OR x_label LIKE 'at.%' OR x_label LIKE 'ch.%') ".
                 "AND ( ".
-                $querypart.
-                "OR UPPER(name) LIKE" . $db->quote(strtoupper($channel.' HD%')) . " ".
-                "OR UPPER(name) LIKE " . $db->quote(strtoupper($channel.',%')). " ".
-                "OR UPPER(name) LIKE " . $db->quote(strtoupper($channel.'.%')). " ".
-            ")";
+                implode( " OR ", $queryparts).
+                ")";
             $result = $db->query($sqlquery);
             $idlist = array();
             $comments = array();
@@ -189,44 +193,54 @@ class rawOutputRenderer {
 
     //this is the most stupid way to fix the problem
     private function fixChannelName($channel){
-
-        switch ($channel) {
+        $variants = array($channel);
+        switch (strtoupper($channel)) {
         case "ARD":
-            $channel = "Das Erste";
+            $variants[] = "Das Erste";
             break;
-        case "ZDFneo":
-            $channel = "ZDF_neo";
+        case "ZDFNEO":
+            $variants[] = "ZDF_neo";
             break;
-        case "ZDFinfo":
-            $channel = "ZDFinfokanal";
+        case "ZDFINFO":
+            $variants[] = "ZDFinfokanal";
             break;
         case "SAT1":
-            $channel = "SAT.1";
+        case "SAT.1":
+            $variants[] = "SAT.1";
+            $variants[] = "SAT. 1";
+            $variants[] = "SAT.1 Bayern";
+            $variants[] = "SAT.1 HH/SH";
+            $variants[] = "SAT.1 NRW";
+            $variants[] = "SAT.1 NS/Bremen";
+            $variants[] = "SAT.1 RhlPf/Hessen";
             break;
         case "RTL":
-            $channel = "RTL Television"; // doesn't work good
+            $variants[] = "RTL Television";
+            $variants[] = "RTL FS";
+            $variants[] = "RTL HB NDS";
+            $variants[] = "RTL HH %";
+            $variants[] = "RTL Austria";
             break;
         case "S RTL":
-            $channel = "Super RTL";
+            $variants[] = "Super RTL";
             break;
         case "RTL II":
-            $channel = "RTL2";
+            $variants[] = "RTL2";
             break;
         case "DSF":
-            $channel = "Sport1";
+            $variants[] = "Sport1";
             break;
         case "VIVA":
-            $channel = "VIVA Germany";
+            $variants[] = "VIVA Germany";
             break;
-        case "Ki.Ka":
         case "KI.KA":
-            $channel = "KIKA";
+            $variants[] = "KIKA";
             break;
         case "ORF 1":
-            $channel = "ORF1";
+            $variants[] = "ORF1";
             break;
         case "ORF 2":
-            $channel = "ORF2";
+            $variants[] = "ORF2";
             break;
         case "NDR":
         case "NDR":
@@ -235,47 +249,30 @@ class rawOutputRenderer {
         case "WDR":
         case "SWR":
         case "RBB":
-            $channel = $channel."%";
+            $variants[] = $channel."%";
             break;
         case "BR":
-            $channel = "Bayerisches FS %";
+            $variants[] = "Bayerisches FS %";
             break;
-        case "BR alpha":
-        case "BR Alpha":
-            $channel = "BR-alpha";
+        case "BR ALPHA":
+            $variants[] = "BR-alpha";
             break;
-        case "SKY Fußball Bundesliga"://do not use UTF-8 here!!!
-            $channel = "SKY Bundesliga";
+        //case "SKY Fußball Bundesliga"://do not use UTF-8 here!!!
+        //    $variants[] = "SKY Bundesliga";
+        //    break;
+        case "SKY SPORT HD":
+            $variants[] = "SKY Sport HD 1";
             break;
-        case "SKY Sport HD":
-            $channel = "SKY Sport HD 1";
+        case "RHEINMAINTV":
+            $variants[] = "rhein main TV";
             break;
-        case "rheinmainTV":
-            $channel = "rhein main TV";
-            break;
-        case "National Geographic HD":
-            $channel = "NatGeo HD";
+        case "NATIONAL GEOGRAPHIC HD":
+            $variants[] = "NatGeo HD";
             break;
         }
 
-
-        return $channel;
+        return $variants;
     }
-
-/*
-NTV, Kabel, DSF, ORF 1, ORF 2, B3, NDR, SF 1, H3, RBB, WDR, SWR, ATV+,
- MDR, TV Berlin, SF 2, TV München, HH1, BR Alpha, Ki.Ka, NL1, NL2, NL3, DK1, DK2, Tele5, MTV,
-  VIVA, CNN, TV5, QVC, S RTL, Home Shopping Europe, EinsMuXx, Planet, SCI FI, Beate-Uhse-TV,
-   XXP, ZDFInfo, Discovery Geschichte, FOCUS Gesundheit, RTL Shop, Silverline, Bibel-TV, BBC,
-    ESPN Classic Sport, NASN, History Channel, Extreme Sports Channel, Wetter Fernsehen, tv.gusto premium,
-     Sailing Channel, Gute Laune TV, Trace.TV, SPIEGEL TV XXP DIGITAL, E! Entertainment Television,
-      Fashion TV, münchen 2, The Biography Channel, Turner Classic Movies, MTV Base,
-      Kanal 7 Int, Zone Reality Europe, Baby TV, The Karaoke Channel, Tier TV,
-       ATV Avrupa, Detski Mir / Teleclub, Euro D, Euro Star, iTVN, LIG TV, RTR-Planeta, Nashe Kino,
-        Show Turk, RTVi, Türkmax, DELUXE MUSIC TV, MTV Entertainment, Nick Premium, FOX Channel, TIMM,
-         SKY Fußball Bundesliga, SKY Sport HD, National Geographic Wild, TGRT EU, BloombergTV, fashiontv HD, sportdigital.tv, National Geographic HD, Sonnenklar.TV, LUST PUR, BBC Entertainment, OKTO TV, AutoMotorSportChannel, Austria9, yourfamilyentertainment, NRW.TV, PULS 4, Alpengluehen TVX, Nick jr., iMusic1, Astro TV
-*/
-
 
 }
 
