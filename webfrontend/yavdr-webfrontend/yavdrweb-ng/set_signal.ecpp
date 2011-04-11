@@ -72,7 +72,7 @@ if (
 	}
 	else if (signal == "change-sound" )
 	{
-		if ((value == "analog") || (value == "spdif") || (value == "hdmi") || (value == "passthrough") || (value == "hdmi+analog"))
+		if ((value == "analog") || (value == "spdif") || (value == "hdmi") || (value == "passthrough") || (value == "all"))
 		{
 			int err = dbset("system.sound.type=%s", value.c_str());
 		}
