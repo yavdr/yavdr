@@ -2,7 +2,8 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
   data: {},
   itemId: 'settings-hw-remote',
   title: _('Settings'),
-  description: '<p>' + _('In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press "Save" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device "On Screen Display". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the "Learning Phase" by pressing "Save" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it.') + '</p>',
+  description: _('Here you can configure your remote hardware. The default and most common choice is EventLircd.'),
+//  description: _('<p>In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press "Save" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device "On Screen Display". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the "Learning Phase" by pressing "Save" again..<br>&nbsp;</p><h2>EventLircd</h2><p>Most common choice with autodetect hardware.<br>&nbsp;</p><h2>Lirc</h2><p>In case of serial port conntected devices, please also choose the correct driver and port.<br>&nbsp;</p>'),
   initComponent: function() {
 
     this.lircForm = new YaVDR.Component.Settings.HwRemote.LIRC({
@@ -15,13 +16,13 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
 
     this.items = [
       new YaVDR.Component.Item({
-        title: _('LIRC'),
+        title: _('EventLircd'),
         style: 'margin-bottom: 5px',
-        items: this.lircForm
+        items: this.eventlircdForm
       }),
       new YaVDR.Component.Item({
-        title: _('EventLircd'),
-        items: this.eventlircdForm
+        title: _('LIRC'),
+        items: this.lircForm
       })
     ];
     YaVDR.Component.Settings.HwRemote.superclass.initComponent.call(this);
