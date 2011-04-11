@@ -27,6 +27,11 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
       ],
       data: [
         {
+          key: 'all',
+          title: _('Output to all devices'),
+          description: _('Audio output will happen to all outputs. The default choice.')
+        },
+        {
           key: 'analog',
           title: _('Analog'),
           description: _('Audio output will happen through the speaker/headphone plug')
@@ -40,11 +45,6 @@ YaVDR.Component.Settings.HwAudio.Audio = Ext.extend(YaVDR.Default.Form, {
           key: 'hdmi',
           title: _('HDMI-Stereo'),
           description: _('Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets).')
-        },
-        {
-          key: 'hdmi+analog',
-          title: _('HDMI-Analog'),
-          description: _('Audio output will happen through HDMI and analog at the same time. HDMI will be stereo.')
         },
         {
           key: 'passthrough',
