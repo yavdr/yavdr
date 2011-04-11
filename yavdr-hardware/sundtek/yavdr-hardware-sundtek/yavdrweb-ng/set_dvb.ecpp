@@ -54,6 +54,11 @@ for (serials_type::const_iterator it = serials.begin(); it != serials.end(); ++i
 		}
 	}
 }
+
+
+string cmd = "/usr/bin/signal-event sundtek-hardware";
+int ret = system( cmd.c_str() );
+
 success = "true"; //TODO: use ret to find out if we were successful.
 
 </%cpp>{

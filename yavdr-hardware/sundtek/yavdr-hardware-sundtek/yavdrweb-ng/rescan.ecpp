@@ -11,17 +11,12 @@ extern "C" {
 #include <yavdr/common.h>
 
 using namespace std;
-</%pre><& authenticate@yavdrweb ><%args>
-signal_params = "";
-</%args><%cpp>
+</%pre><& authenticate@yavdrweb ><%cpp>
 
 string success = "false";
 int ret = 0;
 
 string cmd = "/usr/bin/signal-event rescan-sundtek";
-if (signal_params != "") {
-	cmd += " " + signal_params;
-}
 
 ret = system( cmd.c_str() );
 success = "true"; //TODO: use ret to find out if we were successful.
