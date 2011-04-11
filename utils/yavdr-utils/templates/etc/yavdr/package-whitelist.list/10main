@@ -4,6 +4,8 @@ vdr-plugin-svdrpext
 vdr-plugin-dvbsddevice
 vdr-plugin-examples
 vdr-plugin-markad
+vdr-plugin-dbus2vdr
+vdr-plugin-dbus
 vdr-plugin-yaepghd-themes
 vdr-plugin-targavfd
 vdr-plugin-imonlcd
@@ -12,7 +14,6 @@ vdr-plugin-cdplayer
 vdr-plugin-cdda
 vdr-plugin-filebrowser
 vdr-plugin-fritzbox
-vdr-plugin-pvr350
 vdr-plugin-advchctrl
 vdr-plugin-arghdirector
 vdr-plugin-atmo
@@ -25,11 +26,11 @@ vdr-plugin-avards
 vdr-plugin-calc
 vdr-plugin-cinebars
 vdr-plugin-autosort
+vdr-plugin-autostart
 vdr-plugin-bewegung
 vdr-plugin-dvd
 vdr-plugin-epgsync
 vdr-plugin-devstatus
-vdr-plugin-dxr3
 vdr-plugin-extb
 vdr-plugin-chanorg
 vdr-plugin-director
@@ -79,6 +80,7 @@ vdr-plugin-radio
 vdr-plugin-recstatus
 vdr-plugin-remoteosd
 vdr-plugin-pvrinput
+vdr-plugin-pvr350
 vdr-plugin-mailbox
 vdr-plugin-scheduler
 vdr-plugin-skinelchi
@@ -89,6 +91,8 @@ vdr-plugin-sndctl
 vdr-plugin-softdevice
 vdr-plugin-serial
 vdr-plugin-rotor
+vdr-plugin-streamdev-client
+vdr-plugin-streamdev-server
 vdr-plugin-skinsoppalusikka
 vdr-plugin-rssreader
 vdr-plugin-skinenigmang
@@ -104,6 +108,7 @@ vdr-plugin-tvm2vdr
 vdr-plugin-taste
 vdr-plugin-trayopen
 vdr-plugin-systeminfo
+vdr-plugin-sundtek
 vdr-plugin-spider
 vdr-plugin-tvonscreen
 vdr-plugin-upnp
