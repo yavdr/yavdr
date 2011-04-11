@@ -1,0 +1,158 @@
+Sixx::694
+Das Erste::71
+ZDF::37
+RTL::38
+Sat.1::39
+ProSieben::40
+kabel eins::44
+RTL II::41
+VOX::42
+Super RTL::43
+3sat::56
+Arte::58
+Das VIERTE::486
+NDR::47
+WDR::46
+SWR::50
+BR::51
+MDR::48
+RBB::52
+HR::49
+HH 1::153
+TV.Berlin::1192
+Spreekanal::236
+Franken TV::151
+Oberpfalz TV::185
+Rhein-Neckar-Fernsehen::211
+M&uuml;nchen TV::262
+n-tv::66
+N24::175
+Phoenix::194
+Eurosport::65
+SPORT1::64
+VIVA::266
+MTV::70
+KI.KA::57
+EinsExtra::100
+EinsFestival::146
+BR alpha::104
+ZDFtheaterkanal::275
+ZDFinfokanal::276
+HSE24::159
+QVC::208
+9Live::1179
+Tele 5::277
+Bibel TV::280
+CNN::69
+BBC World News::67
+Euronews::68
+Cartoon Network::132
+TF 1::252
+France 2::149
+France 3::150
+TV 5::260
+RAI 1::209
+RAI 2::210
+ORF 1::54
+ORF 2::55
+ATV::115
+SF1::59
+SF2::60
+Disney Channel::139
+Discovery Channel::138
+Junior::160
+Planet::195
+Classica::133
+Goldstar TV::152
+Beate-Uhse.TV::123
+MGM::1196
+Heimatkanal::154
+Animal Planet::1183
+SF Info::231
+TW 1::265
+VH1 Classic::296
+Bloomberg TV::127
+Canale 5::297
+Italia 1::298
+Schweiz 5::299
+Deutsche Welle TV::300
+Go TV::391
+rheinmainTV::403
+Kinowelt TV::450
+Silverline::451
+History::452
+National Geographic::453
+E! Entertainment::454
+Fashion TV::455
+Playhouse Disney::460
+MTV Dance::465
+MTV Hits UK::466
+AXN::468
+Extreme Sports Channel::469
+13th Street::471
+Syfy::472
+ESPN Classic::473
+EinsPlus::475
+Focus Gesundheit::476
+Spiegel TV::482
+Gute Laune TV::487
+Discovery HD::490
+Sat.1 Comedy::491
+kabel eins classics::492
+Eurosport 2::504
+DMAX::507
+RAI 3::508
+RTL Crime::527
+RTL Living::528
+Passion::529
+The Biography Channel::536
+Anixe HD::537
+CNBC Paneurope::538
+Animax::539
+3plus::544
+MTV Entertainment::553
+Sportdigital.tv::564
+FOX::565
+TIMM::588
+Nickelodeon / Comedy Central::589
+TNT Serie::590
+ESPN America::591
+Sky Cinema::610
+Sky Cinema +1::611
+Sky Cinema +24::612
+Sky Action::613
+Sky Nostalgie::614
+Sky Krimi::615
+Sky Emotion::616
+Sky Comedy::617
+Sky Cinema Hits::618
+Sky Sport 1::619
+Sky Sport 2::620
+Sky Sport HD 1::621
+Sky Sport Austria::622
+Sky Fu&szlig;ball Bundesliga::623
+National Geographic HD::624
+Spiegel Geschichte::625
+National Geographic Wild::626
+Motorvision TV::627
+Sky Select::628
+Sky Cinema HD::629
+Disney Cinemagic::630
+Disney Cinemagic HD::631
+History HD::632
+TNT Film::633
+Lust Pur::634
+iMusic::635
+Disney XD::657
+ZDFneo::659
+Servus TV::660
+Sky Sport HD 2::697
+SPORT1+::698
+RSI LA1::255
+RSI LA2::256
+TSR 1::257
+TSR 2::258
+Star TV::232
+Tele Bielingue::248
+Sky Action HD::10058
+Sky Cinema Hits HD::10059

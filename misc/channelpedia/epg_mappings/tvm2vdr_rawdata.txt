@@ -1,0 +1,193 @@
+ARD::001
+ZDF::002
+RTL::004
+SAT1::005
+PROSieben::006
+NTV::007
+Kabel::008
+RTL II::009
+Arte::010
+VOX::011
+DSF::012
+EURONEWS::013
+ORF 1::014
+ORF 2::015
+B3::018
+NDR::019
+SF 1::024
+H3::026
+RBB::027
+WDR::028
+SWR::029
+ATV+::031
+MDR::032
+TV Berlin::038
+SF 2::039
+TV München::044
+HH1::054
+BR Alpha::057
+9Live::059
+Ki.Ka::063
+N24::065
+Das Vierte::067
+NL1::088
+NL2::089
+NL3::090
+DK1::091
+DK2::092
+Tele5::105
+EUROSPORT::107
+MTV::109
+3SAT::118
+VIVA::121
+CNN::126
+TV5::133
+QVC::136
+S RTL::179
+Home Shopping Europe::189
+Nick::190
+Phoenix::206
+SKY Cinema Hits HD::401
+SKY Action HD::402
+13th Street::501
+Classica::508
+Discovery Channel::510
+Disney Channel::511
+EinsFestival::512
+EinsMuXx::513
+Goldstar TV::516
+Heimatkanal::517
+Junior::518
+Planet::521
+SCI FI::541
+Beate-Uhse-TV::544
+EinsExtra::551
+ZDFtheaterkanal::552
+ZDF_neo::553
+XXP::554
+MGM::565
+Animal Planet::568
+ZDFInfo::570
+Discovery Geschichte::572
+FOCUS Gesundheit::573
+RTL Shop::574
+AXN::576
+Kinowelt TV::577
+Silverline::578
+Bibel-TV::579
+BBC::581
+Playboy TV::582
+Playhouse Disney::583
+ESPN Classic Sport::584
+NASN::585
+MTV Hits::588
+History Channel::589
+K-TV::590
+VH1 Classic::591
+MTV Dance::592
+National Geographic::593
+Extreme Sports Channel::594
+Wetter Fernsehen::595
+tv.gusto premium::597
+Motors TV::598
+Sailing Channel::600
+Gute Laune TV::601
+Trace.TV::602
+SPIEGEL TV XXP DIGITAL::605
+E! Entertainment Television::606
+Fashion TV::607
+TW1::609
+kabel eins classics::610
+Sat.1 Comedy::611
+Boomerang::612
+Discovery HD::614
+münchen 2::620
+RTL Crime::621
+RTL Living::622
+RTL Passion::623
+Comedy Central::625
+The Biography Channel::626
+Cartoon Network::627
+Turner Classic Movies::628
+Animax::629
+Eurosport 2::630
+MTV Base::632
+MEZZO::633
+Kanal 7 Int::634
+MTV Music::637
+Zone Reality Europe::638
+MCM Top::639
+Baby TV::641
+The Karaoke Channel::642
+Tier TV::643
+YAVIDO::644
+ATV Avrupa::645
+Detski Mir / Teleclub::646
+Euro D::647
+Euro Star::648
+iTVN::650
+LIG TV::651
+RTR-Planeta::652
+TV Polonia::653
+TVP Info::654
+TVP Kultura::655
+Nashe Kino::656
+Show Turk::657
+RTVi::658
+Türkmax::659
+DELUXE MUSIC TV::660
+MTV Entertainment::661
+Nick Premium::662
+FOX Channel::663
+Romance TV::664
+TIMM::665
+Anixe HD::666
+SKY Cinema::667
+SKY Cinema +24::668
+SKY Cinema Hits::669
+SKY Action::670
+SKY Emotion::671
+SKY Comedy::672
+SKY Krimi::673
+SKY Cinema +1::674
+SKY Nostalgie::675
+SKY Sport Austria::676
+SKY Fußball Bundesliga::677
+SKY Sport 1::678
+SKY Sport 2::679
+SKY Cinema HD::680
+SKY Sport HD::681
+National Geographic Wild::682
+Disney Cinemagic::683
+Spiegel Geschichte::684
+TNT Serie::685
+TGRT EU::686
+BloombergTV::687
+Disney XD::689
+fashiontv HD::691
+sportdigital.tv::692
+National Geographic HD::693
+Disney Cinemagic HD::694
+Eurosport HD::695
+Sixx::696
+Sonnenklar.TV::697
+HISTORY HD::698
+MOTORVISION TV::699
+LUST PUR::700
+BBC Entertainment::701
+OKTO TV::702
+gotv::703
+AutoMotorSportChannel::704
+Austria9::705
+yourfamilyentertainment::706
+NRW.TV::707
+PULS 4::708
+SKY Sport HD 2::709
+RNF::710
+Alpengluehen TVX::711
+Blue Movie 2::712
+Blue Movie 3::713
+Blue Movie 1::714
+Nick jr.::715
+iMusic1::716
+Astro TV::717

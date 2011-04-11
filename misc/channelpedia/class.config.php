@@ -31,6 +31,7 @@ require_once 'class.channelImport.php';
 require_once 'class.channelListWriter.php';
 require_once 'class.rawOutputRenderer.php';
 require_once 'class.HTMLOutputRenderer.php';
+require_once 'class.epg2vdrMapper.php';
 
 class config {
 
