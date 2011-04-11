@@ -74,8 +74,9 @@ class epg2vdrMapper{
                     $queryparts[] =
                         "UPPER(name) =" . $this->db->quote(strtoupper($channel)) . " ".
                         "OR UPPER(name) LIKE" . $this->db->quote(strtoupper($channel.' HD%')) . " ".
-                        "OR UPPER(name) LIKE " . $this->db->quote(strtoupper($channel.',%')). " ".
-                        "OR UPPER(name) LIKE " . $this->db->quote(strtoupper($channel.'.%')). " ";
+                        "OR UPPER(name) LIKE " . $this->db->quote(strtoupper($channel.',%')). " ";
+                        //"OR UPPER(name) LIKE " . $this->db->quote(strtoupper($channel.'.%')). " ";
+                        //line above maybe only matches outdated sky channels?? check!
             }
             $sqlquery=
                 "SELECT * FROM channels ".
@@ -184,7 +185,6 @@ class epg2vdrMapper{
         case "ORF 2":
             $variants[] = "ORF2";
             break;
-        case "NDR":
         case "NDR":
         case "HR":
         case "MDR":

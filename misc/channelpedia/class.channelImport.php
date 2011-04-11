@@ -78,11 +78,10 @@ class channelImport{
      */
 
     private function updateExistingChannels(){
-
+        $query = $this->db->exec("BEGIN TRANSACTION");
         foreach ($this->existingChannelBuffer as $params){
             //print "checking channel ".$params["name"]." for changes: ";
             $result = $this->db->query2( "SELECT * FROM channels", $this->getWhereArray( "source, nid, tid, sid", $params ) );
-            $query = $this->db->exec("BEGIN TRANSACTION");
             foreach ($result as $row){
                 if ($row["x_timestamp_added"] == $this->timestamp){
                     print "ERROR: Trying to update channel ".$params["name"]." that was added earlier! Double channel entry!\n";
@@ -102,7 +101,9 @@ class channelImport{
                             $update_data[] = "$key = ".$this->db->quote( $value);
                         }
                     }
-                    $update_data[] = "x_last_changed = ".time();
+                    $update_data[] = "x_last_changed = ". $this->timestamp;
+                    $update_data[] = "x_last_confirmed = " . $this->timestamp;
+
                     if (count ($changes) != 0){
                         //print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
                         $query = $this->db->exec2(
@@ -114,19 +115,24 @@ class channelImport{
                                 "combined_id"        => $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"],
                                 "name"               => $params["name"],
                                 "update_description" => implode("\n",$changes),
-                                "timestamp"          => time(),
+                                "timestamp"          => $this->timestamp,
                                 "importance"         => $importance
                             )
                         );
                         $this->numChanChanged++;
                     }
                     else{
-                        //print "channel unchanged.\n";
+                        //print "channel unchanged, but update x_last_confirmed\n";
+                        //channel unchanged, but update x_last_confirmed
+                        $query = $this->db->exec2(
+                            "UPDATE channels SET x_last_confirmed = " . $this->timestamp,
+                            $this->getWhereArray( "source, nid, tid, sid", $params )
+                        );
                     }
                 }
             }
-            $query = $this->db->exec("COMMIT TRANSACTION");
         }
+        $query = $this->db->exec("COMMIT TRANSACTION");
     }
 
     /*
@@ -205,7 +211,7 @@ class channelImport{
                 "combined_id" => $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"],
                 "name" => $params["name"],
                 "update_description" => "New channel added: " . $rawstring,
-                "timestamp" => time(),
+                "timestamp" => $this->timestamp,
                 "importance" => "1"
             );
             $query = $this->db->insert( "channel_update_log", $insert_params);
@@ -243,7 +249,7 @@ class channelImport{
             "name"            => $cname,
             "provider"        => $cprovider,
             "frequency"       => $details[1],
-            "modulation"      => $details[2],
+            "modulation"      => strtoupper($details[2]), //w_scan has lower case, we don't want that
             "source"          => $details[3],
             "symbolrate"      => $details[4],
             "vpid"            => $details[5],
@@ -255,8 +261,9 @@ class channelImport{
             "tid"             => $details[11],
             "rid"             => $details[12],
             "x_label"         => "",
-            "x_last_changed"  => time(),
-            "x_timestamp_added" => $this->timestamp
+            "x_last_changed"  => $this->timestamp,
+            "x_timestamp_added" => $this->timestamp,
+            "x_last_confirmed" => 0
         );
     }
 

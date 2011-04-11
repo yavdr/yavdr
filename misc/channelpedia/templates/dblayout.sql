@@ -37,8 +37,8 @@ CREATE TABLE channels(
     tid TEXT,
     rid INTEGER,
     x_label TEXT,
-    x_last_changed TIMESTAMP,
     x_timestamp_added TIMESTAMP,
+    x_last_changed TIMESTAMP,
     x_last_confirmed TIMESTAMP,
     PRIMARY KEY ( source, nid, tid, sid)
 );

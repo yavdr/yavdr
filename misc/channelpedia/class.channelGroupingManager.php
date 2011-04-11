@@ -106,6 +106,7 @@ class channelGroupingManager{
     }
 
     public function updateAllLabelsOfSource( $source ){
+        $query = $this->db->exec("BEGIN TRANSACTION");
         $sourcetype = substr($source, 0, 1);
         foreach ( $this->rulesets as $title => $object){
             $config = $object->getConfig();
@@ -158,6 +159,7 @@ class channelGroupingManager{
                 }
             }
         }
+        $query = $this->db->exec("COMMIT TRANSACTION");
     }
 
     /*

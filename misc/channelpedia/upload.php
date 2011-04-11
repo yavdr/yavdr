@@ -22,7 +22,7 @@
 *
 */
 
-ini_set("display_errors", E_ALL);
+//ini_set("display_errors", E_ALL);
 
 require_once 'class.config.php';
 

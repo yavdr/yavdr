@@ -98,7 +98,7 @@ class dbConnection {
     }
 
     public function query( $statement ){
-        //print "Query: $statement\n";
+        //print "Query: $statement\n\n";
         $result = $this->dbh->query( $statement );
         if ($result === false)
             die( "\nDB-Error: " . $this->dbh->errorCode() . " / " . $statement );
@@ -113,6 +113,7 @@ class dbConnection {
     }
 
     public function exec( $statement ){
+        //print "Exec: $statement\n\n";
         $errorcode = 0;
         $result = $this->dbh->exec( $statement );
         if ($result === false){
