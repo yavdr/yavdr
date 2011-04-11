@@ -1,8 +1,15 @@
 #!/bin/bash
 
+CARD="`cat /proc/asound/cards | grep "\[NVidia" | cut -b2`"
+
 amixer set 'Master' unmute
 amixer set 'IEC958' unmute
 amixer set 'IEC958,1' unmute
 amixer set 'PCM' unmute
+
+amixer set -c$CARD 'IEC958' unmute
+amixer set -c$CARD 'IEC958,1' unmute
+amixer set -c$CARD 'IEC958,2' unmute
+amixer set -c$CARD 'IEC958,3' unmute
 
 alsactl store all
