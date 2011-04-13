@@ -12,19 +12,3 @@
            post_unmount_command = "mount-notify unmounted %device_file %mount_point"
            post_unmount_command = "/usr/bin/vdr-mounter --unmount %mount_point" 
        }
-
-root@zotac-natty:/home/yavdr-natty# cat /etc/udisks-glue/config
-       filter disks {
-           optical = false
-           partition_table = false
-           usage = filesystem
-       }
-
-       match disks {
-           automount = true
-#           automount_options = sync
-           post_mount_command = "mount-notify mounted %device_file %mount_point" 
-           post_mount_command = "/usr/bin/vdr-mounter --mount %mount_point"
-           post_unmount_command = "mount-notify unmounted %device_file %mount_point"
-           post_unmount_command = "/usr/bin/vdr-mounter --unmount %mount_point" 
-       }
