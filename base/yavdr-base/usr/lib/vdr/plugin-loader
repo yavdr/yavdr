@@ -22,7 +22,7 @@ if [ -r "$PLUGIN_CFG_DIR/order.conf" ]; then
    # move ordered plugins to list of ordered plugins
    for plugin in ${plugin_order[@]}; do
        for (( i=0 ; i<${#installed_plugins[@]} ; i++ )); do
-           if [ "$plugin" = "-${installed_plugins[$i]}" ]; then
+           if [ "$plugin" = "-${installed_plugins[$i]}" -o "$plugin" = "-*${installed_plugins[$i]}" ]; then
               unset installed_plugins[$i]
               installed_plugins=( "${installed_plugins[@]}" )
               break
