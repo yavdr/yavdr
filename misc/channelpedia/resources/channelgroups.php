@@ -75,9 +75,6 @@ class channelgroupsResource extends Resource {
             }
         }
         return $response;
-
     }
-
 }
-
 ?>
