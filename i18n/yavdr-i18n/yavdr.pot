@@ -80,9 +80,7 @@ msgid "Miscellaneous_on_"
 msgstr ""
 
 #: end avahi-mounter
-
 #: begin web front end
-
 #: yavdrweb-ng/static/javascripts/component/settings/hw_audio.js
 
 msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
@@ -618,7 +616,6 @@ msgid "Schedule"
 msgstr ""
 
 #: yavdrweb-ng/static/javascripts/component/recordings.js
-
 #: yavdrweb-ng/static/javascripts/component/settings.js
 
 msgid "Here you can configure your VDR and applications around it."
