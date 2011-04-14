@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: yavdri18n\n"
+"Project-Id-Version: yavdr-i18n\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Holger Schvestka <hotzenplotz5@gmx.de>\n"
