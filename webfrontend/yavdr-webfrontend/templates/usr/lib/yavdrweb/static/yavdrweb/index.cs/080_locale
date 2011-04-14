@@ -15,18 +15,17 @@
 <?cs /if ?>
  
         function _(msgid) {
-            var translated = gt.gettext("_" + msgid);
+            var translated = gt.gettext(msgid);
 <?cs if:(webfrontend.devmode == "1") ?>
-            if (typeof console != "undefined" && translated.substr(0,1) == "_" && typeof found[msgid] == "undefined") {
+            if (typeof console != "undefined" && typeof found[msgid] == "undefined") {
                 found[msgid] = 1;
                 console.log ('msgid "_' + msgid.replace(/\"/g, '\\"') + '"');
                 console.log ('msgstr "'+msgid.replace(/\"/g, '\\"')+'"');
                 //console.log ('msgstr ""' );
-                return translated.substr(1);
+                return translated;
             }
             return translated;
 <?cs else ?>
-            if (translated.substr(0,1) == "_") return translated.substr(1);
             return translated;
              
 <?cs /if ?>

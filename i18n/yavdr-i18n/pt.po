@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-12 18:55+0200\n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2011-04-14 17:02+0100\n"
 "PO-Revision-Date: 2010-10-04 14:50-0000\n"
 "Last-Translator: hudo <hudokkow@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: PORTUGAL\n"
@@ -48,9 +48,6 @@ msgstr "Ferramentas"
 msgid "Xterm"
 msgstr "XTerm"
 
-msgid "System"
-msgstr "Sistema"
-
 msgid "Commands"
 msgstr "Comandos"
 
@@ -83,4 +80,651 @@ msgid "Pictures_on_"
 msgstr ""
 
 msgid "Miscellaneous_on_"
+msgstr ""
+
+msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
+msgstr ""
+
+msgid "Audio Settings"
+msgstr ""
+
+msgid "Output to all devices"
+msgstr ""
+
+msgid "Analog"
+msgstr ""
+
+msgid "Audio output will happen through the speaker/headphone plug"
+msgstr ""
+
+msgid "Digital (Toslink/SPDIF)"
+msgstr ""
+
+msgid "Audio output will happen through Toslink/SPDIF."
+msgstr ""
+
+msgid "HDMI-Stereo"
+msgstr ""
+
+msgid "Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
+msgstr ""
+
+msgid "HDMI-Passthrough"
+msgstr ""
+
+msgid "Audio output will happen through HDMI with Pass Through."
+msgstr ""
+
+msgid "Audio output"
+msgstr ""
+
+msgid "Here you can configure your display settings."
+msgstr ""
+
+msgid "Display settings"
+msgstr ""
+
+msgid "Rescan displays"
+msgstr ""
+
+msgid "Refresh rate"
+msgstr ""
+
+msgid "Device"
+msgstr ""
+
+msgid "Primary"
+msgstr ""
+
+msgid "Secondary"
+msgstr ""
+
+msgid "Select resolution"
+msgstr ""
+
+msgid "Resolution"
+msgstr ""
+
+msgid "Nvidia overscan compensation"
+msgstr ""
+
+msgid "Basic settings"
+msgstr ""
+
+msgid "Dual-Head Mode"
+msgstr ""
+
+msgid "GraphTFT"
+msgstr ""
+
+msgid "Xine settings"
+msgstr ""
+
+msgid "Xine HD deinterlacer"
+msgstr ""
+
+msgid "default"
+msgstr ""
+
+msgid "Xine SD deinterlacer"
+msgstr ""
+
+msgid "diabled (less than 2 displays found)"
+msgstr ""
+
+msgid "Rescan display. Displays may flicker."
+msgstr ""
+
+msgid "Rescan display failed."
+msgstr ""
+
+msgid "Default frequency"
+msgstr ""
+
+msgid "rate"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Here you can configure your remote hardware. The default and most common choice is EventLircd."
+msgstr ""
+
+msgid "EventLircd"
+msgstr ""
+
+msgid "LIRC"
+msgstr ""
+
+msgid "Driver"
+msgstr ""
+
+msgid "LIRC driver"
+msgstr ""
+
+msgid "HW-Default"
+msgstr ""
+
+msgid "Lircd-Conf"
+msgstr ""
+
+msgid "Receiver"
+msgstr ""
+
+msgid "Serial port"
+msgstr ""
+
+msgid "Activate LIRC"
+msgstr ""
+
+msgid "Activate EventLircd"
+msgstr ""
+
+msgid "Configuration editor"
+msgstr ""
+
+msgid "Choose a file:"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Reload"
+msgstr ""
+
+msgid "Mark content"
+msgstr ""
+
+msgid "Send to PasteBin"
+msgstr ""
+
+msgid "Please wait..."
+msgstr ""
+
+msgid "General system settings are made here."
+msgstr ""
+
+msgid "Webfrontend language"
+msgstr ""
+
+msgid "Shutdown and wakeup"
+msgstr ""
+
+msgid "Grub"
+msgstr ""
+
+msgid "Choose timeout in seconds:"
+msgstr ""
+
+msgid "\"The maximum is 10.\""
+msgstr ""
+
+msgid "\"The minimum is 0.\""
+msgstr ""
+
+msgid "\"Language\""
+msgstr ""
+
+msgid "Suspend to RAM"
+msgstr ""
+
+msgid "Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
+msgstr ""
+
+msgid "Fake suspend to disk"
+msgstr ""
+
+msgid "Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
+msgstr ""
+
+#, fuzzy
+msgid "Shutdown"
+msgstr "Desligar sistema"
+
+msgid "This is the classical shutdown."
+msgstr ""
+
+msgid "reboot PowerOff-kernel"
+msgstr ""
+
+msgid "Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
+msgstr ""
+
+msgid "Without timer wakeup."
+msgstr ""
+
+msgid "ACPI timer wakeup. YaVDR default setting."
+msgstr ""
+
+msgid "You need a special nvram configuration to use it."
+msgstr ""
+
+#, fuzzy
+msgid "Shutdown method"
+msgstr "Desligar sistema"
+
+msgid "Wakeup method"
+msgstr ""
+
+msgid "Disable USB-wakeup"
+msgstr ""
+
+msgid "Deactivate USB-wakeup, for incompatible hardware"
+msgstr ""
+
+msgid "Network"
+msgstr ""
+
+msgid "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "The name is missing"
+msgstr ""
+
+msgid "Package installer"
+msgstr ""
+
+msgid "load new information from internet"
+msgstr ""
+
+msgid "remove unneeded packages"
+msgstr ""
+
+msgid "clears out the local repository of retrieved package file"
+msgstr ""
+
+msgid "Install"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Deactivate"
+msgstr ""
+
+msgid "Package"
+msgstr ""
+
+msgid "Maintainer"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Please select a package to see additional details."
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Name of the group"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Next channel no."
+msgstr ""
+
+msgid "\"ChannelsReader.read: Channels not available\""
+msgstr ""
+
+msgid "Channels saved"
+msgstr ""
+
+msgid "generated channels.conf"
+msgstr ""
+
+msgid "Channel list"
+msgstr ""
+
+msgid "Clipboard"
+msgstr ""
+
+msgid "Move into channels.conf"
+msgstr ""
+
+msgid "Add new group"
+msgstr ""
+
+msgid "Please enter the group name:"
+msgstr ""
+
+msgid "\"Display channels.conf\""
+msgstr ""
+
+msgid "\"Channel\""
+msgstr ""
+
+msgid "\"Name\""
+msgstr ""
+
+msgid "\"Provider\""
+msgstr ""
+
+msgid "\"loading channels\""
+msgstr ""
+
+msgid "Move into clipboard"
+msgstr ""
+
+msgid "On top"
+msgstr ""
+
+msgid "At bottom"
+msgstr ""
+
+msgid "Insert clipboard"
+msgstr ""
+
+msgid "Above %s"
+msgstr ""
+
+msgid "Below %s"
+msgstr ""
+
+msgid "Delete \"%s\""
+msgstr ""
+
+msgid "Delete selection"
+msgstr ""
+
+msgid "Here you can make general setting for and around VDR."
+msgstr ""
+
+msgid "General settings"
+msgstr ""
+
+msgid "Lifeguard monitoring items"
+msgstr ""
+
+msgid "EPG"
+msgstr ""
+
+msgid "Lifeguard"
+msgstr ""
+
+msgid "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
+msgstr ""
+
+msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
+msgstr ""
+
+msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
+msgstr ""
+
+msgid "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
+msgstr ""
+
+msgid "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
+msgstr ""
+
+msgid "Video Output"
+msgstr ""
+
+msgid "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
+msgstr ""
+
+msgid "Charset override"
+msgstr ""
+
+msgid "Diagnostics"
+msgstr ""
+
+msgid "Refresh"
+msgstr ""
+
+msgid "Go to the end"
+msgstr ""
+
+msgid "ALSA status information"
+msgstr ""
+
+msgid "ALSA device list"
+msgstr ""
+
+msgid "ALSA custom sound configuration"
+msgstr ""
+
+msgid "Package information"
+msgstr ""
+
+msgid "Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
+msgstr ""
+
+msgid "Apt history of recently installed packages"
+msgstr ""
+
+msgid "LIRC hardware configuration"
+msgstr ""
+
+msgid "LIRCD configuration"
+msgstr ""
+
+msgid "System information"
+msgstr ""
+
+#, fuzzy
+msgid "System load"
+msgstr "Sistema"
+
+msgid "Network status"
+msgstr ""
+
+msgid "Filesystem usage"
+msgstr ""
+
+msgid "Kernel log"
+msgstr ""
+
+msgid "Webserver logfile"
+msgstr ""
+
+msgid "VDR basic configuration"
+msgstr ""
+
+msgid "VDR setup.conf"
+msgstr ""
+
+msgid "VDR remote.conf"
+msgstr ""
+
+msgid "Xorg server log"
+msgstr ""
+
+msgid "X-Server configuration (only if NVIDIA VDPAU present)"
+msgstr ""
+
+msgid "X-Server logfile"
+msgstr ""
+
+msgid "XBMC crash log"
+msgstr ""
+
+msgid "yaVDR database"
+msgstr ""
+
+msgid "yaVDR DB"
+msgstr ""
+
+msgid "VDR"
+msgstr ""
+
+msgid "Recordings"
+msgstr ""
+
+msgid "Duration"
+msgstr ""
+
+#, fuzzy
+msgid "Timers"
+msgstr "Temporizador"
+
+msgid "Start"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Here you can configure your VDR and applications around it."
+msgstr ""
+
+msgid "Hardware"
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Remote control settings"
+msgstr ""
+
+msgid "Audio configuration"
+msgstr ""
+
+msgid "Edit configurations"
+msgstr ""
+
+msgid "Packages"
+msgstr ""
+
+msgid "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+msgstr ""
+
+msgid "\"Execute command...\""
+msgstr ""
+
+msgid "The command has been executed successfully"
+msgstr ""
+
+msgid "The command could not complete successfully"
+msgstr ""
+
+msgid "Switch temporarily to second screen"
+msgstr ""
+
+#, fuzzy
+msgid "Reboot computer"
+msgstr "Reiniciar sistema"
+
+msgid "Kill XBMC"
+msgstr ""
+
+msgid "Sound (ALSA)"
+msgstr ""
+
+msgid "System log files"
+msgstr ""
+
+msgid "Xorg server"
+msgstr ""
+
+msgid "LIRC configuration"
+msgstr ""
+
+msgid "VDR configuration"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Program"
+msgstr ""
+
+msgid "Saving"
+msgstr ""
+
+msgid "Error while saving data."
+msgstr ""
+
+msgid "Data stored successfully."
+msgstr ""
+
+msgid "Introduction"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Install package?"
+msgstr ""
+
+msgid "Would you like to install package \"%s\"?"
+msgstr ""
+
+msgid "Would you like to remove package \"%s\"?"
+msgstr ""
+
+msgid "Would you like to enable \"%s\"?"
+msgstr ""
+
+msgid "fatal error: disable plugin failed"
+msgstr ""
+
+msgid "Disable plugin?"
+msgstr ""
+
+msgid "Would you like to disable \"%s\"?"
+msgstr ""
+
+msgid "Title (optional)"
+msgstr ""
+
+msgid "Email (optional)"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "unchanged"
+msgstr ""
+
+msgid "DVB-T"
+msgstr ""
+
+msgid "DVB-C"
+msgstr ""
+
+msgid "Rescan Sundtek"
+msgstr ""
+
+msgid "DVB-Mode"
+msgstr ""
+
+msgid "mount device"
+msgstr ""
+
+msgid "mounted"
+msgstr ""
+
+msgid "remove this configuration"
+msgstr ""
+
+msgid "Do you realy want to remove this configration:"
+msgstr ""
+
+msgid " (local)"
+msgstr ""
+
+msgid "Network-Support"
+msgstr ""
+
+msgid "allows devices to be mounted remotely"
+msgstr ""
+
+msgid "Rescan for sundtek devices."
 msgstr ""

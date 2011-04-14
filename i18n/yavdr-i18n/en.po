@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: yavdr\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-12 18:55+0200\n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2011-04-14 17:02+0100\n"
 "PO-Revision-Date: 2010-08-14 21:58+0200\n"
 "Last-Translator: Volker Richert <richert@addmore.de>\n"
 "Language-Team: en <bugs@yavdr.com>\n"
@@ -10,7 +10,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
 
 msgid "Timer"
 msgstr "Timer"
@@ -42,9 +41,6 @@ msgstr "Tools"
 msgid "Xterm"
 msgstr "Xterm"
 
-msgid "System"
-msgstr "System"
-
 msgid "Commands"
 msgstr "Commands"
 
@@ -63,523 +59,6 @@ msgstr "Reboot system"
 msgid "Shutdown system"
 msgstr "Shutdown system"
 
-# begin web frontend
-msgid "_yaVDR Paket Installer"
-msgstr "yaVDR Paket Installer"
-
-msgid "_Send to PasteBin"
-msgstr "Send to PasteBin"
-
-msgid "_Recordings"
-msgstr "Recordings"
-
-msgid "_Timer"
-msgstr "Timer"
-
-msgid "_Settings"
-msgstr "Settings"
-
-msgid "_Here you can configure your VDR and applications around it."
-msgstr "Here you can configure your VDR and applications around it."
-
-msgid "_Timers"
-msgstr "Timers"
-
-msgid "_General"
-msgstr "General"
-
-msgid "_Channels"
-msgstr "Channels"
-
-msgid "_Remote control settings"
-msgstr "Remote control settings"
-
-msgid "_Audio configuration"
-msgstr "Audio configuration"
-
-msgid "_Display settings"
-msgstr "Display settings"
-
-msgid "_System"
-msgstr "System"
-
-msgid "_Network"
-msgstr "Network"
-
-msgid "_Packages"
-msgstr "Packages"
-
-msgid "_Edit configurations"
-msgstr "Edit configurations"
-
-msgid "_Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
-msgstr "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
-
-msgid "_Switch temporarily to second screen"
-msgstr "Switch temporarily to second screen"
-
-msgid "_Reboot computer"
-msgstr "Reboot computer"
-
-msgid "_Kill XBMC"
-msgstr "Kill XBMC"
-
-msgid "_Restart VDR"
-msgstr "Restart VDR"
-
-msgid "_System information"
-msgstr "System information"
-
-msgid "_System log files"
-msgstr "System log files"
-
-msgid "_XBMC crash log"
-msgstr "XBMC crash log"
-
-msgid "_LIRC configuration"
-msgstr "LIRC configuration"
-
-msgid "_VDR configuration"
-msgstr "VDR configuration"
-
-msgid "_Xorg server"
-msgstr "Xorg server"
-
-msgid "_Sound (ALSA)"
-msgstr "Sound (ALSA)"
-
-msgid "_yaVDR database"
-msgstr "yaVDR database"
-
-msgid "_Here you can make general setting for and around VDR."
-msgstr "Here you can make general setting for and around VDR."
-
-msgid "_Name of the group"
-msgstr "Name of the group"
-
-msgid "_generated channels.conf"
-msgstr "generated channels.conf"
-
-msgid "_In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
-msgstr "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
-
-msgid "_Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
-msgstr "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
-
-msgid "_Here you can configure your display settings."
-msgstr "Here you can configure your display settings."
-
-msgid "_Default frequency"
-msgstr "Default frequency"
-
-msgid "_General system settings are made here."
-msgstr "General system settings are made here."
-
-msgid "_VDR basic configuration"
-msgstr "VDR basic configuration"
-
-msgid "_Xorg server log"
-msgstr "Xorg server log"
-
-msgid "_ALSA status information"
-msgstr "ALSA status information"
-
-msgid "_Package information"
-msgstr "Package information"
-
-msgid "_Dashboard"
-msgstr "Dashboard"
-
-msgid "_VDR"
-msgstr "VDR"
-
-msgid "_Hardware"
-msgstr "Hardware"
-
-msgid "_Introduction"
-msgstr "Introduction"
-
-msgid "_General settings"
-msgstr "General settings"
-
-msgid "_This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
-msgstr "This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
-
-msgid "_This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
-msgstr "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
-
-msgid "_If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
-msgstr "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
-
-msgid "_You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
-msgstr "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
-
-msgid "_Video Output"
-msgstr "Video Output"
-
-msgid "_Cancel"
-msgstr "Cancel"
-
-msgid "_Save"
-msgstr "Save"
-
-msgid "_Lifeguard monitoring items"
-msgstr "Lifeguard monitoring items"
-
-msgid "_Lifeguard"
-msgstr "Lifeguard"
-
-msgid "_VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
-msgstr "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
-
-msgid "_EPG"
-msgstr "EPG"
-
-msgid "_Override incorrect not DVB compliant EPG Encoding, as send by Sky"
-msgstr "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
-
-msgid "_Charset override"
-msgstr "Charset override"
-
-msgid "_Add new group"
-msgstr "Add new group"
-
-msgid "_Display channels.conf"
-msgstr "Display channels.conf"
-
-msgid "_Reload"
-msgstr "Reload"
-
-msgid "_Channel"
-msgstr "Channel"
-
-msgid "_Name"
-msgstr "Name"
-
-msgid "_Provider"
-msgstr "Provider"
-
-msgid "_loading channels"
-msgstr "loading channels"
-
-msgid "_Channel list"
-msgstr "Channel list"
-
-msgid "_Clipboard"
-msgstr "Clipboard"
-
-msgid "_Driver"
-msgstr "Driver"
-
-msgid "_LIRC driver"
-msgstr "LIRC driver"
-
-msgid "_HW-Default"
-msgstr "HW-Default"
-
-msgid "_Lircd-Conf"
-msgstr "Lircd-Conf"
-
-msgid "_Receiver"
-msgstr "Receiver"
-
-msgid "_Serial port"
-msgstr "Serial port"
-
-msgid "_Activate LIRC"
-msgstr "Activate LIRC"
-
-msgid "_Activate EventLircd"
-msgstr "Activate EventLircd"
-
-msgid "_LIRC"
-msgstr "LIRC"
-
-msgid "_EventLircd"
-msgstr "EventLircd"
-
-msgid "_Audio Settings"
-msgstr "Audio Settings"
-
-msgid "_Analog"
-msgstr "Analog"
-
-msgid "_Audio output will happen through the speaker/headphone plug"
-msgstr "Audio output will happen through the speaker/headphone plug"
-
-msgid "_Digital (Toslink/SPDIF)"
-msgstr "Digital (Toslink/SPDIF)"
-
-msgid "_Audio output will happen through Toslink/SPDIF."
-msgstr "Audio output will happen through Toslink/SPDIF."
-
-msgid "_HDMI-Stereo"
-msgstr "HDMI-Stereo"
-
-msgid "_Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
-msgstr "Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
-
-msgid "_HDMI-Analog"
-msgstr "HDMI-Analog"
-
-msgid "_Audio output will happen through HDMI and analog at the same time. HDMI will be stereo."
-msgstr "Audio output will happen through HDMI and analog at the same time. HDMI will be stereo."
-
-msgid "_HDMI-Passthrough"
-msgstr "HDMI-Passthrough"
-
-msgid "_Audio output will happen through HDMI with Pass Through."
-msgstr "Audio output will happen through HDMI with Pass Through."
-
-msgid "_Audio output"
-msgstr "Audio output"
-
-msgid "_Rescan displays"
-msgstr "Rescan displays"
-
-msgid "_Basic settings"
-msgstr "Basic settings"
-
-msgid "_Dual-Head Mode"
-msgstr "Dual-Head Mode"
-
-msgid "_GraphTFT"
-msgstr "GraphTFT"
-
-msgid "_Xine settings"
-msgstr "Xine settings"
-
-msgid "_Xine HD deinterlacer"
-msgstr "Xine HD deinterlacer"
-
-msgid "_default"
-msgstr "default"
-
-msgid "_Xine SD deinterlacer"
-msgstr "Xine SD deinterlacer"
-
-msgid "_Device"
-msgstr "Device"
-
-msgid "_Primary"
-msgstr "Primary"
-
-msgid "_Secondary"
-msgstr "Secondary"
-
-msgid "_Select resolution"
-msgstr "Select resolution"
-
-msgid "_Resolution"
-msgstr "Resolution"
-
-msgid "_Nvidia overscan compensation"
-msgstr "Nvidia overscan compensation"
-
-msgid "_Display"
-msgstr "Display"
-
-msgid "_rate"
-msgstr "rate"
-
-msgid "_Refresh rate"
-msgstr "Refresh rate"
-
-msgid "_diabled (less than 2 displays found)"
-msgstr "diabled (less than 2 displays found)"
-
-msgid "_Webfrontend language"
-msgstr "Webfrontend language"
-
-msgid "_Language"
-msgstr "Language"
-
-msgid "_Shutdown and wakeup"
-msgstr "Shutdown and wakeup"
-
-msgid "_Suspend to RAM"
-msgstr "Suspend to RAM"
-
-msgid "_Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
-msgstr "Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
-
-msgid "_Fake suspend to disk"
-msgstr "Fake suspend to disk"
-
-msgid "_Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
-msgstr "Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
-
-msgid "_Shutdown"
-msgstr "Shutdown"
-
-msgid "_This is the classical shutdown."
-msgstr "This is the classical shutdown."
-
-msgid "_reboot PowerOff-kernel"
-msgstr "reboot PowerOff-kernel"
-
-msgid "_Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
-msgstr "Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
-
-msgid "_Without timer wakeup."
-msgstr "Without timer wakeup."
-
-msgid "_ACPI timer wakeup. YaVDR default setting."
-msgstr "ACPI timer wakeup. YaVDR default setting."
-
-msgid "_You need a special nvram configuration to use it."
-msgstr "You need a special nvram configuration to use it."
-
-msgid "_Shutdown method"
-msgstr "Shutdown method"
-
-msgid "_Wakeup method"
-msgstr "Wakeup method"
-
-msgid "_Disable USB-wakeup"
-msgstr "Disable USB-wakeup"
-
-msgid "_Deactivate USB-wakeup, for incompatible hardware"
-msgstr "Deactivate USB-wakeup, for incompatible hardware"
-
-msgid "_Grub"
-msgstr "Grub"
-
-msgid "_Choose timeout in seconds:"
-msgstr "Choose timeout in seconds:"
-
-msgid "_The maximum is 10."
-msgstr "The maximum is 10."
-
-msgid "_The minimum is 0."
-msgstr "The minimum is 0."
-
-msgid "_Add"
-msgstr "Add"
-
-msgid "_Edit"
-msgstr "Edit"
-
-msgid "_Delete"
-msgstr "Delete"
-
-msgid "_You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
-msgstr "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
-
-msgid "_Package"
-msgstr "Package"
-
-msgid "_Version"
-msgstr "Version"
-
-msgid "_Maintainer"
-msgstr "Maintainer"
-
-msgid "_Description"
-msgstr "Description"
-
-msgid "_Please select a package to see additional details."
-msgstr "Please select a package to see additional details."
-
-msgid "_Package installer"
-msgstr "Package installer"
-
-msgid "_load new information from internet"
-msgstr "load new information from internet"
-
-msgid "_remove unneeded packages"
-msgstr "remove unneeded packages"
-
-msgid "_clears out the local repository of retrieved package file"
-msgstr "clears out the local repository of retrieved package file"
-
-msgid "_Configuration editor"
-msgstr "Configuration editor"
-
-msgid "_Choose a file:"
-msgstr "Choose a file:"
-
-msgid "_Mark content"
-msgstr "Mark content"
-
-msgid "_Please wait..."
-msgstr "Please wait..."
-
-msgid "_Commands"
-msgstr "Commands"
-
-msgid "_Diagnostics"
-msgstr "Diagnostics"
-
-msgid "_Execute command"
-msgstr "Execute command"
-
-msgid "_The command has been executed successfully"
-msgstr "The command has been executed successfully"
-
-msgid "_System load"
-msgstr "System load"
-
-msgid "_Refresh"
-msgstr "Refresh"
-
-msgid "_Go to the end"
-msgstr "Go to the end"
-
-msgid "_Network status"
-msgstr "Network status"
-
-msgid "_Filesystem usage"
-msgstr "Filesystem usage"
-
-msgid "_Kernel log"
-msgstr "Kernel log"
-
-msgid "_Webserver logfile"
-msgstr "Webserver logfile"
-
-msgid "_LIRC hardware configuration"
-msgstr "LIRC hardware configuration"
-
-msgid "_LIRCD configuration"
-msgstr "LIRCD configuration"
-
-msgid "_VDR setup.conf"
-msgstr "VDR setup.conf"
-
-msgid "_VDR remote.conf"
-msgstr "VDR remote.conf"
-
-msgid "_X-Server configuration (only if NVIDIA VDPAU present)"
-msgstr "X-Server configuration (only if NVIDIA VDPAU present)"
-
-msgid "_X-Server logfile"
-msgstr "X-Server logfile"
-
-msgid "_ALSA device list"
-msgstr "ALSA device list"
-
-msgid "_ALSA custom sound configuration"
-msgstr "ALSA custom sound configuration"
-
-msgid "_Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
-msgstr "Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
-
-msgid "_Apt history of recently installed packages"
-msgstr "Apt history of recently installed packages"
-
-msgid "_yaVDR DB"
-msgstr "yaVDR DB"
-
-msgid "_Saving"
-msgstr "Saving"
-
-msgid "_Data stored successfully."
-msgstr "Data stored successfully."
-
-msgid "_Execute command..."
-msgstr "Execute command..."
-
 # begin avahi-mounter
 msgid "Recordings_on_"
 msgstr "Recordings_on_"
@@ -595,3 +74,854 @@ msgstr "Pictures_on_"
 
 msgid "Miscellaneous_on_"
 msgstr "Miscellaneous_on_"
+
+#, fuzzy
+msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
+msgstr "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
+
+#, fuzzy
+msgid "Audio Settings"
+msgstr "Audio Settings"
+
+msgid "Output to all devices"
+msgstr ""
+
+#, fuzzy
+msgid "Analog"
+msgstr "Analog"
+
+#, fuzzy
+msgid "Audio output will happen through the speaker/headphone plug"
+msgstr "Audio output will happen through the speaker/headphone plug"
+
+#, fuzzy
+msgid "Digital (Toslink/SPDIF)"
+msgstr "Digital (Toslink/SPDIF)"
+
+#, fuzzy
+msgid "Audio output will happen through Toslink/SPDIF."
+msgstr "Audio output will happen through Toslink/SPDIF."
+
+#, fuzzy
+msgid "HDMI-Stereo"
+msgstr "HDMI-Stereo"
+
+#, fuzzy
+msgid "Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
+msgstr "Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
+
+#, fuzzy
+msgid "HDMI-Passthrough"
+msgstr "HDMI-Passthrough"
+
+#, fuzzy
+msgid "Audio output will happen through HDMI with Pass Through."
+msgstr "Audio output will happen through HDMI with Pass Through."
+
+#, fuzzy
+msgid "Audio output"
+msgstr "Audio output"
+
+#, fuzzy
+msgid "Here you can configure your display settings."
+msgstr "Here you can configure your display settings."
+
+#, fuzzy
+msgid "Display settings"
+msgstr "Display settings"
+
+#, fuzzy
+msgid "Rescan displays"
+msgstr "Rescan displays"
+
+#, fuzzy
+msgid "Refresh rate"
+msgstr "Refresh rate"
+
+#, fuzzy
+msgid "Device"
+msgstr "Device"
+
+#, fuzzy
+msgid "Primary"
+msgstr "Primary"
+
+#, fuzzy
+msgid "Secondary"
+msgstr "Secondary"
+
+#, fuzzy
+msgid "Select resolution"
+msgstr "Select resolution"
+
+#, fuzzy
+msgid "Resolution"
+msgstr "Resolution"
+
+#, fuzzy
+msgid "Nvidia overscan compensation"
+msgstr "Nvidia overscan compensation"
+
+#, fuzzy
+msgid "Basic settings"
+msgstr "Basic settings"
+
+#, fuzzy
+msgid "Dual-Head Mode"
+msgstr "Dual-Head Mode"
+
+#, fuzzy
+msgid "GraphTFT"
+msgstr "GraphTFT"
+
+#, fuzzy
+msgid "Xine settings"
+msgstr "Xine settings"
+
+#, fuzzy
+msgid "Xine HD deinterlacer"
+msgstr "Xine HD deinterlacer"
+
+#, fuzzy
+msgid "default"
+msgstr "default"
+
+#, fuzzy
+msgid "Xine SD deinterlacer"
+msgstr "Xine SD deinterlacer"
+
+#, fuzzy
+msgid "diabled (less than 2 displays found)"
+msgstr "diabled (less than 2 displays found)"
+
+msgid "Rescan display. Displays may flicker."
+msgstr ""
+
+#, fuzzy
+msgid "Rescan display failed."
+msgstr "Rescan displays"
+
+#, fuzzy
+msgid "Default frequency"
+msgstr "Default frequency"
+
+#, fuzzy
+msgid "rate"
+msgstr "rate"
+
+#, fuzzy
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Here you can configure your remote hardware. The default and most common choice is EventLircd."
+msgstr ""
+
+#, fuzzy
+msgid "EventLircd"
+msgstr "EventLircd"
+
+#, fuzzy
+msgid "LIRC"
+msgstr "LIRC"
+
+#, fuzzy
+msgid "Driver"
+msgstr "Driver"
+
+#, fuzzy
+msgid "LIRC driver"
+msgstr "LIRC driver"
+
+#, fuzzy
+msgid "HW-Default"
+msgstr "HW-Default"
+
+#, fuzzy
+msgid "Lircd-Conf"
+msgstr "Lircd-Conf"
+
+#, fuzzy
+msgid "Receiver"
+msgstr "Receiver"
+
+#, fuzzy
+msgid "Serial port"
+msgstr "Serial port"
+
+#, fuzzy
+msgid "Activate LIRC"
+msgstr "Activate LIRC"
+
+#, fuzzy
+msgid "Activate EventLircd"
+msgstr "Activate EventLircd"
+
+#, fuzzy
+msgid "Configuration editor"
+msgstr "Configuration editor"
+
+#, fuzzy
+msgid "Choose a file:"
+msgstr "Choose a file:"
+
+#, fuzzy
+msgid "Save"
+msgstr "Save"
+
+msgid "System"
+msgstr "System"
+
+#, fuzzy
+msgid "Reload"
+msgstr "Reload"
+
+#, fuzzy
+msgid "Mark content"
+msgstr "Mark content"
+
+#, fuzzy
+msgid "Send to PasteBin"
+msgstr "Send to PasteBin"
+
+#, fuzzy
+msgid "Please wait..."
+msgstr "Please wait..."
+
+#, fuzzy
+msgid "General system settings are made here."
+msgstr "General system settings are made here."
+
+#, fuzzy
+msgid "Webfrontend language"
+msgstr "Webfrontend language"
+
+#, fuzzy
+msgid "Shutdown and wakeup"
+msgstr "Shutdown and wakeup"
+
+#, fuzzy
+msgid "Grub"
+msgstr "Grub"
+
+#, fuzzy
+msgid "Choose timeout in seconds:"
+msgstr "Choose timeout in seconds:"
+
+#, fuzzy
+msgid "\"The maximum is 10.\""
+msgstr "The maximum is 10."
+
+#, fuzzy
+msgid "\"The minimum is 0.\""
+msgstr "The minimum is 0."
+
+#, fuzzy
+msgid "\"Language\""
+msgstr "Language"
+
+#, fuzzy
+msgid "Suspend to RAM"
+msgstr "Suspend to RAM"
+
+#, fuzzy
+msgid "Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
+msgstr "Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
+
+#, fuzzy
+msgid "Fake suspend to disk"
+msgstr "Fake suspend to disk"
+
+#, fuzzy
+msgid "Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
+msgstr "Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
+
+#, fuzzy
+msgid "Shutdown"
+msgstr "Shutdown"
+
+#, fuzzy
+msgid "This is the classical shutdown."
+msgstr "This is the classical shutdown."
+
+#, fuzzy
+msgid "reboot PowerOff-kernel"
+msgstr "reboot PowerOff-kernel"
+
+#, fuzzy
+msgid "Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
+msgstr "Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
+
+#, fuzzy
+msgid "Without timer wakeup."
+msgstr "Without timer wakeup."
+
+#, fuzzy
+msgid "ACPI timer wakeup. YaVDR default setting."
+msgstr "ACPI timer wakeup. YaVDR default setting."
+
+#, fuzzy
+msgid "You need a special nvram configuration to use it."
+msgstr "You need a special nvram configuration to use it."
+
+#, fuzzy
+msgid "Shutdown method"
+msgstr "Shutdown method"
+
+#, fuzzy
+msgid "Wakeup method"
+msgstr "Wakeup method"
+
+#, fuzzy
+msgid "Disable USB-wakeup"
+msgstr "Disable USB-wakeup"
+
+#, fuzzy
+msgid "Deactivate USB-wakeup, for incompatible hardware"
+msgstr "Deactivate USB-wakeup, for incompatible hardware"
+
+#, fuzzy
+msgid "Network"
+msgstr "Network"
+
+#, fuzzy
+msgid "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
+msgstr "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
+
+#, fuzzy
+msgid "Add"
+msgstr "Add"
+
+#, fuzzy
+msgid "Delete"
+msgstr "Delete"
+
+msgid "The name is missing"
+msgstr ""
+
+#, fuzzy
+msgid "Package installer"
+msgstr "Package installer"
+
+#, fuzzy
+msgid "load new information from internet"
+msgstr "load new information from internet"
+
+#, fuzzy
+msgid "remove unneeded packages"
+msgstr "remove unneeded packages"
+
+#, fuzzy
+msgid "clears out the local repository of retrieved package file"
+msgstr "clears out the local repository of retrieved package file"
+
+msgid "Install"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+#, fuzzy
+msgid "Activate"
+msgstr "Activate LIRC"
+
+msgid "Deactivate"
+msgstr ""
+
+#, fuzzy
+msgid "Package"
+msgstr "Package"
+
+#, fuzzy
+msgid "Maintainer"
+msgstr "Maintainer"
+
+#, fuzzy
+msgid "Description"
+msgstr "Description"
+
+#, fuzzy
+msgid "Please select a package to see additional details."
+msgstr "Please select a package to see additional details."
+
+#, fuzzy
+msgid "Version"
+msgstr "Version"
+
+#, fuzzy
+msgid "Name of the group"
+msgstr "Name of the group"
+
+#, fuzzy
+msgid "Name"
+msgstr "Name"
+
+msgid "Next channel no."
+msgstr ""
+
+msgid "\"ChannelsReader.read: Channels not available\""
+msgstr ""
+
+#, fuzzy
+msgid "Channels saved"
+msgstr "Channels"
+
+#, fuzzy
+msgid "generated channels.conf"
+msgstr "generated channels.conf"
+
+#, fuzzy
+msgid "Channel list"
+msgstr "Channel list"
+
+#, fuzzy
+msgid "Clipboard"
+msgstr "Clipboard"
+
+#, fuzzy
+msgid "Move into channels.conf"
+msgstr "generated channels.conf"
+
+#, fuzzy
+msgid "Add new group"
+msgstr "Add new group"
+
+msgid "Please enter the group name:"
+msgstr ""
+
+#, fuzzy
+msgid "\"Display channels.conf\""
+msgstr "Display channels.conf"
+
+#, fuzzy
+msgid "\"Channel\""
+msgstr "Channel"
+
+#, fuzzy
+msgid "\"Name\""
+msgstr "Name"
+
+#, fuzzy
+msgid "\"Provider\""
+msgstr "Provider"
+
+#, fuzzy
+msgid "\"loading channels\""
+msgstr "loading channels"
+
+msgid "Move into clipboard"
+msgstr ""
+
+msgid "On top"
+msgstr ""
+
+msgid "At bottom"
+msgstr ""
+
+#, fuzzy
+msgid "Insert clipboard"
+msgstr "Clipboard"
+
+msgid "Above %s"
+msgstr ""
+
+msgid "Below %s"
+msgstr ""
+
+#, fuzzy
+msgid "Delete \"%s\""
+msgstr "Delete"
+
+#, fuzzy
+msgid "Delete selection"
+msgstr "Select resolution"
+
+#, fuzzy
+msgid "Here you can make general setting for and around VDR."
+msgstr "Here you can make general setting for and around VDR."
+
+#, fuzzy
+msgid "General settings"
+msgstr "General settings"
+
+#, fuzzy
+msgid "Lifeguard monitoring items"
+msgstr "Lifeguard monitoring items"
+
+#, fuzzy
+msgid "EPG"
+msgstr "EPG"
+
+#, fuzzy
+msgid "Lifeguard"
+msgstr "Lifeguard"
+
+#, fuzzy
+msgid "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
+msgstr "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
+
+#, fuzzy
+msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
+msgstr "This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
+
+#, fuzzy
+msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
+msgstr "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
+
+#, fuzzy
+msgid "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
+msgstr "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
+
+#, fuzzy
+msgid "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
+msgstr "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
+
+#, fuzzy
+msgid "Video Output"
+msgstr "Video Output"
+
+#, fuzzy
+msgid "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
+msgstr "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
+
+#, fuzzy
+msgid "Charset override"
+msgstr "Charset override"
+
+#, fuzzy
+msgid "Diagnostics"
+msgstr "Diagnostics"
+
+#, fuzzy
+msgid "Refresh"
+msgstr "Refresh"
+
+#, fuzzy
+msgid "Go to the end"
+msgstr "Go to the end"
+
+#, fuzzy
+msgid "ALSA status information"
+msgstr "ALSA status information"
+
+#, fuzzy
+msgid "ALSA device list"
+msgstr "ALSA device list"
+
+#, fuzzy
+msgid "ALSA custom sound configuration"
+msgstr "ALSA custom sound configuration"
+
+#, fuzzy
+msgid "Package information"
+msgstr "Package information"
+
+#, fuzzy
+msgid "Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
+msgstr "Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
+
+#, fuzzy
+msgid "Apt history of recently installed packages"
+msgstr "Apt history of recently installed packages"
+
+#, fuzzy
+msgid "LIRC hardware configuration"
+msgstr "LIRC hardware configuration"
+
+#, fuzzy
+msgid "LIRCD configuration"
+msgstr "LIRCD configuration"
+
+#, fuzzy
+msgid "System information"
+msgstr "System information"
+
+#, fuzzy
+msgid "System load"
+msgstr "System load"
+
+#, fuzzy
+msgid "Network status"
+msgstr "Network status"
+
+#, fuzzy
+msgid "Filesystem usage"
+msgstr "Filesystem usage"
+
+#, fuzzy
+msgid "Kernel log"
+msgstr "Kernel log"
+
+#, fuzzy
+msgid "Webserver logfile"
+msgstr "Webserver logfile"
+
+#, fuzzy
+msgid "VDR basic configuration"
+msgstr "VDR basic configuration"
+
+#, fuzzy
+msgid "VDR setup.conf"
+msgstr "VDR setup.conf"
+
+#, fuzzy
+msgid "VDR remote.conf"
+msgstr "VDR remote.conf"
+
+#, fuzzy
+msgid "Xorg server log"
+msgstr "Xorg server log"
+
+#, fuzzy
+msgid "X-Server configuration (only if NVIDIA VDPAU present)"
+msgstr "X-Server configuration (only if NVIDIA VDPAU present)"
+
+#, fuzzy
+msgid "X-Server logfile"
+msgstr "X-Server logfile"
+
+#, fuzzy
+msgid "XBMC crash log"
+msgstr "XBMC crash log"
+
+#, fuzzy
+msgid "yaVDR database"
+msgstr "yaVDR database"
+
+#, fuzzy
+msgid "yaVDR DB"
+msgstr "yaVDR DB"
+
+#, fuzzy
+msgid "VDR"
+msgstr "VDR"
+
+#, fuzzy
+msgid "Recordings"
+msgstr "Recordings"
+
+#, fuzzy
+msgid "Duration"
+msgstr "VDR configuration"
+
+#, fuzzy
+msgid "Timers"
+msgstr "Timers"
+
+msgid "Start"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+#, fuzzy
+msgid "Here you can configure your VDR and applications around it."
+msgstr "Here you can configure your VDR and applications around it."
+
+#, fuzzy
+msgid "Hardware"
+msgstr "Hardware"
+
+#, fuzzy
+msgid "General"
+msgstr "General"
+
+#, fuzzy
+msgid "Remote control settings"
+msgstr "Remote control settings"
+
+#, fuzzy
+msgid "Audio configuration"
+msgstr "Audio configuration"
+
+#, fuzzy
+msgid "Edit configurations"
+msgstr "Edit configurations"
+
+#, fuzzy
+msgid "Packages"
+msgstr "Packages"
+
+#, fuzzy
+msgid "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+msgstr "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+
+#, fuzzy
+msgid "\"Execute command...\""
+msgstr "Execute command..."
+
+#, fuzzy
+msgid "The command has been executed successfully"
+msgstr "The command has been executed successfully"
+
+#, fuzzy
+msgid "The command could not complete successfully"
+msgstr "The command has been executed successfully"
+
+#, fuzzy
+msgid "Switch temporarily to second screen"
+msgstr "Switch temporarily to second screen"
+
+#, fuzzy
+msgid "Reboot computer"
+msgstr "Reboot computer"
+
+#, fuzzy
+msgid "Kill XBMC"
+msgstr "Kill XBMC"
+
+#, fuzzy
+msgid "Sound (ALSA)"
+msgstr "Sound (ALSA)"
+
+#, fuzzy
+msgid "System log files"
+msgstr "System log files"
+
+#, fuzzy
+msgid "Xorg server"
+msgstr "Xorg server"
+
+#, fuzzy
+msgid "LIRC configuration"
+msgstr "LIRC configuration"
+
+#, fuzzy
+msgid "VDR configuration"
+msgstr "VDR configuration"
+
+#, fuzzy
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Program"
+msgstr ""
+
+#, fuzzy
+msgid "Saving"
+msgstr "Saving"
+
+msgid "Error while saving data."
+msgstr ""
+
+#, fuzzy
+msgid "Data stored successfully."
+msgstr "Data stored successfully."
+
+#, fuzzy
+msgid "Introduction"
+msgstr "Introduction"
+
+msgid "Close"
+msgstr ""
+
+msgid "Install package?"
+msgstr ""
+
+msgid "Would you like to install package \"%s\"?"
+msgstr ""
+
+msgid "Would you like to remove package \"%s\"?"
+msgstr ""
+
+msgid "Would you like to enable \"%s\"?"
+msgstr ""
+
+msgid "fatal error: disable plugin failed"
+msgstr ""
+
+msgid "Disable plugin?"
+msgstr ""
+
+msgid "Would you like to disable \"%s\"?"
+msgstr ""
+
+msgid "Title (optional)"
+msgstr ""
+
+msgid "Email (optional)"
+msgstr ""
+
+#, fuzzy
+msgid "Content"
+msgstr "Mark content"
+
+msgid "Send"
+msgstr ""
+
+msgid "unchanged"
+msgstr ""
+
+msgid "DVB-T"
+msgstr ""
+
+msgid "DVB-C"
+msgstr ""
+
+msgid "Rescan Sundtek"
+msgstr ""
+
+msgid "DVB-Mode"
+msgstr ""
+
+msgid "mount device"
+msgstr ""
+
+msgid "mounted"
+msgstr ""
+
+#, fuzzy
+msgid "remove this configuration"
+msgstr "Audio configuration"
+
+msgid "Do you realy want to remove this configration:"
+msgstr ""
+
+msgid " (local)"
+msgstr ""
+
+#, fuzzy
+msgid "Network-Support"
+msgstr "Network"
+
+msgid "allows devices to be mounted remotely"
+msgstr ""
+
+msgid "Rescan for sundtek devices."
+msgstr ""
+
+# begin web frontend
+#~ msgid "_yaVDR Paket Installer"
+#~ msgstr "yaVDR Paket Installer"
+
+#~ msgid "_Timer"
+#~ msgstr "Timer"
+
+#~ msgid "_System"
+#~ msgstr "System"
+
+#~ msgid "_Restart VDR"
+#~ msgstr "Restart VDR"
+
+#~ msgid "_In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
+#~ msgstr "In Order to configure your remote control, choose LIRC or one of the both LIRC compatible daemons (Inputlirc or IRServer). If you press \"Save\" , VDR will be restarted to activate the new settings.<br>If VDR has no key mapping yet it will directly start a learning phase at your output device \"On Screen Display\". The learning phase ends after a couple of seconds automatically, if no button has been pressed. You can restart the \"Learning Phase\" by pressing \"Save\" again..<br>&nbsp;</p><h2>Lirc</h2><p>Most common choice. Please choose the correct driver.<br>In case of serial port conntected devices,please also choose the correct port.<br>&nbsp;</p><h2>InputLirc</h2><p>This is comfortable choice for most modern USB remote controls, as well as for most of the Remote Controls delivered and connected to DVB cards. For the latter case please make sure, the remote control receiver is supported by the driver. Please choose the device from the list.<br>&nbsp;</p><h2>Irserver</h2><p>For remote controls supported by IRserver. Supported hardware will be detected. You just need to activate the choice and save it."
+
+#~ msgid "_Cancel"
+#~ msgstr "Cancel"
+
+#~ msgid "_HDMI-Analog"
+#~ msgstr "HDMI-Analog"
+
+#~ msgid "_Audio output will happen through HDMI and analog at the same time. HDMI will be stereo."
+#~ msgstr "Audio output will happen through HDMI and analog at the same time. HDMI will be stereo."
+
+#~ msgid "_Display"
+#~ msgstr "Display"
+
+#~ msgid "_Edit"
+#~ msgstr "Edit"
+
+#~ msgid "_Commands"
+#~ msgstr "Commands"
+
+#~ msgid "_Execute command"
+#~ msgstr "Execute command"
