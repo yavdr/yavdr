@@ -4,8 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
-msgid ""
-msgstr ""
+
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-12 18:55+0200\n"
@@ -44,9 +43,6 @@ msgid "Tools"
 msgstr ""
 
 msgid "Xterm"
-msgstr ""
-
-msgid "System"
 msgstr ""
 
 msgid "Commands"
@@ -128,9 +124,6 @@ msgstr ""
 #: yavdrweb-ng/static/javascripts/component/settings/hw_display.js
 
 msgid "Here you can configure your display settings."
-msgstr ""
-
-msgid "Settings"
 msgstr ""
 
 msgid "Display settings"
@@ -245,6 +238,9 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+msgid "System"
+msgstr ""
+
 msgid "Reload"
 msgstr ""
 
@@ -339,9 +335,6 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-msgid "Edit"
-msgstr ""
-
 msgid "Delete"
 msgstr ""
 
@@ -422,9 +415,6 @@ msgid "Add new group"
 msgstr ""
 
 msgid "Please enter the group name:"
-msgstr ""
-
-msgid "Add new group"
 msgstr ""
 
 msgid "\"Display channels.conf\""
@@ -660,9 +650,6 @@ msgstr ""
 msgid "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
 msgstr ""
 
-msgid "Commands"
-msgstr ""
-
 msgid "\"Execute command...\""
 msgstr ""
 
@@ -697,9 +684,6 @@ msgid "LIRC configuration"
 msgstr ""
 
 msgid "VDR configuration"
-msgstr ""
-
-msgid "System information"
 msgstr ""
 
 msgid "Timer"
@@ -742,9 +726,6 @@ msgid "Would you like to remove package \"%s\"?"
 msgstr ""
 
 msgid "Would you like to enable \"%s\"?"
-msgstr ""
-
-msgid "Please wait..."
 msgstr ""
 
 msgid "fatal error: disable plugin failed"
