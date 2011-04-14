@@ -532,9 +532,6 @@ msgstr ""
 
 #: yavdrweb-ng/static/javascripts/component/system/diagnose_lirc.js
 
-msgid "LIRC configuration"
-msgstr ""
-
 msgid "LIRC hardware configuration"
 msgstr ""
 
@@ -671,9 +668,6 @@ msgstr ""
 msgid "Sound (ALSA)"
 msgstr ""
 
-msgid "XBMC crash log"
-msgstr ""
-
 msgid "System log files"
 msgstr ""
 
@@ -684,9 +678,6 @@ msgid "LIRC configuration"
 msgstr ""
 
 msgid "VDR configuration"
-msgstr ""
-
-msgid "Timer"
 msgstr ""
 
 #: yavdrweb-ng/static/javascripts/base.js
@@ -781,9 +772,6 @@ msgid "Do you realy want to remove this configration:"
 msgstr ""
 
 msgid " (local)"
-msgstr ""
-
-msgid "Basic settings"
 msgstr ""
 
 msgid "Network-Support"
