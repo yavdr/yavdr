@@ -9,6 +9,7 @@ require_once '../class.channelIterator.php';
 
 // load resources
 require_once '../resources/channelgroups.php';
+require_once '../resources/sources.php';
 
 // handle request
 $request = new Request(array(

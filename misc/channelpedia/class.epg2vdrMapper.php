@@ -181,6 +181,7 @@ class epg2vdrMapper{
         case "SAT.1":
             $variants[] = "SAT.1";
             $variants[] = "SAT. 1";
+            $variants[] = "SAT 1";
             $variants[] = "SAT.1 Bayern";
             $variants[] = "SAT.1 HH/SH";
             $variants[] = "SAT.1 NRW";

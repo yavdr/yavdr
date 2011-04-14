@@ -102,7 +102,11 @@ class HTMLOutputRenderer{
         }
         $this->closeHierarchy();
 
+        $this->addDividerTitle("Reports");
         $this->renderDEComparison();
+        $this->renderUnconfirmedChannels("S19.2E");
+        $this->renderUnconfirmedChannels("S28.2E");
+        $this->closeHierarchy();
 
         $this->renderIndexPage();
     }
@@ -321,11 +325,60 @@ class HTMLOutputRenderer{
             $html_table .
             $this->getHTMLFooter();
         $filename = "parameter_comparison_de.html";
-        $this->addDividerTitle("Reports");
         $this->addToOverview( "Comparison: Parameters of German public TV channels at different providers", $filename );
-        $this->closeHierarchy();
         file_put_contents($this->exportpath . $filename, $nice_html_output );
     }
+
+    private function renderUnconfirmedChannels($source){
+        $pagetitle = "Unconfirmed German channels on $source / likely to be outdated";
+        $nice_html_output =
+            $this->getHTMLHeader($pagetitle).
+            '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
+            <p>Last updated on: '. date("D M j G:i:s T Y").'</p>';
+        $html_table = "";
+
+        $sqlquery = "SELECT x_last_confirmed FROM channels WHERE source = ".$this->db->quote($source)." ORDER BY x_last_confirmed DESC LIMIT 1";
+        $result = $this->db->query($sqlquery);
+        $timestamp = $result->fetchAll();
+        $timestamp = $timestamp[0][0];
+        $nice_html_output .= "<p>Looking for channels that were last confirmed before ". date("D, d M Y H:i:s", $timestamp). "</p>\n";
+
+        $x = new channelIterator();
+        $x->init2( "SELECT * FROM channels WHERE source = 'S19.2E' AND x_last_confirmed < ".$timestamp);
+        $lastname = "";
+        while ($x->moveToNextChannel() !== false){
+            $carray = $x->getCurrentChannelArray();
+            if ($lastname == ""){
+                $html_table .= "<h3>Table view</h3>\n<div class=\"tablecontainer\"><table>\n<tr>";
+                foreach ($x->getCurrentChannelArrayKeys() as $header){
+                    $html_table .= '<th class="'.htmlspecialchars($header).'">'.htmlspecialchars(ucfirst($header))."</th>\n";
+                }
+                $html_table .= "</tr>\n";
+            }
+            $html_table .= "<tr>\n";
+            foreach ($carray as $param => $value){
+                if ($param == "apid" || $param == "caid"){
+                    $value = str_replace ( array(",",";"), ",<br/>", htmlspecialchars($value ));
+                }
+                elseif ($param == "x_last_changed"){
+                    $value = date("D, d M Y H:i:s", $value);
+                }
+                else
+                    $value = htmlspecialchars($value);
+                $html_table .= '<td class="'.htmlspecialchars($param).'">'.$value."</td>\n";
+            }
+            $html_table .= "</tr>\n";
+            $lastname = $carray["name"];
+        }
+        $html_table .= "</table></div>\n";
+        $nice_html_output .=
+            $html_table .
+            $this->getHTMLFooter();
+        $filename = "unconfirmed_channels_".$source."_de.html";
+        $this->addToOverview( $pagetitle, $filename );
+        file_put_contents($this->exportpath . $filename, $nice_html_output );
+    }
+
 
     private function renderGroupingHints($source){
         $pagetitle = "Grouping hints for unsorted channels of ".$source;
