@@ -8,6 +8,6 @@ xine.osdMode = osdBlendScaledSHQ
 xine.osdExtent.X = 1920
 xine.osdExtent.Y = 1080
 xine.osdGammaCorrection = 123
-xine.osdMode = osdBlendScaledAuto
+xine.osdMode = osdOverlay
 xine.transparencyMode = transparencyOn
 xine.volumeMode = volumeChangeSW
