@@ -739,6 +739,15 @@ msgstr ""
 
 #: hw_sundtek.js
 
+msgid "You can configure your sundtek DVB hardware here."
+msgstr ""
+
+msgid "Sundtek"
+msgstr ""
+
+msgid "Sundtek Settings"
+msgstr ""
+
 msgid "unchanged"
 msgstr ""
 
