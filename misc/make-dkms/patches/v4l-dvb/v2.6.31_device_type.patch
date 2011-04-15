@@ -1,0 +1,11 @@
+--- linux/drivers/media/rc/rc-main.c.orig	2011-03-11 18:44:43.734443972 +0100
++++ linux/drivers/media/rc/rc-main.c	2011-03-11 18:44:56.371948200 +0100
+@@ -904,7 +904,7 @@
+ 	.attrs	= rc_dev_attrs,
+ };
+ 
+-static const struct attribute_group *rc_dev_attr_groups[] = {
++static struct attribute_group *rc_dev_attr_groups[] = {
+ 	&rc_dev_attr_grp,
+ 	NULL
+ };

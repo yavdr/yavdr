@@ -99,14 +99,3 @@ diff --git a/linux/drivers/media/video/v4l2-common.c b/linux/drivers/media/video
  	else
  		client = i2c_new_device(adapter, info);
  
---- a/linux/drivers/media/video/hdpvr/hdpvr-i2c.c	2011-02-07 21:30:19.592701508 +0100
-+++ b/linux/drivers/media/video/hdpvr/hdpvr-i2c.c	2011-02-07 21:30:42.463212136 +0100
-@@ -59,7 +59,7 @@ static int hdpvr_new_i2c_ir(struct hdpvr
- 		break;
- 	}
- 
--	return i2c_new_probed_device(adap, &info, addr_list, NULL) == NULL ?
-+	return i2c_new_probed_device(adap, &info, addr_list) == NULL ?
- 	       -1 : 0;
- }
- 

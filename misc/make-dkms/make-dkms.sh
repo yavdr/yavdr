@@ -19,6 +19,9 @@ if [ -d updates/v4l-dvb -a -d updates/media_build ]; then
     cd updates/v4l-dvb
     git pull
     cd ..
+    cd media_build
+    git pull
+    cd ..
 else 
     cd updates/
     git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git v4l-dvb
@@ -26,6 +29,7 @@ else
     git remote add linuxtv git://linuxtv.org/media_tree.git
     git remote update
     git checkout -b media-master remotes/linuxtv/staging/for_v2.6.39
+    cd ..
     git clone git://linuxtv.org/media_build.git
 fi
 
@@ -36,7 +40,10 @@ cd ..
 rm -rf ../../repositories/v4l-dvb/
 mkdir ../../repositories/v4l-dvb
 tar c * --exclude=".hg" --exclude ".git" | tar x -C ../../repositories/v4l-dvb
-VERSION=git`cat .git/refs/heads/master`
+cd ../v4l-dvb
+VERSION=git`git rev-list --all | wc -l`
+cd ../media_build
+VERSION=$VERSION.`git rev-list --all | wc -l`
 cd ../..
 echo $VERSION > repositories/v4l-dvb.version
 echo "v4l-dvb: Update ended. Now: $VERSION"
@@ -60,7 +67,7 @@ cd ..
 echo "s2-liplianin: Update ended. Now: $VERSION"
 }
 
-KERNEL=2.6.32-28-generic
+KERNEL=2.6.32-30-generic
 if [ -z "$KERNEL" ]; then
     if [ ! -z "$2" ]; then
     	KERNEL="$2"
@@ -93,10 +100,12 @@ case $1 in
            ;;
 esac
 
-VERSION=0~`/bin/date --utc +%0Y%0m%0d`.$(cat repositories/$REPO.version)
-
-
+VERSION=0~`/bin/date +%0Y%0m%0d`.$(cat repositories/$REPO.version)
 PATCHES=( `find patches/$REPO/* -name *.patch | tac` )
+
+if [ -e "config-$REPO" ]; then 
+    cp config-$REPO repositories/$REPO/v4l/.config
+fi 
 
 # generate dkms.conf
 cat <<EOF > dkms.conf.$REPO
@@ -174,4 +183,4 @@ cp $dkmstree/${REPO}/$VERSION/dsc/* ./packages/dsc/
 #cp $dkmstree/${REPO}/$VERSION/deb/* ./packages/deb/
 
 # upload to ppa
-dput ppa:yavdr/testing-vdr ./packages/dsc/$REPO-*.changes
+dput ppa:yavdr/testing-vdr ./packages/dsc/$REPO-dkms_$VERSION*.changes

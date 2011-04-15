@@ -1,7 +1,7 @@
 diff --git a/linux/drivers/media/rc/rc-main.c b/linux/drivers/media/rc/rc-main.c
 --- a/linux/drivers/media/rc/rc-main.c
 +++ b/linux/drivers/media/rc/rc-main.c
-@@ -318,37 +318,23 @@ static unsigned int ir_establish_scancod
+@@ -318,37 +318,23 @@
   * This routine is used to handle evdev EVIOCSKEY ioctl.
   */
  static int ir_setkeycode(struct input_dev *idev,
@@ -45,7 +45,7 @@ diff --git a/linux/drivers/media/rc/rc-main.c b/linux/drivers/media/rc/rc-main.c
  
  out:
  	spin_unlock_irqrestore(&rc_map->lock, flags);
-@@ -436,42 +422,24 @@ static unsigned int ir_lookup_by_scancod
+@@ -436,48 +422,25 @@
   * This routine is used to handle evdev EVIOCGKEY ioctl.
   */
  static int ir_getkeycode(struct input_dev *idev,
@@ -71,27 +71,40 @@ diff --git a/linux/drivers/media/rc/rc-main.c b/linux/drivers/media/rc/rc-main.c
 -
 -		index = ir_lookup_by_scancode(rc_map, scancode);
 -	}
-+	index = ir_lookup_by_scancode(rc_map, scancode);
- 
- 	if (index >= rc_map->len) {
--		if (!(ke->flags & INPUT_KEYMAP_BY_INDEX))
--			IR_dprintk(1, "unknown key for scancode 0x%04x\n",
--				   scancode);
- 		retval = -EINVAL;
- 		goto out;
- 	}
- 
--	entry = &rc_map->scan[index];
 -
--	ke->index = index;
--	ke->keycode = entry->keycode;
--	ke->len = sizeof(entry->scancode);
--	memcpy(ke->scancode, &entry->scancode, sizeof(entry->scancode));
+-	if (index < rc_map->len) {
+-		entry = &rc_map->scan[index];
+-
+-		ke->index = index;
+-		ke->keycode = entry->keycode;
+-		ke->len = sizeof(entry->scancode);
+-		memcpy(ke->scancode, &entry->scancode, sizeof(entry->scancode));
+-
+-	} else if (!(ke->flags & INPUT_KEYMAP_BY_INDEX)) {
+-		/*
+-		 * We do not really know the valid range of scancodes
+-		 * so let's respond with KEY_RESERVED to anything we
+-		 * do not have mapping for [yet].
+-		 */
+-		ke->index = index;
+-		ke->keycode = KEY_RESERVED;
+-	} else {
+-		retval = -EINVAL;
+-		goto out;
+-	}
++	index = ir_lookup_by_scancode(rc_map, scancode);
++ 
++ 	if (index >= rc_map->len) {
++		*keycode = KEY_RESERVED;
++		retval = 0;
++ 		goto out;
++ 	}
++ 
 +	*keycode = rc_map->scan[index].keycode;
  
  	retval = 0;
  
-@@ -960,8 +928,8 @@ struct rc_dev *rc_allocate_device(void)
+@@ -966,8 +929,8 @@
  		return NULL;
  	}
  
