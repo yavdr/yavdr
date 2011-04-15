@@ -330,7 +330,7 @@ class HTMLOutputRenderer{
     }
 
     private function renderUnconfirmedChannels($source){
-        $pagetitle = "Unconfirmed German channels on $source / likely to be outdated";
+        $pagetitle = "Unconfirmed channels on $source / likely to be outdated";
         $nice_html_output =
             $this->getHTMLHeader($pagetitle).
             '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
@@ -374,7 +374,7 @@ class HTMLOutputRenderer{
         $nice_html_output .=
             $html_table .
             $this->getHTMLFooter();
-        $filename = "unconfirmed_channels_".$source."_de.html";
+        $filename = "unconfirmed_channels_".$source.".html";
         $this->addToOverview( $pagetitle, $filename );
         file_put_contents($this->exportpath . $filename, $nice_html_output );
     }

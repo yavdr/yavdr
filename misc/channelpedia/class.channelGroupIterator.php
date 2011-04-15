@@ -53,6 +53,8 @@ class channelGroupIterator{
         }
         else{
             $exists = true;
+            $this->channelgroup['channelcount'] = intval($this->channelgroup['channelcount']);
+            $this->channelgroup['id'] = $this->count + 1;
             $this->count++;
         }
         return $exists;

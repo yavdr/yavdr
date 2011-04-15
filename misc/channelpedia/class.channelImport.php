@@ -72,6 +72,10 @@ class channelImport{
         return $where_array;
     }
 
+    private function getChannelsWithMatchingUniqueParams( $params ){
+        return $this->db->query2( "SELECT * FROM channels", $this->getWhereArray( "source, nid, tid, sid", $params ) );
+    }
+
     /*
      * tries to update all channel data of the channels
      * listed in array existingChannelBuffer
@@ -81,7 +85,7 @@ class channelImport{
         $query = $this->db->exec("BEGIN TRANSACTION");
         foreach ($this->existingChannelBuffer as $params){
             //print "checking channel ".$params["name"]." for changes: ";
-            $result = $this->db->query2( "SELECT * FROM channels", $this->getWhereArray( "source, nid, tid, sid", $params ) );
+            $result = $this->getChannelsWithMatchingUniqueParams( $params );
             foreach ($result as $row){
                 if ($row["x_timestamp_added"] == $this->timestamp){
                     print "ERROR: Trying to update channel ".$params["name"]." that was added earlier! Double channel entry!\n";
@@ -144,12 +148,13 @@ class channelImport{
         $msg_prefix = "";
         $filename = $sourcepath . 'channels.conf';
         if (file_exists($filename)) {
+            //read channels.conf line by line
             $handle = fopen ($filename, "r");
-            $counter = 1;
+            //$counter = 1;
             $cgroup = "";
             $query = $this->db->exec("BEGIN TRANSACTION");
             while (!feof($handle)) {
-                //$msg_prefix = "try to add channel $counter : ";
+                //$msg_prefix = "try to add channel: ";
                 $buffer = fgets($handle, 4096);
                 $buffer = rtrim( $buffer, "\n");
                 if (substr($buffer,0,1) == ":"){
@@ -161,9 +166,17 @@ class channelImport{
                 }
                 else{
                     $this->numChanChecked++;
-                    $counter++;
-                    $params = $this->getParamArray($buffer);
-                    if ($params !== false)
+                    //$counter++;
+                    $params = $this->config->convertChannelString2Array($buffer, $this->cableSourceType, $this->terrSourceType);
+
+                    if ($params !== false && count($params == 14)){
+                        $params = $params + array(
+                            "x_label"         => "",
+                            "x_last_changed"  => $this->timestamp,
+                            "x_timestamp_added" => $this->timestamp,
+                            "x_last_confirmed" => 0
+                        );
+
                         if (false === $this->insertChannelIntoDB ($params, $buffer)){
                             $this->existingChannelBuffer[] = $params;
                             //print $msg_prefix . "already exists.\n";
@@ -172,6 +185,7 @@ class channelImport{
                             $this->numChanAdded++;
                             //print $msg_prefix . "added successfully.\n";
                         }
+                    }
                     else{
                         print $msg_prefix . "illegal channel: $buffer.\n";
                     }
@@ -179,6 +193,10 @@ class channelImport{
             }
             fclose ($handle);
             $query = $this->db->exec("COMMIT TRANSACTION");
+            //rename read channels.conf file
+            if (file_exists($filename . ".old"))
+                unlink($filename . ".old");
+            rename($filename, $filename . ".old");
         }
     }
 
@@ -222,51 +240,6 @@ class channelImport{
         return $success;
     }
 
-    /*
-     * converts channel data string into an array
-     * ready to use for db insert
-     */
-
-    private function getParamArray( $buffer ){
-        $details = explode( ":", $buffer);
-        if (count($details) != 13) return false;
-        $cname = $details[0];
-        $cprovider = "";
-        $cnamedetails = explode( ";", $cname);
-        if (count($cnamedetails) == 2){
-            $cname = $cnamedetails[0];
-            $cprovider = $cnamedetails[1];
-        }
-        $sourcetype = substr($details[3], 0, 1);
-        if ($sourcetype == "C")
-            $details[3] .= '['.$this->cableSourceType.']';
-        elseif ($sourcetype == "T")
-            $details[3] .= '['.$this->terrSourceType.']';
-        elseif ($sourcetype != "S")
-            return false;
-
-        return array(
-            "name"            => $cname,
-            "provider"        => $cprovider,
-            "frequency"       => $details[1],
-            "modulation"      => strtoupper($details[2]), //w_scan has lower case, we don't want that
-            "source"          => $details[3],
-            "symbolrate"      => $details[4],
-            "vpid"            => $details[5],
-            "apid"            => $details[6],
-            "tpid"            => $details[7],
-            "caid"            => $details[8],
-            "sid"             => $details[9],
-            "nid"             => $details[10],
-            "tid"             => $details[11],
-            "rid"             => $details[12],
-            "x_label"         => "",
-            "x_last_changed"  => $this->timestamp,
-            "x_timestamp_added" => $this->timestamp,
-            "x_last_confirmed" => 0
-        );
-    }
-
     public function updateNecessaryLabels(){
         $labeller = channelGroupingManager::getInstance();
         if ($this->numChanAdded + $this->numChanChanged > 0){
@@ -282,6 +255,5 @@ class channelImport{
             print "No need for label update.\n";
         }
     }
-
 }
 ?>
