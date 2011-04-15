@@ -1,1 +1,1 @@
-        <command name="Pidgin" execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=pidgin &amp;> /dev/null " />
+        <command name=<?cs call:quote(_("Pidgin")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=pidgin &amp;> /dev/null " />

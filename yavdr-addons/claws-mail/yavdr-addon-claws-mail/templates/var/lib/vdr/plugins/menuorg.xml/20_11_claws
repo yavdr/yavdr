@@ -1,1 +1,1 @@
-        <command name="Mail" execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=claws &amp;> /dev/null " />
+        <command name=<?cs call:quote(_("Mail")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=claws &amp;> /dev/null " />

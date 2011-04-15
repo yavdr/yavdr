@@ -1,1 +1,1 @@
-        <command name="DVD-Rip" execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=dvdrip &amp;> /dev/null " />
+        <command name=<?cs call:quote(_("DVD-Rip")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=no app=dvdrip &amp;> /dev/null " />

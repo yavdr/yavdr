@@ -1,1 +1,1 @@
-        <command name="Extreme Tuxracer" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=tuxracer &amp;> /dev/null " />
+        <command name=<?cs call:quote(_("Extreme Tuxracer")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=tuxracer &amp;> /dev/null " />

@@ -1,1 +1,1 @@
-        <command name="Performous" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=performous &amp;> /dev/null " />
+        <command name=<?cs call:quote(_("Performous")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=performous &amp;> /dev/null " />

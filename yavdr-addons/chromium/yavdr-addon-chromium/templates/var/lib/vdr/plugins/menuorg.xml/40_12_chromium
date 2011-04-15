@@ -1,1 +1,1 @@
-        <command name="Chromium 2D-Shooter" execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=chromium &amp;> /dev/null " />
+        <command name=<?cs call:quote(_("Chromium 2D-Shooter")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=chromium &amp;> /dev/null " />
