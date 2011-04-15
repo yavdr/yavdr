@@ -724,3 +724,81 @@ msgstr "Entferntes mounten der Geräte erlauben"
 
 msgid "Rescan for sundtek devices."
 msgstr "Erneut nach Sundtek Geräten suchen"
+
+msgid "CD-Ripper Asunder"
+msgstr ""
+
+msgid "Chromium 2D-Shooter"
+msgstr ""
+
+msgid "Mail"
+msgstr ""
+
+msgid "DVD-Rip"
+msgstr ""
+
+msgid "M.A.M.E"
+msgstr ""
+
+msgid "ARD"
+msgstr ""
+
+msgid "ZDF"
+msgstr ""
+
+msgid "DMAX"
+msgstr ""
+
+msgid "Golem-Video"
+msgstr ""
+
+msgid "SAT1"
+msgstr ""
+
+msgid "Gametrailers"
+msgstr ""
+
+msgid "Performous"
+msgstr ""
+
+msgid "Pidgin"
+msgstr ""
+
+msgid "PIP on/off"
+msgstr ""
+
+msgid "PIP swap"
+msgstr ""
+
+msgid "PIP"
+msgstr ""
+
+msgid "Semsix"
+msgstr ""
+
+msgid "Simfy"
+msgstr ""
+
+msgid "Skype"
+msgstr ""
+
+msgid "SuperTuxKart"
+msgstr ""
+
+msgid "Thunderbird-Mail"
+msgstr ""
+
+msgid "Extreme Tuxracer"
+msgstr ""
+
+msgid "TV-Browser"
+msgstr ""
+
+msgid "VLC-Media-Player"
+msgstr ""
+
+msgid "Wormux"
+msgstr ""
+
+msgid "You-Tube"
+msgstr ""
