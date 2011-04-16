@@ -18,9 +18,6 @@ msgstr ""
 msgid "Timer"
 msgstr ""
 
-msgid "Video"
-msgstr ""
-
 msgid "Applications"
 msgstr ""
 
@@ -305,9 +302,6 @@ msgid "Activate EventLircd"
 msgstr ""
 
 #: yavdrweb-ng/static/javascripts/component/settings/system_config_editor.js
-
-msgid "Edit configurations"
-msgstr ""
 
 msgid "Choose a file:"
 msgstr ""
