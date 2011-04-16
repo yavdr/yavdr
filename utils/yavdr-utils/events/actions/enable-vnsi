@@ -108,5 +108,15 @@ CREATE INDEX idx_idGroup_iChannelNumber on map_channelgroups_channels(idGroup, i
 COMMIT;
 EOF
 
+sqlite3  /var/lib/vdr/.xbmc/userdata/Database/Addons15.db<<EOF
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE pvrenabled (id integer primary key, addonID text);
+INSERT INTO "pvrenabled" VALUES(1,'pvr.vdr.vnsi');
+CREATE UNIQUE INDEX idxPVREnabled ON pvrenabled(addonID);
+COMMIT;
+EOF
+
+
 chown -R vdr:vdr /var/lib/vdr/.xbmc
 
