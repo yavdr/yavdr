@@ -80,21 +80,6 @@ msgstr "Rechner neu starten"
 msgid "Shutdown system"
 msgstr "System herunterfahren"
 
-msgid "Recordings_on_"
-msgstr "Aufnahmen_auf_"
-
-msgid "Videos_on_"
-msgstr "Videos_auf_"
-
-msgid "Music_on_"
-msgstr "Musik_auf_"
-
-msgid "Pictures_on_"
-msgstr "Bilder_auf_"
-
-msgid "Miscellaneous_on_"
-msgstr "Sonstige_auf_"
-
 msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
 msgstr "Bitte wählen Sie hier die Audioausgabe und drücken sie \"Speichern\". Nach dem Speichern wird VDR neugestartet um die Auswahl zu aktivieren."
 
@@ -192,7 +177,7 @@ msgid "Rescan display failed."
 msgstr ""
 
 msgid "Default frequency"
-msgstr ""
+msgstr "Frequenz Voreinstellung"
 
 msgid "rate"
 msgstr "Rate"
@@ -231,10 +216,10 @@ msgid "Activate LIRC"
 msgstr "LIRC Aktivieren"
 
 msgid "Activate EventLircd"
-msgstr ""
+msgstr "Eventlircd aktivieren"
 
 msgid "Edit configurations"
-msgstr ""
+msgstr "Konfiguration bearbeiten"
 
 msgid "Choose a file:"
 msgstr "Wählen Sie eine Datei:"
@@ -270,13 +255,13 @@ msgid "Grub"
 msgstr "Grub"
 
 msgid "Choose timeout in seconds:"
-msgstr ""
+msgstr "Wähle Grub Unterbrechung in Sekunden"
 
 msgid "\"The maximum is 10.\""
-msgstr ""
+msgstr "\"Das Maximum ist 10.\""
 
 msgid "\"The minimum is 0.\""
-msgstr ""
+msgstr "\"Das Minimum ist 0.\""
 
 msgid "\"Language\""
 msgstr "\"Sprache\""
@@ -327,7 +312,7 @@ msgid "Deactivate USB-wakeup, for incompatible hardware"
 msgstr ""
 
 msgid "Network"
-msgstr ""
+msgstr "Netzwerk"
 
 msgid "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
 msgstr ""
@@ -381,7 +366,7 @@ msgid "Name of the group"
 msgstr ""
 
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 msgid "Next channel no."
 msgstr ""
@@ -596,9 +581,6 @@ msgstr "Einstellung der Fernbedinung"
 msgid "Audio"
 msgstr "Audio-Einstellunngen"
 
-msgid "Edit configurations"
-msgstr ""
-
 msgid "Packages"
 msgstr "Pakete"
 
@@ -621,7 +603,7 @@ msgid "Reboot computer"
 msgstr "Rechner neu starten"
 
 msgid "Kill XBMC"
-msgstr ""
+msgstr "XBMC Notstopp"
 
 msgid "Sound (ALSA)"
 msgstr "Ton (ALSA)"
@@ -639,7 +621,7 @@ msgid "VDR configuration"
 msgstr "VDR Konfiguration"
 
 msgid "Dashboard"
-msgstr " Armaturenbrett"
+msgstr "Dashboard"
 
 msgid "Program"
 msgstr "Programm"
@@ -684,7 +666,7 @@ msgid "Title (optional)"
 msgstr ""
 
 msgid "Email (optional)"
-msgstr ""
+msgstr "Email (optional)"
 
 msgid "Content"
 msgstr "Inhalt"
@@ -717,7 +699,7 @@ msgid "remove this configuration"
 msgstr "Diese Konfiguration entfernen"
 
 msgid "Do you realy want to remove this configration:"
-msgstr ""
+msgstr "Wollen Sie diese Konfiguration wirklich entfernen:"
 
 msgid " (local)"
 msgstr " (lokal)"
@@ -738,19 +720,19 @@ msgid "Chromium 2D-Shooter"
 msgstr ""
 
 msgid "Mail"
-msgstr ""
+msgstr "Mail"
 
 msgid "DVD-Rip"
-msgstr ""
+msgstr "DVD-Rip"
 
 msgid "M.A.M.E"
-msgstr ""
+msgstr "M.A.M.E"
 
 msgid "ARD"
-msgstr ""
+msgstr "ARD"
 
 msgid "ZDF"
-msgstr ""
+msgstr "ZDF"
 
 msgid "DMAX"
 msgstr ""
