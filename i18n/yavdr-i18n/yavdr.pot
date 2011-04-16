@@ -165,7 +165,7 @@ msgstr ""
 msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
 msgstr ""
 
-msgid "Audio Settings"
+msgid "Audio"
 msgstr ""
 
 msgid "Output to all devices"
@@ -203,7 +203,7 @@ msgstr ""
 msgid "Here you can configure your display settings."
 msgstr ""
 
-msgid "Display settings"
+msgid "Display"
 msgstr ""
 
 msgid "Rescan displays"
@@ -230,7 +230,7 @@ msgstr ""
 msgid "Nvidia overscan compensation"
 msgstr ""
 
-msgid "Basic settings"
+msgid "Basic"
 msgstr ""
 
 msgid "Dual-Head Mode"
@@ -239,7 +239,7 @@ msgstr ""
 msgid "GraphTFT"
 msgstr ""
 
-msgid "Xine settings"
+msgid "Xine"
 msgstr ""
 
 msgid "Xine HD deinterlacer"
@@ -306,7 +306,7 @@ msgstr ""
 
 #: yavdrweb-ng/static/javascripts/component/settings/system_config_editor.js
 
-msgid "Configuration editor"
+msgid "Edit configurations"
 msgstr ""
 
 msgid "Choose a file:"
@@ -420,9 +420,6 @@ msgstr ""
 
 #: yavdrweb-ng/static/javascripts/component/settings/system_packages.js
 
-msgid "Package installer"
-msgstr ""
-
 msgid "load new information from internet"
 msgstr ""
 
@@ -479,7 +476,7 @@ msgstr ""
 msgid "generated channels.conf"
 msgstr ""
 
-msgid "Channel list"
+msgid "Channels"
 msgstr ""
 
 msgid "Clipboard"
@@ -538,7 +535,7 @@ msgstr ""
 msgid "Here you can make general setting for and around VDR."
 msgstr ""
 
-msgid "General settings"
+msgid "General"
 msgstr ""
 
 msgid "Lifeguard monitoring items"
@@ -702,13 +699,10 @@ msgstr ""
 msgid "Hardware"
 msgstr ""
 
-msgid "General"
+msgid "Remote control"
 msgstr ""
 
-msgid "Remote control settings"
-msgstr ""
-
-msgid "Audio configuration"
+msgid "Audi"
 msgstr ""
 
 msgid "Edit configurations"
@@ -823,9 +817,6 @@ msgid "You can configure your sundtek DVB hardware here."
 msgstr ""
 
 msgid "Sundtek"
-msgstr ""
-
-msgid "Sundtek Settings"
 msgstr ""
 
 msgid "unchanged"
