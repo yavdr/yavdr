@@ -12,7 +12,7 @@ YaVDR.Component.Settings.SystemConfigEditor = Ext.extend(YaVDR.Component, {
       }),
       {
         region: 'center',
-        title: _('Configuration editor'),
+        title: _('Edit configurations'),
         frame: true,
         layout: 'fit',
         items: new YaVDR.Component.Settings.SystemConfigEditor.Editor

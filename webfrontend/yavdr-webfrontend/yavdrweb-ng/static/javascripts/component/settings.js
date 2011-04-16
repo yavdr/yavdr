@@ -41,9 +41,9 @@ Ext.apply(YaVDR.Component.Settings, {
 YaVDR.Component.Settings.addMenu('vdr', 'settings-vdr-generic', _('General'), '/icons/fugue/television-image.png');
 YaVDR.Component.Settings.addMenu('vdr', 'settings-vdr-channels', _('Channels'), '/icons/fugue/book-open-list.png');
 
-YaVDR.Component.Settings.addMenu('hw', 'settings-hw-remote', _('Remote control settings'), '/icons/silk/keyboard.png');
-YaVDR.Component.Settings.addMenu('hw', 'settings-hw-audio', _('Audio configuration'), '/icons/fugue/speaker.png');
-YaVDR.Component.Settings.addMenu('hw', 'settings-hw-display', _('Display settings'), '/icons/fugue/television.png');
+YaVDR.Component.Settings.addMenu('hw', 'settings-hw-remote', _('Remote control'), '/icons/silk/keyboard.png');
+YaVDR.Component.Settings.addMenu('hw', 'settings-hw-audio', _('Audio'), '/icons/fugue/speaker.png');
+YaVDR.Component.Settings.addMenu('hw', 'settings-hw-display', _('Display'), '/icons/fugue/television.png');
 
 YaVDR.Component.Settings.addMenu('system', 'settings-system-generic', _('System'), '/icons/silk/computer.png');
 YaVDR.Component.Settings.addMenu('system', 'settings-system-network', _('Network'), '/icons/fugue/network-ethernet.png');

@@ -5,7 +5,7 @@ YaVDR.Component.Settings.HwDisplay = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: _('Display settings'),
+        title: _('Display'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.HwDisplay.Display
       })
@@ -276,7 +276,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
         
         var basic = new Ext.form.FieldSet({
           itemId: 'basic',
-          title: _('Basic settings'),
+          title: _('Basic'),
           items: [
             {
               disabled: true,
@@ -305,7 +305,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
 
         var xine = new Ext.form.FieldSet({
           itemId: 'xine',
-          title: _('Xine settings'),
+          title: _('Xine'),
           items: [
             new YaVDR.EasyComboBox({
               itemId: 'deinterlacer_hd',

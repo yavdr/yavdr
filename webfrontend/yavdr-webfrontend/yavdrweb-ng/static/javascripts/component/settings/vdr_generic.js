@@ -5,7 +5,7 @@ YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
   initComponent: function() {
     this.items = [
       new YaVDR.Component.Item({
-        title: _('General settings'),
+        title: _('General'),
         style: 'margin-bottom: 5px',
         items: new YaVDR.Component.Settings.VdrGeneric.Frontend
       }),

@@ -541,7 +541,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
         html : _('Settings')
       }), new YaVDR.Component.Item({
         region : 'center',
-        title : _('Channel list'),
+        title : _('Channels'),
         layout : 'fit',
         items : this.grid
       }), new YaVDR.Component.Item({

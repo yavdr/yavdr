@@ -17,7 +17,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
         region: 'center',
         style: '',
         layout: 'border',
-        title: _('Package installer'),
+        title: _('Packages'),
         tbar: [
           {
             text: 'apt-get update',
@@ -41,7 +41,7 @@ YaVDR.Component.Settings.SystemPackages = Ext.extend(YaVDR.Component, {
           },
           {
             text: 'apt-get clean',
-            icon: '/static/images/icons/dpkg_clean.png',
+            icon: '/icons/silk/table_lightning.png',
             tooltip: {
               text: 'apt-get clean: ' + _('clears out the local repository of retrieved package file'),
               title: 'apt-get clean'
