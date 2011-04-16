@@ -42,23 +42,70 @@ cat <<-! > /var/lib/vdr/.xbmc/userdata/guisettings.xml
 !
 
 sqlite3  /var/lib/vdr/.xbmc/userdata/Database/TV12.db<<EOF
-PRAGMA foreign_keys=OFF; BEGIN TRANSACTION; CREATE TABLE version (idVersion integer, iCompressCount integer); INSERT INTO "version" VALUES (12,0);
-CREATE TABLE addon (id integer primary key, type text,name text, summary text, description text, stars integer,path text, addonID text, icon text, version text, changelog text, fanart text, author text);
-CREATE TABLE addonextra (id integer, key text, value text);
-CREATE TABLE repo (id integer primary key, addonID text,checksum text, lastcheck text);
-CREATE TABLE addonlinkrepo (idRepo integer, idAddon integer);
-CREATE TABLE disabled (id integer primary key, addonID text);
-CREATE TABLE pvrenabled (id integer primary key, addonID text);
-CREATE TABLE broken (id integer primary key, addonID text, reason text);
-CREATE INDEX idxAddon ON addon(addonID);
-CREATE INDEX idxAddonExtra ON addonextra(id);
-CREATE UNIQUE INDEX ix_addonlinkrepo_1 ON addonlinkrepo ( idAddon, idRepo );
-CREATE UNIQUE INDEX ix_addonlinkrepo_2 ON addonlinkrepo ( idRepo, idAddon );
-CREATE UNIQUE INDEX idxDisabled ON disabled(addonID);
-CREATE UNIQUE INDEX idxPVREnabled ON pvrenabled(addonID);
-CREATE UNIQUE INDEX idxBroken ON broken(addonID);
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE version (idVersion integer, iCompressCount integer);
+INSERT INTO "version" VALUES(12,0);
+
+CREATE TABLE clients (idClient integer primary key, sName    varchar(64), sUid     varchar(32));
+INSERT INTO "clients" VALUES(1,'VDR VNSI Client','pvr.vdr.vnsi');
+
+CREATE TABLE channels (
+   idChannel            integer primary key, 
+   iUniqueId            integer, bIsRadio             bool, 
+   bIsHidden            bool, sIconPath            varchar(255), 
+   sChannelName         varchar(64), bIsVirtual           bool, 
+   bEPGEnabled          bool, sEPGScraper          varchar(32), 
+   iLastWatched         integer,iClientId            integer, 
+   iClientChannelNumber integer, sInputFormat         varchar(32), 
+   sStreamURL           varchar(255), iEncryptionSystem    integer);
+
+CREATE TABLE channelgroups (
+   idGroup    integer primary key,
+   bIsRadio   bool, 
+   sName      varchar(64),
+   iSortOrder integer);
+
+INSERT INTO "channelgroups" VALUES(1,1,'All radio channels',0);
+
+CREATE TABLE map_channelgroups_channels (
+  idChannel      integer, 
+  idGroup        integer, 
+  iChannelNumber integer);
+
+CREATE TABLE channelsettings (
+  idChannel            integer primary key, 
+  iInterlaceMethod     integer, 
+  iViewMode            integer, 
+  fCustomZoomAmount    float, 
+  fPixelRatio          float, 
+  iAudioStream         integer, 
+  iSubtitleStream      integer,
+  fSubtitleDelay       float, 
+  bSubtitles           bool, 
+  fBrightness          float, 
+  fContrast            float, 
+  fGamma               float,
+  fVolumeAmplification float, 
+  fAudioDelay          float, 
+  bOutputToAllSpeakers bool, 
+  bCrop                bool, 
+  iCropLeft            integer, 
+  iCropRight           integer, 
+  iCropTop             integer, 
+  iCropBottom          integer, 
+  fSharpness           float, 
+  fNoiseReduction      float);
+
+CREATE INDEX idx_channels_iClientId on channels(iClientId);
+CREATE INDEX idx_channels_iLastWatched on channels(iLastWatched);
+CREATE INDEX idx_channels_bIsRadio on channels(bIsRadio);
+CREATE INDEX idx_channels_bIsHidden on channels(bIsHidden);
+CREATE INDEX idx_channelgroups_bIsRadio on channelgroups(bIsRadio);
+CREATE UNIQUE INDEX idx_idChannel_idGroup on map_channelgroups_channels(idChannel, idGroup);
+CREATE INDEX idx_idGroup_iChannelNumber on map_channelgroups_channels(idGroup, iChannelNumber);
+
 COMMIT;
-INSERT INTO "pvrenabled" VALUES(1,'pvr.vdr.vnsi');
 EOF
 
 chown -R vdr:vdr /var/lib/vdr/.xbmc
