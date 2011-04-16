@@ -1,7 +1,7 @@
 YaVDR.Component.Settings.HwSundtek = Ext.extend(YaVDR.Component, {
   itemId: 'settings_hw_sundtek',
   description: _('You can configure your sundtek DVB hardware here.'),
-  title: _('Sundtek'),
+  title: _('Settings'),
   initComponent: function() {
 	this.sundtek = new YaVDR.Component.Settings.HwSundtek.Hardware;
 	this.items = [
