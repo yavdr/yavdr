@@ -6,7 +6,7 @@ YaVDR.Component.Settings.HwSundtek = Ext.extend(YaVDR.Component, {
 	this.sundtek = new YaVDR.Component.Settings.HwSundtek.Hardware;
 	this.items = [
 	  new YaVDR.Component.Item({
-		title: _('Sundtek Settings'),
+		title: _('Sundtek'),
 		style: 'margin-bottom: 5px',
 		items: this.sundtek
 	  })
