@@ -20,6 +20,18 @@ msgstr ""
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+msgid "Recording"
+msgstr "Aufnahmen"
+
+msgid "Music"
+msgstr "Musik"
+
+msgid "Picture"
+msgstr "Bilder"
+
+msgid "Miscellaneous"
+msgstr "Sonstiges"
+
 msgid "Timer"
 msgstr "Timer"
 
