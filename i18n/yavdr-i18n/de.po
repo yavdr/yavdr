@@ -375,7 +375,7 @@ msgid "\"ChannelsReader.read: Channels not available\""
 msgstr ""
 
 msgid "Channels saved"
-msgstr ""
+msgstr "Kanäle gespeichert"
 
 msgid "generated channels.conf"
 msgstr ""
@@ -384,13 +384,13 @@ msgid "Channels"
 msgstr "Kanäle"
 
 msgid "Clipboard"
-msgstr ""
+msgstr "Ablage"
 
 msgid "Move into channels.conf"
 msgstr ""
 
 msgid "Add new group"
-msgstr ""
+msgstr "Neu Gruppe hinzufügen"
 
 msgid "Please enter the group name:"
 msgstr ""
@@ -411,7 +411,7 @@ msgid "\"loading channels\""
 msgstr ""
 
 msgid "Move into clipboard"
-msgstr ""
+msgstr "In die Ablage verschieben"
 
 msgid "On top"
 msgstr "Anfang"
@@ -420,7 +420,7 @@ msgid "At bottom"
 msgstr "Ende"
 
 msgid "Insert clipboard"
-msgstr ""
+msgstr "In die Ablage einfügen"
 
 msgid "Above %s"
 msgstr ""
@@ -429,10 +429,10 @@ msgid "Below %s"
 msgstr ""
 
 msgid "Delete \"%s\""
-msgstr ""
+msgstr "\"%s\" löschen"
 
 msgid "Delete selection"
-msgstr ""
+msgstr "Auswahl löschen"
 
 msgid "Here you can make general setting for and around VDR."
 msgstr ""
@@ -444,7 +444,7 @@ msgid "EPG"
 msgstr "EPG"
 
 msgid "Lifeguard"
-msgstr ""
+msgstr "Lifeguard"
 
 msgid "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
 msgstr ""
@@ -570,7 +570,7 @@ msgid "Here you can configure your VDR and applications around it."
 msgstr ""
 
 msgid "Hardware"
-msgstr ""
+msgstr "Hardware"
 
 msgid "General"
 msgstr "Allgemein"
@@ -591,7 +591,7 @@ msgid "\"Execute command...\""
 msgstr ""
 
 msgid "The command has been executed successfully"
-msgstr ""
+msgstr "Der Befehl wurde erfolgreich ausgeführt"
 
 msgid "The command could not complete successfully"
 msgstr ""
@@ -630,10 +630,10 @@ msgid "Saving"
 msgstr "Speichern"
 
 msgid "Error while saving data."
-msgstr ""
+msgstr "Fehler beim speichern der Daten."
 
 msgid "Data stored successfully."
-msgstr ""
+msgstr "Daten erfolgreich gespeichert."
 
 msgid "Introduction"
 msgstr "Einführung"
@@ -714,10 +714,10 @@ msgid "Rescan for sundtek devices."
 msgstr "Erneut nach Sundtek Geräten suchen"
 
 msgid "CD-Ripper Asunder"
-msgstr ""
+msgstr "CD-Ripper Asunder"
 
 msgid "Chromium 2D-Shooter"
-msgstr ""
+msgstr "Chromium 2D-Shooter"
 
 msgid "Mail"
 msgstr "Mail"
@@ -735,58 +735,58 @@ msgid "ZDF"
 msgstr "ZDF"
 
 msgid "DMAX"
-msgstr ""
+msgstr "DMAX"
 
 msgid "Golem-Video"
-msgstr ""
+msgstr "Golem-Video"
 
 msgid "SAT1"
-msgstr ""
+msgstr "SAT1"
 
 msgid "Gametrailers"
-msgstr ""
+msgstr "Gametrailers"
 
 msgid "Performous"
-msgstr ""
+msgstr "Performous"
 
 msgid "Pidgin"
-msgstr ""
+msgstr "Pidgin"
 
 msgid "PIP on/off"
-msgstr ""
+msgstr "PIP an/aus"
 
 msgid "PIP swap"
-msgstr ""
+msgstr "PIP tausch"
 
 msgid "PIP"
-msgstr ""
+msgstr "PIP"
 
 msgid "Semsix"
-msgstr ""
+msgstr "Semsix"
 
 msgid "Simfy"
-msgstr ""
+msgstr "Simfy"
 
 msgid "Skype"
-msgstr ""
+msgstr "Skype"
 
 msgid "SuperTuxKart"
-msgstr ""
+msgstr "SuperTuxKart"
 
 msgid "Thunderbird-Mail"
-msgstr ""
+msgstr "Thunderbird-Mail"
 
 msgid "Extreme Tuxracer"
-msgstr ""
+msgstr "Extreme Tuxracer"
 
 msgid "TV-Browser"
-msgstr ""
+msgstr "TV-Browser"
 
 msgid "VLC-Media-Player"
-msgstr ""
+msgstr "VLC-Media-Player"
 
 msgid "Wormux"
-msgstr ""
+msgstr "Wormux"
 
 msgid "You-Tube"
-msgstr ""
+msgstr "You-Tube"
