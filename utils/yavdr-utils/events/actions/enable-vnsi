@@ -38,6 +38,26 @@ cat <<-! > /var/lib/vdr/.xbmc/userdata/guisettings.xml
         <marginstart>2</marginstart>
         <marginstop>10</marginstop>
     </pvrrecord>
+    <videoplayer>
+        <adjustrefreshrate>true</adjustrefreshrate>
+        <displayresolution>10</displayresolution>
+        <errorinaspect>0</errorinaspect>
+        <maxspeedadjust>5.000000</maxspeedadjust>
+        <pauseafterrefreshchange>20</pauseafterrefreshchange>
+        <rendermethod>0</rendermethod>
+        <resamplequality>1</resamplequality>
+        <stretch43>0</stretch43>
+        <synctype>2</synctype>
+        <teletextenabled>true</teletextenabled>
+        <usechd>true</usechd>
+        <usedisplayasclock>true</usedisplayasclock>
+        <usepbo>true</usepbo>
+        <usevaapi>true</usevaapi>
+        <usevdpau>true</usevdpau>
+        <vdpau_allow_xrandr>false</vdpau_allow_xrandr>
+        <vdpaustudiolevel>false</vdpaustudiolevel>
+        <vdpauupscalinglevel>false</vdpauupscalinglevel>
+    </videoplayer>
 </settings>
 !
 
