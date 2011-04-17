@@ -603,7 +603,7 @@ msgid "Reboot computer"
 msgstr "Rechner neu starten"
 
 msgid "Kill XBMC"
-msgstr "XBMC Notstoppvdr-plugin-webvideo-0.4.1"
+msgstr "XBMC Notstopp"
 
 msgid "Sound (ALSA)"
 msgstr "Ton (ALSA)"
