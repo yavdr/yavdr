@@ -93,7 +93,7 @@ msgid "Analog"
 msgstr "Analog"
 
 msgid "Audio output will happen through the speaker/headphone plug"
-msgstr "Audio Ausgabe erfolgt am Kopfhöhrer Anschluss"
+msgstr "Audio Ausgabe erfolgt am Kopfhörer Anschluss"
 
 msgid "Digital (Toslink/SPDIF)"
 msgstr "Digital (Toslink/SPDIF)"
@@ -138,7 +138,7 @@ msgid "Secondary"
 msgstr ""
 
 msgid "Select resolution"
-msgstr ""
+msgstr "Auflösung wählen"
 
 msgid "Resolution"
 msgstr " Auflösung"
@@ -201,7 +201,7 @@ msgid "LIRC driver"
 msgstr "LIRC Treiber"
 
 msgid "HW-Default"
-msgstr ""
+msgstr "HW-Voreinstellung"
 
 msgid "Lircd-Conf"
 msgstr "Lircd-Conf"
@@ -210,7 +210,7 @@ msgid "Receiver"
 msgstr "Empfänger"
 
 msgid "Serial port"
-msgstr ""
+msgstr "serielle Schnittstelle"
 
 msgid "Activate LIRC"
 msgstr "LIRC Aktivieren"
@@ -306,7 +306,7 @@ msgid "Wakeup method"
 msgstr ""
 
 msgid "Disable USB-wakeup"
-msgstr ""
+msgstr "USB-wakeup abschalten"
 
 msgid "Deactivate USB-wakeup, for incompatible hardware"
 msgstr ""
@@ -351,10 +351,10 @@ msgid "Package"
 msgstr "Paket"
 
 msgid "Maintainer"
-msgstr ""
+msgstr "Maintainer"
 
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 msgid "Please select a package to see additional details."
 msgstr ""
@@ -603,7 +603,7 @@ msgid "Reboot computer"
 msgstr "Rechner neu starten"
 
 msgid "Kill XBMC"
-msgstr "XBMC Notstopp"
+msgstr "XBMC Notstoppvdr-plugin-webvideo-0.4.1"
 
 msgid "Sound (ALSA)"
 msgstr "Ton (ALSA)"
@@ -705,7 +705,7 @@ msgid " (local)"
 msgstr " (lokal)"
 
 msgid "Network-Support"
-msgstr "Netzerk-Unterstützung"
+msgstr "Netzwerk-Unterstützung"
 
 msgid "allows devices to be mounted remotely"
 msgstr "Entferntes mounten der Geräte erlauben"
