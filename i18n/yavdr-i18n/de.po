@@ -588,13 +588,13 @@ msgid "Here you can monitor your system. You can look into log files and send th
 msgstr ""
 
 msgid "\"Execute command...\""
-msgstr ""
+msgstr "\"Befehl ausführen...\""
 
 msgid "The command has been executed successfully"
 msgstr "Der Befehl wurde erfolgreich ausgeführt"
 
 msgid "The command could not complete successfully"
-msgstr ""
+msgstr "Der Befehl konnte nicht erfolgreich ausgeführt werden"
 
 msgid "Switch temporarily to second screen"
 msgstr ""
@@ -609,7 +609,7 @@ msgid "Sound (ALSA)"
 msgstr "Ton (ALSA)"
 
 msgid "System log files"
-msgstr ""
+msgstr "System log Dateien"
 
 msgid "Xorg server"
 msgstr "Xorg Server"
@@ -645,25 +645,25 @@ msgid "Install package?"
 msgstr "Paket installieren?"
 
 msgid "Would you like to install package \"%s\"?"
-msgstr ""
+msgstr "Wollen Sie das Paket \"%s\" installieren?"
 
 msgid "Would you like to remove package \"%s\"?"
-msgstr ""
+msgstr "Wollen Sie das Paket \"%s\" entfernen?"
 
 msgid "Would you like to enable \"%s\"?"
-msgstr ""
+msgstr "Wollen Sie \"%s\" aktivieren?"
 
 msgid "fatal error: disable plugin failed"
-msgstr ""
+msgstr "schwerwiegender Fehler: Plugin abschalten war erfolglos"
 
 msgid "Disable plugin?"
-msgstr "Plugin abschalten"
+msgstr "Plugin abschalten?"
 
 msgid "Would you like to disable \"%s\"?"
-msgstr ""
+msgstr "Wollen Sie \"%s\" abschalten?"
 
 msgid "Title (optional)"
-msgstr ""
+msgstr "Titel (optional"
 
 msgid "Email (optional)"
 msgstr "Email (optional)"
