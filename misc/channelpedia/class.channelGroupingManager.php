@@ -106,6 +106,7 @@ class channelGroupingManager{
     }
 
     public function updateAllLabelsOfSource( $source ){
+        print "Updating labels for channels belonging to $source.\n";
         $query = $this->db->exec("BEGIN TRANSACTION");
         $sourcetype = substr($source, 0, 1);
         foreach ( $this->rulesets as $title => $object){
@@ -259,7 +260,7 @@ class channelGroupingManager{
         //now only update channels with EMPTY x_label field!
         $sqlquery = "UPDATE channels SET x_label=". $this->db->quote($label) ." $where";
         $result = $this->db->query($sqlquery);
-        print "Updating labels for channels belonging to $title / $source / $label.\n";
+        //print "Updating labels for channels belonging to $title / $source / $label.\n";
     }
 
 }

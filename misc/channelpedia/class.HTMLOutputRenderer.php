@@ -226,7 +226,7 @@ class HTMLOutputRenderer{
         $groupIterator->init($source, $language);
         while ($groupIterator->moveToNextChannelGroup() !== false){
             $cols = $groupIterator->getCurrentChannelGroupArray();
-            print "Processing channelgroup ".$cols["x_label"]."\n";
+            //print "Processing channelgroup ".$cols["x_label"]."\n";
             $html_table = "";
             $shortlabel =
             preg_match ( "/.*?\.\d*?\.(.*)/" , $cols["x_label"], $shortlabelparts );
@@ -341,10 +341,10 @@ class HTMLOutputRenderer{
         $result = $this->db->query($sqlquery);
         $timestamp = $result->fetchAll();
         $timestamp = $timestamp[0][0];
-        $nice_html_output .= "<p>Looking for channels that were last confirmed before ". date("D, d M Y H:i:s", $timestamp). "</p>\n";
+        $nice_html_output .= "<p>Looking for channels that were last confirmed before ". date("D, d M Y H:i:s", $timestamp). " ($timestamp)</p>\n";
 
         $x = new channelIterator();
-        $x->init2( "SELECT * FROM channels WHERE source = 'S19.2E' AND x_last_confirmed < ".$timestamp);
+        $x->init2( "SELECT * FROM channels WHERE source = ".$this->db->quote($source)." AND x_last_confirmed < ".$timestamp);
         $lastname = "";
         while ($x->moveToNextChannel() !== false){
             $carray = $x->getCurrentChannelArray();

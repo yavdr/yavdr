@@ -22,7 +22,7 @@
 *
 */
 
-class channelImport{
+class channelImport extends channelFileIterator{
 
     const
         hd_channel = " UPPER(name) LIKE '% HD%' ";
@@ -31,8 +31,6 @@ class channelImport{
         $cableSourceType,
         $terrSourceType,
         $existingChannelBuffer,
-        $db,
-        $config,
         $numChanChecked = 0,
         $numChanAdded = 0,
         $numChanChanged = 0,
@@ -42,8 +40,7 @@ class channelImport{
         $timestamp;
 
     function __construct(){
-        $this->config = config::getInstance();
-        $this->db = dbConnection::getInstance();
+        parent::__construct();
     }
 
     public function importChannelsConfFile($username, $cableSourceType, $terrSourceType){
@@ -61,19 +58,6 @@ class channelImport{
         $this->insertChannelsConfIntoDB( $this->config->getValue("path")."sources/$username/" );
         $this->updateExistingChannels();
         print "Summary: Channels checked: $this->numChanChecked / Channels added: $this->numChanAdded / Channels modified: $this->numChanChanged\n";
-    }
-
-    private function getWhereArray( $wherelist, $params ){
-        $where_array = array();
-        foreach ( explode(",", $wherelist) as $key ){
-            $key = trim($key);
-            $where_array[$key] = $params[$key];
-        }
-        return $where_array;
-    }
-
-    private function getChannelsWithMatchingUniqueParams( $params ){
-        return $this->db->query2( "SELECT * FROM channels", $this->getWhereArray( "source, nid, tid, sid", $params ) );
     }
 
     /*
@@ -139,6 +123,19 @@ class channelImport{
         $query = $this->db->exec("COMMIT TRANSACTION");
     }
 
+    public function convertChannelString2ArrayFixSource( $channel, $cableSourceType, $terrSourceType ){
+        if ($channel !== false){
+            $sourcetype = substr($channel["source"], 0, 1);
+            if ($sourcetype == "C" && strlen($channel["source"]) == 1)
+                $channel["source"] .= '['.$cableSourceType.']';
+            elseif ($sourcetype == "T"  && strlen($channel["source"]) == 1)
+                $channel["source"] .= '['.$terrSourceType.']';
+            elseif ($sourcetype != "S")
+                $channel = false;
+        }
+        return $channel;
+    }
+
     /*
      * reads channel conf file line by line and
      * adds channel lines that seem correct to the db
@@ -147,27 +144,30 @@ class channelImport{
     private function insertChannelsConfIntoDB($sourcepath){
         $msg_prefix = "";
         $filename = $sourcepath . 'channels.conf';
-        if (file_exists($filename)) {
+        if (!file_exists($filename)) {
+            print "No new uploaded channels.conf exists. Skipping this path.\n";
+        }
+        else{
             //read channels.conf line by line
-            $handle = fopen ($filename, "r");
-            //$counter = 1;
+            $this->openChannelFile($filename);
             $cgroup = "";
             $query = $this->db->exec("BEGIN TRANSACTION");
-            while (!feof($handle)) {
+            while ($this->moveToNextLine() !== false) {
                 //$msg_prefix = "try to add channel: ";
-                $buffer = fgets($handle, 4096);
-                $buffer = rtrim( $buffer, "\n");
-                if (substr($buffer,0,1) == ":"){
-                   $cgroup = ltrim($buffer,":");
+                if ($this->isCurrentLineAGroupDelimiter()){
+                   $cgroup = $this->getGroupDelimiterFromCurrentLine();
                    //print $msg_prefix."Skipping a group delimiter.\n";
                 }
-                elseif($buffer == ""){
+                elseif($this->isCurrentLineEmpty()){
                     //print $msg_prefix . "illegal channel: ignoring empty line.\n";
                 }
                 else{
                     $this->numChanChecked++;
-                    //$counter++;
-                    $params = $this->config->convertChannelString2Array($buffer, $this->cableSourceType, $this->terrSourceType);
+                    $params = $this->convertChannelString2ArrayFixSource(
+                        $this->getCurrentLineAsChannelArray(),
+                        $this->cableSourceType,
+                        $this->terrSourceType
+                    );
 
                     if ($params !== false && count($params == 14)){
                         $params = $params + array(
@@ -177,7 +177,7 @@ class channelImport{
                             "x_last_confirmed" => 0
                         );
 
-                        if (false === $this->insertChannelIntoDB ($params, $buffer)){
+                        if (false === $this->insertChannelIntoDB ($params, $this->getCurrentLine())){
                             $this->existingChannelBuffer[] = $params;
                             //print $msg_prefix . "already exists.\n";
                         }
@@ -191,7 +191,6 @@ class channelImport{
                     }
                 }
             }
-            fclose ($handle);
             $query = $this->db->exec("COMMIT TRANSACTION");
             //rename read channels.conf file
             if (file_exists($filename . ".old"))

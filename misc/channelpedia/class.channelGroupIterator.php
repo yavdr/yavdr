@@ -53,9 +53,9 @@ class channelGroupIterator{
         }
         else{
             $exists = true;
-            $this->channelgroup['channelcount'] = intval($this->channelgroup['channelcount']);
-            $this->channelgroup['id'] = $this->count + 1;
             $this->count++;
+            $this->channelgroup['id'] = $this->count;
+            $this->channelgroup['channelcount'] = intval($this->channelgroup['channelcount']);
         }
         return $exists;
     }

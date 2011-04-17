@@ -27,6 +27,7 @@ require_once 'class.dbConnection.php';
 require_once 'class.channelGroupingManager.php';
 require_once 'class.channelGroupIterator.php';
 require_once 'class.channelIterator.php';
+require_once 'class.channelFileIterator.php';
 require_once 'class.channelImport.php';
 require_once 'class.channelListWriter.php';
 require_once 'class.rawOutputRenderer.php';
@@ -108,7 +109,7 @@ class config {
             $channel["rid"];
     }
 
-    public function convertChannelString2Array( $string, $cableSourceType, $terrSourceType ){
+    public function convertChannelString2Array( $string ){
         $result = false;
         $details = explode( ":", $string);
         if (count($details) == 13){
@@ -119,32 +120,22 @@ class config {
                 $cname = $cnamedetails[0];
                 $cprovider = $cnamedetails[1];
             }
-            $sourcetype = substr($details[3], 0, 1);
-            if ($sourcetype == "C")
-                $details[3] .= '['.$cableSourceType.']';
-            elseif ($sourcetype == "T")
-                $details[3] .= '['.$terrSourceType.']';
-            elseif ($sourcetype != "S")
-                $details[3] = ""; // illegal source type detected
-
-            if ($details[3] != ""){
-                $result = array(
-                    "name"            => $cname,
-                    "provider"        => $cprovider,
-                    "frequency"       => $details[1],
-                    "modulation"      => strtoupper($details[2]), //w_scan has lower case, we don't want that
-                    "source"          => $details[3],
-                    "symbolrate"      => $details[4],
-                    "vpid"            => $details[5],
-                    "apid"            => $details[6],
-                    "tpid"            => $details[7],
-                    "caid"            => $details[8],
-                    "sid"             => $details[9],
-                    "nid"             => $details[10],
-                    "tid"             => $details[11],
-                    "rid"             => $details[12]
-                );
-            }
+            $result = array(
+                "name"            => $cname,
+                "provider"        => $cprovider,
+                "frequency"       => $details[1],
+                "modulation"      => strtoupper($details[2]), //w_scan has lower case, we don't want that
+                "source"          => $details[3],
+                "symbolrate"      => $details[4],
+                "vpid"            => $details[5],
+                "apid"            => $details[6],
+                "tpid"            => $details[7],
+                "caid"            => $details[8],
+                "sid"             => $details[9],
+                "nid"             => $details[10],
+                "tid"             => $details[11],
+                "rid"             => $details[12]
+            );
         }
         return $result;
     }
