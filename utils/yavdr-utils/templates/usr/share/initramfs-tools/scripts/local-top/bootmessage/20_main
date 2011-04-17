@@ -1,2 +1,0 @@
-echo starting yaVDR 0.4
-echo -e '\033[?17;0;8c'
