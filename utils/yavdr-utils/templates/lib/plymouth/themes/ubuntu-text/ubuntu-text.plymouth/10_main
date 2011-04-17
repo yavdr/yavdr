@@ -1,0 +1,13 @@
+[Plymouth Theme]
+Name=Ubuntu Text
+Description=Text mode theme based on ubuntu-logo theme
+ModuleName=ubuntu-text
+
+[ubuntu-text]
+title=yaVDR64  0.4
+#black=0x2c001e
+black=0x0
+white=0xffffff
+brown=0xff4012
+blue=0x988592
+
