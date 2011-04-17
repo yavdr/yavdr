@@ -34,6 +34,7 @@ if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
   enable_plugin "lcdproc"
   disable_plugin "dummydevice"
   disable_plugin "control"
+  enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   enable_plugin "xine"
   disable_plugin "xineliboutput"
@@ -47,6 +48,7 @@ elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   enable_plugin "lcdproc"
   disable_plugin "dummydevice"
   disable_plugin "control"
+  enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
   enable_plugin "dummydevice"
   disable_plugin "xine"
@@ -60,6 +62,7 @@ elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
   disable_plugin "extrecmenu"
   disable_plugin "suspendoutput"
   enable_plugin "control"
+  enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "headless" ]; then
   enable_plugin "dummydevice"
   disable_plugin "xine"
@@ -75,6 +78,7 @@ elif [ "$(dbget vdr.frontend)" = "headless" ]; then
   disable_plugin "extrecmenu"
   disable_plugin "suspendoutput"
   enable_plugin "control"
+  enable_plugin "*dynamite"
 fi
 
 if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" ]; then
