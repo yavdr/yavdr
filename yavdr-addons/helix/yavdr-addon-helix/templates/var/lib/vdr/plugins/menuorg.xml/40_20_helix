@@ -1,0 +1,1 @@
+        <command name=<?cs call:quote(_("Helix")) ?> execute="/usr/share/vdr/menuorg-appswitcher standalone=yes app=helix &amp;> /dev/null " />

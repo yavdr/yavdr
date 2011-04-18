@@ -140,6 +140,9 @@ msgstr ""
 msgid "You-Tube"
 msgstr ""
 
+msgid "Helix"
+msgstr ""
+
 #: begin avahi-mounter
 
 msgid "Recording"
