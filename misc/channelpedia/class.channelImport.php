@@ -28,36 +28,22 @@ class channelImport extends channelFileIterator{
         hd_channel = " UPPER(name) LIKE '% HD%' ";
 
     private
-        $cableSourceType,
-        $terrSourceType,
         $existingChannelBuffer,
         $numChanChecked = 0,
         $numChanAdded = 0,
         $numChanChanged = 0,
-        $foundSatellites = array(),
-        $cableProviderPresent = false,
-        $terrProviderPresent = false,
         $timestamp;
 
-    function __construct(){
-        parent::__construct();
-    }
-
-    public function importChannelsConfFile($username, $cableSourceType, $terrSourceType){
+    public function __construct($username, $cableSourceType, $terrSourceType){
+        parent::__construct($cableSourceType, $terrSourceType);
         $this->timestamp = time();
         $this->numChanChecked = 0;
         $this->numChanAdded = 0;
         $this->numChanChanged = 0;
-        $this->foundSatellites = array();
-        $this->cableProviderPresent = false;
-        $this->terrProviderPresent = false;
-        print "Processing channels.conf of user $username\n";
-        $this->cableSourceType = $cableSourceType;
-        $this->terrSourceType = $terrSourceType;
         $this->existingChannelBuffer = array();
+
+        print "Processing channels.conf of user $username\n";
         $this->insertChannelsConfIntoDB( $this->config->getValue("path")."sources/$username/" );
-        $this->updateExistingChannels();
-        print "Summary: Channels checked: $this->numChanChecked / Channels added: $this->numChanAdded / Channels modified: $this->numChanChanged\n";
     }
 
     /*
@@ -123,14 +109,26 @@ class channelImport extends channelFileIterator{
         $query = $this->db->exec("COMMIT TRANSACTION");
     }
 
-    public function convertChannelString2ArrayFixSource( $channel, $cableSourceType, $terrSourceType ){
-        if ($channel !== false){
-            $sourcetype = substr($channel["source"], 0, 1);
-            if ($sourcetype == "C" && strlen($channel["source"]) == 1)
-                $channel["source"] .= '['.$cableSourceType.']';
-            elseif ($sourcetype == "T"  && strlen($channel["source"]) == 1)
-                $channel["source"] .= '['.$terrSourceType.']';
-            elseif ($sourcetype != "S")
+    private function checkAndFixChannelSource(){
+        $channel = $this->getCurrentLineAsChannelArray();
+        if ( $channel !== false){
+            if (strlen($channel["source"]) == 1){
+                switch ($channel["source"]){
+                case "C":
+                    $this->cableProviderPresent = true;
+                    $channel["source"] .= '['.$this->cableSourceType.']';
+                    break;
+                case "T":
+                    $this->terrProviderPresent = true;
+                    $channel["source"] .= '['.$this->terrSourceType.']';
+                    break;
+                default:
+                    print "ERROR: unknown source type!".$channel["source"]."\n";
+                }
+            }
+            elseif (substr($channel["source"], 0, 1) == "S")
+                $this->foundSatellites[$channel["source"]] = true;
+            else
                 $channel = false;
         }
         return $channel;
@@ -163,13 +161,8 @@ class channelImport extends channelFileIterator{
                 }
                 else{
                     $this->numChanChecked++;
-                    $params = $this->convertChannelString2ArrayFixSource(
-                        $this->getCurrentLineAsChannelArray(),
-                        $this->cableSourceType,
-                        $this->terrSourceType
-                    );
-
-                    if ($params !== false && count($params == 14)){
+                    $params = $this->checkAndFixChannelSource();
+                    if ($params !== false){
                         $params = $params + array(
                             "x_label"         => "",
                             "x_last_changed"  => $this->timestamp,
@@ -187,7 +180,7 @@ class channelImport extends channelFileIterator{
                         }
                     }
                     else{
-                        print $msg_prefix . "illegal channel: $buffer.\n";
+                        print $msg_prefix . "illegal channel: ".$this->getCurrentLine().".\n";
                     }
                 }
             }
@@ -196,6 +189,8 @@ class channelImport extends channelFileIterator{
             if (file_exists($filename . ".old"))
                 unlink($filename . ".old");
             rename($filename, $filename . ".old");
+            $this->updateExistingChannels();
+            print "Summary: Channels checked: $this->numChanChecked / Channels added: $this->numChanAdded / Channels modified: $this->numChanChanged\n";
         }
     }
 
@@ -205,22 +200,8 @@ class channelImport extends channelFileIterator{
      * that are used for insert
      */
 
-    private function insertChannelIntoDB ($params, $rawstring){
+    private function insertChannelIntoDB($params, $rawstring){
         $success = true;
-
-        $sourcetype = substr($params["source"], 0, 1);
-        if ($sourcetype == "S"){
-            $this->foundSatellites[$params["source"]] = true;
-        }
-        elseif ($sourcetype == "C"){
-            $this->cableProviderPresent = true;
-        }
-        elseif ($sourcetype == "T"){
-            $this->terrProviderPresent = true;
-        }
-        else
-            return false;
-
         $query = $this->db->insert( "channels", $params);
         //19 = channel already exists, could'nt be inserted
         if ($query != 19) {

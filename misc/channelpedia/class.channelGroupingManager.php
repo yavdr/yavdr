@@ -90,23 +90,21 @@ class channelGroupingManager{
     }
 
     public function updateAllLabels(){
-            //reset all labels in DB to empty strings before updating them
-            $sqlquery = "UPDATE channels SET x_label=''";
-            $result = $this->db->query($sqlquery);
-
-            foreach ($this->config->getValue("sat_positions") as $sat => $languages){
-                $this->updateAllLabelsOfSource($sat);
-            }
-            foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
-                $this->updateAllLabelsOfSource("C[$cablep]");
-            }
-            foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
-                $this->updateAllLabelsOfSource("T[$terrp]");
-            }
+        foreach ($this->config->getValue("sat_positions") as $sat => $languages){
+            $this->updateAllLabelsOfSource($sat);
+        }
+        foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
+            $this->updateAllLabelsOfSource("C[$cablep]");
+        }
+        foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
+            $this->updateAllLabelsOfSource("T[$terrp]");
+        }
     }
 
     public function updateAllLabelsOfSource( $source ){
         print "Updating labels for channels belonging to $source.\n";
+        //reset all labels in DB to empty strings before updating them
+        $temp = $this->db->query("UPDATE channels SET x_label='' WHERE source = ".$this->db->quote($source));
         $query = $this->db->exec("BEGIN TRANSACTION");
         $sourcetype = substr($source, 0, 1);
         foreach ( $this->rulesets as $title => $object){

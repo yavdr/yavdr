@@ -28,8 +28,8 @@ class updateFromScan extends channelFileIterator{
         $newfile,
         $stats;
 
-    public function __construct(){
-        parent::__construct();
+    public function __construct($cableSourceType, $terrSourceType){
+        parent::__construct($cableSourceType, $terrSourceType);
         $checkpath = $this->config->getValue("path"). "scancompare/";
         $infofile = $checkpath."info.txt";
         $cableProvider = "";

@@ -55,8 +55,7 @@ if (is_file( $checkpath."info.txt" ) && $_FILES["channels"]["name"] == "channels
         $cableProvider = trim($info); //FIXME
     }
     //print $info ."/". $infofile ."/".  $cableProvider."\n";
-    $x = new channelImport();
-    $x->importChannelsConfFile($user, $cableProvider, "none");
+    $x = new channelImport($user, $cableProvider, "none");
     $x->updateNecessaryLabels();
 
     $x =new rawOutputRenderer();

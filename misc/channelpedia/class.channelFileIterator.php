@@ -31,11 +31,22 @@ class channelFileIterator{
 
     protected
         $db,
-        $config;
+        $config,
+        $cableSourceType,
+        $terrSourceType,
+        $foundSatellites = array(),
+        $cableProviderPresent = false,
+        $terrProviderPresent = false;
 
-    function __construct(){
+
+    function __construct($cableSourceType, $terrSourceType){
         $this->db = dbConnection::getInstance();
         $this->config = config::getInstance();
+        $this->foundSatellites = array();
+        $this->cableProviderPresent = false;
+        $this->terrProviderPresent = false;
+        $this->cableSourceType = $cableSourceType;
+        $this->terrSourceType = $terrSourceType;
     }
 
     public function openChannelFile($file){

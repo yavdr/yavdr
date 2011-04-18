@@ -39,7 +39,6 @@ if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
 function importFromAllChannelSources(){
     $config = config::getInstance();
     $dir = new DirectoryIterator( $config->getValue("path")."sources/" );
-    $x = new channelImport();
     foreach ($dir as $fileinfo) {
         if ( $fileinfo->isDir() && !$fileinfo->isDot()){
             //echo $fileinfo->getFilename() . "\n";
@@ -50,7 +49,7 @@ function importFromAllChannelSources(){
                 $cableProvider = trim($info); //FIXME
             }
             //print $info ."/". $infofile ."/".  $cableProvider."\n";
-            $x->importChannelsConfFile( $fileinfo->getFilename(), $cableProvider, "none" );
+            $x = new channelImport( $fileinfo->getFilename(), $cableProvider, "none" );
         }
     }
     $labeller = channelGroupingManager::getInstance();
