@@ -105,19 +105,19 @@ msgid "HDMI-Stereo"
 msgstr "HDMI-Stereo"
 
 msgid "Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
-msgstr ""
+msgstr "Audio Ausgabe erfolgt durch HDMI PCM. Diese Variante ermöglicht die Ton-Ausgabe für z.B. Fernseher mit HDMI-Eingang."
 
 msgid "HDMI-Passthrough"
 msgstr "HDMI-Passthrough"
 
 msgid "Audio output will happen through HDMI with Pass Through."
-msgstr ""
+msgstr "Audio Ausgabe erfolgt durch HDMI Pass Through."
 
 msgid "Audio output"
 msgstr "Ton Ausgabe"
 
 msgid "Here you can configure your display settings."
-msgstr ""
+msgstr "Hier können Sie ihre Anzeigeeinstellungen konfigurieren."
 
 msgid "Display"
 msgstr "Anzeigeeinstellungen"
@@ -132,10 +132,10 @@ msgid "Device"
 msgstr "Gerät"
 
 msgid "Primary"
-msgstr ""
+msgstr "Primär"
 
 msgid "Secondary"
-msgstr ""
+msgstr "Sekundär"
 
 msgid "Select resolution"
 msgstr "Auflösung wählen"
@@ -144,13 +144,13 @@ msgid "Resolution"
 msgstr " Auflösung"
 
 msgid "Nvidia overscan compensation"
-msgstr ""
+msgstr "Nvidia Overscan-Kompensation"
 
 msgid "Basic settings"
-msgstr ""
+msgstr "Grund Einstellungen"
 
 msgid "Dual-Head Mode"
-msgstr ""
+msgstr "Dual-Head Modus"
 
 msgid "GraphTFT"
 msgstr "GraphTFT"
@@ -159,13 +159,13 @@ msgid "Xine"
 msgstr "Xine Einstellungen"
 
 msgid "Xine HD deinterlacer"
-msgstr ""
+msgstr "Xine HD deinterlacer"
 
 msgid "default"
 msgstr "Voreinstellung"
 
 msgid "Xine SD deinterlacer"
-msgstr ""
+msgstr "Xine SD deinterlacer"
 
 msgid "diabled (less than 2 displays found)"
 msgstr ""
@@ -186,7 +186,7 @@ msgid "Settings"
 msgstr "Einstellungen"
 
 msgid "Here you can configure your remote hardware. The default and most common choice is EventLircd."
-msgstr ""
+msgstr "Konfigurieren Sie hier ihre Fernbedienung. Die Voreinstellung und am meisten gebrauchte Wahl ist Eventlircd."
 
 msgid "EventLircd"
 msgstr "Eventlircd"
@@ -243,7 +243,7 @@ msgid "Please wait..."
 msgstr "Bitte warten..."
 
 msgid "General system settings are made here."
-msgstr ""
+msgstr "Wechseln Sie zwischen verschiedenen Shutdown-Methoden"
 
 msgid "Webfrontend language"
 msgstr "Webfrontend Sprache"
@@ -267,13 +267,13 @@ msgid "\"Language\""
 msgstr "\"Sprache\""
 
 msgid "Suspend to RAM"
-msgstr ""
+msgstr "Suspend to RAM"
 
 msgid "Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
 msgstr ""
 
 msgid "Fake suspend to disk"
-msgstr ""
+msgstr "Fake suspend to disk"
 
 msgid "Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
 msgstr ""
@@ -408,7 +408,7 @@ msgid "\"Provider\""
 msgstr "\"Anbieter\""
 
 msgid "\"loading channels\""
-msgstr ""
+msgstr "\"Kanäle nachladen\""
 
 msgid "Move into clipboard"
 msgstr "In die Ablage verschieben"
@@ -423,10 +423,10 @@ msgid "Insert clipboard"
 msgstr "In die Ablage einfügen"
 
 msgid "Above %s"
-msgstr ""
+msgstr "Über %s"
 
 msgid "Below %s"
-msgstr ""
+msgstr "Unterhalb %s"
 
 msgid "Delete \"%s\""
 msgstr "\"%s\" löschen"
@@ -438,7 +438,7 @@ msgid "Here you can make general setting for and around VDR."
 msgstr ""
 
 msgid "Lifeguard monitoring items"
-msgstr ""
+msgstr "Lifeguard Überwachungs Punkte"
 
 msgid "EPG"
 msgstr "EPG"
@@ -504,7 +504,7 @@ msgid "LIRCD configuration"
 msgstr ""
 
 msgid "System information"
-msgstr ""
+msgstr "System Informationen"
 
 msgid "System load"
 msgstr ""
@@ -531,7 +531,7 @@ msgid "VDR remote.conf"
 msgstr "VDR remote.conf"
 
 msgid "Xorg server log"
-msgstr ""
+msgstr "Xorg server log"
 
 msgid "X-Server configuration (only if NVIDIA VDPAU present)"
 msgstr ""
@@ -540,13 +540,13 @@ msgid "X-Server logfile"
 msgstr "X-Server Aufzeichnungsdatei"
 
 msgid "XBMC crash log"
-msgstr ""
+msgstr "XBMC crash log"
 
 msgid "yaVDR database"
-msgstr ""
+msgstr "yaVDR Datenbank"
 
 msgid "yaVDR DB"
-msgstr ""
+msgstr "yaVDR DB"
 
 msgid "VDR"
 msgstr "VDR"
@@ -564,10 +564,10 @@ msgid "Start"
 msgstr "Start"
 
 msgid "Schedule"
-msgstr ""
+msgstr "Programminfo"
 
 msgid "Here you can configure your VDR and applications around it."
-msgstr ""
+msgstr "Konfigurieren Sie hier VDR und seine Applikationen."
 
 msgid "Hardware"
 msgstr "Hardware"
@@ -585,7 +585,7 @@ msgid "Packages"
 msgstr "Pakete"
 
 msgid "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
-msgstr ""
+msgstr "Informieren Sie sich über den Zustand des Systems, betreiben Sie Fehleranalyse und senden Sie die Logdateien nach PasteBin um anderen die Überprüfung zu ermöglichen."
 
 msgid "\"Execute command...\""
 msgstr "\"Befehl ausführen...\""
@@ -597,7 +597,7 @@ msgid "The command could not complete successfully"
 msgstr "Der Befehl konnte nicht erfolgreich ausgeführt werden"
 
 msgid "Switch temporarily to second screen"
-msgstr ""
+msgstr "Vorläufig auf den zweiten Bildschirm schalten"
 
 msgid "Reboot computer"
 msgstr "Rechner neu starten"
@@ -628,6 +628,9 @@ msgstr "Programm"
 
 msgid "Saving"
 msgstr "Speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
 
 msgid "Error while saving data."
 msgstr "Fehler beim speichern der Daten."

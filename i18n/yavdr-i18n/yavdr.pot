@@ -754,6 +754,9 @@ msgstr ""
 msgid "Saving"
 msgstr ""
 
+msgid "Cancel"
+msgstr ""
+
 msgid "Error while saving data."
 msgstr ""
 
