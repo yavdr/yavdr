@@ -8,6 +8,9 @@ if [ install = "$1" -o upgrade = "$1" ]; then
    dpkg-divert --package yavdr-utils --add --rename \
       --divert /etc/init/rsyslog.conf.dontremove /etc/init/rsyslog.conf
    dpkg-divert --package yavdr-utils --add --rename \
-      --divert /etc/samba/smb.conf.dontremove /etc/samba/smb.conf   
-fi  
+      --divert /etc/samba/smb.conf.dontremove /etc/samba/smb.conf
+   dpkg-divert --package yavdr-utils --add --rename \
+      --divert /etc/default/grub.dontremove /etc/default/grub   
+   
 
+fi
