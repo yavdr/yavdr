@@ -579,7 +579,7 @@ msgid "Remote control"
 msgstr "Einstellung der Fernbedinung"
 
 msgid "Audio"
-msgstr "Audio-Einstellunngen"
+msgstr "Audio"
 
 msgid "Packages"
 msgstr "Pakete"
