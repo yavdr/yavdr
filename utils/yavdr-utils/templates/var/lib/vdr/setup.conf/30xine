@@ -1,5 +1,5 @@
 xine.modeLiveTV.monitoringDuration = 30
-xine.modeLiveTV.monitoringMode = monitoringOnce
+xine.modeLiveTV.monitoringMode = monitoringContinuous
 xine.modeLiveTV.prebufferFramesAudio = 6
 xine.modeLiveTV.prebufferFramesVideoHD = 16
 xine.modeLiveTV.prebufferFramesVideoSD = 6
