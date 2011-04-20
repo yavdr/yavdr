@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+rm -fr /var/lib/vdr/.xbmc
 mkdir -p /var/lib/vdr/.xbmc/userdata/Database/
 
 
