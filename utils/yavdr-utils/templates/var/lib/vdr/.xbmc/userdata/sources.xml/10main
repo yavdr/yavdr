@@ -6,21 +6,21 @@
         <default pathversion="1"></default>
         <source>
             <name>Video</name>
-            <path pathversion="1">/media/<?cs call:quote(_(Video)) ?>/</path>
+            <path pathversion="1">/media/<?cs call:quote(_("Video")) ?>/</path>
         </source>
     </video>
     <music>
         <default pathversion="1"></default>
         <source>
             <name>Musik</name>
-            <path pathversion="1">/media/<?cs call:quote(_(Music)) ?>/</path>
+            <path pathversion="1">/media/<?cs call:quote(_("Music")) ?>/</path>
         </source>
     </music>
     <pictures>
         <default pathversion="1"></default>
         <source>
             <name>Bilder</name>
-            <path pathversion="1">/media/<?cs call:quote(_(Picture)) ?>/</path>
+            <path pathversion="1">/media/<?cs call:quote(_("Picture")) ?>/</path>
         </source>
     </pictures>
     <files>
