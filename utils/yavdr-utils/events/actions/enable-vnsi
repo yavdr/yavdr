@@ -142,3 +142,5 @@ EOF
 
 chown -R vdr:vdr /var/lib/vdr/.xbmc
 
+process-template --owner=vdr --group=vdr /var/lib/vdr/.xbmc/userdata/sources.xml
+
