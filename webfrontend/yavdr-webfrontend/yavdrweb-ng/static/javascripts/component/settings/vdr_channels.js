@@ -602,7 +602,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
               icon : '/icons/silk/cart_remove.png',
               menu : [
                 {
-                  text : 'On top',
+                  text : _('On top'),
                   icon : '/icons/fugue/node-insert-previous.png',
                   scope : this,
                   handler : function() {
@@ -617,7 +617,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
                   }
                 },
                 {
-                  text : 'At bottom',
+                  text : _('At bottom'),
                   icon : '/icons/fugue/node-insert-next.png',
                   scope : this,
                   handler : function() {

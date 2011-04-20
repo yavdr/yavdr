@@ -858,6 +858,9 @@ msgstr ""
 msgid "Rescan for sundtek devices."
 msgstr ""
 
+msgid "Do not change frontend settings"
+msgstr ""
+
 #: end web front end
 
 

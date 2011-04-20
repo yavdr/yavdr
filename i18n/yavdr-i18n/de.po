@@ -387,16 +387,16 @@ msgid "Clipboard"
 msgstr "Ablage"
 
 msgid "Move into channels.conf"
-msgstr ""
+msgstr "In die Kanalliste einfügen"
 
 msgid "Add new group"
 msgstr "Neu Gruppe hinzufügen"
 
 msgid "Please enter the group name:"
-msgstr ""
+msgstr "Neuer Gruppenname:"
 
 msgid "\"Display channels.conf\""
-msgstr ""
+msgstr "\"channels.conf anzeigen\""
 
 msgid "\"Channel\""
 msgstr "\"Kanal\""
@@ -414,10 +414,10 @@ msgid "Move into clipboard"
 msgstr "In die Ablage verschieben"
 
 msgid "On top"
-msgstr "Anfang"
+msgstr "Am Anfang"
 
 msgid "At bottom"
-msgstr "Ende"
+msgstr "Am Ende"
 
 msgid "Insert clipboard"
 msgstr "In die Ablage einfügen"
@@ -796,4 +796,10 @@ msgstr "You-Tube"
 
 msgid "Helix"
 msgstr "Helix"
+
+msgid "Do not change frontend settings"
+msgstr "Einstellungen nicht ändern"
+
+msgid "You can configure your sundtek DVB hardware here."
+msgstr "Konfigurieren sie ihre Sundtek DVB Hardware hier."
 
