@@ -99,7 +99,7 @@ void convertSerial(char *dst, char *src) {
 }
 
 int isDummySerial(char *serial) {
-	return 0; // disable all the dummy serial handling
+	return 1; // disable all the dummy serial handling
 	int i = 0;
 	int isDummySerial = 0;
 	while(dummySerials[i] != NULL) {
