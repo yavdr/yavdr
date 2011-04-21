@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts "d:" opt; do
+while getopts "d:s:h:a:" opt; do
   case $opt in
     d)
       DEVID=$OPTARG 

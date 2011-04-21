@@ -1,20 +1,25 @@
 #!/bin/bash
 
-while getopts "d:s:h:" opt; do
+while getopts "d:s:h:a:" opt; do
   case $opt in
     d)
-      DEVID=$OPTARG 
+      DEVID=$OPTARG
       ;;
     h)
-      HOST=$OPTARG 
+      HOST=$OPTARG
+      ;;
+    a)
+      ADDRESS=$OPTARG
       ;;
     s)
-      SERIAL=$OPTARG 
+      SERIAL=$OPTARG
       ;;
   esac
 done
 
-LOCALID=`/usr/bin/dbget system.hardware.sundtek.stick.$SERIAL.mounted`
+SKEY=`echo "$ADDRESS" | sed s/\\\\./_/g`
+
+LOCALID=`/usr/bin/dbget system.hardware.sundtek.stick.${SERIAL}_${SKEY}.mounted`
 
 if [ -n "$LOCALID" ]; then
     DEV=`/usr/bin/dbget system.hardware.sundtek.frontend.$LOCALID`
@@ -24,5 +29,5 @@ if [ -n "$LOCALID" ]; then
     fi
     
     /usr/bin/dbremove system.hardware.sundtek.frontend.$LOCALID
-    /usr/bin/dbremove system.hardware.sundtek.stick.$SERIAL.mounted
+    /usr/bin/dbremove system.hardware.sundtek.stick.${SERIAL}_${SKEY}.mounted
 fi

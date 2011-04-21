@@ -1,6 +1,0 @@
-# enable network   
-if [ "x$ENABLE_NETWORK" = "x1" ]; then
-        /opt/bin/mediaclient --enablenetwork=on
-else
-        /opt/bin/mediaclient --enablenetwork=off
-fi

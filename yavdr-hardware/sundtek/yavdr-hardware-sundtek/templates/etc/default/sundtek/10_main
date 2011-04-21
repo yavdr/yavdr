@@ -1,0 +1,8 @@
+# Path to mediaclient
+# MEDIACLIENT=/opt/bin/mediaclient
+
+# Enable networking. This must be 1 to allow enabeling in WFE
+ENABLE_NETWORK=1
+
+# This devices will be mounted on startup of mediaserver. The do not relay on avahia. A list separated by space
+MOUNT_SUNDTEK=""

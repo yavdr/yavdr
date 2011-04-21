@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts "d:a:" opt; do
+while getopts "d:s:h:a:" opt; do
   case $opt in
     d)
       DEVID=$OPTARG 
@@ -18,8 +18,8 @@ fi
 
 if [ "X${AVAHI_DAEMON_START}" = "X1" -a -n "$DEVID" -a "X`dbget system.hardware.sundtek.enablenetwork`" = "X1" ]; then
   SERIAL=`/usr/bin/sundtekadapter -d $DEVID -s`
-  SKEY=`echo "$ADDRESS" | sed s/\\./_/g`
-  if [ "X`dbget system.hardware.sundtek.stick.$SERIAL_$SKEY.info.ip`" = "X" ]; then
+  SKEY=`echo "$ADDRESS" | sed s/\\\\./_/g`
+  if [ "X`dbget system.hardware.sundtek.stick.${SERIAL}_${SKEY}.info.ip`" = "X" ]; then
     (
     cat <<EOF
 <?xml version="1.0" standalone='no'?>

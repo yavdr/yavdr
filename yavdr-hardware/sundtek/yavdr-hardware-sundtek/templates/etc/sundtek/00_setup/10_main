@@ -1,6 +1,0 @@
-MEDIACLIENT=/opt/bin/mediaclient
-ENABLE_NETWORK=0
-MOUNT_SUNDTEK=""
-
-[ -x "$MEDIACLIENT" ] || exit 0
-[ -r /etc/default/sundtek ] && . /etc/default/sundtek
