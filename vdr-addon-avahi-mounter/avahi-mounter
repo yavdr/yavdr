@@ -196,7 +196,7 @@ class DvbDevice:
         self.__device = device
         self.__serial = serial
 
-        syslog("dvbdevice on %s:%s (serial %s)" % (host, device, serial))
+        syslog("dvbdevice on %s/%s:%s (serial %s)" % (host, address, device, serial))
 
     def use(self):
         syslog("create dvb")
