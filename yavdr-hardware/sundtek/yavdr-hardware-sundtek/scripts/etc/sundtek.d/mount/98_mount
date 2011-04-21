@@ -1,20 +1,19 @@
 #!/bin/bash
 
 
-while getopts "d:s:h:" opt; do
+while getopts "d:s:h:a:" opt; do
   case $opt in
     d)
       DEVID=$OPTARG 
+      ;;
+    a)
+      ADDRESS=$OPTARG 
       ;;
     h)
       HOST=$OPTARG 
       ;;
     s)
       SERIAL=$OPTARG 
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
       ;;
   esac
 done

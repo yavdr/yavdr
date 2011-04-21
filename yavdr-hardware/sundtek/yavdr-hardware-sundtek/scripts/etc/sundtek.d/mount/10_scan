@@ -1,22 +1,4 @@
 #!/bin/bash
 
 
-while getopts "d:s:h:" opt; do
-  case $opt in
-    d)
-      DEVID=$OPTARG 
-      ;;
-    h)
-      HOST=$OPTARG 
-      ;;
-    s)
-      SERIAL=$OPTARG 
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
-      ;;
-  esac
-done
-
 /usr/bin/scansundtek

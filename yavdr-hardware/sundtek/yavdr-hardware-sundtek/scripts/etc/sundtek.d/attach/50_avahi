@@ -1,13 +1,12 @@
 #!/bin/bash
 
-while getopts "d:" opt; do
+while getopts "d:a:" opt; do
   case $opt in
     d)
       DEVID=$OPTARG 
       ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
+    a)
+      ADDRESS=$OPTARG 
       ;;
   esac
 done

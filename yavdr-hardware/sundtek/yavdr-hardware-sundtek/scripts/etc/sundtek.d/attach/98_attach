@@ -5,10 +5,6 @@ while getopts "d:" opt; do
     d)
       DEVID=$OPTARG 
       ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
-      ;;
   esac
 done
 
