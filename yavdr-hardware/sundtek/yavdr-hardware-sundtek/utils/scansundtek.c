@@ -143,11 +143,11 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 		printf("\tdevice found - %s", device->devicename);
 	}
 	convertSerial(_serial, device->serial);
-	if (isDummySerial(_serial) == 1) {
-		strcat(_serial, "_127_0_0_1");
-	}
 
 	if ((device->capabilities & (uint32_t) MEDIA_REMOTE_DEVICE) == 0) {
+		if (isDummySerial(_serial) == 1) {
+			strcat(_serial, "_127_0_0_1");
+		}
 		// mark serial as available
 		dbset("system.hardware.sundtek.found.%i=%s", (*count)++, _serial);
 
@@ -181,7 +181,7 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 			syslog(LOG_ERR, "mounted device %s", device->devicename);
 			printf(" - mounted device");
 		}
-		dbset("system.hardware.sundtek.stick.%s.mounted=%i", _serial, device->id);
+		//dbset("system.hardware.sundtek.stick.%s.mounted=%i", _serial, device->id);
 	}
 	dbset("system.hardware.sundtek.frontend.%i=%s", device->id, device->frontend_node);
 	free(device);
