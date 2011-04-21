@@ -14,7 +14,7 @@ stop on stopped plymouth
 
 pre-start script
     case "$JOB" in
-    openbox|oem-config)
+    oem-config)
 	exit 0
 	;;
     *)
