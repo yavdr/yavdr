@@ -3,19 +3,18 @@
 while getopts "d:s:h:" opt; do
   case $opt in
     d)
-      DEVID=$OPTARG 
+      DEVID=$OPTARG
       ;;
     h)
-      HOST=$OPTARG 
+      HOST=$OPTARG
+      ;;
+    a)
+      ADDRESS=$OPTARG
       ;;
     s)
-      SERIAL=$OPTARG 
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
+      SERIAL=$OPTARG
       ;;
   esac
 done
 
-run-parts --verbose -a "-h" -a "$HOST" -a "-d" -a "$DEVID" -a "-s" -a "$SERIAL" /etc/sundtek.d/mount
+run-parts --verbose -a "-h" -a "$HOST" -a "-a" -a "$ADDRESS" -a "-d" -a "$DEVID" -a "-s" -a "$SERIAL" /etc/sundtek.d/mount

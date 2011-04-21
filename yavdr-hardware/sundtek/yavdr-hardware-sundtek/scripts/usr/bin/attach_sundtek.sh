@@ -3,11 +3,7 @@
 while getopts "d:" opt; do
   case $opt in
     d)
-      DEVID=$OPTARG 
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
+      DEVID=$OPTARG
       ;;
   esac
 done

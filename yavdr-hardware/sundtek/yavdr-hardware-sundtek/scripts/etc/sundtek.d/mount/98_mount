@@ -18,6 +18,8 @@ while getopts "d:s:h:a:" opt; do
   esac
 done
 
-if [ "X`dbget system.hardware.sundtek.stick.$SERIAL.mount`" = "X1" ]; then
+SKEY=`echo "$ADDRESS" | sed s/\\./_/g`
+
+if [ "X`dbget system.hardware.sundtek.stick.$SERIAL_$SKEY.mount`" = "X1" ]; then
   /opt/bin/mediaclient --mount=$HOST:$DEVID
 fi
