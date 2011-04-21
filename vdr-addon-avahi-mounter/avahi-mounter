@@ -95,7 +95,7 @@ class ZeroconfBrowser(object):
             mount.use()
             self.mounts[name] = mount
         elif type == '_dvb._tcp':
-            device = DvbDevice(host, txt)
+            device = DvbDevice(host, address, txt)
             device.use()
             self.mounts[name] = device
         syslog("Service resolved: %s nach %s" % (host, name))
@@ -180,7 +180,7 @@ class Mount:
         self.notify()
 
 class DvbDevice:
-    def __init__(self, host, txt):
+    def __init__(self, host, address, txt):
         syslog("DvbDevice created")
         device = []
         serial = []
@@ -192,6 +192,7 @@ class DvbDevice:
             elif key == "serial":
                 serial = value
         self.__host = host
+        self.__address = address
         self.__device = device
         self.__serial = serial
 
@@ -202,6 +203,7 @@ class DvbDevice:
         try:
             subprocess.call(["/usr/bin/mount_sundtek.sh", 
                  "-h", self.__host,
+                 "-a", self.__address,
                  "-d", self.__device,
                  "-s", self.__serial])
         except OSError as (errno, strerror):
@@ -213,6 +215,7 @@ class DvbDevice:
         try:
             subprocess.call(["/usr/bin/unmount_sundtek.sh", 
                  "-h", self.__host,
+                 "-a", self.__address,
                  "-d", self.__device,
                  "-s", self.__serial])
         except OSError as (errno, strerror):
