@@ -79,6 +79,21 @@ elif [ "$(dbget vdr.frontend)" = "headless" ]; then
   disable_plugin "suspendoutput"
   enable_plugin "control"
   enable_plugin "*dynamite"
+elif [ "$(dbget vdr.frontend)" = "ttpremium6400" ]; then
+  disable_plugin "dummydevice"
+  disable_plugin "xine"
+  disable_plugin "xineliboutput"
+  enable_plugin "lcdproc"
+  enable_plugin "imonlcd"
+  enable_plugin "iptv"
+  enable_plugin "text2skin"
+  enable_plugin "menuorg"
+  enable_plugin "yaepghd"
+  enable_plugin "extrecmenu"
+  enable_plugin "suspendoutput"
+  enable_plugin "control"
+  disable_plugin "*dynamite"
+  disable_plugin "dynamite"
 fi
 
 if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" ]; then
@@ -90,7 +105,9 @@ fi
 if [ "$1" != "post-install" ]; then
   if [ "$(dbget vdr.frontend)" = "headless" ]; then
     stop openbox
-  else 
+  elif [ "$(dbget vdr.frontend)" = "ttpremium6400" ]; then
+    stop openbox
+  else
     start openbox || /bin/true
   fi
 fi

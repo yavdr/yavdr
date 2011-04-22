@@ -138,6 +138,11 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
           description: _('If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice.')
         },
         {
+          key: 'ttpremium6400',
+          title: 'TT-premium S2-6400 HD (experimental)',
+          description: _('If you want to use VDR with a TT-premium S2-6400 HD.')
+        },
+        {
           key: 'headless',
           title: 'headless (yaVDR server)',
           description: _('You can choose this if you don\'t want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards.')
