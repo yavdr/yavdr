@@ -2,7 +2,7 @@ LIRC.Up         KEY_UP
 LIRC.Down       KEY_DOWN
 LIRC.Menu       KEY_MENU
 LIRC.Ok         KEY_ENTER
-LIRC.Back       KEY_BACK
+LIRC.Back       KEY_EXIT
 LIRC.Left       KEY_LEFT
 LIRC.Right      KEY_RIGHT
 LIRC.Red        KEY_RED
