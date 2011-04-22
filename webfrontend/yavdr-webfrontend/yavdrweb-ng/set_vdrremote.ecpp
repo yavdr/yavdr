@@ -1,0 +1,43 @@
+<%pre>
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <ctype.h>
+extern "C" {
+#include <yavdr/db-utils/dbset.h>
+};
+
+#include <yavdr/common.h>
+
+using namespace std;
+</%pre><& authenticate ><%args>
+  remotetype;
+</%args><%cpp>
+  string success = "false";
+  string msg = "Unspecified error.";
+  
+  if (remotetype == "vdrremote")
+  {
+    int err;
+    err = dbset("system.remoted=vdrremote");
+    if (err) {
+      msg = "Error on dbset system.remoted";
+    }
+    else {
+      int ret = system("/usr/bin/signal-event change-remoted");
+      success = "true";
+      msg = "OK.";
+    }
+  }
+  else
+  {
+     msg = "Illegal request parameters";
+  }
+</%cpp>{
+    success: <$success$>
+/*    errors: {
+        receiver_id: "<$msg$>"
+    }
+*/
+}

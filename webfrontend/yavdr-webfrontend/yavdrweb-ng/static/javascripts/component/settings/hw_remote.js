@@ -14,6 +14,10 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
       base: this
     });
 
+    this.vdrRemoteForm = new YaVDR.Component.Settings.HwRemote.VdrRemote({
+      base: this
+    });
+
     this.items = [
       new YaVDR.Component.Item({
         title: _('EventLircd'),
@@ -22,7 +26,12 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
       }),
       new YaVDR.Component.Item({
         title: _('LIRC'),
+        style: 'margin-bottom: 5px',
         items: this.lircForm
+      }),
+      new YaVDR.Component.Item({
+        title: _('VDR-Remote-Plugin'),
+        items: this.vdrRemoteForm
       })
     ];
     YaVDR.Component.Settings.HwRemote.superclass.initComponent.call(this);
@@ -58,6 +67,7 @@ YaVDR.Component.Settings.HwRemote = Ext.extend(YaVDR.Component, {
 
         this.lircForm.receiverStore.loadData(this.data.lircReceiverList);
         this.lircForm.active.setValue(this.data.currentRemoted == 'lircd');
+        this.vdrRemoteForm.active.setValue(this.data.currentRemoted == 'eventlircd');
         this.eventlircdForm.active.setValue(typeof this.data.currentRemoted == 'undefined' || this.data.currentRemoted == '' || this.data.currentRemoted == 'eventlircd');
       }
     });
@@ -130,6 +140,7 @@ YaVDR.Component.Settings.HwRemote.LIRC = Ext.extend(YaVDR.Default.Form, {
         check: function(cb, checked) {
           if (checked) {
             this.base.eventlircdForm.active.setValue(false);
+            this.base.vdrRemoteForm.active.setValue(false);
             this.getFooterToolbar().getComponent('save').enable();
             this.serialPort.enable();
             this.driver.enable();
@@ -175,6 +186,7 @@ YaVDR.Component.Settings.HwRemote.EventLircd = Ext.extend(YaVDR.Default.Form, {
         check: function(cb, checked) {
           if (checked) {
             this.base.lircForm.active.setValue(false);
+            this.base.vdrRemoteForm.active.setValue(false);
             this.getFooterToolbar().getComponent('save').enable();
           } else {
             this.getFooterToolbar().getComponent('save').disable();
@@ -195,6 +207,46 @@ YaVDR.Component.Settings.HwRemote.EventLircd = Ext.extend(YaVDR.Default.Form, {
   doSave: function() {
     this.getForm().submit({
       url: '/admin/set_eventlircd'
+    })
+  },
+  doLoad: function() {
+    this.base.doLoad.call(this.base);
+  }
+});
+
+YaVDR.Component.Settings.HwRemote.VdrRemote = Ext.extend(YaVDR.Default.Form, {
+  initComponent: function() {
+
+    this.active = new Ext.form.Radio({
+      name: 'remotetype',
+      fieldLabel: _('Activate VDR-Remote-Plugin'),
+      inputValue: 'vdrremote',
+      listeners: {
+        scope: this,
+        check: function(cb, checked) {
+          if (checked) {
+            this.base.lircForm.active.setValue(false);
+            this.base.eventlircdForm.active.setValue(false);
+            this.getFooterToolbar().getComponent('save').enable();
+          } else {
+            this.getFooterToolbar().getComponent('save').disable();
+          }
+        }
+      }
+    });
+
+    this.items = [
+      this.active
+    ];
+
+    YaVDR.Component.Settings.HwRemote.VdrRemote.superclass.initComponent.call(this);
+    this.getFooterToolbar().getComponent('save').disable();
+    // own handler -> so disable auto load
+    this.un('render', this.doLoad);
+  },
+  doSave: function() {
+    this.getForm().submit({
+      url: '/admin/set_vdrremote'
     })
   },
   doLoad: function() {
