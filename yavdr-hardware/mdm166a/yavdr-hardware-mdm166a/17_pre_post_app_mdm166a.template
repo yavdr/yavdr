@@ -15,17 +15,17 @@ fi
 /bin/chown vdr:vdr $GUISETTINGS
 
 if [ ! -z $STANDALONE ] ; then
-  touch /tmp/.standalone || /bin/true
+  touch /tmp/.standalone 
 fi
 
-/usr/bin/svdrpsend remo off || /bin/true
+vdr-dbus-send /Remote remote.Disable
 /usr/bin/svdrpsend plug targvfd off || /bin/true
 end script
 
 post-stop script
-/bin/rm -f /tmp/.standalone || /bin/true
+/bin/rm -f /tmp/.standalone 
 /usr/bin/svdrpsend plug targvfd on || /bin/true
-/usr/bin/svdrpsend remo on || /bin/true
+vdr-dbus-send /Remote remote.Enable
 /sbin/initctl emit --no-wait vdr-frontend-restart
 end script
 <?cs /if ?>
