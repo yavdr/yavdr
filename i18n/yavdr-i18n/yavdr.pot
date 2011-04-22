@@ -559,6 +559,9 @@ msgstr ""
 msgid "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
 msgstr ""
 
+msgid "If you want to use VDR with a TT-premium S2-6400 HD."
+msgstr ""
+
 msgid "Video Output"
 msgstr ""
 
