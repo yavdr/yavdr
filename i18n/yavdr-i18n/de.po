@@ -803,3 +803,6 @@ msgstr "Einstellungen nicht ändern"
 msgid "You can configure your sundtek DVB hardware here."
 msgstr "Konfigurieren sie ihre Sundtek DVB Hardware hier."
 
+msgid "If you want to use VDR with a TT-premium S2-6400 HD."
+msgstr ""
+
