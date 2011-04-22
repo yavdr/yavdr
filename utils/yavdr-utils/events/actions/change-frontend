@@ -92,8 +92,7 @@ elif [ "$(dbget vdr.frontend)" = "ttpremium6400" ]; then
   enable_plugin "extrecmenu"
   enable_plugin "suspendoutput"
   enable_plugin "control"
-  disable_plugin "*dynamite"
-  disable_plugin "dynamite"
+  enable_plugin "*dynamite"
 fi
 
 if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" ]; then
