@@ -10,4 +10,4 @@ done
 
 DEV=`/usr/bin/sundtekadapter -d $DEVID`
 
-/usr/bin/svdrpsend plug dynamite attd $DEV
+vdr-dbus-send /Plugins/dynamite plugin.SVDRPCommand string:'ATTD' string:"$DEV"

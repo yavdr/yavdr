@@ -11,7 +11,7 @@ done
 DEV=`/usr/bin/dbget system.hardware.sundtek.frontend.$DEVID`
 
 if [ -n "$DEV" ]; then
-  /usr/bin/svdrpsend plug dynamite detd $DEV
+  vdr-dbus-send /Plugins/dynamite plugin.SVDRPCommand string:'DETD' string:"$DEV"
 fi
 
 /usr/bin/dbremove system.hardware.sundtek.frontend.$DEVID
