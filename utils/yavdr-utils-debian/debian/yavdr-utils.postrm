@@ -13,4 +13,6 @@ if [ remove = "$1" ]; then
       --divert /etc/default/grub.dontremove /etc/default/grub
     dpkg-divert --package yavdr-utils --remove --rename \ 
       --divert /lib/plymouth/themes/ubuntu-text/ubuntu-text.plymouth.dontremove /lib/plymouth/themes/ubuntu-text/ubuntu-text.plymouth
+    dpkg-divert --package yavdr-utils --remove --rename \ 
+      --divert /usr/share/polkit-1/actions/org.freedesktop.policykit.policy.dontremove /usr/share/polkit-1/actions/org.freedesktop.policykit.policy
 fi
