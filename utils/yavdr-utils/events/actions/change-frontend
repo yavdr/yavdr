@@ -24,6 +24,7 @@ disable_plugin () {
 if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
   enable_plugin "xineliboutput"
   disable_plugin "xine"
+  disable_plugin "remote"
   enable_plugin "iptv"
   enable_plugin "text2skin"
   enable_plugin "menuorg"
@@ -39,6 +40,7 @@ if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
 elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   enable_plugin "xine"
   disable_plugin "xineliboutput"
+  disable_plugin "remote"
   enable_plugin "iptv"
   enable_plugin "text2skin"
   enable_plugin "menuorg"
@@ -53,6 +55,7 @@ elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
   enable_plugin "dummydevice"
+  disable_plugin "remote"
   disable_plugin "xine"
   disable_plugin "xineliboutput"
   disable_plugin "lcdproc"
@@ -70,6 +73,7 @@ elif [ "$(dbget vdr.frontend)" = "headless" ]; then
   enable_plugin "dummydevice"
   disable_plugin "xine"
 #  enable_plugin "xine"
+  disable_plugin "remote"
   disable_plugin "xineliboutput"
   disable_plugin "lcdproc"
   disable_plugin "imonlcd"
@@ -85,6 +89,7 @@ elif [ "$(dbget vdr.frontend)" = "headless" ]; then
   enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "ttpremium6400" ]; then
   enable_plugin "dvbhddevice"
+  enable_plugin "remote"
   disable_plugin "dummydevice"
   disable_plugin "xine"
   disable_plugin "xineliboutput"
