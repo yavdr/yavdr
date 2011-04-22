@@ -23,11 +23,12 @@ LOCALID=`/usr/bin/dbget system.hardware.sundtek.stick.${SERIAL}_${SKEY}.mounted`
 
 if [ -n "$LOCALID" ]; then
     DEV=`/usr/bin/dbget system.hardware.sundtek.frontend.$LOCALID`
-    
+
     if [ -n "$DEV" ]; then
       vdr-dbus-send /Plugins/dynamite plugin.SVDRPCommand string:'DETD' string:"$DEV"
+      /opt/bin/mediaclient --unmount=$LOCALID
     fi
-    
+
     /usr/bin/dbremove system.hardware.sundtek.frontend.$LOCALID
     /usr/bin/dbremove system.hardware.sundtek.stick.${SERIAL}_${SKEY}.mounted
 fi
