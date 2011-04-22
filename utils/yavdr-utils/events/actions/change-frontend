@@ -34,6 +34,7 @@ if [ "$(dbget vdr.frontend)" = "xineliboutput" ]; then
   enable_plugin "lcdproc"
   disable_plugin "dummydevice"
   disable_plugin "control"
+  disable_plugin "dvbhddevice"
   enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   enable_plugin "xine"
@@ -48,6 +49,7 @@ elif [ "$(dbget vdr.frontend)" = "xine" ]; then
   enable_plugin "lcdproc"
   disable_plugin "dummydevice"
   disable_plugin "control"
+  disable_plugin "dvbhddevice"
   enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
   enable_plugin "dummydevice"
@@ -61,6 +63,7 @@ elif [ "$(dbget vdr.frontend)" = "xbmc" ]; then
   disable_plugin "yaepghd"
   disable_plugin "extrecmenu"
   disable_plugin "suspendoutput"
+  disable_plugin "dvbhddevice"
   enable_plugin "control"
   enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "headless" ]; then
@@ -77,9 +80,11 @@ elif [ "$(dbget vdr.frontend)" = "headless" ]; then
   disable_plugin "yaepghd"
   disable_plugin "extrecmenu"
   disable_plugin "suspendoutput"
+  disable_plugin "dvbhddevice"
   enable_plugin "control"
   enable_plugin "*dynamite"
 elif [ "$(dbget vdr.frontend)" = "ttpremium6400" ]; then
+  enable_plugin "dvbhddevice"
   disable_plugin "dummydevice"
   disable_plugin "xine"
   disable_plugin "xineliboutput"
