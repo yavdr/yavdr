@@ -12,6 +12,13 @@ stop on stopping vdr or s3-suspend or stopping openbox
 nice -10
 respawn
 
+pre-start script 
+if [ -e /tmp/.standalone ]; then 
+   exit 1 
+fi 
+end script
+
+
 env HOME=/var/lib/vdr
 #env XINE_BUFFER_LOG=1
 <?cs /if ?>
