@@ -196,9 +196,6 @@ int main(int argc, char *argv[]) {
 	char _serial[100];
 	int32_t deviceId = -1;
 
-	openlog("scansundtek", LOG_PID | LOG_CONS, LOG_USER);
-	syslog(LOG_ERR, "started");
-
 	while (1) {
 		static struct option long_options[] = {
 			/* These options set a flag. */
@@ -222,37 +219,15 @@ int main(int argc, char *argv[]) {
 			verbose = 1;
 			break;
 		case 'd':
-			syslog(LOG_ERR, "looking for ID %s\n", optarg);
 			deviceId = strtol(optarg, NULL, 10);
-			syslog(LOG_ERR, "looking for ID %i\n", deviceId);
 			break;
-			/*
-			 case 'b':
-			 puts("option -b\n");
-			 break;
-
-			 case 'c':
-			 printf("option -c with value `%s'\n", optarg);
-			 break;
-
-			 case 'd':
-			 printf("option -d with value `%s'\n", optarg);
-			 break;
-
-			 case 'f':
-			 printf("option -f with value `%s'\n", optarg);
-			 break;
-
-			 case '?':
-			 /* getopt_long already printed an error message. * /
-			 break;
-
-			 default:
-			 abort();*/
 		}
 	}
 
-
+	if (verbose) {
+		openlog("scansundtek", LOG_PID | LOG_CONS, LOG_USER);
+		syslog(LOG_ERR, "started");
+	}
 
 	struct ifreq *ifr;
 	struct ifconf ifc;
