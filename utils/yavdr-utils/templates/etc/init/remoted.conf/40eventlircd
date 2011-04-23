@@ -11,6 +11,7 @@ start on filesystem
 stop on runlevel [016]
 
 respawn
+nice -10
 
 script
 test -f /usr/sbin/eventlircd || exit 0
