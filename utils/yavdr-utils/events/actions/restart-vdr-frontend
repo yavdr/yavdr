@@ -1,4 +1,7 @@
+
 #!/bin/bash
 
-stop vdr-frontend
-start vdr-frontend
+if [ `dbget vdr.frontend` = 'xineliboutput' || `dbget vdr.frontend` = 'xine']; then
+  stop vdr-frontend
+  start vdr-frontend
+fi
