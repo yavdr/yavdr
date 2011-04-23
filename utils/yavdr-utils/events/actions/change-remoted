@@ -1,5 +1,19 @@
 #!/bin/bash
 
+enable_plugin () {
+  if grep -q "$1\$" $ORDER_CONF; then
+    sed -i -e "s/.*$1\$/$1/" $ORDER_CONF
+  fi
+}
+
+disable_plugin () {
+  if ! grep -q "$1\$" $ORDER_CONF; then
+    append_plugin "-$1"
+  else
+    sed -i -e "s/.*$1\$/-$1/" $ORDER_CONF
+  fi
+}
+
 REMOTE=`dbget system.remoted`
 
 if [ "x$REMOTE" = "x" -o "x$REMOTE" = "xlircd" ]; then
@@ -8,3 +22,8 @@ else
   restart remoted
 fi
 
+if [ "x$REMOTE" = "xvdrremote" ]; then
+  enable_plugin "remote"
+else
+  disable_plugin "remote"
+fi
