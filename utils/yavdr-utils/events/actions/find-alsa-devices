@@ -25,6 +25,7 @@ elif [ $(LANG=C aplay -l | grep -i $INTERFACE | wc -l) -eq 4 ]; then
     # we are totally lost and need to do some wild guessing
     dbset system.hardware.alsa.${INTERFACE}.card=1
     dbset system.hardware.alsa.${INTERFACE}.device=7
+  fi
 fi
 done
 
