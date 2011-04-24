@@ -539,7 +539,37 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       this.items = [ new YaVDR.Component.Header({
         region : 'north',
         html : _('Settings')
-      }), new YaVDR.Component.Item({
+      }), {
+        region : 'west',
+        title: _('Channelpedia'),
+        collapsible: true,   // make collapsible
+        floatable: true,
+        split: true,
+        collapseMode: 'mini',
+        width: 300,
+        collapsed: true,
+        id: 'west-region-container',
+        layout: 'fit',
+        qtip: _('Channelpedia'),
+        xtype: 'treepanel',
+        useArrows: true,
+        autoScroll: true,
+        animate: false,
+        //enableDD: true,
+        containerScroll: true,
+        border: true,
+        // auto create TreeLoader
+        dataUrl: '/admin/channelpedia',
+
+        root: {
+            nodeType: 'async',
+            text: 'Channelpedia',
+            draggable: false,
+            id: 'root',
+            leaf: false
+        }
+
+      }, new YaVDR.Component.Item({
         region : 'center',
         title : _('Channels'),
         layout : 'fit',

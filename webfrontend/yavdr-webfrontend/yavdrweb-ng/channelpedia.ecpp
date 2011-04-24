@@ -1,0 +1,132 @@
+<%pre>
+#include <stdio.h>
+#include <string>
+#include <dirent.h>
+#include <jsoncpp/json.h>
+#include "curl/curl.h"
+
+using namespace std;
+</%pre><%args>
+node;
+</%args><%shared>
+
+	// This is the writer call back function used by curl  
+	static int writer(char *data, size_t size, size_t nmemb,  
+					  std::string *buffer)  
+	{  
+	  // What we will return  
+	  int result = 0;  
+	  
+	  // Is there anything in the buffer?  
+	  if (buffer != NULL)  
+	  {  
+		// Append the data to the buffer  
+		buffer->append(data, size * nmemb);  
+	  
+		// How much did we write?  
+		result = size * nmemb;  
+	  }  
+	  
+	  return result;  
+	}  
+</%shared>
+<& authenticate >
+<%cpp>
+	reply.setHeader ("Cache-Control", "no-cache", false);
+	reply.setHeader ("Content-Type", "application/json", false);
+
+	Json::Value json;
+
+	char errorBuffer[CURL_ERROR_SIZE];  
+	string buffer;
+
+	CURL *curl;
+	CURLcode curlResult;
+    // Create our curl handle  
+    curl = curl_easy_init();  
+
+    // Now set up all of the curl options  
+    curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);  
+    
+    curl_easy_setopt(curl, CURLOPT_HEADER, 0);  
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);  
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writer);  
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+    
+    if (curl)  
+    {  
+		if (node == "root") {
+			curl_easy_setopt(curl, CURLOPT_URL, "http://www.henningpingel.de/fileadmin/yavdr/restful/sources");
+			// Attempt to retrieve the remote page  
+			curlResult = curl_easy_perform(curl);  
+
+			// Always cleanup  
+			curl_easy_cleanup(curl);  
+			
+			// Did we succeed?  
+			if (curlResult == CURLE_OK)
+			{  
+				Json::Value source;   // will contains the root value after parsing.
+				Json::Reader reader;
+				bool parsingSuccessful = reader.parse( buffer, source );
+				const Json::Value quellen = source["result"];
+
+			    if( quellen.size() > 0 ) {
+			    	int i = 0;
+			        for( Json::ValueIterator itr = quellen.begin() ; itr != quellen.end() ; itr++ ) {
+			        	string key = itr.key().asString();
+			        	if (quellen[key].size() > 0) {
+			        		json[i]["id"] = key;
+			        		json[i]["text"] = key;
+							json[i]["leaf"] = false;
+							int j = 0;
+							for( Json::ValueIterator itr2 = (*itr).begin() ; itr2 != (*itr).end() ; itr2++ ) {
+								key = itr2.key().asString();
+								if ((*itr)[key].size() > 0) { // languages available
+									Json::Value child;
+									child["id"] = itr2.key();
+									child["text"] = itr2.key();
+									child["leaf"] = false;
+									
+									int k = 0;
+									for( Json::ValueIterator itr3 = (*itr2).begin() ; itr3 != (*itr2).end() ; itr3++ ) {
+										key = (*itr3).asString();
+										Json::Value language;
+										language["id"] = key;
+										language["text"] = key;
+										language["leaf"] = false;
+											
+										child["children"][k++] = language;
+									}
+									json[i]["children"][j++] = child;
+								}
+							}
+			        	} // ignore empty...
+
+			        	i++;
+			        }
+			        
+			    }
+
+				reply.out() << json;
+			} else {  
+				reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
+			}  
+		}
+    }
+		
+
+		//reply.out() << json;
+
+/*
+ * [{
+ *  "text":"yui-bridge.js",
+ *  "id":"src\/adapter\/yui-bridge.js",
+ *  "leaf":true,
+ *  "cls":"file",
+ *  "children": []
+ * }]
+ * 
+ */
+</%cpp>
+

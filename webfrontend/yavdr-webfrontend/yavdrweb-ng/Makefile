@@ -12,7 +12,8 @@ yavdrweb.so: neo_hdf.o neo_err.o auth.o authenticate.o yavdrweb.o \
              get_timers.o get_autofs_config.o set_autofs_config.o \
              get_x11.o set_x11.o get_packages.o dpkg.o session.o \
              set_shutdown_wakeup.o get_eventlircd.o set_eventlircd.o \
-             channels.o
+             channels.o channelpedia.o
+             
 	${CXX} -o $@ $^ ${LDFLAGS}
 
 testdeploy: all
@@ -30,7 +31,7 @@ ifeq ($(CEXTRAFLAGS),)
 endif
 CXXFLAGS+=-I.. -I/usr/include -I/usr/include/ClearSilver -I/usr/include/yavdr -fPIC $(CEXTRAFLAGS)
 CFLAGS+=-I/usr/include/ClearSilver -I/usr/include/ClearSilver/util -I/usr/include/NVCtrl /usr/include/yavdr -fPIC $(CEXTRAFLAGS)
-LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lneo_cs -lpam -lXNVCtrl -lX11 -lXext -ljson -lboost_regex -L/usr/lib/yavdr -lyavdrdb -lsvdrp -lyavdrutils
+LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lneo_cs -lpam -lXNVCtrl -lX11 -lXext -ljson -lcurl -lboost_regex -L/usr/lib/yavdr -lyavdrdb -lsvdrp -lyavdrutils
 
 .ecpp.cpp:
 	${ECPPC} ${ECPPFLAGS} ${ECPPFLAGS_CPP} $<
