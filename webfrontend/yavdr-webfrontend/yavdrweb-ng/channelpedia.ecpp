@@ -90,10 +90,10 @@ node;
 									
 									int k = 0;
 									for( Json::ValueIterator itr3 = (*itr2).begin() ; itr3 != (*itr2).end() ; itr3++ ) {
-										key = (*itr3).asString();
+										string key2 = (*itr3).asString();
 										Json::Value language;
-										language["id"] = key;
-										language["text"] = key;
+										language["id"] = key + "/" + key2;
+										language["text"] = key2;
 										language["leaf"] = false;
 											
 										child["children"][k++] = language;
