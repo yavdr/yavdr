@@ -3,7 +3,8 @@
          <command name=<?cs call:quote(_("Switch temporarily to second screen")) ?> execute="/usr/bin/signal-event change-display &amp;> /dev/null &amp; " />
 <?cs /if ?>
          <plugin name="femon" />
-         <plugin name="avolctl" />
+         <plugin name="sndctl" />
          <plugin name="suspendoutput" />
          <plugin name="recstatus" />
          <plugin name="dynamite" />
+         <plugin name="pin" />
