@@ -19,7 +19,9 @@ int scandirfilter(const struct dirent *entry)
 		return 1;
 }
 
-</%shared><%cpp>
+</%shared>
+<& authenticate >
+<%cpp>
 reply.setHeader ("Cache-Control", "no-cache", false);
 
 //restrict commands
