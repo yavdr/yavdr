@@ -36,4 +36,10 @@ LIRC.Volume+    KEY_VOLUMEUP
 LIRC.Volume-    KEY_VOLUMEDOWN
 LIRC.Mute       KEY_MUTE
 LIRC.Subtitles  KEY_SUBTITLE
+LIRC.User1      KEY_TEXT
+LIRC.User2      KEY_VIDEO
+LIRC.User3      KEY_MP3
+LIRC.User4      KEY_MEDIA
+LIRC.User5      KEY_TV
+LIRC.User6      KEY_ZOOM
 
