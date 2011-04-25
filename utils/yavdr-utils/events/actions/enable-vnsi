@@ -3,7 +3,7 @@
 
 rm -fr /var/lib/vdr/.xbmc
 mkdir -p /var/lib/vdr/.xbmc/userdata/Database/
-
+mkdir -p /var/lib/vdr/.xbmc/system/
 
 
 cat <<-! > /var/lib/vdr/.xbmc/userdata/guisettings.xml
@@ -144,4 +144,6 @@ EOF
 chown -R vdr:vdr /var/lib/vdr/.xbmc
 
 process-template --owner=vdr --group=vdr /var/lib/vdr/.xbmc/userdata/sources.xml
+process-template --owner=vdr --group=vdr /var/lib/vdr/.xbmc/system/Lircmap.xml
+
 
