@@ -1,6 +1,9 @@
 #!/bin/bash
 
 for INTERFACE in hdmi digital analog ; do
+CARD=""
+DEVICE=""
+
 if [ $(LANG=C aplay -l | grep -i $INTERFACE | wc -l) -eq 1 ]; then
   SINK="$(LANG=C aplay -l | grep -i $INTERFACE)"
   # get the index id's
@@ -11,9 +14,9 @@ if [ $(LANG=C aplay -l | grep -i $INTERFACE | wc -l) -eq 1 ]; then
   dbset system.hardware.alsa.${INTERFACE}.card=$CARD
   dbset system.hardware.alsa.${INTERFACE}.device=$DEVICE
 elif [ $(LANG=C aplay -l | grep -i $INTERFACE | wc -l) -eq 4 ]; then
-  ELD="`grep -e "monitor_present.*1$" /proc/asound/card?/eld* | cut -d":" -f1`"
+  CARD=$(LANG=C aplay -l | grep -i $INTERFACE) ; CARD=${CARD//:*} ; CARD=${CARD#card }
+  ELD="`grep -e "monitor_present.*1$" /proc/asound/card${CARD}/eld* | cut -d":" -f1`"
   if [ "x$ELD" != "x" ]; then
-    CARD="$(basename $(dirname $ELD))"; CARD=${CARD#card}
     ELD=${ELD#*\#} ; ELD=${ELD//.*}
     DEVICE=$(grep -e "^ *Device:.*" /proc/asound/card$CARD/codec\#${ELD})
     DEVICE=${DEVICE#*device=}
@@ -21,11 +24,25 @@ elif [ $(LANG=C aplay -l | grep -i $INTERFACE | wc -l) -eq 4 ]; then
     # put them into db
     dbset system.hardware.alsa.${INTERFACE}.card=$CARD
     dbset system.hardware.alsa.${INTERFACE}.device=$DEVICE
-  else 
+  else
     # we are totally lost and need to do some wild guessing
-    dbset system.hardware.alsa.${INTERFACE}.card=1
+    dbset system.hardware.alsa.${INTERFACE}.card=$CARD
     dbset system.hardware.alsa.${INTERFACE}.device=7
   fi
 fi
 done
+
+if [ "$(dbget system.sound.type)" = "" ]; then
+   if [ "$(dbget system.hardware.alsa.hdmi.device)"    != "" -a \
+        "$(dbget system.hardware.alsa.digital.device)" != "" -a \
+        "$(dbget system.hardware.alsa.analog.device)"  != "" ]; then
+      dbset system.sound.type="all"
+   elif  [ "$(dbget system.hardware.alsa.hdmi.device)"    != "" ]; then
+      dbset system.sound.type="hdmi"
+   elif  [ "$(dbget system.hardware.alsa.digital.device)" != "" ]; then
+      dbset system.sound.type="digital"
+   else
+      dbset system.sound.type="analog"
+   fi
+fi
 
