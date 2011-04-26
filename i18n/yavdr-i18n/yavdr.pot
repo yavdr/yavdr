@@ -864,6 +864,9 @@ msgstr ""
 msgid "Do not change frontend settings"
 msgstr ""
 
+msgid "Language"
+msgstr ""
+
 #: end web front end
 
 

@@ -282,28 +282,28 @@ msgid "Shutdown"
 msgstr "System herunterfahren"
 
 msgid "This is the classical shutdown."
-msgstr ""
+msgstr "Das ist die klassische Abschalt-Methode."
 
 msgid "reboot PowerOff-kernel"
-msgstr ""
+msgstr "Rechner Neu starten PowerOff-kernel"
 
 msgid "Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
 msgstr ""
 
 msgid "Without timer wakeup."
-msgstr ""
+msgstr "Ohne Timer-gesteuertem Aufwachen"
 
 msgid "ACPI timer wakeup. YaVDR default setting."
 msgstr ""
 
 msgid "You need a special nvram configuration to use it."
-msgstr ""
+msgstr "Sie brauchen eine spezielle/extra Konfiguration um es zu benutzen."
 
 msgid "Shutdown method"
-msgstr ""
+msgstr "Abschalt Methode"
 
 msgid "Wakeup method"
-msgstr ""
+msgstr "Aufwach Methode"
 
 msgid "Disable USB-wakeup"
 msgstr "USB-wakeup abschalten"
@@ -806,3 +806,5 @@ msgstr "Konfigurieren sie ihre Sundtek DVB Hardware hier."
 msgid "If you want to use VDR with a TT-premium S2-6400 HD."
 msgstr ""
 
+msgid "Language"
+msgstr "Sprache"
