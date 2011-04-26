@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# detect helper
+check_pci() {
+  lspci -nv | grep -q "Subsystem: $1"
+}
+check_usb() {
+  lsusb | grep -q "$1"
+}
+
+# default channels.conf
+SOURCE="IP"
+
+# detect only one dvb tree
+DRIVER=""
+
+# TT 6400 PCI
+if check_pci "13c2:300a" || check_pci "13c2:300b"; then
+  SOURCE="SAT"
+  DRIVER="v4l-dvb-dkms"
+#  dbset vdr.frontend="ttpremium6400"
+#  /usr/bin/signal-event change-frontend
+
+# TT 3600 USB
+elif check_usb "0b48:3007"; then
+  SOURCE="SAT"
+  DRIVER="s2-liplianin-dkms"
+
+# Hauppauge WinTV-NOVA-HD-S2
+elif check_usb "14f1:0800"; then
+  SOURCE="SAT"
+  DRIVER="v4l-dvb-dkms"
+
+fi
+
+#echo $DRIVER
+
+# temp: remove old driver
+if [ "$DRIVER" = "s2-liplianin-dkms" ]; then
+  apt-get remove --purge v4l-dvb-dkms
+elif [ "$DRIVER" = "v4l-dvb-dkms" ]; then
+  apt-get remove --purge s2-liplianin-dkms
+fi
+# install driver
+if [ -n "$DRIVER" ]; then
+  apt-get install -y $DRIVER
+fi
+
+# detect: Sundtek Sticks
+if lsusb -v | grep -q Sundtek; then
+  apt-get install -y yavdr-hardware-sundtek
+fi
+
+# todo set channels
+#echo $SOURCE

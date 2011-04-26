@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if lspci -nv | grep -q "Subsystem: 13c2:300b" || lspci -nv | grep -q "Subsystem: 13c2:300a"; then
-  dbset vdr.frontend="ttpremium6400"
-  /usr/bin/signal-event change-frontend
-fi
-
