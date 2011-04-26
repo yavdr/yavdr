@@ -297,7 +297,7 @@ msgid "ACPI timer wakeup. YaVDR default setting."
 msgstr ""
 
 msgid "You need a special nvram configuration to use it."
-msgstr "Sie brauchen eine spezielle/extra Konfiguration um es zu benutzen."
+msgstr "Sie brauchen eine spezielle/extra Konfiguration um Nvram-wakeup zu benutzen."
 
 msgid "Shutdown method"
 msgstr "Abschalt Methode"
