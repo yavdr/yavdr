@@ -71,7 +71,7 @@ msgstr "USB Massenspeicher sicher entfernen"
 msgid "Update vdr recordings list"
 msgstr "Aufnahmen-Liste aktualisieren"
 
-msgid "Restart vdr"
+msgid "Restart VDR"
 msgstr "VDR neu starten"
 
 msgid "Reboot system"

@@ -51,7 +51,7 @@ msgstr ""
 msgid "Update vdr recordings list"
 msgstr ""
 
-msgid "Restart vdr"
+msgid "Restart VDR"
 msgstr ""
 
 msgid "Reboot system"
