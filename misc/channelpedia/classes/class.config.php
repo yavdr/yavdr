@@ -24,8 +24,6 @@
 
 define( 'PATH_TO_CLASSES', dirname(__FILE__) ."/");
 
-print "abspath: " . PATH_TO_CLASSES. "\n";
-
 require_once PATH_TO_CLASSES.'../config/config.php';
 require_once PATH_TO_CLASSES.'class.dbConnection.php';
 require_once PATH_TO_CLASSES.'class.channelGroupingManager.php';
