@@ -1,2 +1,16 @@
 #!/bin/sh
 
+DEV=0
+KEY=`/usr/bin/dbget system.hardware.sundtek.found.${DEV}`
+
+while [ -n "$KEY" ] ; do
+  if [ "x$(dbget system.hardware.sundtek.stick.$KEY.mount)" = "x1" -a  "x$(dbget system.hardware.sundtek.stick.$KEY.mounted)" = "x" ]; then
+    /opt/bin/mediaclient --mount=`dbget system.hardware.sundtek.stick.$KEY.info.ip`:`dbget system.hardware.sundtek.stick.$KEY.info.id`
+    SERIAL=`dbget system.hardware.sundtek.stick.$KEY.info.serial`
+    ID=`/usr/bin/sundtekadapter -s $SERIAL -o id`
+    /usr/bin/dbset "system.hardware.sundtek.stick.$KEY.mounted=$ID"
+  fi
+  DEV=$((DEV+1))
+  KEY=`/usr/bin/dbget system.hardware.sundtek.found.${DEV}`
+done
+
