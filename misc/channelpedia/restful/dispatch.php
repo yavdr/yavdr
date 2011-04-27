@@ -9,6 +9,7 @@ require_once '../classes/class.channelIterator.php';
 
 // load resources
 require_once '../classes/restful_resources/channelgroups.php';
+require_once '../classes/restful_resources/channelsupload.php';
 require_once '../classes/restful_resources/sources.php';
 
 // handle request

@@ -45,4 +45,7 @@
 
 define("CUSTOM_PATH", "");
 
+define("UPLOAD_PASSWORD", "password")
+
+
 ?>
