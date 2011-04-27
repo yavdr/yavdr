@@ -1,6 +1,9 @@
 #!/bin/bash
+
+############################################################################################################
 # hardware detection for yavdr
 # author: Marco Scholl <yavdr@marco-scholl.de>
+############################################################################################################
 
 # detect helper
 check_pci() {
@@ -10,14 +13,18 @@ check_usb() {
   lsusb | grep -q "$1"
 }
 
+############################################################################################################
+
 # default channels.conf
 SOURCE="IP"
 
 # detect only one dvb tree
 DRIVER=""
 
+############################################################################################################
 # erkenne erstmal geräte die mit beiden paketen laufen und mindest einen davon benötigen
 # die DRIVER variable kann dann von nachfolgenden erkennungen überschrieben werden
+############################################################################################################
 
 # TT 6400 PCI
 if check_pci "13c2:300a" || check_pci "13c2:300b"; then
@@ -32,10 +39,16 @@ fi
 if check_usb "0b48:3007" || check_usb "0b48:300A"; then
   SOURCE="SAT"
   DRIVER="s2-liplianin-dkms"
+
+# TeVii S470 - optional aber läuft wohl besser mit s2
+elif check_pci "d470:9022"; then
+  SOURCE="SAT"
+  DRIVER="s2-liplianin-dkms"
 fi
 
+############################################################################################################
 # erkenne nun nach priorität treiber vorraussetzungen
-#
+############################################################################################################
 # erkenne s2-liplianin
 
 # TeVii S660 USB
@@ -47,6 +60,7 @@ if check_usb "9022:d660"; then
 elif check_pci "9022:d482" || check_pci "9022:d481"; then
   SOURCE="SAT"
   DRIVER="s2-liplianin-dkms"
+
 
 # DVBWorld DVB-S2 PCIE2006
 elif check_pci "1ADE:2032"; then
