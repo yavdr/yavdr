@@ -4,5 +4,5 @@
 # Enable networking. This must be 1 to allow enabeling in WFE
 ENABLE_NETWORK=1
 
-# This devices will be mounted on startup of mediaserver. The do not relay on avahia. A list separated by space
+# This devices will be mounted on startup of mediaserver. They do not relay on avahi. A list separated by space
 MOUNT_SUNDTEK=""

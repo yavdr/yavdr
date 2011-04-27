@@ -19,11 +19,11 @@ while getopts "d:s:h:a:" opt; do
 done
 
 SKEY=`echo "$ADDRESS" | sed s/\\\\./_/g`
-ID=`/opt/bin/mediaclient -e | grep "(${HOST})" | cut -f1 -d: | cut -f 2 -d " "`
+ID=`/usr/bin/sundtekadapter -s ${SERIAL} --remoteonly -o id`
 
 if [ "X`dbget system.hardware.sundtek.stick.${SERIAL}_${SKEY}.mount`" = "X1" \
     -a -z "${ID}" ]; then
   /opt/bin/mediaclient --mount=$HOST:$DEVID
-  ID=`/opt/bin/mediaclient -e | grep "(${HOST})" | cut -f1 -d: | cut -f 2 -d " "`
+  ID=`/usr/bin/sundtekadapter -s ${SERIAL} --remoteonly -o id`
   dbset "system.hardware.sundtek.stick.${SERIAL}_${SKEY}.mounted=$ID"
 fi

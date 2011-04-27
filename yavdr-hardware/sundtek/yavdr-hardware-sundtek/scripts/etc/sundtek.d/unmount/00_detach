@@ -19,10 +19,10 @@ done
 
 SKEY=`echo "$ADDRESS" | sed s/\\\\./_/g`
 
-LOCALID=`/usr/bin/dbget system.hardware.sundtek.stick.${SERIAL}_${SKEY}.mounted`
+LOCALID=`/usr/bin/sundtekadapter --serial=${SERIAL} --remoteonly -o id`
 
 if [ -n "$LOCALID" ]; then
-    DEV=`/usr/bin/dbget system.hardware.sundtek.frontend.$LOCALID`
+    DEV=`/usr/bin/sundtekadapter --serial=${SERIAL} --remoteonly -o frontend`
 
     if [ -n "$DEV" ]; then
       vdr-dbus-send /Plugins/dynamite plugin.SVDRPCommand string:'DETD' string:"$DEV"
