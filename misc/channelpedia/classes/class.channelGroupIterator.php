@@ -53,6 +53,15 @@ class channelGroupIterator{
         }
         else{
             $exists = true;
+        $sourcetest = strtoupper( substr($channel["source"],0,1));
+            $groupnamechunks = explode("_", $this->channelgroup["x_label"]);
+            if ( count($groupnamechunks) > 0)
+                $this->channelgroup['lang'] = $groupnamechunks[0];
+            if ( count($groupnamechunks) > 1)
+                $this->channelgroup['provider'] = $groupnamechunks[1];
+            if ( count($groupnamechunks) == 2)
+                $this->channelgroup['region'] = $groupnamechunks[2];
+
             $this->count++;
             $this->channelgroup['id'] = $this->count;
             $this->channelgroup['channelcount'] = intval($this->channelgroup['channelcount']);

@@ -34,7 +34,7 @@ class channelgroupsResource extends Resource {
 
         if ($group == 0){
             if ($outputtype === "json"){
-                $response->addHeader('Content-type', 'application/json');
+                $response->addHeader('Content-type', 'application/json; charset=utf-8');
                 $jsonarray = array();
                 $jsonarray["result"] = array();
                 while ($groupIterator->moveToNextChannelGroup() !== false){
@@ -52,7 +52,7 @@ class channelgroupsResource extends Resource {
         }
         else{
             if ($outputtype === "json"){
-                $response->addHeader('Content-type', 'application/json');
+                $response->addHeader('Content-type', 'application/json; charset=utf-8');
                 $jsonarray = array();
                 $jsonarray["result"] = array();
                 while ($groupIterator->moveToNextChannelGroup() !== false ){
@@ -70,7 +70,7 @@ class channelgroupsResource extends Resource {
                 $response->body .= json_encode($jsonarray)."\n";
             }
             else{
-                $response->addHeader('Content-type', 'text/plain');
+                $response->addHeader('Content-type', 'text/plain; charset=utf-8');
                 $response->body .= "not implemented yet\n";
             }
         }
