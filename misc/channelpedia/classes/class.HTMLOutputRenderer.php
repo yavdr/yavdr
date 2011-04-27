@@ -41,7 +41,7 @@ class HTMLOutputRenderer{
     function __construct(){
         $this->db = dbConnection::getInstance();
         $this->config = config::getInstance();
-        $this->exportpath = $this->config->getValue("userdata").$this->config->getValue("exportfolder")."/html/";
+        $this->exportpath = $this->config->getValue("exportfolder")."/html/";
 
         $this->addDividerTitle("Essential channels (pre-sorted lists)");
 
