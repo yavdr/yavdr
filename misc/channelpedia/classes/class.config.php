@@ -22,17 +22,21 @@
 *
 */
 
-require_once 'config.php';
-require_once 'class.dbConnection.php';
-require_once 'class.channelGroupingManager.php';
-require_once 'class.channelGroupIterator.php';
-require_once 'class.channelIterator.php';
-require_once 'class.channelFileIterator.php';
-require_once 'class.channelImport.php';
-require_once 'class.channelListWriter.php';
-require_once 'class.rawOutputRenderer.php';
-require_once 'class.HTMLOutputRenderer.php';
-require_once 'class.epg2vdrMapper.php';
+define( 'PATH_TO_CLASSES', dirname(__FILE__) ."/");
+
+print PATH_TO_CLASSES."\n";
+
+require_once PATH_TO_CLASSES.'../config/config.php';
+require_once PATH_TO_CLASSES.'class.dbConnection.php';
+require_once PATH_TO_CLASSES.'class.channelGroupingManager.php';
+require_once PATH_TO_CLASSES.'class.channelGroupIterator.php';
+require_once PATH_TO_CLASSES.'class.channelIterator.php';
+require_once PATH_TO_CLASSES.'class.channelFileIterator.php';
+require_once PATH_TO_CLASSES.'class.channelImport.php';
+require_once PATH_TO_CLASSES.'class.channelListWriter.php';
+require_once PATH_TO_CLASSES.'class.rawOutputRenderer.php';
+require_once PATH_TO_CLASSES.'class.HTMLOutputRenderer.php';
+require_once PATH_TO_CLASSES.'class.epg2vdrMapper.php';
 
 class config {
 
@@ -53,11 +57,19 @@ class config {
     public function getValue($key){
         $default_lang_de_cable_provider = array("de");
 
+        /* CUSTOM_PATH can be set in config/config.php
+         * to overrule the default path
+         */
+        if (CUSTOM_PATH == ""){
+            $pathdynamic = PATH_TO_CLASSES."../";
+        }
+        else
+            $pathdynamic = CUSTOM_PATH;
         $value = null;
         if ( $key == "path")
-            $value = PATH;
+            $value = "userdata/";
         elseif ($key == "exportfolder")
-            $value = EXPORTFOLDER;
+            $value = "gen/";
         elseif ($key == "sat_positions")
             $value = array(
                 "S13E" => array(),

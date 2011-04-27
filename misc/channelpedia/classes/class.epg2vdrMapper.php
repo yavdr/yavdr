@@ -24,6 +24,9 @@
 
 class epg2vdrMapper{
 
+    const
+        epgMappingDir = "../epg_mappings/";
+
     private
         $db,
         $config,
@@ -48,7 +51,7 @@ class epg2vdrMapper{
 
     private function getExternalEPGMappings($epgservice){
         if (!array_key_exists($epgservice, $this->externalEPGMappings)){
-            $this->externalEPGMappings[$epgservice] = unserialize(file_get_contents("epg_mappings/".$epgservice."2vdr.txt"));
+            $this->externalEPGMappings[$epgservice] = unserialize(file_get_contents(epg2vdrMapper::epgMappingDir .$epgservice."2vdr.txt"));
         }
         return $this->externalEPGMappings[$epgservice];
     }

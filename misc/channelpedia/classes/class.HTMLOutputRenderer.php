@@ -25,10 +25,10 @@
 class HTMLOutputRenderer{
 
     const
-        stylesheet = "templates/styles.css",
-        htmlHeaderTemplate = "templates/html_header.html",
-        htmlFooterTemplate = "templates/html_footer.html",
-        htmlCustomFooterTemplate = "templates/html_custom_footer.html";
+        stylesheet = "../templates/styles.css",
+        htmlHeaderTemplate = "../templates/html_header.html",
+        htmlFooterTemplate = "../templates/html_footer.html",
+        htmlCustomFooterTemplate = "../templates/html_custom_footer.html";
 
     private
         $db,

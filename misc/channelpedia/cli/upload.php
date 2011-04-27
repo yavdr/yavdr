@@ -24,7 +24,7 @@
 
 //ini_set("display_errors", E_ALL);
 
-require_once 'class.config.php';
+require_once '../classes/class.config.php';
 
 $config = config::getInstance();
 

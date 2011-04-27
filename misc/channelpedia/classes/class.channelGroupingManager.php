@@ -23,20 +23,20 @@
 */
 
 //TODO: autoload these rule files
-require_once 'grouping_rules/base/class.ruleBase.php';
-require_once 'grouping_rules/class.GermanyEssentials.php';
-require_once 'grouping_rules/class.GermanySatNonEssentials.php';
-require_once 'grouping_rules/class.GermanyKabelDeutschland.php';
-require_once 'grouping_rules/class.GermanyWilhelmTel.php';
-require_once 'grouping_rules/class.GermanyUnityMedia.php';
-require_once 'grouping_rules/class.GermanyTeleColumbus.php';
-require_once 'grouping_rules/class.UKIrelandEssentials.php';
-require_once 'grouping_rules/class.AustriaSatEssentials.php';
-require_once 'grouping_rules/class.SwitzerlandSatEssentials.php';
-require_once 'grouping_rules/class.SpainSatEssentials.php';
-require_once 'grouping_rules/class.PolandSatEssentials.php';
-require_once 'grouping_rules/class.FranceSatEssentials.php';
-require_once 'grouping_rules/class.NetherlandsSatEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/base/class.ruleBase.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.GermanyEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.GermanySatNonEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.GermanyKabelDeutschland.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.GermanyWilhelmTel.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.GermanyUnityMedia.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.GermanyTeleColumbus.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.UKIrelandEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.AustriaSatEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.SwitzerlandSatEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.SpainSatEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.PolandSatEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.FranceSatEssentials.php';
+require_once PATH_TO_CLASSES . '../grouping_rules/class.NetherlandsSatEssentials.php';
 
 define("HD_CHANNEL"," UPPER(name) LIKE '% HD%' ");
 

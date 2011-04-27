@@ -23,7 +23,7 @@
 */
 
 //input: reads channel.conf from path and put channels into db
-require_once 'class.config.php';
+require_once '../classes/class.config.php';
 
 if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
 

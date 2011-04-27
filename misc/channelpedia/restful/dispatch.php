@@ -1,19 +1,19 @@
 <?php
 
 // load Tonic library
-require_once '../lib/tonic.php';
-require_once '../class.config.php';
-require_once '../class.dbConnection.php';
-require_once '../class.channelGroupIterator.php';
-require_once '../class.channelIterator.php';
+require_once '../classes/lib/tonic.php';
+require_once '../classes/class.config.php';
+require_once '../classes/class.dbConnection.php';
+require_once '../classes/class.channelGroupIterator.php';
+require_once '../classes/class.channelIterator.php';
 
 // load resources
-require_once '../resources/channelgroups.php';
-require_once '../resources/sources.php';
+require_once '../classes/restful_resources/channelgroups.php';
+require_once '../classes/restful_resources/sources.php';
 
 // handle request
 $request = new Request(array(
-    'baseUri' => '/fileadmin/yavdr/restful'
+    'baseUri' => '/restful'
 ));
 
 $resource = $request->loadResource();
