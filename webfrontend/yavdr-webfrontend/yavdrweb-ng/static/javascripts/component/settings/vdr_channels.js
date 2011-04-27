@@ -545,7 +545,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
         collapsible: true,   // make collapsible
         floatable: true,
         split: true,
-        collapseMode: 'mini',
+        //collapseMode: 'mini',
         width: 300,
         collapsed: true,
         id: 'west-region-container',

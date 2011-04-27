@@ -114,42 +114,79 @@ node;
 				reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
 			}  
 		} else {
-			string url = "http://www.henningpingel.de/fileadmin/yavdr/restful/channelgroups/" + node + "/0/json";
-			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-			// Attempt to retrieve the remote page
-			curlResult = curl_easy_perform(curl);  
-
-			// Always cleanup  
-			curl_easy_cleanup(curl);
-			
-			// Did we succeed?  
-			if (curlResult == CURLE_OK)
-			{
-				Json::Value source;   // will contains the root value after parsing.
-				Json::Reader reader;
-				bool parsingSuccessful = reader.parse( buffer, source );
-				char *dummy = NULL;
-
-				if (parsingSuccessful) {
-					const Json::Value channelgroups = source["result"];
-					if( channelgroups.size() > 0 ) {
-						int i = 0;
-						for( Json::ValueIterator itr = channelgroups.begin() ; itr != channelgroups.end() ; itr++ ) {
-							Json::Value channelgroup = (*itr);
-							if (asprintf(&dummy, "%d", channelgroup["id"].asInt()) > 0) {
-								json[i]["id"] = node + "/" + dummy;
-								json[i]["text"] = channelgroup["x_label"].asString();
-								json[i]["leaf"] = false;
-								
-								i++;
-								free(dummy);
+			if (node.find_first_of("/") == node.find_last_of("/")) {
+				string url = "http://www.henningpingel.de/fileadmin/yavdr/restful/channelgroups/" + node + "/0/json";
+				curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+				// Attempt to retrieve the remote page
+				curlResult = curl_easy_perform(curl);  
+	
+				// Always cleanup  A
+				curl_easy_cleanup(curl);
+				
+				// Did we succeed?  
+				if (curlResult == CURLE_OK)
+				{
+					Json::Value source;   // will contains the root value after parsing.
+					Json::Reader reader;
+					bool parsingSuccessful = reader.parse( buffer, source );
+					char *dummy = NULL;
+	
+					if (parsingSuccessful) {
+						const Json::Value channelgroups = source["result"];
+						if( channelgroups.size() > 0 ) {
+							int i = 0;
+							for( Json::ValueIterator itr = channelgroups.begin() ; itr != channelgroups.end() ; itr++ ) {
+								Json::Value channelgroup = (*itr);
+								if (asprintf(&dummy, "%d", channelgroup["id"].asInt()) > 0) {
+									json[i]["id"] = node + "/" + dummy;
+									json[i]["text"] = channelgroup["x_label"].asString();
+									json[i]["leaf"] = false;
+									
+									i++;
+									free(dummy);
+								}
 							}
 						}
+						reply.out() << json;
 					}
-					reply.out() << json;
+				} else {  
+					reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
 				}
-			} else {  
-				reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
+			} else {
+				string url = "http://www.henningpingel.de/fileadmin/yavdr/restful/channelgroups/" + node + "/json";
+				curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+				// Attempt to retrieve the remote page
+				curlResult = curl_easy_perform(curl);  
+	
+				// Always cleanup  A
+				curl_easy_cleanup(curl);
+				
+				// Did we succeed?  
+				if (curlResult == CURLE_OK)
+				{
+					Json::Value source;   // will contains the root value after parsing.
+					Json::Reader reader;
+					bool parsingSuccessful = reader.parse( buffer, source );
+					char *dummy = NULL;
+	
+					if (parsingSuccessful) {
+						const Json::Value channels = source["result"]["channelparameters"];
+						if( channels.size() > 0 ) {
+							int i = 0;
+							for( Json::ValueIterator itr = channels.begin() ; itr != channels.end() ; itr++ ) {
+								Json::Value channel = (*itr);
+								json[i]["id"] = channel["name"].asString()+";"+channel["provider"].asString();
+								json[i]["text"] = channel["name"].asString();
+								json[i]["leaf"] = true;
+								
+								i++;
+							}
+						}
+						reply.out() << json;
+					}
+				} else {  
+					reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
+				}
 			}
 		}
     }
