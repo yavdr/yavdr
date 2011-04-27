@@ -62,7 +62,7 @@ if [ -n "$DRIVER" ]; then
 fi
 
 # detect: Sundtek Sticks
-if lsusb -v | grep -q Sundtek; then
+if check_usb "eb1a:5"; then
   apt-get install -y yavdr-hardware-sundtek
 fi
 
