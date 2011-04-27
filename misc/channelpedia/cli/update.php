@@ -38,12 +38,12 @@ if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
 
 function importFromAllChannelSources(){
     $config = config::getInstance();
-    $dir = new DirectoryIterator( $config->getValue("path")."sources/" );
+    $dir = new DirectoryIterator( $config->getValue("userdata")."sources/" );
     foreach ($dir as $fileinfo) {
         if ( $fileinfo->isDir() && !$fileinfo->isDot()){
             //echo $fileinfo->getFilename() . "\n";
             $cableProvider = "";
-            $infofile = $config->getValue("path")."sources/". $fileinfo->getFilename() ."/info.txt";
+            $infofile = $config->getValue("userdata")."sources/". $fileinfo->getFilename() ."/info.txt";
             if (file_exists( $infofile )){
                 $info = file_get_contents( $infofile);
                 $cableProvider = trim($info); //FIXME

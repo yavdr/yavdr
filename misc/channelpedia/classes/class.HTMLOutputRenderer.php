@@ -340,35 +340,37 @@ class HTMLOutputRenderer{
         $sqlquery = "SELECT x_last_confirmed FROM channels WHERE source = ".$this->db->quote($source)." ORDER BY x_last_confirmed DESC LIMIT 1";
         $result = $this->db->query($sqlquery);
         $timestamp = $result->fetchAll();
-        $timestamp = $timestamp[0][0];
-        $nice_html_output .= "<p>Looking for channels that were last confirmed before ". date("D, d M Y H:i:s", $timestamp). " ($timestamp)</p>\n";
+        $timestamp = intval($timestamp[0][0]);
+        if ($timestamp != 0){
+            $nice_html_output .= "<p>Looking for channels that were last confirmed before ". date("D, d M Y H:i:s", $timestamp). " ($timestamp)</p>\n";
 
-        $x = new channelIterator();
-        $x->init2( "SELECT * FROM channels WHERE source = ".$this->db->quote($source)." AND x_last_confirmed < ".$timestamp);
-        $lastname = "";
-        while ($x->moveToNextChannel() !== false){
-            $carray = $x->getCurrentChannelArray();
-            if ($lastname == ""){
-                $html_table .= "<h3>Table view</h3>\n<div class=\"tablecontainer\"><table>\n<tr>";
-                foreach ($x->getCurrentChannelArrayKeys() as $header){
-                    $html_table .= '<th class="'.htmlspecialchars($header).'">'.htmlspecialchars(ucfirst($header))."</th>\n";
+            $x = new channelIterator();
+            $x->init2( "SELECT * FROM channels WHERE source = ".$this->db->quote($source)." AND x_last_confirmed < ".$timestamp);
+            $lastname = "";
+            while ($x->moveToNextChannel() !== false){
+                $carray = $x->getCurrentChannelArray();
+                if ($lastname == ""){
+                    $html_table .= "<h3>Table view</h3>\n<div class=\"tablecontainer\"><table>\n<tr>";
+                    foreach ($x->getCurrentChannelArrayKeys() as $header){
+                        $html_table .= '<th class="'.htmlspecialchars($header).'">'.htmlspecialchars(ucfirst($header))."</th>\n";
+                    }
+                    $html_table .= "</tr>\n";
+                }
+                $html_table .= "<tr>\n";
+                foreach ($carray as $param => $value){
+                    if ($param == "apid" || $param == "caid"){
+                        $value = str_replace ( array(",",";"), ",<br/>", htmlspecialchars($value ));
+                    }
+                    elseif ($param == "x_last_changed"){
+                        $value = date("D, d M Y H:i:s", $value);
+                    }
+                    else
+                        $value = htmlspecialchars($value);
+                    $html_table .= '<td class="'.htmlspecialchars($param).'">'.$value."</td>\n";
                 }
                 $html_table .= "</tr>\n";
+                $lastname = $carray["name"];
             }
-            $html_table .= "<tr>\n";
-            foreach ($carray as $param => $value){
-                if ($param == "apid" || $param == "caid"){
-                    $value = str_replace ( array(",",";"), ",<br/>", htmlspecialchars($value ));
-                }
-                elseif ($param == "x_last_changed"){
-                    $value = date("D, d M Y H:i:s", $value);
-                }
-                else
-                    $value = htmlspecialchars($value);
-                $html_table .= '<td class="'.htmlspecialchars($param).'">'.$value."</td>\n";
-            }
-            $html_table .= "</tr>\n";
-            $lastname = $carray["name"];
         }
         $html_table .= "</table></div>\n";
         $nice_html_output .=

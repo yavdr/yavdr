@@ -39,7 +39,7 @@ $user = $_POST["user"];
 if ( $user == "" || strstr($user,".") || strstr($user,"/") )
     die("illegal user value");
 
-$checkpath = $config->getValue("path"). "sources/$user/";
+$checkpath = $config->getValue("userdata"). "sources/$user/";
 
 if (is_file( $checkpath."info.txt" ) && $_FILES["channels"]["name"] == "channels.conf"){
     if (move_uploaded_file($_FILES["channels"]["tmp_name"], $checkpath."channels.conf" ))

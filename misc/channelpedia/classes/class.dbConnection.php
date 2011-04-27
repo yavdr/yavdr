@@ -32,7 +32,7 @@ class dbConnection {
 
     protected function __construct(){
         $config = config::getInstance();
-        $this->dbfile = $config->getValue("path") . "channeldb.sqlite";
+        $this->dbfile = $config->getValue("userdata") . "channeldb.sqlite";
         //print "DB-File: ".$this->dbfile;
         if (!file_exists($this->dbfile)){
             $this->createDB();
@@ -72,7 +72,7 @@ class dbConnection {
     }
 
     private function createDB(){
-        $dblayoutfile = "templates/dblayout.sql";
+        $dblayoutfile = "../templates/dblayout.sql";
         if (!file_exists($dblayoutfile))
             die ("dblayoutfile $dblayoutfile does not exist!");
         $this->connect();

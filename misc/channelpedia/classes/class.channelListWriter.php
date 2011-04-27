@@ -44,7 +44,7 @@ class channelListWriter extends channelIterator{
         parent::__construct();
         $this->init1($xlabel, $source, $orderby);
         $config = config::getInstance();
-        $gpath = $config->getValue("path"). $config->getValue("exportfolder")."/raw/";
+        $gpath = $config->getValue("exportfolder")."/raw/";
         $groupname = $source. '_' . $label;
         $this->filename = $gpath . 'channels_' . $groupname . '.conf';
     }

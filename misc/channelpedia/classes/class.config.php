@@ -24,7 +24,7 @@
 
 define( 'PATH_TO_CLASSES', dirname(__FILE__) ."/");
 
-print PATH_TO_CLASSES."\n";
+print "abspath: " . PATH_TO_CLASSES. "\n";
 
 require_once PATH_TO_CLASSES.'../config/config.php';
 require_once PATH_TO_CLASSES.'class.dbConnection.php';
@@ -41,8 +41,17 @@ require_once PATH_TO_CLASSES.'class.epg2vdrMapper.php';
 class config {
 
     private static $instance = null;
+    private $pathdynamic = "";
 
     protected function __construct(){
+        /* CUSTOM_PATH can be set in config/config.php
+         * to overrule the default path
+         */
+        if (CUSTOM_PATH == ""){
+            $this->pathdynamic = PATH_TO_CLASSES."../";
+        }
+        else
+            $this->pathdynamic = CUSTOM_PATH;
     }
 
     private function __clone(){}
@@ -57,19 +66,11 @@ class config {
     public function getValue($key){
         $default_lang_de_cable_provider = array("de");
 
-        /* CUSTOM_PATH can be set in config/config.php
-         * to overrule the default path
-         */
-        if (CUSTOM_PATH == ""){
-            $pathdynamic = PATH_TO_CLASSES."../";
-        }
-        else
-            $pathdynamic = CUSTOM_PATH;
         $value = null;
-        if ( $key == "path")
-            $value = "userdata/";
+        if ( $key == "userdata")
+            $value = $this->pathdynamic."userdata/";
         elseif ($key == "exportfolder")
-            $value = "gen/";
+            $value = $this->pathdynamic."gen"; // no ending slash!
         elseif ($key == "sat_positions")
             $value = array(
                 "S13E" => array(),
