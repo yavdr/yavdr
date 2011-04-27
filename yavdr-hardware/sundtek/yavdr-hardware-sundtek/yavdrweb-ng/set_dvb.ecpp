@@ -51,6 +51,13 @@ for (serials_type::const_iterator it = serials.begin(); it != serials.end(); ++i
 			dbset(("system.hardware.sundtek.stick." + serial + ".mount=1").c_str());
 		} else {
 			dbremove(("system.hardware.sundtek.stick." + serial + ".mount").c_str());
+			dbremove(("system.hardware.sundtek.stick." + serial + ".static").c_str());
+		}
+		string _static = qparam[serial + "|static"];
+		if (_static == "1") {
+			dbset(("system.hardware.sundtek.stick." + serial + ".static=1").c_str());
+		} else {
+			dbremove(("system.hardware.sundtek.stick." + serial + ".static").c_str());
 		}
 	}
 }

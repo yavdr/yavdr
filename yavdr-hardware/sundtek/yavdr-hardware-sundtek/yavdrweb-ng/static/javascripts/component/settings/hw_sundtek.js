@@ -139,11 +139,33 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
             xtype: 'checkbox',
             fieldLabel: _('mount device'),
             name: serial + '|mount',
+            serial: serial,
             inputValue: 1,
             disabled: !found,
-            checked: (item.mount == 1)
+            checked: (item.mount == 1),
+            listeners: {
+              scope: this,
+              check: function(cb, checked) {
+                var e = Ext.getCmp(cb.serial + '|static');
+                if (checked) {
+                  e.enable();
+                } else {
+                  e.disable().setValue(false);
+                }
+              }
+            }
           });
           
+          items.push({
+            xtype: 'checkbox',
+            fieldLabel: _('mount static (without avahi support)'),
+            name: serial + '|static',
+            itemId: serial + '|static',
+            id: serial + '|static',
+            inputValue: 1,
+            disabled: (item.mount != 1),
+            checked: (item.static == 1)
+          });
 
           items.push({
             itemId: serial + '|mounted',
