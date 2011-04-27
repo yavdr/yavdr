@@ -867,6 +867,12 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
 #: end web front end
 
 

@@ -716,6 +716,12 @@ msgstr "Entferntes einhängen der Geräte erlauben"
 msgid "Rescan for sundtek devices."
 msgstr "Erneut nach Sundtek Geräten suchen"
 
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
+
 msgid "CD-Ripper Asunder"
 msgstr "CD-Ripper Asunder"
 
