@@ -8,7 +8,7 @@
 #include <linux/if.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-
+#include <unistd.h>
 
 #include <sundtek/mcsimple.h>
 
@@ -139,7 +139,7 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 	char _serial[100];
 
 	if (verbose) {
-		syslog(LOG_ERR, "device found - %s", device->devicename);
+		syslog(LOG_INFO, "device found - %s", device->devicename);
 		printf("\tdevice found - %s", device->devicename);
 	}
 	convertSerial(_serial, device->serial);
@@ -178,7 +178,7 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 		//dbset("system.hardware.sundtek.%s.info.serial=%s", device->serial, device->serial);
 	} else {
 		if (verbose) {
-			syslog(LOG_ERR, "mounted device %s", device->devicename);
+			syslog(LOG_INFO, "mounted device %s", device->devicename);
 			printf(" - mounted device");
 		}
 		//dbset("system.hardware.sundtek.stick.%s.mounted=%i", _serial, device->id);
@@ -192,9 +192,10 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 
 int main(int argc, char *argv[]) {
 	int c;
+	int fd;
 
 	char _serial[100];
-	int32_t deviceId = -1;
+	int32_t deviceId = -1, wait;
 
 	while (1) {
 		static struct option long_options[] = {
@@ -202,13 +203,14 @@ int main(int argc, char *argv[]) {
 			{ "verbose", no_argument, &verbose, 1 },
 			{ "attach", no_argument, &attach, 1 },
 			{ "detach", no_argument, &attach, 0 },
+			{ "wait", required_argument, 0, 'w' },
 			{ "device", required_argument, 0, 'd'},
 			{ 0, 0, 0, 0 }
 		};
 		/* getopt_long stores the option index here. */
 		int option_index = 0;
 
-		c = getopt_long(argc, argv, "vd:a", long_options, &option_index);
+		c = getopt_long(argc, argv, "vd:aw:", long_options, &option_index);
 
 		/* Detect the end of the options. */
 		if (c == -1)
@@ -217,16 +219,31 @@ int main(int argc, char *argv[]) {
 		switch (c) {
 		case 'v':
 			verbose = 1;
+
+			openlog("scansundtek", LOG_PID | LOG_CONS, LOG_USER);
 			break;
 		case 'd':
 			deviceId = strtol(optarg, NULL, 10);
 			break;
+		case 'w':
+			wait = strtol(optarg, NULL, 10);
+			while((fd = net_connect()) < 0 && wait-- > 0) {
+				if (verbose) {
+					syslog(LOG_INFO, "waiting for sundtek daemon");
+					printf("waiting for sundtek daemon\n");
+				}
+				sleep(1);
+			}
+			if (fd > 0)
+				net_close(fd);
+			else {
+				if (verbose) {
+					syslog(LOG_ERR, "timeout waiting for sundtek daemon");
+					printf ("timeout waiting for sundtek daemon\n");
+				}
+				exit(1);
+			}
 		}
-	}
-
-	if (verbose) {
-		openlog("scansundtek", LOG_PID | LOG_CONS, LOG_USER);
-		syslog(LOG_ERR, "started");
 	}
 
 	struct ifreq *ifr;
@@ -274,7 +291,6 @@ int main(int argc, char *argv[]) {
 
 	int d = i = 0;
 	int localId = 0;
-	int fd;
 	struct media_device_enum *device;
 
 	// scan for all devices
@@ -286,13 +302,14 @@ int main(int argc, char *argv[]) {
 		dbremove("system.hardware.sundtek.found");
 		dbremove("system.hardware.sundtek.frontend");
 
-		if (verbose)
+		if (verbose) {
 			printf("network scan:\n");
+		}
 		// scan network
 		while (media_scan_info(obj, n, "ip", (void**) &ip) == 0) {
 			media_scan_info(obj, n, "id", (void**) &id);
 			if (verbose) {
-				syslog(LOG_ERR, "\tdevice found at %s:%s - ", ip, id);
+				syslog(LOG_INFO, "device found at %s:%s - ", ip, id);
 				printf("\tdevice found at %s:%s - ", ip, id);
 			}
 			// checking local interfaces
@@ -328,7 +345,6 @@ int main(int argc, char *argv[]) {
 					dbset("system.hardware.sundtek.found.%i=%s", count++, _serial);
 					media_scan_info(obj, n, "devicename", (void**) &name);
 					if (verbose) {
-						syslog(LOG_ERR, "device found at %s:%s - ", ip, id);
 						printf("%s", name);
 					}
 					char *prefix;
@@ -344,13 +360,13 @@ int main(int argc, char *argv[]) {
 					}
 				} else {
 					if (verbose) {
-						syslog(LOG_ERR, "ignored remote mounted device");
+						syslog(LOG_INFO, "ignored remote mounted device");
 						printf("ignored remote mounted device");
 					}
 				}
 			} else {
 				if (verbose) {
-					syslog(LOG_ERR, "ignored local device");
+					syslog(LOG_INFO, "ignored local device");
 					printf("ignored local device");
 				}
 			}
@@ -363,13 +379,15 @@ int main(int argc, char *argv[]) {
 		free(ifr);
 
 		// local scan
-		if (verbose)
+		if (verbose) {
 			printf("\nlocal scan:\n");
-
+		}
 		fd = net_connect();
 		if (fd < 0) {
-			if (verbose)
-					printf("\tcan't connect to daemon!\n");
+			if (verbose) {
+				syslog(LOG_ERR, "can't connect to daemon");
+				printf("\tcan't connect to daemon!\n");
+			}
 			return fd;
 		}
 
@@ -390,8 +408,10 @@ int main(int argc, char *argv[]) {
 
 			fd = net_connect();
 			if (fd < 0) {
-				if (verbose)
-						printf("\tcan't connect to daemon!\n");
+				if (verbose) {
+					syslog(LOG_ERR, "can't connect to daemon");
+					printf("\tcan't connect to daemon!\n");
+				}
 				return fd;
 			}
 
@@ -411,5 +431,9 @@ int main(int argc, char *argv[]) {
 
 		}
 	}
+
+	if (verbose)
+		printf("finished");
+
 	return 0;
 }

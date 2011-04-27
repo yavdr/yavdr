@@ -99,93 +99,106 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
 //  },
   renderSundtek: function(item, serial, found) {
     var items = [];
-    if (found) {
-      items.push({
-        xtype: 'hidden',
-        name: 'serials',
-        value: serial,
-        disabled: !found
-      });      
-    }
-    
-    if (item.info.capabilities.dvbc == "1" && item.info.capabilities.dvbt == "1") {
-      
-      var selectionHidden = new Ext.form.Hidden({
-        name: serial + '|mode',
-        disabled: !found
-      });
-      items.push(selectionHidden);
-
-      var value = item.mode;
-      items.push(new YaVDR.SelectionList({
-        fieldLabel: _('DVB-Mode'),
-        hiddenField: selectionHidden,
-        tpl: this.sundtekTpl,
-        store: this.sundtekStore,
-        disabled: !found,
-        listeners: {
-          afterrender: function(list) {
-            var rec = this.store.getById(value);
-            list.select(rec);
-          }
+    try {
+      if (typeof item.info != 'undefined') {
+        if (found) {
+          items.push({
+            xtype: 'hidden',
+            name: 'serials',
+            value: serial,
+            disabled: !found
+          });      
         }
-      }));
-    }
-    
-    if (typeof item.info.ip != "undefined") { // remote device
-      items.push({
-        xtype: 'checkbox',
-        fieldLabel: _('mount device'),
-        name: serial + '|mount',
-        inputValue: 1,
-        disabled: !found,
-        checked: (item.mount == 1)
-      });
-      
-      items.push({
-        disabled: true,
-        itemId: serial + '|mounted',
-        name: serial + '|mounted',
-        xtype: 'checkbox',
-        fieldLabel: _('mounted'),
-        boxLabel: 'yes',
-        inputValue: 1,
-        checked: (item.mounted == 1)
-      });
-    }
-    
-    if (!found) {
-      items.push({
-        xtype: 'button',
-        text: _('remove this configuration'),
-        handler: function(btn) {        
-          Ext.Msg.confirm( _('remove this configuration'), _('Do you realy want to remove this configration:'), function(btn, text){
-            if (btn == 'yes'){
-              Ext.Ajax.request({
-                 url: '/sundtek/remove_dvb',
-                 params: { serial: serial },
-                 success: function() {
-                   this.doLoad();
-                 },
-                 failure: function() {
-                   this.doLoad();
-                 },
-                 scope: this
-              });
+        
+        if (item.info.capabilities.dvbc == "1" && item.info.capabilities.dvbt == "1") {
+          
+          var selectionHidden = new Ext.form.Hidden({
+            name: serial + '|mode',
+            disabled: !found
+          });
+          items.push(selectionHidden);
+  
+          var value = item.mode;
+          items.push(new YaVDR.SelectionList({
+            fieldLabel: _('DVB-Mode'),
+            hiddenField: selectionHidden,
+            tpl: this.sundtekTpl,
+            store: this.sundtekStore,
+            disabled: !found,
+            listeners: {
+              afterrender: function(list) {
+                var rec = this.store.getById(value);
+                list.select(rec);
+              }
             }
-          }, this);
-        },
-        scope: this
-      });
-    }
+          }));
+        }
+        
+        if (typeof item.info.ip != "undefined") { // remote device
+          items.push({
+            xtype: 'checkbox',
+            fieldLabel: _('mount device'),
+            name: serial + '|mount',
+            inputValue: 1,
+            disabled: !found,
+            checked: (item.mount == 1)
+          });
+          
 
-    this.insert(this.items.length, {
-      itemData: item,
-      itemId: serial + '|sundtek',
-      title: item.info.devicename + (typeof item.info.ip != "undefined"?' @ ' + item.info.ip + ':' + item.info.id:_(' (local)')),
-      items: items
-    });
-
+          items.push({
+            itemId: serial + '|mounted',
+            name: serial + '|mounted',
+            xtype: 'label',
+            fieldLabel: _('mounted'),
+            text: (typeof item.mounted != 'undefined'?_('yes'):_('no'))
+          });
+          
+          /*
+          items.push({
+            disabled: true,
+            itemId: serial + '|mounted',
+            name: serial + '|mounted',
+            xtype: 'radio',
+            fieldLabel: _('mounted'),
+            boxLabel: _('yes'),
+            inputValue: 1,
+            checked: (item.mounted == 1)
+          });*/
+        }
+        
+        if (!found) {
+          items.push({
+            xtype: 'button',
+            text: _('remove this configuration'),
+            handler: function(btn) {        
+              Ext.Msg.confirm( _('remove this configuration'), _('Do you realy want to remove this configration:'), function(btn, text){
+                if (btn == 'yes'){
+                  Ext.Ajax.request({
+                     url: '/sundtek/remove_dvb',
+                     params: { serial: serial },
+                     success: function() {
+                       this.doLoad();
+                     },
+                     failure: function() {
+                       this.doLoad();
+                     },
+                     scope: this
+                  });
+                }
+              }, this);
+            },
+            scope: this
+          });
+        }
+  
+        this.insert(this.items.length, {
+          itemData: item,
+          itemId: serial + '|sundtek',
+          title: item.info.devicename + (typeof item.info.ip != "undefined"?' @ ' + item.info.ip + ':' + item.info.id:_(' (local)')),
+          items: items
+        }); 
+      }
+    } catch (e) {}
   },
   doLoad: function() {
     Ext.Ajax.request({

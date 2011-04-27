@@ -24,3 +24,6 @@ if [ -n "$MOUNT_SUNDTEK" ]; then
         /opt/bin/mediaclient --mount=$i
     done
 fi
+
+# scan for sundteks after staring driver
+/usr/bin/scansundtek -v -w 30
