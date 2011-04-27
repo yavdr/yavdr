@@ -70,9 +70,8 @@ class channelsupload extends Resource {
             }
             else
                 $response->body .= "Error. File upload canceled.\n";
-            }
+        }
 
-        $response->body = "\n";
         return $response;
     }
 }

@@ -43,7 +43,7 @@ class channelImport extends channelFileIterator{
         $this->existingChannelBuffer = array();
 
         print "Processing channels.conf of user $username\n";
-        $this->insertChannelsConfIntoDB( $this->config->getValue("path")."sources/$username/" );
+        $this->insertChannelsConfIntoDB( $this->config->getValue("userdata")."sources/$username/" );
     }
 
     /*
