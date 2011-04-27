@@ -3,6 +3,6 @@ pre-start script
 end script
 
 post-stop script
-    vdr-dbus-send /Plugins/dynamite plugin.SVDRPCommand string:'DETD' ||:
+    vdr-dbus-send /Plugins/dynamite plugin.SVDRPCommand string:'DTAD' string:'force' ||:
     /opt/bin/mediaclient --shutdown
 end script
