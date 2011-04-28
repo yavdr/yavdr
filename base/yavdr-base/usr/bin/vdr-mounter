@@ -10,7 +10,7 @@ case $1 in
         --mount)
                 [ ! -h $VIDEO_DIR/"$NAME" ] && ln -s "$DIR" $VIDEO_DIR/"$NAME"
                 if [ "$(find $DIR -name *.rec)" != "" ]; then
-                    touch $VIDEO_DIR/.update
+                    vdr-dbus-send /Recording recording.Update
                     chown vdr:vdr $VIDEO_DIR/.update
                     /usr/bin/svdrpsend -p $SVDRP_PORT MESG "$NAME mounted (with recordings)"
                 else
