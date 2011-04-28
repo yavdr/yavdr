@@ -42,73 +42,55 @@ class HTMLOutputRenderer{
         $this->db = dbConnection::getInstance();
         $this->config = config::getInstance();
         $this->exportpath = $this->config->getValue("exportfolder")."/html/";
+    }
 
-        $this->addDividerTitle("Essential channels (pre-sorted lists)");
+    public function renderAllHTMLPages(){
+        $this->addDividerTitle("DVB sources");
 
         $this->addDividerTitle("Satellite positions");
         foreach ($this->config->getValue("sat_positions") as $sat => $languages){
-            $this->addDividerTitle($sat);
-            foreach ($languages as $language)
-                $this->writeNiceHTMLPage( $sat, $language );
-            $this->addUncategorizedListLink( $sat );
-            $this->renderGroupingHints( $sat );
-            $this->addCompleteListLink( $sat );
-            if (in_array("de", $languages)){
-                $this->addEPGChannelmapLink( $sat );
-            }
-            $this->closeHierarchy();
+            $this->renderPagesOfSingleSource($sat, $languages);
         }
         $this->closeHierarchy();
+
         $this->addDividerTitle("Cable providers");
         foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
-            $this->addDividerTitle($cablep);
-            foreach ($languages as $language)
-                $this->writeNiceHTMLPage( "C[$cablep]", $language );
-            $this->addUncategorizedListLink( "C[$cablep]" );
-            $this->renderGroupingHints( "C[$cablep]" );
-            $this->addCompleteListLink( "C[$cablep]" );
-            if (in_array("de", $languages)){
-                $this->addEPGChannelmapLink( "C[$cablep]" );
-            }
-            $this->closeHierarchy();
-            }
+            $this->renderPagesOfSingleSource("C[$cablep]", $languages);
+        }
         $this->closeHierarchy();
+
         $this->addDividerTitle("Terrestrial providers");
         foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
-            $this->addDividerTitle($terrp);
-            foreach ($languages as $language)
-                $this->writeNiceHTMLPage("T[$terrp]", $language);
-            $this->addUncategorizedListLink("T[$terrp]");
-            $this->renderGroupingHints( "T[$cablep]" );
-            $this->addCompleteListLink("T[$terrp]");
-            if (in_array("de", $languages)){
-                $this->addEPGChannelmapLink( "T[$terrp]" );
-            }
-            $this->closeHierarchy();
+            $this->renderPagesOfSingleSource("T[$terrp]", $languages);
         }
         $this->closeHierarchy();
-        $this->closeHierarchy();
-        $this->addDividerTitle("Changelog");
 
-        $this->writeChangelog("", 1 ); //general changelog for all sources
-        foreach ($this->config->getValue("sat_positions") as $sat => $languages){
-            $this->writeChangelog( $sat );
-        }
-        foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
-            $this->writeChangelog( "C[$cablep]" );
-        }
-        foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
-            $this->writeChangelog("T[$terrp]");
-        }
+        $this->closeHierarchy();
+
+        $this->addDividerTitle("General Changelog");
+        $this->writeGeneralChangelog();
         $this->closeHierarchy();
 
         $this->addDividerTitle("Reports");
         $this->renderDEComparison();
-        $this->renderUnconfirmedChannels("S19.2E");
-        $this->renderUnconfirmedChannels("S28.2E");
         $this->closeHierarchy();
 
         $this->renderIndexPage();
+    }
+
+    private function renderPagesOfSingleSource($source, $languages){
+        $this->addDividerTitle($source);
+        foreach ($languages as $language)
+            $this->writeNiceHTMLPage( $source, $language );
+        $this->addUncategorizedListLink( $source );
+        $this->renderGroupingHints( $source );
+        $this->addCompleteListLink( $source );
+        $this->renderUnconfirmedChannels( $source );
+        if (in_array("de", $languages)){
+            $this->addEPGChannelmapLink( $source );
+        }
+        $this->writeChangelog( $source );
+        $this->closeHierarchy();
     }
 
     private function getHTMLHeader($pagetitle){
@@ -127,7 +109,7 @@ class HTMLOutputRenderer{
     private function getHTMLFooter(){
         if ( $this->html_footer_template == ""){
             $customfooter = "";
-            if (file_exists("templates/html_custom_footer.html")){
+            if ( file_exists( HTMLOutputRenderer::htmlCustomFooterTemplate ) ){
                 $customfooter = file_get_contents( HTMLOutputRenderer::htmlCustomFooterTemplate);
             }
             $this->html_footer_template =
@@ -165,7 +147,12 @@ class HTMLOutputRenderer{
         $this->linklist[] = array( "", "close");
     }
 
-    public function writeChangelog($source, $importance = 0){
+    //general changelog for all sources
+    public function writeGeneralChangelog(){
+        $this->writeChangelog("", 1 );
+    }
+
+    private function writeChangelog($source, $importance = 0){
 
         $where = array();
         $wherestring = "";

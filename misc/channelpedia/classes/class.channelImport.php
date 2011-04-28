@@ -220,16 +220,37 @@ class channelImport extends channelFileIterator{
         return $success;
     }
 
-    public function updateNecessaryLabels(){
-        $labeller = channelGroupingManager::getInstance();
+    /*
+     * only those stuff is being updated that really needs to be updated
+     * keep the amount of unnecessary updates as small as possible
+     */
+
+    public function updateAffectedDataAndFiles(){
         if ($this->numChanAdded + $this->numChanChanged > 0){
+            $labeller = channelGroupingManager::getInstance();
+            $rawOutput = new rawOutputRenderer();
+            $htmlOutput = new HTMLOutputRenderer();
             foreach ($this->foundSatellites as $sat => $dummy){
+                $languages = $this->config->getLanguageGroupsOfSource( "DVB-S", $sat);
                 $labeller->updateAllLabelsOfSource($sat);
+                $rawOutput->writeRawOutputForSingleSource( $sat, $sat, $languages);
+                $htmlOutput->renderPagesOfSingleSource($sat, $languages);
             }
-            if ($this->cableProviderPresent)
-                $labeller->updateAllLabelsOfSource("C[".$this->cableSourceType."]");
-            if ($this->terrProviderPresent)
-                $labeller->updateAllLabelsOfSource("T[".$this->terrSourceType."]");
+            if ($this->cableProviderPresent){
+                $languages = $this->config->getLanguageGroupsOfSource( "DVB-C", $this->cableSourceType);
+                $provider = "C[".$this->cableSourceType."]";
+                $labeller->updateAllLabelsOfSource( $provider );
+                $rawOutput->writeRawOutputForSingleSource( "C", $provider, $languages);
+                $htmlOutput->renderPagesOfSingleSource($provider, $languages);
+            }
+            if ($this->terrProviderPresent){
+                $languages = $this->config->getLanguageGroupsOfSource( "DVB-T", $this->terrSourceType);
+                $provider = "T[".$this->terrSourceType."]";
+                $labeller->updateAllLabelsOfSource( $provider );
+                $rawOutput->writeRawOutputForSingleSource( "T", $provider, $languages);
+                $htmlOutput->renderPagesOfSingleSource($provider, $languages);
+            }
+            $htmlOutput->writeGeneralChangelog();
         }
         else{
             print "No need for label update.\n";

@@ -56,12 +56,7 @@ class channelsupload extends Resource {
                     }
                     //print $info ."/". $infofile ."/".  $cableProvider."\n";
                     $x = new channelImport($user, $cableProvider, "none");
-                    $x->updateNecessaryLabels();
-
-                    $x =new rawOutputRenderer();
-                    $x->writeRawOutput();
-
-                    $x =new HTMLOutputRenderer();
+                    $x->updateAffectedDataAndFiles();
                     unset($x);
                 }
                 else{

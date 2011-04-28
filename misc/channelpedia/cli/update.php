@@ -30,9 +30,10 @@ if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
 importFromAllChannelSources();
 
 $x = new rawOutputRenderer();
-$x->writeRawOutput();
+$x->writeRawOutputForAllSources();
 
 $x = new HTMLOutputRenderer();
+$x->renderAllHTMLPages();
 
 if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
 

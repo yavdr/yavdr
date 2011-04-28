@@ -28,47 +28,29 @@ class rawOutputRenderer {
         $this->config = config::getInstance();
     }
 
-    public function writeRawOutput(){
-        //for all existing sources, write unfiltered channels.conf lists to disc
+    public function writeRawOutputForAllSources(){
         foreach ($this->config->getValue("sat_positions") as $sat => $languages){
-            $y = new channelListWriter("_complete", $sat);
-            $y->writeFile();
+            $this->writeRawOutputForSingleSource( $sat, $sat, $languages);
         }
         foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
-            $y = new channelListWriter("_complete", "C[$cablep]");
-            $y->writeFile();
+            $this->writeRawOutputForSingleSource( "C", "C[$cablep]", $languages);
         }
         foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
-            $y = new channelListWriter("_complete", "T[$terrp]");
-            $y->writeFile();
+            $this->writeRawOutputForSingleSource( "T", "T[$terrp]", $languages);
         }
-        unset($y);
-        $epgstuff = epg2vdrMapper::getInstance();
-        //selections
-        foreach ($this->config->getValue("sat_positions") as $sat => $languages){
-            //$this->writeAllChannelSelections2Disk( $sat );
-            $this->writeAllUncategorizedChannels2Disk( $sat );
-            if (in_array("de", $languages)){
-                $epgstuff->writeEPGChannelmap( $sat, $sat, "tvm");
-                $epgstuff->writeEPGChannelmap( $sat, $sat, "epgdata");
-            }
+    }
 
-        }
-        foreach ($this->config->getValue("cable_providers") as $cablep => $languages){
-            //$this->writeAllChannelSelections2Disk( "C[$cablep]" );
-            $this->writeAllUncategorizedChannels2Disk( "C[$cablep]" );
-            if (in_array("de", $languages)){
-                $epgstuff->writeEPGChannelmap( "C", "C[$cablep]", "tvm");
-                $epgstuff->writeEPGChannelmap( "C", "C[$cablep]", "epgdata");
-            }
-        }
-        foreach ($this->config->getValue("terr_providers") as $terrp => $languages){
-            //$this->writeAllChannelSelections2Disk( "T[$terrp]" );
-            $this->writeAllUncategorizedChannels2Disk( "T[$terrp]" );
-            if (in_array("de", $languages)){
-                $epgstuff->writeEPGChannelmap( "T", "T[$terrp]", "tvm");
-                $epgstuff->writeEPGChannelmap( "T", "T[$terrp]", "epgdata");
-            }
+    public function writeRawOutputForSingleSource( $shortsource, $longsource, $languages){
+        //write unfiltered channels.conf lists to disc
+        $channelListWriter = new channelListWriter("_complete", $longsource);
+        $channelListWriter->writeFile();
+        //$this->writeAllChannelSelections2Disk( $longsource );
+        $this->writeAllUncategorizedChannels2Disk( $longsource);
+        //epgmappings only for German providers
+        if (in_array("de", $languages)){
+            $epgstuff = epg2vdrMapper::getInstance();
+            $epgstuff->writeEPGChannelmap( $shortsource, $longsource, "tvm");
+            $epgstuff->writeEPGChannelmap( $shortsource, $longsource, "epgdata");
         }
     }
 

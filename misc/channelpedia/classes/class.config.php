@@ -39,7 +39,9 @@ require_once PATH_TO_CLASSES.'class.epg2vdrMapper.php';
 class config {
 
     private static $instance = null;
-    private $pathdynamic = "";
+    private
+        $pathdynamic = "",
+        $sourcelist;
 
     protected function __construct(){
         /* CUSTOM_PATH can be set in config/config.php
@@ -50,6 +52,29 @@ class config {
         }
         else
             $this->pathdynamic = CUSTOM_PATH;
+
+        $default_lang_de_cable_provider = array("de");
+
+        $this->sourcelist = array(
+            "DVB-S" => array(
+                "S13E" => array(),
+                "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl" ),
+                "S28.2E" => array( "en" )
+            ),
+            "DVB-C" => array(
+                "de_KabelBW" => $default_lang_de_cable_provider,
+                "de_KabelDeutschland_Speyer" => $default_lang_de_cable_provider,
+                "de_KabelDeutschland_Nuernberg" => $default_lang_de_cable_provider,
+                "de_Primacom_Halberstadt" => $default_lang_de_cable_provider,
+                "de_TeleColumbus_Magdeburg" => $default_lang_de_cable_provider,
+                "de_UnityMediaNRW" => $default_lang_de_cable_provider,
+                "de_WilhelmTel" => $default_lang_de_cable_provider,
+                "at_salzburg-ag" => $default_lang_de_cable_provider
+            ),
+            "DVB-T" => array(
+            )
+        );
+
     }
 
     private function __clone(){}
@@ -61,8 +86,18 @@ class config {
         return self::$instance;
     }
 
+    public function getLanguageGroupsOfSource( $type, $source){
+        $groups = false;
+        foreach ($this->sourcelist[$type] as $sourcename => $languages){
+            if ( $sourcename == $source){
+                $groups = $languages;
+                break;
+            }
+        }
+        return $groups;
+    }
+
     public function getValue($key){
-        $default_lang_de_cable_provider = array("de");
 
         $value = null;
         if ( $key == "userdata")
@@ -70,24 +105,11 @@ class config {
         elseif ($key == "exportfolder")
             $value = $this->pathdynamic."gen"; // no ending slash!
         elseif ($key == "sat_positions")
-            $value = array(
-                "S13E" => array(),
-                "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl" ),
-                "S28.2E" => array( "en" )
-            );
+            $value = $this->sourcelist["DVB-S"];
         elseif ($key == "cable_providers")
-            $value = array(
-                "de_KabelBW" => $default_lang_de_cable_provider,
-                "de_KabelDeutschland_Speyer" => $default_lang_de_cable_provider,
-                "de_KabelDeutschland_Nuernberg" => $default_lang_de_cable_provider,
-                "de_Primacom_Halberstadt" => $default_lang_de_cable_provider,
-                "de_TeleColumbus_Magdeburg" => $default_lang_de_cable_provider,
-                "de_UnityMediaNRW" => $default_lang_de_cable_provider,
-                "de_WilhelmTel" => $default_lang_de_cable_provider,
-                "at_salzburg-ag" => $default_lang_de_cable_provider
-            );
+            $value = $this->sourcelist["DVB-C"];
         elseif ($key == "terr_providers"){
-            $value = array();
+            $value = $this->sourcelist["DVB-T"];
         }
         return $value;
     }
