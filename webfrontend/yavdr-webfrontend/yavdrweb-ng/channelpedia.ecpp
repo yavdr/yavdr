@@ -57,7 +57,7 @@ node;
     if (curl)  
     {  
 		if (node == "root") {
-			curl_easy_setopt(curl, CURLOPT_URL, "http://www.henningpingel.de/fileadmin/yavdr/restful/sources");
+			curl_easy_setopt(curl, CURLOPT_URL, "http://channelpedia.yavdr.com/restful/sources");
 			// Attempt to retrieve the remote page  
 			curlResult = curl_easy_perform(curl);  
 
@@ -115,7 +115,7 @@ node;
 			}  
 		} else {
 			if (node.find_first_of("/") == node.find_last_of("/")) {
-				string url = "http://www.henningpingel.de/fileadmin/yavdr/restful/channelgroups/" + node + "/0/json";
+				string url = "http://channelpedia.yavdr.com/restful/channelgroups/" + node + "/0/json";
 				curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 				// Attempt to retrieve the remote page
 				curlResult = curl_easy_perform(curl);  
@@ -153,7 +153,7 @@ node;
 					reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
 				}
 			} else {
-				string url = "http://www.henningpingel.de/fileadmin/yavdr/restful/channelgroups/" + node + "/json";
+				string url = "http://channelpedia.yavdr.com/restful/channelgroups/" + node + "/json";
 				curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 				// Attempt to retrieve the remote page
 				curlResult = curl_easy_perform(curl);  
