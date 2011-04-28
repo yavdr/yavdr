@@ -8,7 +8,7 @@ respawn
 env DISPLAY=:1
 env XORGCONFIG=/etc/X11/xorg.conf.yavdr
 env xorg_driver
-<?cs /if ?>
+
 <?cs if:(vdr.frontend == "xineliboutput" ) ?>
 export __GL_SYNC_TO_VBLANK=1
 <?cs if:(system.x11.dualhead.enabled != "1") ?>
@@ -21,7 +21,6 @@ export __GL_SYNC_DISPLAY_DEVICE=`/usr/bin/dbget system.x11.display.1.device`
 <?cs /if ?>
 <?cs /if ?>
 
-<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
 script
 # D-bus
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
