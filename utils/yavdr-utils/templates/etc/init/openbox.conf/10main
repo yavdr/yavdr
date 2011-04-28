@@ -11,7 +11,14 @@ env xorg_driver
 <?cs /if ?>
 <?cs if:(vdr.frontend == "xineliboutput" ) ?>
 export __GL_SYNC_TO_VBLANK=1
-export __GL_SYNC_DISPLAY_DEVICE=DFP-1
+<?cs if:(system.x11.dualhead.enabled != "1") ?>
+export __GL_SYNC_DISPLAY_DEVICE=`/usr/bin/dbget system.x11.display.default`
+<?cs else ?><? if:(vdr.tempdisplay != ".1") ?>
+export __GL_SYNC_DISPLAY_DEVICE=`/usr/bin/dbget system.x11.display.0.device`
+<?cs else ?>
+export __GL_SYNC_DISPLAY_DEVICE=`/usr/bin/dbget system.x11.display.1.device`
+<?cs /if ?>
+<?cs /if ?>
 <?cs /if ?>
 
 <?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>

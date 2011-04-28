@@ -9,9 +9,14 @@ while getopts "d:s:h:a:" opt; do
 done
 
 DEV=`/usr/bin/dbget system.hardware.sundtek.frontend.$DEVID`
+SERIAL=`/usr/bin/dbget system.hardware.sundtek.serials.$DEVID`
 
 if [ -n "$DEV" ]; then
   vdr-dbus-send /Plugins/dynamite plugin.SVDRPCommand string:'DTAD' string:"$DEV"
+fi
+
+if [ -n "$SERIAL" ]; then
+    /usr/bin/dbremove system.hardware.sundtek.stick.$SERIAL.mounted
 fi
 
 /usr/bin/dbremove system.hardware.sundtek.frontend.$DEVID

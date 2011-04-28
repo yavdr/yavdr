@@ -183,6 +183,7 @@ void writeDevice2HDF(struct media_device_enum *device, int *count) {
 		}
 		//dbset("system.hardware.sundtek.stick.%s.mounted=%i", _serial, device->id);
 	}
+	//dbset("system.hardware.sundtek.serials.%i=%s", device->id, _serial);
 	dbset("system.hardware.sundtek.frontend.%i=%s", device->id, device->frontend_node);
 	free(device);
 	if (verbose)
@@ -301,6 +302,7 @@ int main(int argc, char *argv[]) {
 		//TODO: Cleanup hdf
 		dbremove("system.hardware.sundtek.found");
 		dbremove("system.hardware.sundtek.frontend");
+		dbremove("system.hardware.sundtek.serials");
 
 		if (verbose) {
 			printf("network scan:\n");
