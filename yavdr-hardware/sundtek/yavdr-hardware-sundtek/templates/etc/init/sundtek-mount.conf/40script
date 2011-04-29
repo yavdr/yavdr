@@ -1,5 +1,5 @@
 script
-<?cs each:item = system.hardware.sundtek.found ?><?cs if:(system.hardware.sundtek.stick[item].static == "1") ?>
+<?cs each:item = system.hardware.sundtek.found ?><?cs if:(system.hardware.sundtek.stick[item].static == "1" && ?system.hardware.sundtek.stick[item].info.ip) ?>
 /opt/bim/mediaclient --mount=<?cs var:system.hardware.sundtek.stick[item].info.ip ?>:<?cs var:system.hardware.sundtek.stick[item].info.id ?>
 <?cs /if ?><?cs /each ?>
 end script
