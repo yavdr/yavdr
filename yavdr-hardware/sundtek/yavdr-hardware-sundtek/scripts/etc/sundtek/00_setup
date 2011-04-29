@@ -27,3 +27,5 @@ fi
 
 # scan for sundteks after staring driver
 /usr/bin/scansundtek -v -w 30
+
+initctl emit sundtek-mount --no-wait

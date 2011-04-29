@@ -1,0 +1,2 @@
+start on mount-sundtek
+stop on stopping sundtek
