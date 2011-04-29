@@ -18,14 +18,15 @@ else
     /opt/bin/mediaclient --enablenetwork=off
 fi
 
+# scan for sundteks after staring driver
+/usr/bin/scansundtek -v -w 30
+
+# this will mount all sundtek devices which markt as staticly mounted in yavdr web frontend
+initctl emit mount-sundtek
+
 # try to mount devices
 if [ -n "$MOUNT_SUNDTEK" ]; then
     for i in $MOUNT_SUNDTEK; do
         /opt/bin/mediaclient --mount=$i
     done
 fi
-
-# scan for sundteks after staring driver
-/usr/bin/scansundtek -v -w 30
-
-initctl emit sundtek-mount --no-wait
