@@ -67,18 +67,15 @@ class HTMLOutputRenderer{
 
         $this->closeHierarchy();
 
-        $this->addDividerTitle("General Changelog");
-        $this->writeGeneralChangelog();
-        $this->closeHierarchy();
-
         $this->addDividerTitle("Reports");
+        $this->writeGeneralChangelog();
         $this->renderDEComparison();
         $this->closeHierarchy();
 
         $this->renderIndexPage();
     }
 
-    private function renderPagesOfSingleSource($source, $languages){
+    public function renderPagesOfSingleSource($source, $languages){
         $this->addDividerTitle($source);
         foreach ($languages as $language)
             $this->writeNiceHTMLPage( $source, $language );
@@ -156,10 +153,16 @@ class HTMLOutputRenderer{
 
         $where = array();
         $wherestring = "";
-        if ($source != "")
+        if ($source != ""){
             $where[] = " combined_id LIKE ".$this->db->quote( $source."%" ) . " ";
-        else
+            $pagetitle = 'Changelog for '.$source;
+            $linktitle = 'Changelog';
+        }
+        else{
             $source = "all_sources";
+            $pagetitle = 'Changelog for all sources';
+            $linktitle = $pagetitle;
+        }
         if ($importance === 1 ){
         	$where[] = " importance = $importance ";
         }
@@ -171,7 +174,6 @@ class HTMLOutputRenderer{
             "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, name, combined_id, importance, update_description ".
             "FROM channel_update_log $wherestring ORDER BY timestamp DESC LIMIT 100";
         $result = $this->db->query($sqlquery);
-        $pagetitle = 'Changelog for '.$source.'';
         $buffer =
             $this->getHTMLHeader($pagetitle)."\n".
             '<h1>'.htmlspecialchars($pagetitle).'</h1><p>Last updated on: '. date("D M j G:i:s T Y")."</p>\n<table>\n";
@@ -195,7 +197,7 @@ class HTMLOutputRenderer{
         }
         $buffer .= "<table>\n".$this->getHTMLFooter();
         $filename = "changelog_".$source.".html";
-        $this->addToOverview($pagetitle, $filename);
+        $this->addToOverview($linktitle, $filename);
         file_put_contents($this->exportpath . $filename, $buffer );
     }
 
@@ -267,6 +269,7 @@ class HTMLOutputRenderer{
 
         $filename = "channels_".$language."_".$source.".html";
         $this->addToOverview( $language, $filename );
+        print "HTMLOutputRenderer/writeNiceHTMLPage: writing to file ".$this->exportpath . $this->filename."\n";
         file_put_contents($this->exportpath . $filename, $nice_html_output );
     }
 

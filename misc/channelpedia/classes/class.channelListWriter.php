@@ -66,7 +66,7 @@ class channelListWriter extends channelIterator{
     }
 
     private function openFile(){
-        print "writing to file $this->filename\n";
+        print "channelListWriter: writing to file $this->filename\n";
         @unlink($this->filename);
         $this->filehandle = fopen ($this->filename, "w");
     }

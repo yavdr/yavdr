@@ -97,6 +97,10 @@ class config {
         return $groups;
     }
 
+    public function getSourceList(){
+        return $this->sourcelist;
+    }
+
     public function getValue($key){
 
         $value = null;
