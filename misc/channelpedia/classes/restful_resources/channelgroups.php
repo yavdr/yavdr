@@ -4,7 +4,7 @@
  * Channel groups resource
  *
  * @namespace channelpedia/channelgroups
- * @uri /channelgroups/:source/:language/:group/:outputtype
+ * @uri /channelgroups/:sourcetype/:source/:language/:group/:outputtype
  *
  */
 
@@ -15,7 +15,7 @@ class channelgroupsResource extends Resource {
      * @param Request request
      * @return Response
      */
-    function get($request, $source, $language, $group, $outputtype) {
+    function get($request, $sourcetype, $source, $language, $group, $outputtype) {
 
         $response = new Response($request);
 
@@ -26,10 +26,15 @@ class channelgroupsResource extends Resource {
         $outputtype = strtolower($outputtype);
         if ($outputtype !== "json" && $outputtype !== "")
             throw InvalidParamException();
+        if (!in_array( $sourcetype, array("DVB-S", "DVB-C", "DVB-T")))
+            throw InvalidParamException();
 
         $response->code = Response::OK;
 
         $groupIterator = new channelGroupIterator();
+        if (in_array( $sourcetype, array( "DVB-C", "DVB-T" ))){
+            $source = substr($sourcetype,4,1)."[".$source."]";
+        }
         $groupIterator->init($source, $language);
 
         if ($group == 0){
