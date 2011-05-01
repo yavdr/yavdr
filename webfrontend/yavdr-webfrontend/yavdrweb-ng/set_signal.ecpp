@@ -29,6 +29,7 @@ if (
 		(signal == "change-frontend") ||
 		(signal == "change-lifeguard") ||
 		(signal == "kill-xbmc") ||
+                (signal == "reset-xbmc") ||
 		(signal == "restart-vdr") ||
 		(signal == "change-auto-net-yavdr") ||
 		(signal == "change-timeout") ||
