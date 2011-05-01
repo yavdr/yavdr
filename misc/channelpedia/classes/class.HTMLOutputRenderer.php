@@ -202,7 +202,7 @@ class HTMLOutputRenderer{
         file_put_contents($this->exportpath . $filename, $buffer );
     }
 
-    private function writeUploadLog(){
+    public function writeUploadLog(){
         $pagetitle = "Upload log";
         $sqlquery=
             "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, user, description, source ".
@@ -211,12 +211,12 @@ class HTMLOutputRenderer{
         $buffer =
             $this->getHTMLHeader($pagetitle)."\n".
             '<h1>'.htmlspecialchars($pagetitle).'</h1><p>Last updated on: '. date("D M j G:i:s T Y")."</p>\n".
-            "<table><tr><th>Timestamp</th><th>User</th><th>Source</th><th>Description</th></tr>\n";
+            "<table><tr><th>Timestamp</th><th>Channels.conf of user</th><th>Source</th><th>Description</th></tr>\n";
 
         foreach ($result as $row) {
             $buffer.='<tr><td>'.
             htmlspecialchars( $row["datestamp"] ). "</td><td>".
-            htmlspecialchars( $row["user"] ). "</td><td>".
+            htmlspecialchars( substr($row["user"],0,2)."..." ). "</td><td>".
             htmlspecialchars( $row["source"] ). "</td><td>".
             htmlspecialchars( $row["description"] ). "</td>".
             "</tr>\n";

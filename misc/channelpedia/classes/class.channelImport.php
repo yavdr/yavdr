@@ -159,7 +159,12 @@ class channelImport extends channelFileIterator{
         if (!file_exists($filename)) {
             $this->addToUpdateLog( "-", "No unprocessed channels.conf exists. Nothing to do.");
         }
+        elseif (file_exists($sourcepath . 'lockfile.txt')) {
+            $this->addToUpdateLog( "-", "Lockfile present. Processing of channels.conf rejected.");
+        }
         else{
+            //lock this user
+            file_put_contents($sourcepath . 'lockfile.txt', "locked");
             //read channels.conf line by line
             $this->openChannelFile($filename);
             $cgroup = "";
@@ -207,6 +212,7 @@ class channelImport extends channelFileIterator{
             rename($filename, $filename . ".old");
             $this->updateExistingChannels();
             $this->addToUpdateLog( "-", "Summary:  Checked: $this->numChanChecked / Added: $this->numChanAdded / Modified: $this->numChanChanged / Ignored: $this->numChanIgnored");
+            unlink($sourcepath . 'lockfile.txt');
         }
     }
 
@@ -242,10 +248,11 @@ class channelImport extends channelFileIterator{
      */
 
     public function updateAffectedDataAndFiles(){
+        $htmlOutput = new HTMLOutputRenderer();
+        $htmlOutput->writeUploadLog();
         if ($this->numChanAdded + $this->numChanChanged > 0){
             $labeller = channelGroupingManager::getInstance();
             $rawOutput = new rawOutputRenderer();
-            $htmlOutput = new HTMLOutputRenderer();
             foreach ($this->foundSatellites as $sat => $dummy){
                 $languages = $this->config->getLanguageGroupsOfSource( "DVB-S", $sat);
                 $labeller->updateAllLabelsOfSource($sat);
