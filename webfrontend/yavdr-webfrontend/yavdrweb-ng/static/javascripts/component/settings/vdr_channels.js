@@ -410,6 +410,21 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
         data.nid = columns[10];
         data.tid = columns[11];
         data.rid = columns[12];
+        if(data.vpid != '0') {
+          if(data.caid != '0') {
+            data.channel_type = _('TV') + ' ⚡';
+          } else {
+            data.channel_type = _('TV');
+          }
+        } else if(data.apid != '0') {
+          if(data.caid != '0') {
+            data.channel_type = _('Radio') + ' ⚡';
+          } else {
+            data.channel_type = _('Radio');
+          }
+        } else {
+          data.channel_type = _('Data');
+        }
         data.channel_orig = channel;
         data.channel = channel++;
       }
@@ -605,6 +620,13 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             width : 160,
             dataIndex : 'name',
             sortable : false
+          },
+          {
+            header : _("Type"),
+            id: "channel_type",
+            width : 100,
+            dataIndex : 'channel_type',
+            sortable : false
           }
         ],
         // sm: new Ext.grid.RowSelectionModel({ singleSelect: true }),
@@ -774,6 +796,13 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             align : 'left',
             width : 160,
             dataIndex : 'name',
+            sortable : false
+          },
+          {
+            header : _("Type"),
+            id: "channel_type",
+            width : 100,
+            dataIndex : 'channel_type',
             sortable : false
           },
           {
