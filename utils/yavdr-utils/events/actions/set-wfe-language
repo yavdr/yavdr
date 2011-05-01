@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [ ${LANG:0:2} == 'de' ]; then
+  dbset webfrontend.language=de
+fi
