@@ -412,13 +412,13 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
         data.rid = columns[12];
         if(data.vpid != '0') {
           if(data.caid != '0') {
-            data.channel_type = _('TV') + ' ⚡';
+            data.channel_type = _('TV') + ' ⚷';
           } else {
             data.channel_type = _('TV');
           }
         } else if(data.apid != '0') {
           if(data.caid != '0') {
-            data.channel_type = _('Radio') + ' ⚡';
+            data.channel_type = _('Radio') + ' ⚷';
           } else {
             data.channel_type = _('Radio');
           }
