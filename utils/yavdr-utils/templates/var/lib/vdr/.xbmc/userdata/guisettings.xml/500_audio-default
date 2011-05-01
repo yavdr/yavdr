@@ -1,0 +1,15 @@
+    <audiooutput>
+        <ac3passthrough>true</ac3passthrough>
+        <audiodevice>default</audiodevice>
+        <channellayout>0</channellayout>
+        <customdevice></customdevice>
+        <custompassthrough></custompassthrough>
+        <dontnormalizelevels>true</dontnormalizelevels>
+        <dtspassthrough>true</dtspassthrough>
+        <mode>0</mode>
+        <passthroughaac>false</passthroughaac>
+        <passthroughdevice>iec958</passthroughdevice>
+        <passthroughmp1>false</passthroughmp1>
+        <passthroughmp2>false</passthroughmp2>
+        <passthroughmp3>false</passthroughmp3>
+    </audiooutput>
