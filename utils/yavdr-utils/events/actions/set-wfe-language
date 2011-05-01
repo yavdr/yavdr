@@ -3,3 +3,12 @@
 if [ ${LANG:0:2} == 'de' ]; then
   dbset webfrontend.language=de
 fi
+
+# old script
+#language=`echo $LANG | cut -d_ -f1`
+#if [ -f /usr/lib/yavdrweb/static/locale/$language.js ]; then 
+#  dbset "webfrontend.language=$language"
+#else 
+#  dbset "webfrontend.language=en"
+#fi
+
