@@ -1,65 +1,8 @@
 #!/bin/bash
 
 
-
 mkdir -p /var/lib/vdr/.xbmc/userdata/Database/
 
-
-cat <<-! > /var/lib/vdr/.xbmc/userdata/guisettings.xml
-<settings>
-    <pvrmanager>
-        <channelmanager></channelmanager>
-        <channelscan></channelscan>
-        <enabled>true</enabled>
-        <resetdb></resetdb>
-        <syncchannelgroups>true</syncchannelgroups>
-    </pvrmanager>
-    <pvrmenu>
-        <defaultguideview>2</defaultguideview>
-        <hidevideolength>true</hidevideolength>
-        <iconpath></iconpath>
-        <infoswitch>true</infoswitch>
-        <infotime>5</infotime>
-        <infotimeout>true</infotimeout>
-        <searchicons></searchicons>
-    </pvrmenu>
-    <pvrplayback>
-        <channelentrytimeout>0</channelentrytimeout>
-        <playminimized>true</playminimized>
-        <scantime>15</scantime>
-        <signalquality>true</signalquality>
-        <startlast>0</startlast>
-        <switchautoclose>true</switchautoclose>
-    </pvrplayback>
-    <pvrrecord>
-        <defaultlifetime>99</defaultlifetime>
-        <defaultpriority>50</defaultpriority>
-        <instantrecordtime>180</instantrecordtime>
-        <marginstart>2</marginstart>
-        <marginstop>10</marginstop>
-    </pvrrecord>
-    <videoplayer>
-        <adjustrefreshrate>true</adjustrefreshrate>
-        <displayresolution>10</displayresolution>
-        <errorinaspect>0</errorinaspect>
-        <maxspeedadjust>5.000000</maxspeedadjust>
-        <pauseafterrefreshchange>20</pauseafterrefreshchange>
-        <rendermethod>0</rendermethod>
-        <resamplequality>1</resamplequality>
-        <stretch43>0</stretch43>
-        <synctype>2</synctype>
-        <teletextenabled>true</teletextenabled>
-        <usechd>true</usechd>
-        <usedisplayasclock>true</usedisplayasclock>
-        <usepbo>true</usepbo>
-        <usevaapi>true</usevaapi>
-        <usevdpau>true</usevdpau>
-        <vdpau_allow_xrandr>false</vdpau_allow_xrandr>
-        <vdpaustudiolevel>false</vdpaustudiolevel>
-        <vdpauupscalinglevel>false</vdpauupscalinglevel>
-    </videoplayer>
-</settings>
-!
 
 sqlite3  /var/lib/vdr/.xbmc/userdata/Database/TV12.db<<EOF
 PRAGMA foreign_keys=OFF;
@@ -144,5 +87,6 @@ chown -R vdr:vdr /var/lib/vdr/.xbmc
 
 process-template --owner=vdr --group=vdr /var/lib/vdr/.xbmc/userdata/sources.xml
 process-template --owner=vdr --group=vdr /var/lib/vdr/.xbmc/userdata/Lircmap.xml
+process-template --owner=vdr --group=vdr /var/lib/vdr/.xbmc/userdata/guisettings.xml
 
 

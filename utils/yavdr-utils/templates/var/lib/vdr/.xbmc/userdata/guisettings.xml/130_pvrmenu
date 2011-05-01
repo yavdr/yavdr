@@ -1,0 +1,9 @@
+    <pvrmenu>
+        <defaultguideview>2</defaultguideview>
+        <hidevideolength>true</hidevideolength>
+        <iconpath></iconpath>
+        <infoswitch>true</infoswitch>
+        <infotime>5</infotime>
+        <infotimeout>true</infotimeout>
+        <searchicons></searchicons>
+    </pvrmenu>
