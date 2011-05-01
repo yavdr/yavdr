@@ -51,6 +51,9 @@ Ext.apply(YaVDR.Component.System, {
   killXBMC: function() {
     YaVDR.Component.System.request('/admin/set_signal?signal=kill-xbmc');
   },
+  resetXBMC: function() {
+    YaVDR.Component.System.request('/admin/set_signal?signal=reset-xbmc');
+  },
   reboot: function() {
     YaVDR.Component.System.request('/admin/set_signal?signal=reboot');
   },
@@ -73,6 +76,7 @@ Ext.apply(YaVDR.Component.System, {
 YaVDR.Component.System.addCommand(_('Switch temporarily to second screen'), YaVDR.Component.System.changeVdrToSecondDisplay, '/icons/fugue/monitor--arrow.png');
 YaVDR.Component.System.addCommand(_('Reboot computer'), YaVDR.Component.System.reboot, '/icons/fugue/arrow-circle-225.png');
 YaVDR.Component.System.addCommand(_('Kill XBMC'), YaVDR.Component.System.killXBMC, '/icons/fugue/arrow-step.png');
+YaVDR.Component.System.addCommand(_('Set XBMC defaults'), YaVDR.Component.System.resetXBMC, '/icons/fugue/hammer.png');
 YaVDR.Component.System.addCommand(_('Restart VDR'), YaVDR.Component.System.restartVDR, '/icons/fugue/arrow-circle-double-135.png');
 
 YaVDR.Component.System.addMenu('diagnose', 'system-diagnose-system-infos', _('System information'), '/icons/fugue/system-monitor.png');
