@@ -1,3 +1,2 @@
 #!/bin/bash
-dbset system.wakeup.method=acpi
 process-template --owner=vdr --group=vdr /etc/vdr/vdr-addon-acpiwakeup.conf
