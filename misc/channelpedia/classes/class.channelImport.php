@@ -32,18 +32,29 @@ class channelImport extends channelFileIterator{
         $numChanChecked = 0,
         $numChanAdded = 0,
         $numChanChanged = 0,
-        $timestamp;
+        $numChanIgnored = 0,
+        $timestamp,
+        $username;
 
     public function __construct($username, $cableSourceType, $terrSourceType){
         parent::__construct($cableSourceType, $terrSourceType);
+        $this->username = $username;
         $this->timestamp = time();
         $this->numChanChecked = 0;
         $this->numChanAdded = 0;
         $this->numChanChanged = 0;
+        $this->numChanIgnored = 0;
         $this->existingChannelBuffer = array();
+        //$this->addToUpdateLog( "-", "Processing users channels.conf.");
+    }
 
-        print "Processing channels.conf of user $username\n";
-        $this->insertChannelsConfIntoDB( $this->config->getValue("userdata")."sources/$username/" );
+    public function addToUpdateLog( $source, $description ){
+        $query = $this->db->insert( "upload_log", array(
+            "timestamp" => $this->timestamp,
+            "user" => $this->username,
+            "source" => $source,
+            "description" => $description
+        ));
     }
 
     /*
@@ -62,6 +73,7 @@ class channelImport extends channelFileIterator{
                     print "To update: " . $this->config->channelArray2ChannelString($params) ."\n";
                     print "Existing : " . $this->config->channelArray2ChannelString($row) ."\n";
                     print "---\n";
+                    $this->numChanIgnored++;
                 }
                 else{
                     $changes = array();
@@ -139,11 +151,13 @@ class channelImport extends channelFileIterator{
      * adds channel lines that seem correct to the db
      */
 
-    private function insertChannelsConfIntoDB($sourcepath){
+    public function insertChannelsConfIntoDB(){
+        $sourcepath = $this->config->getValue("userdata")."sources/".$this->username."/";
+
         $msg_prefix = "";
         $filename = $sourcepath . 'channels.conf';
         if (!file_exists($filename)) {
-            print "No new uploaded channels.conf exists. Skipping this path.\n";
+            $this->addToUpdateLog( "-", "No unprocessed channels.conf exists. Nothing to do.");
         }
         else{
             //read channels.conf line by line
@@ -158,6 +172,7 @@ class channelImport extends channelFileIterator{
                 }
                 elseif($this->isCurrentLineEmpty()){
                     //print $msg_prefix . "illegal channel: ignoring empty line.\n";
+                    //$this->numChanIgnored++;
                 }
                 else{
                     $this->numChanChecked++;
@@ -181,6 +196,7 @@ class channelImport extends channelFileIterator{
                     }
                     else{
                         print $msg_prefix . "illegal channel: ".$this->getCurrentLine().".\n";
+                        $this->numChanIgnored++;
                     }
                 }
             }
@@ -190,7 +206,7 @@ class channelImport extends channelFileIterator{
                 unlink($filename . ".old");
             rename($filename, $filename . ".old");
             $this->updateExistingChannels();
-            print "Summary: Channels checked: $this->numChanChecked / Channels added: $this->numChanAdded / Channels modified: $this->numChanChanged\n";
+            $this->addToUpdateLog( "-", "Summary:  Checked: $this->numChanChecked / Added: $this->numChanAdded / Modified: $this->numChanChanged / Ignored: $this->numChanIgnored");
         }
     }
 

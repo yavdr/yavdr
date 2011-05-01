@@ -55,9 +55,11 @@ class channelsupload extends Resource {
                         $cableProvider = trim($info); //FIXME
                     }
                     //print $info ."/". $infofile ."/".  $cableProvider."\n";
-                    $x = new channelImport($user, $cableProvider, "none");
-                    $x->updateAffectedDataAndFiles();
-                    unset($x);
+                    $importer = new channelImport($user, $cableProvider, "none");
+                    $importer->addToUpdateLog( "-", "channels.conf was uploaded and is now being processed.");
+                    $importer->insertChannelsConfIntoDB();
+                    $importer->updateAffectedDataAndFiles();
+                    unset($importer);
                 }
                 else{
                     $response->body .= "Error. File upload canceled.\n";

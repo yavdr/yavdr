@@ -73,18 +73,18 @@ class channelGroupingManager{
         $this->config = config::getInstance();
         $this->db = dbConnection::getInstance();
         $this->rulesets = array(
-            "GermanyEssentials" => new GermanyEssentials(),
-            "GermanySatNonEssential" => new GermanySatNonEssentials(),
-            "AustriaSatEssentials" => new AustriaSatEssentials(),
+            "GermanyEssentials"        => new GermanyEssentials(),
+            "GermanySatNonEssential"   => new GermanySatNonEssentials(),
+            "AustriaSatEssentials"     => new AustriaSatEssentials(),
             "SwitzerlandSatEssentials" => new SwitzerlandSatEssentials(),
-            "GermanyKabelDeutschland" => new GermanyKabelDeutschland(),
-            "GermanyWilhelmTel" => new GermanyWilhelmTel(),
-            "GermanyUnityMedia" => new GermanyUnityMedia(),
-            "GermanyTeleColumbus" => new GermanyTeleColumbus(),
-            "UKIrelandEssentials" => new UKIrelandEssentials(),
-            "SpainSatEssentials" => new SpainSatEssentials(),
-            "PolandSatEssentials" => new PolandSatEssentials(),
-            "FranceSatEssentials" => new FranceSatEssentials(),
+            "GermanyKabelDeutschland"  => new GermanyKabelDeutschland(),
+            "GermanyWilhelmTel"        => new GermanyWilhelmTel(),
+            "GermanyUnityMedia"        => new GermanyUnityMedia(),
+            "GermanyTeleColumbus"      => new GermanyTeleColumbus(),
+            "UKIrelandEssentials"      => new UKIrelandEssentials(),
+            "SpainSatEssentials"       => new SpainSatEssentials(),
+            "PolandSatEssentials"      => new PolandSatEssentials(),
+            "FranceSatEssentials"      => new FranceSatEssentials(),
             "NetherlandsSatEssentials" => new NetherlandsSatEssentials(),
         );
     }

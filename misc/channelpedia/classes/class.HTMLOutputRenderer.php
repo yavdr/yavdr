@@ -69,6 +69,7 @@ class HTMLOutputRenderer{
 
         $this->addDividerTitle("Reports");
         $this->writeGeneralChangelog();
+        $this->writeUploadLog();
         $this->renderDEComparison();
         $this->closeHierarchy();
 
@@ -201,6 +202,32 @@ class HTMLOutputRenderer{
         file_put_contents($this->exportpath . $filename, $buffer );
     }
 
+    private function writeUploadLog(){
+        $pagetitle = "Upload log";
+        $sqlquery=
+            "SELECT DATETIME( timestamp, 'unixepoch', 'localtime' ) AS datestamp, user, description, source ".
+            "FROM upload_log ORDER BY timestamp DESC LIMIT 100";
+        $result = $this->db->query($sqlquery);
+        $buffer =
+            $this->getHTMLHeader($pagetitle)."\n".
+            '<h1>'.htmlspecialchars($pagetitle).'</h1><p>Last updated on: '. date("D M j G:i:s T Y")."</p>\n".
+            "<table><tr><th>Timestamp</th><th>User</th><th>Source</th><th>Description</th></tr>\n";
+
+        foreach ($result as $row) {
+            $buffer.='<tr><td>'.
+            htmlspecialchars( $row["datestamp"] ). "</td><td>".
+            htmlspecialchars( $row["user"] ). "</td><td>".
+            htmlspecialchars( $row["source"] ). "</td><td>".
+            htmlspecialchars( $row["description"] ). "</td>".
+            "</tr>\n";
+        }
+        $buffer .= "<table>\n".$this->getHTMLFooter();
+        $filename = "upload_log.html";
+        $this->addToOverview($pagetitle, $filename);
+        file_put_contents($this->exportpath . $filename, $buffer );
+    }
+
+
     //assembles all pre-written channel lists from hdd into one html page
     public function writeNiceHTMLPage($source, $language){
         $pagetitle = ''.$source.' (Language/Region: '.$language.')';
@@ -269,7 +296,7 @@ class HTMLOutputRenderer{
 
         $filename = "channels_".$language."_".$source.".html";
         $this->addToOverview( $language, $filename );
-        print "HTMLOutputRenderer/writeNiceHTMLPage: writing to file ".$this->exportpath . $this->filename."\n";
+        print "HTMLOutputRenderer/writeNiceHTMLPage: writing to file ".$this->exportpath . $filename."\n";
         file_put_contents($this->exportpath . $filename, $nice_html_output );
     }
 
@@ -330,7 +357,10 @@ class HTMLOutputRenderer{
         $sqlquery = "SELECT x_last_confirmed FROM channels WHERE source = ".$this->db->quote($source)." ORDER BY x_last_confirmed DESC LIMIT 1";
         $result = $this->db->query($sqlquery);
         $timestamp = $result->fetchAll();
-        $timestamp = intval($timestamp[0][0]);
+        if (isset($timestamp[0][0]))
+            $timestamp = intval($timestamp[0][0]);
+        else
+            $timestamp = 0;
         if ($timestamp != 0){
             $nice_html_output .= "<p>Looking for channels that were last confirmed before ". date("D, d M Y H:i:s", $timestamp). " ($timestamp)</p>\n";
 

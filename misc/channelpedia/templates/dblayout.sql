@@ -50,3 +50,10 @@ CREATE TABLE channel_update_log(
     combined_id TEXT,
     update_description TEXT
 );
+
+CREATE TABLE upload_log(
+    timestamp TIMESTAMP,
+    user TEXT,
+    source TEXT,
+    description TEXT
+);

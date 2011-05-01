@@ -25,17 +25,11 @@
 //input: reads channel.conf from path and put channels into db
 require_once '../classes/class.config.php';
 
-if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
+//if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
 
 importFromAllChannelSources();
 
-$x = new rawOutputRenderer();
-$x->writeRawOutputForAllSources();
-
-$x = new HTMLOutputRenderer();
-$x->renderAllHTMLPages();
-
-if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
+//if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
 
 function importFromAllChannelSources(){
     $config = config::getInstance();
@@ -50,12 +44,19 @@ function importFromAllChannelSources(){
                 $cableProvider = trim($info); //FIXME
             }
             //print $info ."/". $infofile ."/".  $cableProvider."\n";
-            $x = new channelImport( $fileinfo->getFilename(), $cableProvider, "none" );
+            $importer = new channelImport( $fileinfo->getFilename(), $cableProvider, "none");
+            $importer->addToUpdateLog( "-", "Manually forced update: Checking for presence of unprocessed channels.conf to analyze.");
+            $importer->insertChannelsConfIntoDB();
         }
     }
     $labeller = channelGroupingManager::getInstance();
     $labeller->updateAllLabels();
-    unset($labeller);
-    unset($x);
+
+    $x = new rawOutputRenderer();
+    $x->writeRawOutputForAllSources();
+
+    $x = new HTMLOutputRenderer();
+    $x->renderAllHTMLPages();
+
 }
 ?>
