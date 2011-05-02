@@ -261,7 +261,7 @@ class HTMLOutputRenderer{
             $x->init1($cols["x_label"], $source, $orderby = "UPPER(name) ASC");
             while ($x->moveToNextChannel() !== false){
                 if ($html_table == ""){
-                    $html_table = "<h3>Table view</h3>\n<div class=\"tablecontainer\"><table>\n<tr>";
+                    $html_table = "<h3>Table view</h3>\n<div class=\"tablecontainer\"><table class=\"nice_table\">\n<tr>";
                     foreach ($x->getCurrentChannelArrayKeys() as $header){
                         $html_table .= '<th class="'.htmlspecialchars($header).'">'.htmlspecialchars(ucfirst($header))."</th>\n";
                     }
@@ -270,21 +270,41 @@ class HTMLOutputRenderer{
                 $nice_html_body .= htmlspecialchars( $x->getCurrentChannelString())."\n";
                 $html_table .= "<tr".$prestyle.">\n";
                 foreach ($x->getCurrentChannelArray() as $param => $value){
-                    if ($param == "apid" || $param == "caid"){
-                        $value = str_replace ( array(",",";"), ",<br/>", htmlspecialchars($value ));
+                    switch ($param){
+                        case "apid":
+                        case "caid":
+                            $value = str_replace ( array(",",";"), ",<br/>", htmlspecialchars($value ));
+                            break;
+                        case "frequency":
+                            $sourcetype = substr($source,0,1);
+                            if ($sourcetype == "S")
+                                $value = $value." MHz";
+                            else{
+//    * MHz, kHz oder Hz angegeben.
+//Der angegebene Wert wird mit 1000 multipliziert, bis er größer als 1000000 ist.
+                                 $value2 = intval($value);
+                                 $step = 0;    //113000
+                                 while($value2 < 1000000){
+                                     $step++;
+                                     $value2 = $value2 * 1000;
+                                 }
+                                 $value = $value2 / (1000*1000);
+                                 $value = $value . " Mhz";
+                            }
+                            break;
+                        case "x_last_changed":
+                            $value = date("D, d M Y H:i:s", $value);
+                            break;
+                        default:
+                            $value = htmlspecialchars($value);
                     }
-                    elseif ($param == "x_last_changed"){
-                        $value = date("D, d M Y H:i:s", $value);
-                    }
-                    else
-                        $value = htmlspecialchars($value);
                     $html_table .= '<td class="'.htmlspecialchars($param).'">'.$value."</td>\n";
                 }
                 $html_table .= "</tr>\n";
             }
             $html_table .= "</table></div>";
-            $nice_html_body .= "</pre>\n";
-            //$nice_html_body .= "</pre>\n".$html_table;
+            //$nice_html_body .= "</pre>\n";
+            $nice_html_body .= "</pre>\n".$html_table;
             $nice_html_linklist .= '<li><a href="#'.$escaped_shortlabel.'">'.$escaped_shortlabel. " (" . $cols["channelcount"] . " channels)</a></li>\n";
         }
 

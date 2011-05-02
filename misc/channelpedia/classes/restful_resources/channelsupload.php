@@ -59,6 +59,7 @@ class channelsupload extends Resource {
                     $importer->addToUpdateLog( "-", "channels.conf was uploaded and is now being processed.");
                     $importer->insertChannelsConfIntoDB();
                     $importer->updateAffectedDataAndFiles();
+                    $importer->addToUpdateLog( "-", "Processing finished.");
                     unset($importer);
                 }
                 else{

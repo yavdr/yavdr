@@ -63,12 +63,14 @@ class channelgroupsResource extends Resource {
                 while ($groupIterator->moveToNextChannelGroup() !== false ){
                     if ($groupIterator->getCurrentChannelGroupCount() == $group){
                         $values = $groupIterator->getCurrentChannelGroupArray();
-                        $jsonarray["meta"][] = $values;
+                        $jsonarray["result"]["meta"] = $values;
                         $channelIterator = new channelIterator();
                         $channelIterator->init1($values['x_label'], $source, $orderby = "UPPER(name) ASC");
                         while ($channelIterator->moveToNextChannel() !== false){
-                            $jsonarray["result"]["channelparameters"][] = $channelIterator->getCurrentChannelArray();
-                            $jsonarray["result"]["channelstrings"][] = $channelIterator->getCurrentChannelString();
+                            $jsonarray["result"]["channels"][] = array (
+                                "parameters" => $channelIterator->getCurrentChannelArray(),
+                                "string" => $channelIterator->getCurrentChannelString()
+                            );
                         }
                     }
                 }
