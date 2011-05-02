@@ -399,9 +399,9 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
         data.name = names[0];
         data.provider = names[1];
         data.frequency = columns[1];
-        data.parameters = columns[2];
+        data.modulation = columns[2];
         data.source = columns[3];
-        data.srate = columns[4];
+        data.symbolrate = columns[4];
         data.vpid = columns[5];
         data.apid = columns[6];
         data.tpid = columns[7];
@@ -458,8 +458,8 @@ YaVDR.ChannelsStore = Ext.extend(Ext.data.Store, {
         }
       } else {
         channels.push(data.name + ';' + data.provider + ':'
-            + data.frequency + ':' + data.parameters + ':'
-            + data.source + ':' + data.srate + ':' + data.vpid + ':'
+            + data.frequency + ':' + data.modulation + ':'
+            + data.source + ':' + data.symbolrate + ':' + data.vpid + ':'
             + data.apid + ':' + data.tpid + ':' + data.caid + ':'
             + data.sid + ':' + data.nid + ':' + data.tid + ':'
             + data.rid)
@@ -550,41 +550,23 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       this.initGrid();
       this.initClipBoardStore();
       this.initClipBoardGrid();
+      this.initChannelpediaTree();
 
       this.items = [ new YaVDR.Component.Header({
         region : 'north',
         html : _('Settings')
-      }), {
+      }), new YaVDR.Component.Item({
         region : 'west',
-        title: _('Channelpedia'),
+        title : _('Channelpedia'),
+        layout : 'fit',
         collapsible: true,   // make collapsible
-        floatable: true,
+        floatable: false,
         split: true,
-        //collapseMode: 'mini',
         width: 300,
         collapsed: true,
-        id: 'west-region-container',
-        layout: 'fit',
-        qtip: _('Channelpedia'),
-        xtype: 'treepanel',
-        useArrows: true,
-        autoScroll: true,
-        animate: false,
-        //enableDD: true,
-        containerScroll: true,
-        border: true,
-        // auto create TreeLoader
-        dataUrl: '/admin/channelpedia',
-
-        root: {
-            nodeType: 'async',
-            text: 'Channelpedia',
-            draggable: false,
-            id: 'root',
-            leaf: false
-        }
-
-      }, new YaVDR.Component.Item({
+        //margins: '5 0 0 5',
+        items : this.channelpediaTree
+      }), new YaVDR.Component.Item({
         region : 'center',
         title : _('Channels'),
         layout : 'fit',
@@ -606,6 +588,95 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
     },
     initClipBoardStore : function() {
       this.clipBoardStore = new Ext.data.Store();
+    },
+    initChannelpediaTree : function() {
+      this.channelpediaTree = new Ext.tree.TreePanel({
+        id: 'west-region-container',
+        layout: 'fit',
+        qtip: _('Channelpedia'),
+        useArrows: true,
+        autoScroll: true,
+        animate: false,
+        //enableDrag: true,
+        //ddGroup : 'channels',
+/*        draggable: {
+//        Config option of Ext.Panel.DD class.
+//        It's a floating Panel, so do not show a placeholder proxy in the original position.
+          insertProxy: false,
+
+//        Called for each mousemove event while dragging the DD object.
+          onDrag : function(e){
+//            Record the x,y position of the drag proxy so that we can
+//            position the Panel at end of drag.
+              var pel = this.proxy.getEl();
+              this.x = pel.getLeft(true);
+              this.y = pel.getTop(true);
+
+//            Keep the Shadow aligned if there is one.
+              var s = this.panel.getEl().shadow;
+              if (s) {
+                  s.realign(this.x, this.y, pel.getWidth(), pel.getHeight());
+              }
+          },
+
+//        Called on the mouseup event.
+          endDrag : function(e){
+              this.panel.setPosition(this.x, this.y);
+          }
+        },*/
+        containerScroll: true,
+        border: true,
+        
+        // auto create TreeLoader
+        dataUrl: '/admin/channelpedia',
+        root: {
+            nodeType: 'async',
+            text: 'Channelpedia',
+            draggable: false,
+            id: 'root',
+            leaf: false
+        }
+      });
+      
+      this.channelpediaTree.on('contextmenu', function( node, e ) {
+        e.stopEvent();
+        
+        if (node.draggable) {
+          var contextMenu = new Ext.menu.Menu({
+            items : [
+              {
+                text : sprintf(_('Append "%s" to channels.conf'), node.text),
+                icon : '/icons/fugue/node-insert-next.png',
+                scope : this,
+                handler : function() {
+                  Ext.Msg.progress(_('Channelpedia', _('Loading channels ...')));
+                  node.expand(true, true, function() {
+                    Ext.Msg.progress(_('Channelpedia', _('Adding channels to channels.conf ...')));
+                    this.addChannelpediaNode(node, false);
+                    Ext.Msg.hide();
+                  }, this);
+                }
+              }]
+          });
+          // show
+          contextMenu.showAt(e.getXY());          
+        }
+      }, this);
+    },
+    
+    addChannelpediaNode: function(node, withGroup) {
+      if (node.isLeaf() && node.attributes.record) {
+        node.attributes.record['type'] = 0;
+        this.store.add(new Ext.data.Record(node.attributes.record));
+      } else {
+        if (node.hasChildNodes()) {
+          node.eachChild(function(childNode) {
+            this.addChannelpediaNode(childNode, withGroup);
+            return true;
+          }, this, withGroup);
+        }
+      }
+      //alert(node.text);
     },
     initClipBoardGrid : function() {
       this.clipBoardGrid = new Ext.grid.GridPanel({
@@ -915,7 +986,9 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
               }
             },
             {
-              text : this.grid.getSelectionModel().getSelections().length > 1 ? _('Delete selection') : sprintf(_('Delete "%s"'), record.data.name),
+              text : this.grid.getSelectionModel().getSelections().length > 1
+                ? _('Delete selection') 
+                : sprintf(_('Delete "%s"'), record.data.name),
               icon : '/icons/silk/delete.png',
               scope : this,
               handler : function() {

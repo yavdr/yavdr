@@ -80,22 +80,25 @@ node;
 			        		json[i]["id"] = key;
 			        		json[i]["text"] = key;
 							json[i]["leaf"] = false;
+							json[i]["draggable"] = false;
 							int j = 0;
 							for( Json::ValueIterator itr2 = (*itr).begin() ; itr2 != (*itr).end() ; itr2++ ) {
-								key = itr2.key().asString();
-								if ((*itr)[key].size() > 0) { // languages available
+								string key2 = itr2.key().asString();
+								if ((*itr)[key2].size() > 0) { // languages available
 									Json::Value child;
-									child["id"] = itr2.key();
-									child["text"] = itr2.key();
+									child["id"] = key + "/" + key2;
+									child["text"] = key2;
 									child["leaf"] = false;
+									child["draggable"] = true;
 									
 									int k = 0;
 									for( Json::ValueIterator itr3 = (*itr2).begin() ; itr3 != (*itr2).end() ; itr3++ ) {
-										string key2 = (*itr3).asString();
+										string key3 = (*itr3).asString();
 										Json::Value language;
-										language["id"] = key + "/" + key2;
-										language["text"] = key2;
+										language["id"] = key + "/" + key2 + "/" + key3;
+										language["text"] = key3;
 										language["leaf"] = false;
+										language["draggable"] = true;
 											
 										child["children"][k++] = language;
 									}
@@ -114,7 +117,7 @@ node;
 				reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
 			}  
 		} else {
-			if (node.find_first_of("/") == node.find_last_of("/")) {
+			if (node.find_first_of("/", node.find_first_of("/") + 1) == node.find_last_of("/")) { // three "/"
 				string url = "http://channelpedia.yavdr.com/restful/channelgroups/" + node + "/0/json";
 				curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 				// Attempt to retrieve the remote page
@@ -139,8 +142,9 @@ node;
 								Json::Value channelgroup = (*itr);
 								if (asprintf(&dummy, "%d", channelgroup["id"].asInt()) > 0) {
 									json[i]["id"] = node + "/" + dummy;
-									json[i]["text"] = channelgroup["x_label"].asString();
+									json[i]["text"] = channelgroup["friendlyname"].asString();
 									json[i]["leaf"] = false;
+									json[i]["draggable"] = true;
 									
 									i++;
 									free(dummy);
@@ -178,7 +182,8 @@ node;
 								json[i]["id"] = channel["name"].asString()+";"+channel["provider"].asString();
 								json[i]["text"] = channel["name"].asString();
 								json[i]["leaf"] = true;
-								
+								json[i]["draggable"] = true;								
+								json[i]["record"] = channel;
 								i++;
 							}
 						}
