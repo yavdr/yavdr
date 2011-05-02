@@ -2,18 +2,15 @@
 
 case "$1" in
   start)
-	/bin/true
+        log_begin_msg "Starting $DESC: $NAME"
+        # wait for vdr to finish
+        # finally stop rsyslogd (stop disabled to get vdr stop log=
+	while pidof vdr &> /dev/null ; do sleep 1 ; done
+	/sbin/initctl emit close-poweroff
         log_end_msg $?
-        restart_xprint
         ;;
   stop)
-        log_begin_msg "Stopping $DESC: $NAME"
-        # wait for vdr to finish
-	while pidof vdr &> /dev/null ; do sleep 1 ; done
-        # finally stop rsyslogd (stop disabled to get vdr stop log=
-	kill -TERM $(pidof rsyslogd)
-        log_end_msg $?
-        ;;
+       log_begin_msg "Stopping $DESC: $NAME"
   *)
         N=/etc/init.d/${0##*/}
         echo "Usage: $N {start|stop}" >&2
