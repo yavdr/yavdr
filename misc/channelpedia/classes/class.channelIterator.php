@@ -63,6 +63,15 @@ class channelIterator{
         else{
             $exists = true;
             $this->count++;
+
+            //turn some integer params back into integer values
+            $int_params = array("frequency", "symbolrate", "sid", "nid", "tid", "rid", "x_last_changed", "x_timestamp_added", "x_last_confirmed");
+            foreach ( $this->channel as $param => $value){
+                if (in_array($param, $int_params)){
+                    $this->channel[$param] = intval($value);
+                }
+            }
+
             if ($this->lastFrequency != $this->channel["source"] ."-" . $this->channel["frequency"]){
                 $this->transponderChanged = true;
             }

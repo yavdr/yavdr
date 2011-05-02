@@ -160,18 +160,18 @@ class config {
             $result = array(
                 "name"            => $cname,
                 "provider"        => $cprovider,
-                "frequency"       => $details[1],
+                "frequency"       => intval($details[1]),
                 "modulation"      => strtoupper($details[2]), //w_scan has lower case, we don't want that
                 "source"          => $details[3],
-                "symbolrate"      => $details[4],
+                "symbolrate"      => intval($details[4]),
                 "vpid"            => $details[5],
                 "apid"            => $details[6],
                 "tpid"            => $details[7],
                 "caid"            => $details[8],
-                "sid"             => $details[9],
-                "nid"             => $details[10],
-                "tid"             => $details[11],
-                "rid"             => $details[12]
+                "sid"             => intval($details[9]),
+                "nid"             => intval($details[10]),
+                "tid"             => intval($details[11]),
+                "rid"             => intval($details[12])
             );
         }
         return $result;
