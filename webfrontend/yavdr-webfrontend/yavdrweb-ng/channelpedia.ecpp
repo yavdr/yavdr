@@ -174,15 +174,15 @@ node;
 					char *dummy = NULL;
 	
 					if (parsingSuccessful) {
-						const Json::Value channels = source["result"]["channelparameters"];
+						const Json::Value channels = source["result"]["channels"];
 						if( channels.size() > 0 ) {
 							int i = 0;
 							for( Json::ValueIterator itr = channels.begin() ; itr != channels.end() ; itr++ ) {
 								Json::Value channel = (*itr);
-								json[i]["id"] = channel["name"].asString()+";"+channel["provider"].asString();
-								json[i]["text"] = channel["name"].asString();
+								json[i]["id"] = channel["parameters"]["name"].asString()+";"+channel["parameters"]["provider"].asString();
+								json[i]["text"] = channel["parameters"]["name"].asString();
 								json[i]["leaf"] = true;
-								json[i]["draggable"] = true;								
+								json[i]["draggable"] = true;
 								json[i]["record"] = channel;
 								i++;
 							}
