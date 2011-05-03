@@ -1,4 +1,4 @@
-    Option         "Composite" <?cs if:(vdr.frontend == "xineliboutput" ) ?>"on"<?cs else ?>"Disable"<?cs /if ?>
+    Option         "Composite" <?cs if:(vdr.frontend == "sxfe" ) ?>"on"<?cs else ?>"Disable"<?cs /if ?>
 
 
 

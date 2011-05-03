@@ -1,4 +1,4 @@
-<?cs if:(!?vdr.frontend || vdr.frontend != "headless") ?>
+<?cs if:(!?vdr.frontend || vdr.frontend != "disabled") ?>
 start on (filesystem and \
           started dbus and \
           (start-xorg or stopped udevtrigger))
@@ -9,7 +9,7 @@ env DISPLAY=:1
 env XORGCONFIG=/etc/X11/xorg.conf.yavdr
 env xorg_driver
 
-<?cs if:(vdr.frontend == "xineliboutput" ) ?>
+<?cs if:(vdr.frontend == "sxfe" ) ?>
 export __GL_SYNC_TO_VBLANK=1
 <?cs if:(system.x11.dualhead.enabled != "1") ?>
 export __GL_SYNC_DISPLAY_DEVICE=`/usr/bin/dbget system.x11.display.default`

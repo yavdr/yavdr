@@ -15,7 +15,7 @@ fi
 end script
 
 post-stop script
-/bin/rm -f /tmp/.standalone 
+/bin/rm -f /tmp/.standalone
 if [ ! -z $STANDALONE ] ; then
    vdr-dbus-send /Remote remote.Enable ||:
    /sbin/initctl emit --no-wait vdr-frontend-restart
