@@ -1,1 +1,1 @@
-<?cs if:(vdr.frontend == "xbmc") ?>while ! netcat -z localhost 34890; do sleep 1; done;<?cs /if ?>
+<?cs if:(vdr.frontend == "xbmc" && vdr.backend != 'disabled') ?>while ! netcat -z localhost 34890; do sleep 1; done;<?cs /if ?>
