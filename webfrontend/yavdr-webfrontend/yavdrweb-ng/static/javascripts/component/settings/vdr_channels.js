@@ -649,12 +649,8 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
                 icon : '/icons/fugue/node-insert-next.png',
                 scope : this,
                 handler : function() {
-                  Ext.Msg.progress(_('Channelpedia', _('Loading channels ...')));
-                  node.expand(true, true, function() {
-                    Ext.Msg.progress(_('Channelpedia', _('Adding channels to channels.conf ...')));
-                    this.addChannelpediaNode(node, false);
-                    Ext.Msg.hide();
-                  }, this);
+                  Ext.getBody().mask(_('Adding channels to channels.conf ...'));
+                  this.addChannelpediaNode(node, true);
                 }
               }]
           });
@@ -664,17 +660,35 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       }, this);
     },
     
-    addChannelpediaNode: function(node, withGroup) {
+    addChannelpediaNode: function(node, first) {
       if (node.isLeaf() && node.attributes.record) {
         node.attributes.record['type'] = 0;
+        var lastRec = this.store.getAt(this.store.data.items.length - 1);
+        if (lastRec) {
+          node.attributes.record['channel'] = lastRec.get('channel') + 1;
+        }
         this.store.add(new Ext.data.Record(node.attributes.record));
       } else {
-        if (node.hasChildNodes()) {
-          node.eachChild(function(childNode) {
-            this.addChannelpediaNode(childNode, withGroup);
-            return true;
-          }, this, withGroup);
+        if (node.attributes.groupable) {
+          this.store.add(new Ext.data.Record({
+            type : 1,
+            name : node.text
+          }));
         }
+        var isExpanded = node.isExpanded();
+        node.expand(false, false, function(node) {
+          if (!isExpanded)
+            node.collapse(false, false);
+          if (node.hasChildNodes()) {
+            node.eachChild(function(childNode) {
+              this.addChannelpediaNode(childNode, false);
+              return true;
+            }, this);
+          }
+          if (first)
+            Ext.getBody().unmask();
+        }, this);
+        
       }
       //alert(node.text);
     },
@@ -809,7 +823,9 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       } else {
         if (value == record.data.channel_orig)
           return value;
-        else
+        else if (typeof record.data.channel_orig == 'undefined') {
+          return value + _(' (new)');
+        } else 
           return value + " (" + record.data.channel_orig + ")";
       }
     },

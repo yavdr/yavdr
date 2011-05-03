@@ -21,6 +21,7 @@ node;
 	  // Is there anything in the buffer?  
 	  if (buffer != NULL)  
 	  {  
+		  printf("%s", data);
 		// Append the data to the buffer  
 		buffer->append(data, size * nmemb);  
 	  
@@ -34,7 +35,7 @@ node;
 <& authenticate >
 <%cpp>
 	reply.setHeader ("Cache-Control", "no-cache", false);
-	reply.setHeader ("Content-Type", "application/json", false);
+	reply.setContentType ("application/json; charset=utf-8"); // ; charset=UTF-8
 
 	Json::Value json;
 
@@ -81,6 +82,7 @@ node;
 			        		json[i]["text"] = key;
 							json[i]["leaf"] = false;
 							json[i]["draggable"] = false;
+							json[i]["groupable"] = false;
 							int j = 0;
 							for( Json::ValueIterator itr2 = (*itr).begin() ; itr2 != (*itr).end() ; itr2++ ) {
 								string key2 = itr2.key().asString();
@@ -90,6 +92,7 @@ node;
 									child["text"] = key2;
 									child["leaf"] = false;
 									child["draggable"] = true;
+									child["groupable"] = false;
 									
 									int k = 0;
 									for( Json::ValueIterator itr3 = (*itr2).begin() ; itr3 != (*itr2).end() ; itr3++ ) {
@@ -99,7 +102,8 @@ node;
 										language["text"] = key3;
 										language["leaf"] = false;
 										language["draggable"] = true;
-											
+										language["groupable"] = false;
+										
 										child["children"][k++] = language;
 									}
 									json[i]["children"][j++] = child;
@@ -142,10 +146,10 @@ node;
 								Json::Value channelgroup = (*itr);
 								if (asprintf(&dummy, "%d", channelgroup["id"].asInt()) > 0) {
 									json[i]["id"] = node + "/" + dummy;
-									json[i]["text"] = channelgroup["friendlyname"].asString();
+									json[i]["text"] = channelgroup["friendlyname"];
 									json[i]["leaf"] = false;
 									json[i]["draggable"] = true;
-									
+									json[i]["groupable"] = true;
 									i++;
 									free(dummy);
 								}
@@ -171,6 +175,7 @@ node;
 					Json::Value source;   // will contains the root value after parsing.
 					Json::Reader reader;
 					bool parsingSuccessful = reader.parse( buffer, source );
+					  
 					char *dummy = NULL;
 	
 					if (parsingSuccessful) {
@@ -178,11 +183,11 @@ node;
 						if( channels.size() > 0 ) {
 							int i = 0;
 							for( Json::ValueIterator itr = channels.begin() ; itr != channels.end() ; itr++ ) {
-								Json::Value channel = (*itr);
-								json[i]["id"] = channel["parameters"]["name"].asString()+";"+channel["parameters"]["provider"].asString();
-								json[i]["text"] = channel["parameters"]["name"].asString();
+								Json::Value channel = (*itr)["parameters"];
+								json[i]["id"] = (*itr)["string"];
+								json[i]["text"] = channel["name"];
 								json[i]["leaf"] = true;
-								json[i]["draggable"] = true;
+								json[i]["draggable"] = true;								
 								json[i]["record"] = channel;
 								i++;
 							}

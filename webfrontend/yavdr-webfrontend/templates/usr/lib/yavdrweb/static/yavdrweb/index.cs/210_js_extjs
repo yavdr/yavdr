@@ -1,4 +1,4 @@
 
     <!-- js_extjs -->
-    <script type="text/javascript" src="/ext/adapter/ext/ext-base.js"></script>
-    <script type="text/javascript" src="/ext/ext-all.js"></script> 
+    <script type="text/javascript" src="/ext/adapter/ext/ext-base<?cs if:(webfrontend.devmode == "1") ?>-debug<?cs /if ?>.js"></script>
+    <script type="text/javascript" src="/ext/ext-all<?cs if:(webfrontend.devmode == "1") ?>-debug<?cs /if ?>.js"></script> 
