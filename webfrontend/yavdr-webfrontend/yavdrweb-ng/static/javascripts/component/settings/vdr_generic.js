@@ -175,7 +175,7 @@ YaVDR.Component.Settings.VdrGeneric.Setup = Ext.extend(YaVDR.Default.Form, {
         },
         {
           key: 'custom',
-          title: 'custom configuration',
+          title: 'custom configuration (experimental)',
           description: _('You can choose this if you want to configure an extended setup ')
         }
       ]
