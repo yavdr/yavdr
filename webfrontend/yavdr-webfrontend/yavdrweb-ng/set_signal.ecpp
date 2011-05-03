@@ -18,6 +18,7 @@ signal;
 signal_params = "";
 value;
 value2;
+value3;
 string values[];
 </%args><%cpp>
 
@@ -29,7 +30,7 @@ if (
 		(signal == "change-frontend") ||
 		(signal == "change-lifeguard") ||
 		(signal == "kill-xbmc") ||
-                (signal == "reset-xbmc") ||
+        (signal == "reset-xbmc") ||
 		(signal == "restart-vdr") ||
 		(signal == "change-auto-net-yavdr") ||
 		(signal == "change-timeout") ||
@@ -44,10 +45,18 @@ if (
 
 	if (signal == "change-frontend" )
 	{
-		if ((value == "xine") || (value == "xineliboutput") || (value == "xbmc") || (value == "headless") || (value == "ttpremium6400"))
-		{
-			int err = dbset("vdr.frontend=%s", value.c_str());
-		}
+        if ((value == "xine") || (value == "sxfe") || (value == "xbmc") || (value == "headless") || (value == "hdff") || (value == "custom"))
+        {
+            int err = dbset("vdr.setup=%s", value.c_str());
+        }
+        if ((value2 == "xine") || (value2 == "sxfe") || (value2 == "xbmc") || (value2 == "disabled") || (value2 == "blank"))
+        {
+            int err = dbset("vdr.frontend=%s", value2.c_str());
+        }
+        if ((value3 == "xine") || (value3 == "sxfe") || (value3 == "streaming") || (value3 == "disabled") || (value3 == "hdff"))
+        {
+            int err = dbset("vdr.backend=%s", value3.c_str());
+        }
 	}
 	else if (signal == "change-epg" )
 	{

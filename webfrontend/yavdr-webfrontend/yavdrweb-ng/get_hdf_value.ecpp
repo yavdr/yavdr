@@ -59,6 +59,8 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json, bool includeLength) {
   const char *valid_hdf_requests[] = {
     "webfrontend.language",
     "vdr.frontend",
+    "vdr.backend",
+    "vdr.setup",
     "system.shutdown",
     "system.sound.type",
     "system.hardware.nvidia.overscan",
@@ -72,7 +74,7 @@ void hdfwalk(HDF *hdf, HDF *child, Json::Value *json, bool includeLength) {
     "system.wakeup.disable_usb",
 	"vdr.epg.charset_override"
   };
-  
+
   bool validRequest = false;
   if (hdfpaths.size() == 0) {
 	  for (int findex = 0; (findex < (sizeof(valid_hdf_requests) / sizeof(valid_hdf_requests[0]))) && !validRequest; findex++)

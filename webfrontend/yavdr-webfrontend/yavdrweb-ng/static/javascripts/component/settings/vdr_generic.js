@@ -7,7 +7,7 @@ YaVDR.Component.Settings.VdrGeneric = Ext.extend(YaVDR.Component, {
       new YaVDR.Component.Item({
         title: _('General'),
         style: 'margin-bottom: 5px',
-        items: new YaVDR.Component.Settings.VdrGeneric.Frontend
+        items: new YaVDR.Component.Settings.VdrGeneric.Setup
       }),
       new YaVDR.Component.Item({
         title: _('Lifeguard monitoring items'),
@@ -110,11 +110,37 @@ YaVDR.Component.Settings.VdrGeneric.Lifeguard = Ext.extend(YaVDR.Default.Form, {
 });
 
 
-YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
+YaVDR.Component.Settings.VdrGeneric.Setup = Ext.extend(YaVDR.Default.Form, {
+
+  updateSetup: function(value) {
+    if(value == 'custom') {
+      this.backendSelectorView.show();
+      this.frontendSelectorView.show();
+    } else {
+      this.frontendSelectorView.hide();
+      this.backendSelectorView.hide();
+      if(value == 'xine') {
+        this.frontendSelectorView.select("frontend-selection-xine");
+        this.backendSelectorView.select("backend-selection-xine");
+      } else if(value == 'xbmc') {
+        this.frontendSelectorView.select("frontend-selection-xbmc");
+        this.backendSelectorView.select("backend-selection-streaming");
+      } else if(value == 'hdff') {
+        this.frontendSelectorView.select("frontend-selection-disabled");
+        this.backendSelectorView.select("backend-selection-hdff");
+      } else if(value == 'headless') {
+        this.frontendSelectorView.select("frontend-selection-disabled");
+        this.backendSelectorView.select("backend-selection-streaming");
+      } else {
+        this.frontendSelectorView.select("frontend-selection-sxfe");
+        this.backendSelectorView.select("backend-selection-xineliboutput");
+      }
+    }
+  },
 
   initComponent: function() {
 
-    this.frontendStore = new Ext.data.JsonStore({
+    this.setupStore = new Ext.data.JsonStore({
       fields: [
         { name: 'key' },
         { type: 'boolean', name: 'disabled' },
@@ -123,7 +149,7 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
       ],
       data: [
         {
-          key: 'xineliboutput',
+          key: 'sxfe',
           title: 'vdr-sxfe@vdr-plugin-xineliboutput',
           description: _('This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR')
         },
@@ -138,7 +164,7 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
           description: _('If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice.')
         },
         {
-          key: 'ttpremium6400',
+          key: 'hdff',
           title: 'TT-premium S2-6400 HD (experimental)',
           description: _('If you want to use VDR with a TT-premium S2-6400 HD.')
         },
@@ -146,10 +172,103 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
           key: 'headless',
           title: 'headless (yaVDR server)',
           description: _('You can choose this if you don\'t want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards.')
+        },
+        {
+          key: 'custom',
+          title: 'custom configuration',
+          description: _('You can choose this if you want to configure an extended setup ')
         }
       ]
 
     });
+
+    this.frontendStore = new Ext.data.JsonStore({
+      fields: [
+        { name: 'key' },
+        { type: 'boolean', name: 'disabled' },
+        { name: 'title' },
+        { name: 'description' }
+      ],
+      data: [
+        {
+          key: 'disabled',
+          title: _('Disabled')//,
+          //description: _('If you want to use VDR with a TT-premium S2-6400 HD.')
+        },
+        {
+          key: 'blank',
+          title: _('Blank')//,
+          //description: _('This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR')
+        },
+        {
+          key: 'sxfe',
+          title: 'vdr-sxfe'//,
+          //description: _('This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR')
+        },
+        {
+          key: 'xine',
+          title: 'xine'//,
+          //description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.')
+        },
+        {
+          key: 'xbmc',
+          title: 'xbmc'//,
+          //description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.')
+        }
+      ]
+
+    });
+
+    this.backendStore = new Ext.data.JsonStore({
+      fields: [
+        { name: 'key' },
+        { type: 'boolean', name: 'disabled' },
+        { name: 'title' },
+        { name: 'description' }
+      ],
+      data: [
+        {
+          key: 'disabled',
+          title: _('Disabled')//,
+          //description: _('If you want to use VDR with a TT-premium S2-6400 HD.')
+        },
+        {
+          key: 'streaming',
+          title: _('Streaming')//,
+          //description: _('This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR')
+        },
+        {
+          key: 'xineliboutput',
+          title: 'vdr-plugin-xineliboutput'//,
+          //description: _('This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR')
+        },
+        {
+          key: 'xine',
+          title: 'vdr-plugin-xine'//,
+          //description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.')
+        },
+        {
+          key: 'hdff',
+          title: 'TT-premium S2-6400 HD'//,
+          //description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.')
+        }
+      ]
+
+    });
+
+    this.setupTpl = new Ext.XTemplate(
+      '<tpl for=".">',
+      '<tpl if="disabled == true">',
+      '<div class="selection-wrap unselectable" id="setup-selection-{key}">',
+      '</tpl>',
+      '<tpl if="disabled == false">',
+      '<div class="selection-wrap selectable" id="setup-selection-{key}">',
+      '</tpl>',
+      '<div class="title">{title}</div>',
+      '<div class="description">{description}</div>',
+      '</div>',
+      '</tpl>'
+      );
 
     this.frontendTpl = new Ext.XTemplate(
       '<tpl for=".">',
@@ -165,26 +284,73 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
       '</tpl>'
       );
 
-    this.frontendTpl.compile();
+    this.backendTpl = new Ext.XTemplate(
+      '<tpl for=".">',
+      '<tpl if="disabled == true">',
+      '<div class="selection-wrap unselectable" id="backend-selection-{key}">',
+      '</tpl>',
+      '<tpl if="disabled == false">',
+      '<div class="selection-wrap selectable" id="backend-selection-{key}">',
+      '</tpl>',
+      '<div class="title">{title}</div>',
+      '<div class="description">{description}</div>',
+      '</div>',
+      '</tpl>'
+      );
 
-    this.frontendSelectionHidden = new Ext.form.Hidden({
+    this.setupTpl.compile();
+    this.frontendTpl.compile();
+    this.backendTpl.compile();
+
+    this.setupSelectionHidden = new Ext.form.Hidden({
       name: 'value',
-      value: 'xineliboutput'
+      listeners: {
+        scope: this,
+        change: function(element, value) {
+          this.updateSetup(value);
+        }
+      }
+    });
+    this.frontendSelectionHidden = new Ext.form.Hidden({
+      name: 'value2'
+    });
+    this.backendSelectionHidden = new Ext.form.Hidden({
+      name: 'value3'
     });
 
-    this.frontendSelectiorView = new YaVDR.SelectionList({
-      fieldLabel: _('Video Output'),
+    this.setupSelectorView = new YaVDR.SelectionList({
+      fieldLabel: _('Setup'),
+      hiddenField: this.setupSelectionHidden,
+      tpl: this.setupTpl,
+      store: this.setupStore
+    });
+
+    this.frontendSelectorView = new YaVDR.SelectionList({
+      hidden: true,
+      fieldLabel: _('Frontend'),
       hiddenField: this.frontendSelectionHidden,
       tpl: this.frontendTpl,
       store: this.frontendStore
     });
 
+    this.backendSelectorView = new YaVDR.SelectionList({
+      hidden: true,
+      fieldLabel: _('Backend'),
+      hiddenField: this.backendSelectionHidden,
+      tpl: this.backendTpl,
+      store: this.backendStore
+    });
+
     this.items = [
+      this.setupSelectionHidden,
       this.frontendSelectionHidden,
-      this.frontendSelectiorView
+      this.backendSelectionHidden,
+      this.setupSelectorView,
+      this.frontendSelectorView,
+      this.backendSelectorView
     ];
 
-    YaVDR.Component.Settings.VdrGeneric.Frontend.superclass.initComponent.call(this);
+    YaVDR.Component.Settings.VdrGeneric.Setup.superclass.initComponent.call(this);
   },
   doSave: function() {
     this.getForm().submit({
@@ -193,76 +359,92 @@ YaVDR.Component.Settings.VdrGeneric.Frontend = Ext.extend(YaVDR.Default.Form, {
   },
 
   doLoad: function() {
-    YaVDR.getHdfValue('vdr.frontend', function(value) {
-      this.frontendSelectiorView.select("frontend-selection-" + value);
+    YaVDR.getHdfValue(['vdr.setup', 'vdr.frontend', 'vdr.backend'], function(value) {
+      console.log(value);
+      try {
+        this.setupSelectorView.select("setup-selection-" + value.vdr.setup);
+      } catch(e) {
+      }
+
+      try {
+        this.frontendSelectorView.select("frontend-selection-" + value.vdr.frontend);
+      } catch(e) {
+      }
+
+      try {
+        this.backendSelectorView.select("backend-selection-" + value.vdr.backend);
+      } catch(e) {
+      }
+
     }, this);
+
   }
 });
 
 YaVDR.Component.Settings.VdrGeneric.EPG = Ext.extend(YaVDR.Default.Form, {
 
-	initComponent: function() {
+    initComponent: function() {
 
-		this.charsetOverrideStore = new Ext.data.JsonStore({
-			fields: [
-				{ name: 'key' },
-				{ name: 'title' },
-				{ name: 'description' }
-			],
-			data: [
-				{
-					key: '',
-					title: 'None',
-					description: ''
-				},
-				{
-					key: 'ISO-8859-9',
-					title: 'ISO-8859-9',
-					description: _('Override incorrect not DVB compliant EPG Encoding, as send by Sky')
-				}
-			]
-		});
+        this.charsetOverrideStore = new Ext.data.JsonStore({
+            fields: [
+                { name: 'key' },
+                { name: 'title' },
+                { name: 'description' }
+            ],
+            data: [
+                {
+                    key: '',
+                    title: 'None',
+                    description: ''
+                },
+                {
+                    key: 'ISO-8859-9',
+                    title: 'ISO-8859-9',
+                    description: _('Override incorrect not DVB compliant EPG Encoding, as send by Sky')
+                }
+            ]
+        });
 
-		this.charsetOverrideTpl = new Ext.XTemplate(
-						'<tpl for=".">',
-						'<div class="selection-wrap selectable" id="charset-selection-{key}">',
-						'<div class="title">{title}</div>',
-						'<div class="description">{description}</div>',
-						'</div>',
-						'</tpl>'
-						);
+        this.charsetOverrideTpl = new Ext.XTemplate(
+                        '<tpl for=".">',
+                        '<div class="selection-wrap selectable" id="charset-selection-{key}">',
+                        '<div class="title">{title}</div>',
+                        '<div class="description">{description}</div>',
+                        '</div>',
+                        '</tpl>'
+                        );
 
-		this.charsetOverrideTpl.compile();
+        this.charsetOverrideTpl.compile();
 
-		this.charsetOverrideSelectionHidden = new Ext.form.Hidden({
-			name: 'value',
-			value: ''
-		});
+        this.charsetOverrideSelectionHidden = new Ext.form.Hidden({
+            name: 'value',
+            value: ''
+        });
 
-		this.charsetOverrideSelectiorView = new YaVDR.SelectionList({
-			fieldLabel: _('Charset override'),
-			hiddenField: this.charsetOverrideSelectionHidden,
-			tpl: this.charsetOverrideTpl,
-			store: this.charsetOverrideStore
-		});
+        this.charsetOverrideSelectorView = new YaVDR.SelectionList({
+            fieldLabel: _('Charset override'),
+            hiddenField: this.charsetOverrideSelectionHidden,
+            tpl: this.charsetOverrideTpl,
+            store: this.charsetOverrideStore
+        });
 
-		this.items = [
-			this.charsetOverrideSelectionHidden,
-			this.charsetOverrideSelectiorView
-		];
+        this.items = [
+            this.charsetOverrideSelectionHidden,
+            this.charsetOverrideSelectorView
+        ];
 
 
-		YaVDR.Component.Settings.VdrGeneric.EPG.superclass.initComponent.call(this);
-	},
-	doSave: function() {
-		this.getForm().submit({
-			url: '/admin/set_signal?signal=change-epg'
-		});
-	},
+        YaVDR.Component.Settings.VdrGeneric.EPG.superclass.initComponent.call(this);
+    },
+    doSave: function() {
+        this.getForm().submit({
+            url: '/admin/set_signal?signal=change-epg'
+        });
+    },
 
-	doLoad: function() {
-		YaVDR.getHdfValue('vdr.epg.charset_override', function(value) {
-      this.charsetOverrideSelectiorView.select("charset-selection-" + value);
-		}, this);
-	}
+    doLoad: function() {
+        YaVDR.getHdfValue('vdr.epg.charset_override', function(value) {
+      this.charsetOverrideSelectorView.select("charset-selection-" + value);
+        }, this);
+    }
 });
