@@ -873,6 +873,9 @@ msgstr ""
 msgid "no"
 msgstr ""
 
+msgid "Set XBMC defaults"
+msgstr ""
+
 #: end web front end
 
 
