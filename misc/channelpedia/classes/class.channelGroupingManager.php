@@ -207,7 +207,7 @@ class channelGroupingManager{
                 $label_suffixes[] ="TV";
                 break;
             case 2:
-                $where[] = "vpid = '0'";
+                $where[] = "vpid = '0' AND apid != '0'";
                 $label_suffixes[] ="Radio";
                 break;
             case 3:

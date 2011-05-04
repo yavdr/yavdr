@@ -71,6 +71,14 @@ class channelIterator{
                     $this->channel[$param] = intval($value);
                 }
             }
+            //FIXME: this is the wrong place to correct charsets
+            $this->channel["x_utf-8-name"] = mb_check_encoding($this->channel["name"], "UTF-8");
+            $this->channel["x_utf-8-provider"] = mb_check_encoding($this->channel["provider"], "UTF-8");
+            if ($this->channel["x_utf-8-name"] === false)
+                $this->channel["name"] = mb_convert_encoding ( $this->channel["name"] , "UTF-8", "ISO-8859-15");
+            if ($this->channel["x_utf-8-provider"] === false)
+                $this->channel["provider"] = mb_convert_encoding ( $this->channel["provider"] , "UTF-8", "ISO-8859-15");
+
             $this->channel["x_unique_id"] = $this->channel["source"]."-". $this->channel["nid"]."-". $this->channel["tid"]."-". $this->channel["sid"];
 
             if ($this->lastFrequency != $this->channel["source"] ."-" . $this->channel["frequency"]){
