@@ -71,6 +71,7 @@ class channelIterator{
                     $this->channel[$param] = intval($value);
                 }
             }
+            $this->channel["x_unique_id"] = $this->channel["source"]."-". $this->channel["nid"]."-". $this->channel["tid"]."-". $this->channel["sid"];
 
             if ($this->lastFrequency != $this->channel["source"] ."-" . $this->channel["frequency"]){
                 $this->transponderChanged = true;

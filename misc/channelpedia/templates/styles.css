@@ -101,7 +101,8 @@ table {
     font-family: Arial, sans-serif; 
     font-size: 0.8em; 
     background-color: white; 
-    border-collapse:collapse; 
+    border-collapse:collapse;
+    width: 100%;
 }
 
 tr.changelog_row_style_1 { 
@@ -122,9 +123,7 @@ td.source{
     background-color: #dfe8f6; 
 }
 
-td.sid, td.nid, td.rid, td.rid,
-td.frequency,
-td.symbolrate{
+td.sid, td.nid, td.rid, td.rid, td.tpid, td.frequency, td.symbolrate{
     text-align: right;
 }
 

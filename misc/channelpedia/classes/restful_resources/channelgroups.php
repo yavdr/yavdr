@@ -20,9 +20,10 @@ class channelgroupsResource extends Resource {
         $response = new Response($request);
 
         //check validity of supplied parameters
-        if ($group != intval($group))
+        if ($group !== "all" && $group != intval($group))
             throw InvalidParamException();
-        $group = intval($group);
+        if ($group !== "all")
+            $group = intval($group);
         $outputtype = strtolower($outputtype);
         if ($outputtype !== "json" && $outputtype !== "")
             throw InvalidParamException();
@@ -37,7 +38,7 @@ class channelgroupsResource extends Resource {
         }
         $groupIterator->init($source, $language);
 
-        if ($group == 0){
+        if ($group === 0){
             if ($outputtype === "json"){
                 $response->addHeader('Content-type', 'application/json; charset=utf-8');
                 $jsonarray = array();
@@ -61,17 +62,21 @@ class channelgroupsResource extends Resource {
                 $jsonarray = array();
                 $jsonarray["result"] = array();
                 while ($groupIterator->moveToNextChannelGroup() !== false ){
-                    if ($groupIterator->getCurrentChannelGroupCount() == $group){
-                        $values = $groupIterator->getCurrentChannelGroupArray();
-                        $jsonarray["result"] = $values;
+                    if ($group === "all" || intval($groupIterator->getCurrentChannelGroupCount()) === $group){
+                        $temp = $groupIterator->getCurrentChannelGroupArray();
+                        $temp["channels"] = array();
                         $channelIterator = new channelIterator();
-                        $channelIterator->init1($values['x_label'], $source, $orderby = "UPPER(name) ASC");
+                        $channelIterator->init1($temp['x_label'], $source, $orderby = "UPPER(name) ASC");
                         while ($channelIterator->moveToNextChannel() !== false){
-                            $jsonarray["result"]["channels"][] = array (
+                            $temp["channels"][] = array (
                                 "parameters" => $channelIterator->getCurrentChannelArray(),
                                 "string" => $channelIterator->getCurrentChannelString()
                             );
                         }
+                        if ($group === "all")
+                            $jsonarray["result"][] = $temp;
+                        else
+                            $jsonarray["result"] = $temp;
                     }
                 }
                 $response->body .= json_encode($jsonarray)."\n";
