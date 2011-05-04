@@ -649,8 +649,19 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
                 icon : '/icons/fugue/node-insert-next.png',
                 scope : this,
                 handler : function() {
+                  contextMenu.hide();
                   Ext.getBody().mask(_('Adding channels to channels.conf ...'));
-                  this.addChannelpediaNode(node, true);
+                  var pos = this.store.data.items.length - 1;
+                  var nextChannel = 1;
+                  if (pos >= 0) {
+                    lastRec = this.store.getAt(pos);
+                    while (lastRec && lastRec.get('channel_type') == 1)
+                      lastRec = this.store.getAt(--pos);
+                    
+                    if (lastRec) nextChannel = lastRec.get('channel') + 1;
+                  }
+                  
+                  this.addChannelpediaNode(node, true, nextChannel);
                 }
               }]
           });
@@ -660,14 +671,28 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       }, this);
     },
     
-    addChannelpediaNode: function(node, first) {
+    addChannelpediaNode: function(node, first, nextChannel) {
       if (node.isLeaf() && node.attributes.record) {
-        node.attributes.record['type'] = 0;
-        var lastRec = this.store.getAt(this.store.data.items.length - 1);
-        if (lastRec) {
-          node.attributes.record['channel'] = lastRec.get('channel') + 1;
+        var data = node.attributes.record;
+        data.type = 0;
+        data.channel = nextChannel++;
+        if(data.vpid != '0') {
+          if(data.caid != '0') {
+            data.channel_type = _('TV') + ' ⚷';
+          } else {
+            data.channel_type = _('TV');
+          }
+        } else if(data.apid != '0') {
+          if(data.caid != '0') {
+            data.channel_type = _('Radio') + ' ⚷';
+          } else {
+            data.channel_type = _('Radio');
+          }
+        } else {
+          data.channel_type = _('Data');
         }
-        this.store.add(new Ext.data.Record(node.attributes.record));
+        data.channel_orig = data.channel;
+        this.store.add(new Ext.data.Record(data));
       } else {
         if (node.attributes.groupable) {
           this.store.add(new Ext.data.Record({
@@ -675,21 +700,25 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             name : node.text
           }));
         }
+        
         var isExpanded = node.isExpanded();
         node.expand(false, false, function(node) {
           if (!isExpanded)
             node.collapse(false, false);
           if (node.hasChildNodes()) {
             node.eachChild(function(childNode) {
-              this.addChannelpediaNode(childNode, false);
+              nextChannel = this.addChannelpediaNode(childNode, false, ++nextChannel);
               return true;
             }, this);
           }
-          if (first)
-            Ext.getBody().unmask();
-        }, this);
-        
+          
+        }, this); 
       }
+      
+      if (first)
+        Ext.getBody().unmask();
+      
+      return nextChannel;
       //alert(node.text);
     },
     initClipBoardGrid : function() {

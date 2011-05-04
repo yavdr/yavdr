@@ -21,7 +21,6 @@ node;
 	  // Is there anything in the buffer?  
 	  if (buffer != NULL)  
 	  {  
-		  printf("%s", data);
 		// Append the data to the buffer  
 		buffer->append(data, size * nmemb);  
 	  
@@ -91,7 +90,7 @@ node;
 									child["id"] = key + "/" + key2;
 									child["text"] = key2;
 									child["leaf"] = false;
-									child["draggable"] = true;
+									child["draggable"] = false;
 									child["groupable"] = false;
 									
 									int k = 0;
@@ -121,6 +120,63 @@ node;
 				reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
 			}  
 		} else {
+			string url = "http://channelpedia.yavdr.com/restful/channelgroups/" + node + "/all/json";
+			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+			// Attempt to retrieve the remote page
+			curlResult = curl_easy_perform(curl);  
+
+			// Always cleanup  A
+			curl_easy_cleanup(curl);
+			
+			// Did we succeed?  
+			if (curlResult == CURLE_OK)
+			{
+				Json::Value source;   // will contains the root value after parsing.
+				Json::Reader reader;
+				bool parsingSuccessful = reader.parse( buffer, source );
+				char *dummy = NULL;
+
+				if (parsingSuccessful) {
+					const Json::Value channelgroups = source["result"];
+					if( channelgroups.size() > 0 ) {
+						int i = 0;
+						for( Json::ValueIterator itr = channelgroups.begin() ; itr != channelgroups.end() ; itr++ ) {
+							Json::Value channelgroup = (*itr);
+							if (asprintf(&dummy, "%d", channelgroup["id"].asInt()) > 0) {
+								json[i]["id"] = node + "/" + dummy;
+								json[i]["text"] = channelgroup["friendlyname"];
+								json[i]["leaf"] = false;
+								json[i]["draggable"] = true;
+								json[i]["groupable"] = true;
+								
+								const Json::Value channels = channelgroup["channels"];
+								if( channels.size() > 0 ) {
+									int j = 0;
+									Json::Value children;
+									for( Json::ValueIterator itr2 = channels.begin() ; itr2 != channels.end() ; itr2++ ) {
+										Json::Value channel = (*itr2)["parameters"];
+										children[j]["id"] = channel["x_unique_id"];
+										children[j]["text"] = channel["name"];
+										children[j]["leaf"] = true;
+										children[j]["draggable"] = true;								
+										children[j]["record"] = channel;
+										j++;
+									}
+									json[i]["children"] = children;
+								}
+								
+								i++;
+								free(dummy);
+							}
+						}
+					}
+					reply.out() << json;
+				}
+			} else {  
+				reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
+			}
+
+			/*
 			if (node.find_first_of("/", node.find_first_of("/") + 1) == node.find_last_of("/")) { // three "/"
 				string url = "http://channelpedia.yavdr.com/restful/channelgroups/" + node + "/0/json";
 				curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
@@ -197,7 +253,7 @@ node;
 				} else {  
 					reply.out() << "Error: [" << curlResult << "] - " << errorBuffer;
 				}
-			}
+			}*/
 		}
     }
 		
