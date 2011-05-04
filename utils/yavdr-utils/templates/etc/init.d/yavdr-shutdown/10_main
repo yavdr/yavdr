@@ -11,6 +11,7 @@ case "$1" in
         ;;
   stop)
        log_begin_msg "Stopping $DESC: $NAME"
+       ;;
   *)
         N=/etc/init.d/${0##*/}
         echo "Usage: $N {start|stop}" >&2
