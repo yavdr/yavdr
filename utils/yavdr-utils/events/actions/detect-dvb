@@ -31,12 +31,16 @@ if check_pci "13c2:300a" || check_pci "13c2:300b"; then
   # ist kein treiber gewählt, so installiere den v4l
   SOURCE="SAT"
   DRIVER="v4l-dvb-dkms"
-  dbset vdr.frontend="hdff"
+  dbset vdr.setup="custom"
+  dbset vdr.frontend="disbaled"
+  dbset vdr.backend="hdff"
   /usr/bin/signal-event change-frontend
 
 # SD-FFs
 elif check_pci "1131:7146" ; then
-  dbset vdr.frontend="sdff"
+  dbset vdr.setup="custom"
+  dbset vdr.frontend="disbaled"
+  dbset vdr.backend="hdff"
   /usr/bin/signal-event change-frontend
 fi
 
