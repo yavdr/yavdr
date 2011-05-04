@@ -80,7 +80,22 @@ elif [ "$(dbget vdr.backend)" = "hdff" ]; then
   enable_plugin "extrecmenu"
   enable_plugin "suspendoutput"
   enable_plugin "control"
-  enable_plugin "*dynamite"
+  disable_plugin "*dynamite"
+elif [ "$(dbget vdr.backend)" = "sdff" ]; then
+  enable_plugin "dvbsddevice"
+  disable_plugin "dummydevice"
+  disable_plugin "xine"
+  disable_plugin "xineliboutput"
+  enable_plugin "lcdproc"
+  enable_plugin "imonlcd"
+  enable_plugin "iptv"
+  enable_plugin "text2skin"
+  enable_plugin "menuorg"
+  disable_plugin "yaepghd"
+  enable_plugin "extrecmenu"
+  enable_plugin "suspendoutput"
+  enable_plugin "control"
+  disable_plugin "*dynamite"
 fi
 
 if [ "x$(dbget vdr.plugin.graphtft.enabled)" = "x1" ]; then
