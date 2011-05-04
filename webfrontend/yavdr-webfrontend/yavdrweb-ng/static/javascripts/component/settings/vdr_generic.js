@@ -251,6 +251,11 @@ YaVDR.Component.Settings.VdrGeneric.Setup = Ext.extend(YaVDR.Default.Form, {
           key: 'hdff',
           title: 'TT-premium S2-6400 HD'//,
           //description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.')
+        },
+        {
+          key: 'sdff',
+          title: 'TT-premium SD'//,
+          //description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.')
         }
       ]
 
