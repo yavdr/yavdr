@@ -158,7 +158,8 @@ node;
 										children[j]["id"] = channel["x_unique_id"];
 										children[j]["text"] = channel["name"];
 										children[j]["leaf"] = true;
-										children[j]["draggable"] = true;								
+										children[j]["draggable"] = true;
+										children[j]["checked"] = false;
 										children[j]["record"] = channel;
 										j++;
 									}

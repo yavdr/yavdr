@@ -670,33 +670,61 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       this.channelpediaTree.on('contextmenu', function( node, e ) {
         e.stopEvent();
         
+        var contextMenu = new Ext.menu.Menu();
+        
         if (node.draggable && !node.disabled) {
-          var contextMenu = new Ext.menu.Menu({
-            items : [
-              {
-                text : sprintf(_('Append "%s" to channels.conf'), node.text),
-                icon : '/icons/fugue/node-insert-next.png',
-                scope : this,
-                handler : function() {
-                  contextMenu.hide();
-                  Ext.getBody().mask(_('Adding channels to channels.conf ...'));
-                  var pos = this.store.data.items.length - 1;
-                  var nextChannel = 1;
-                  if (pos >= 0) {
-                    lastRec = this.store.getAt(pos);
-                    while (lastRec && lastRec.get('channel_type') == 1)
-                      lastRec = this.store.getAt(--pos);
-                    
-                    if (lastRec) nextChannel = lastRec.get('channel') + 1;
-                  }
-                  
-                  this.addChannelpediaNode(node, true, nextChannel);
-                }
-              }]
+          contextMenu.add({
+            text : sprintf(_('Append "%s" to channels.conf'), node.text),
+            icon : '/icons/fugue/node-insert-next.png',
+            scope : this,
+            handler : function() {
+              contextMenu.hide();
+              Ext.getBody().mask(_('Adding channels to channels.conf ...'));
+              var pos = this.store.data.items.length - 1;
+              var nextChannel = 1;
+              if (pos >= 0) {
+                lastRec = this.store.getAt(pos);
+                while (lastRec && lastRec.get('channel_type') == 1)
+                  lastRec = this.store.getAt(--pos);
+                
+                if (lastRec) nextChannel = lastRec.get('channel') + 1;
+              }
+              
+              this.addChannelpediaNode(node, true, nextChannel);
+            }
           });
-          // show
-          contextMenu.showAt(e.getXY());          
         }
+    
+        contextMenu.add({
+          text : sprintf(_('Append checked channels to channels.conf'), node.text),
+          icon : '/icons/fugue/node-insert-next.png',
+          scope : this,
+          handler : function() {
+            contextMenu.hide();
+            Ext.getBody().mask(_('Adding channels to channels.conf ...'));
+            var nodes = this.channelpediaTree.getChecked();
+            
+            var pos = this.store.data.items.length - 1;
+            var nextChannel = 1;
+            if (pos >= 0) {
+              lastRec = this.store.getAt(pos);
+              while (lastRec && lastRec.get('channel_type') == 1)
+                lastRec = this.store.getAt(--pos);
+              
+              if (lastRec) nextChannel = lastRec.get('channel') + 1;
+            }
+            var i = 0;
+            for(; i<nodes.length; i++) {
+              var node = nodes[i];
+              nextChannel = this.addChannelpediaNode(node, false, nextChannel);
+              node.getUI().toggleCheck(false);
+            }
+            
+            Ext.getBody().unmask();
+          }
+        });
+        // show
+        contextMenu.showAt(e.getXY());     
       }, this);
       
       this.channelpediaTree.on('beforechildrenrendered', this.checkNode, this);
