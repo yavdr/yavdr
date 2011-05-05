@@ -1,17 +1,14 @@
 . /lib/lsb/init-functions
 
 case "$1" in
-  start)
+   stop)
         log_begin_msg "Starting $DESC: $NAME"
         # wait for vdr to finish
         # finally stop rsyslogd (stop disabled to get vdr stop log=
 	while pidof vdr &> /dev/null ; do sleep 1 ; done
-	/sbin/initctl emit close-poweroff
+	/sbin/initctl emit yavdr-shutdown
         log_end_msg $?
         ;;
-  stop)
-       log_begin_msg "Stopping $DESC: $NAME"
-       ;;
   *)
         N=/etc/init.d/${0##*/}
         echo "Usage: $N {start|stop}" >&2
