@@ -20,14 +20,14 @@ esac
 case $1 in
      hibernate|suspend)
          echo "vdr is going to sleep"
-         initctl emit s3-suspend
+         initctl emit suspend
          ;;
      thaw|resume)
          echo "vdr is going to wakeup"
-         initctl emit s3-resume
+         initctl emit resume
          for INTERFACE in `ifquery --list | grep -v lo`; do restart network-interface INTERFACE=$INTERFACE ; done
          ;;
-     *)  echo "Irgendwer ruft mich total falsch auf."
+     *)  echo "Not a possible option."
          ;;
 esac
 <?cs /if ?>
