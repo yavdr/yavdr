@@ -391,7 +391,6 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
         } else {
           data.name = columns[1];
         }
-
         data.type = 1;
       } else {
         names = columns[0].split(';');
@@ -410,6 +409,7 @@ Ext.extend(YaVDR.ChannelsReader, Ext.data.DataReader, {
         data.nid = columns[10];
         data.tid = columns[11];
         data.rid = columns[12];
+        data.x_unique_id = data.source + '-' + data.nid + '-' + data.tid + '-' + data.sid;
         if(data.vpid != '0') {
           if(data.caid != '0') {
             data.channel_type = _('TV') + ' ⚷';
@@ -552,6 +552,10 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
       this.initClipBoardGrid();
       this.initChannelpediaTree();
 
+      this.store.on('add', this.channelpediaTree.onStoreAdd, this);
+      this.store.on('remove', this.channelpediaTree.onStoreRemove, this);
+      this.store.on('load', this.channelpediaTree.onStoreLoad, this.channelpediaTree);
+      
       this.items = [ new YaVDR.Component.Header({
         region : 'north',
         html : _('Settings')
@@ -635,13 +639,38 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             draggable: false,
             id: 'root',
             leaf: false
+        },
+        onStoreAdd: function(store, records, index ) {
+          for (i = 0; i < records.length; i++) {
+            var node = this.channelpediaTree.getNodeById(records[i].get('x_unique_id'));
+            if (node) node.disable();
+          } 
+        },
+        onStoreRemove: function(store, record, index ) {
+          var node = this.channelpediaTree.getNodeById(record.get('x_unique_id'));
+          if (node) node.enable();
+        },
+        onStoreLoad: function(store, records, options ) {
+          this.enableChilds(this.root);
+          for (i = 0; i < records.length; i++) {
+            var node = this.getNodeById(records[i].get('x_unique_id'));
+            if (node) node.disable();
+          }
+        },
+        enableChilds: function(parent) {
+          if (parent.hasChildNodes()) {
+            parent.eachChild(function(child) {
+              if (child.disabled) child.enable();
+              this.enableChilds(child);
+            }, this);
+          }
         }
       });
       
       this.channelpediaTree.on('contextmenu', function( node, e ) {
         e.stopEvent();
         
-        if (node.draggable) {
+        if (node.draggable && !node.disabled) {
           var contextMenu = new Ext.menu.Menu({
             items : [
               {
@@ -669,52 +698,67 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
           contextMenu.showAt(e.getXY());          
         }
       }, this);
+      
+      this.channelpediaTree.on('beforechildrenrendered', this.checkNode, this);
+    },
+    
+    onNodeLoad: function(loader, node, response) {
+      this.checkNode(node);
+    },
+    checkNode: function(node) {
+      if(this.grid.store.find('x_unique_id', node.id, 0, false, true) != -1)
+        node.disable(); 
+      if (node.hasChildNodes()) {
+        node.eachChild(this.checkNode, this);
+      }
     },
     
     addChannelpediaNode: function(node, first, nextChannel) {
-      if (node.isLeaf() && node.attributes.record) {
-        var data = node.attributes.record;
-        data.type = 0;
-        data.channel = nextChannel++;
-        if(data.vpid != '0') {
-          if(data.caid != '0') {
-            data.channel_type = _('TV') + ' ⚷';
+      if (!node.disabled) {
+        if (node.isLeaf() && node.attributes.record) {
+          var data = node.attributes.record;
+          data.type = 0;
+          data.channel = nextChannel++;
+          if(data.vpid != '0') {
+            if(data.caid != '0') {
+              data.channel_type = _('TV') + ' ⚷';
+            } else {
+              data.channel_type = _('TV');
+            }
+          } else if(data.apid != '0') {
+            if(data.caid != '0') {
+              data.channel_type = _('Radio') + ' ⚷';
+            } else {
+              data.channel_type = _('Radio');
+            }
           } else {
-            data.channel_type = _('TV');
+            data.channel_type = _('Data');
           }
-        } else if(data.apid != '0') {
-          if(data.caid != '0') {
-            data.channel_type = _('Radio') + ' ⚷';
-          } else {
-            data.channel_type = _('Radio');
-          }
+          data.channel_orig = data.channel;
+          this.store.add(new Ext.data.Record(data));
         } else {
-          data.channel_type = _('Data');
-        }
-        data.channel_orig = data.channel;
-        this.store.add(new Ext.data.Record(data));
-      } else {
-        if (node.attributes.groupable) {
-          this.store.add(new Ext.data.Record({
-            type : 1,
-            name : node.text
-          }));
-        }
-        
-        var isExpanded = node.isExpanded();
-        node.expand(false, false, function(node) {
-          if (!isExpanded)
-            node.collapse(false, false);
-          if (node.hasChildNodes()) {
-            node.eachChild(function(childNode) {
-              nextChannel = this.addChannelpediaNode(childNode, false, ++nextChannel);
-              return true;
-            }, this);
+          if (node.attributes.groupable) {
+            this.store.add(new Ext.data.Record({
+              type : 1,
+              name : node.text
+            }));
           }
           
-        }, this); 
+          var isExpanded = node.isExpanded();
+          node.expand(false, false, function(node) {
+            if (!isExpanded)
+              node.collapse(false, false);
+            if (node.hasChildNodes()) {
+              node.eachChild(function(childNode) {
+                nextChannel = this.addChannelpediaNode(childNode, false, ++nextChannel);
+                return true;
+              }, this);
+            }
+            
+          }, this); 
+        }
       }
-      
+
       if (first)
         Ext.getBody().unmask();
       
