@@ -43,7 +43,7 @@ if check_pci "13c2:300a" || check_pci "13c2:300b"; then
 elif check_pci2 "1131:7146" ; then
   dbset vdr.setup="custom"
   dbset vdr.frontend="disbaled"
-  dbset vdr.backend="hdff"
+  dbset vdr.backend="sdff"
   /usr/bin/signal-event change-frontend
 fi
 
