@@ -100,7 +100,8 @@ else
 fi
 
 # update menuorg
-process-template /var/lib/vdr/plugins/menuorg.xml
+process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
+
 
 # restart openbox if needed
 if [ "$1" != "post-install" ]; then
