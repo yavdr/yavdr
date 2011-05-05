@@ -1,3 +1,5 @@
 #!/bin/bash
 
-start vdr-frontend
+if [ "$VDR_FRONTEND" = "sxfe" ] || [ "$VDR_FRONTEND" = "xine" ]; then
+  start vdr-frontend
+fi

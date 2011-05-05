@@ -1,4 +1,5 @@
 #!/bin/bash
 
-start launcher 
-
+if [ ! "$(dbget vdr.backend)" = "disabled" ]; then
+  start launcher
+fi

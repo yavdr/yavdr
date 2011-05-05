@@ -101,9 +101,8 @@ fi
 
 # restart openbox if needed
 if [ "$1" != "post-install" ]; then
-  if [ "$(dbget vdr.frontend)" = "disabled" ]; then
-    stop openbox &> /dev/null
-  else
+  stop openbox &> /dev/null
+  if [ ! "$(dbget vdr.frontend)" = "disabled" ]; then
     start openbox || /bin/true
   fi
 fi

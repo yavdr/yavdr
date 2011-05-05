@@ -1,3 +1,5 @@
 #!/bin/bash
 
-start vdr
+if [ ! "$(dbget vdr.backend)" = "disabled" ]; then
+  start vdr
+fi

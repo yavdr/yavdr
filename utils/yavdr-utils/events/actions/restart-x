@@ -1,4 +1,6 @@
 #!/bin/bash
 
-stop openbox
-start openbox
+if [ ! "$(dbget vdr.frontend)" = "disabled" ]; then
+  stop openbox &> /dev/null
+  start openbox &> /dev/null
+fi
