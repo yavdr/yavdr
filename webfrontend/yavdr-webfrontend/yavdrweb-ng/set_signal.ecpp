@@ -53,7 +53,7 @@ if (
         {
             int err = dbset("vdr.frontend=%s", value2.c_str());
         }
-        if ((value3 == "xine") || (value3 == "sxfe") || (value3 == "streaming") || (value3 == "disabled") || (value3 == "hdff"))
+        if ((value3 == "xine") || (value3 == "xineliboutput") || (value3 == "streaming") || (value3 == "disabled") || (value3 == "hdff"))
         {
             int err = dbset("vdr.backend=%s", value3.c_str());
         }
