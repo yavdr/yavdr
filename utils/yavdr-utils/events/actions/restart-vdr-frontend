@@ -1,8 +1,5 @@
 #!/bin/bash
-
-VDR_FRONTEND="$(dbget vdr.frontend)"
-
-if [ "$VDR_FRONTEND" = "sxfe" ] || [ "$VDR_FRONTEND" = "xine" ]; then
+if [ "$(dbget vdr.frontend)" = "sxfe" ] || [ "$(dbget vdr.frontend)" = "xine" ]; then
   stop vdr-frontend
   start vdr-frontend
 fi
