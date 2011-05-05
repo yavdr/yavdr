@@ -69,7 +69,7 @@ elif [ "$(dbget vdr.backend)" = "streaming" ]; then
   disable_plugin "suspendoutput"
   enable_plugin "control"
   enable_plugin "*dynamite"
-elif [ "$(dbget vdr.backend)" = "hdff" || "$(dbget vdr.backend)" = "sdff" ]; then
+elif [ "$(dbget vdr.backend)" = "hdff" ] || [ "$(dbget vdr.backend)" = "sdff" ]; then
   if [ "$(dbget vdr.backend)" = "sdff" ]; then
     enable_plugin "dvbsddevice"
     disable_plugin "dvbhddevice"
