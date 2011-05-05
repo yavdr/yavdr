@@ -24,12 +24,12 @@ if (key == "webfrontend.language")
 	//TODO: umstellen auf dir lookup
     if (
     	(value == "de") ||
-    	(value == "en") ||
-    	(value == "nl") || 
-    	(value == "fr") || 
-        (value == "pt") || 
-        (value == "zh") || 
-    	(value == "it")) {
+    	(value == "en")) {
+//    	(value == "nl") || 
+//	(value == "fr") || 
+//	(value == "pt") || 
+//	(value == "zh") || 
+//	(value == "it")) {
         int err = dbset("%s=%s", key.c_str(), value.c_str());
     } 
     success = "true";
