@@ -1,0 +1,52 @@
+#!/bin/bash
+
+exit-error () {
+echo "Please provide at least 3 parameter:"
+echo "  xml-node-set XMLPATH FILE SNIPPET "
+echo "   XMLPATH .. path to the node to replace"
+echo "   FILE    .. path to the file you want to replace the node"
+echo "   SNIPPET .. path to the content you want to replace it with"
+exit 1
+}
+
+[ "$1" = "" ] && exit-error || XMLNODE=$1
+[ "$2" = "" ] && exit-error || FILE=$1
+[ "$3" = "" ] && exit-error || SNIPPET=$1
+
+TEMP=$(mktemp --tmpdir=/tmp)
+OUT=$(mktemp --tmpdir=/tmp)
+
+cat <<-! > $TEMP
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+<xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="node() | @*">
+<xsl:copy>
+<xsl:apply-templates select="node() | @*"/>
+</xsl:copy>
+</xsl:template>
+!
+
+process-template $SNIPPET
+cat $SNIPPET >> $TEMP
+
+cat <<-! >> $TEMP
+</xsl:template>
+
+</xsl:stylesheet>
+!
+
+xsltproc $TEMP $FILE > $OUT
+
+cp $OUT $FILE
+
+rm -f $OUT
+rm -f $TEMP
+rm -f $SNIPPET
+
+
