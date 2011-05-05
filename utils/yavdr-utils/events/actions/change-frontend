@@ -99,6 +99,9 @@ else
   disable_plugin "graphtft"
 fi
 
+# update menuorg
+process-template /var/lib/vdr/plugins/menuorg.xml
+
 # restart openbox if needed
 if [ "$1" != "post-install" ]; then
   stop openbox &> /dev/null
@@ -113,3 +116,4 @@ if [ "$(dbget vdr.backend)" = "disabled" ]; then
 else
   rm /etc/init/vdr.override
 fi
+
