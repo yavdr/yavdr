@@ -22,7 +22,7 @@ TNTNET=env ${EXTRA_ENV} tntnet
 CXXFLAGS+=-I/usr/include -I/usr/include/yavdr -I/usr/include/ClearSilver -I/usr/include/sundtek -fPIC -g #-O2
 #LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -lneo_cs -lpam -lXNVCtrl -lX11 -lXext -ljson -lboost_regex -L/usr/lib/yavdr -lyavdrdb -lsvdrp -lyavdrutils
 
-LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -ljson -L/opt/lib/ -lmediaclient -lmcsimple -L/usr/lib/yavdr -lyavdrdb
+LDFLAGS+=-shared -L/usr/lib -ltntnet -lneo_utl -ljsoncpp -L/opt/lib/ -lmediaclient -lmcsimple -L/usr/lib/yavdr -lyavdrdb
 
 .ecpp.cpp:
 	${ECPPC} ${ECPPFLAGS} ${ECPPFLAGS_CPP} $<

@@ -31,7 +31,7 @@ extern "C" {
 };
 
 #include <yavdr/common.h>
-#include <jsoncpp/json.h>
+#include <jsoncpp/json.hpp>
 
 using namespace std;
 
