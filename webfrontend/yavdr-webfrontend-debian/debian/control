@@ -2,13 +2,13 @@ Source: yavdr-webfrontend
 Section: misc
 Priority: extra
 Maintainer: Gerald Dachs <gda@dachsweb.de>
-Build-Depends: debhelper (>= 7.0.50~), libtntnet-dev, libpam0g-dev, flex, libx11-dev, nvidia-settings, libxext-dev, libjsoncpp-dev, libboost-dev, libboost-regex-dev, libsvdrp-dev, yavdr-utils-dev, clearsilver-dev, libcurl4-openssl-dev
+Build-Depends: debhelper (>= 7.0.50~), libtntnet-dev (>= 2.0), libpam0g-dev, flex, libx11-dev, nvidia-settings, libxext-dev, libjsoncpp-dev, libboost-dev, libboost-regex-dev, libsvdrp-dev, yavdr-utils-dev, clearsilver-dev, libcurl4-openssl-dev
 Standards-Version: 3.9.1
 Homepage: http://yavdr.origo.ethz.ch/
 
 Package: yavdr-webfrontend
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-ext, libxext6, libjsoncpp0, libjs-ext-examples, tntnet, yavdr-i18n, sqlite3, silk-icons, fugue-icons, libsvdrp0, yavdr-utils (>=0.3.0.2557), update-notifier-common, libcurl3
+Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-ext, libxext6, libjsoncpp0, libjs-ext-examples, tntnet (>= 2.0), yavdr-i18n, sqlite3, silk-icons, fugue-icons, libsvdrp0, yavdr-utils (>=0.3.0.2557), update-notifier-common, libcurl3
 Conflicts: yavdr-utils (<=0.3.0.2556), yavdr-startup (<=0.3.0.2534)
 Suggests: lirc
 Description: WEB front end for yaVDR
