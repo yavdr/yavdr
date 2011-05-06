@@ -81,6 +81,26 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    int pci_bus;
+    int pci_device;
+    int pci_func;
+    ret = XNVCTRLQueryTargetAttribute(dpy,
+										NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+										0,
+										NV_CTRL_PCI_BUS,
+										&pci_bus);
+	ret = XNVCTRLQueryTargetAttribute(dpy,
+										NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+										0,
+										NV_CTRL_PCI_DEVICE,
+										&pci_device);
+	ret = XNVCTRLQueryTargetAttribute(dpy,
+										NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+										0,
+										NV_CTRL_PCI_FUNCTION,
+										&pci_func);
+	dbset("system.hardware.nvidia.busid=%i:%i:%i", pci_bus, pci_device, pci_func);
+
     nDisplayDevice = 0;
     for (mask = 1; mask < (1 << 24); mask <<= 1) {
         if (display_devices & mask) {
