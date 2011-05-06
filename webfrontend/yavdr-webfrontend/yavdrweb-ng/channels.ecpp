@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <dirent.h>
-#include <jsoncpp/json.h>
+#include <jsoncpp/json.hpp>
 
 using namespace std;
 </%pre><%args>

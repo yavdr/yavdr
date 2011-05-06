@@ -1,7 +1,7 @@
 <%pre>
 #include <stdio.h>
 #include <string>
-#include <jsoncpp/json.h>
+#include <jsoncpp/json.hpp>
 
 #define CF_UNFILTERED                       0x00000000 //remove nothing, leave all attributes
 #define CF_FILTER_GROUP_AND_NUMBER          0x00000001 //remove channel group name and channel number

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string>
-#include <jsoncpp/json.h>
+#include <jsoncpp/json.hpp>
 
 extern "C" {
 	#include <ClearSilver.h>

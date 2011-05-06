@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <ClearSilver.h>
 #include <yavdr/common.h>
-#include <jsoncpp/json.h>
+#include <jsoncpp/json.hpp>
 #include <boost/regex.hpp>
 
 using namespace std;
