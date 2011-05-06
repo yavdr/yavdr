@@ -1,6 +1,6 @@
 
-start on openbox-started
-stop on stopping openbox
+#start on openbox-started
+#stop on stopping openbox
 
 
 env DISPLAY=:1
