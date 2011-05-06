@@ -37,6 +37,9 @@ if [ "$(dbget vdr.backend)" = "xineliboutput" ]; then
   disable_plugin "dummydevice"
   disable_plugin "control"
   enable_plugin "*dynamite"
+
+process-template /etc/init/xcompmgr.conf
+
 elif [ "$(dbget vdr.backend)" = "xine" ]; then
   disable_plugin "dvbhddevice"
   disable_plugin "dvbsddevice"
@@ -53,6 +56,9 @@ elif [ "$(dbget vdr.backend)" = "xine" ]; then
   disable_plugin "dummydevice"
   disable_plugin "control"
   enable_plugin "*dynamite"
+
+rm -f /etc/init/xcompmgr.conf
+
 elif [ "$(dbget vdr.backend)" = "streaming" ]; then
   disable_plugin "dvbhddevice"
   disable_plugin "dvbsddevice"
@@ -69,6 +75,9 @@ elif [ "$(dbget vdr.backend)" = "streaming" ]; then
   disable_plugin "suspendoutput"
   enable_plugin "control"
   enable_plugin "*dynamite"
+
+rm -f /etc/init/xcompmgr.conf
+
 elif [ "$(dbget vdr.backend)" = "hdff" ] || [ "$(dbget vdr.backend)" = "sdff" ]; then
   if [ "$(dbget vdr.backend)" = "sdff" ]; then
     enable_plugin "dvbsddevice"
@@ -90,6 +99,9 @@ elif [ "$(dbget vdr.backend)" = "hdff" ] || [ "$(dbget vdr.backend)" = "sdff" ];
   enable_plugin "suspendoutput"
   enable_plugin "control"
   disable_plugin "*dynamite"
+
+rm -f /etc/init/xcompmgr.conf
+
 fi
 
 # graphtft support
