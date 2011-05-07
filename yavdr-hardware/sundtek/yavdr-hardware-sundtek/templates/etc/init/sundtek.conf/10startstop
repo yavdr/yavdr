@@ -1,2 +1,2 @@
-start on ((local-filesystems and net-device-up IFACE!=lo) or resume)
-stop on (runlevel [016] or suspend)
+start on (local-filesystems and net-device-up IFACE!=lo)
+stop on runlevel [016]

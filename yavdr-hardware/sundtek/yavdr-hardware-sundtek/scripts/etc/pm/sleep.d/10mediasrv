@@ -1,0 +1,15 @@
+#!/bin/sh
+
+case $1 in
+     hibernate|suspend)
+         echo "sundtek is going to sleep"
+         initctl stop sundtek
+         ;;
+     thaw|resume)
+         echo "sundtek is going to wakeup"
+         initctl start sundtek
+         ;;
+     *)  echo "Not a possible option."
+         ;;
+esac
+
