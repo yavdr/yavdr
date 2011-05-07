@@ -123,7 +123,7 @@ msgid "Display"
 msgstr "Anzeigeeinstellungen"
 
 msgid "Rescan displays"
-msgstr "Bildwiederholrate"
+msgstr "Erneut nach vorhandenen Bildschirmen suchen"
 
 msgid "Refresh rate"
 msgstr "Bildwiederholrate"
@@ -141,7 +141,7 @@ msgid "Select resolution"
 msgstr "Auflösung wählen"
 
 msgid "Resolution"
-msgstr " Auflösung"
+msgstr "Auflösung"
 
 msgid "Nvidia overscan compensation"
 msgstr "Nvidia Overscan-Kompensation"
@@ -171,7 +171,7 @@ msgid "disabled (less than 2 displays found)"
 msgstr "deaktiviert (weniger als 2 Bildschirme gefunden)"
 
 msgid "Rescan display. Displays may flicker."
-msgstr "Erneut Bildschirm Suchen"
+msgstr "Erneut Bildschirm Suchen. Bildschirm kann flackern"
 
 msgid "Rescan display failed."
 msgstr "Erneute Bildschirmsuche fehlgeschlagen"
@@ -276,7 +276,7 @@ msgid "Fake suspend to disk"
 msgstr "Fake suspend to disk"
 
 msgid "Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
-msgstr ""
+msgstr "Alternative für Suspend to RAM. Kann als Ersatz für problematische Hardware genommen werden."
 
 msgid "Shutdown"
 msgstr "System herunterfahren"
@@ -288,13 +288,13 @@ msgid "reboot PowerOff-kernel"
 msgstr "Rechner Neu starten PowerOff-kernel"
 
 msgid "Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
-msgstr ""
+msgstr "Manche Hardware braucht einen PowerOff Kernel um den Rechner erfolgreich herunterzufahren. Wählen Sie das, sollten Sie das Problem haben."
 
 msgid "Without timer wakeup."
 msgstr "Ohne Timer-gesteuertem Aufwachen"
 
 msgid "ACPI timer wakeup. YaVDR default setting."
-msgstr ""
+msgstr "ACPI Zeitgesteuertes Aufwecken. YaVDR Voreinstellung"
 
 msgid "You need a special nvram configuration to use it."
 msgstr "Sie brauchen eine spezielle/extra Konfiguration um Nvram-wakeup zu benutzen."
@@ -315,7 +315,7 @@ msgid "Network"
 msgstr "Netzwerk"
 
 msgid "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
-msgstr ""
+msgstr "Definieren Sie hier den Host und die Freigabe welche automatisch eingehängt werden soll. Bitte die Freigaben eintragen \"host:/pfad/zur/freigabe\"."
 
 msgid "Add"
 msgstr "Hinzufügen"
@@ -492,22 +492,22 @@ msgid "Package information"
 msgstr "Paket Informationen"
 
 msgid "Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
-msgstr ""
+msgstr "Installierte Pakete (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
 
 msgid "Apt history of recently installed packages"
-msgstr ""
+msgstr "APT-Anzeige kürzlich installierter Pakete"
 
 msgid "LIRC hardware configuration"
-msgstr ""
+msgstr "LIRC Hardware Konfiguration"
 
 msgid "LIRCD configuration"
-msgstr ""
+msgstr "LIRCD Konfiguration"
 
 msgid "System information"
 msgstr "System Informationen"
 
 msgid "System load"
-msgstr ""
+msgstr "Systemauslastung"
 
 msgid "Network status"
 msgstr "Netzwerk Status"
@@ -534,7 +534,7 @@ msgid "Xorg server log"
 msgstr "Xorg server log"
 
 msgid "X-Server configuration (only if NVIDIA VDPAU present)"
-msgstr ""
+msgstr "X-Server Konfiguration (nur bei vorhandenem NVIDIA-VDPAU)"
 
 msgid "X-Server logfile"
 msgstr "X-Server Aufzeichnungsdatei"
@@ -819,5 +819,5 @@ msgid "Set XBMC defaults"
 msgstr "XBMC Konfiguration zurücksetzen"
 
 msgid "enabled"
-msgstr "aktiviert"
+msgstr "aktiviert"You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\".
 

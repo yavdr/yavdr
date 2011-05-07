@@ -296,7 +296,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
               name: 'x11_graphtft',
               xtype: 'checkbox',
               fieldLabel: _('GraphTFT'),
-              boxLabel: 'enabled',
+              boxLabel: _('enabled'),
               inputValue: 1,
               disabled: true
             }
