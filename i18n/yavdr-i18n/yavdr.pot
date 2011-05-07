@@ -251,7 +251,7 @@ msgstr ""
 msgid "Xine SD deinterlacer"
 msgstr ""
 
-msgid "diabled (less than 2 displays found)"
+msgid "disabled (less than 2 displays found)"
 msgstr ""
 
 msgid "Rescan display. Displays may flicker."
@@ -356,7 +356,7 @@ msgstr ""
 msgid "Suspend to RAM"
 msgstr ""
 
-msgid "Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
+msgid "Switches the computer into energy saving mode. Only RAM will be supplied with Power."
 msgstr ""
 
 msgid "Fake suspend to disk"
