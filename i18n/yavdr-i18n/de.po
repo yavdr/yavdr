@@ -819,5 +819,5 @@ msgid "Set XBMC defaults"
 msgstr "XBMC Konfiguration zurücksetzen"
 
 msgid "enabled"
-msgstr "aktiviert"You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\".
+msgstr "aktiviert"
 
