@@ -513,7 +513,7 @@ msgid "Network status"
 msgstr "Netzwerk Status"
 
 msgid "Filesystem usage"
-msgstr ""
+msgstr "Festplattenbelegung"
 
 msgid "Kernel log"
 msgstr "Kernel log"
