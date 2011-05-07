@@ -284,7 +284,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
               name: 'x11_dualhead',
               xtype: 'checkbox',
               fieldLabel: _('Dual-Head Mode'),
-              boxLabel: 'enabled',
+              boxLabel: _('enabled'),
               inputValue: 1,
               listeners: {
                 scope: this,
@@ -366,7 +366,7 @@ YaVDR.Component.Settings.HwDisplay.Display = Ext.extend(YaVDR.Default.Form, {
           basic.getComponent('x11_graphtft').enable().setValue(graphtft == '1');
         } else {
           // Disable Checkox und Update Texts
-          basic.getComponent('x11_dualhead').disable().setBoxLabel(_('diabled (less than 2 displays found)'));
+          basic.getComponent('x11_dualhead').disable().setBoxLabel(_('disabled (less than 2 displays found)'));
         }
 
         // Setzte Deinterlacer Settings

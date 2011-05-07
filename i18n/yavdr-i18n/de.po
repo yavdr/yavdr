@@ -167,14 +167,14 @@ msgstr "Voreinstellung"
 msgid "Xine SD deinterlacer"
 msgstr "Xine SD deinterlacer"
 
-msgid "diabled (less than 2 displays found)"
-msgstr ""
+msgid "disabled (less than 2 displays found)"
+msgstr "deaktiviert (weniger als 2 Bildschirme gefunden)"
 
 msgid "Rescan display. Displays may flicker."
-msgstr ""
+msgstr "Erneut Bildschirm Suchen"
 
 msgid "Rescan display failed."
-msgstr ""
+msgstr "Erneute Bildschirmsuche fehlgeschlagen"
 
 msgid "Default frequency"
 msgstr "Frequenz Voreinstellung"
@@ -249,7 +249,7 @@ msgid "Webfrontend language"
 msgstr "Webfrontend Sprache"
 
 msgid "Shutdown and wakeup"
-msgstr ""
+msgstr "PC-Abschalten und PC-Aufwecken"
 
 msgid "Grub"
 msgstr "Grub"
@@ -269,8 +269,8 @@ msgstr "\"Sprache\""
 msgid "Suspend to RAM"
 msgstr "Suspend to RAM"
 
-msgid "Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR."
-msgstr ""
+msgid "Switches the computer into energy saving mode. Only RAM will be supplied with Power."
+msgstr "Schaltet den Computer in den Energiesparmodus. Nur RAM wird mit Strom versorgt."
 
 msgid "Fake suspend to disk"
 msgstr "Fake suspend to disk"
@@ -303,13 +303,13 @@ msgid "Shutdown method"
 msgstr "Abschalt Methode"
 
 msgid "Wakeup method"
-msgstr "Aufwach Methode"
+msgstr "Aufweck-Methode"
 
 msgid "Disable USB-wakeup"
 msgstr "USB-wakeup abschalten"
 
 msgid "Deactivate USB-wakeup, for incompatible hardware"
-msgstr ""
+msgstr "USB-wakeup deaktivieren bei inkompatibler Hardware"
 
 msgid "Network"
 msgstr "Netzwerk"
@@ -363,13 +363,13 @@ msgid "Version"
 msgstr "Version"
 
 msgid "Name of the group"
-msgstr ""
+msgstr "Name der Gruppe"
 
 msgid "Name"
 msgstr "Name"
 
 msgid "Next channel no."
-msgstr ""
+msgstr "Nächste Kanalnummer"
 
 msgid "\"ChannelsReader.read: Channels not available\""
 msgstr ""
@@ -378,7 +378,7 @@ msgid "Channels saved"
 msgstr "Kanäle gespeichert"
 
 msgid "generated channels.conf"
-msgstr ""
+msgstr "generierte channels.conf"
 
 msgid "Channels"
 msgstr "Kanäle"
@@ -447,10 +447,10 @@ msgid "Lifeguard"
 msgstr "Lifeguard"
 
 msgid "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
-msgstr ""
+msgstr "VDR-Lifeguard untersucht mit den ausgewählten Begriffen (siehe Auswahl), ob ein Herunterfahren des Rechners erlaubt ist. Bitte wählen Sie die Einzelnen Punkte, welche nicht durch ein Herunterfahren des Rechners nichtr unterbrochen werden sollen. Nicht gewählt bedeutet der Rechner blockiert nicht das Herunterfahren"
 
-msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
-msgstr ""
+msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe."
+msgstr "Die Auswahl gebraucht das Xineliboutput Plugin mit dem VDR-sxfe Frontend"
 
 msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
 msgstr ""
@@ -465,7 +465,7 @@ msgid "Video Output"
 msgstr "Video Ausgabe"
 
 msgid "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
-msgstr ""
+msgstr "Überschreibt die falsche, nicht DVB-Konforme EPG-Kodierung, wie z.B die von Sky"
 
 msgid "Charset override"
 msgstr ""
@@ -477,16 +477,16 @@ msgid "Refresh"
 msgstr "Neu laden"
 
 msgid "Go to the end"
-msgstr ""
+msgstr "An das Ende"
 
 msgid "ALSA status information"
 msgstr "ALSA Status Informationen"
 
 msgid "ALSA device list"
-msgstr ""
+msgstr "ALSA Geräteliste"
 
 msgid "ALSA custom sound configuration"
-msgstr ""
+msgstr "ALSA Benutzerspezifische Audio-Konfiguration"
 
 msgid "Package information"
 msgstr "Paket Informationen"
@@ -522,10 +522,10 @@ msgid "Webserver logfile"
 msgstr "Webserver logfile"
 
 msgid "VDR basic configuration"
-msgstr ""
+msgstr "VDR Grund-Einstellungen"
 
 msgid "VDR setup.conf"
-msgstr ""
+msgstr "VDR setup.conf"
 
 msgid "VDR remote.conf"
 msgstr "VDR remote.conf"
@@ -810,10 +810,14 @@ msgid "You can configure your sundtek DVB hardware here."
 msgstr "Konfigurieren sie ihre Sundtek DVB Hardware hier."
 
 msgid "If you want to use VDR with a TT-premium S2-6400 HD."
-msgstr ""
+msgstr "Für VDR mit einer TT-Premium S2-6400 HD."
 
 msgid "Language"
 msgstr "Sprache"
 
 msgid "Set XBMC defaults"
-msgstr ""
+msgstr "XBMC Konfiguration zurücksetzen"
+
+msgid "enabled"
+msgstr "aktiviert"
+

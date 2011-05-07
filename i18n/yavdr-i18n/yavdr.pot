@@ -547,7 +547,7 @@ msgstr ""
 msgid "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
 msgstr ""
 
-msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR"
+msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe."
 msgstr ""
 
 msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
@@ -874,6 +874,9 @@ msgid "no"
 msgstr ""
 
 msgid "Set XBMC defaults"
+msgstr ""
+
+msgid "enabled"
 msgstr ""
 
 #: end web front end

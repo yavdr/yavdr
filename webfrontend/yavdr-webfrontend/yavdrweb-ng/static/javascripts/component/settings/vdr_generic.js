@@ -151,7 +151,7 @@ YaVDR.Component.Settings.VdrGeneric.Setup = Ext.extend(YaVDR.Default.Form, {
         {
           key: 'sxfe',
           title: 'vdr-sxfe@vdr-plugin-xineliboutput',
-          description: _('This choice is using the xineliboutput plugin with frontend vdr-sxfe. This is the default for yaVDR')
+          description: _('This choice is using the xineliboutput plugin with frontend vdr-sxfe.')
         },
         {
           key: 'xine',

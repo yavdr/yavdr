@@ -145,7 +145,7 @@ YaVDR.Component.Settings.SystemGeneric.Shutdown = Ext.extend(YaVDR.Default.Form,
         {
           key: 's3',
           title: _('Suspend to RAM'),
-          description: _('Switches the computer into energy saving mode. Only RAM will be supplied with Power. This is the default for yaVDR.')
+          description: _('Switches the computer into energy saving mode. Only RAM will be supplied with Power.')
         },
         {
           key: 's4',
