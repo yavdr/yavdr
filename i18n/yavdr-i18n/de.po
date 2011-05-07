@@ -315,7 +315,7 @@ msgid "Network"
 msgstr "Netzwerk"
 
 msgid "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
-msgstr "Definieren Sie hier den Host und die Freigabe welche automatisch eingehängt werden soll. Bitte die Freigaben eintragen \"host:/pfad/zur/freigabe\"."
+msgstr "Definieren Sie hier den Host und die Freigabe welche automatisch eingehängt werden soll. Bitte die Freigaben eintragen, in der Form: \"host:/pfad/zur/freigabe\"."
 
 msgid "Add"
 msgstr "Hinzufügen"
@@ -324,16 +324,16 @@ msgid "Delete"
 msgstr "Löschen"
 
 msgid "The name is missing"
-msgstr ""
+msgstr "Der Name fehlt"
 
 msgid "load new information from internet"
-msgstr ""
+msgstr "neue Informationen aus dem Internet laden"
 
 msgid "remove unneeded packages"
-msgstr ""
+msgstr "entferne unnötige Pakete"
 
 msgid "clears out the local repository of retrieved package file"
-msgstr ""
+msgstr "Lokales Repository aufräumen"
 
 msgid "Install"
 msgstr "Installieren"
@@ -357,7 +357,7 @@ msgid "Description"
 msgstr "Beschreibung"
 
 msgid "Please select a package to see additional details."
-msgstr ""
+msgstr "Bitte win Paket anwählen um zusätzliche Informationen zu erhalten."
 
 msgid "Version"
 msgstr "Version"
@@ -435,7 +435,7 @@ msgid "Delete selection"
 msgstr "Auswahl löschen"
 
 msgid "Here you can make general setting for and around VDR."
-msgstr ""
+msgstr "Machen Sie hier die Allgemeinen Einstellungen für und um VDR"
 
 msgid "Lifeguard monitoring items"
 msgstr "Lifeguard Überwachungs Punkte"
@@ -447,7 +447,7 @@ msgid "Lifeguard"
 msgstr "Lifeguard"
 
 msgid "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
-msgstr "VDR-Lifeguard untersucht mit den ausgewählten Begriffen (siehe Auswahl), ob ein Herunterfahren des Rechners erlaubt ist. Bitte wählen Sie die Einzelnen Punkte, welche nicht durch ein Herunterfahren des Rechners nichtr unterbrochen werden sollen. Nicht gewählt bedeutet der Rechner blockiert nicht das Herunterfahren"
+msgstr "VDR-Lifeguard untersucht mit den ausgewählten Begriffen (siehe Auswahl), ob ein Herunterfahren des Rechners erlaubt ist. Bitte wählen Sie die Einzelnen Punkte, welche durch ein Herunterfahren des Rechners nicht unterbrochen werden sollen. Nicht gewählt bedeutet der Rechner blockiert nicht das Herunterfahren"
 
 msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe."
 msgstr "Die Auswahl gebraucht das Xineliboutput Plugin mit dem VDR-sxfe Frontend"
@@ -456,7 +456,7 @@ msgid "This is an alternative frontend. It is using the xine plugin using Xine f
 msgstr ""
 
 msgid "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
-msgstr ""
+msgstr "Wollen Sie VDR nur als Backend benutzen für XBMC und mit XBMC TV sehen, dann ist das Ihre Wahl."
 
 msgid "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
 msgstr ""
@@ -468,7 +468,7 @@ msgid "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
 msgstr "Überschreibt die falsche, nicht DVB-Konforme EPG-Kodierung, wie z.B die von Sky"
 
 msgid "Charset override"
-msgstr ""
+msgstr "Zeichensatz überschreiben"
 
 msgid "Diagnostics"
 msgstr "Diagnostik"
