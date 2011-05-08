@@ -395,8 +395,8 @@ msgstr "Neu Gruppe hinzufügen"
 msgid "Please enter the group name:"
 msgstr "Neuer Gruppenname:"
 
-msgid "\"Display channels.conf\""
-msgstr "\"channels.conf anzeigen\""
+msgid "Display channels.conf"
+msgstr "channels.conf anzeigen"
 
 msgid "\"Channel\""
 msgstr "\"Kanal\""

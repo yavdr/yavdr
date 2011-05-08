@@ -475,7 +475,7 @@ msgstr ""
 msgid "Please enter the group name:"
 msgstr ""
 
-msgid "\"Display channels.conf\""
+msgid "Display channels.conf"
 msgstr ""
 
 msgid "\"Channel\""
