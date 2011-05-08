@@ -821,3 +821,6 @@ msgstr "XBMC Konfiguration zurücksetzen"
 msgid "enabled"
 msgstr "aktiviert"
 
+msgid "Edit"
+msgstr "Bearbeiten"
+

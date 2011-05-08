@@ -879,6 +879,9 @@ msgstr ""
 msgid "enabled"
 msgstr ""
 
+msgid "Edit"
+msgstr ""
+
 #: end web front end
 
 
