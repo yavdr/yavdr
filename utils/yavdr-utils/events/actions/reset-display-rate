@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export DISPLAY=:1`dbget vdr.tempdisplay`
+
+if [ "$DISPLAY" = ":1" ]; then
+  RATE="$(dbget system.x11.display.0.rate)"
+else
+  RATE="$(dbget system.x11.display.1.rate)"
+fi
+
+if [ ! "$RATE" = "" ]; then
+  xrandr -r $RATE
+fi
