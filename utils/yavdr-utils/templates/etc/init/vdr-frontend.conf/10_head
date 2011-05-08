@@ -13,6 +13,7 @@ respawn
 
 pre-start script
 if [ -e /tmp/.standalone ]; then
+   vdr-dbus-send /Remote remote.Disable ||:
    exit 1
 fi
 end script

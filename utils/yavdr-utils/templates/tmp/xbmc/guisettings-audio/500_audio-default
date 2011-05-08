@@ -2,7 +2,7 @@
    <audiooutput>
         <ac3passthrough>true</ac3passthrough>
         <audiodevice>default</audiodevice>
-        <channellayout>0</channellayout>
+        <channellayout>9</channellayout>
         <customdevice></customdevice>
         <custompassthrough></custompassthrough>
         <dontnormalizelevels>true</dontnormalizelevels>
