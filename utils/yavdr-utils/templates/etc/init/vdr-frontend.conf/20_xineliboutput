@@ -3,7 +3,7 @@ script
 export DISPLAY=:1`dbget vdr.tempdisplay`
 export __GL_SYNC_TO_VBLANK=1
 <?cs if:(system.x11.dualhead.enabled != "1") ?>
-export __GL_SYNC_DISPLAY_DEVICE=`/usr/bin/dbget system.x11.display.default`
+export __GL_SYNC_DISPLAY_DEVICE=`/usr/bin/dbget system.x11.display.0.device`
 <?cs else ?>
 DISP_DEV0=<?cs var:system.x11.display.0.device ?>
 DISP_DEV1=<?cs var:system.x11.display.1.device ?>
