@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 7.0.50~)
 
 Package: yavdr-base
 Architecture: all
-Depends: ${misc:Depends}, yavdr-utils (>=0.3.0.2557)
+Depends: ${misc:Depends}, yavdr-utils (>=0.3.0.2557), xsltproc
 Replaces: yavdr-startup
 Conflicts: yavdr-startup, yavdr-utils (<< 0.3.0.2556)
 Description: scripts for startup, shutdown and s3
