@@ -30,6 +30,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:apply-templates select="node() | @*"/>
 </xsl:copy>
 </xsl:template>
+
+<xsl:template match="${XMLNODE}">
 !
 
 process-template $SNIPPET
@@ -38,7 +40,7 @@ cat $SNIPPET >> $TEMP
 cat <<-! >> $TEMP
 </xsl:template>
 
-</xsl:stylesheet>
+</xsl:stylesheet> 
 !
 
 xsltproc $TEMP $FILE > $OUT
@@ -47,6 +49,5 @@ cp $OUT $FILE
 
 rm -f $OUT
 rm -f $TEMP
-rm -f $SNIPPET
-
+rm -rf $SNIPPET
 
