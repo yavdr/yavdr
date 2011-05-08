@@ -723,8 +723,27 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             Ext.getBody().unmask();
           }
         });
+        /*
+        if (typeof node.attributes.source != 'undefined') {
+          contextMenu.add('-');
+          
+          contextMenu.add({
+            text : sprintf(_('Move unknown from channels.conf into clipboard'), node.text),
+            icon : '/icons/silk/cart_put.png',
+            scope : this,
+            handler : function() {
+              contextMenu.hide();
+              Ext.getBody().mask(_('Checking channels.conf ...'));
+              node.expand(false, false, function(node) {
+                alert(node.id);
+              }, this)
+              
+              Ext.getBody().unmask();
+            }
+          });
+        }*/
         // show
-        contextMenu.showAt(e.getXY());     
+        contextMenu.showAt(e.getXY());
       }, this);
       
       this.channelpediaTree.on('beforechildrenrendered', this.checkNode, this);
@@ -999,6 +1018,14 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             align : 'left',
             width : 100,
             dataIndex : 'provider',
+            sortable : false
+          },
+          {
+            header : _("Source"),
+            id:"source",
+            align : 'left',
+            width : 100,
+            dataIndex : 'source',
             sortable : false
           }
         ],

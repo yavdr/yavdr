@@ -92,6 +92,7 @@ node;
 									child["leaf"] = false;
 									child["draggable"] = false;
 									child["groupable"] = false;
+									child["source"] = key2;
 									
 									int k = 0;
 									for( Json::ValueIterator itr3 = (*itr2).begin() ; itr3 != (*itr2).end() ; itr3++ ) {
