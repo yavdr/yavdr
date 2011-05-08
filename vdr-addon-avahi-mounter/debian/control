@@ -8,7 +8,7 @@ Homepage: https://svn.origo.ethz.ch/yavdr/trunk/
 
 Package: vdr-addon-avahi-mounter
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${vdr:Depends}, avahi-daemon, nfs-kernel-server, python, libnss-mdns
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${vdr:Depends}, avahi-daemon, nfs-kernel-server, python, libnss-mdns, python-avahi
 Suggests: vdr
 Description: avahi-mounter an VDR-Addon  
  avahi-mounter an VDR-Addon                                            
