@@ -11,6 +11,7 @@ extern "C" {
 };
 
 #include <yavdr/common.h>
+#include <math.h>
 
 extern "C" {
 #include <X11/Xlib.h>
@@ -22,56 +23,72 @@ extern "C" {
 
 using namespace std;
 </%pre><& authenticate ><%args>
-  x11_graphtft = "0";
-  x11_dualhead = "0";
-  deinterlacer_hd = "";
-  deinterlacer_sd = "";
-  primary = "";
-  secondary = "";
+x11_graphtft = "0";
+x11_dualhead = "0";
+deinterlacer_hd = "";
+deinterlacer_sd = "";
+primary = "";
+secondary = "";
 
-  string display0; string freq0[];
-  string display1; string freq1[];
-  string display2; string freq2[];
+string display0; string freq0[];
+string display1; string freq1[];
+string display2; string freq2[];
 
-  string modeline0;
-  string modeline1;
-  string modeline2;
+string modeline0;
+string modeline1;
+string modeline2;
 
-  string overscan0;
-  string overscan1;
-  string overscan2;
+string overscan0;
+string overscan1;
+string overscan2;
 
-  string defaultfreq0;
-  string defaultfreq1;
-  string defaultfreq2;
+string defaultfreq0;
+string defaultfreq1;
+string defaultfreq2;
 </%args><%shared>
-bool writeDisplayToHDF(int id, string display, string modeline, std::vector<string> modes, string overscan, string defaultfreq) {
-    if (modes.size() > 0) {
-        int err = dbset("system.x11.display.%i.device=%s"  , id, display.c_str());
+void Tokenize(const string& str,
+		vector<string>& tokens,
+		const string& delimiters = " ")
+{
+	tokens.clear();
+	// Skip delimiters at beginning.
+	string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+	// Find first "non-delimiter".
+	string::size_type pos = str.find_first_of(delimiters, lastPos);
 
-        if (modeline != "nvidia-auto-select") {
-			sort(modes.begin(), modes.end());
-			for(int i=0; i < modes.size(); i++) {
-			  err = dbset("system.x11.display.%i.mode.%i=%s", id, i, modes[i].c_str());
-			}
-	        err = dbset("system.x11.display.%i.default=%s", id, defaultfreq.c_str());
-        } else {
-        	err = dbset("system.x11.display.%i.mode.0=nvidia-auto-select", id);
-            err = dbset("system.x11.display.%i.default=nvidia-auto-select", id);
-        }
-        err = dbset("system.x11.display.%i.overscan=%s", id, overscan.c_str());
-        
-        return true;
-    }
-    return false;
+	while (string::npos != pos || string::npos != lastPos)
+	{
+		// Found a token, add it to the vector.
+		tokens.push_back(str.substr(lastPos, pos - lastPos));
+		// Skip delimiters.  Note the "not_of"
+		lastPos = str.find_first_not_of(delimiters, pos);
+		// Find next "non-delimiter"
+		pos = str.find_first_of(delimiters, lastPos);
+	}
+}
+
+bool writeDisplayToHDF(int id, string display, string modeline, std::vector<string> modes, string overscan, string defaultfreq, string defaultrate) {
+	if (modes.size() > 0) {
+		int err = dbset("system.x11.display.%i.device=%s" , id, display.c_str());
+
+		sort(modes.begin(), modes.end());
+		for(int i=0; i < modes.size(); i++) {
+			err = dbset("system.x11.display.%i.mode.%i=%s", id, i, modes[i].c_str());
+		}
+		err = dbset("system.x11.display.%i.default=%s", id, defaultfreq.c_str());
+		err = dbset("system.x11.display.%i.rate=%s", id, defaultrate.c_str());
+		err = dbset("system.x11.display.%i.overscan=%s", id, overscan.c_str());
+
+		return true;
+	}
+	return false;
 }
 
 void cleanDisplayInHDF(int id) {
 	char buffer[100];
 	sprintf(buffer, "system.x11.display.%i", id);
-    int err = dbremove(buffer);
+	int err = dbremove(buffer);
 }
-
 
 int display_device_mask(string name) {
 	if (name == "CRT-0") {
@@ -127,242 +144,321 @@ int display_device_mask(string name) {
 	}
 }
 
+inline std::string trim_right(const std::string &source , const std::string& t = " ")
+{
+	std::string str = source;
+	return str.erase( str.find_last_not_of(t) + 1);
+}
+
+inline std::string trim_left( const std::string& source, const std::string& t = " ")
+{
+	std::string str = source;
+	return str.erase(0 , source.find_first_not_of(t) );
+}
+
+inline std::string trim(const std::string& source, const std::string& t = " ")
+{
+	std::string str = source;
+	return trim_left( trim_right( str , t) , t );
+}
+
 </%shared><%cpp>
-  string success = "false";
-  string msg = "Unspecified error.";
-  
-  int err;
+string success = "false";
+string msg = "Unspecified error.";
 
-  err = dbset("vdr.deinterlacer.hd.type=%s", deinterlacer_hd.c_str());
-  err = dbset("vdr.deinterlacer.sd.type=%s", deinterlacer_sd.c_str());
+int err;
 
-  if (x11_dualhead != "1") {
-    err = dbset("system.x11.dualhead.enabled=0");
-    err = dbset("vdr.plugin.graphtft.enabled=0");
-      
-    // writing primary display
-    err = dbset("system.x11.display.default=%s", primary.c_str());
-      
-    cleanDisplayInHDF(0);
-    if (freq0.size() > 0 && primary == display0) {
-      writeDisplayToHDF(0, display0, modeline0, freq0, overscan0, defaultfreq0);
-    } else if (freq1.size() > 0 && primary == display1) {
-      writeDisplayToHDF(0, display1, modeline1, freq1, overscan1, defaultfreq1);
-    } else if (freq2.size() > 0 && primary == display2) {
-      writeDisplayToHDF(0, display2, modeline2, freq2, overscan2, defaultfreq2);
-    }
-  }
-  else
-  {
-    err = dbset("system.x11.dualhead.enabled=1");
-    err = dbset("system.x11.display.default=%s", primary.c_str());
-    err = dbset("vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
-    
-    cleanDisplayInHDF(0);
-    if (modeline0 == "disabled") {
-      err = dbset("system.x11.dualhead.enabled=0");
-      err = dbset("vdr.plugin.graphtft.enabled=0");
-    } else if (freq0.size() > 0 && primary == display0) {
-      writeDisplayToHDF(0, display0, modeline0, freq0, overscan0, defaultfreq0);
-    } else if (freq1.size() > 0 && primary == display1) {
-      writeDisplayToHDF(0, display1, modeline1, freq1, overscan1, defaultfreq1);
-    } else if (freq2.size() > 0 && primary == display2) {
-      writeDisplayToHDF(0, display2, modeline2, freq2, overscan2, defaultfreq2);
-    }
-      
-    cleanDisplayInHDF(1);
-    if ((primary != "" && secondary == primary) || modeline1 == "disabled") {
-      err = dbset("system.x11.dualhead.enabled=0");
-      err = dbset("vdr.plugin.graphtft.enabled=0");
-    } else if (freq0.size() > 0 && secondary == display0) {
-      writeDisplayToHDF(1, display0, modeline0, freq0, overscan0, defaultfreq0);
-    } else if (freq1.size() > 0 && secondary == display1) {
-      writeDisplayToHDF(1, display1, modeline1, freq1, overscan1, defaultfreq1);
-    } else if (freq2.size() > 0 && secondary == display2) {
-      writeDisplayToHDF(1, display2, modeline2, freq2, overscan2, defaultfreq2);
-    } else {
-        err = dbset("system.x11.dualhead.enabled=0");
-        err = dbset("vdr.plugin.graphtft.enabled=0");
-    }
-  }
-    
-  // Query PCI-Device
-  Display *dpy = XOpenDisplay(NULL);
-  
-  if (dpy) {
-      int pci_bus;
-      int pci_device;
-      int pci_func;
+err = dbset("vdr.deinterlacer.hd.type=%s", deinterlacer_hd.c_str());
+err = dbset("vdr.deinterlacer.sd.type=%s", deinterlacer_sd.c_str());
 
-      int screen = DefaultScreen(dpy);
-      if (XNVCTRLIsNvScreen(dpy, screen)) {
-          Bool ret;
-          ret = XNVCTRLQueryTargetAttribute(dpy,
-                                            NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
-                                            0,
-                                            NV_CTRL_PCI_BUS,
-                                            &pci_bus);
-          ret = XNVCTRLQueryTargetAttribute(dpy,
-                                            NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
-                                            0,
-                                            NV_CTRL_PCI_DEVICE,
-                                            &pci_device);
-          ret = XNVCTRLQueryTargetAttribute(dpy,
-                                            NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
-                                            0,
-                                            NV_CTRL_PCI_FUNCTION,
-                                            &pci_func);
-          err = dbset("system.hardware.nvidia.busid=%i:%i:%i", pci_bus, pci_device, pci_func);
+// Query PCI-Device
+Display *dpy = XOpenDisplay(NULL);
 
+if (dpy) {
+	int pci_bus;
+	int pci_device;
+	int pci_func;
 
-          // read EDIDs
-          /* check if EDID is available for this display device */
+	int screen = DefaultScreen(dpy);
+	if (XNVCTRLIsNvScreen(dpy, screen)) {
+		Bool ret;
+		ret = XNVCTRLQueryTargetAttribute(dpy,
+				NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+				0,
+				NV_CTRL_PCI_BUS,
+				&pci_bus);
+		ret = XNVCTRLQueryTargetAttribute(dpy,
+				NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+				0,
+				NV_CTRL_PCI_DEVICE,
+				&pci_device);
+		ret = XNVCTRLQueryTargetAttribute(dpy,
+				NV_CTRL_TARGET_TYPE_GPU, 0 /* Just query first GPU */,
+				0,
+				NV_CTRL_PCI_FUNCTION,
+				&pci_func);
+		err = dbset("system.hardware.nvidia.busid=%i:%i:%i", pci_bus, pci_device, pci_func);
 
+		string defaultrate0 = "";
+		string defaultrate1 = "";
+		string defaultrate2 = "";
 
-          int num_gpus, i;
-          /* Get the number of gpus in the system */
-          ret = XNVCTRLQueryTargetCount(dpy, NV_CTRL_TARGET_TYPE_GPU,
-					&num_gpus);
+		// read EDIDs
+		/* check if EDID is available for this display device */
 
-          if (ret) {
-            int display_devices, len;
+		int num_gpus, i;
+		/* Get the number of gpus in the system */
+		ret = XNVCTRLQueryTargetCount(dpy, NV_CTRL_TARGET_TYPE_GPU,
+				&num_gpus);
 
-            /* display information about all GPUs */
-            for (int gpu = 0; gpu < num_gpus; gpu++) {  
-              int *pData;
-              /* X Screens driven by this GPU */
-              ret = XNVCTRLQueryTargetBinaryData(dpy,
-                                                 NV_CTRL_TARGET_TYPE_GPU,
-                                                 gpu, // target_id
-                                                 0, // display_mask
-                                                 NV_CTRL_BINARY_DATA_XSCREENS_USING_GPU,
-                                                 (unsigned char **) &pData,
-                                                 &len);
+		if (ret) {
+			int display_devices, len;
 
-              if (ret) {
-                /* Connected Display Devices on X Screen */
-                ret = XNVCTRLQueryTargetAttribute(dpy,
-                NV_CTRL_TARGET_TYPE_X_SCREEN,
-                0, // target_id
-                0, // display_mask
-								NV_CTRL_CONNECTED_DISPLAYS,
-								&display_devices);
+			/* display information about all GPUs */
+			for (int gpu = 0; gpu < num_gpus; gpu++) {
+				int *pData;
+				/* X Screens driven by this GPU */
+				ret = XNVCTRLQueryTargetBinaryData(dpy,
+						NV_CTRL_TARGET_TYPE_GPU,
+						gpu, // target_id
+						0, // display_mask
+						NV_CTRL_BINARY_DATA_XSCREENS_USING_GPU,
+						(unsigned char **) &pData,
+						&len);
 
-						/* List all X Screens on GPU */
-						for (int j = 1; j <= pData[0]; j++) {
-							screen = pData[j];
-							int enabled_devices;
+				if (ret) {
+					/* Connected Display Devices on X Screen */
+					ret = XNVCTRLQueryTargetAttribute(dpy,
+							NV_CTRL_TARGET_TYPE_X_SCREEN,
+							0, // target_id
+							0, // display_mask
+							NV_CTRL_CONNECTED_DISPLAYS,
+							&display_devices);
 
-							/* Enabled Display Devices on X Screen */
+					/* List all X Screens on GPU */
+					for (int j = 1; j <= pData[0]; j++) {
+						screen = pData[j];
+						int enabled_devices;
+
+						/* Enabled Display Devices on X Screen */
+						ret = XNVCTRLQueryTargetAttribute(dpy,
+								NV_CTRL_TARGET_TYPE_X_SCREEN,
+								screen, // target_id
+								0, // display_mask
+								NV_CTRL_ENABLED_DISPLAYS,
+								&enabled_devices);
+						//printf("   Display Device Mask (Enabled)   : 0x%08x\n",
+						//enabled_devices);
+
+						// edid for primary device
+						int mask = display_device_mask(primary);
+
+						char *str, *start;
+						string _s;
+						int len;
+						
+						ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
+								NV_CTRL_BINARY_DATA_MODELINES,
+								(unsigned char **) &str, &len);
+						
+						if (ret) {
+							/*
+							 * the returned data is in the form:
+							 *
+							 *  "ModeLine 1\0ModeLine 2\0ModeLine 3\0Last ModeLine\0\0"
+							 *
+							 * so walk from one "\0" to the next to print each ModeLine.
+							 * 
+							 * validate modelines && get rate for both screens
+							 */
+							start = str;
+							for (int k = 0; k < len; k++) {
+								if (str[k] == '\0' && start[0] != '\0') {
+									_s = string(start);
+									vector<string> tokens;
+									vector<string> parts;
+									Tokenize(_s, parts, ":");
+									Tokenize(parts[parts.size()-1], tokens);
+
+									bool interlace = false;
+									bool doublescan = false;
+
+									for(int i=10; i<tokens.size();i++) {
+
+										std::transform(tokens[i].begin(), tokens[i].end(),
+												tokens[i].begin(), ::tolower);
+										if (tokens[i] == "doublescan") {
+											doublescan = true;
+										} else if (tokens[i] == "interlace") {
+											interlace = true;
+										}
+									}
+									int frequency = floor(0.5 + atof(tokens[1].c_str()) * pow(10,6) / (atof(tokens[5].c_str()) * atof(tokens[9].c_str())) * (interlace?2:1) / (doublescan?2:1));
+									std::stringstream ss;
+									ss << frequency;
+
+									string modeline = trim(tokens[0].substr(1, tokens[0].length()-2));
+									
+									if (modeline == defaultfreq0) {
+										defaultrate0 = ss.str() + (interlace?"i":"") + (doublescan?"d":"");
+									} else if (modeline == defaultfreq1) {
+										defaultrate1 = ss.str() + (interlace?"i":"") + (doublescan?"d":"");
+									} else if (modeline == defaultfreq2) {
+										defaultrate2 = ss.str() + (interlace?"i":"") + (doublescan?"d":"");
+									}
+									
+									start = &str[k+1];
+								}
+							}
+
+							XFree(str);
+						}
+						if ((enabled_devices & mask)) {							
+							int val;
+							char *data;
 							ret = XNVCTRLQueryTargetAttribute(dpy,
 									NV_CTRL_TARGET_TYPE_X_SCREEN,
-									screen, // target_id
-									0, // display_mask
-									NV_CTRL_ENABLED_DISPLAYS,
-									&enabled_devices);
-							//printf("   Display Device Mask (Enabled)   : 0x%08x\n",
-							//enabled_devices);
-
-							// edid for primary device
-							int mask = display_device_mask(primary);
-							if ((enabled_devices & mask)) {
-								int val;
-								char *data;
-								ret = XNVCTRLQueryTargetAttribute(dpy,
+									screen,
+									mask,
+									NV_CTRL_EDID_AVAILABLE,
+									&val);
+							ret = 1;
+							if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
+								ret = XNVCTRLQueryTargetBinaryData(dpy,
 										NV_CTRL_TARGET_TYPE_X_SCREEN,
-										screen,
-										mask,
-										NV_CTRL_EDID_AVAILABLE,
-										&val);
-								ret = 1;
-								if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
-									ret = XNVCTRLQueryTargetBinaryData(dpy,
-											NV_CTRL_TARGET_TYPE_X_SCREEN,
-											screen, // target_id
-											mask, // display_mask
-											NV_CTRL_BINARY_DATA_EDID,
-											(unsigned char **) &data,
-											&len);
-									if (ret) {
-										ofstream myFile ("/etc/X11/edid.0.yavdr" , ios::out | ios::binary);
-										if (myFile) {
-											myFile.write (data, len);
-											myFile.close();
-											err = dbset("system.hardware.nvidia.0.edid=1");
-										} else {
-											err = dbset("system.hardware.nvidia.0.edid=0");
-										}
+										screen, // target_id
+										mask, // display_mask
+										NV_CTRL_BINARY_DATA_EDID,
+										(unsigned char **) &data,
+										&len);
+								if (ret) {
+									ofstream myFile ("/etc/X11/edid.0.yavdr" , ios::out | ios::binary);
+									if (myFile) {
+										myFile.write (data, len);
+										myFile.close();
+										err = dbset("system.hardware.nvidia.0.edid=1");
 									} else {
-										err = dbremove("system.hardware.nvidia.0.edid");
-										remove("/etc/X11/edid.0.yavdr");
+										err = dbset("system.hardware.nvidia.0.edid=0");
 									}
 								} else {
 									err = dbremove("system.hardware.nvidia.0.edid");
 									remove("/etc/X11/edid.0.yavdr");
 								}
+							} else {
+								err = dbremove("system.hardware.nvidia.0.edid");
+								remove("/etc/X11/edid.0.yavdr");
 							}
+						}
 
-
-							// edid for secondary device
-							mask = display_device_mask(secondary);
-							if ((enabled_devices & mask)) {
-								int val;
-								char *data;
-								ret = XNVCTRLQueryTargetAttribute(dpy,
+						// edid for secondary device
+						mask = display_device_mask(secondary);
+						if ((enabled_devices & mask)) {
+							int val;
+							char *data;
+							ret = XNVCTRLQueryTargetAttribute(dpy,
+									NV_CTRL_TARGET_TYPE_X_SCREEN,
+									screen,
+									mask,
+									NV_CTRL_EDID_AVAILABLE,
+									&val);
+							ret = 1;
+							if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
+								ret = XNVCTRLQueryTargetBinaryData(dpy,
 										NV_CTRL_TARGET_TYPE_X_SCREEN,
-										screen,
-										mask,
-										NV_CTRL_EDID_AVAILABLE,
-										&val);
-								ret = 1;
-								if (ret && (val == NV_CTRL_EDID_AVAILABLE_TRUE)) {
-									ret = XNVCTRLQueryTargetBinaryData(dpy,
-											NV_CTRL_TARGET_TYPE_X_SCREEN,
-											screen, // target_id
-											mask, // display_mask
-											NV_CTRL_BINARY_DATA_EDID,
-											(unsigned char **) &data,
-											&len);
-									if (ret) {
-										ofstream myFile ("/etc/X11/edid.1.yavdr" , ios::out | ios::binary);
-										if (myFile) {
-											myFile.write (data, len);
-											myFile.close();
-											err = dbset("system.hardware.nvidia.1.edid=1");
-										} else {
-											err = dbset("system.hardware.nvidia.1.edid=0");
-										}
+										screen, // target_id
+										mask, // display_mask
+										NV_CTRL_BINARY_DATA_EDID,
+										(unsigned char **) &data,
+										&len);
+								if (ret) {
+									ofstream myFile ("/etc/X11/edid.1.yavdr" , ios::out | ios::binary);
+									if (myFile) {
+										myFile.write (data, len);
+										myFile.close();
+										err = dbset("system.hardware.nvidia.1.edid=1");
 									} else {
-										err = dbremove("system.hardware.nvidia.1.edid");
-										remove("/etc/X11/edid.1.yavdr");
+										err = dbset("system.hardware.nvidia.1.edid=0");
 									}
 								} else {
 									err = dbremove("system.hardware.nvidia.1.edid");
 									remove("/etc/X11/edid.1.yavdr");
 								}
+							} else {
+								err = dbremove("system.hardware.nvidia.1.edid");
+								remove("/etc/X11/edid.1.yavdr");
 							}
 						}
-
-						XFree(pData);
 					}
-				}
-			} // number of gpus
-        }
 
-        XCloseDisplay(dpy);
-    }
-    if (err) {
-      msg = "Error on database operation";
-    }
-    else {
-      int ret = system("/usr/bin/signal-event display-state-change");
-      success = "true";
-      msg = "OK. signal-event display-state-change";
-    }
-</%cpp>{
-    success: <$success$>
-/*    errors: {
-        receiver_id: "<$msg$>"
-    }
-*/
+					XFree(pData);
+				}
+			}
+		} // number of gpus
+		
+
+		if (x11_dualhead != "1") {
+			err = dbset("system.x11.dualhead.enabled=0");
+			err = dbset("vdr.plugin.graphtft.enabled=0");
+
+			cleanDisplayInHDF(0);
+			if (freq0.size() > 0 && primary == display0) {
+				writeDisplayToHDF(0, display0, modeline0, freq0, overscan0, defaultfreq0, defaultrate0);
+			} else if (freq1.size() > 0 && primary == display1) {
+				writeDisplayToHDF(0, display1, modeline1, freq1, overscan1, defaultfreq1, defaultrate1);
+			} else if (freq2.size() > 0 && primary == display2) {
+				writeDisplayToHDF(0, display2, modeline2, freq2, overscan2, defaultfreq2, defaultrate2);
+			}
+			cleanDisplayInHDF(1);
+		}
+		else
+		{
+			err = dbset("system.x11.dualhead.enabled=1");
+			err = dbset("vdr.plugin.graphtft.enabled=%s", (x11_graphtft=="1"?"1":"0"));
+
+			cleanDisplayInHDF(0);
+			if (modeline0 == "disabled") {
+				err = dbset("system.x11.dualhead.enabled=0");
+				err = dbset("vdr.plugin.graphtft.enabled=0");
+			} else if (freq0.size() > 0 && primary == display0) {
+				writeDisplayToHDF(0, display0, modeline0, freq0, overscan0, defaultfreq0, defaultrate0);
+			} else if (freq1.size() > 0 && primary == display1) {
+				writeDisplayToHDF(0, display1, modeline1, freq1, overscan1, defaultfreq1, defaultrate1);
+			} else if (freq2.size() > 0 && primary == display2) {
+				writeDisplayToHDF(0, display2, modeline2, freq2, overscan2, defaultfreq2, defaultrate2);
+			}
+
+			cleanDisplayInHDF(1);
+			if ((primary != "" && secondary == primary) || modeline1 == "disabled") {
+				err = dbset("system.x11.dualhead.enabled=0");
+				err = dbset("vdr.plugin.graphtft.enabled=0");
+			} else if (freq0.size() > 0 && secondary == display0) {
+				writeDisplayToHDF(1, display0, modeline0, freq0, overscan0, defaultfreq0, defaultrate0);
+			} else if (freq1.size() > 0 && secondary == display1) {
+				writeDisplayToHDF(1, display1, modeline1, freq1, overscan1, defaultfreq1, defaultrate1);
+			} else if (freq2.size() > 0 && secondary == display2) {
+				writeDisplayToHDF(1, display2, modeline2, freq2, overscan2, defaultfreq2, defaultrate2);
+			} else {
+				err = dbset("system.x11.dualhead.enabled=0");
+				err = dbset("vdr.plugin.graphtft.enabled=0");
+			}
+		}
+		
+	}
+
+	XCloseDisplay(dpy);
+}
+if (err) {
+	msg = "Error on database operation";
+}
+else {
+	int ret = system("/usr/bin/signal-event display-state-change");
+	success = "true";
+	msg = "OK. signal-event display-state-change";
+}
+</%cpp> {
+	success: <$success$>
+	/*    errors: {
+	 receiver_id: "<$msg$>"
+	 }
+	 */
 }

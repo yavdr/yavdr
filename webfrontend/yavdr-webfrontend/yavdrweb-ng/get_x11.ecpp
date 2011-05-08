@@ -237,7 +237,7 @@ else
 								modelines[next]["modes"]["0"]["interlace"] = false;
 								modelines[next]["modes"]["0"]["doublescan"] = false;
 								next++;
-*/
+
 								modelines[next]["id"] = "nvidia-auto-select";
 								modelines[next]["modes"]["auto"]["modeline"] = "nvidia-auto-select";
 								modelines[next]["modes"]["auto"]["x"] = 0;
@@ -245,7 +245,7 @@ else
 								modelines[next]["modes"]["auto"]["interlace"] = false;
 								modelines[next]["modes"]["auto"]["doublescan"] = false;
 								next++;
-
+*/
 								ret = XNVCTRLQueryBinaryData(dpy, screen, mask,
 										NV_CTRL_BINARY_DATA_MODELINES,
 										(unsigned char **) &str, &len);
@@ -298,7 +298,7 @@ else
 												pos = known[resolution].asInt();
 											}
 
-											if (!modelines[pos].isMember("modes") || !modelines[pos]["modes"].isMember(freq) || (isEDIDMode && !modelines[pos]["modes"][freq]["isedid"])) {
+											if (trim(tokens[0].substr(1, tokens[0].length()-2)) != "nvidia-auto-select" && (!modelines[pos].isMember("modes") || !modelines[pos]["modes"].isMember(freq) || (isEDIDMode && !modelines[pos]["modes"][freq]["isedid"]))) {
 												Json::Value modeline;
 												modeline["id"] = trim(tokens[0].substr(1, tokens[0].length()-2));
 												modeline["isedid"] = isEDIDMode;
