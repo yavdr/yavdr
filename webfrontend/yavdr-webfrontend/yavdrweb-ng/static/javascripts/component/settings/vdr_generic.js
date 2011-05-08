@@ -365,7 +365,6 @@ YaVDR.Component.Settings.VdrGeneric.Setup = Ext.extend(YaVDR.Default.Form, {
 
   doLoad: function() {
     YaVDR.getHdfValue(['vdr.setup', 'vdr.frontend', 'vdr.backend'], function(value) {
-      console.log(value);
       try {
         this.setupSelectorView.select("setup-selection-" + value.vdr.setup);
       } catch(e) {
