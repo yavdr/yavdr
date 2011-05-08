@@ -3,4 +3,4 @@
 /usr/bin/scansundtek
 
 process-template /etc/sundtek.conf
-process-template --mode 755 /etc/pm/sleep.d/10sundtek
+process-template --mode 755 /etc/pm/sleep.d/10mediasrv
