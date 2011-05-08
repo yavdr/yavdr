@@ -452,14 +452,14 @@ msgstr "VDR-Lifeguard untersucht mit den ausgewählten Begriffen (siehe Auswahl)
 msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe."
 msgstr "Die Auswahl gebraucht das Xineliboutput Plugin mit dem VDR-sxfe Frontend"
 
-msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
-msgstr ""
+msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding."
+msgstr "Wählen Sie Xine-Plugin als Alternative."
 
 msgid "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
 msgstr "Wollen Sie VDR nur als Backend benutzen für XBMC und mit XBMC TV sehen, dann ist das Ihre Wahl."
 
 msgid "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
-msgstr ""
+msgstr "Wählen Sie yaVDR Server wenn Sie keinerlei Video-Ausgabe brauchen und wenn man yavdr als Server verwenden will. Es deaktiviert das dekodieren der Videokarten"
 
 msgid "Video Output"
 msgstr "Video Ausgabe"

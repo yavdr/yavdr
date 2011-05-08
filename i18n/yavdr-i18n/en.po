@@ -536,7 +536,7 @@ msgstr ""
 msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe."
 msgstr ""
 
-msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one."
+msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding."
 msgstr ""
 
 msgid "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."

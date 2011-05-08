@@ -156,7 +156,7 @@ YaVDR.Component.Settings.VdrGeneric.Setup = Ext.extend(YaVDR.Default.Form, {
         {
           key: 'xine',
           title: 'xine@vdr-plugin-xine',
-          description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding. If you have trouble with the default, try this one.')
+          description: _('This is an alternative frontend. It is using the xine plugin using Xine for decoding.')
         },
         {
           key: 'xbmc',
