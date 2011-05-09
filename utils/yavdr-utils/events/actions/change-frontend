@@ -113,7 +113,8 @@ fi
 
 # update menuorg
 process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
-
+# update xbmc-exit
+process-template /etc/init/xbmc-exit.conf
 
 # restart openbox if needed
 if [ "$1" != "post-install" ]; then

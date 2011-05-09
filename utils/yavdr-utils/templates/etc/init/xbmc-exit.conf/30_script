@@ -1,17 +1,13 @@
-start on stopped xbmc
-
-task
-
 script
 
 logger -t "XBMC" "XBMC exit with exit status $EXIT_STATUS, $EXIT_SIGNAL, ENV: $(env) ."
 case $EXIT_STATUS in
     64|66)
-        if [ "$(dbget vdr.backend)" != "disabled" ]; then
-            svdrpsend HITK Power || /bin/true
-        else
-            poweroff
-        fi
+	<?cs if:(vdr.backend == "disabled") ?>
+        poweroff
+        <?cs else ?>
+        svdrpsend HITK Power || /bin/true
+	<?cs /if ?>
         ;;
     *)
         initctl emit reset-display-rate
@@ -20,4 +16,3 @@ case $EXIT_STATUS in
 esac
 
 end script
-
