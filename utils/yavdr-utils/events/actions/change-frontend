@@ -1,7 +1,5 @@
 #!/bin/bash
 ORDER_CONF=/etc/vdr/plugins/order.conf
-#ORDER_CONF=order.conf
-
 
 append_plugin () {
   echo $1 >> $ORDER_CONF
@@ -38,7 +36,7 @@ if [ "$(dbget vdr.backend)" = "xineliboutput" ]; then
   disable_plugin "control"
   enable_plugin "*dynamite"
 
-process-template /etc/init/xcompmgr.conf
+  process-template /etc/init/xcompmgr.conf
 
 elif [ "$(dbget vdr.backend)" = "xine" ]; then
   disable_plugin "dvbhddevice"
@@ -57,14 +55,16 @@ elif [ "$(dbget vdr.backend)" = "xine" ]; then
   disable_plugin "control"
   enable_plugin "*dynamite"
 
-rm -f /etc/init/xcompmgr.conf
+  rm -f /etc/init/xcompmgr.conf
 
 elif [ "$(dbget vdr.backend)" = "streaming" ]; then
   disable_plugin "dvbhddevice"
   disable_plugin "dvbsddevice"
   enable_plugin "dummydevice"
+  enable_plugin "vnsi"
+  enable_plugin "streamdev-server"  
   disable_plugin "xine"
-  enable_plugin "xineliboutput"
+  disable_plugin "xineliboutput"
   disable_plugin "lcdproc"
   disable_plugin "imonlcd"
   disable_plugin "iptv"
@@ -76,7 +76,7 @@ elif [ "$(dbget vdr.backend)" = "streaming" ]; then
   enable_plugin "control"
   enable_plugin "*dynamite"
 
-rm -f /etc/init/xcompmgr.conf
+  rm -f /etc/init/xcompmgr.conf
 
 elif [ "$(dbget vdr.backend)" = "hdff" ] || [ "$(dbget vdr.backend)" = "sdff" ]; then
   if [ "$(dbget vdr.backend)" = "sdff" ]; then
@@ -97,10 +97,10 @@ elif [ "$(dbget vdr.backend)" = "hdff" ] || [ "$(dbget vdr.backend)" = "sdff" ];
   enable_plugin "yaepghd"
   enable_plugin "extrecmenu"
   enable_plugin "suspendoutput"
-  enable_plugin "control"
+  disable_plugin "control"
   disable_plugin "*dynamite"
 
-rm -f /etc/init/xcompmgr.conf
+  rm -f /etc/init/xcompmgr.conf
 
 fi
 
@@ -127,6 +127,6 @@ fi
 if [ "$(dbget vdr.backend)" = "disabled" ]; then
   echo "manual" > /etc/init/vdr.override
 else
-  rm /etc/init/vdr.override
+  rm -f /etc/init/vdr.override
 fi
 
