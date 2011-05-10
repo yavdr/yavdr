@@ -316,7 +316,7 @@ class HTMLOutputRenderer{
 
         $filename = "channels_".$language."_".$source.".html";
         $this->addToOverview( $language, $filename );
-        print "HTMLOutputRenderer/writeNiceHTMLPage: writing to file ".$this->exportpath . $filename."\n";
+        $this->config->addToDebugLog( "HTMLOutputRenderer/writeNiceHTMLPage: writing to file ".$filename."\n" );
         file_put_contents($this->exportpath . $filename, $nice_html_output );
     }
 

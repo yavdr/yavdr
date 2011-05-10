@@ -27,9 +27,11 @@ class channelListWriter extends channelIterator{
     private
         $filehandle = null,
         $filename = "",
-        $addTransponderDelimiters = false;
+        $addTransponderDelimiters = false,
+        $config;
 
     function __construct($label = "_complete", $source, $orderby = "UPPER(name) ASC"){
+        $this->config = config::getInstance();
         $xlabel = $label;
         if ($label == "_complete"){
             $this->addTransponderDelimiters = true;
@@ -43,10 +45,8 @@ class channelListWriter extends channelIterator{
         }
         parent::__construct();
         $this->init1($xlabel, $source, $orderby);
-        $config = config::getInstance();
-        $gpath = $config->getValue("exportfolder")."/raw/";
         $groupname = $source. '_' . $label;
-        $this->filename = $gpath . 'channels_' . $groupname . '.conf';
+        $this->filename = 'channels_' . $groupname . '.conf';
     }
 
     public function writeFile(){
@@ -66,9 +66,11 @@ class channelListWriter extends channelIterator{
     }
 
     private function openFile(){
-        print "channelListWriter: writing to file $this->filename\n";
-        @unlink($this->filename);
-        $this->filehandle = fopen ($this->filename, "w");
+        $config = config::getInstance();
+        $gpath = $config->getValue("exportfolder")."/raw/";
+        $config->addToDebugLog( "channelListWriter: writing to file $this->filename\n");
+        @unlink($gpath .  $this->filename);
+        $this->filehandle = fopen ($gpath .  $this->filename, "w");
     }
 
     private function closeFile(){
@@ -77,7 +79,7 @@ class channelListWriter extends channelIterator{
                 die("Error on file close.");
         }
         else
-            print "channelListWriter: $this->filename was not written - it is empty!\n";
+            $this->config->addToDebugLog( "channelListWriter: $this->filename was not written - it is empty!\n" );
     }
 }
 

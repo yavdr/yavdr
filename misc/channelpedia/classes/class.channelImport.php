@@ -34,7 +34,8 @@ class channelImport extends channelFileIterator{
         $numChanChanged = 0,
         $numChanIgnored = 0,
         $timestamp,
-        $username;
+        $username,
+        $debuglog;
 
     public function __construct($username, $cableSourceType, $terrSourceType){
         parent::__construct($cableSourceType, $terrSourceType);
@@ -50,7 +51,7 @@ class channelImport extends channelFileIterator{
 
     public function addToUpdateLog( $source, $description ){
         $query = $this->db->insert( "upload_log", array(
-            "timestamp" => $this->timestamp,
+            "timestamp" => time(), //$this->timestamp,
             "user" => $this->username,
             "source" => $source,
             "description" => $description
@@ -65,14 +66,16 @@ class channelImport extends channelFileIterator{
     private function updateExistingChannels(){
         $query = $this->db->exec("BEGIN TRANSACTION");
         foreach ($this->existingChannelBuffer as $params){
-            //print "checking channel ".$params["name"]." for changes: ";
+            //$this->config->addToDebugLog( "checking channel ".$params["name"]." for changes: \n");
             $result = $this->getChannelsWithMatchingUniqueParams( $params );
             foreach ($result as $row){
                 if ($row["x_timestamp_added"] == $this->timestamp){
-                    print "ERROR: Trying to update channel ".$params["name"]." that was added earlier! Double channel entry!\n";
-                    print "To update: " . $this->config->channelArray2ChannelString($params) ."\n";
-                    print "Existing : " . $this->config->channelArray2ChannelString($row) ."\n";
-                    print "---\n";
+                    $this->config->addToDebugLog(
+                        "ERROR: Trying to update channel ".$params["name"]." that was added earlier! Double channel entry!\n".
+                        "To update: " . $this->config->channelArray2ChannelString($params) ."\n".
+                        "Existing : " . $this->config->channelArray2ChannelString($row) ."\n".
+                        "---\n"
+                    );
                     $this->numChanIgnored++;
                 }
                 else{
@@ -91,7 +94,7 @@ class channelImport extends channelFileIterator{
                     $update_data[] = "x_last_confirmed = " . $this->timestamp;
 
                     if (count ($changes) != 0){
-                        //print "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n";
+                        //$this->config->addToDebugLog( "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n");
                         $query = $this->db->exec2(
                             "UPDATE channels SET ".implode(", " , $update_data),
                             $this->getWhereArray( "source, nid, tid, sid", $params )
@@ -108,7 +111,7 @@ class channelImport extends channelFileIterator{
                         $this->numChanChanged++;
                     }
                     else{
-                        //print "channel unchanged, but update x_last_confirmed\n";
+                        //$this->config->addToDebugLog( "channel unchanged, but update x_last_confirmed\n");
                         //channel unchanged, but update x_last_confirmed
                         $query = $this->db->exec2(
                             "UPDATE channels SET x_last_confirmed = " . $this->timestamp,
@@ -135,7 +138,7 @@ class channelImport extends channelFileIterator{
                     $channel["source"] .= '['.$this->terrSourceType.']';
                     break;
                 default:
-                    print "ERROR: unknown source type!".$channel["source"]."\n";
+                    $this->config->addToDebugLog( "ERROR: unknown source type!".$channel["source"]."\n");
                 }
             }
             elseif (substr($channel["source"], 0, 1) == "S")
@@ -173,10 +176,10 @@ class channelImport extends channelFileIterator{
                 //$msg_prefix = "try to add channel: ";
                 if ($this->isCurrentLineAGroupDelimiter()){
                    $cgroup = $this->getGroupDelimiterFromCurrentLine();
-                   //print $msg_prefix."Skipping a group delimiter.\n";
+                   //$this->config->addToDebugLog( $msg_prefix."Skipping a group delimiter.\n");
                 }
                 elseif($this->isCurrentLineEmpty()){
-                    //print $msg_prefix . "illegal channel: ignoring empty line.\n";
+                    //$this->config->addToDebugLog( $msg_prefix . "illegal channel: ignoring empty line.\n");
                     //$this->numChanIgnored++;
                 }
                 else{
@@ -192,15 +195,15 @@ class channelImport extends channelFileIterator{
 
                         if (false === $this->insertChannelIntoDB ($params, $this->getCurrentLine())){
                             $this->existingChannelBuffer[] = $params;
-                            //print $msg_prefix . "already exists.\n";
+                            //$this->config->addToDebugLog( $msg_prefix . "already exists.\n");
                         }
                         else{
                             $this->numChanAdded++;
-                            //print $msg_prefix . "added successfully.\n";
+                            //$this->config->addToDebugLog( $msg_prefix . "added successfully.\n");
                         }
                     }
                     else{
-                        print $msg_prefix . "illegal channel: ".$this->getCurrentLine().".\n";
+                        $this->config->addToDebugLog( $msg_prefix . "illegal channel: ".$this->getCurrentLine().".\n");
                         $this->numChanIgnored++;
                     }
                 }
@@ -276,7 +279,7 @@ class channelImport extends channelFileIterator{
             $htmlOutput->writeGeneralChangelog();
         }
         else{
-            print "No need for label update.\n";
+            $this->config->addToDebugLog( "No need for label update.\n");
         }
     }
 }

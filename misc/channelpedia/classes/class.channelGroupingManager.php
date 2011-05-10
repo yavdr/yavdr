@@ -102,7 +102,7 @@ class channelGroupingManager{
     }
 
     public function updateAllLabelsOfSource( $source ){
-        print "Updating labels for channels belonging to $source.\n";
+        $this->config->addToDebugLog( "Updating labels for channels belonging to $source.\n" );
         //reset all labels in DB to empty strings before updating them
         $temp = $this->db->query("UPDATE channels SET x_label='' WHERE source = ".$this->db->quote($source));
         $query = $this->db->exec("BEGIN TRANSACTION");
@@ -252,13 +252,13 @@ class channelGroupingManager{
         $sqlquery = "SELECT * FROM channels $where2 x_label != '' AND x_label != ". $this->db->quote($label);
         $result = $this->db->query($sqlquery);
         foreach ($result as $row){
-            print "*** Notice: Channel '".$row["name"]."' is already tagged with '".$row["x_label"]."'. We just tried to tag it with '$label'\n";
+            $this->config->addToDebugLog( "*** Notice: Channel '".$row["name"]."' is already tagged with '".$row["x_label"]."'. We just tried to tag it with '$label'\n" );
         }
 
         //now only update channels with EMPTY x_label field!
         $sqlquery = "UPDATE channels SET x_label=". $this->db->quote($label) ." $where";
         $result = $this->db->query($sqlquery);
-        //print "Updating labels for channels belonging to $title / $source / $label.\n";
+        //$this->config->addToDebugLog( "Updating labels for channels belonging to $title / $source / $label.\n" );
     }
 
 }

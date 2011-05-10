@@ -57,6 +57,5 @@ function importFromAllChannelSources(){
 
     $x = new HTMLOutputRenderer();
     $x->renderAllHTMLPages();
-
 }
 ?>

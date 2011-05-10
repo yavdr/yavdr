@@ -53,6 +53,11 @@ class config {
         else
             $this->pathdynamic = CUSTOM_PATH;
 
+        $debuglogfile = $this->getValue("exportfolder")."/raw/debuglog.txt";
+        //@unlink($debuglogfile);
+        $this->debuglog = fopen( $debuglogfile, "w");
+        $this->addToDebugLog("---------------------------------- begin of session ".date("D M j G:i:s T Y")." -------------------------------------------\n");
+
         $default_lang_de_cable_provider = array("de");
 
         $this->sourcelist = array(
@@ -77,6 +82,12 @@ class config {
 
     }
 
+    function __destruct(){
+        $this->addMemoryPeakUsageToDebugLog();
+        $this->addToDebugLog("---------------------------------- end of session -------------------------------------------\n");
+        fclose( $this->debuglog );
+    }
+
     private function __clone(){}
 
     public static function getInstance(){
@@ -84,6 +95,16 @@ class config {
             self::$instance = new config();
         }
         return self::$instance;
+    }
+
+    public function addToDebugLog( $line ){
+        fputs( $this->debuglog, $line);
+    }
+
+    private function addMemoryPeakUsageToDebugLog(){
+        $memorypeak1 = intval(memory_get_peak_usage ( true ) / 1024);
+        $memorypeak2 = intval(memory_get_peak_usage ( false ) / 1024);
+        $this->addToDebugLog( "Memory usage: real: $memorypeak1 KB, emalloc: $memorypeak2 KB\n" );
     }
 
     public function getLanguageGroupsOfSource( $type, $source){
