@@ -1,3 +1,5 @@
+#!/bin/sh
+
 case $1 in
      hibernate|suspend)
          echo "sundtek is going to sleep"

@@ -5,10 +5,12 @@ install:
 	@mkdir -p $(DESTDIR)/etc/sundtek.d/detach
 	@mkdir -p $(DESTDIR)/etc/sundtek.d/mount
 	@mkdir -p $(DESTDIR)/etc/sundtek.d/unmount
+	@mkdir -p $(DESTDIR)/etc/pm/sleep.d
 	@install etc/sundtek.d/attach/* $(DESTDIR)/etc/sundtek.d/attach
 	@install etc/sundtek.d/detach/* $(DESTDIR)/etc/sundtek.d/detach
 	@install etc/sundtek.d/mount/* $(DESTDIR)/etc/sundtek.d/mount
 	@install etc/sundtek.d/unmount/* $(DESTDIR)/etc/sundtek.d/unmount
+	@install etc/pm/sleep.d/* $(DESTDIR)/etc/pm/sleep.d
 	@mkdir -p $(DESTDIR)/usr/bin
 	@install usr/bin/* $(DESTDIR)/usr/bin
 
