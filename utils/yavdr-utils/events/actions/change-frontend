@@ -111,8 +111,6 @@ else
   disable_plugin "graphtft"
 fi
 
-# update menuorg
-process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
 # update xbmc-exit
 process-template /etc/init/xbmc-exit.conf
 

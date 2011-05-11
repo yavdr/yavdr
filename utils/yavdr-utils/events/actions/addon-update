@@ -15,5 +15,3 @@ process-template /etc/wmdrawer/web
 process-template /etc/wmdrawer/system
 process-template /etc/vdr/lifeguard.conf
 
-process-template --owner=vdr --group=vdr /var/lib/vdr/plugins/menuorg.xml
-
