@@ -11,7 +11,7 @@
 static const char *VERSION        = "0.0.1";
 static const char *DESCRIPTION    = "How to shutdown via SVDRP";
 
-class cPluginSvdrpdemo : public cPlugin {
+class cPluginShutdown : public cPlugin {
 private:
   // Add any member variables or functions you may need here.
 public:
@@ -21,7 +21,7 @@ public:
   virtual cString SVDRPCommand(const char *Command, const char *Option, int &ReplyCode);
   };
 
-const char **cPluginSvdrpdemo::SVDRPHelpPages(void)
+const char **cPluginShutdown::SVDRPHelpPages(void)
 {
   static const char *HelpPages[] = {
     "CONF\n"
@@ -31,7 +31,7 @@ const char **cPluginSvdrpdemo::SVDRPHelpPages(void)
   return HelpPages;
 }
 
-cString cPluginSvdrpdemo::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
+cString cPluginShutdown::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
 {
   if (strcasecmp(Command, "CONF") == 0) {
     isyslog("confirm shutdown request");
@@ -47,4 +47,5 @@ cString cPluginSvdrpdemo::SVDRPCommand(const char *Command, const char *Option, 
   return NULL;
 }
 
-VDRPLUGINCREATOR(cPluginSvdrpdemo); // Don't touch this!
+VDRPLUGINCREATOR(cPluginShutdown); // Don't touch this!
+
