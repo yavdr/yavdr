@@ -216,7 +216,9 @@ int merge_template(HDF *hdf, char *template, char *output)
             }
             free(namelist[n]);
           }
-          free(namelist);
+          if (numtemps > 0) {
+        	free(namelist);
+          }
       
           while ((ret == 0) && (m < numcustomtemps))
           {
