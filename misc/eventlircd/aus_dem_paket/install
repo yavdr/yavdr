@@ -1,2 +1,0 @@
-debian/udev/*.rules		/lib/udev/rules.d
-debian/usr-share-remotes/*	/usr/share/eventlircd/remotes
