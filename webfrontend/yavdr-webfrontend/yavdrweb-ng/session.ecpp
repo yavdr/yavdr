@@ -7,9 +7,16 @@
 
 extern "C" {
 	#include <ClearSilver.h>
+	#include <errno.h>
+	#include <sys/sysinfo.h>
 };
 
 #include <yavdr/common.h>
+
+#define FSHIFT          16              /* nr of bits of precision */
+#define FIXED_1         (1<<FSHIFT)     /* 1.0 as fixed-point */
+#define LOAD_INT(x) ((x) >> FSHIFT)
+#define LOAD_FRAC(x) LOAD_INT(((x) & (FIXED_1-1)) * 100)
 
 using namespace std;
 </%pre><& authenticate ><%args>
@@ -21,17 +28,54 @@ long int ts;
 	Json::Value json;
 	char *dummy = NULL;
 
-	time_t seconds;
-	seconds = time(NULL);
-	if (asprintf(&dummy, "%li", (long int) seconds) > 0) {
+	struct tm *current_time;
+	time_t current_secs;
+
+	time(&current_secs);
+	current_time = localtime(&current_secs);
+
+	if (asprintf(&dummy, "%li", (long int) current_secs) > 0) {
 		json["timestamp"] = dummy;
-		json["uptime"]  = "";
+		free(dummy);
+		
+		struct sysinfo info;
+		sysinfo(&info);
+		if (asprintf(&dummy, "%2d:%02d",
+				current_time->tm_hour, 
+				current_time->tm_min) > 0) {
+			json["time"] = dummy;
+			free(dummy);
+		}
+
+		int updays = (int) info.uptime / (60*60*24);
+		json["uptime"]["day"] = updays;
+		
+		int upminutes = (int) info.uptime / 60;
+		int uphours = (upminutes / 60) % 24;
+		upminutes %= 60;
+		json["uptime"]["days"] = updays;
+		json["uptime"]["hours"] = uphours;
+		json["uptime"]["minutes"] = upminutes;
+		
+		ostringstream s;
+		s << LOAD_INT(info.loads[0]) << "." << LOAD_FRAC(info.loads[0]);
+		json["load"]["1"] = s.str();
+		s.seekp(0);
+		
+		s << LOAD_INT(info.loads[1]) << "." << LOAD_FRAC(info.loads[1]);
+		json["load"]["5"] = s.str();
+		s.seekp(0);
+		
+		s << LOAD_INT(info.loads[2]) << "." << LOAD_FRAC(info.loads[2]);
+		json["load"]["15"] = s.str();
+		s.seekp(0);
+		
 		json["config"]  = "";
 		// Daemons status
 		json["daemons"]["vdr"]["status"]  = 1;
 		json["daemons"]["xine"]["status"]  = 0;
 		json["daemons"]["xbmc"]["status"]  = 1;
-		free(dummy);
+		
 	}
 	
     HDF *hdf = NULL;

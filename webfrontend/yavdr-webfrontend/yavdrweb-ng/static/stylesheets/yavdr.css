@@ -98,3 +98,7 @@
     border-top-color: #36c;
     background: url(/ext/resources/images/default/tree/drop-over.gif) no-repeat top right;
 }
+
+.ext-gecko .x-form-display-field {
+    padding-top: 3px;
+}

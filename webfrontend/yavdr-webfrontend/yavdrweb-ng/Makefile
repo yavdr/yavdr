@@ -12,7 +12,7 @@ yavdrweb.so: neo_hdf.o neo_err.o auth.o authenticate.o yavdrweb.o \
              get_timers.o get_autofs_config.o set_autofs_config.o \
              get_x11.o set_x11.o get_packages.o dpkg.o session.o \
              set_shutdown_wakeup.o get_eventlircd.o set_eventlircd.o \
-             channels.o channelpedia.o
+             channels.o channelpedia.o dashboard_vdr.o
              
 	${CXX} -o $@ $^ ${LDFLAGS}
 
