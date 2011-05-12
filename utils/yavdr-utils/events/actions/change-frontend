@@ -105,17 +105,6 @@ else
   disable_plugin "graphtft"
 fi
 
-# update xbmc-exit
-process-template /etc/init/xbmc-exit.conf
-
-# restart openbox if needed
-if [ "$1" != "post-install" ]; then
-  stop openbox &> /dev/null
-  if [ ! "$(dbget vdr.frontend)" = "disabled" ]; then
-    start openbox || /bin/true
-  fi
-fi
-
 # disable vdr if needed
 if [ "$(dbget vdr.backend)" = "disabled" ]; then
   echo "manual" > /etc/init/vdr.override
