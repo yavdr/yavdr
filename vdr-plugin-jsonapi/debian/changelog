@@ -1,12 +1,12 @@
-vdr-plugin-jsonapi (0.0.1-1) unstable; urgency=low
+vdr-plugin-jsonapi (0.0.2-1yavdr1~natty) natty; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
-  
-  Important:
-  
-  If you intend to make this plugin available to others, please create an
-  ITP-bug (see http://www.debian.org/devel/wnpp ) and contact the
-  Debian VDR packaging team: pkg-vdr-dvb-devel@lists.alioth.debian.org
+  * added channel informations developed by aelo
+
+ -- Gerald Dachs <gda@dachsweb.de>  Thu, 12 May 2011 20:15:02 +0200
+
+vdr-plugin-jsonapi (0.0.1-1yavdr1~natty) natty; urgency=low
+
+  * Initial release
 
  -- Gerald Dachs <gda@dachsweb.de>  Tue, 25 Jan 2011 18:47:20 +0100
 
