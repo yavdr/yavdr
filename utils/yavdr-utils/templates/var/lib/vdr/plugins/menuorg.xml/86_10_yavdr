@@ -1,6 +1,6 @@
                <command name=<?cs call:quote(_("Safely remove usb mass storage")) ?> confirm="yes" execute="/usr/bin/vdr-mounter --unmount-all &amp;> /dev/null" />
-               <command name=<?cs call:quote(_("Update vdr recordings list")) ?> execute="/usr/bin/touch /srv/vdr/video.00/.update &amp;> /dev/null " />
+               <command name=<?cs call:quote(_("Update vdr recordings list")) ?> execute="/usr/bin/vdr-dbus-send /Recording recording.Update &amp;> /dev/null " />
                <command name=<?cs call:quote(_("Restart VDR")) ?> confirm="yes" execute="sudo /sbin/initctl restart vdr" />
                <command name=<?cs call:quote(_("Reboot system")) ?> confirm="yes" execute="sudo reboot" />
-               <command name=<?cs call:quote(_("Shutdown system")) ?> execute="/usr/bin/svdrpsend hitk power &amp;> /dev/null &amp; " />
+               <command name=<?cs call:quote(_("Shutdown system")) ?> execute="/usr/bin/vdr-dbus-send /Remote remote.HitKey string:'Power' &amp;> /dev/null &amp; " />
 
