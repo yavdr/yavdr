@@ -91,7 +91,7 @@ void ChannelsResponder::reply(std::ostream& out, cxxtools::http::Request& reques
   SerChannel serChannel;
   std::vector < struct SerChannel > serChannels;
 
-  reply.addHeader("Content-Type", "application/json");
+  reply.setContentType("application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
 
   std::string suffix = (std::string) ".ts";  
@@ -136,7 +136,7 @@ void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& requ
   RecordingRec recordingRec;
   std::vector < struct RecordingRec > recordingsRec;
 
-  reply.addHeader("Content-Type", "application/json");
+  reply.setContentType("application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
   for (cRecording* recording = Recordings.First(); recording; recording = Recordings.Next(recording)) {
     recordingRec.Name = recording->Name();
