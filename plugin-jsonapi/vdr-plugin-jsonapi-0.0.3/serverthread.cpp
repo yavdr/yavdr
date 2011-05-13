@@ -139,6 +139,7 @@ void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& requ
   reply.addHeader("Content-Type", "application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
   for (cRecording* recording = Recordings.First(); recording; recording = Recordings.Next(recording)) {
+	esyslog("recording name: %s", recording->Name());
     recordingRec.Name = recording->Name();
     recordingRec.FileName = recording->FileName();
     recordingRec.IsNew = recording->IsNew();
