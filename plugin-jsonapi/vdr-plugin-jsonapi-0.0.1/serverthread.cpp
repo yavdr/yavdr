@@ -91,7 +91,7 @@ void ChannelsResponder::reply(std::ostream& out, cxxtools::http::Request& reques
   SerChannel serChannel;
   std::vector < struct SerChannel > serChannels;
 
-  reply.addHeader("Content-Type", "application/json");
+  reply.setContentType("application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
 
   std::string suffix = (std::string) ".ts";  
@@ -110,7 +110,7 @@ void ChannelsResponder::reply(std::ostream& out, cxxtools::http::Request& reques
       serChannels.push_back(serChannel);
     }
   }
-  serializer.serialize(serChannels, "rows");
+  serializer.serialize(serChannels, "channels");
   serializer.finish();
 }
 
@@ -136,7 +136,7 @@ void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& requ
   RecordingRec recordingRec;
   std::vector < struct RecordingRec > recordingsRec;
 
-  reply.addHeader("Content-Type", "application/json");
+  reply.setContentType("application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
   for (cRecording* recording = Recordings.First(); recording; recording = Recordings.Next(recording)) {
     recordingRec.Name = recording->Name();
@@ -146,7 +146,7 @@ void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& requ
     recordingRec.IsPesRecording = recording->IsPesRecording();
     recordingsRec.push_back(recordingRec);
   }
-  serializer.serialize(recordingsRec, "rows");
+  serializer.serialize(recordingsRec, "recordings");
   serializer.finish();
 }
 
