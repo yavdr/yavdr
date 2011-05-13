@@ -9,7 +9,7 @@
 #include <vdr/plugin.h>
 #include "serverthread.h"
 
-static const char *VERSION        = "0.0.1";
+static const char *VERSION        = "0.0.3";
 static const char *DESCRIPTION    = "Enter description for 'jsonapi' plugin";
 static const char *MAINMENUENTRY  = "Jsonapi";
 
