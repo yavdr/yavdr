@@ -31,22 +31,12 @@ class channelFileIterator{
 
     protected
         $db,
-        $config,
-        $cableSourceType,
-        $terrSourceType,
-        $foundSatellites = array(),
-        $cableProviderPresent = false,
-        $terrProviderPresent = false;
+        $config;
 
 
-    function __construct($cableSourceType, $terrSourceType){
+    function __construct(){
         $this->db = dbConnection::getInstance();
         $this->config = config::getInstance();
-        $this->foundSatellites = array();
-        $this->cableProviderPresent = false;
-        $this->terrProviderPresent = false;
-        $this->cableSourceType = $cableSourceType;
-        $this->terrSourceType = $terrSourceType;
     }
 
     public function openChannelFile($file){
@@ -73,6 +63,14 @@ class channelFileIterator{
         return $this->currentline;
     }
 
+    public function getCurrentLineAsChannelArray(){
+        if (!$this->isCurrentLineAGroupDelimiter()){
+            return $this->config->convertChannelString2Array($this->currentline);
+        }
+        else
+            return false;
+    }
+
     public function isCurrentLineAGroupDelimiter(){
         return (substr($this->currentline,0,1) == ":");
     }
@@ -83,14 +81,6 @@ class channelFileIterator{
 
     public function getGroupDelimiterFromCurrentLine(){
         return ltrim($this->currentline,":");
-    }
-
-    public function getCurrentLineAsChannelArray(){
-        if (!$this->isCurrentLineAGroupDelimiter()){
-            return $this->config->convertChannelString2Array($this->currentline);
-        }
-        else
-            return false;
     }
 
     protected function getWhereArray( $wherelist, $params ){

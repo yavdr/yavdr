@@ -37,8 +37,10 @@ class channelImport extends channelFileIterator{
         $username,
         $debuglog;
 
-    public function __construct($username, $cableSourceType, $terrSourceType){
-        parent::__construct($cableSourceType, $terrSourceType);
+    public function __construct($username, $nonSatProviders ){
+        parent::__construct();
+        config::resetPresentProviders();
+        config::setNonSatProviders( $nonSatProviders );
         $this->username = $username;
         $this->timestamp = time();
         $this->numChanChecked = 0;
@@ -56,6 +58,8 @@ class channelImport extends channelFileIterator{
             "source" => $source,
             "description" => $description
         ));
+        $this->config->addToDebugLog( $this->username . ": " . $description."\n");
+
     }
 
     /*
@@ -69,9 +73,9 @@ class channelImport extends channelFileIterator{
             //$this->config->addToDebugLog( "checking channel ".$params["name"]." for changes: \n");
             $result = $this->getChannelsWithMatchingUniqueParams( $params );
             foreach ($result as $row){
-                if ($row["x_timestamp_added"] == $this->timestamp){
+                if ($row["x_timestamp_added"] == $this->timestamp || $row["x_last_confirmed"] == $this->timestamp){
                     $this->config->addToDebugLog(
-                        "ERROR: Trying to update channel ".$params["name"]." that was added earlier! Double channel entry!\n".
+                        "ERROR: Trying to update channel ".$params["name"]." that was added or updated earlier! Double channel entry!\n".
                         "To update: " . $this->config->channelArray2ChannelString($params) ."\n".
                         "Existing : " . $this->config->channelArray2ChannelString($row) ."\n".
                         "---\n"
@@ -94,7 +98,7 @@ class channelImport extends channelFileIterator{
                     $update_data[] = "x_last_confirmed = " . $this->timestamp;
 
                     if (count ($changes) != 0){
-                        //$this->config->addToDebugLog( "Changed: ".$params["source"].$params["nid"].$params["tid"].$params["sid"].$params["name"].": ".implode(", ",$changes)."\n");
+                        $this->config->addToDebugLog( "Changed: ".$params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"]."-".$params["name"].": ".implode(", ",$changes)."\n");
                         $query = $this->db->exec2(
                             "UPDATE channels SET ".implode(", " , $update_data),
                             $this->getWhereArray( "source, nid, tid, sid", $params )
@@ -122,31 +126,6 @@ class channelImport extends channelFileIterator{
             }
         }
         $query = $this->db->exec("COMMIT TRANSACTION");
-    }
-
-    private function checkAndFixChannelSource(){
-        $channel = $this->getCurrentLineAsChannelArray();
-        if ( $channel !== false){
-            if (strlen($channel["source"]) == 1){
-                switch ($channel["source"]){
-                case "C":
-                    $this->cableProviderPresent = true;
-                    $channel["source"] .= '['.$this->cableSourceType.']';
-                    break;
-                case "T":
-                    $this->terrProviderPresent = true;
-                    $channel["source"] .= '['.$this->terrSourceType.']';
-                    break;
-                default:
-                    $this->config->addToDebugLog( "ERROR: unknown source type!".$channel["source"]."\n");
-                }
-            }
-            elseif (substr($channel["source"], 0, 1) == "S")
-                $this->foundSatellites[$channel["source"]] = true;
-            else
-                $channel = false;
-        }
-        return $channel;
     }
 
     /*
@@ -184,17 +163,12 @@ class channelImport extends channelFileIterator{
                 }
                 else{
                     $this->numChanChecked++;
-                    $params = $this->checkAndFixChannelSource();
-                    if ($params !== false){
-                        $params = $params + array(
-                            "x_label"         => "",
-                            "x_last_changed"  => $this->timestamp,
-                            "x_timestamp_added" => $this->timestamp,
-                            "x_last_confirmed" => 0
-                        );
+                    $currentchannel = new channel( $this->getCurrentLine(), $this->timestamp );
+                    if ($currentchannel->isValid()){
+                        //if (false === $this->insertChannelIntoDB ($params, $this->getCurrentLine())){
+                        if (false === $currentchannel->insertIntoDB()){
+                            $this->existingChannelBuffer[] = $currentchannel->getAsArray();
 
-                        if (false === $this->insertChannelIntoDB ($params, $this->getCurrentLine())){
-                            $this->existingChannelBuffer[] = $params;
                             //$this->config->addToDebugLog( $msg_prefix . "already exists.\n");
                         }
                         else{
@@ -220,32 +194,6 @@ class channelImport extends channelFileIterator{
     }
 
     /*
-     * inserts a channel into db
-     * takes an associative array with keys and values
-     * that are used for insert
-     */
-
-    private function insertChannelIntoDB($params, $rawstring){
-        $success = true;
-        $query = $this->db->insert( "channels", $params);
-        //19 = channel already exists, could'nt be inserted
-        if ($query != 19) {
-            $insert_params = array(
-                "combined_id" => $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"],
-                "name" => $params["name"],
-                "update_description" => "New channel added: " . $rawstring,
-                "timestamp" => $this->timestamp,
-                "importance" => "1"
-            );
-            $query = $this->db->insert( "channel_update_log", $insert_params);
-        }
-        else{
-            $success = false;
-        }
-        return $success;
-    }
-
-    /*
      * only those stuff is being updated that really needs to be updated
      * keep the amount of unnecessary updates as small as possible
      */
@@ -256,22 +204,22 @@ class channelImport extends channelFileIterator{
         if ($this->numChanAdded + $this->numChanChanged > 0){
             $labeller = channelGroupingManager::getInstance();
             $rawOutput = new rawOutputRenderer();
-            foreach ($this->foundSatellites as $sat => $dummy){
+            foreach (config::getPresentSatProviders as $sat => $dummy){
                 $languages = $this->config->getLanguageGroupsOfSource( "DVB-S", $sat);
                 $labeller->updateAllLabelsOfSource($sat);
                 $rawOutput->writeRawOutputForSingleSource( $sat, $sat, $languages);
                 $htmlOutput->renderPagesOfSingleSource($sat, $languages);
             }
-            if ($this->cableProviderPresent){
-                $languages = $this->config->getLanguageGroupsOfSource( "DVB-C", $this->cableSourceType);
-                $provider = "C[".$this->cableSourceType."]";
+            if (config::getPresentNonSatProvider("C") != ""){
+                $languages = $this->config->getLanguageGroupsOfSource( "DVB-C", config::getPresentNonSatProvider("C"));
+                $provider = "C[".config::getPresentNonSatProvider("C")."]";
                 $labeller->updateAllLabelsOfSource( $provider );
                 $rawOutput->writeRawOutputForSingleSource( "C", $provider, $languages);
                 $htmlOutput->renderPagesOfSingleSource($provider, $languages);
             }
-            if ($this->terrProviderPresent){
-                $languages = $this->config->getLanguageGroupsOfSource( "DVB-T", $this->terrSourceType);
-                $provider = "T[".$this->terrSourceType."]";
+            if (config::getPresentNonSatProvider("T") != ""){
+                $languages = $this->config->getLanguageGroupsOfSource( "DVB-T", config::getPresentNonSatProvider("T"));
+                $provider = "T[".config::getPresentNonSatProvider("T")."]";
                 $labeller->updateAllLabelsOfSource( $provider );
                 $rawOutput->writeRawOutputForSingleSource( "T", $provider, $languages);
                 $htmlOutput->renderPagesOfSingleSource($provider, $languages);

@@ -25,6 +25,7 @@
 define( 'PATH_TO_CLASSES', dirname(__FILE__) ."/");
 
 require_once PATH_TO_CLASSES.'../config/config.php';
+require_once PATH_TO_CLASSES.'class.channel.php';
 require_once PATH_TO_CLASSES.'class.dbConnection.php';
 require_once PATH_TO_CLASSES.'class.channelGroupingManager.php';
 require_once PATH_TO_CLASSES.'class.channelGroupIterator.php';
@@ -41,7 +42,9 @@ class config {
     private static $instance = null;
     private
         $pathdynamic = "",
-        $sourcelist;
+        $sourcelist,
+        $usersNonSatProviders,
+        $usersPresentProviders;
 
     protected function __construct(){
         /* CUSTOM_PATH can be set in config/config.php
@@ -79,12 +82,44 @@ class config {
             "DVB-T" => array(
             )
         );
+    }
 
+    public function setNonSatProviders( $providers ){
+        $this->usersNonSatProviders = $providers;
+    }
+
+    public function getNonSatProviders(){
+        return $this->usersNonSatProviders;
+    }
+
+    public function resetPresentProviders(){
+        $this->usersPresentProviders = array();
+        $this->usersPresentProviders["S"] = array();
+    }
+
+    public function addPresentNonSatProvider( $type, $provider ){
+        $this->usersPresentProviders[$type] = $provider;
+    }
+
+    public function getPresentNonSatProvider( $type ){
+        $result = "";
+        if (in_array($type, $this->usersPresentProviders))
+            $result = $this->usersPresentProviders[$type];
+        return $result;
+    }
+
+
+    public function addPresentSatProvider( $satposition ){
+        $this->usersPresentProviders["S"][$satposition] = true;
+    }
+
+    public function getPresentSatProviders(){
+        return $this->usersPresentProviders["S"];
     }
 
     function __destruct(){
         $this->addMemoryPeakUsageToDebugLog();
-        $this->addToDebugLog("---------------------------------- end of session -------------------------------------------\n");
+        $this->addToDebugLog("---------------------------------- end of session ".date("D M j G:i:s T Y")." -------------------------------------------\n");
         fclose( $this->debuglog );
     }
 

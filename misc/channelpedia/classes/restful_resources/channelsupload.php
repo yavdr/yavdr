@@ -48,17 +48,21 @@ class channelsupload extends Resource {
                     $response->body .= "Upload successful.\n";
                     //quick'n'dirty approach
                     //now trigger the import of the newly uploaded channels.conf file
-                    $cableProvider = "";
+                    $providers = array(
+                        "C" => $cableProvider,
+                        "T" => "none"
+                    );
                     $infofile = $checkpath."info.txt";
                     if (file_exists( $infofile )){
                         $info = file_get_contents( $infofile);
-                        $cableProvider = trim($info); //FIXME
+                        $providers["C"] = trim($info); //FIXME
                     }
                     //print $info ."/". $infofile ."/".  $cableProvider."\n";
-                    $importer = new channelImport($user, $cableProvider, "none");
+                    $importer = new channelImport($user, $providers);
                     $importer->addToUpdateLog( "-", "channels.conf was uploaded and is now being processed.");
                     $importer->insertChannelsConfIntoDB();
                     $importer->updateAffectedDataAndFiles();
+                    $importer->addToUpdateLog( "-", "Processing finished.");
                     unset($importer);
                 }
                 else{

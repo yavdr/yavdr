@@ -44,7 +44,11 @@ function importFromAllChannelSources(){
                 $cableProvider = trim($info); //FIXME
             }
             //print $info ."/". $infofile ."/".  $cableProvider."\n";
-            $importer = new channelImport( $fileinfo->getFilename(), $cableProvider, "none");
+            $providers = array(
+                "C" => $cableProvider,
+                "T" => "none"
+            );
+            $importer = new channelImport( $fileinfo->getFilename(), $providers);
             $importer->addToUpdateLog( "-", "Manually forced update: Checking for presence of unprocessed channels.conf to analyze.");
             $importer->insertChannelsConfIntoDB();
         }
