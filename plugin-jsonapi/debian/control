@@ -1,0 +1,13 @@
+Source: vdr-plugin-jsonapi
+Section: video
+Priority: extra
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Build-Depends: debhelper (>= 7.0.50~), vdr-dev (>= 1.7.18), gettext, libcxxtools-dev, libboost-dev
+Standards-Version: 3.9.1
+Homepage: https://svn.origo.ethz.ch/yavdr/trunk/
+
+Package: vdr-plugin-jsonapi
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${vdr:Depends}
+Description: vdr-plugin-jsonapi
+ vdr-plugin-jsonapi

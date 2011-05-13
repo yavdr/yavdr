@@ -1,0 +1,2 @@
+libvdr-jsonapi.so.*    usr/lib/vdr/plugins/
+#locale                      usr/share/
