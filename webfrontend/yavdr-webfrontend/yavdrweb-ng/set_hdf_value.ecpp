@@ -24,9 +24,9 @@ if (key == "webfrontend.language")
 	//TODO: umstellen auf dir lookup
     if (
     	(value == "de") ||
-    	(value == "en")) {
+    	(value == "en") ||
+	(value == "fr")) { 
 //    	(value == "nl") || 
-//	(value == "fr") || 
 //	(value == "pt") || 
 //	(value == "zh") || 
 //	(value == "it")) {
