@@ -82,20 +82,6 @@ class channelFileIterator{
     public function getGroupDelimiterFromCurrentLine(){
         return ltrim($this->currentline,":");
     }
-
-    protected function getWhereArray( $wherelist, $params ){
-        $where_array = array();
-        foreach ( explode(",", $wherelist) as $key ){
-            $key = trim($key);
-            $where_array[$key] = $params[$key];
-        }
-        return $where_array;
-    }
-
-    protected function getChannelsWithMatchingUniqueParams( $params ){
-        return $this->db->query2( "SELECT * FROM channels", $this->getWhereArray( "source, nid, tid, sid", $params ) );
-    }
-
 }
 
 ?>

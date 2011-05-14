@@ -212,12 +212,12 @@ class channelGroupingManager{
                 break;
             case 3:
                 $where[] = "vpid != '0'";
-                $where[] = "NOT " . channelImport::hd_channel;
+                $where[] = "NOT " . HD_CHANNEL;
                 $label_suffixes[] ="SDTV";
                 break;
             case 4:
                 $where[] = "vpid != '0'";
-                $where[] = channelImport::hd_channel;
+                $where[] = HD_CHANNEL;
                 $label_suffixes[] ="HDTV";
                 break;
         }

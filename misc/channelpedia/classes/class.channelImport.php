@@ -24,30 +24,15 @@
 
 class channelImport extends channelFileIterator{
 
-    const
-        hd_channel = " UPPER(name) LIKE '% HD%' ";
-
     private
-        $existingChannelBuffer,
-        $numChanChecked = 0,
-        $numChanAdded = 0,
-        $numChanChanged = 0,
-        $numChanIgnored = 0,
-        $timestamp,
+        $metaDate,
         $username,
         $debuglog;
 
     public function __construct($username, $nonSatProviders ){
         parent::__construct();
-        config::resetPresentProviders();
-        config::setNonSatProviders( $nonSatProviders );
+        $this->metaData = new channelImportMetaData( $nonSatProviders );
         $this->username = $username;
-        $this->timestamp = time();
-        $this->numChanChecked = 0;
-        $this->numChanAdded = 0;
-        $this->numChanChanged = 0;
-        $this->numChanIgnored = 0;
-        $this->existingChannelBuffer = array();
         //$this->addToUpdateLog( "-", "Processing users channels.conf.");
     }
 
@@ -60,72 +45,6 @@ class channelImport extends channelFileIterator{
         ));
         $this->config->addToDebugLog( $this->username . ": " . $description."\n");
 
-    }
-
-    /*
-     * tries to update all channel data of the channels
-     * listed in array existingChannelBuffer
-     */
-
-    private function updateExistingChannels(){
-        $query = $this->db->exec("BEGIN TRANSACTION");
-        foreach ($this->existingChannelBuffer as $params){
-            //$this->config->addToDebugLog( "checking channel ".$params["name"]." for changes: \n");
-            $result = $this->getChannelsWithMatchingUniqueParams( $params );
-            foreach ($result as $row){
-                if ($row["x_timestamp_added"] == $this->timestamp || $row["x_last_confirmed"] == $this->timestamp){
-                    $this->config->addToDebugLog(
-                        "ERROR: Trying to update channel ".$params["name"]." that was added or updated earlier! Double channel entry!\n".
-                        "To update: " . $this->config->channelArray2ChannelString($params) ."\n".
-                        "Existing : " . $this->config->channelArray2ChannelString($row) ."\n".
-                        "---\n"
-                    );
-                    $this->numChanIgnored++;
-                }
-                else{
-                    $changes = array();
-                    $update_data = array();
-                    $importance = 0;
-                    foreach ($params as $key => $value){
-                        if ($value != $row[$key]  && substr($key,0,2) !== "x_" ){
-                            if ($key != "apid" && $key != "vpid" && $key != "caid")
-                                $importance = 1;
-                            $changes[] = "$key: '".$row[$key]. "' to '". $value."'";
-                            $update_data[] = "$key = ".$this->db->quote( $value);
-                        }
-                    }
-                    $update_data[] = "x_last_changed = ". $this->timestamp;
-                    $update_data[] = "x_last_confirmed = " . $this->timestamp;
-
-                    if (count ($changes) != 0){
-                        $this->config->addToDebugLog( "Changed: ".$params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"]."-".$params["name"].": ".implode(", ",$changes)."\n");
-                        $query = $this->db->exec2(
-                            "UPDATE channels SET ".implode(", " , $update_data),
-                            $this->getWhereArray( "source, nid, tid, sid", $params )
-                        );
-                        $query = $this->db->insert( "channel_update_log",
-                            array(
-                                "combined_id"        => $params["source"]."-".$params["nid"]."-".$params["tid"]."-".$params["sid"],
-                                "name"               => $params["name"],
-                                "update_description" => implode("\n",$changes),
-                                "timestamp"          => $this->timestamp,
-                                "importance"         => $importance
-                            )
-                        );
-                        $this->numChanChanged++;
-                    }
-                    else{
-                        //$this->config->addToDebugLog( "channel unchanged, but update x_last_confirmed\n");
-                        //channel unchanged, but update x_last_confirmed
-                        $query = $this->db->exec2(
-                            "UPDATE channels SET x_last_confirmed = " . $this->timestamp,
-                            $this->getWhereArray( "source, nid, tid, sid", $params )
-                        );
-                    }
-                }
-            }
-        }
-        $query = $this->db->exec("COMMIT TRANSACTION");
     }
 
     /*
@@ -159,26 +78,21 @@ class channelImport extends channelFileIterator{
                 }
                 elseif($this->isCurrentLineEmpty()){
                     //$this->config->addToDebugLog( $msg_prefix . "illegal channel: ignoring empty line.\n");
-                    //$this->numChanIgnored++;
                 }
                 else{
-                    $this->numChanChecked++;
-                    $currentchannel = new channel( $this->getCurrentLine(), $this->timestamp );
+                    $currentchannel = new channel( $this->getCurrentLine(), $this->metaData);
                     if ($currentchannel->isValid()){
                         //if (false === $this->insertChannelIntoDB ($params, $this->getCurrentLine())){
                         if (false === $currentchannel->insertIntoDB()){
-                            $this->existingChannelBuffer[] = $currentchannel->getAsArray();
-
                             //$this->config->addToDebugLog( $msg_prefix . "already exists.\n");
                         }
                         else{
-                            $this->numChanAdded++;
                             //$this->config->addToDebugLog( $msg_prefix . "added successfully.\n");
                         }
                     }
                     else{
                         $this->config->addToDebugLog( $msg_prefix . "illegal channel: ".$this->getCurrentLine().".\n");
-                        $this->numChanIgnored++;
+                        $this->metaData->increaseIgnoredChannelCount();
                     }
                 }
             }
@@ -187,8 +101,12 @@ class channelImport extends channelFileIterator{
             if (file_exists($filename . ".old"))
                 unlink($filename . ".old");
             rename($filename, $filename . ".old");
-            $this->updateExistingChannels();
-            $this->addToUpdateLog( "-", "Summary:  Checked: $this->numChanChecked / Added: $this->numChanAdded / Modified: $this->numChanChanged / Ignored: $this->numChanIgnored");
+            $this->addToUpdateLog( "-", "Summary: ".
+                "Checked: " . $this->metaData->getCheckedChannelCount() .
+                " / Added: " . $this->metaData->getAddedChannelCount() .
+                " / Modified: " . $this->metaData->getChangedChannelCount() .
+                " / Ignored: "  . $this->metaData->getIgnoredChannelCount()
+            );
             unlink($sourcepath . 'lockfile.txt');
         }
     }
@@ -204,22 +122,22 @@ class channelImport extends channelFileIterator{
         if ($this->numChanAdded + $this->numChanChanged > 0){
             $labeller = channelGroupingManager::getInstance();
             $rawOutput = new rawOutputRenderer();
-            foreach (config::getPresentSatProviders as $sat => $dummy){
+            foreach ($this->metaData->getPresentSatProviders as $sat => $dummy){
                 $languages = $this->config->getLanguageGroupsOfSource( "DVB-S", $sat);
                 $labeller->updateAllLabelsOfSource($sat);
                 $rawOutput->writeRawOutputForSingleSource( $sat, $sat, $languages);
                 $htmlOutput->renderPagesOfSingleSource($sat, $languages);
             }
-            if (config::getPresentNonSatProvider("C") != ""){
-                $languages = $this->config->getLanguageGroupsOfSource( "DVB-C", config::getPresentNonSatProvider("C"));
-                $provider = "C[".config::getPresentNonSatProvider("C")."]";
+            if ($this->metaData->getPresentNonSatProvider("C") != ""){
+                $languages = $this->config->getLanguageGroupsOfSource( "DVB-C", $this->metaData->getPresentNonSatProvider("C"));
+                $provider = "C[".$this->metaData->getPresentNonSatProvider("C")."]";
                 $labeller->updateAllLabelsOfSource( $provider );
                 $rawOutput->writeRawOutputForSingleSource( "C", $provider, $languages);
                 $htmlOutput->renderPagesOfSingleSource($provider, $languages);
             }
-            if (config::getPresentNonSatProvider("T") != ""){
-                $languages = $this->config->getLanguageGroupsOfSource( "DVB-T", config::getPresentNonSatProvider("T"));
-                $provider = "T[".config::getPresentNonSatProvider("T")."]";
+            if ($this->metaData->getPresentNonSatProvider("T") != ""){
+                $languages = $this->config->getLanguageGroupsOfSource( "DVB-T", $this->metaData->getPresentNonSatProvider("T"));
+                $provider = "T[".$this->metaData->getPresentNonSatProvider("T")."]";
                 $labeller->updateAllLabelsOfSource( $provider );
                 $rawOutput->writeRawOutputForSingleSource( "T", $provider, $languages);
                 $htmlOutput->renderPagesOfSingleSource($provider, $languages);
