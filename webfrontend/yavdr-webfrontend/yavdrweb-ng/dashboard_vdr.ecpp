@@ -23,17 +23,17 @@ using namespace std;
 		Json::Value json;
 		json["data"]["pid"] = 12;
 		json["data"]["diskspace"] = 12;
-		string x = hdf_get_value(hdf, "x11.display.0.resolution.x", "");
+		string x = hdf_get_value(hdf, "system.x11.display.0.resolution.x", "");
 		if (x != "") {
-			string y = hdf_get_value(hdf, "x11.display.0.resolution.y", "");
+			string y = hdf_get_value(hdf, "system.x11.display.0.resolution.y", "");
 			json["data"]["resolution"] = x + "x" + y;
 		} else {
 			json["data"]["resolution"] = "";
 		}
 		json["data"]["frontend"] = hdf_get_value(hdf, "vdr.setup", "unknown");
-		
+
 		json["success"] = true;
-		reply.setContentType("application/json");
+		reply.setContentType("application/json; charset=utf-8");
 		reply.out() << json;
 	}
 </%cpp>
