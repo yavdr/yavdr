@@ -1,0 +1,137 @@
+--- a/v4l/scripts/make_config_compat.pl	2011-02-27 11:25:48.000000000 +0000
++++ b/v4l/scripts/make_config_compat.pl	2011-03-05 13:46:48.000000000 +0000
+@@ -338,6 +338,27 @@
+ 	$out.= "\n#define NEED_BITOPS 1\n";
+ }
+ 
++sub check_fw_csr_string()
++{
++	my @files = ( "$kdir/include/linux/firewire.h" );
++
++	foreach my $file ( @files ) {
++		open IN, "<$file" or next;
++		while (<IN>) {
++			if (m/fw_csr_string\(/) {
++				close IN;
++				# definition found. No need for compat
++				return;
++			}
++		}
++		close IN;
++	}
++
++	# definition not found. This means that we need compat
++	$out.= "\n#define NEED_FW_CSR_STRING 1\n";
++}
++
++
+ sub check_delayed_work()
+ {
+ 	my @files = ( "$kdir//include/linux/workqueue.h" );
+@@ -358,6 +379,91 @@
+ 	$out.= "\n#define NEED_DELAYED_WORK 1\n";
+ }
+ 
++sub check_vzalloc()
++{
++	my @files = ( "$kdir/include/linux/vmalloc.h" );
++
++	foreach my $file ( @files ) {
++		open IN, "<$file" or die "File not found: $file";
++		while (<IN>) {
++			if (m/vzalloc/) {
++				close IN;
++				# definition found. No need for compat
++				return;
++			}
++		}
++		close IN;
++	}
++
++	# definition not found. This means that we need compat
++	$out.= "\n#define NEED_VZALLOC 1\n";
++}
++
++sub check_flush_work_sync()
++{
++	my @files = ( "$kdir/include/linux/workqueue.h" );
++
++	foreach my $file ( @files ) {
++		open IN, "<$file" or die "File not found: $file";
++		while (<IN>) {
++			if (m/flush_work_sync/) {
++				close IN;
++				# definition found. No need for compat
++				return;
++			}
++		}
++		close IN;
++	}
++
++	# definition not found. This means that we need compat
++	$out.= "\n#define NEED_FLUSH_WORK_SYNC 1\n";
++}
++
++sub check_autosuspend_delay()
++{
++	my @files = ( "$kdir/include/linux/pm_runtime.h" );
++
++	foreach my $file ( @files ) {
++		open IN, "<$file" or next;
++		while (<IN>) {
++			if (m/pm_runtime_set_autosuspend_delay/) {
++				close IN;
++				# definition found. No need for compat
++				return;
++			}
++		}
++		close IN;
++	}
++
++	# definition not found. This means that we need compat
++	$out.= "\n#define NEED_AUTOSUSPEND_DELAY 1\n";
++}
++
++
++sub check_file_for_func($$$)
++{
++	my $incfile = shift;
++	my $function = shift;
++	my $define = shift;
++
++	my @files = ( "$kdir/$incfile" );
++
++	foreach my $file ( @files ) {
++		open IN, "<$file" or die "File not found: $file";
++		while (<IN>) {
++			if (m/($function)/) {
++				close IN;
++				# definition found. No need for compat
++				return;
++			}
++		}
++		close IN;
++	}
++
++	# definition not found. This means that we need compat
++	$out.= "\n#define $define 1\n";
++}
++
+ sub check_other_dependencies()
+ {
+ 	check_spin_lock();
+@@ -378,6 +484,14 @@
+ 	check_snd_BUG_ON();
+ 	check_bitops();
+ 	check_delayed_work();
++	check_fw_csr_string();
++	check_vzalloc();
++	check_flush_work_sync();
++	check_autosuspend_delay();
++	check_file_for_func("include/linux/kernel.h", "hex_to_bin", "NEED_HEX_TO_BIN");
++	check_file_for_func("include/sound/control.h", "snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO");
++	check_file_for_func("include/linux/sysfs.h", "sysfs_attr_init", "NEED_SYSFS_ATTR_INIT");
++	check_file_for_func("include/linux/delay.h", "usleep_range", "NEED_USLEEP_RANGE");
+ }
+ 
+ # Do the basic rules

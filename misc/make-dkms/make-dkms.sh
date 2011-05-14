@@ -67,7 +67,7 @@ cd ..
 echo "s2-liplianin: Update ended. Now: $VERSION"
 }
 
-KERNEL=2.6.32-30-generic
+KERNEL=2.6.38-8-generic
 if [ -z "$KERNEL" ]; then
     if [ ! -z "$2" ]; then
     	KERNEL="$2"
@@ -101,7 +101,7 @@ case $1 in
 esac
 
 VERSION=0~`/bin/date +%0Y%0m%0d`.$(cat repositories/$REPO.version)
-PATCHES=( `find patches/$REPO/* -name *.patch | tac` )
+PATCHES=( `find patches/$REPO/* -name '*.patch' | tac` )
 
 if [ -e "config-$REPO" ]; then 
     cp config-$REPO repositories/$REPO/v4l/.config
@@ -183,4 +183,4 @@ cp $dkmstree/${REPO}/$VERSION/dsc/* ./packages/dsc/
 #cp $dkmstree/${REPO}/$VERSION/deb/* ./packages/deb/
 
 # upload to ppa
-dput ppa:yavdr/testing-vdr ./packages/dsc/$REPO-dkms_$VERSION*.changes
+dput ppa:yavdr/main ./packages/dsc/$REPO-dkms_$VERSION*.changes

@@ -1,0 +1,23 @@
+--- a/linux/drivers/media/dvb/frontends/stb0899_drv.c	2011-02-26 06:44:11.000000000 +0000
++++ b/linux/drivers/media/dvb/frontends/stb0899_drv.c	2011-04-24 08:14:50.000000000 +0000
+@@ -983,7 +983,7 @@ static int stb0899_read_signal_strength(
+ 		break;
+ 	case SYS_DVBS2:
+ 		if (internal->lock) {
+-			reg = STB0899_READ_S2REG(STB0899_DEMOD, IF_AGC_GAIN);
++			reg = STB0899_READ_S2REG(STB0899_S2DEMOD, IF_AGC_GAIN);
+ 			val = STB0899_GETFIELD(IF_AGC_GAIN, reg);
+ 
+ 			*strength = stb0899_table_lookup(stb0899_dvbs2rf_tab, ARRAY_SIZE(stb0899_dvbs2rf_tab) - 1, val);
+@@ -1426,9 +1426,9 @@ static void stb0899_set_iterations(struc
+ 	if (iter_scale > config->ldpc_max_iter)
+ 		iter_scale = config->ldpc_max_iter;
+ 
+-	reg = STB0899_READ_S2REG(STB0899_S2DEMOD, MAX_ITER);
++	reg = STB0899_READ_S2REG(STB0899_S2FEC, MAX_ITER);
+ 	STB0899_SETFIELD_VAL(MAX_ITERATIONS, reg, iter_scale);
+-	stb0899_write_s2reg(state, STB0899_S2DEMOD, STB0899_BASE_MAX_ITER, STB0899_OFF0_MAX_ITER, reg);
++	stb0899_write_s2reg(state, STB0899_S2FEC, STB0899_BASE_MAX_ITER, STB0899_OFF0_MAX_ITER, reg);
+ }
+ 
+ static enum dvbfe_search stb0899_search(struct dvb_frontend *fe, struct dvb_frontend_parameters *p)

@@ -1,0 +1,70 @@
+diff -r 70c428a8a1d2 linux/drivers/media/dvb/frontends/stv090x.c
+--- a/linux/drivers/media/dvb/frontends/stv090x.c	Fri Jan 08 17:58:11 2010 +0100
++++ b/linux/drivers/media/dvb/frontends/stv090x.c	Sat Jan 09 14:43:35 2010 +0100
+@@ -4292,6 +4292,34 @@
+ 	return 0;
+ }
+ 
++static int stv090x_read_ber(struct dvb_frontend *fe, u32 *ber)
++{
++	struct stv090x_state *state = fe->demodulator_priv;
++
++	u32 reg, h, m, l;
++	enum fe_status status;
++
++	stv090x_read_status(fe, &status);
++	if (!(status & FE_HAS_LOCK)) {
++		*ber = 1 << 23; /* Max BER */
++	} else {
++		/* Counter 1 */
++		reg = STV090x_READ_DEMOD(state, ERRCNT12);
++		h = STV090x_GETFIELD_Px(reg, ERR_CNT12_FIELD);
++
++		reg = STV090x_READ_DEMOD(state, ERRCNT11);
++		m = STV090x_GETFIELD_Px(reg, ERR_CNT11_FIELD);
++
++		reg = STV090x_READ_DEMOD(state, ERRCNT10);
++		l = STV090x_GETFIELD_Px(reg, ERR_CNT10_FIELD);
++
++		*ber = ((h << 16) | (m << 8) | l);
++		/* followin line is similar to ber = ber * 10^7 / 2^23 */
++		*ber = (u32) (((u64) *ber * 9766) >> 13);
++	}
++	return 0;
++}
++
+ static int stv090x_read_per(struct dvb_frontend *fe, u32 *per)
+ {
+ 	struct stv090x_state *state = fe->demodulator_priv;
+@@ -4306,7 +4334,7 @@
+ 	} else {
+ 		/* Counter 2 */
+ 		reg = STV090x_READ_DEMOD(state, ERRCNT22);
+-		h = STV090x_GETFIELD_Px(reg, ERR_CNT2_FIELD);
++		h = STV090x_GETFIELD_Px(reg, ERR_CNT22_FIELD);
+ 
+ 		reg = STV090x_READ_DEMOD(state, ERRCNT21);
+ 		m = STV090x_GETFIELD_Px(reg, ERR_CNT21_FIELD);
+@@ -5287,7 +5315,7 @@
+ 
+ 	.search				= stv090x_search,
+ 	.read_status			= stv090x_read_status,
+-	.read_ber			= stv090x_read_per,
++	.read_ber			= stv090x_read_ber,
+ 	.read_signal_strength		= stv090x_read_signal_strength,
+ 	.read_snr			= stv090x_read_cnr
+ };
+diff -r 70c428a8a1d2 linux/drivers/media/dvb/frontends/stv090x_reg.h
+--- a/linux/drivers/media/dvb/frontends/stv090x_reg.h	Fri Jan 08 17:58:11 2010 +0100
++++ b/linux/drivers/media/dvb/frontends/stv090x_reg.h	Sat Jan 09 14:43:35 2010 +0100
+@@ -2232,8 +2232,8 @@
+ #define STV090x_P2_ERRCNT22				STV090x_Px_ERRCNT22(2)
+ #define STV090x_OFFST_Px_ERRCNT2_OLDVALUE_FIELD		7
+ #define STV090x_WIDTH_Px_ERRCNT2_OLDVALUE_FIELD		1
+-#define STV090x_OFFST_Px_ERR_CNT2_FIELD			0
+-#define STV090x_WIDTH_Px_ERR_CNT2_FIELD			7
++#define STV090x_OFFST_Px_ERR_CNT22_FIELD		0
++#define STV090x_WIDTH_Px_ERR_CNT22_FIELD		7
+ 
+ #define STV090x_Px_ERRCNT21(__x)			(0xF59E - (__x - 1) * 0x200)
+ #define STV090x_P1_ERRCNT21				STV090x_Px_ERRCNT21(1)

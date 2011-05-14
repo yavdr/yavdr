@@ -3,7 +3,7 @@ Short description
 -----------------
 
 Requirements: linux-headers-.... , 
-              mercurial (for update the repo's and getting the hg version), 
+              mercurial, git (for update the repos and getting the hg version), 
               gcc etc,
               dput,
               gnupg-agent,

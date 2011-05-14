@@ -1,0 +1,74 @@
+diff --git a/linux/drivers/media/dvb/frontends/stb0899_algo.c b/linux/drivers/media/dvb/frontends/stb0899_algo.c
+index 2da55ec..55f0c4e 100644
+--- a/linux/drivers/media/dvb/frontends/stb0899_algo.c
++++ b/linux/drivers/media/dvb/frontends/stb0899_algo.c
+@@ -338,36 +338,42 @@ static enum stb0899_status stb0899_check_data(struct stb0899_state *state)
+ 	int lock = 0, index = 0, dataTime = 500, loop;
+ 	u8 reg;
+ 
+-	internal->status = NODATA;
++	reg = stb0899_read_reg(state, STB0899_VSTATUS);
++	lock = STB0899_GETFIELD(VSTATUS_LOCKEDVIT, reg);
++	if ( !lock ) {
+ 
+-	/* RESET FEC	*/
+-	reg = stb0899_read_reg(state, STB0899_TSTRES);
+-	STB0899_SETFIELD_VAL(FRESACS, reg, 1);
+-	stb0899_write_reg(state, STB0899_TSTRES, reg);
+-	msleep(1);
+-	reg = stb0899_read_reg(state, STB0899_TSTRES);
+-	STB0899_SETFIELD_VAL(FRESACS, reg, 0);
+-	stb0899_write_reg(state, STB0899_TSTRES, reg);
++		internal->status = NODATA;
+ 
+-	if (params->srate <= 2000000)
+-		dataTime = 2000;
+-	else if (params->srate <= 5000000)
+-		dataTime = 1500;
+-	else if (params->srate <= 15000000)
+-		dataTime = 1000;
+-	else
+-		dataTime = 500;
+-
+-	stb0899_write_reg(state, STB0899_DSTATUS2, 0x00); /* force search loop	*/
+-	while (1) {
+-		/* WARNING! VIT LOCKED has to be tested before VIT_END_LOOOP	*/
+-		reg = stb0899_read_reg(state, STB0899_VSTATUS);
+-		lock = STB0899_GETFIELD(VSTATUS_LOCKEDVIT, reg);
+-		loop = STB0899_GETFIELD(VSTATUS_END_LOOPVIT, reg);
++		/* RESET FEC	*/
++		reg = stb0899_read_reg(state, STB0899_TSTRES);
++		STB0899_SETFIELD_VAL(FRESACS, reg, 1);
++		stb0899_write_reg(state, STB0899_TSTRES, reg);
++		msleep(1);
++		reg = stb0899_read_reg(state, STB0899_TSTRES);
++		STB0899_SETFIELD_VAL(FRESACS, reg, 0);
++		stb0899_write_reg(state, STB0899_TSTRES, reg);
+ 
+-		if (lock || loop || (index > dataTime))
+-			break;
+-		index++;
++		if (params->srate <= 2000000)
++			dataTime = 2000;
++		else if (params->srate <= 5000000)
++			dataTime = 1500;
++		else if (params->srate <= 15000000)
++			dataTime = 1000;
++		else
++			dataTime = 500;
++
++		stb0899_write_reg(state, STB0899_DSTATUS2, 0x00); /* force search loop	*/
++		while (1) {
++			/* WARNING! VIT LOCKED has to be tested before VIT_END_LOOOP	*/
++			reg = stb0899_read_reg(state, STB0899_VSTATUS);
++			lock = STB0899_GETFIELD(VSTATUS_LOCKEDVIT, reg);
++			loop = STB0899_GETFIELD(VSTATUS_END_LOOPVIT, reg);
++	
++			if (lock || (loop && index) || (index > dataTime))
++				break;
++			index++;
++			msleep(1);
++		}
+ 	}
+ 
+ 	if (lock) {	/* DATA LOCK indicator	*/
