@@ -31,6 +31,7 @@ class channel{
 
     private
         $sourceDB, //needed for db
+        $sourceShort,
         $metaData,
         $channelstring = "",
         $uniqueid="",
@@ -83,20 +84,20 @@ class channel{
         if ( $this->metaData !== null)
             $this->setSourceForDB();
         else
-            $this->sourceDB  = $this->params["source"];
+            $this->setSourceShort();
 
         //convert name and provider strings to utf-8 if they are not in utf-8
         //this only needs to be done if the channels were read from file
         //usually is necessary for sky_de channels that are encoded in ISO-8859-15
         if ( $this->metaData !== null){
-            $this->params["x_utf8"] = true;
+            $this->params["x_utf8"] = 1;
             if (mb_check_encoding($this->params["name"], "UTF-8") === false){
                 $this->params["name"] = mb_convert_encoding ( $this->params["name"] , "UTF-8", "ISO-8859-15");
-                $this->params["x_utf8"] = false;
+                $this->params["x_utf8"] = 0;
             }
             if (mb_check_encoding($this->params["provider"], "UTF-8") === false){
                 $this->params["provider"] = mb_convert_encoding ( $this->params["provider"] , "UTF-8", "ISO-8859-15");
-                $this->params["x_utf8"] = false;
+                $this->params["x_utf8"] = 0;
             }
         }
 
@@ -108,6 +109,15 @@ class channel{
         return ($this->params !== false);
     }
 
+    private function setSourceShort(){
+        $this->sourceDB  = $this->params["source"];
+        if (!$this->isSatelliteSource()){
+            $this->sourceShort = substr($this->source,0,1);
+        }
+        else
+            $this->sourceShort = $this->source;
+    }
+
     private function setSourceForDB(){
         if (!$this->isSatelliteSource()){
             switch ($this->source){
@@ -115,6 +125,7 @@ class channel{
             case "T":
             case "A":
                 $nonSatProviders = $this->metaData->getNonSatProviders();
+                $this->sourceShort = $this->source;
                 $this->sourceDB = $this->source . '[' . $nonSatProviders[ $this->source ] . ']';
                 if ( $this->metaData !== null)
                     $this->metaData->addPresentNonSatProvider( $this->source, $nonSatProviders[ $this->source ] );
@@ -125,6 +136,7 @@ class channel{
         }
         else{
             $this->sourceDB = $this->source;
+            $this->sourceShort = $this->source;
             if ( $this->metaData !== null)
                 $this->metaData->addPresentSatProvider( $this->source );
         }
@@ -148,6 +160,8 @@ class channel{
 
     //FIXME temp
     public function getAsArray(){
+        $this->params["x_unique_id"] = $this->getUniqueID();
+        $this->params["source"] = $this->sourceShort;
         return $this->params;
     }
 

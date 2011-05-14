@@ -304,8 +304,8 @@ class HTMLOutputRenderer{
                 $html_table .= "</tr>\n";
             }
             $html_table .= "</table></div>";
-            //$nice_html_body .= "</pre>\n";
-            $nice_html_body .= "</pre>\n".$html_table;
+            $nice_html_body .= "</pre>\n";
+            //$nice_html_body .= "</pre>\n".$html_table;
             $nice_html_linklist .= '<li><a href="#'.$escaped_shortlabel.'">'.$escaped_shortlabel. " (" . $cols["channelcount"] . " channels)</a></li>\n";
         }
 

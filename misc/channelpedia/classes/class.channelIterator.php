@@ -58,7 +58,6 @@ class channelIterator{
             //FIXME: encapsulate access to result fetch
             $temp = $this->result->fetch(PDO::FETCH_ASSOC);
             if ($temp !== false){
-                //$this->config->addToDebugLog( "channeliterator new channel ".($temp === false ? "FALSE":"notFALSE")."\n");
                 $channelobj = new channel( $temp );
                 if ($channelobj->isValid()) {
                     $exists = true;

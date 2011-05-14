@@ -117,7 +117,7 @@ class channelImport extends channelFileIterator{
     public function updateAffectedDataAndFiles(){
         $htmlOutput = new HTMLOutputRenderer();
         $htmlOutput->writeUploadLog();
-        if ($this->numChanAdded + $this->numChanChanged > 0){
+        if ( $this->metaData->getAddedChannelCount() + $this->metaData->getChangedChannelCount() > 0){
             $labeller = channelGroupingManager::getInstance();
             $rawOutput = new rawOutputRenderer();
             foreach ($this->metaData->getPresentSatProviders as $sat => $dummy){
