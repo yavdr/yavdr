@@ -69,8 +69,9 @@ class channelgroupsResource extends Resource {
                         $channelIterator->init1($temp['x_label'], $source, $orderby = "UPPER(name) ASC");
                         while ($channelIterator->moveToNextChannel() !== false){
                             $temp["channels"][] = array (
+                                //FIXME use channel object intelligently here!!!!
                                 "parameters" => $channelIterator->getCurrentChannelArray(),
-                                "string" => $channelIterator->getCurrentChannelString()
+                                "string" => $channelIterator->getCurrentChannelObject()->getChannelString()
                             );
                         }
                         if ($group === "all")

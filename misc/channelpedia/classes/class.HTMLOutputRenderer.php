@@ -267,8 +267,9 @@ class HTMLOutputRenderer{
                     }
                     $html_table .= "</tr>\n";
                 }
-                $nice_html_body .= htmlspecialchars( $x->getCurrentChannelString())."\n";
+                $nice_html_body .= htmlspecialchars( $x->getCurrentChannelObject()->getChannelString() )."\n";
                 $html_table .= "<tr".$prestyle.">\n";
+                //FIXME use channel object here
                 foreach ($x->getCurrentChannelArray() as $param => $value){
                     switch ($param){
                         case "apid":
@@ -444,7 +445,7 @@ class HTMLOutputRenderer{
                 "x_label = '' AND provider = ".$this->db->quote($row["provider"]).
                 " ORDER by x_label ASC, lower(name) ASC, source ASC");
             while ($x->moveToNextChannel() !== false){
-                $nice_html_body .= htmlspecialchars( $x->getCurrentChannelString())."\n";
+                $nice_html_body .= htmlspecialchars( $x->getCurrentChannelObject()->getChannelString())."\n";
             }
             $nice_html_body .= "</pre>";
         }

@@ -57,9 +57,9 @@ class updateFromScan extends channelFileIterator{
                     $this->stats["empty_lines"] ++;
                 }
                 else{
-                    $channel = $this->getCurrentLineAsChannelArray();
-                    if ($channel === false)
-                        fputs ($this->newfile, "#Illegal channel: " . $this->getCurrentLine() . "\n");
+                    $channel = $this->getCurrentLineAsChannelObject();
+                    if ($channel->isValid() === false)
+                        fputs ($this->newfile, "#Illegal channel: " . $chanel->getChannelString() . "\n");
                     else{
                         $newchannel = $this->checkChannel( $channel );
                         if ($newchannel !== "")
@@ -76,43 +76,42 @@ class updateFromScan extends channelFileIterator{
 
     private function checkChannel( $channel ){
         $channelstring = "";
-        $result = $this->getChannelsWithMatchingUniqueParams( $channel );
         $rowcount = 0;
         $matchstring = "";
+        $result = $channel->getChannelsWithMatchingUniqueParams();
         foreach ($result as $row){
+            $resultchannel = new channel($row);
+            $matchstring .= " * " .$resultchannel->getChannelString() ."\n";
             $rowcount ++;
-            $matchstring .= " * " .$this->config->channelArray2ChannelString($row) ."\n";
         }
         switch ($rowcount){
             case 0:
-                print "Warning: Found no match for channel: ". $this->config->channelArray2ChannelString($channel)."\n";
+                print "Warning: Found no match for channel: ". $channel->getChannelString()."\n";
                 $this->stats["unmatched_channels"] ++;
-                $channelstring = "#Warning: Found no match for channel: ". $this->config->channelArray2ChannelString($channel);
+                $channelstring = "#Warning: Found no match for channel: ". $channel->getChannelString();
                 $query = "SELECT * FROM channels WHERE".
-                    " name = " . $this->db->quote($channel['name']) .
-                    " AND source = " . $this->db->quote($channel['source']);
+                    " name = " . $this->db->quote($channel->getName()) .
+                    " AND source = " . $this->db->quote($channel->getSource);
                 $result = $this->db->query($query);
-                foreach ($result as $row){
-                    $channelstring .= "\n#  Alternative: " . $this->config->channelArray2ChannelString($row);
+                foreach ($result as $row2){
+                    $altchannel = new channel($row2);
+                    $channelstring .= "\n#  Alternative: " . $altchannel->getChannelString();
                 }
-                $channelstring = "";
+                $channelstring = ""; //hide alternative lines for now
                 break;
             case 1:
-                print "Info: Found one match for channel: ". $this->config->channelArray2ChannelString($channel)."\n";
-                if ( $this->config->channelArray2ChannelString($channel) != $this->config->channelArray2ChannelString($row))
+                print "Info: Found one match for channel: ". $channel->getChannelString()."\n";
+                if ( $channel->getChannelString() != $resultchannel->getChannelString())
                     $this->stats["updated_channels"] ++;
                 else
                     $this->stats["unchanged_channels"] ++;
 
-                $channelstring = $this->config->channelArray2ChannelString($row);
+                $channelstring = $resultchannel->getChannelString();
                 break;
             default:
                 print "Error: Found more than one match for channel". $channel["name"] . ":\n" . $matchstring;
                 $this->stats["unmatched_channels"] ++;
-
         }
-
-
         return $channelstring;
     }
 }

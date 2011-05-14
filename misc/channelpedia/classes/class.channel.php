@@ -30,9 +30,9 @@ class channel{
         $params;
 
     private
-        $timestamp, //needed for db
         $sourceDB, //needed for db
         $metaData,
+        $channelstring = "",
 
         $name,
         $provider,
@@ -49,22 +49,33 @@ class channel{
         $tid,
         $rid;
 
-    public function __construct( $channelparams, & $metaDataObj ){
+    public function __construct( $channelparams, & $metaDataObj = null){
         $this->config = config::getInstance();
         $this->db = dbConnection::getInstance();
         $this->metaData = $metaDataObj;
-        $this->metaData->increaseCheckedChannelCount();
-        $this->timestamp = $metaDataObj->getTimestamp();
+        if ( $this->metaData !== null)
+            $this->metaData->increaseCheckedChannelCount();
         $this->params = array();
         if (is_array( $channelparams )){
             $this->params = $channelparams;
+            $this->channelstring = $this->convertArray2String();
         }
         elseif (is_string( $channelparams )){
-            $this->params = $this->config->convertChannelString2Array( $channelparams );
+            $this->channelstring = $channelparams;
+            $this->params = $this->convertString2Array( $channelparams );
         }
 
         $this->source = $this->params["source"];
-        $this->setSourceForDB();
+
+        //if a channel was read from a file the source of non-sat channels
+        //need to be modified before they are being put into the db
+        //this does not apply for channels read from the db
+        //we assume that metaData is null when channel was read from db
+        //ugly!
+        if ( $this->metaData !== null)
+            $this->setSourceForDB();
+        else
+            $this->sourceDB  = $this->params["source"];
     }
 
     public function isValid(){
@@ -79,15 +90,17 @@ class channel{
             case "A":
                 $nonSatProviders = $this->metaData->getNonSatProviders();
                 $this->sourceDB = $this->source . '[' . $nonSatProviders[ $this->source ] . ']';
-                $this->metaData->addPresentNonSatProvider( $this->source, $nonSatProviders[ $this->source ] );
+                if ( $this->metaData !== null)
+                    $this->metaData->addPresentNonSatProvider( $this->source, $nonSatProviders[ $this->source ] );
                 break;
             default:
-                throw new Exception( "Unknown source type!" . $this->source );
+                throw new Exception( "Unknown source type! " . $this->source );
             }
         }
         else{
             $this->sourceDB = $this->source;
-            $this->metaData->addPresentSatProvider( $this->source );
+            if ( $this->metaData !== null)
+                $this->metaData->addPresentSatProvider( $this->source );
         }
     }
 
@@ -115,8 +128,8 @@ class channel{
         //this only has to be added if native channel data is to be inserted to db
         $this->params = $this->params + array(
             "x_label"         => "",
-            "x_last_changed"  => $this->timestamp,
-            "x_timestamp_added" => $this->timestamp,
+            "x_last_changed"  => $this->metaData->getTimestamp(),
+            "x_timestamp_added" => $this->metaData->getTimestamp(),
             "x_last_confirmed" => 0
         );
         //FIXME: source should stay original
@@ -126,12 +139,13 @@ class channel{
         $query = $this->db->insert( "channels", $this->params);
         //19 = channel already exists, could'nt be inserted
         if ($query != 19) {
-            $this->metaData->increaseAddedChannelCount();
+            if ( $this->metaData !== null)
+                $this->metaData->increaseAddedChannelCount();
             $query = $this->db->insert( "channel_update_log", array(
                 "combined_id" => $this->params["source"]."-".$this->params["nid"]."-".$this->params["tid"]."-".$this->params["sid"],
                 "name" => $this->params["name"],
-                "update_description" => "New channel added: " . $this->config->channelArray2ChannelString($this->params),
-                "timestamp" => $this->timestamp,
+                "update_description" => "New channel added: " . $this->getChannelString(),
+                "timestamp" => $this->metaData->getTimestamp(),
                 "importance" => "1"
             ));
         }
@@ -146,14 +160,16 @@ class channel{
         //$this->config->addToDebugLog( "checking channel ".$this->params["name"]." for changes: \n");
         $result = $this->getChannelsWithMatchingUniqueParams( $this->params );
         foreach ($result as $row){
-            if ($row["x_timestamp_added"] == $this->timestamp || $row["x_last_confirmed"] == $this->timestamp){
+            $otherchannel = new channel($row);
+            if ($row["x_timestamp_added"] == $this->metaData->getTimestamp() || $row["x_last_confirmed"] == $this->metaData->getTimestamp()){
                 $this->config->addToDebugLog(
                     "ERROR: Trying to update channel ".$this->params["name"]." that was added or updated earlier! Double channel entry!\n".
-                    "To update: " . $this->config->channelArray2ChannelString($this->params) ."\n".
-                    "Existing : " . $this->config->channelArray2ChannelString($row) ."\n".
+                    "To update: " . $this->getChannelString() ."\n".
+                    "Existing : " . $otherchannel->getChannelString() ."\n".
                     "---\n"
                 );
-                $this->metaData->increaseIgnoredChannelCount();
+                if ( $this->metaData !== null)
+                    $this->metaData->increaseIgnoredChannelCount();
             }
             else{
                 $changes = array();
@@ -167,8 +183,8 @@ class channel{
                         $update_data[] = "$key = ".$this->db->quote( $value);
                     }
                 }
-                $update_data[] = "x_last_changed = ". $this->timestamp;
-                $update_data[] = "x_last_confirmed = " . $this->timestamp;
+                $update_data[] = "x_last_changed = "   . $this->metaData->getTimestamp();
+                $update_data[] = "x_last_confirmed = " . $this->metaData->getTimestamp();
 
                 if (count ($changes) != 0){
                     $this->config->addToDebugLog( "Changed: ".$this->params["source"]."-".$this->params["nid"]."-".$this->params["tid"]."-".$this->params["sid"]."-".$this->params["name"].": ".implode(", ",$changes)."\n");
@@ -181,17 +197,18 @@ class channel{
                             "combined_id"        => $this->params["source"]."-".$this->params["nid"]."-".$this->params["tid"]."-".$this->params["sid"],
                             "name"               => $this->params["name"],
                             "update_description" => implode("\n",$changes),
-                            "timestamp"          => $this->timestamp,
+                            "timestamp"          => $this->metaData->getTimestamp(),
                             "importance"         => $importance
                         )
                     );
-                    $this->metaData->increaseChangedChannelCount();
+                    if ( $this->metaData !== null)
+                        $this->metaData->increaseChangedChannelCount();
                 }
                 else{
                     //$this->config->addToDebugLog( "channel unchanged, but update x_last_confirmed\n");
                     //channel unchanged, but update x_last_confirmed
                     $query = $this->db->exec2(
-                        "UPDATE channels SET x_last_confirmed = " . $this->timestamp,
+                        "UPDATE channels SET x_last_confirmed = " . $this->metaData->getTimestamp(),
                         $this->getWhereArray( "source, nid, tid, sid", $this->params )
                     );
                 }
@@ -211,5 +228,69 @@ class channel{
         }
         return $where_array;
     }
+
+    public function getChannelString(){
+        return $this->channelstring;
+    }
+
+    public function convertArray2String(){
+        $provider = "";
+        if ($this->params["provider"] != "")
+            $provider = ";". $this->params["provider"];
+
+        //remove meta provider info from cable ot terrestrial source string
+        $source = $this->params["source"];
+        $sourcetest = strtoupper( substr($this->params["source"],0,1));
+        if ($sourcetest == "C" || $sourcetest == "T")
+            $source = $sourcetest;
+
+        return
+            $this->params["name"] .
+            $provider . ":".
+            $this->params["frequency"] . ":".
+            $this->params["modulation"] . ":".
+            $source . ":".
+            $this->params["symbolrate"] . ":".
+            $this->params["vpid"] . ":".
+            $this->params["apid"] . ":".
+            $this->params["tpid"] . ":".
+            $this->params["caid"] . ":".
+            $this->params["sid"] . ":".
+            $this->params["nid"] . ":".
+            $this->params["tid"] . ":".
+            $this->params["rid"];
+    }
+
+    public function convertString2Array( $string ){
+        $result = false;
+        $details = explode( ":", $string);
+        if (count($details) == 13){
+            $cname = $details[0];
+            $cprovider = "";
+            $cnamedetails = explode( ";", $cname);
+            if (count($cnamedetails) == 2){
+                $cname = $cnamedetails[0];
+                $cprovider = $cnamedetails[1];
+            }
+            $result = array(
+                "name"            => $cname,
+                "provider"        => $cprovider,
+                "frequency"       => intval($details[1]),
+                "modulation"      => strtoupper($details[2]), //w_scan has lower case, we don't want that
+                "source"          => $details[3],
+                "symbolrate"      => intval($details[4]),
+                "vpid"            => $details[5],
+                "apid"            => $details[6],
+                "tpid"            => $details[7],
+                "caid"            => $details[8],
+                "sid"             => intval($details[9]),
+                "nid"             => intval($details[10]),
+                "tid"             => intval($details[11]),
+                "rid"             => intval($details[12])
+            );
+        }
+        return $result;
+    }
+
 }
 ?>

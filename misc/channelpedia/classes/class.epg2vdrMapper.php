@@ -94,8 +94,10 @@ class epg2vdrMapper{
             $idlist = array();
             $comments = array();
             foreach ($result as $row){
+                $currentChannel = new channel($row);
+                //FIXME use channel object properly here
                 $idlist[] = $shortsource . "-" . $row["nid"] . "-" . $row["tid"] . "-" . $row["sid"];
-                $comments[] = $this->config->channelArray2ChannelString($row);
+                $comments[] = $currentChannel->getChannelString();
             }
             if (count($idlist) > 0 ){
                 $map .=

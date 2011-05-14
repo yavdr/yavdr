@@ -26,8 +26,7 @@ class channelImport extends channelFileIterator{
 
     private
         $metaDate,
-        $username,
-        $debuglog;
+        $username;
 
     public function __construct($username, $nonSatProviders ){
         parent::__construct();
@@ -82,7 +81,6 @@ class channelImport extends channelFileIterator{
                 else{
                     $currentchannel = new channel( $this->getCurrentLine(), $this->metaData);
                     if ($currentchannel->isValid()){
-                        //if (false === $this->insertChannelIntoDB ($params, $this->getCurrentLine())){
                         if (false === $currentchannel->insertIntoDB()){
                             //$this->config->addToDebugLog( $msg_prefix . "already exists.\n");
                         }

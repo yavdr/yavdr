@@ -91,16 +91,16 @@ class channelIterator{
         return $exists;
     }
 
+    public function getCurrentChannelObject(){
+        return new channel( $this->channel );
+    }
+
     public function getCurrentChannelArray(){
         return $this->channel;
     }
 
     public function getCurrentChannelArrayKeys(){
         return array_keys($this->channel);
-    }
-
-    public function getCurrentChannelString(){
-        return $this->config->channelArray2ChannelString($this->channel);
     }
 
     public function transponderChanged(){

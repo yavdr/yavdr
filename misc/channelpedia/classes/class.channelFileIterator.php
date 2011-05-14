@@ -63,12 +63,8 @@ class channelFileIterator{
         return $this->currentline;
     }
 
-    public function getCurrentLineAsChannelArray(){
-        if (!$this->isCurrentLineAGroupDelimiter()){
-            return $this->config->convertChannelString2Array($this->currentline);
-        }
-        else
-            return false;
+    public function getCurrentLineAsChannelObject(){
+        return new channel($this->currentline);
     }
 
     public function isCurrentLineAGroupDelimiter(){
