@@ -33,6 +33,7 @@ class channel{
         $sourceDB, //needed for db
         $metaData,
         $channelstring = "",
+        $uniqueid="",
 
         $name,
         $provider,
@@ -57,6 +58,13 @@ class channel{
             $this->metaData->increaseCheckedChannelCount();
         $this->params = array();
         if (is_array( $channelparams )){
+            //turn some integer params back into integer values
+            $int_params = array("frequency", "symbolrate", "sid", "nid", "tid", "rid", "x_last_changed", "x_timestamp_added", "x_last_confirmed");
+            foreach ( $channelparams as $param => $value){
+                if (in_array($param, $int_params)){
+                    $channelparams[$param] = intval($value);
+                }
+            }
             $this->params = $channelparams;
             $this->channelstring = $this->convertArray2String();
         }
@@ -76,6 +84,24 @@ class channel{
             $this->setSourceForDB();
         else
             $this->sourceDB  = $this->params["source"];
+
+        //convert name and provider strings to utf-8 if they are not in utf-8
+        //this only needs to be done if the channels were read from file
+        //usually is necessary for sky_de channels that are encoded in ISO-8859-15
+        if ( $this->metaData !== null){
+            $this->params["x_utf8"] = true;
+            if (mb_check_encoding($this->params["name"], "UTF-8") === false){
+                $this->params["name"] = mb_convert_encoding ( $this->params["name"] , "UTF-8", "ISO-8859-15");
+                $this->params["x_utf8"] = false;
+            }
+            if (mb_check_encoding($this->params["provider"], "UTF-8") === false){
+                $this->params["provider"] = mb_convert_encoding ( $this->params["provider"] , "UTF-8", "ISO-8859-15");
+                $this->params["x_utf8"] = false;
+            }
+        }
+
+        $this->uniqueid = $this->params["source"]."-". $this->params["nid"]."-". $this->params["tid"]."-". $this->params["sid"];
+
     }
 
     public function isValid(){
@@ -104,8 +130,20 @@ class channel{
         }
     }
 
+    public function getFrequency(){
+        return $this->params["frequency"];
+    }
+
+    public function getModulation(){
+        return $this->params["modulation"];
+    }
+
     public function getSource(){
         return $this->source;
+    }
+
+    public function getUniqueID(){
+        return $this->uniqueid;
     }
 
     //FIXME temp
@@ -142,7 +180,7 @@ class channel{
             if ( $this->metaData !== null)
                 $this->metaData->increaseAddedChannelCount();
             $query = $this->db->insert( "channel_update_log", array(
-                "combined_id" => $this->params["source"]."-".$this->params["nid"]."-".$this->params["tid"]."-".$this->params["sid"],
+                "combined_id" => $this->getUniqueID(),
                 "name" => $this->params["name"],
                 "update_description" => "New channel added: " . $this->getChannelString(),
                 "timestamp" => $this->metaData->getTimestamp(),
@@ -187,14 +225,14 @@ class channel{
                 $update_data[] = "x_last_confirmed = " . $this->metaData->getTimestamp();
 
                 if (count ($changes) != 0){
-                    $this->config->addToDebugLog( "Changed: ".$this->params["source"]."-".$this->params["nid"]."-".$this->params["tid"]."-".$this->params["sid"]."-".$this->params["name"].": ".implode(", ",$changes)."\n");
+                    $this->config->addToDebugLog( "Changed: ".$this->getUniqueID() . "-" . $this->params["name"] . ": " . implode(", ",$changes)."\n");
                     $query = $this->db->exec2(
                         "UPDATE channels SET ".implode(", " , $update_data),
-                        $this->getWhereArray( "source, nid, tid, sid", $this->params )
+                        $this->getWhereArray( "source, nid, tid, sid" )
                     );
                     $query = $this->db->insert( "channel_update_log",
                         array(
-                            "combined_id"        => $this->params["source"]."-".$this->params["nid"]."-".$this->params["tid"]."-".$this->params["sid"],
+                            "combined_id"        => $this->getUniqueID(),
                             "name"               => $this->params["name"],
                             "update_description" => implode("\n",$changes),
                             "timestamp"          => $this->metaData->getTimestamp(),
@@ -209,7 +247,7 @@ class channel{
                     //channel unchanged, but update x_last_confirmed
                     $query = $this->db->exec2(
                         "UPDATE channels SET x_last_confirmed = " . $this->metaData->getTimestamp(),
-                        $this->getWhereArray( "source, nid, tid, sid", $this->params )
+                        $this->getWhereArray( "source, nid, tid, sid" )
                     );
                 }
             }

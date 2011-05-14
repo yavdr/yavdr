@@ -100,6 +100,7 @@ class config {
 
     public function addToDebugLog( $line ){
         fputs( $this->debuglog, $line);
+        //print "$line";
     }
 
     private function addMemoryPeakUsageToDebugLog(){

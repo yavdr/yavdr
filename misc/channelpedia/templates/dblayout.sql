@@ -40,6 +40,7 @@ CREATE TABLE channels(
     x_timestamp_added TIMESTAMP,
     x_last_changed TIMESTAMP,
     x_last_confirmed TIMESTAMP,
+    x_utf8 BOOLEAN,
     PRIMARY KEY ( source, nid, tid, sid)
 );
 

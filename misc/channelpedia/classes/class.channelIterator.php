@@ -53,54 +53,43 @@ class channelIterator{
 
     public function moveToNextChannel(){
         $this->channel = false;
+        $exists = false;
         if (!$this->result === false){
             //FIXME: encapsulate access to result fetch
-            $this->channel = $this->result->fetch(PDO::FETCH_ASSOC);
-        }
-        if ($this->channel === false){
-            $exists = false;
-        }
-        else{
-            $exists = true;
-            $this->count++;
+            $temp = $this->result->fetch(PDO::FETCH_ASSOC);
+            if ($temp !== false){
+                //$this->config->addToDebugLog( "channeliterator new channel ".($temp === false ? "FALSE":"notFALSE")."\n");
+                $channelobj = new channel( $temp );
+                if ($channelobj->isValid()) {
+                    $exists = true;
+                    $this->channel = $channelobj;
+                    $this->count++;
 
-            //turn some integer params back into integer values
-            $int_params = array("frequency", "symbolrate", "sid", "nid", "tid", "rid", "x_last_changed", "x_timestamp_added", "x_last_confirmed");
-            foreach ( $this->channel as $param => $value){
-                if (in_array($param, $int_params)){
-                    $this->channel[$param] = intval($value);
+                    if ( $this->lastFrequency != $this->channel->getSource() ."-" . $this->channel->getFrequency() ){
+                        $this->transponderChanged = true;
+                    }
+                    else
+                        $this->transponderChanged = false;
+                    $this->lastFrequency = $this->channel->getSource() ."-" . $this->channel->getFrequency();
+                }
+                else{
+                    print "channel invalid.\n";
                 }
             }
-            //FIXME: this is the wrong place to correct charsets
-            $this->channel["x_utf-8-name"] = mb_check_encoding($this->channel["name"], "UTF-8");
-            $this->channel["x_utf-8-provider"] = mb_check_encoding($this->channel["provider"], "UTF-8");
-            if ($this->channel["x_utf-8-name"] === false)
-                $this->channel["name"] = mb_convert_encoding ( $this->channel["name"] , "UTF-8", "ISO-8859-15");
-            if ($this->channel["x_utf-8-provider"] === false)
-                $this->channel["provider"] = mb_convert_encoding ( $this->channel["provider"] , "UTF-8", "ISO-8859-15");
-
-            $this->channel["x_unique_id"] = $this->channel["source"]."-". $this->channel["nid"]."-". $this->channel["tid"]."-". $this->channel["sid"];
-
-            if ($this->lastFrequency != $this->channel["source"] ."-" . $this->channel["frequency"]){
-                $this->transponderChanged = true;
-            }
-            else
-                $this->transponderChanged = false;
-            $this->lastFrequency = $this->channel["source"] ."-" . $this->channel["frequency"];
         }
         return $exists;
     }
 
     public function getCurrentChannelObject(){
-        return new channel( $this->channel );
-    }
-
-    public function getCurrentChannelArray(){
         return $this->channel;
     }
 
+    public function getCurrentChannelArray(){
+        return $this->channel->getAsArray();
+    }
+
     public function getCurrentChannelArrayKeys(){
-        return array_keys($this->channel);
+        return array_keys($this->channel->getAsArray());
     }
 
     public function transponderChanged(){
@@ -108,13 +97,13 @@ class channelIterator{
     }
 
     public function getCurrentTransponderInfo(){
-        $frequency = $this->channel['frequency'];
+        $frequency = $this->channel->getFrequency();
         $hilow = "";
-        if (substr($this->channel['source'],0,1) == "S" && $frequency >= 11700 && $frequency <= 12750)
+        if (substr($this->channel->getSource(),0,1) == "S" && $frequency >= 11700 && $frequency <= 12750)
             $hilow = "High-Band";
-        else if (substr($this->channel['source'],0,1) == "S" && $frequency >= 10700 && $frequency < 11700)
+        else if (substr($this->channel->getSource(),0,1) == "S" && $frequency >= 10700 && $frequency < 11700)
             $hilow = "Low-Band";
-        return "Transponder " . $this->channel['source'] . " " . $hilow . " " .$this->channel['modulation']. " " . $frequency;
+        return "Transponder " . $this->channel->getSource() . " " . $hilow . " " .$this->channel->getModulation(). " " . $frequency;
     }
 
     public function getCurrentChannelCount(){

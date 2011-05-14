@@ -25,14 +25,15 @@
 class dbConnection {
 
     private
+        $config,
         $dbh = null,
         $dbfile;
 
     private static $instance = null;
 
     protected function __construct(){
-        $config = config::getInstance();
-        $this->dbfile = $config->getValue("userdata") . "channeldb.sqlite";
+        $this->config = config::getInstance();
+        $this->dbfile = $this->config->getValue("userdata") . "channeldb.sqlite";
         //print "DB-File: ".$this->dbfile;
         if (!file_exists($this->dbfile)){
             $this->createDB();
@@ -98,7 +99,7 @@ class dbConnection {
     }
 
     public function query( $statement ){
-        //print "Query: $statement\n\n";
+        //$this->config->addToDebugLog( "Query: $statement\n");
         $result = $this->dbh->query( $statement );
         if ($result === false)
             die( "\nDB-Error: " . $this->dbh->errorCode() . " / " . $statement );
