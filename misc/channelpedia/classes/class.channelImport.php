@@ -120,7 +120,7 @@ class channelImport extends channelFileIterator{
         if ( $this->metaData->getAddedChannelCount() + $this->metaData->getChangedChannelCount() > 0){
             $labeller = channelGroupingManager::getInstance();
             $rawOutput = new rawOutputRenderer();
-            foreach ($this->metaData->getPresentSatProviders as $sat => $dummy){
+            foreach ($this->metaData->getPresentSatProviders() as $sat => $dummy){
                 $languages = $this->config->getLanguageGroupsOfSource( "DVB-S", $sat);
                 $labeller->updateAllLabelsOfSource($sat);
                 $rawOutput->writeRawOutputForSingleSource( $sat, $sat, $languages);
