@@ -8,7 +8,7 @@ Build-Depends: cdbs, debhelper (>= 7.0.50~), yavdr-utils-dev, libtntnet-dev, cle
 
 Package: yavdr-hardware-sundtek
 Architecture: any
-Depends: ${misc:Depends}, yavdr-utils, dvb-driver-sundtek
+Depends: ${misc:Depends}, yavdr-utils, dvb-driver-sundtek, vdr-plugin-sundtek
 Description: yavdr-hardware-sundtek package to install and configure sundtek-driver for yavdr
  yavdr-sundtek-hardware package to install and configure sundtek-driver for yavdr
  
