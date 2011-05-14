@@ -8,7 +8,7 @@ description     "Inputlirc Daemon"
 author          "Gerald Dachs <gda@dachsweb.de>"
 
 start on starting vdr
-stop on runlevel [016]
+stop on runlevel [!2345]
 
 respawn
 
