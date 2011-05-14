@@ -92,7 +92,7 @@ inline std::string trim(const std::string& source, const std::string& t = " ")
 
 </%shared><%cpp>
 reply.setHeader ("Cache-Control", "no-cache", true);
-reply.setHeader ("Content-Type", "application/json", true);
+reply.setContentType("application/json; charset=utf-8");
 
 HDF *hdf = NULL;
 NEOERR *err;
