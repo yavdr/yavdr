@@ -1,4 +1,3 @@
-
 YaVDR.Component.Dashboard.Vdr = Ext.extend(YaVDR.Component.Dashboard.Item, {
   
   title: _('VDR'),
@@ -46,7 +45,7 @@ YaVDR.Component.Dashboard.Vdr = Ext.extend(YaVDR.Component.Dashboard.Item, {
       url: '/admin/dashboard_vdr',
       success: function(form, action) {
         form.setValues({
-          backend: (action.result.data.pid > 0?_('running'):_('stopped')),
+          backend: (action.result.data.running > 0?_('running'):_('stopped')),
           resolution: (action.result.data.resolution != ""?action.result.data.resolution:_('unknown'))
         });
         this.getEl().unmask();
