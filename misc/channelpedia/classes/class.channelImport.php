@@ -25,13 +25,15 @@
 class channelImport extends channelFileIterator{
 
     private
+        $reparseOldFile = false,
         $metaDate,
         $username;
 
-    public function __construct($username, $nonSatProviders ){
+    public function __construct( & $metaData, $forceReparsing = false ){
         parent::__construct();
-        $this->metaData = new channelImportMetaData( $nonSatProviders );
-        $this->username = $username;
+        $this->reparseOldFile = $forceReparsing;
+        $this->metaData = $metaData;
+        $this->username = $this->metaData->getUsername();
         //$this->addToUpdateLog( "-", "Processing users channels.conf.");
     }
 
@@ -56,6 +58,13 @@ class channelImport extends channelFileIterator{
 
         $msg_prefix = "";
         $filename = $sourcepath . 'channels.conf';
+        if ($this->reparseOldFile) {
+            if (file_exists($sourcepath . 'lockfile.txt')){
+                unlink($sourcepath . 'lockfile.txt');
+            }
+            if (!file_exists($filename))
+                rename($filename . ".old", $filename);
+        }
         if (!file_exists($filename)) {
             $this->addToUpdateLog( "-", "No unprocessed channels.conf exists. Nothing to do.");
         }

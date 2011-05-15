@@ -63,6 +63,9 @@ class channel{
             $int_params = array("frequency", "symbolrate", "sid", "nid", "tid", "rid", "x_last_changed", "x_timestamp_added", "x_last_confirmed");
             foreach ( $channelparams as $param => $value){
                 if (in_array($param, $int_params)){
+                    if (!array_key_exists($param, $channelparams)){
+                        throw new Exception( "channel: param $param ist not in channel array!");
+                    }
                     $channelparams[$param] = intval($value);
                 }
             }
@@ -70,21 +73,14 @@ class channel{
             $this->channelstring = $this->convertArray2String();
         }
         elseif (is_string( $channelparams )){
-            $this->channelstring = $channelparams;
+            //$this->channelstring = $channelparams;
             $this->params = $this->convertString2Array( $channelparams );
+            $this->channelstring = $this->convertArray2String();
         }
-
-        $this->source = $this->params["source"];
-
-        //if a channel was read from a file the source of non-sat channels
-        //need to be modified before they are being put into the db
-        //this does not apply for channels read from the db
-        //we assume that metaData is null when channel was read from db
-        //ugly!
-        if ( $this->metaData !== null)
-            $this->setSourceForDB();
         else
-            $this->setSourceShort();
+            throw new Exception("Channelparams are neither of type array nor of type string!");
+
+        $this->uniqueid = $this->params["source"]."-". $this->params["nid"]."-". $this->params["tid"]."-". $this->params["sid"];
 
         //convert name and provider strings to utf-8 if they are not in utf-8
         //this only needs to be done if the channels were read from file
@@ -101,8 +97,17 @@ class channel{
             }
         }
 
-        $this->uniqueid = $this->params["source"]."-". $this->params["nid"]."-". $this->params["tid"]."-". $this->params["sid"];
+        $this->source = $this->params["source"];
 
+        //if a channel was read from a file the source of non-sat channels
+        //need to be modified before they are being put into the db
+        //this does not apply for channels read from the db
+        //we assume that metaData is null when channel was read from db
+        //ugly!
+        if ( $this->metaData !== null)
+            $this->setSourceForDB();
+        else
+            $this->setSourceShort();
     }
 
     public function isValid(){
@@ -124,11 +129,17 @@ class channel{
             case "C":
             case "T":
             case "A":
-                $nonSatProviders = $this->metaData->getNonSatProviders();
+                $nonSatProviders = $this->metaData->getAnnouncedNonSatProviders();
                 $this->sourceShort = $this->source;
                 $this->sourceDB = $this->source . '[' . $nonSatProviders[ $this->source ] . ']';
                 if ( $this->metaData !== null)
                     $this->metaData->addPresentNonSatProvider( $this->source, $nonSatProviders[ $this->source ] );
+                break;
+            case "I":
+            case "P":
+                $this->config->addToDebugLog( "ignoring channels sourcetype: ". $this->source  ."\n");
+
+                $this->params = false;
                 break;
             default:
                 throw new Exception( "Unknown source type! " . $this->source );
@@ -208,9 +219,9 @@ class channel{
         return $success;
     }
 
-    public function updateInDB(){
+    protected function updateInDB(){
         //$this->config->addToDebugLog( "checking channel ".$this->params["name"]." for changes: \n");
-        $result = $this->getChannelsWithMatchingUniqueParams( $this->params );
+        $result = $this->getChannelsWithMatchingUniqueParams();
         foreach ($result as $row){
             $otherchannel = new channel($row);
             if ($row["x_timestamp_added"] == $this->metaData->getTimestamp() || $row["x_last_confirmed"] == $this->metaData->getTimestamp()){
@@ -293,7 +304,7 @@ class channel{
         //remove meta provider info from cable ot terrestrial source string
         $source = $this->params["source"];
         $sourcetest = strtoupper( substr($this->params["source"],0,1));
-        if ($sourcetest == "C" || $sourcetest == "T")
+        if ($sourcetest == "C" || $sourcetest == "T" || $sourcetest == "A" )
             $source = $sourcetest;
 
         return
@@ -324,6 +335,7 @@ class channel{
                 $cname = $cnamedetails[0];
                 $cprovider = $cnamedetails[1];
             }
+
             $result = array(
                 "name"            => $cname,
                 "provider"        => $cprovider,
@@ -340,6 +352,9 @@ class channel{
                 "tid"             => intval($details[11]),
                 "rid"             => intval($details[12])
             );
+        }
+        else{
+            throw new Exception( "Couldn't convert channel string to channel array");
         }
         return $result;
     }

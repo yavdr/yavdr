@@ -47,5 +47,23 @@ define("CUSTOM_PATH", "");
 
 define("UPLOAD_PASSWORD", "password")
 
+$global_user_config = array(
+
+/*
+    "username" => array(
+        "ignoreSources" => array(),
+        "announcedProviders" => array(
+            "C" => "none",
+            "T" => "none",
+            "A" => "none",
+            //"S" => array() //not mandatory
+        ),
+        "visibleName" => "",
+
+        "password" => "",
+        "email" => "none"
+    ),
+*/
+);
 
 ?>

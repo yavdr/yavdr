@@ -57,9 +57,11 @@ class channelIterator{
         if (!$this->result === false){
             //FIXME: encapsulate access to result fetch
             $temp = $this->result->fetch(PDO::FETCH_ASSOC);
-            if ($temp !== false){
+            if (!$temp === false){
                 $channelobj = new channel( $temp );
+                //print "channelobject instanciated.\n";
                 if ($channelobj->isValid()) {
+                    //print "channelobject is valid.\n";
                     $exists = true;
                     $this->channel = $channelobj;
                     $this->count++;
@@ -95,6 +97,7 @@ class channelIterator{
         return $this->transponderChanged;
     }
 
+    //FIXME: This info should be provided by channel object!
     public function getCurrentTransponderInfo(){
         $frequency = $this->channel->getFrequency();
         $hilow = "";

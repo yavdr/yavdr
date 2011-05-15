@@ -38,32 +38,25 @@ class channelsupload extends Resource {
         $password = isset($_POST["password"]) ? $_POST["password"] : "";
         $user = isset($_POST["user"]) ? $_POST["user"] : "";
         //prevent directory traversal: user name is not allowed to contain dots or slashes
-        if ( UPLOAD_PASSWORD == "" || $password != UPLOAD_PASSWORD || $user == "" || strstr($user,".") || strstr($user,"/") || strstr($user,"\\") )
+        if ( $user == "" || strstr($user,".") || strstr($user,"/") || strstr($user,"\\") )
             $response->body .= "Error. File upload canceled.\n";
         else{
             $checkpath = $config->getValue("userdata"). "sources/$user/";
-
-            if (isset($_FILES["channels"]["name"]) && is_file( $checkpath."info.txt" ) && $_FILES["channels"]["name"] == "channels.conf"){
-                if (move_uploaded_file($_FILES["channels"]["tmp_name"], $checkpath."channels.conf" )){
-                    $response->body .= "Upload successful.\n";
-                    //quick'n'dirty approach
-                    //now trigger the import of the newly uploaded channels.conf file
-                    $providers = array(
-                        "C" => $cableProvider,
-                        "T" => "none"
-                    );
-                    $infofile = $checkpath."info.txt";
-                    if (file_exists( $infofile )){
-                        $info = file_get_contents( $infofile);
-                        $providers["C"] = trim($info); //FIXME
+            if (isset($_FILES["channels"]["name"]) && $_FILES["channels"]["name"] == "channels.conf"){
+                $metaData = new channelImportMetaData($username);
+                if ( $metaData->userNameExists() && $metaData->isAuthenticated( $password ) ){
+                    if (move_uploaded_file( $_FILES["channels"]["tmp_name"], $checkpath."channels.conf" )){
+                        $response->body .= "Upload successful.\n";
+                        $importer = new channelImport( $metaData );
+                        $importer->addToUpdateLog( "-", "channels.conf was uploaded and is now being processed.");
+                        $importer->insertChannelsConfIntoDB();
+                        $importer->updateAffectedDataAndFiles();
+                        $importer->addToUpdateLog( "-", "Processing finished.");
+                        unset($importer);
                     }
-                    //print $info ."/". $infofile ."/".  $cableProvider."\n";
-                    $importer = new channelImport($user, $providers);
-                    $importer->addToUpdateLog( "-", "channels.conf was uploaded and is now being processed.");
-                    $importer->insertChannelsConfIntoDB();
-                    $importer->updateAffectedDataAndFiles();
-                    $importer->addToUpdateLog( "-", "Processing finished.");
-                    unset($importer);
+                    else{
+                        $response->body .= "Error. File upload canceled.\n";
+                    }
                 }
                 else{
                     $response->body .= "Error. File upload canceled.\n";

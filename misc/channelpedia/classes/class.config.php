@@ -79,6 +79,7 @@ class config {
                 "at_salzburg-ag" => $default_lang_de_cable_provider
             ),
             "DVB-T" => array(
+                "de_Heidelberg" => array() //$default_lang_de_cable_provider
             )
         );
     }

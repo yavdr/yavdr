@@ -25,32 +25,30 @@
 //input: reads channel.conf from path and put channels into db
 require_once '../classes/class.config.php';
 
+//set this to true to reparse all old channels.conf.old files of all users
+$forceReparsing = true;
+
+
 //if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
 
-importFromAllChannelSources();
+importFromAllChannelSources( $forceReparsing );
 
 //if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "</pre>";
 
-function importFromAllChannelSources(){
+function importFromAllChannelSources($forceReparsing = false){
     $config = config::getInstance();
     $dir = new DirectoryIterator( $config->getValue("userdata")."sources/" );
     foreach ($dir as $fileinfo) {
         if ( $fileinfo->isDir() && !$fileinfo->isDot()){
-            //echo $fileinfo->getFilename() . "\n";
-            $cableProvider = "";
-            $infofile = $config->getValue("userdata")."sources/". $fileinfo->getFilename() ."/info.txt";
-            if (file_exists( $infofile )){
-                $info = file_get_contents( $infofile);
-                $cableProvider = trim($info); //FIXME
+            $metaData = new channelImportMetaData( $fileinfo->getFilename() );
+            if ( $metaData->userNameExists()){
+                $importer = new channelImport( $metaData, $forceReparsing );
+                $importer->addToUpdateLog( "-", "Manually forced update: Checking for presence of unprocessed channels.conf to analyze.");
+                $importer->insertChannelsConfIntoDB();
+                //print "user account for folder " . $fileinfo->getFilename() . " does exist in global_user_data!\n";
             }
-            //print $info ."/". $infofile ."/".  $cableProvider."\n";
-            $providers = array(
-                "C" => $cableProvider,
-                "T" => "none"
-            );
-            $importer = new channelImport( $fileinfo->getFilename(), $providers);
-            $importer->addToUpdateLog( "-", "Manually forced update: Checking for presence of unprocessed channels.conf to analyze.");
-            $importer->insertChannelsConfIntoDB();
+            else
+                print "user account for folder " . $fileinfo->getFilename() . " does not exist in global_user_data!\n";
         }
     }
     $labeller = channelGroupingManager::getInstance();

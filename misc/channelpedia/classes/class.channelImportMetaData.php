@@ -26,35 +26,67 @@ class channelImportMetaData{
 
     private
         $timestamp,
-        $usersNonSatProviders = array(), //provider names that the user offers to indicate what's in his channels conf
+        //$usersNonSatProviders = array(), //provider names that the user offers to indicate what's in his channels conf
         $usersPresentProviders , //provider names for channels actually present in the channels.conf including all satellite positions found
         $numChanChecked = 0,
         $numChanAdded = 0,
         $numChanChanged = 0,
-        $numChanIgnored = 0;
+        $numChanIgnored = 0,
+        $username,
+        $currentUserConfig;
 
 
-    public function __construct( $providers ){
+    public function __construct( $username ){
+        global $global_user_config;
+        if ( array_key_exists($username, $global_user_config) ){
+            $this->currentUserConfig = $global_user_config[ $username ];
+            //print_r($this->currentUserConfig);die();
+        }
+        else
+            $this->currentUserConfig = null;
+
         $this->timestamp = time();
         $this->numChanChecked = 0;
         $this->numChanAdded   = 0;
         $this->numChanChanged = 0;
         $this->numChanIgnored = 0;
         $this->resetPresentProviders();
-        $this->setNonSatProviders( $providers );
+        $this->username = $username;
+    }
+
+    public function userNameExists(){
+        return ($this->currentUserConfig !== null);
+    }
+
+    public function isAuthenticated( $password ){
+        return ($this->currentUserConfig["password"] === $password);
+    }
+
+    public function getUsername(){
+        return $this->username;
+    }
+
+    public function getAnnouncedNonSatProvider( $type ){
+        $feedback = false;
+        if (in_array( $type, $this->currentUserConfig["announcedProviders"] ))
+            $feedback = $this->currentUserConfig["announcedProviders"]["type"];
+        return $feedback;
+    }
+
+    public function getAnnouncedNonSatProviders(){
+        $feedback = false;
+        if (in_array( "announcedProviders", $this->currentUserConfig ))
+            $feedback = $this->currentUserConfig["announcedProviders"];
+        return $feedback;
     }
 
     public function getTimestamp(){
         return $this->timestamp;
     }
 
-    public function setNonSatProviders( $providers ){
-        $this->usersNonSatProviders = $providers;
-    }
-
-    public function getNonSatProviders(){
+/*    public function getNonSatProviders(){
         return $this->usersNonSatProviders;
-    }
+    }*/
 
     public function resetPresentProviders(){
         $this->usersPresentProviders = array();
