@@ -6,13 +6,80 @@
  */
 
 #include "serverthread.h"
+cxxtools::Utf8Codec codec;
+// Helper methods
+//
+
+int GetIntParam(std::string qparams, std::string param)
+{
+  int result = -1;
+  int begin_parse = qparams.find(param);
+  if ( begin_parse != -1 )
+  {
+     int end_parse = qparams.find_first_of("& ", begin_parse + param.length());
+     if ( end_parse == -1 ) { end_parse = qparams.length() - 1; }
+     if( qparams.length() > 0 && begin_parse != -1 ) { result = atoi(qparams.substr(begin_parse+param.length(), end_parse).c_str()); }
+  }
+  return result;
+}
+
+cChannel* GetChannel(int number)
+{
+  cChannel* result = NULL;
+  int counter = 1;
+  for (cChannel *channel = Channels.First(); channel; channel = Channels.Next(channel))
+  {
+      if (!channel->GroupSep()) {
+         if (counter == number)
+         {
+            result = channel;
+            break;
+         }
+         counter++;
+      }
+  }
+  return result;
+}
+
+// Event related
+//
+
+struct SerEvent
+{
+  int Id;
+  cxxtools::String Title;
+  cxxtools::String ShortText;
+  cxxtools::String Description;
+  int StartTime;
+  int Duration;
+};
+
+struct SerEvents
+{
+  std::vector < struct SerEvent > event;
+};
+
+void operator<<= (cxxtools::SerializationInfo& si, const SerEvent& e)
+{
+  si.addMember("id") <<= e.Id;
+  si.addMember("title") <<= e.Title;
+  si.addMember("short_text") <<= e.ShortText;
+  si.addMember("description") <<= e.Description;
+  si.addMember("start_time") <<= e.StartTime;
+  si.addMember("duration") <<= e.Duration;
+}
+
+void operator<<= (cxxtools::SerializationInfo& si, const SerEvents& e)
+{
+  si.addMember("rows") <<= e.event;
+}
 
 // Channel related
 //
 
 struct SerChannel
 {
-  std::string Name;
+  cxxtools::String Name;
   int Number;
   int Transponder;
   std::string Stream;
@@ -39,7 +106,7 @@ void operator<<= (cxxtools::SerializationInfo& si, const SerChannel& c)
   si.addMember("is_sat") <<= c.IsSat;
 }
 
-void operator<<=(cxxtools::SerializationInfo& si, const SerChannels& c)
+void operator<<= (cxxtools::SerializationInfo& si, const SerChannels& c)
 {
   si.addMember("rows") <<= c.channel;
 }
@@ -49,8 +116,8 @@ void operator<<=(cxxtools::SerializationInfo& si, const SerChannels& c)
 
 struct RecordingRec
 {
-  std::string Name;
-  std::string FileName;
+  cxxtools::String Name;
+  cxxtools::String FileName;
   bool IsNew;
   bool IsEdited;
   bool IsPesRecording;
@@ -99,7 +166,7 @@ void ChannelsResponder::reply(std::ostream& out, cxxtools::http::Request& reques
   for(cChannel *channel = Channels.First(); channel; channel = Channels.Next(channel))
   {
     if(!channel->GroupSep()) {
-      serChannel.Name = channel->Name();
+      serChannel.Name = codec.decode(channel->Name());
       serChannel.Number = channel->Number();
       serChannel.Transponder = channel->Transponder();
       serChannel.Stream = (std::string)channel->GetChannelID().ToString() + (std::string)suffix;
@@ -117,6 +184,90 @@ void ChannelsResponder::reply(std::ostream& out, cxxtools::http::Request& reques
 // ChannelsService
 //
 typedef cxxtools::http::CachedService<ChannelsResponder> ChannelsService;
+
+// EventResponder
+//
+class EventsResponder : public cxxtools::http::Responder
+{
+  public:
+    explicit EventsResponder(cxxtools::http::Service& service)
+      : cxxtools::http::Responder(service)
+      { }
+    virtual void reply(std::ostream&, cxxtools::http::Request& request, cxxtools::http::Reply& reply);
+};
+
+void EventsResponder::reply(std::ostream& out, cxxtools::http::Request& request, cxxtools::http::Reply& reply)
+{
+  std::string qparams = request.qparams();
+  
+  int channel_number = GetIntParam(qparams, (std::string)"channel=");
+  int from = GetIntParam(qparams, (std::string)"from=");
+  int timespan = GetIntParam(qparams, (std::string)"timespan=");
+  
+  dsyslog("jsonapi: %s ///%i///%i///%i///", qparams.c_str(), channel_number, from, timespan);
+
+  if ( channel_number == -1 || channel_number ) channel_number = 1;
+  cChannel* channel = GetChannel(channel_number);
+  if ( !channel ) return;
+
+  if ( from == -1 ) from = time(NULL); // default time is now
+  if ( timespan == -1 ) timespan = 3600; // default timespan is one hour
+  
+  int to = from + timespan;
+
+  SerEvent serEvent;
+  std::vector < struct SerEvent > serEvents;
+  cxxtools::String eventTitle;
+  cxxtools::String eventShortText;
+  cxxtools::String eventDescription;
+  cxxtools::String empty = codec.decode("");
+
+  cSchedulesLock MutexLock;
+  const cSchedules *Schedules = cSchedules::Schedules(MutexLock);
+
+  if(!Schedules) return;
+
+  const cSchedule *Schedule = Schedules->GetSchedule(channel->GetChannelID());
+  
+  if(!Schedule) return;
+
+  bool atLeastOneEvent = false;
+
+  for(const cEvent* event = Schedule->Events()->First(); event; event = Schedule->Events()->Next(event))
+  {
+    int ts = event->StartTime();
+    int te = ts + event->Duration();
+    if ( ts <= to && te >= from ) {
+       if( !event->Title() ) { eventTitle = empty; } else { eventTitle = codec.decode(event->Title()); }
+       if( !event->ShortText() ) { eventShortText = empty; } else { eventShortText = codec.decode(event->ShortText()); }
+       if( !event->Description() ) { eventDescription = empty; } else { eventDescription = codec.decode(event->Description()); }
+
+       serEvent.Id = event->EventID();
+       serEvent.Title = eventTitle;
+       serEvent.ShortText = eventShortText;
+       serEvent.Description = eventDescription;
+       serEvent.StartTime = event->StartTime();
+       serEvent.Duration = event->Duration();
+       serEvents.push_back(serEvent);
+       atLeastOneEvent = true;
+    }else{
+      if(ts > to) break;
+    }
+  }
+
+  if(!atLeastOneEvent) return;
+  
+  //reply.setContentType("application/json; charset=utf-8");
+  reply.addHeader("Content-Type", "application/json");
+  cxxtools::JsonSerializer serializer(out);
+  serializer.serialize(serEvents, "rows");
+  serializer.finish();
+}
+
+
+// EventsService
+//
+typedef cxxtools::http::CachedService<EventsResponder> EventsService;
 
 // RecordingsResponder
 //
@@ -139,9 +290,8 @@ void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& requ
   reply.addHeader("Content-Type", "application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
   for (cRecording* recording = Recordings.First(); recording; recording = Recordings.Next(recording)) {
-	esyslog("recording name: %s", recording->Name());
-    recordingRec.Name = recording->Name();
-    recordingRec.FileName = recording->FileName();
+	recordingRec.Name = codec.decode(recording->Name());
+	recordingRec.FileName = codec.decode(recording->FileName());
     recordingRec.IsNew = recording->IsNew();
     recordingRec.IsEdited = recording->IsEdited();
     recordingRec.IsPesRecording = recording->IsPesRecording();
@@ -186,8 +336,10 @@ cServerThread::Action(void)
 
   RecordingsService recordingsService;
   ChannelsService channelsService;
+  EventsService eventsService;
   server->addService("/recordings.json", recordingsService);
   server->addService("/channels.json", channelsService);
+  server->addService("/events.json", eventsService);
   loop.run();
 
   dsyslog("JSONAPI: server thread ended (pid=%d)", getpid());

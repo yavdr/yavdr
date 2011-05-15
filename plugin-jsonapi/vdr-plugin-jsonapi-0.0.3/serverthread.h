@@ -16,6 +16,7 @@
 #include <cxxtools/arg.h>
 #include <cxxtools/jsonserializer.h>
 #include <cxxtools/serializationinfo.h>
+#include <cxxtools/utf8codec.h>
 
 #include <unistd.h>
 #include <vdr/tools.h>
