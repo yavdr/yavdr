@@ -257,8 +257,7 @@ void EventsResponder::reply(std::ostream& out, cxxtools::http::Request& request,
 
   if(!atLeastOneEvent) return;
   
-  //reply.setContentType("application/json; charset=utf-8");
-  reply.addHeader("Content-Type", "application/json");
+  reply.addHeader("Content-Type", "application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
   serializer.serialize(serEvents, "rows");
   serializer.finish();
