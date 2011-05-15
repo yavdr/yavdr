@@ -18,8 +18,18 @@ using namespace std;
 	{
 		Json::Value json;
 		json["data"]["running"] = (system("pidof -s vdr") == 0?1:0);
+		
+		FILE *fp;
 
-		json["data"]["diskspace"] = "more than 1 bit...";
+		fp = popen("df | grep -vE '^tmpfs|cdrom|none'| grep 'dev' | awk '{ sum+=$2; used+=$3; free+=$4 } END { print sum \"|\" used \"|\" free }'", "r");
+		if (!feof(fp)) {
+			unsigned long int sum, used, free;
+			
+			int result = fscanf(fp, "%lu|%lu|%lu", &sum, &used, &free);
+			json["data"]["disk"]["sum"] = (Json::Value::UInt64)sum;
+			json["data"]["disk"]["used"] = (Json::Value::UInt64)used;
+			json["data"]["disk"]["free"] = (Json::Value::UInt64)free;
+		}
 		
 		string x = hdf_get_value(hdf, "system.x11.display.0.resolution.x", "");
 		if (x != "") {

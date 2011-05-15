@@ -16,7 +16,7 @@ YaVDR.Component.Dashboard.Vdr = Ext.extend(YaVDR.Component.Dashboard.Item, {
         value: ''
       },{
         xtype: 'displayfield',
-        fieldLabel: _('Disk space'),
+        fieldLabel: _('Disk usage'),
         name: 'diskspace',
         value: ''
       },{
@@ -44,9 +44,11 @@ YaVDR.Component.Dashboard.Vdr = Ext.extend(YaVDR.Component.Dashboard.Item, {
     this.panel.load({
       url: '/admin/dashboard_vdr',
       success: function(form, action) {
+        var data = action.result.data;
         form.setValues({
-          backend: (action.result.data.running > 0?_('running'):_('stopped')),
-          resolution: (action.result.data.resolution != ""?action.result.data.resolution:_('unknown'))
+          diskspace: (typeof data.disk != 'undefined'?sprintf(_("sum: %0.2fGB, used: %0.2fGB, free: %0.2fGB"), data.disk.sum / 1000000, data.disk.used / 1000000, data.disk.free / 1000000):_('unknown')),
+          backend: (data.running > 0?_('running'):_('stopped')),
+          resolution: (data.resolution != ""?data.resolution:_('unknown'))
         });
         this.getEl().unmask();
       },

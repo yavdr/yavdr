@@ -723,7 +723,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
             Ext.getBody().unmask();
           }
         });
-        /*
+
         if (typeof node.attributes.source != 'undefined') {
           contextMenu.add('-');
           
@@ -741,7 +741,7 @@ YaVDR.Component.Settings.VdrChannels = Ext.extend(YaVDR.Component, {
               Ext.getBody().unmask();
             }
           });
-        }*/
+        }
         // show
         contextMenu.showAt(e.getXY());
       }, this);
