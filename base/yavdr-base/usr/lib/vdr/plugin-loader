@@ -14,6 +14,14 @@ plugins=`find ${PLUGIN_DIR} -maxdepth 1 \
                             sed "s/.*${PLUGIN_PREFIX}\([^\.]\+\)\.so\.${version}.*$/:\1/"`
 installed_plugins=(`echo ${plugins[@]} | sed 's/[^ ]*://g'`)
 
+for (( i=0 ; i<${#installed_plugins[@]} ; i++ )); do
+    if [ "${installed_plugins[$i]}" = "proxy" ]; then
+       unset installed_plugins[$i]
+       installed_plugins=( "${installed_plugins[@]}" )
+       proxy_plugin_found="true"
+       break
+    fi
+done
 
 if [ -r "$PLUGIN_CFG_DIR/order.conf" ]; then
    # load plugin order
@@ -22,10 +30,7 @@ if [ -r "$PLUGIN_CFG_DIR/order.conf" ]; then
    # move ordered plugins to list of ordered plugins
    for plugin in ${plugin_order[@]}; do
        for (( i=0 ; i<${#installed_plugins[@]} ; i++ )); do
-           if [ "$plugin" = "-${installed_plugins[$i]}" -o "$plugin" = "-*${installed_plugins[$i]}" -o "${installed_plugins[$i]}" = "proxy" ]; then
-              if [ "${installed_plugins[$i]}" = "proxy" ]; then
-                  proxy_plugin_found="true"
-              fi
+           if [ "$plugin" = "-${installed_plugins[$i]}" -o "$plugin" = "-*${installed_plugins[$i]}" ]; then
               unset installed_plugins[$i]
               installed_plugins=( "${installed_plugins[@]}" )
               break
