@@ -1,3 +1,4 @@
 
     <!-- js_dashboards -->
     <script type="text/javascript" src="/static/javascripts/component/dashboard/vdr.js"></script>
+    <script type="text/javascript" src="/static/javascripts/component/dashboard/system.js"></script>

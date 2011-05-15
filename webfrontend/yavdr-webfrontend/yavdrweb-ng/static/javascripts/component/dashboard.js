@@ -8,25 +8,16 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
 	  baseCls:'x-plain',
 
 	  items: [
-	    new YaVDR.Component.Dashboard.Vdr()//,
-	    //new YaVDR.Component.Dashboard.Recordings()
+	    new YaVDR.Component.Dashboard.Vdr(),
+	    new YaVDR.Component.Dashboard.Recordings()
 	  ]
     },
 	{
       columnWidth: .5,
       baseCls:'x-plain',
-      items: [{
-		frame: true,
-		autoScroll: true,
-		height: 150,
-		anchor: '100%',
-		title: _('System'),
-		tools: [{
-		  id: 'refresh'
-		}],
-	    style: 'margin: 0 0 0px 0 ',
-		html: '<b>Shutdown</b>: S3 (Disabled USB-Wakeup)<br> <b>CPU</b>: 10% - <b>RAM</b>: 1024MB (169 MG frei)<br><b>Soundausgabe</b>: HDMI + Analog<br>Achtung Demo Inhalt'
-      }]
+      items: [
+         new YaVDR.Component.Dashboard.System()
+      ]
     }];
 
     YaVDR.Component.Dashboard.superclass.initComponent.call(this);
@@ -56,7 +47,7 @@ YaVDR.Component.Dashboard.Item = Ext.extend(Ext.Panel, {
 
 YaVDR.Component.Dashboard.Recordings = Ext.extend(YaVDR.Component.Dashboard.Item, {
 	title: _('Recordings'),
-	style: 'margin: 0 5px 0 0 ',
+	style: 'margin: 5px 5px 0 0 ',
 	initComponent: function() {
 
 		this.store = new YaVDR.RecordingsStore({ autoLoad: true, baseParams: { limit: 10 } });
@@ -88,8 +79,8 @@ YaVDR.Component.Dashboard.Recordings = Ext.extend(YaVDR.Component.Dashboard.Item
 
 YaVDR.Component.Dashboard.Timers = Ext.extend(YaVDR.Component.Dashboard.Item, {
 	title: _('Timers'),
+    style: 'margin: 5px 5px 0 0 ',
 	initComponent: function() {
-
 		this.tools = [
 			{
 				id: 'refresh',

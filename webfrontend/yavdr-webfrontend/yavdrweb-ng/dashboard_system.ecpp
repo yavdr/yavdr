@@ -1,0 +1,54 @@
+<%pre>
+#include <ClearSilver.h>
+#include <yavdr/common.h>
+#include <jsoncpp/json.hpp>
+
+#include <sys/sysinfo.h>
+#include <stdint.h>
+
+using namespace std;
+</%pre><& authenticate ><%args>
+</%args>
+<%cpp>
+	HDF *hdf = NULL;
+	NEOERR *err;
+	if (((err = hdf_init(&hdf)) != STATUS_OK) || ((err = hdf_read_file(hdf, YAVDRDB)) != STATUS_OK))
+	{
+		reply.out() << "Error on hdf_read_file.";
+		nerr_log_error(err);
+	}
+	else
+	{
+		Json::Value json;
+		json["data"]["shutdown"] = hdf_get_value(hdf, "system.shutdown", "unknown");
+		json["data"]["wakeup"]["method"] = hdf_get_value(hdf, "system.wakeup.method", "none");
+		json["data"]["wakeup"]["disable_usb"] = hdf_get_value(hdf, "system.wakeup.disable_usb", "0");
+		struct sysinfo info;
+		sysinfo(&info);
+		
+		json["data"]["uptime"] = (Json::Value::UInt64)info.uptime;
+		             
+		json["data"]["loads"][0] = info.loads[0]/65536.0;
+		json["data"]["loads"][1] = info.loads[1]/65536.0;
+		json["data"]["loads"][2] = info.loads[2]/65536.0;
+		
+		json["data"]["memory"]["available"] = (Json::Value::UInt64)(info.totalram * info.mem_unit);
+		json["data"]["memory"]["free"] = (Json::Value::UInt64)(info.freeram * info.mem_unit);
+		json["data"]["sound"] = hdf_get_value(hdf, "system.sound.type", "all");
+
+		/*
+		string x = hdf_get_value(hdf, "system.x11.display.0.resolution.x", "");
+		if (x != "") {
+			string y = hdf_get_value(hdf, "system.x11.display.0.resolution.y", "");
+			json["data"]["resolution"] = x + "x" + y;
+		} else {
+			json["data"]["resolution"] = "";
+		}
+		string setup = hdf_get_value(hdf, "vdr.setup", "unknown");
+		json["data"]["frontend"] = setup + (setup != "custom"?"":" (" + string(hdf_get_value(hdf, "vdr.frontend", "unknown")) + " / " + string(hdf_get_value(hdf, "vdr.backend", "unknown")));
+*/
+		json["success"] = true;
+		reply.setContentType("application/json; charset=utf-8");
+		reply.out() << json;
+	}
+</%cpp>
