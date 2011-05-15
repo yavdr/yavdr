@@ -129,11 +129,11 @@ class channel{
             case "C":
             case "T":
             case "A":
-                $nonSatProviders = $this->metaData->getAnnouncedNonSatProviders();
+                $nonSatProvider = $this->metaData->getAnnouncedNonSatProvider($this->source);
                 $this->sourceShort = $this->source;
-                $this->sourceDB = $this->source . '[' . $nonSatProviders[ $this->source ] . ']';
+                $this->sourceDB = $this->source . '[' . $nonSatProvider . ']';
                 if ( $this->metaData !== null)
-                    $this->metaData->addPresentNonSatProvider( $this->source, $nonSatProviders[ $this->source ] );
+                    $this->metaData->addPresentNonSatProvider( $this->source, $nonSatProvider );
                 break;
             case "I":
             case "P":

@@ -59,6 +59,7 @@ class channelImport extends channelFileIterator{
         $msg_prefix = "";
         $filename = $sourcepath . 'channels.conf';
         if ($this->reparseOldFile) {
+            $this->config->addToDebugLog( "Reparsing of old channel file forced.\n");
             if (file_exists($sourcepath . 'lockfile.txt')){
                 unlink($sourcepath . 'lockfile.txt');
             }

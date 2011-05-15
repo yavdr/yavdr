@@ -68,8 +68,8 @@ class channelImportMetaData{
 
     public function getAnnouncedNonSatProvider( $type ){
         $feedback = false;
-        if (in_array( $type, $this->currentUserConfig["announcedProviders"] ))
-            $feedback = $this->currentUserConfig["announcedProviders"]["type"];
+        if (array_key_exists( $type, $this->currentUserConfig["announcedProviders"] ))
+            $feedback = $this->currentUserConfig["announcedProviders"][$type];
         return $feedback;
     }
 

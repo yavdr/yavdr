@@ -26,7 +26,7 @@
 require_once '../classes/class.config.php';
 
 //set this to true to reparse all old channels.conf.old files of all users
-$forceReparsing = false;
+$forceReparsing = true;
 
 
 //if ( array_key_exists('SERVER_SOFTWARE',$_SERVER)) print "<pre>";
