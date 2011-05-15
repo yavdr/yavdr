@@ -22,7 +22,10 @@ if [ -r "$PLUGIN_CFG_DIR/order.conf" ]; then
    # move ordered plugins to list of ordered plugins
    for plugin in ${plugin_order[@]}; do
        for (( i=0 ; i<${#installed_plugins[@]} ; i++ )); do
-           if [ "$plugin" = "-${installed_plugins[$i]}" -o "$plugin" = "-*${installed_plugins[$i]}" ]; then
+           if [ "$plugin" = "-${installed_plugins[$i]}" -o "$plugin" = "-*${installed_plugins[$i]}" -o "${installed_plugins[$i]}" = "proxy" ]; then
+              if [ "${installed_plugins[$i]}" = "proxy" ]; then
+                  proxy_plugin_found="true"
+              fi
               unset installed_plugins[$i]
               installed_plugins=( "${installed_plugins[@]}" )
               break
@@ -46,13 +49,23 @@ fi
 # append unordered and last plugins to ordered plugins
 ordered_plugins=( "${ordered_plugins[@]}" "${installed_plugins[@]}" "${last_plugins[@]}" )
 
+if [ "$proxy_plugin_found" = "true" -a -r "$PLUGIN_CFG_DIR/proxy.conf" ]; then
+   proxied_plugins=( `cat $PLUGIN_CFG_DIR/proxy.conf | sed "s/#.*$//"` )
+fi
+
 # add the command line arguments for each plugin
 for plugin in ${ordered_plugins[@]}; do
+    proxycmd=""
+    for proxied_plugin in ${proxied_plugins[@]}; do
+        if [ "$plugin" = "$proxied_plugin" ]; then
+	    proxycmd="proxy -s "
+        fi 
+    done
     if [ -r "$PLUGIN_CFG_DIR/plugin.$plugin.conf" ] ; then
         arguments=( `cat $PLUGIN_CFG_DIR/plugin.$plugin.conf | sed "s/#.*$//"` )
-        PLUGINS[$PLUGNUM]="-P$plugin ${arguments[*]}"
+        PLUGINS[$PLUGNUM]="-P$proxycmd$plugin ${arguments[*]}"
     else
-        PLUGINS[$PLUGNUM]="-P$plugin"
+        PLUGINS[$PLUGNUM]="-P$proxycmd$plugin"
     fi
     PLUGNUM=$(($PLUGNUM + 1))
 done
