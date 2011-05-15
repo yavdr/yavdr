@@ -45,7 +45,7 @@
 
 define("CUSTOM_PATH", "");
 
-define("UPLOAD_PASSWORD", "password")
+define("UPLOAD_PASSWORD", "password");
 
 $global_user_config = array(
 
