@@ -43,7 +43,7 @@ class channelImportMetaData{
             //print_r($this->currentUserConfig);die();
         }
         else
-            $this->currentUserConfig = null;
+            $this->currentUserConfig = false;
 
         $this->timestamp = time();
         $this->numChanChecked = 0;
@@ -55,7 +55,7 @@ class channelImportMetaData{
     }
 
     public function userNameExists(){
-        return ($this->currentUserConfig !== null);
+        return (!$this->currentUserConfig === false);
     }
 
     public function isAuthenticated( $password ){

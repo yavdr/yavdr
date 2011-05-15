@@ -39,12 +39,12 @@ class channelsupload extends Resource {
         $user = isset($_POST["user"]) ? $_POST["user"] : "";
         //prevent directory traversal: user name is not allowed to contain dots or slashes
         if ( $user == "" || strstr($user,".") || strstr($user,"/") || strstr($user,"\\") )
-            $response->body .= "Error. File upload canceled.\n";
+            $response->body .= "Error. File upload canceled: Invalid username.\n";
         else{
-            $checkpath = $config->getValue("userdata"). "sources/$user/";
             if (isset($_FILES["channels"]["name"]) && $_FILES["channels"]["name"] == "channels.conf"){
-                $metaData = new channelImportMetaData($username);
+                $metaData = new channelImportMetaData($user);
                 if ( $metaData->userNameExists() && $metaData->isAuthenticated( $password ) ){
+                    $checkpath = $config->getValue("userdata"). "sources/$user/";
                     if (move_uploaded_file( $_FILES["channels"]["tmp_name"], $checkpath."channels.conf" )){
                         $response->body .= "Upload successful.\n";
                         $importer = new channelImport( $metaData );
@@ -55,7 +55,7 @@ class channelsupload extends Resource {
                         unset($importer);
                     }
                     else{
-                        $response->body .= "Error. File upload canceled.\n";
+                        $response->body .= "Error. Couldn't put uploaded file in the right place.\n";
                     }
                 }
                 else{
@@ -63,7 +63,7 @@ class channelsupload extends Resource {
                 }
             }
             else
-                $response->body .= "Error. File upload canceled.\n";
+                $response->body .= "Error. Uploaded file should exist and be called channels.conf\n";
         }
         return $response;
     }
