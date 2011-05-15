@@ -15,13 +15,15 @@
 #include <cxxtools/eventloop.h>
 #include <cxxtools/arg.h>
 #include <cxxtools/jsonserializer.h>
-#include <cxxtools/serializationinfo.h>
 #include <cxxtools/utf8codec.h>
 
 #include <unistd.h>
 #include <vdr/tools.h>
 #include <vdr/thread.h>
 #include <vdr/recording.h>
+
+#include "data.h"
+#include "tools.h"
 
 using namespace std;
 

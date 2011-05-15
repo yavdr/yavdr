@@ -56,7 +56,7 @@ DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
 ### The object files (add further files here):
 
-OBJS = $(PLUGIN).o serverthread.o
+OBJS = $(PLUGIN).o serverthread.o data.o tools.o
 
 ### The main target:
 
