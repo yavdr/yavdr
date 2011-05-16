@@ -27,8 +27,8 @@ void TimersResponder::reply(std::ostream& out, cxxtools::http::Request& request,
   SerTimer serTimer;
   std::vector < struct SerTimer > serTimers;
 
-  cTimer *timer;
   int timer_count = Timers.Count();
+  cTimer *timer;
   for (int i=0;i<timer_count;i++)
   {
     timer = Timers.Get(i);
@@ -36,7 +36,7 @@ void TimersResponder::reply(std::ostream& out, cxxtools::http::Request& request,
     serTimer.Stop = timer->Stop();
     serTimer.Priority = timer->Priority();
     serTimer.Lifetime = timer->Lifetime();
-    serTimer.EventID = !timer->Event() ? timer->Event()->EventID() : -1;
+    serTimer.EventID = timer->Event() != NULL ? timer->Event()->EventID() : -1;
     serTimer.WeekDays = timer->WeekDays();
     serTimer.Day = timer->Day();
     serTimer.Channel = timer->Channel()->Number();
@@ -49,6 +49,7 @@ void TimersResponder::reply(std::ostream& out, cxxtools::http::Request& request,
   reply.addHeader("Content-Type", "application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
   serializer.serialize(serTimers, "timers");
+  
   serializer.finish();
 }
 

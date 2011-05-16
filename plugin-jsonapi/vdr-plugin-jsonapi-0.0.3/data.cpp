@@ -27,7 +27,7 @@ void operator>>= (const cxxtools::SerializationInfo& si, SerTimer& t)
   si.getMember("channel") >>= t.Channel;
   si.getMember("filename") >>= t.FileName;
   si.getMember("is_pending") >>= t.IsPending;
-  si.getMember("is_recodring") >>= t.IsRecording;
+  si.getMember("is_recording") >>= t.IsRecording;
 }
 
 void operator<<= (cxxtools::SerializationInfo& si, const SerTimers& t)
