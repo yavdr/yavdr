@@ -1,5 +1,29 @@
 #include <cxxtools/serializationinfo.h>
 
+struct SerTimer
+{
+  int Start;
+  int Stop;
+  int Priority;
+  int Lifetime;
+  int EventID;
+  int WeekDays;
+  int Day;
+  int Channel;
+  bool IsRecording;
+  bool IsPending;
+  cxxtools::String FileName;
+};
+
+struct SerTimers
+{
+  std::vector < struct SerTimer > timer;
+};
+
+void operator<<= (cxxtools::SerializationInfo& si, const SerTimer& t);
+void operator>>= (const cxxtools::SerializationInfo& si, SerTimer& t);
+void operator<<= (cxxtools::SerializationInfo& si, const SerTimers& t);
+
 struct SerEvent
 {
   int Id;
@@ -23,7 +47,7 @@ struct SerChannel
   cxxtools::String Name;
   int Number;
   int Transponder;
-  std::string Stream;
+  cxxtools::String Stream;
   bool IsAtsc;
   bool IsCable;
   bool IsTerr;
@@ -38,7 +62,7 @@ struct SerChannels
 void operator<<= (cxxtools::SerializationInfo& si, const SerChannel& c);
 void operator<<= (cxxtools::SerializationInfo& si, const SerChannels& c);
 
-struct RecordingRec
+struct SerRecording
 {
   cxxtools::String Name;
   cxxtools::String FileName;
@@ -47,11 +71,11 @@ struct RecordingRec
   bool IsPesRecording;
 };
 
-struct RecordingsRec
+struct SerRecordings
 {
-  std::vector < struct RecordingRec > recording;
+  std::vector < struct SerRecording > recording;
 };
 
-void operator<<= (cxxtools::SerializationInfo& si, const RecordingRec& p);
-void operator<<= (cxxtools::SerializationInfo& si, const RecordingsRec& p);
+void operator<<= (cxxtools::SerializationInfo& si, const SerRecording& p);
+void operator<<= (cxxtools::SerializationInfo& si, const SerRecordings& p);
 

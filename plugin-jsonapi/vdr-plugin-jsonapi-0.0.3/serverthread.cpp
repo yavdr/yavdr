@@ -8,6 +8,54 @@
 #include "serverthread.h"
 cxxtools::Utf8Codec codec;
 
+// TimersResponder
+//
+class TimersResponder : public cxxtools::http::Responder
+{
+  public:
+    explicit TimersResponder(cxxtools::http::Service& service)
+      : cxxtools::http::Responder(service)
+      { }
+     virtual void reply(std::ostream&, cxxtools::http::Request& request, cxxtools::http::Reply& reply);
+};
+
+//implementation not final!!!
+void TimersResponder::reply(std::ostream& out, cxxtools::http::Request& request, cxxtools::http::Reply& reply)
+{
+  esyslog("jsonapi, timers: /%s/", request.method().c_str());
+ 
+  SerTimer serTimer;
+  std::vector < struct SerTimer > serTimers;
+
+  cTimer *timer;
+  int timer_count = Timers.Count();
+  for (int i=0;i<timer_count;i++)
+  {
+    timer = Timers.Get(i);
+    serTimer.Start = timer->Start();
+    serTimer.Stop = timer->Stop();
+    serTimer.Priority = timer->Priority();
+    serTimer.Lifetime = timer->Lifetime();
+    serTimer.EventID = !timer->Event() ? timer->Event()->EventID() : -1;
+    serTimer.WeekDays = timer->WeekDays();
+    serTimer.Day = timer->Day();
+    serTimer.Channel = timer->Channel()->Number();
+    serTimer.IsRecording = timer->Recording();
+    serTimer.IsPending = timer->Pending();
+    serTimer.FileName = codec.decode(timer->File());
+    serTimers.push_back(serTimer);
+  }
+
+  reply.addHeader("Content-Type", "application/json; charset=utf-8");
+  cxxtools::JsonSerializer serializer(out);
+  serializer.serialize(serTimers, "timers");
+  serializer.finish();
+}
+
+//ChannelsService
+//
+typedef cxxtools::http::CachedService<TimersResponder> TimersService;
+
 // ChannelsResponder
 //
 class ChannelsResponder : public cxxtools::http::Responder
@@ -35,7 +83,7 @@ void ChannelsResponder::reply(std::ostream& out, cxxtools::http::Request& reques
       serChannel.Name = codec.decode(channel->Name());
       serChannel.Number = channel->Number();
       serChannel.Transponder = channel->Transponder();
-      serChannel.Stream = (std::string)channel->GetChannelID().ToString() + (std::string)suffix;
+      serChannel.Stream = codec.decode(((std::string)channel->GetChannelID().ToString() + (std::string)suffix).c_str());
       serChannel.IsAtsc = channel->IsAtsc();
       serChannel.IsCable = channel->IsCable();
       serChannel.IsSat = channel->IsSat();
@@ -52,7 +100,7 @@ void ChannelsResponder::reply(std::ostream& out, cxxtools::http::Request& reques
 typedef cxxtools::http::CachedService<ChannelsResponder> ChannelsService;
 
 // EventResponder
-//
+// 
 class EventsResponder : public cxxtools::http::Responder
 {
   public:
@@ -72,7 +120,7 @@ void EventsResponder::reply(std::ostream& out, cxxtools::http::Request& request,
   
   dsyslog("jsonapi: %s ///%i///%i///%i///", qparams.c_str(), channel_number, from, timespan);
 
-  if ( channel_number == -1 || channel_number ) channel_number = 1;
+  if ( channel_number == -1 || !channel_number ) return; 
   cChannel* channel = GetChannel(channel_number);
   if ( !channel ) return;
 
@@ -97,7 +145,6 @@ void EventsResponder::reply(std::ostream& out, cxxtools::http::Request& request,
   
   if(!Schedule) return;
 
-  bool atLeastOneEvent = false;
 
   for(const cEvent* event = Schedule->Events()->First(); event; event = Schedule->Events()->Next(event))
   {
@@ -115,17 +162,14 @@ void EventsResponder::reply(std::ostream& out, cxxtools::http::Request& request,
        serEvent.StartTime = event->StartTime();
        serEvent.Duration = event->Duration();
        serEvents.push_back(serEvent);
-       atLeastOneEvent = true;
     }else{
       if(ts > to) break;
     }
   }
-
-  if(!atLeastOneEvent) return;
   
   reply.addHeader("Content-Type", "application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
-  serializer.serialize(serEvents, "rows");
+  serializer.serialize(serEvents, "events");
   serializer.finish();
 }
 
@@ -149,20 +193,20 @@ class RecordingsResponder : public cxxtools::http::Responder
 
 void RecordingsResponder::reply(std::ostream& out, cxxtools::http::Request& request, cxxtools::http::Reply& reply)
 {
-  RecordingRec recordingRec;
-  std::vector < struct RecordingRec > recordingsRec;
+  SerRecording serRecording;
+  std::vector < struct SerRecording > serRecordings;
 
   reply.addHeader("Content-Type", "application/json; charset=utf-8");
   cxxtools::JsonSerializer serializer(out);
   for (cRecording* recording = Recordings.First(); recording; recording = Recordings.Next(recording)) {
-	recordingRec.Name = codec.decode(recording->Name());
-	recordingRec.FileName = codec.decode(recording->FileName());
-    recordingRec.IsNew = recording->IsNew();
-    recordingRec.IsEdited = recording->IsEdited();
-    recordingRec.IsPesRecording = recording->IsPesRecording();
-    recordingsRec.push_back(recordingRec);
+    serRecording.Name = codec.decode(recording->Name());
+    serRecording.FileName = codec.decode(recording->FileName());
+    serRecording.IsNew = recording->IsNew();
+    serRecording.IsEdited = recording->IsEdited();
+    serRecording.IsPesRecording = recording->IsPesRecording();
+    serRecordings.push_back(serRecording);
   }
-  serializer.serialize(recordingsRec, "recordings");
+  serializer.serialize(serRecordings, "recordings");
   serializer.finish();
 }
 
@@ -194,17 +238,20 @@ cServerThread::~cServerThread ()
   delete server;
 }
 
-void
-cServerThread::Action(void)
+void cServerThread::Action(void)
 {
   active = true;
 
-  RecordingsService recordingsService;
   ChannelsService channelsService;
   EventsService eventsService;
-  server->addService("/recordings.json", recordingsService);
+  RecordingsService recordingsService;
+  TimersService timersService;
+
   server->addService("/channels.json", channelsService);
   server->addService("/events.json", eventsService);
+  server->addService("/recordings.json", recordingsService);
+  server->addService("/timers.json", timersService);
+
   loop.run();
 
   dsyslog("JSONAPI: server thread ended (pid=%d)", getpid());
