@@ -25,6 +25,7 @@ if (key == "webfrontend.language")
     if (
     	(value == "de") ||
     	(value == "en") ||
+        (value == "ru") ||
 	(value == "fr")) { 
 //    	(value == "nl") || 
 //	(value == "pt") || 

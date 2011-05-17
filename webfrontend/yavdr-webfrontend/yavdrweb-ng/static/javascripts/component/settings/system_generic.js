@@ -84,6 +84,11 @@ YaVDR.Component.Settings.SystemGeneric.Language = Ext.extend(YaVDR.Default.Form,
           key: 'de',
           title: 'German'
         },
+        {
+          key: 'ru',
+          title: 'Russian'
+        },
+
          {
           key: 'fr',
           title: 'French'
