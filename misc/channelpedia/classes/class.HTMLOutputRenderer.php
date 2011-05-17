@@ -257,7 +257,7 @@ class HTMLOutputRenderer{
                 '<a name ="'.$escaped_shortlabel.'">'.$escaped_shortlabel . " (" . $cols["channelcount"] . ' channels)</a>'.
                 "</h2>\n".
                 "<h3>VDR channel format</h3>\n<pre".$prestyle.">";
-            $x = new channelIterator();
+            $x = new channelIterator( $shortenSource = true);
             $x->init1($cols["x_label"], $source, $orderby = "UPPER(name) ASC");
             while ($x->moveToNextChannel() !== false){
                 if ($html_table == ""){
@@ -270,7 +270,7 @@ class HTMLOutputRenderer{
                 $nice_html_body .= htmlspecialchars( $x->getCurrentChannelObject()->getChannelString() )."\n";
                 $html_table .= "<tr".$prestyle.">\n";
                 //FIXME use channel object here
-                foreach ($x->getCurrentChannelArray() as $param => $value){
+                foreach ($x->getCurrentChannelObject()->getAsArray() as $param => $value){
                     switch ($param){
                         case "apid":
                         case "caid":
@@ -328,11 +328,11 @@ class HTMLOutputRenderer{
             '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
             <p>Last updated on: '. date("D M j G:i:s T Y").'</p>';
         $html_table = "";
-        $x = new channelIterator();
+        $x = new channelIterator( $shortenSource = false );
         $x->init2( "SELECT * FROM channels WHERE x_label LIKE 'de.%' AND lower(x_label) LIKE '%public%' ORDER by x_label ASC, lower(name) ASC, source ASC");
         $lastname = "";
         while ($x->moveToNextChannel() !== false){
-            $carray = $x->getCurrentChannelArray();
+            $carray = $x->getCurrentChannelObject()->getAsArray();
             if (strtolower($carray["name"]) != strtolower($lastname)){
                 if ($lastname != ""){
                     $html_table .= "</table>\n</div>\n";
@@ -385,11 +385,11 @@ class HTMLOutputRenderer{
         if ($timestamp != 0){
             $nice_html_output .= "<p>Looking for channels that were last confirmed before ". date("D, d M Y H:i:s", $timestamp). " ($timestamp)</p>\n";
 
-            $x = new channelIterator();
+            $x = new channelIterator( $shortenSource = true );
             $x->init2( "SELECT * FROM channels WHERE source = ".$this->db->quote($source)." AND x_last_confirmed < ".$timestamp);
             $lastname = "";
             while ($x->moveToNextChannel() !== false){
-                $carray = $x->getCurrentChannelArray();
+                $carray = $x->getCurrentChannelObject()->getAsArray();
                 if ($lastname == ""){
                     $html_table .= "<h3>Table view</h3>\n<div class=\"tablecontainer\"><table>\n<tr>";
                     foreach ($x->getCurrentChannelArrayKeys() as $header){
@@ -439,7 +439,7 @@ class HTMLOutputRenderer{
         foreach ($result as $row) {
             $html_table .= "<tr><td>".htmlspecialchars($row["provider"])."</td><td>".htmlspecialchars($row["providercount"])."</td></tr>\n";
             $nice_html_body .= "<h2>".htmlspecialchars($row["provider"]). " (" . htmlspecialchars($row["providercount"]) ." channels)</h2>\n<pre>\n";
-            $x = new channelIterator();
+            $x = new channelIterator( $shortenSource = true );
             $x->init2( "SELECT * FROM channels ".
                 "WHERE source = ".$this->db->quote($source)." AND ".
                 "x_label = '' AND provider = ".$this->db->quote($row["provider"]).

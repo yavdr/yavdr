@@ -31,11 +31,13 @@ class channelIterator{
         $channel = false,
         $count = 0,
         $lastFrequency = "",
-        $transponderChanged = true;
+        $transponderChanged = true,
+        $shortenSource;
 
-    function __construct(){
+    function __construct($shortenSource = true){
         $this->db = dbConnection::getInstance();
         $this->config = config::getInstance();
+        $this->shortenSource = $shortenSource;
     }
 
     public function init1( $label, $source, $orderby = "frequency, modulation, provider, name ASC"){
@@ -64,6 +66,9 @@ class channelIterator{
                     //print "channelobject is valid.\n";
                     $exists = true;
                     $this->channel = $channelobj;
+                    if ($this->shortenSource){
+                        $this->channel->setSourceToShortForm();
+                    }
                     $this->count++;
 
                     if ( $this->lastFrequency != $this->channel->getSource() ."-" . $this->channel->getFrequency() ){
@@ -83,10 +88,6 @@ class channelIterator{
 
     public function getCurrentChannelObject(){
         return $this->channel;
-    }
-
-    public function getCurrentChannelArray(){
-        return $this->channel->getAsArray();
     }
 
     public function getCurrentChannelArrayKeys(){

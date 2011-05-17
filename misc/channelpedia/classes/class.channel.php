@@ -31,10 +31,10 @@ class channel{
 
     private
         $sourceDB, //needed for db
-        $sourceShort,
         $metaData,
         $channelstring = "",
-        $uniqueid="",
+        $uniqueID = "",
+        $longUniqueID = "",
 
         $name,
         $provider,
@@ -80,8 +80,6 @@ class channel{
         else
             throw new Exception("Channelparams are neither of type array nor of type string!");
 
-        $this->uniqueid = $this->params["source"]."-". $this->params["nid"]."-". $this->params["tid"]."-". $this->params["sid"];
-
         //convert name and provider strings to utf-8 if they are not in utf-8
         //this only needs to be done if the channels were read from file
         //usually is necessary for sky_de channels that are encoded in ISO-8859-15
@@ -106,21 +104,35 @@ class channel{
         //ugly!
         if ( $this->metaData !== null)
             $this->setSourceForDB();
+//        else
+//            $this->setSourceToShortForm();
+//when channels are read from db we want to output the long source in most cases, examples:
+//update log, de report
+
+        $this->sourceLessId = $this->params["nid"]."-". $this->params["tid"]."-". $this->params["sid"];
+        $this->uniqueID = $this->getShortenedSource()."-". $this->sourceLessId;
+        if ( $this->metaData !== null)
+            $this->longUniqueID = $this->sourceDB."-". $this->sourceLessId;
         else
-            $this->setSourceShort();
+            $this->longUniqueID = $this->params["source"]."-". $this->sourceLessId;
     }
 
     public function isValid(){
         return ($this->params !== false);
     }
 
-    private function setSourceShort(){
-        $this->sourceDB  = $this->params["source"];
+    public function getShortenedSource(){
+        $retval = "";
         if (!$this->isSatelliteSource()){
-            $this->sourceShort = substr($this->source,0,1);
+            $retval = substr($this->source,0,1);
         }
         else
-            $this->sourceShort = $this->source;
+            $retval = $this->source;
+        return $retval;
+    }
+
+    public function setSourceToShortForm(){
+        $this->source = $this->getShortenedSource();
     }
 
     private function setSourceForDB(){
@@ -130,7 +142,6 @@ class channel{
             case "T":
             case "A":
                 $nonSatProvider = $this->metaData->getAnnouncedNonSatProvider($this->source);
-                $this->sourceShort = $this->source;
                 $this->sourceDB = $this->source . '[' . $nonSatProvider . ']';
                 if ( $this->metaData !== null)
                     $this->metaData->addPresentNonSatProvider( $this->source, $nonSatProvider );
@@ -138,7 +149,6 @@ class channel{
             case "I":
             case "P":
                 $this->config->addToDebugLog( "ignoring channels sourcetype: ". $this->source  ."\n");
-
                 $this->params = false;
                 break;
             default:
@@ -147,7 +157,6 @@ class channel{
         }
         else{
             $this->sourceDB = $this->source;
-            $this->sourceShort = $this->source;
             if ( $this->metaData !== null)
                 $this->metaData->addPresentSatProvider( $this->source );
         }
@@ -166,13 +175,18 @@ class channel{
     }
 
     public function getUniqueID(){
-        return $this->uniqueid;
+        return $this->uniqueID;
     }
+
+    public function getLongUniqueID(){
+        return $this->longUniqueID;
+    }
+
 
     //FIXME temp
     public function getAsArray(){
         $this->params["x_unique_id"] = $this->getUniqueID();
-        $this->params["source"] = $this->sourceShort;
+        $this->params["source"] = $this->source;
         return $this->params;
     }
 
@@ -205,7 +219,7 @@ class channel{
             if ( $this->metaData !== null)
                 $this->metaData->increaseAddedChannelCount();
             $query = $this->db->insert( "channel_update_log", array(
-                "combined_id" => $this->getUniqueID(),
+                "combined_id" => $this->longUniqueID,
                 "name" => $this->params["name"],
                 "update_description" => "New channel added: " . $this->getChannelString(),
                 "timestamp" => $this->metaData->getTimestamp(),
@@ -301,18 +315,12 @@ class channel{
         if ($this->params["provider"] != "")
             $provider = ";". $this->params["provider"];
 
-        //remove meta provider info from cable ot terrestrial source string
-        $source = $this->params["source"];
-        $sourcetest = strtoupper( substr($this->params["source"],0,1));
-        if ($sourcetest == "C" || $sourcetest == "T" || $sourcetest == "A" )
-            $source = $sourcetest;
-
         return
             $this->params["name"] .
             $provider . ":".
             $this->params["frequency"] . ":".
             $this->params["modulation"] . ":".
-            $source . ":".
+            $this->getShortenedSource() . ":".
             $this->params["symbolrate"] . ":".
             $this->params["vpid"] . ":".
             $this->params["apid"] . ":".
