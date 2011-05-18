@@ -4,7 +4,6 @@ export DISPLAY=:1`dbget vdr.tempdisplay`
 
 #ASPECT_RATIO="anamorphic"
 GEOMETRY=`xrandr | grep "\*" | cut -d" " -f4`
-USE_AUTOCROP="0"
 
 test -f /etc/default/xine && . /etc/default/xine
 XINEOPTS="-G $GEOMETRY -A alsa --config /etc/xine/config --keymap=file:/etc/xine/keymap --post vdr --post vdr_video --post vdr_audio --verbose=2 --no-gui --no-logo --no-splash --deinterlace -pq"
@@ -18,6 +17,7 @@ if [ "$USE_AUTOCROP" = "1" ]; then
 fi
 
 while [ ! -e /tmp/vdr-xine/stream ] ; do sleep 0.1 ; done
-exec su -c "/usr/bin/xine $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes &> /tmp/vdr-frontend.log" vdr
+exec start-stop-daemon --start --exec /usr/bin/xine --user vdr --chuid vdr \
+-- $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes &> /tmp/vdr-frontend.log
 end script
 <?cs /if ?>

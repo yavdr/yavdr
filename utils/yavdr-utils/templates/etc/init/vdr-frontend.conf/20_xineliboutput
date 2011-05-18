@@ -20,6 +20,7 @@ XINELIBOUTPUTOPTS="--post tvtime:method=use_vo_driver --reconnect --audio=alsa -
 CONFIG="--config /etc/vdr-sxfe/config_xineliboutput"
 
 while  ! netcat -z localhost 37890; do sleep 0.1; done;
-exec su -c "/usr/bin/vdr-sxfe --opengl --hud=opengl $XINELIBOUTPUTOPTS $CONFIG xvdr://127.0.0.1:37890 &> /tmp/vdr-frontend.log" vdr
+exec start-stop-daemon --start --exec /usr/bin/vdr-sxfe --user vdr --chuid vdr \
+-- --opengl --hud=opengl $XINELIBOUTPUTOPTS $CONFIG xvdr://127.0.0.1:37890 &> /tmp/vdr-frontend.log
 end script
 <?cs /if ?>

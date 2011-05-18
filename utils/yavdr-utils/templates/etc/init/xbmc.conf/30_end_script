@@ -6,5 +6,6 @@ if [ $RET -ne 0 ]; then
   exit $RET
 fi
 
-exec su -c "/usr/lib/xbmc/xbmc.bin --standalone --lircdev /var/run/lirc/lircd" vdr
+exec start-stop-daemon --start --exec /usr/lib/xbmc/xbmc.bin --user vdr --chuid vdr \
+-- --standalone --lircdev /var/run/lirc/lircd
 end script
