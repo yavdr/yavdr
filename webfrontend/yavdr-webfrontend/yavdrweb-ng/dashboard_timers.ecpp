@@ -10,10 +10,6 @@
 #include <algorithm>
 #include <vector>
 
-extern "C" {
-	#include <svdrp.h>
-}
-
 using namespace std;
 
 </%pre><& authenticate ><%shared>
