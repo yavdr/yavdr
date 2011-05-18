@@ -16,7 +16,8 @@ YaVDR.Component.Dashboard = Ext.extend(YaVDR.Component, {
       columnWidth: .5,
       baseCls:'x-plain',
       items: [
-         new YaVDR.Component.Dashboard.System()
+         new YaVDR.Component.Dashboard.System(),
+         new YaVDR.Component.Dashboard.Timers()
       ]
     }];
 

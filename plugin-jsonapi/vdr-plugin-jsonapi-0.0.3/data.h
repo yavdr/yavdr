@@ -10,6 +10,7 @@ struct SerTimer
   int WeekDays;
   int Day;
   int Channel;
+  cxxtools::String ChannelName;
   bool IsRecording;
   bool IsPending;
   cxxtools::String FileName;

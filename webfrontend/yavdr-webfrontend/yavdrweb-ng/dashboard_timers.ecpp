@@ -5,6 +5,7 @@
 #include <cstring>
 #include <jsoncpp/json.hpp>
 #include <time.h>
+#include "curl/curl.h"
 
 #include <algorithm>
 #include <vector>
@@ -26,6 +27,25 @@ bool compareTimer (yavdr_timer_t i, yavdr_timer_t j) {
 	return (i.timestamp<j.timestamp);
 }
 
+// This is the writer call back function used by curl  
+static int writer(char *data, size_t size, size_t nmemb,  
+				  std::string *buffer)  
+{  
+  // What we will return  
+  int result = 0;  
+  
+  // Is there anything in the buffer?  
+  if (buffer != NULL)  
+  {  
+	// Append the data to the buffer  
+	buffer->append(data, size * nmemb);  
+  
+	// How much did we write?  
+	result = size * nmemb;  
+  }  
+  
+  return result;  
+}  
 </%shared><%cpp>
 	reply.setHeader ("Cache-Control", "no-cache", true);
 	reply.setHeader ("Content-Type", "application/json", true);
@@ -69,8 +89,69 @@ bool compareTimer (yavdr_timer_t i, yavdr_timer_t j) {
 	json["metaData"]["fields"][11u]["name"] = "start";
 	json["metaData"]["fields"][11u]["type"] = "date";
 	
-	json["metaData"]["fields"][12u] = "stop";
+	json["metaData"]["fields"][12u]["name"] = "stop";
+	json["metaData"]["fields"][12u]["type"] = "date";
 
+	CURL *curl;
+	CURLcode curlResult;
+    // Create our curl handle  
+    curl = curl_easy_init();  
+    
+    if (curl)  
+    {
+    	char errorBuffer[CURL_ERROR_SIZE];  
+    	string buffer;
+
+        // Now set up all of the curl options  
+        curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);  
+        
+        curl_easy_setopt(curl, CURLOPT_HEADER, 0);  
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);  
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writer);  
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+        
+		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:8002/timers.json");
+		// Attempt to retrieve the remote page
+		curlResult = curl_easy_perform(curl);  
+
+		// Always cleanup  
+		curl_easy_cleanup(curl);  
+		
+		// Did we succeed?  
+		if (curlResult == CURLE_OK)
+		{  
+			Json::Value source;   // will contains the root value after parsing.
+			Json::Reader reader;
+			bool parsingSuccessful = reader.parse( buffer, source );
+			const Json::Value timers = source["timers"];
+			
+		    if( timers.size() > 0 ) {
+		    	json["total"] = timers.size();
+			    // so sieht dann data aus
+				// [{ id: 0, name: 'Der Film', length: 123, information: 'text' }]
+		    	
+		    	int i = 0;
+				for( Json::ValueIterator itr = timers.begin() ; itr != timers.end() ; itr++, i++ ) {
+					json["data"][i]["id"] = i;
+					json["data"][i]["name"] = (*itr)["FileName"];
+					json["data"][i]["channel"] = (*itr)["ChannelName"];
+					json["data"][i]["first_date"] = "";
+					json["data"][i]["is_active"] = false;
+							
+					json["data"][i]["start"] = (*itr)["Start"];
+					json["data"][i]["stop"] = (*itr)["Stop"];
+				}
+		    }
+		} else {
+			json["data"] = false;
+			json["total"] = 0;
+		}
+
+    } else {
+    	json["data"] = false;
+    	json["total"] = 0;
+    }
+    /*
 	svdrp_t *svdrp;
 
 	svdrp = svdrp_open("192.168.6.253", 6419, SVDRP_DEFAULT_TIMEOUT, SVDRP_MSG_VERBOSE);
@@ -134,7 +215,7 @@ bool compareTimer (yavdr_timer_t i, yavdr_timer_t j) {
 			//timerStore["data"] = timer.data;
 
 			json["data"][i++] = timerStore;*/
-			timer_id++;
+/*			timer_id++;
 			yaTimer = new yavdr_timer_t;
 		}
 
@@ -145,7 +226,7 @@ bool compareTimer (yavdr_timer_t i, yavdr_timer_t j) {
 	} else {
 		json["total"] = 0;
 		json["data"] = "";
-	}
+	}*/
 
 	reply.out() << json;
 

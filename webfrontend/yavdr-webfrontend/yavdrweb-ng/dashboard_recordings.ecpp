@@ -1,0 +1,109 @@
+<%pre>
+#include <stdio.h>
+#include <time.h>
+#include <string>
+#include <jsoncpp/json.hpp>
+#include "curl/curl.h"
+
+using namespace std;
+</%pre><& authenticate ><%shared>
+
+// This is the writer call back function used by curl  
+static int writer(char *data, size_t size, size_t nmemb,  
+				  std::string *buffer)  
+{  
+  // What we will return  
+  int result = 0;  
+  
+  // Is there anything in the buffer?  
+  if (buffer != NULL)  
+  {  
+	// Append the data to the buffer  
+	buffer->append(data, size * nmemb);  
+  
+	// How much did we write?  
+	result = size * nmemb;  
+  }  
+  
+  return result;  
+}  
+</%shared><& authenticate ><%cpp>
+	reply.setHeader ("Cache-Control", "no-cache", false);
+	reply.setContentType ("application/json; charset=utf-8");
+
+	Json::Value json;
+
+
+    // das mus in die json["metaData"]["fields"] und zwar als array
+	// [{ name: 'id', type: 'integer' }, 'name', 'information', { name: 'length', type: 'integer' }]
+
+	json["metaData"]["root"]  = "data";
+	json["metaData"]["idProperty"]  = "id";
+	json["metaData"]["totalProperty"]  = "total";
+
+	json["metaData"]["fields"][0u]["name"] = "id";
+	json["metaData"]["fields"][0u]["type"] = "integer";
+	json["metaData"]["fields"][1u] = "name";
+	json["metaData"]["fields"][2u] = "information";
+	json["metaData"]["fields"][3u]["name"] = "length";
+	json["metaData"]["fields"][3u]["type"] = "integer";
+
+	CURL *curl;
+	CURLcode curlResult;
+    // Create our curl handle  
+    curl = curl_easy_init();  
+    
+    if (curl)  
+    {
+    	char errorBuffer[CURL_ERROR_SIZE];  
+    	string buffer;
+
+        // Now set up all of the curl options  
+        curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);  
+        
+        curl_easy_setopt(curl, CURLOPT_HEADER, 0);  
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);  
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writer);  
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+        
+		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:8002/recordings.json");
+		// Attempt to retrieve the remote page
+		curlResult = curl_easy_perform(curl);  
+
+		// Always cleanup  
+		curl_easy_cleanup(curl);  
+		
+		// Did we succeed?  
+		if (curlResult == CURLE_OK)
+		{  
+			Json::Value source;   // will contains the root value after parsing.
+			Json::Reader reader;
+			bool parsingSuccessful = reader.parse( buffer, source );
+			const Json::Value recordings = source["recordings"];
+			
+		    if( recordings.size() > 0 ) {
+		    	json["total"] = recordings.size();
+			    // so sieht dann data aus
+				// [{ id: 0, name: 'Der Film', length: 123, information: 'text' }]
+		    	
+		    	int i = 0;
+				for( Json::ValueIterator itr = recordings.begin() ; itr != recordings.end() ; itr++, i++ ) {
+					json["data"][i]["id"] = i;
+					json["data"][i]["name"] = (*itr)["name"];
+					json["data"][i]["information"] = "";
+					json["data"][i]["length"] = i;
+				}
+		    }
+		} else {
+			json["data"] = false;
+			json["total"] = 0;
+		}
+
+    } else {
+    	json["data"] = false;
+    	json["total"] = 0;
+    }
+
+	reply.out() << json;
+
+</%cpp>

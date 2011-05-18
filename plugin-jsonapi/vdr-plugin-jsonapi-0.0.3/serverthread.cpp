@@ -39,6 +39,7 @@ void TimersResponder::reply(std::ostream& out, cxxtools::http::Request& request,
     serTimer.EventID = timer->Event() != NULL ? timer->Event()->EventID() : -1;
     serTimer.WeekDays = timer->WeekDays();
     serTimer.Day = timer->Day();
+    serTimer.ChannelName = timer->Channel()->ShortName(true);
     serTimer.Channel = timer->Channel()->Number();
     serTimer.IsRecording = timer->Recording();
     serTimer.IsPending = timer->Pending();
