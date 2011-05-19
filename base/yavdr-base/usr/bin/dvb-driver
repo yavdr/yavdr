@@ -63,7 +63,7 @@ elif [ "$1" == "--unload" ]; then
         COUNT=0
         while fuser $(dirname ${DEVICE[$i]})/* &> /dev/null ; do 
             sleep 1 
-            if [ "$COUNT" -lt "6" ]; then 
+            if [ "$COUNT" -lt "60" ]; then 
                 COUNT=$(( $COUNT + 1 ))
             else
                 echo "Device is in use. Giving up."

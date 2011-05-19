@@ -9,7 +9,7 @@
 
 <?cs if:(!?system.shutdown || system.shutdown == "s3") ?> 
 if grep -q "mem" /sys/power/state ; then
-	echo "SHUTDOWNCMD=\"stop vdr; /sbin/initctl --quiet emit --no-wait init-s3\""
+	echo "SHUTDOWNCMD=\"vdr-dbus-send /Plugins/dynamite plugin.SVDRPCommand string:'DTAD'; /sbin/initctl --quiet emit --no-wait init-s3\""
 fi
 <?cs elif:(system.shutdown == "s4") ?>
 if grep -q "disk" /sys/power/state ; then
