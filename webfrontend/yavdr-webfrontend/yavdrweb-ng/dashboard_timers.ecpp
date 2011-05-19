@@ -18,11 +18,11 @@ typedef struct yavdr_timer_s {
     time_t timestamp;
     svdrp_timer_t timer;
 } yavdr_timer_t;
-*/
+
 bool compareTimer (yavdr_timer_t i, yavdr_timer_t j) {
 	return (i.timestamp<j.timestamp);
 }
-
+*/
 // This is the writer call back function used by curl  
 static int writer(char *data, size_t size, size_t nmemb,  
 				  std::string *buffer)  
