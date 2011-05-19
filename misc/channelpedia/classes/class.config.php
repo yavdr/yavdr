@@ -26,6 +26,7 @@ define( 'PATH_TO_CLASSES', dirname(__FILE__) ."/");
 
 require_once PATH_TO_CLASSES.'../config/config.php';
 require_once PATH_TO_CLASSES.'class.channel.php';
+require_once PATH_TO_CLASSES.'class.storableChannel.php';
 require_once PATH_TO_CLASSES.'class.channelImportMetaData.php';
 require_once PATH_TO_CLASSES.'class.dbConnection.php';
 require_once PATH_TO_CLASSES.'class.channelGroupingManager.php';

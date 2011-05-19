@@ -123,12 +123,6 @@ class Request {
     public $ifNoneMatch = array();
     
     /**
-     * Name of resource class to use for when nothing is found
-     * @var str
-     */
-    public $noResource = 'NoResource';
-    
-    /**
      * The resource classes loaded and how they are wired to URIs
      * @var str[]
      */
@@ -172,7 +166,6 @@ class Request {
      * will be added to the default map of mimetypes</dd>
      * <dt>baseUri</dt> <dd>The base relative URI to use when dispatcher isn't
      * at the root of the domain. Do not put a trailing slash</dd>
-     * <dt>404</dt> <dd>Class name to use when no resource is found</dd>
      * <dt>mounts</dt> <dd>an array of namespace to baseUri prefix mappings</dd>
      * </dl>
      *
@@ -181,7 +174,7 @@ class Request {
     function __construct($config = array()) {
         
         // set defaults
-        $config['uri'] = $this->getConfig($config, 'uri', 'REDIRECT_URL');
+        $config['uri'] = parse_url($this->getConfig($config, 'uri', 'REQUEST_URI'), PHP_URL_PATH);
         $config['baseUri'] = $this->getConfig($config, 'baseUri', '');
         $config['accept'] = $this->getConfig($config, 'accept', 'HTTP_ACCEPT');
         $config['acceptLang'] = $this->getConfig($config, 'acceptLang', 'HTTP_ACCEPT_LANGUAGE');
@@ -304,14 +297,6 @@ class Request {
             }
         }
         
-        // 404 resource
-        if (isset($config['404'])) {
-            $this->noResource = $config['404'];
-        }
-        if (class_exists('Tonic\\'.$this->noResource)) {
-            $this->noResource = 'Tonic\\'.$this->noResource;
-        }
-        
         // mounts
         if (isset($config['mount']) && is_array($config['mount'])) {
             $this->mounts = $config['mount'];
@@ -319,18 +304,11 @@ class Request {
         
         // prime named resources for autoloading
         if (isset($config['autoload']) && is_array($config['autoload'])) {
-            foreach ($config['autoload'] as $uri => $filename) {
-                $parts = preg_split('|[/\\\\]|', $filename);
-                $filename = join(DIRECTORY_SEPARATOR, $parts);
-                $parts = explode('.', array_pop($parts));
-                $className = $parts[0];
-                if (file_exists($filename)) {
-                    $this->resources[$uri] = array(
-                        'class' => $className,
-                        'filename' => $filename,
-                        'loaded' => FALSE
-                    );
-                }
+            foreach ($config['autoload'] as $uri => $className) {
+                $this->resources[$uri] = array(
+                    'class' => $className,
+                    'loaded' => FALSE
+                );
             }
         }
         
@@ -462,6 +440,7 @@ class Request {
     /**
      * Instantiate the resource class that matches the request URI the best
      * @return Resource
+     * @throws ResponseException If the resource does not exist, a 404 exception is thrown
      */
     function loadResource() {
         
@@ -502,7 +481,7 @@ class Request {
             list($uri, $resource, $parameters) = array_shift($uriMatches);
             if (!$resource['loaded']) { // autoload
                 if (!class_exists($resource['class'])) {
-                    include $resource['filename'];
+                    throw new Exception('Unable to load resource');
                 }
                 $resourceDetails = $this->getResourceClassDetails($resource['class']);
                 $resource = $this->resources[$uri] = array(
@@ -516,7 +495,9 @@ class Request {
             }
             return new $resource['class']($parameters);
         }
-        return new $this->noResource(array());
+        
+        // no resource found, throw response exception
+        throw new ResponseException('A resource matching URI "'.$this->uri.'" was not found', Response::NOTFOUND);
         
     }
     
@@ -579,6 +560,7 @@ class Resource {
      * Execute a request on this resource.
      * @param Request request
      * @return Response
+     * @throws ResponseException If the HTTP method is not allowed on the resource, a 405 exception is thrown
      */
     function exec($request) {
         
@@ -611,12 +593,9 @@ class Resource {
         } else {
             
             // send 405 method not allowed
-            $response = new Response($request);
-            $response->code = Response::METHODNOTALLOWED;
-            $response->body = sprintf(
-                'The HTTP method "%s" used for the request is not allowed for the resource "%s".',
-                $request->method,
-                $request->uri
+            throw new ResponseException(
+                'The HTTP method "'.$request->method.'"is not allowed for the resource "'.$request->uri.'".',
+                Response::METHODNOTALLOWED
             );
             
         }
@@ -624,32 +603,6 @@ class Resource {
         # good for debugging, remove this at some point
         $response->addHeader('X-Resource', get_class($this));
         
-        return $response;
-        
-    }
-    
-}
-
-/**
- * 404 resource class
- * @namespace Tonic\Lib
- */
-class NoResource extends Resource {
-    
-    /**
-     * Always return a 404 response.
-     * @param Request request
-     * @return Response
-     */
-    function exec($request) {
-        
-        // send 404 not found
-        $response = new Response($request);
-        $response->code = Response::NOTFOUND;
-        $response->body = sprintf(
-            'Nothing was found for the resource "%s".',
-            $request->uri
-        );
         return $response;
         
     }
@@ -689,7 +642,7 @@ class Response {
      * The request object generating this response
      * @var Request
      */
-    private $request;
+    public $request;
     
     /**
      * The HTTP response code to send
@@ -749,35 +702,6 @@ class Response {
     }
     
     /**
-     * Add content encoding headers and encode the response body
-     */
-    function doContentEncoding() {
-        if (ini_get('zlib.output_compression') == 0) { // do nothing if PHP will do the compression for us
-            foreach ($this->request->acceptEncoding as $encoding) {
-                switch($encoding) {
-                case 'gzip':
-                    $this->addHeader('Content-Encoding', 'gzip');
-                    $this->addVary('Accept-Encoding');
-                    $this->body = gzencode($this->body);
-                    break 2;
-                case 'deflate':
-                    $this->addHeader('Content-Encoding', 'deflate');
-                    $this->addVary('Accept-Encoding');
-                    $this->body = gzdeflate($this->body);
-                    break 2;
-                case 'compress':
-                    $this->addHeader('Content-Encoding', 'compress');
-                    $this->addVary('Accept-Encoding');
-                    $this->body = gzcompress($this->body);
-                    break 2;
-                case 'identity':
-                    break 2;
-                }
-            }
-        }
-    }
-    
-    /**
      * Send a cache control header with the response
      * @param int time Cache length in seconds
      */
@@ -813,11 +737,6 @@ class Response {
         
         if (php_sapi_name() != 'cli' && !headers_sent()) {
             
-            if ($this->body) {
-                $this->doContentEncoding();
-                $this->addHeader('Content-Length', strlen($this->body));
-            }
-            
             header('HTTP/1.1 '.$this->code);
             foreach ($this->headers as $header => $value) {
                 header($header.': '.$value);
@@ -826,6 +745,26 @@ class Response {
         
         echo $this->body;
         
+    }
+    
+}
+
+/**
+ * Exception class for HTTP response errors
+ * @namespace Tonic\Lib
+ */
+class ResponseException extends Exception {
+    
+    /**
+     * Generate a default response for this exception
+     * @param Request request
+     * @return Response
+     */
+    function response($request) {
+        $response = new Response($request);
+        $response->code = $this->code;
+        $response->body = $this->message;
+        return $response;
     }
     
 }

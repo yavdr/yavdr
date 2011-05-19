@@ -21,14 +21,14 @@ class channelgroupsResource extends Resource {
 
         //check validity of supplied parameters
         if ($group !== "all" && $group != intval($group))
-            throw InvalidParamException();
+            throw new Exception("Invalid parameter.");
         if ($group !== "all")
             $group = intval($group);
         $outputtype = strtolower($outputtype);
         if ($outputtype !== "json" && $outputtype !== "")
-            throw InvalidParamException();
+            throw new Exception("Invalid parameter.");
         if (!in_array( $sourcetype, array("DVB-S", "DVB-C", "DVB-T")))
-            throw InvalidParamException();
+            throw new Exception("Invalid parameter.");
 
         $response->code = Response::OK;
 

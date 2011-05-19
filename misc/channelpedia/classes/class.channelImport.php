@@ -89,7 +89,7 @@ class channelImport extends channelFileIterator{
                     //$this->config->addToDebugLog( $msg_prefix . "illegal channel: ignoring empty line.\n");
                 }
                 else{
-                    $currentchannel = new channel( $this->getCurrentLine(), $this->metaData);
+                    $currentchannel = new storableChannel( $this->getCurrentLine(), $this->metaData);
                     if ($currentchannel->isValid()){
                         if (false === $currentchannel->insertIntoDB()){
                             //$this->config->addToDebugLog( $msg_prefix . "already exists.\n");
