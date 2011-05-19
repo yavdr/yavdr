@@ -60,7 +60,7 @@ class channel{
         $this->params = array();
         if (is_array( $channelparams )){
             //turn some integer params back into integer values
-            $int_params = array("frequency", "symbolrate", "sid", "nid", "tid", "rid", "x_last_changed", "x_timestamp_added", "x_last_confirmed");
+            $int_params = array("frequency", "symbolrate", "sid", "nid", "tid", "rid", "x_last_changed", "x_timestamp_added", "x_last_confirmed", "x_utf8");
             foreach ( $channelparams as $param => $value){
                 if (in_array($param, $int_params)){
                     if (!array_key_exists($param, $channelparams)){
@@ -104,10 +104,6 @@ class channel{
         //ugly!
         if ( $this->metaData !== null)
             $this->setSourceForDB();
-//        else
-//            $this->setSourceToShortForm();
-//when channels are read from db we want to output the long source in most cases, examples:
-//update log, de report
 
         $this->sourceLessId = $this->params["nid"]."-". $this->params["tid"]."-". $this->params["sid"];
         $this->uniqueID = $this->getShortenedSource()."-". $this->sourceLessId;
