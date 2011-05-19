@@ -3,6 +3,6 @@
     <!-- General --->
     <category label="4000"> 
         <setting id="vdr_host" type="text" label="4001" default="localhost" /> 
-        <setting id="vdr_port" type="number" label="4002" default="2001" />
+        <setting id="vdr_port" type="number" label="4002" default="6419" />
     </category>
 </settings>
