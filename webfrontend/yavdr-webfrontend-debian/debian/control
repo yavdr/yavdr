@@ -8,7 +8,7 @@ Homepage: http://yavdr.origo.ethz.ch/
 
 Package: yavdr-webfrontend
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-ext, libxext6, libjsoncpp0, libjs-ext-examples, tntnet (>= 2.0), yavdr-i18n, sqlite3, silk-icons, fugue-icons, yavdr-utils (>=0.3.0.2557), update-notifier-common, libcurl3
+Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-ext, libxext6, libjsoncpp0, libjs-ext-examples, tntnet (>= 2.0), yavdr-i18n, sqlite3, silk-icons, fugue-icons, yavdr-utils (>=0.3.0.2557), update-notifier-common, libcurl3, vdr-plugin-restfulapi
 Conflicts: yavdr-utils (<=0.3.0.2556), yavdr-startup (<=0.3.0.2534)
 Suggests: lirc
 Description: WEB front end for yaVDR
