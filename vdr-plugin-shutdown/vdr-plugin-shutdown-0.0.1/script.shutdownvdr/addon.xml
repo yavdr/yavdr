@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.shutdownvdr"
+       name="VDR shutdown"
+       version="0.0.1"
+       provider-name="sphere">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Asks VDR for shutdown</summary>
+    <description lang="en">Asks VDR for shutdown</description>
+  </extension>
+</addon>

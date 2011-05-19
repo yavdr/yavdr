@@ -2,10 +2,8 @@ Source: vdr-plugin-shutdown
 Section: video
 Priority: extra
 Maintainer: Gerald Dachs <gda@dachsweb.de>
-Build-Depends: cdbs, debhelper (>= 7), vdr-dev (>= 1.7.16-13yavdr1), gettext
-Standards-Version: 3.8.0
-Vcs-Svn: svn://svn.debian.org/pkg-vdr-dvb/vdr/vdr-plugin-shutdown/trunk/
-Vcs-Browser: http://svn.debian.org/wsvn/pkg-vdr-dvb/vdr/vdr-plugin-shutdown/trunk/
+Build-Depends: debhelper (>= 7.0.50~), vdr-dev (>= 1.7.18), gettext
+Standards-Version: 3.9.1
 Homepage: <url://example.com>
 
 Package: vdr-plugin-shutdown

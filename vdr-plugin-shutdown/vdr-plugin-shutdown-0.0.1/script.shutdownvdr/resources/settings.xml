@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <!-- General --->
+    <category label="4000"> 
+        <setting id="vdr_host" type="text" label="4001" default="localhost" /> 
+        <setting id="vdr_port" type="number" label="4002" default="2001" />
+    </category>
+</settings>

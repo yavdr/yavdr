@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings>
+	<!-- General --->
+	<string id="3000">YaVDR Shutdown</string>
+	<string id="3001">Error</string>
+	<string id="3002">started - trying to connect</string>
+	<string id="3003">connected - sending command</string>
+	<string id="3004">command sent - reading result</string>
+	<string id="3005">finished</string>
+	<string id="3006">Shutdown confirmed[CR]This station will shut down</string>
+	<string id="3007">Shutdown Refused</string>
+	<string id="3008">Abort</string>
+	<string id="3009">Force</string>
+	<string id="3010">Reason: [B]%s[/B]</string>
+	<string id="3011">Do you want to force the shutdown?</string>
+	<string id="3012">Forcing Shutdown</string>
+	<!-- Settings --->
+	<string id="4000">General</string>
+	<string id="4001">VDR Host</string>
+	<string id="4002">VDR Port</string>
+</strings>
