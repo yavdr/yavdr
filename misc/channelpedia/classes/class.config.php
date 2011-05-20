@@ -61,28 +61,8 @@ class config {
         $this->debuglog = fopen( $debuglogfile, "w");
         $this->addToDebugLog("---------------------------------- begin of session ".date("D M j G:i:s T Y")." -------------------------------------------\n");
 
-        $default_lang_de_cable_provider = array("de");
-
-        $this->sourcelist = array(
-            "DVB-S" => array(
-                "S13E" => array(),
-                "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl" ),
-                "S28.2E" => array( "en" )
-            ),
-            "DVB-C" => array(
-                "de_KabelBW" => $default_lang_de_cable_provider,
-                "de_KabelDeutschland_Speyer" => $default_lang_de_cable_provider,
-                "de_KabelDeutschland_Nuernberg" => $default_lang_de_cable_provider,
-                "de_Primacom_Halberstadt" => $default_lang_de_cable_provider,
-                "de_TeleColumbus_Magdeburg" => $default_lang_de_cable_provider,
-                "de_UnityMediaNRW" => $default_lang_de_cable_provider,
-                "de_WilhelmTel" => $default_lang_de_cable_provider,
-                "at_salzburg-ag" => $default_lang_de_cable_provider
-            ),
-            "DVB-T" => array(
-                "de_Heidelberg" => array() //$default_lang_de_cable_provider
-            )
-        );
+        global $global_source_config;
+        $this->sourcelist = $global_source_config;
     }
 
     function __destruct(){

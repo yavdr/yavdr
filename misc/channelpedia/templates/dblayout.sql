@@ -37,11 +37,13 @@ CREATE TABLE channels(
     tid TEXT,
     rid INTEGER,
     x_label TEXT,
+    x_xmltv_id TEXT,
+    x_namespace INTEGER,
     x_timestamp_added TIMESTAMP,
     x_last_changed TIMESTAMP,
     x_last_confirmed TIMESTAMP,
     x_utf8 BOOLEAN,
-    PRIMARY KEY ( source, nid, tid, sid)
+    PRIMARY KEY ( x_namespace, source, nid, tid, sid)
 );
 
 CREATE TABLE channel_update_log(

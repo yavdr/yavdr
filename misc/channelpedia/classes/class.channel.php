@@ -81,10 +81,12 @@ class channel{
             $this->channelstring = $this->convertArray2String();
         }
         elseif (is_string( $channelparams )){
-            //$this->channelstring = $channelparams;
             $this->params = $this->convertString2Array( $channelparams );
             $this->source = $this->params["source"];
             $this->channelstring = $this->convertArray2String();
+            //compare channel strings to check if our conversion works fine
+            if ( $this->channelstring != $channelparams)
+                throw new Exception("Channelstrings don't match:\n".$this->channelstring ."\n". $channelparams );
         }
         else
             throw new Exception("Channelparams are neither of type array nor of type string!");
@@ -201,7 +203,7 @@ class channel{
                 "name"            => $cname,
                 "provider"        => $cprovider,
                 "frequency"       => intval($details[1]),
-                "modulation"      => strtoupper($details[2]), //w_scan has lower case, we don't want that
+                "modulation"      => $details[2],
                 "source"          => $details[3],
                 "symbolrate"      => intval($details[4]),
                 "vpid"            => $details[5],

@@ -45,7 +45,43 @@
 
 define("CUSTOM_PATH", "");
 
-define("UPLOAD_PASSWORD", "password");
+
+$default_lang_de_cable_provider = array("de");
+
+/*
+ *  $global_source_config
+ *
+ *  associative array
+ *  lists all sources that are valid within this channelpedia
+ *  grouped by source type (DVB-S, DVB-T, DVB-C).
+ *  For each source the available language/region groups are also being
+ *  specified. Each language group must exist in the grouping_rules classes.
+ */
+
+$global_source_config = array(
+    "DVB-S" => array(
+/*
+        "S13E" => array(),
+        "S19.2E" => array( "de", "at", "ch", "es", "fr", "pl","nl" ),
+        "S28.2E" => array( "en" )
+*/
+    ),
+    "DVB-C" => array(
+/*
+        "de_KabelBW" => $default_lang_de_cable_provider,
+        "de_KabelDeutschland_Speyer" => $default_lang_de_cable_provider,
+        "de_KabelDeutschland_Nuernberg" => $default_lang_de_cable_provider,
+        "de_Primacom_Halberstadt" => $default_lang_de_cable_provider,
+        "de_TeleColumbus_Magdeburg" => $default_lang_de_cable_provider,
+        "de_UnityMediaNRW" => $default_lang_de_cable_provider,
+        "de_WilhelmTel" => $default_lang_de_cable_provider,
+        "at_salzburg-ag" => $default_lang_de_cable_provider
+*/
+    ),
+    "DVB-T" => array(
+//        "de_Heidelberg" => array() //$default_lang_de_cable_provider
+    )
+);
 
 $global_user_config = array(
 
