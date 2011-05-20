@@ -1,0 +1,883 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: yavdr-i18n\n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2011-04-14 17:02+0100\n"
+"PO-Revision-Date: 2011-05-18 21:45+0200\n"
+"Last-Translator: Valdemaras Pipiras <valdemaras@ambernet.lt>\n"
+"Language-Team: YaVDR Lietuviškai <valdemaras@ambernet.lt>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Timer"
+msgstr "Laikmatis"
+
+msgid "Applications"
+msgstr "Programos"
+
+msgid "Web"
+msgstr "Interneto tinklas"
+
+msgid "Internet"
+msgstr "Internetas"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "XBMC on graphtft Display"
+msgstr "XBMC rodomas graphtft ekranėlyje"
+
+msgid "Games"
+msgstr "Žaidimai"
+
+msgid "Tools"
+msgstr "Įrankiai"
+
+msgid "Xterm"
+msgstr "Terminalas"
+
+msgid "Commands"
+msgstr "Komandos"
+
+msgid "Safely remove usb mass storage"
+msgstr "Galite saugiai ištraukti USB raktą"
+
+msgid "Update vdr recordings list"
+msgstr "Atnaujinamas vdr įrašų sąrašas"
+
+msgid "Restart VDR"
+msgstr "Perkrauti VDR"
+
+msgid "Reboot system"
+msgstr "Perkrauti sistemą"
+
+msgid "Shutdown system"
+msgstr "Išjungti sistemą"
+
+#: begin yavdr-addons
+
+msgid "CD-Ripper Asunder"
+msgstr "CD-Ripper"
+
+msgid "Chromium 2D-Shooter"
+msgstr "Chromium 2D šaudyklė"
+
+msgid "Mail"
+msgstr "Paštas"
+
+msgid "DVD-Rip"
+msgstr "DVB-Rip"
+
+msgid "M.A.M.E"
+msgstr "M.A.M.E"
+
+msgid "ARD"
+msgstr "ARD"
+
+msgid "ZDF"
+msgstr "ZDF"
+
+msgid "DMAX"
+msgstr "DMAX"
+
+msgid "Golem-Video"
+msgstr "Golem-Video"
+
+msgid "SAT1"
+msgstr "SAT1"
+
+msgid "Gametrailers"
+msgstr "Žaidimų intro"
+
+msgid "Performous"
+msgstr "Performous"
+
+msgid "Pidgin"
+msgstr "Pidgin"
+
+msgid "PIP on/off"
+msgstr "PIP įj./išj."
+
+msgid "PIP swap"
+msgstr "PIP sukeitimas"
+
+msgid "PIP"
+msgstr "PIP"
+
+msgid "Semsix"
+msgstr "Semsix"
+
+msgid "Simfy"
+msgstr "Simfy"
+
+msgid "Skype"
+msgstr "Skype"
+
+msgid "SuperTuxKart"
+msgstr "SuperTuxKart"
+
+msgid "Thunderbird-Mail"
+msgstr "Thunderbird-Mail"
+
+msgid "Extreme Tuxracer"
+msgstr "Extreme Tuxracer"
+
+msgid "TV-Browser"
+msgstr "TV Naršyklė"
+
+msgid "VLC-Media-Player"
+msgstr "VLC-Media-Grotuvas"
+
+msgid "Wormux"
+msgstr "Wormux"
+
+msgid "You-Tube"
+msgstr "You-Tube"
+
+msgid "Helix"
+msgstr "Helix"
+
+#: begin avahi-mounter
+
+msgid "Recording"
+msgstr "Įrašas"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Music"
+msgstr "Muzika"
+
+msgid "Picture"
+msgstr "Paveikslas"
+
+msgid "Miscellaneous"
+msgstr "Įvairūs"
+
+#: end avahi-mounter begin web front end yavdrweb-ng/static/javascripts/component/settings/hw_audio.js
+
+msgid "Please select the audio output. Make your choice and press \"Save\". At saving VDR and the video output will be restarted in order to make your choice activ."
+msgstr "Išsirinkite garso išvestį. Pasirinkę spauskite \"Išsaugoti\" mygtuką. Išsaugojus VDR ir videu išvestis persikraus."
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Output to all devices"
+msgstr "Išvesti į visus įrenginius"
+
+msgid "Analog"
+msgstr "Analoginė"
+
+msgid "Audio output will happen through the speaker/headphone plug"
+msgstr "Garsas bus išvedamas per kolonėlių/ausinių jungtį"
+
+msgid "Digital (Toslink/SPDIF)"
+msgstr "Skaitmeninė (SPDIF)"
+
+msgid "Audio output will happen through Toslink/SPDIF."
+msgstr "Garsas bus išvedamas per SPDIF."
+
+msgid "HDMI-Stereo"
+msgstr "HDMI-Stereo"
+
+msgid "Audio output will happen through HDMI in PCM. This variant does a downmix for HDMI devices which only can handle stereo (i.e. tv sets)."
+msgstr "Garsas bus išvedamas per HDMI. Naudojant šį variantą per HDMI jungtį bus išvedamas nukarpytas stereo garsas."
+
+msgid "HDMI-Passthrough"
+msgstr "HDMI-Passthrough"
+
+msgid "Audio output will happen through HDMI with Pass Through."
+msgstr "Garsas bus išvedamas per HDMI jungtį kiaurai praleidžiant skaitmeninį garso kanalą (Pass Through)."
+
+msgid "Audio output"
+msgstr "Garso išvestis"
+
+#: yavdrweb-ng/static/javascripts/component/settings/hw_display.js
+
+msgid "Here you can configure your display settings."
+msgstr "Čia galite konfigūruoti ekrano nustatymus."
+
+msgid "Display"
+msgstr "Ekranas"
+
+msgid "Rescan displays"
+msgstr "Nuskanuoti ekranus dar kartą"
+
+msgid "Refresh rate"
+msgstr "Atnaujinti dažnį"
+
+msgid "Device"
+msgstr "Įrenginys"
+
+msgid "Primary"
+msgstr "Pirminis"
+
+msgid "Secondary"
+msgstr "Antrinis"
+
+msgid "Select resolution"
+msgstr "Pasirinkti skiriamąją gebą"
+
+msgid "Resolution"
+msgstr "Skiriamoji geba"
+
+msgid "Nvidia overscan compensation"
+msgstr "Nvidia ekrano perdengiamumo (overscan) kompensacija"
+
+msgid "Basic"
+msgstr "Įprastas"
+
+msgid "Dual-Head Mode"
+msgstr "Dvigalvis režimas"
+
+msgid "GraphTFT"
+msgstr "GraphTFT"
+
+msgid "Xine"
+msgstr "Xine"
+
+msgid "Xine HD deinterlacer"
+msgstr "Xine HD deinterlacer"
+
+msgid "default"
+msgstr "numatytasis"
+
+msgid "Xine SD deinterlacer"
+msgstr "Xine SD deinterlacer"
+
+msgid "disabled (less than 2 displays found)"
+msgstr "išjungta (mažiau nei 2 ekranai rasti)"
+
+msgid "Rescan display. Displays may flicker."
+msgstr "Nuskanuoti ekraną dar kartą. Ekranai gali suvirpėti."
+
+msgid "Rescan display failed."
+msgstr "Nuskanuoti ekraną iš naujo nepavyko."
+
+msgid "Default frequency"
+msgstr "Numatytasis dažnis"
+
+msgid "rate"
+msgstr "dažnis"
+
+#: yavdrweb-ng/static/javascripts/component/settings/hw_remote.js
+
+msgid "Settings"
+msgstr "Nustatymai"
+
+msgid "Here you can configure your remote hardware. The default and most common choice is EventLircd."
+msgstr "Čia galite nustatyti distancinio valdymo įrangą. Numatytasis ir dažniausiai naudojamas pasirinkimas yra EventLircd."
+
+msgid "EventLircd"
+msgstr "EventLircd"
+
+msgid "LIRC"
+msgstr "LIRC"
+
+msgid "Driver"
+msgstr "Tvarkyklė (draiveris)"
+
+msgid "LIRC driver"
+msgstr "LIRC tvarkyklė (draiveris)"
+
+msgid "HW-Default"
+msgstr "Numatytas geležis"
+
+msgid "Lircd-Conf"
+msgstr "Lircd-Conf"
+
+msgid "Receiver"
+msgstr "Imtuvas"
+
+msgid "Serial port"
+msgstr "Serijinis portas"
+
+msgid "Activate LIRC"
+msgstr "Aktyvuoti LIRC"
+
+msgid "Activate EventLircd"
+msgstr "Aktyvuoti EventLircd"
+
+#: yavdrweb-ng/static/javascripts/component/settings/system_config_editor.js
+
+msgid "Choose a file:"
+msgstr "Pasirinkite bylą:"
+
+msgid "Save"
+msgstr "Išsaugoti"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Reload"
+msgstr "Perkrauti"
+
+msgid "Mark content"
+msgstr "Pažymėti turinį"
+
+msgid "Send to PasteBin"
+msgstr "Siųsti į PasteBin svetainę"
+
+msgid "Please wait..."
+msgstr "Lukterkit..."
+
+#: yavdrweb-ng/static/javascripts/component/settings/system_generic.js
+
+msgid "General system settings are made here."
+msgstr "Pagrindiniai sistemos nustatymai atliekami čia."
+
+msgid "Webfrontend language"
+msgstr "Valdymo skydelio kalba"
+
+msgid "Shutdown and wakeup"
+msgstr "Išjungti ir pakelti"
+
+msgid "Grub"
+msgstr "Grub"
+
+msgid "Choose timeout in seconds:"
+msgstr "Pasirinkite užlaikymą sekundėmis:"
+
+msgid "\"The maximum is 10.\""
+msgstr "\"Maksimalus laikas yra 10.\""
+
+msgid "\"The minimum is 0.\""
+msgstr "\"Minimalus 0.\""
+
+msgid "\"Language\""
+msgstr "\"Kalba\""
+
+msgid "Suspend to RAM"
+msgstr "Sustapdyti sitemos darbą budint laikinojoje atmintyje (RAm)"
+
+msgid "Switches the computer into energy saving mode. Only RAM will be supplied with Power."
+msgstr "Kompiuteris perjungiamas į energijos taupymo ręžimą. Energija bus tiekiama tiktai laikinajai atminčiai (RAM)."
+
+msgid "Fake suspend to disk"
+msgstr "Imituoti sistemos darbo pristapdymą"
+
+msgid "Alternative for Suspend to RAM. This can be used as a fallback for some problematic devices"
+msgstr "Alternatyva sitemos darbo budėjimui laikinojoje atmintyje. Šis metodas gali būti naudojamas kaip atsarginis variantas problematiškai veikiančiai geležiai"
+
+msgid "Shutdown"
+msgstr "Išjungti"
+
+msgid "This is the classical shutdown."
+msgstr "Tai klasikinis sistemos išjungimas."
+
+msgid "reboot PowerOff-kernel"
+msgstr "Perkrauti išjungiant linux branduolį"
+
+msgid "Some Hardware needs the PowerOff kernel in order to be able to shut down. Use this if you have this problem."
+msgstr "Kai kuriai geležiai išjungti reikia užgesinti linux branduolį. Naudokit šį metodą tadai kai turit panašių problemų."
+
+msgid "Without timer wakeup."
+msgstr "Nenaudojant laikmačio pakėlimo."
+
+msgid "ACPI timer wakeup. YaVDR default setting."
+msgstr "ACPI laikmačio pakėlimas. Numatytasis YaVDR nustatymas."
+
+msgid "You need a special nvram configuration to use it."
+msgstr "Jei norite naudotis juo, jums reiks soecialaus nvram nustatymo."
+
+msgid "Shutdown method"
+msgstr "Išjungimo metodas"
+
+msgid "Wakeup method"
+msgstr "Pakėlimo metodas"
+
+msgid "Disable USB-wakeup"
+msgstr "Išjungti galimybę pakelti naudojant USB"
+
+msgid "Deactivate USB-wakeup, for incompatible hardware"
+msgstr "Nesuderinamai įrangai, išjungti galimybę pakelti naudojant USB"
+
+#: yavdrweb-ng/static/javascripts/component/settings/system_network.js
+
+msgid "Network"
+msgstr "Tinklas"
+
+msgid "You can define Host and shares which should be mounted automatically. You need to key in the shares using \"host:/path/to/the/share\"."
+msgstr "Galite nustatyti šaltinį ir dalinamus katalogus kurie turėtų būti prikabinti automatiškai. Turite nurodyti šitokiu formatu \"host:/path/to/the/share\" dalinamų katalogų skiltyje."
+
+msgid "Add"
+msgstr "Pridėti"
+
+msgid "Delete"
+msgstr "Ištrint"
+
+msgid "The name is missing"
+msgstr "Neįvestas pavadinimas"
+
+#: yavdrweb-ng/static/javascripts/component/settings/system_packages.js
+
+msgid "load new information from internet"
+msgstr "krauti naują informaciją iš interneto"
+
+msgid "remove unneeded packages"
+msgstr "ištrinti nereikalingus paketus"
+
+msgid "clears out the local repository of retrieved package file"
+msgstr "trina vietinę gauto paketo bylos saugyklą"
+
+msgid "Install"
+msgstr "Įdiegti"
+
+msgid "Remove"
+msgstr "Pašalinti"
+
+msgid "Activate"
+msgstr "Aktyvuoti"
+
+msgid "Deactivate"
+msgstr "Išjungti"
+
+msgid "Package"
+msgstr "Paketas"
+
+msgid "Maintainer"
+msgstr "Palaikytojas"
+
+msgid "Description"
+msgstr "Aprašymas"
+
+msgid "Please select a package to see additional details."
+msgstr "Pasirinkite paketą jei norite pamatyti daugiau informacijos."
+
+msgid "Version"
+msgstr "Versija"
+
+#: yavdrweb-ng/static/javascripts/component/settings/vdr_channels.js
+
+msgid "Name of the group"
+msgstr "Grupęs pavadinimas"
+
+msgid "Name"
+msgstr "Pavadinimas"
+
+msgid "Next channel no."
+msgstr "Sekantis kanalo numeris"
+
+msgid "\"ChannelsReader.read: Channels not available\""
+msgstr "\"ChannelsReader.read: Tokio kanalo nėra\""
+
+msgid "Channels saved"
+msgstr "Kanalai išsaugoti"
+
+msgid "generated channels.conf"
+msgstr "sugeneruotas channels.conf"
+
+msgid "Channels"
+msgstr "Kanalai"
+
+msgid "Clipboard"
+msgstr "Iškarpinė (clipboard)"
+
+msgid "Move into channels.conf"
+msgstr "Pereiti į channels.conf"
+
+msgid "Add new group"
+msgstr "Pridėti naują grupę"
+
+msgid "Please enter the group name:"
+msgstr "Įveskite grupės pavadinimą:"
+
+msgid "Display channels.conf"
+msgstr "Rodyti channels.conf"
+
+msgid "\"Channel\""
+msgstr "\"Kanalas\""
+
+msgid "\"Name\""
+msgstr "\"Pavadinimas\""
+
+msgid "\"Provider\""
+msgstr "\"Tiekėjas\""
+
+msgid "\"loading channels\""
+msgstr "\"kraunami kanalai\""
+
+msgid "Move into clipboard"
+msgstr "Pereiti į iškirptinę"
+
+msgid "On top"
+msgstr "Viršuje"
+
+msgid "At bottom"
+msgstr "Apačioje"
+
+msgid "Insert clipboard"
+msgstr "Įterpti iškirptinę"
+
+msgid "Above %s"
+msgstr "Viršum %s"
+
+msgid "Below %s"
+msgstr "Žemiau %s"
+
+msgid "Delete \"%s\""
+msgstr "Trinti \"%s\""
+
+msgid "Delete selection"
+msgstr "Trinti pasirinktus"
+
+#: yavdrweb-ng/static/javascripts/component/settings/vdr_generic.js
+
+msgid "Here you can make general setting for and around VDR."
+msgstr "Čia galite nustatyti pagrindinius VDR ir susijusius nustatymus."
+
+msgid "General"
+msgstr "Pagrindinis"
+
+msgid "Lifeguard monitoring items"
+msgstr "Saugoti stebėjimo elementus"
+
+msgid "EPG"
+msgstr "EPG"
+
+msgid "Lifeguard"
+msgstr "Apsauga"
+
+msgid "VDR-Lifeguard will check the choosen items before allowing the shutdown. Please choose the items which should not be interrupted by a shutdown. Not checked means it will not block the shutdown."
+msgstr "VDR-Apsauga patikrins pasirinktus elementus prieš leidžiant sistemos išjungimą. Pasirinkite elementus kurie neturėtų būti pertraukiami išjungimo fazės. Nepažymėjimas reiškia kad tai neblokuos išjungimo."
+
+msgid "This choice is using the xineliboutput plugin with frontend vdr-sxfe."
+msgstr "Xineliboutput įskiepas su vdr-sxfe išvesties sąsaja."
+
+msgid "This is an alternative frontend. It is using the xine plugin using Xine for decoding."
+msgstr "Tai alternatyvi išvesties sąsaja. Kuri naudoja xine įskiepą kreipaintis į Xine dekodavimui."
+
+msgid "If you want to use VDR as backend for XBMC and watch TV only in XBMC this is your choice."
+msgstr "Jei norite naudoti VDR kaip valdiklį XBMC ir žiūrėti TV tik su XBMC - tai jūsų pasirinkimas."
+
+msgid "You can choose this if you don't want to have any video output. This is if you want to use yavdr as server, or disable any decoding on video cards."
+msgstr "Galite pasirinkti šį punktą jei iš viso nenorite turėti video išėjimo. Šis punktas įjungiamas tada kai yavdr naudojamas kaip serveris arba visai išjungiamas dekodavimas ant video išvesties."
+
+msgid "If you want to use VDR with a TT-premium S2-6400 HD."
+msgstr "Jei norite naudoti VDR su TT-premium S2-6400 HD."
+
+msgid "Video Output"
+msgstr "Video išvestis"
+
+msgid "Override incorrect not DVB compliant EPG Encoding, as send by Sky"
+msgstr "Perrašyti neteisingus su DVB standartu nesuderinamus EPG kodavimus, kaip daroma Sky tiekėjo atveju"
+
+msgid "Charset override"
+msgstr "Kodavimo perrašymas"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose.js
+
+msgid "Diagnostics"
+msgstr "Diagnostika"
+
+msgid "Refresh"
+msgstr "Atnaujinimas"
+
+msgid "Go to the end"
+msgstr "Eiti į pabaigą"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_alsa.js
+
+msgid "ALSA status information"
+msgstr "Informacija apie ALSA būseną"
+
+msgid "ALSA device list"
+msgstr "ALSA įrenginių sąrašas"
+
+msgid "ALSA custom sound configuration"
+msgstr "Asmeniniai ALSA garso nustatymai"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_dpkg.js
+
+msgid "Package information"
+msgstr "Paketo informacija"
+
+msgid "Installed packages (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
+msgstr "Įdiegti paketai (VDR, VDR-Plugins, VDR-Addons, XBMC, yavdr)"
+
+msgid "Apt history of recently installed packages"
+msgstr "Idiegtų paketų Apt istorija"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_lirc.js
+
+msgid "LIRC hardware configuration"
+msgstr "LIRC geležies nustatymai"
+
+msgid "LIRCD configuration"
+msgstr "LIRCD nustatymai"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_system_information.js
+
+msgid "System information"
+msgstr "Sistemos informacija"
+
+msgid "System load"
+msgstr "Sistemos apkrova"
+
+msgid "Network status"
+msgstr "Tinklo būklė"
+
+msgid "Filesystem usage"
+msgstr "Failų sistemos užimtumas"
+
+msgid "Kernel log"
+msgstr "Branduolio ataskaitos (log)"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_system_logs.js
+
+msgid "Webserver logfile"
+msgstr "Web serverio ataskaitos"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_vdr.js
+
+msgid "VDR basic configuration"
+msgstr "Įprastiniai VDR nustatymai"
+
+msgid "VDR setup.conf"
+msgstr "VDR setup.conf"
+
+msgid "VDR remote.conf"
+msgstr "VDR remote.conf"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_x11.js
+
+msgid "Xorg server log"
+msgstr "Xorg server log"
+
+msgid "X-Server configuration (only if NVIDIA VDPAU present)"
+msgstr "X-Server nustatymai (tik tuo atveju jei įranga turi NVIDIA VDPAU spartinimą)"
+
+msgid "X-Server logfile"
+msgstr "X-Server ataskaitos"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_xbmc.js
+
+msgid "XBMC crash log"
+msgstr "XBMC lūžimo ataskaitos"
+
+#: yavdrweb-ng/static/javascripts/component/system/diagnose_yavdr.js
+
+msgid "yaVDR database"
+msgstr "yaVDR duomenų bazė"
+
+msgid "yaVDR DB"
+msgstr "yaVDR DB"
+
+#: yavdrweb-ng/static/javascripts/component/dashboard.js
+
+msgid "VDR"
+msgstr "VDR"
+
+msgid "Recordings"
+msgstr "Įrašai"
+
+msgid "Duration"
+msgstr "Trukmė"
+
+msgid "Timers"
+msgstr "Laikmačiai"
+
+msgid "Start"
+msgstr "Pradžia"
+
+#: yavdrweb-ng/static/javascripts/component/programm.js
+
+msgid "Schedule"
+msgstr "Programa"
+#: yavdrweb-ng/static/javascripts/component/recordings.js
+#: yavdrweb-ng/static/javascripts/component/settings.js
+
+msgid "Here you can configure your VDR and applications around it."
+msgstr "Čia galite nustatyti VDR ir susijusias programas."
+
+msgid "Hardware"
+msgstr "Geležis"
+
+msgid "Remote control"
+msgstr "Distancinio valdymo pultas"
+
+msgid "Audi"
+msgstr "Audi"
+
+msgid "Edit configurations"
+msgstr "Koreguoti nustatymus"
+
+msgid "Packages"
+msgstr "Paketai"
+
+#: yavdrweb-ng/static/javascripts/component/system.js
+
+msgid "Here you can monitor your system. You can look into log files and send them to pastebin to let others review them."
+msgstr "Čia galite stebėti savo sistemos darbą. Galite peržiūrėti ataskaitų bylas (log files) ir persiųsti jas į pastebin kad kiti galėtų jas įvertinti."
+
+msgid "\"Execute command...\""
+msgstr "\"Vykdyti komandą...\""
+
+msgid "The command has been executed successfully"
+msgstr "Komanda įvykdyta sėkmingai"
+
+msgid "The command could not complete successfully"
+msgstr "Komanda negali būti pabaigta iki galo"
+
+msgid "Switch temporarily to second screen"
+msgstr "Laikinai persijungia į antrą ekraną"
+
+msgid "Reboot computer"
+msgstr "Perkrauti kompiuterį"
+
+msgid "Kill XBMC"
+msgstr "Kill XBMC"
+
+msgid "Sound (ALSA)"
+msgstr "Garsas (ALSA)"
+
+msgid "System log files"
+msgstr "Sistemos ataskaitos"
+
+msgid "Xorg server"
+msgstr "Xorg serveris"
+
+msgid "LIRC configuration"
+msgstr "LIRC nustatymai"
+
+msgid "VDR configuration"
+msgstr "VDR nustatymai"
+
+#: yavdrweb-ng/static/javascripts/base.js
+
+msgid "Dashboard"
+msgstr "Sąrankų skydelis"
+
+msgid "Program"
+msgstr "Programa"
+
+msgid "Saving"
+msgstr "Saugo"
+
+msgid "Cancel"
+msgstr "Atmesti"
+
+msgid "Error while saving data."
+msgstr "Klaida saugant duomenis."
+
+msgid "Data stored successfully."
+msgstr "Duomenys išsaugoti sėkmingai."
+
+#: yavdrweb-ng/static/javascripts/component.js
+
+msgid "Introduction"
+msgstr "Įvadas"
+
+#: yavdrweb-ng/static/javascripts/dpkg.js
+
+msgid "Close"
+msgstr "Uždaryti"
+
+msgid "Install package?"
+msgstr "Įdiegti paketą?"
+
+msgid "Would you like to install package \"%s\"?"
+msgstr "Ar norėtumėte įdiegti \"%s\" paketą?"
+
+msgid "Would you like to remove package \"%s\"?"
+msgstr "Ar norėtumėte ištrinti \"%s\" paketą?"
+
+msgid "Would you like to enable \"%s\"?"
+msgstr "Ar norėtumėte įjungti \"%s\" paketą?"
+
+msgid "fatal error: disable plugin failed"
+msgstr "kritinė klaida: nepavyko išjungti įskiepo"
+
+msgid "Disable plugin?"
+msgstr "Išjungti įskiepą?"
+
+msgid "Would you like to disable \"%s\"?"
+msgstr "Ar norėtumėte išjungti \"%s\"?"
+
+#: yavdrweb-ng/static/javascripts/pastebin.js
+
+msgid "Title (optional)"
+msgstr "Pavadinimas (nebūtinas)"
+
+msgid "Email (optional)"
+msgstr "El. paštas (nebūtinas)"
+
+msgid "Content"
+msgstr "Turinys"
+
+msgid "Send"
+msgstr "Siųsti"
+
+#: hw_sundtek.js
+
+msgid "You can configure your sundtek DVB hardware here."
+msgstr "Čia galite nustatyti savo sundtek DVB geležį."
+
+msgid "Sundtek"
+msgstr "Sundtek"
+
+msgid "unchanged"
+msgstr "nepakeista"
+
+msgid "DVB-T"
+msgstr "DVB-T"
+
+msgid "DVB-C"
+msgstr "DVB-C"
+
+msgid "Rescan Sundtek"
+msgstr "Nuskanuoti iš naujo Sundtek"
+
+msgid "DVB-Mode"
+msgstr "DVB ręžimas"
+
+msgid "mount device"
+msgstr "prikabinti įrenginius"
+
+msgid "mounted"
+msgstr "prikabinta"
+
+msgid "remove this configuration"
+msgstr "pašalinti šiuos nustatymus"
+
+msgid "Do you realy want to remove this configration:"
+msgstr "Ar tikrai norite pašalinti šią konfigūraciją:"
+
+msgid " (local)"
+msgstr " (vietinis)"
+
+msgid "Network-Support"
+msgstr "Tinklo-Palaikymas"
+
+msgid "allows devices to be mounted remotely"
+msgstr "leidžia įrenginius prikabinti nuotoliniu būdu"
+
+msgid "Rescan for sundtek devices."
+msgstr "Nuskanuoti sundtek įrenginius dar kartą."
+
+msgid "Do not change frontend settings"
+msgstr "Nekeisti įvesties sąsajos nustatymų"
+
+msgid "Language"
+msgstr "Kalba"
+
+msgid "yes"
+msgstr "taip"
+
+msgid "no"
+msgstr "ne"
+
+msgid "Set XBMC defaults"
+msgstr "Atstatyti XBMC pradinius nustatymus"
+
+msgid "enabled"
+msgstr "įjungta"
+
+msgid "Edit"
+msgstr "Koreguoti"
+
+#: end web front end
+
+
+

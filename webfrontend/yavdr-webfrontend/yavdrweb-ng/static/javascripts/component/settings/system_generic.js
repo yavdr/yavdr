@@ -91,9 +91,12 @@ YaVDR.Component.Settings.SystemGeneric.Language = Ext.extend(YaVDR.Default.Form,
          {
           key: 'fr',
           title: 'French'
+        },
+         {
+          key: 'lt',
+          title: 'Lithuanian'
         }
       ]
-
     });
 
     this.languageTpl = new Ext.XTemplate(
