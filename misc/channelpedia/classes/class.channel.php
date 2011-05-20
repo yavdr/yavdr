@@ -77,17 +77,17 @@ class channel{
                 }
             }
             $this->params = $channelparams;
+            $this->source = $this->params["source"];
             $this->channelstring = $this->convertArray2String();
         }
         elseif (is_string( $channelparams )){
             //$this->channelstring = $channelparams;
             $this->params = $this->convertString2Array( $channelparams );
+            $this->source = $this->params["source"];
             $this->channelstring = $this->convertArray2String();
         }
         else
             throw new Exception("Channelparams are neither of type array nor of type string!");
-
-        $this->source = $this->params["source"];
 
         $this->sourceLessId = $this->params["nid"]."-". $this->params["tid"]."-". $this->params["sid"];
         $this->uniqueID = $this->getShortenedSource()."-". $this->sourceLessId;
