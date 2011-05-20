@@ -1,3 +1,5 @@
 libvdr-shutdown.so.*    usr/lib/vdr/plugins/
 #debian/tmp/usr/share/locale
 script.shutdownvdr	usr/share/xbmc/addons/
+xbmc-vdr-shutdown	usr/lib/vdr
+xbmc-vdr-shutdown.wrapper usr/lib/vdr

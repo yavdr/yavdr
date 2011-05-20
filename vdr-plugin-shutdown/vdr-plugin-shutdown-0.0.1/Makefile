@@ -53,7 +53,7 @@ OBJS = $(PLUGIN).o main.o
 
 ### The main target:
 
-all: libvdr-$(PLUGIN).so
+all: libvdr-$(PLUGIN).so xbmc-vdr-shutdown.wrapper
 
 ### Implicit rules:
 
@@ -75,6 +75,9 @@ libvdr-$(PLUGIN).so: $(OBJS)
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) -o $@
 	@cp --remove-destination $@ $(LIBDIR)/$@.$(APIVERSION)
 
+xbmc-vdr-shutdown.wrapper: xbmc-vdr-shutdown-wrapper.c
+	$(CC) -o $@ $< 
+
 dist: clean
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)
 	@mkdir $(TMPDIR)/$(ARCHIVE)
@@ -85,3 +88,4 @@ dist: clean
 
 clean:
 	@-rm -f $(OBJS) $(DEPFILE) *.so *.tgz core* *~
+	@rm xbmc-vdr-shutdown.wrapper
