@@ -2,7 +2,7 @@
 start on (filesystem and \
           started dbus and \
           (start-xorg or stopped udevtrigger))
-stop on runlevel [016]
+stop on runlevel [!2345]
 
 respawn
 env DISPLAY=:1
