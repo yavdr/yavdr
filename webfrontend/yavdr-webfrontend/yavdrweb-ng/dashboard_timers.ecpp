@@ -129,13 +129,13 @@ static int writer(char *data, size_t size, size_t nmemb,
 		    	int i = 0;
 				for( Json::ValueIterator itr = timers.begin() ; itr != timers.end() ; itr++, i++ ) {
 					json["data"][i]["id"] = i;
-					json["data"][i]["name"] = (*itr)["FileName"];
-					json["data"][i]["channel"] = (*itr)["ChannelName"];
+					json["data"][i]["name"] = (*itr)["filename"];
+					json["data"][i]["channel"] = (*itr)["channelname"];
 					json["data"][i]["first_date"] = "";
 					json["data"][i]["is_active"] = false;
 							
-					json["data"][i]["start"] = (*itr)["Start"];
-					json["data"][i]["stop"] = (*itr)["Stop"];
+					json["data"][i]["start"] = (*itr)["start"];
+					json["data"][i]["stop"] = (*itr)["stop"];
 				}
 		    }
 		} else {
