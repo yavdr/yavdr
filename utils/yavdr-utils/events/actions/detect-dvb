@@ -73,6 +73,8 @@ elif check_pci "9022:d482" || check_pci "9022:d481"; then
   SOURCE="SAT"
   DRIVER="s2-liplianin-dkms"
 
+elif check_usb "1c73:861f"; then
+  DRIVER="v4l-dvb-dkms"
 
 # DVBWorld DVB-S2 PCIE2006
 elif check_pci "1ADE:2032"; then
