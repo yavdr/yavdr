@@ -3,9 +3,9 @@ This is a "plugin" for the Video Disk Recorder (VDR).
 Written by:                  Gerald Dachs <gda@dachsweb.de>
                              Based on Klaus Schmidingers svdrpdemo plugin
 
-Project's homepage:          http://www.yavdr.de
+Project's homepage:          https://svn.origo.ethz.ch/yavdr/trunk/vdr-plugin-shutdown/
 
-Latest version available at: http://www.yavdr.de
+Latest version available at: https://svn.origo.ethz.ch/yavdr/trunk/vdr-plugin-shutdown/
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

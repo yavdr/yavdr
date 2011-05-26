@@ -88,4 +88,4 @@ dist: clean
 
 clean:
 	@-rm -f $(OBJS) $(DEPFILE) *.so *.tgz core* *~
-	@rm xbmc-vdr-shutdown.wrapper
+	@rm -f xbmc-vdr-shutdown.wrapper
