@@ -93,7 +93,7 @@ elif [ "$(dbget vdr.backend)" = "hdff" ] || [ "$(dbget vdr.backend)" = "sdff" ];
   enable_plugin "extrecmenu"
   enable_plugin "suspendoutput"
   disable_plugin "control"
-  disable_plugin "*dynamite"
+  enable_plugin "*dynamite"
 
 
 fi
