@@ -25,7 +25,7 @@ case $1 in
      thaw|resume)
          echo "vdr is going to wakeup"
          initctl emit resume
-         for INTERFACE in `ifquery --list | grep -v lo`; do restart network-interface INTERFACE=$INTERFACE ; done
+#         for INTERFACE in `ifquery --list | grep -v lo`; do restart network-interface INTERFACE=$INTERFACE ; done
          ;;
      *)  echo "Not a possible option."
          ;;
