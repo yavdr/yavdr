@@ -1,8 +1,0 @@
-[Plymouth Theme]
-Name=yavdr-Script
-Description=yavdr-Script plugin. not much here atm
-ModuleName=script
-
-[script]
-ImageDir=/lib/plymouth/themes/yavdr-script
-ScriptFile=/lib/plymouth/themes/yavdr-script/yavdr-script.script
