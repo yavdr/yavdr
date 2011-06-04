@@ -9,5 +9,7 @@
 #
 # raid1
 # sd_mod
-uvesafb mode_option=640x480-24 mtrr=3 scroll=ywrap
-
+# uvesafb seems not to work for yaVDR according to fnu
+#uvesafb mode_option=640x480-24 mtrr=3 scroll=ywrap
+fbcon
+vesafb

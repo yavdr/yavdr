@@ -1,1 +1,2 @@
-FRAMEBUFFER=y
+# not needed for vesafb
+#FRAMEBUFFER=y
