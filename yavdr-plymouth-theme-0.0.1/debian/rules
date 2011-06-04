@@ -1,0 +1,7 @@
+#!/usr/bin/make -f
+%:
+	dh $@
+
+# Don't generate shlibs for plugins (ideally these wouldn't have a SONAME)
+override_dh_makeshlibs:
+	dh_makeshlibs -X/lib/plymouth/

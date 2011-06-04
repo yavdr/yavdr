@@ -1,0 +1,19 @@
+Package: yavdr-plymouth-theme
+Version: 0.0.1-1yavdr1~natty
+Architecture: i386
+Maintainer: Gerald Dachs <gda@dachsweb.de>
+Installed-Size: 88
+Depends: plymouth, plymouth-label
+Replaces: plymouth (<< 0.8.1-1~)
+Provides: plymouth-theme
+Section: x11
+Priority: optional
+Description: graphical boot animation and logger - yavdr script theme
+ Plymouth is an application that runs very early in the boot process
+ (even before the root filesystem is mounted!) that provides a graphical
+ boot animation while the boot process happens in the background.
+ .
+ This package contains the yavdr script theme.
+ .
+ These theme may not correctly display messages from filesystem
+ decryption, checking or error handling.
