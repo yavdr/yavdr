@@ -26,6 +26,7 @@ case $1 in
          echo "vdr is going to wakeup"
          initctl emit resume
 #         for INTERFACE in `ifquery --list | grep -v lo`; do restart network-interface INTERFACE=$INTERFACE ; done
+         dhclient &
          ;;
      *)  echo "Not a possible option."
          ;;
