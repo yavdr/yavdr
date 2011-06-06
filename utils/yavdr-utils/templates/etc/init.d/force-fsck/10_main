@@ -13,8 +13,7 @@ for dev in $(grep -e "^[:blank:]*[^#].*[12][:blank:]*$" /etc/fstab |\
 	MaxMountCount=`tune2fs -l $dev | grep "Maximum mount count" | cut -c 27-`
 	log_action_msg "Mount count = $MountCount. Maximum mount count = $MaxMountCount."
 	let MountCountZahl=$MountCount+1
-	if [ $MountCountZahl -ge $MaxMountCount ]; then
-		/sbin/start white
+	if [ $MountCountZahl -ge $MaxMountCount ] && [ -z "$(echo $MaxMountCount|grep '-')" ]; then
 		RunFsck="true"
 		log_action_msg "Running fsck is needed!"
 		if [ $RunFsck == "true" ]; 	then
