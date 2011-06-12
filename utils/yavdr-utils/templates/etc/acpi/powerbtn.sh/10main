@@ -15,7 +15,7 @@ fi
 
 if [ "0$(cat /tmp/powerbtn 2>/dev/null)" -lt "0$(($(date +%s)-1))" ]; then
   date +%s > /tmp/powerbtn
-  svdrpsend hitk power
+  /usr/bin/vdr-dbus-send /Remote remote.HitKey string:'Power'
   exit
 fi
 

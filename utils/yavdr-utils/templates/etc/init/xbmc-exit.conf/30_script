@@ -6,7 +6,7 @@ case $EXIT_STATUS in
 	<?cs if:(vdr.backend == "disabled") ?>
         poweroff
         <?cs else ?>
-        svdrpsend HITK Power || /bin/true
+        vdr-dbus-send /Remote remote.HitKey string:'Power' || /bin/true
 	<?cs /if ?>
         ;;
     *)
