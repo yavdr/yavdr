@@ -12,9 +12,9 @@ case $1 in
                 if [ "$(find $DIR -name *.rec)" != "" ]; then
                     vdr-dbus-send /Recording recording.Update
                     chown vdr:vdr $VIDEO_DIR/.update
-                    /usr/bin/svdrpsend -p $SVDRP_PORT MESG "$NAME mounted (with recordings)"
+                    vdr-dbus-send /Skin skin.QueueMessage string:''$NAME' mounted (with recordings)'
                 else
-                    /usr/bin/svdrpsend -p $SVDRP_PORT MESG "$NAME mounted"
+                    vdr-dbus-send /Skin skin.QueueMessage string:''$NAME' mounted'
                 fi
                 /usr/bin/logger -t "vdr-mounter" "ADD: $*"
                 ;;
@@ -23,7 +23,7 @@ case $1 in
                   rm "$VIDEO_DIR/$NAME"
                   touch $VIDEO_DIR/.update
                   chown vdr:vdr $VIDEO_DIR/.update
-                  /usr/bin/svdrpsend -p $SVDRP_PORT MESG "$NAME unmounted"
+                  vdr-dbus-send /Skin skin.QueueMessage string:''$NAME' unmounted'
                 fi
                 /usr/bin/logger -t "vdr-mounter" "REMOVE: $*"
                 ;;
