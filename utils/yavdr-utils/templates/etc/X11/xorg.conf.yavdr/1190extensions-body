@@ -1,4 +1,4 @@
-    Option         "Composite" <?cs if:(!?vdr.frontend || vdr.frontend == "sxfe" ) ?>"on"<?cs else ?>"Disable"<?cs /if ?>
+    Option         "Composite" <?cs if:(!?vdr.frontend || vdr.frontend == "sxfe" ) && (!?vdr.frontend.sxfe.nohud || vdr.frontend.sxfe.nohud == "0" ) ?>"on"<?cs else ?>"Disable"<?cs /if ?>
 
 
 
