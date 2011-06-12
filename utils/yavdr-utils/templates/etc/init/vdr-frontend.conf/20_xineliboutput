@@ -16,7 +16,7 @@ fi
 <?cs /if ?>
 
 
-<?cs if:(!?vdr.frontend.sxfe.nohud || vdr.frontend.sxfe.nohud == "0" ) ?>HUDOPTS="--opengl --hud=opengl"<?cs else ?>HUDOPTS=""<?cs /if ?>
+<?cs if:system.x11.hud == "1" ?>HUDOPTS="--opengl --hud=opengl"<?cs else ?>HUDOPTS=""<?cs /if ?>
 XINELIBOUTPUTOPTS="--post tvtime:method=use_vo_driver --reconnect --audio=alsa --syslog --silent --tcp"
 CONFIG="--config /etc/vdr-sxfe/config_xineliboutput"
 
