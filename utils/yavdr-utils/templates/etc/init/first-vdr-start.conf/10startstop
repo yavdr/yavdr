@@ -1,1 +1,6 @@
+<?cs if:(vdr.frontend == "" || vdr.frontend == "sxfe" || vdr.frontend == "xine" || vdr.frontend == "xbmc") ?>
+start on (starting vdr and stopped openbox-tools)
+<?cs else ?>
 start on (starting vdr)
+<?cs /if ?>
+
