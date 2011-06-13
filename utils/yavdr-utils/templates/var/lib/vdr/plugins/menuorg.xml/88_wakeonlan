@@ -1,0 +1,4 @@
+         <menu name=<?cs call:quote(_("Remote wakeup")) ?>><?cs each:item = system.net.wol.addresses ?>
+         <command name=<?cs call:quote(item.name) ?> execute="sudo /usr/bin/wakeonlan <?cs call:quote(item.address) ?> &amp;> /dev/null" /><?cs /each ?>
+         </menu>
+
