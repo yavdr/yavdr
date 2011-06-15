@@ -1,4 +1,5 @@
 #!/bin/bash
 
+[ -e /etc/default/locale ] && . /etc/default/locale
 /usr/sbin/create-initial-database
 /usr/bin/signal-event post-install
