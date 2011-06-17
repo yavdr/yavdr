@@ -58,6 +58,15 @@ elif check_pci "d470:9022"; then
   DRIVER="s2-liplianin-dkms"
 fi
 
+# PVR350
+elif check_pci2 "4444:0803" ; then
+  dbset vdr.setup="custom"
+  dbset vdr.frontend="disabled"
+  dbset vdr.backend="pvr350"
+  /usr/bin/signal-event change-frontend
+fi
+
+
 ############################################################################################################
 # erkenne nun nach priorität treiber vorraussetzungen
 ############################################################################################################
