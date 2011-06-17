@@ -5,7 +5,7 @@
 # proper transition procedure and rc2 ending and quitting plymouth resulting
 # in it doing a VT switch.
 
-start on (starting vdr-frontend
+start on (starting openbox
           or starting oem-config
           or stopped rc RUNLEVEL=[2345]
           or starting rcS
