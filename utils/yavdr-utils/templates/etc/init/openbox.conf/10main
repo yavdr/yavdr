@@ -19,7 +19,7 @@ if [ -e /etc/default/locale ]; then
 . /etc/default/locale
 fi
 
-exec xinit /usr/bin/openbox --config-file /etc/openbox/rc.xml --startup "/sbin/initctl emit --no-wait openbox-started" -- :1 vt7
+exec xinit /usr/bin/openbox --config-file /etc/openbox/rc.xml --startup "/sbin/initctl emit --no-wait openbox-started" -- :1 vt9
 end script
 
 <?cs /if ?>
