@@ -19,13 +19,6 @@ else
   rm -f /etc/serial.conf
 fi 
 
-if [ "x$LIRCD" = "xirserver" ]; then
-  process-template --mode 755 /etc/pm/sleep.d/30irserver
-  process-template --owner=vdr --group=vdr /var/lib/vdr/remote.conf
-else
-  rm -f /etc/pm/sleep.d/30irserver
-fi
-
 #For Imon-Antec-Veris
 if [ "$(dbget system.lirchw.lircd_conf)" = "imon/lircd.conf.imon-antec-veris" ]; then
     process-template --owner=vdr --group=vdr /var/lib/vdr/remote.conf
