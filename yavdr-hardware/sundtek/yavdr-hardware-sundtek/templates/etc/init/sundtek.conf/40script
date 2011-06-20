@@ -1,9 +1,5 @@
 pre-start script
-    while [ "$(/opt/bin/mediaclient -e|grep -c '^device ')" = "0" ]; do
-        /opt/bin/mediaclient --shutdown||:
-        /opt/bin/mediaclient --start
-        sleep 5
-    done
+    /opt/bin/mediaclient --start
 end script
 
 post-stop script
