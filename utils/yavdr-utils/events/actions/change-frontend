@@ -123,7 +123,7 @@ fi
 fi
 
 if [ ! "$(dbget vdr.backend)" = "pvr350" ]; then
- sed -i /^ivtv/d /etc/modules
+ sed -i /"^ivtv"/d /etc/modules
 fi
 
 # graphtft support
