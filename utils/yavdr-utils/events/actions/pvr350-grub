@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ "$(dbget vdr.backend)" = "pvr350" ]; then
+   process-template /etc/default/grub
+   update-grub
+fi
