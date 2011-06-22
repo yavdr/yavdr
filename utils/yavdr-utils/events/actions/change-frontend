@@ -119,6 +119,7 @@ fi
   enable_plugin "menuorg"
   enable_plugin "yaepghd"
   enable_plugin "extrecmenu"
+  enable_plugin "pvr350"
 
 fi
 
