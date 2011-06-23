@@ -1,3 +1,11 @@
 #!/bin/bash
 
 process-template --owner=vdr --group=vdr /var/lib/vdr/setup.conf
+
+if [ "$(dbget vdr.backend)" = "pvr350" ] || \
+   [ "$(dbget vdr.backend)" = "sdff" ] ;then
+sed -i 's/^.*OSDSkin.*$/OSDSkin = sttng/' /var/lib/vdr/setup.conf
+sed -i 's/^.*OSDAspect.*$/OSDAspect = 1.066667/' /var/lib/vdr/setup.conf
+sed -i 's/^.*OSDHeight.*$/OSDHeight = 518/' /var/lib/vdr/setup.conf
+sed -i 's/^.*OSDWidth.*$/OSDWidth = 648/' /var/lib/vdr/setup.conf
+fi
