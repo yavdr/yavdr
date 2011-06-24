@@ -112,7 +112,7 @@ fi
   disable_plugin "xine"
   disable_plugin "xineliboutput"
   disable_plugin "control"
-  disable_plugin "iptv"
+  enable_plugin "iptv"
   enable_plugin "\*dynamite"
   enable_plugin "lcdproc"
   enable_plugin "imonlcd"
