@@ -8,4 +8,6 @@ sed -i 's/^.*OSDSkin.*$/OSDSkin = sttng/' /var/lib/vdr/setup.conf
 sed -i 's/^.*OSDAspect.*$/OSDAspect = 1.066667/' /var/lib/vdr/setup.conf
 sed -i 's/^.*OSDHeight.*$/OSDHeight = 518/' /var/lib/vdr/setup.conf
 sed -i 's/^.*OSDWidth.*$/OSDWidth = 648/' /var/lib/vdr/setup.conf
+sed -i 's/^.*OSDLeft.*$/OSDLeft = 58/' /var/lib/vdr/setup.conf
+sed -i 's/^.*OSDTop.*$/OSDTop = 29/' /var/lib/vdr/setup.conf
 fi
