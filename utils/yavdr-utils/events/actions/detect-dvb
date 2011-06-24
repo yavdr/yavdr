@@ -59,7 +59,7 @@ elif check_pci "d470:9022"; then
 fi
 
 # PVR350
-elif check_pci "0070:4000" ; then
+if check_pci "0070:4000" ; then
   dbset vdr.setup="custom"
   dbset vdr.frontend="disabled"
   dbset vdr.backend="pvr350"
