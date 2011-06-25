@@ -112,3 +112,4 @@ fi
 
 # todo set channels
 #echo $SOURCE
+process-template /etc/init/first-vdr-start.conf
