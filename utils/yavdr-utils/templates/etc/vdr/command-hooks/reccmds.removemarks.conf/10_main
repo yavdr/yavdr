@@ -1,2 +1,1 @@
-<?cs call:quote(_("Remove marks")) ?>				   : /usr/bin/removemarks
-
+<?cs var:_("Remove marks") ?>                              : /usr/bin/removemarks
