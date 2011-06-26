@@ -1,0 +1,7 @@
+
+MARKSFILE=$1/marks
+
+if [ -e $MARKSFILE ] ; then
+    rm $MARKSFILE
+fi
+
