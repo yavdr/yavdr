@@ -1,0 +1,2 @@
+/srv/picture      *(rw,fsid=0,sync,no_subtree_check,all_squash,anongid=<?cs var:system.vdr.gid ?>,anonuid=<?cs var:system.vdr.uid ?>)
+

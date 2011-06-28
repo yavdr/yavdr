@@ -1,0 +1,1 @@
+/srv/video      *(rw,fsid=2,sync,no_subtree_check,all_squash,anongid=<?cs var:system.vdr.gid ?>,anonuid=<?cs var:system.vdr.uid ?>)
