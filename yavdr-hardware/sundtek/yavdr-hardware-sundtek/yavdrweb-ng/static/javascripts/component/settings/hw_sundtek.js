@@ -128,6 +128,7 @@ YaVDR.Component.Settings.HwSundtek.Hardware = Ext.extend(YaVDR.Default.Form, {
             listeners: {
               afterrender: function(list) {
                 var rec = this.store.getById(value);
+                if (typeof rec == 'undefined') rec = 'none';
                 list.select(rec);
               }
             }
