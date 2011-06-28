@@ -1,3 +1,2 @@
 vdr ALL=NOPASSWD: /sbin/reboot
 vdr ALL=NOPASSWD: /sbin/initctl *
-vdr ALL=NOPASSWD: /usr/bin/wakeonlan *
