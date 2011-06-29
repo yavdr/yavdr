@@ -6,6 +6,7 @@ case "$1" in
         chown -R vdr:vdr /srv/share/vdr
 	chmod +x /usr/bin/vdr-mounter
         chmod 0440 /etc/sudoers.d/yavdr
+        start mhddfs-vdr
         ;;
 esac
 

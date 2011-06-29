@@ -11,5 +11,6 @@ if [ install = "$1" -o upgrade = "$1" ]; then
    dpkg-divert --package yavdr-base --add --rename \
       --divert /usr/share/libxine1-xvdr/nosignal.mpg.dontremove /usr/share/libxine1-xvdr/nosignal.mpg
 
+   stop mhddfs-vdr
 fi
 
