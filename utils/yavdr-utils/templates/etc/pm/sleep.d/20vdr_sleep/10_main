@@ -25,8 +25,7 @@ case $1 in
      thaw|resume)
          echo "vdr is going to wakeup"
          initctl emit resume
-#         for INTERFACE in `ifquery --list | grep -v lo`; do restart network-interface INTERFACE=$INTERFACE ; done
-         dhclient &
+         for INTERFACE in `ifquery --list | grep -v lo`; do grep -q "${INTERFACE}.*dhcp" /etc/network/interfaces && echo $INTERFACE ; done
          ;;
      *)  echo "Not a possible option."
          ;;
