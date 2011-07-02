@@ -2,6 +2,6 @@
 
 USER=$(getent passwd 1000|cut -d ":" -f1)
 process-template --data "user=$USER" /etc/init/xterm.conf
-process-template --mode 755 --uid vdr --gid vdr /usr/bin/removemarks
-process-template --mode 755 --uid vdr --gid vdr /usr/bin/vdr-recrepeat
+process-template --mode=755 --owner=vdr --group=vdr /usr/bin/removemarks
+process-template --mode=755 --owner=vdr --group=vdr /usr/bin/vdr-recrepeat
 
