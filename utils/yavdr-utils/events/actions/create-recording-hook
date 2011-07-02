@@ -1,3 +1,3 @@
 #!/bin/bash
 
-process-template --mode 0755 --uid vdr --gid vdr /usr/lib/vdr/vdr-recordingaction
+process-template --mode 0755 --owner vdr --group vdr /usr/lib/vdr/vdr-recordingaction
