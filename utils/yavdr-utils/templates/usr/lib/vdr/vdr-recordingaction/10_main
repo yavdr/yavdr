@@ -33,6 +33,6 @@ recordinghooks=`find $REC_HOOKS_DIR -maxdepth 1 -xtype f | sort`
 
 for recordinghook in $recordinghooks; do
     logger -t recordingaction "executing $recordinghook $action"
-    echo "$recordinghook $*" | at now
+    echo "$recordinghook $* &> /dev/null" | at now
 done
 
