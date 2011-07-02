@@ -18,5 +18,5 @@ LANG=C /sbin/status vdr | grep -q process && /sbin/initctl emit vdr-frontend-res
    fi
 <?cs /if ?>
 xset -dpms s off -display :1 
-setxkbmap $LANG
+setxkbmap
 end script
