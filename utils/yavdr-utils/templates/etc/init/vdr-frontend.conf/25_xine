@@ -17,6 +17,8 @@ if [ "$USE_AUTOCROP" = "1" ]; then
 fi
 
 while [ ! -e /tmp/vdr-xine/stream ] ; do sleep 0.1 ; done
+<?cs if:(?system.hardware.alsa.hdmi.card) ?>while ! grep -q "^ <?cs var:system.hardware.alsa.hdmi.card ?>" /proc/asound/cards ; do sleep 1 ; done<?cs /if ?>
+<?cs if:(?system.hardware.alsa.analog.card) ?>while ! grep -q "^ <?cs var:system.hardware.alsa.analog.card ?>" /proc/asound/cards ; do sleep 1 ; done<?cs /if ?>
 exec start-stop-daemon --start --exec /usr/bin/xine --user vdr --chuid vdr \
 -- $XINEOPTS vdr:/tmp/vdr-xine/stream#demux:mpeg_pes &> /tmp/vdr-frontend.log
 end script
