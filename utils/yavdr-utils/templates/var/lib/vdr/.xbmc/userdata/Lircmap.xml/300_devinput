@@ -4,8 +4,8 @@
 		<up>KEY_UP</up>
 		<down>KEY_DOWN</down>
                 <menu>KEY_MENU</menu>
-		<select>KEY_ENTER</select>
-		<back>KEY_EXIT</back>
+		<select>KEY_OK</select>
+		<back>KEY_ESC</back>
 		<left>KEY_LEFT</left>
 		<right>KEY_RIGHT</right>
 		<red>KEY_RED</red>
@@ -13,15 +13,15 @@
 		<yellow>KEY_YELLOW</yellow>
 		<blue>KEY_BLUE</blue>
 		<zero>KEY_NUMERIC_0</zero>
-		<one>KEY_NUMERIC_1</one>
-		<two>KEY_NUMERIC_2</two>
-		<three>KEY_NUMERIC_3</three>
-		<four>KEY_NUMERIC_4</four>
-		<five>KEY_NUMERIC_5</five>
-		<six>KEY_NUMERIC_6</six>
-		<seven>KEY_NUMERIC_7</seven>
-		<eight>KEY_NUMERIC_8</eight>
-		<nine>KEY_NUMERIC_9</nine>
+		<one>KEY_1</one>
+		<two>KEY_2</two>
+		<three>KEY_3</three>
+		<four>KEY_4</four>
+		<five>KEY_5</five>
+		<six>KEY_6</six>
+		<seven>KEY_7</seven>
+		<eight>KEY_8</eight>
+		<nine>KEY_9</nine>
 		<info>KEY_INFO</info>
 		<play>KEY_PLAY</play>
 		<pause>KEY_PAUSE</pause>
@@ -30,8 +30,8 @@
 		<forward>KEY_FASTFORWARD</forward>
 		<reverse>KEY_REWIND</reverse>
 		<skipplus>KEY_NEXT</skipplus>
-		<skipminus>KEY_PREVIOUS</skipminus>
-		<power>KEY_POWER</power>
+		<skipminus>KEY_BACK</skipminus>
+		<power>KEY_POWER2</power>
 		<channelplus>KEY_CHANNELUP</channelplus>
 		<channelminus>KEY_CHANNELDOWN</channelminus>
 		<title>KEY_CHANNEL</title>
@@ -43,7 +43,7 @@
 		<subtitle>KEY_SUBTITLE</subtitle>
 		<mute>KEY_MUTE</mute>
 		<myvideo>KEY_VIDEO</myvideo>
-		<mymusic>KEY_MP3</mymusic>
+		<mymusic>KEY_AUDIO</mymusic>
 		<mypictures>KEY_MEDIA</mypictures>
 		<mytv>KEY_TV</mytv>
                 <playlist>KEY_ZOOM</playlist>
