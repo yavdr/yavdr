@@ -34,8 +34,15 @@ get_devices () {
         if [ -e "/sys/class/dvb/dvb${ADAPTER_NO}.frontend${FRONTEND_NO}/device/uevent" ]; then
             DEVICE[$NO]="$DEV"
             MODALIAS=$(udevadm info --query=env -n $DEV | grep DVBMODULE)
-            MODULES[$NO]=$(clean-module-list $(get-module-list ${MODALIAS//DVBMODULE=}))
-            ALL_MODULES[$NO]=$(get-module-list ${MODALIAS//DVBMODULE=})
+            if [ -e /etc/dvb-driver/whitelist.conf ]; then
+               if ! grep -q $MODALIAS /etc/dvb-driver/whitelist.conf ; then
+                   MODULES[$NO]=$(clean-module-list $(get-module-list ${MODALIAS//DVBMODULE=}))
+                   ALL_MODULES[$NO]=$(get-module-list ${MODALIAS//DVBMODULE=})
+               else
+                   MODULES[$NO]=""
+                   ALL_MODULES[$NO]=""
+               fi
+            fi
         else
             DEVICE[$NO]="$DEV"
         fi
