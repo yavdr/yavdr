@@ -42,6 +42,9 @@ get_devices () {
                    MODULES[$NO]=""
                    ALL_MODULES[$NO]=""
                fi
+            else
+               MODULES[$NO]=$(clean-module-list $(get-module-list ${MODALIAS//DVBMODULE=}))
+               ALL_MODULES[$NO]=$(get-module-list ${MODALIAS//DVBMODULE=})
             fi
         else
             DEVICE[$NO]="$DEV"
