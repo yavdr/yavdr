@@ -142,7 +142,7 @@
 {"KEY_G", 34},
 {"KEY_GOTO", 0x162},
 {"KEY_GRAVE", 41},
-{"KEY_GREEN", 0x18f}, /* KEY_GREEN */
+{"green", 0x18f}, /* KEY_GREEN */
 {"KEY_H", 35},
 {"KEY_HANGEUL", 122},
 {"KEY_HANJA", 123},
@@ -153,7 +153,7 @@
 {"KEY_HOMEPAGE", 172},
 {"KEY_HP", 211},
 {"KEY_I", 23},
-{"KEY_INFO", 0x166},
+{"info", 0x166}, /* KEY_INFO */
 {"KEY_INSERT", 110},
 {"KEY_INS_LINE", 0x1c2},
 {"KEY_ISO", 170},
@@ -204,7 +204,7 @@
 {"KEY_MAX", 0x1ff},
 {"KEY_MEDIA", 226},
 {"KEY_MEMO", 0x18c},
-{"info", 139}, /* KEY_MENU */
+{"ehome", 139}, /* KEY_MENU */
 {"KEY_MHP", 0x16f},
 {"KEY_MINUS", 12},
 {"KEY_MODE", 0x175},
@@ -236,7 +236,7 @@
 {"KEY_PLAYPAUSE", 164},
 {"power", 116}, /* KEY_POWER */
 {"KEY_POWER2", 0x164},
-{"prew", 0x19c}, /* KEY_PREVIOUS */
+{"prev", 0x19c}, /* KEY_PREVIOUS */
 {"KEY_PREVIOUSSONG", 165},
 {"KEY_PRINT", 210},
 {"KEY_PROG1", 148},
