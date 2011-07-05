@@ -104,6 +104,7 @@ elif [ "$(dbget vdr.backend)" = "pvr350" ]; then
 if ! grep '^ivtv' /etc/modules > /dev/null; then
   echo "ivtv" >> /etc/modules
   echo "ivtvfb" >> /etc/modules
+  echo "ir_kbd_i2c" >> /etc/modules
 fi
 
   disable_plugin "dvbhddevice"
@@ -125,6 +126,7 @@ fi
 
 if [ ! "$(dbget vdr.backend)" = "pvr350" ]; then
  sed -i /"^ivtv"/d /etc/modules
+ sed -i /"^ir_kbd_i2c"/d /etc/modules
 fi
 
 # graphtft support
