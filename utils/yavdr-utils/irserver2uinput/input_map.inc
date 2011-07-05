@@ -234,8 +234,8 @@
 {"KEY_PLAYCD", 200},
 {"KEY_PLAYER", 0x183},
 {"KEY_PLAYPAUSE", 164},
-{"power", 116}, /* KEY_POWER */
-{"KEY_POWER2", 0x164},
+{"KEY_POWER", 116},
+{"power", 0x164}, /* KEY_POWER2 */
 {"prev", 0x19c}, /* KEY_PREVIOUS */
 {"KEY_PREVIOUSSONG", 165},
 {"KEY_PRINT", 210},
