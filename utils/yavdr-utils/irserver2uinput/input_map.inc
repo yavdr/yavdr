@@ -19,7 +19,7 @@
 {"KEY_AUDIO", 0x188},
 {"KEY_AUX", 0x186},
 {"KEY_B", 48},
-{"back", 158}, /* KEY_BACK */
+{"KEY_BACK", 158},
 {"KEY_BACKSLASH", 43},
 {"KEY_BACKSPACE", 14},
 {"KEY_BASSBOOST", 209},
@@ -82,7 +82,7 @@
 {"enter", 28}, /* KEY_ENTER */
 {"epg", 0x16d}, /* KEY_EPG */
 {"KEY_EQUAL", 13},
-{"KEY_ESC", 1},
+{"back", 1}, /* KEY_ESC */
 {"KEY_EXIT", 174},
 {"KEY_F10", 68},
 {"KEY_F11", 87},
