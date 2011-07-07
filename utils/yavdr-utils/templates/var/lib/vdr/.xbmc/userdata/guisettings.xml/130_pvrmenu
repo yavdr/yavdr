@@ -1,7 +1,7 @@
     <pvrmenu>
         <defaultguideview>2</defaultguideview>
         <hidevideolength>true</hidevideolength>
-        <iconpath></iconpath>
+        <iconpath>/var/lib/vdr/channellogos/</iconpath>
         <infoswitch>true</infoswitch>
         <infotime>5</infotime>
         <infotimeout>true</infotimeout>
