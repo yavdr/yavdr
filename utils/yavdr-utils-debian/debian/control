@@ -8,7 +8,7 @@ Homepage: http://yavdr.origo.ethz.ch/
 
 Package: yavdr-utils
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, sqlite3
+Depends: ${shlibs:Depends}, ${misc:Depends}, sqlite3, ir-keytable
 Suggests: lirc
 Conflicts: yavdr-startup
 Description: Utilities and WEB front end for yaVDR
