@@ -6,11 +6,6 @@ env DISPLAY=:1
 export DISPLAY
 
 script
-<?cs if:(system.x11.dualhead.enabled == "1") ?>
-DISPLAY=:1.1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png ||:
-DISPLAY=:1.1 /usr/bin/openbox --config-file /etc/openbox/rc.xml
-xset -dpms s off -display :1.1
-<?cs /if ?>
 LANG=C /sbin/status vdr | grep -q process && /sbin/initctl emit vdr-frontend-restart || /bin/true
 <?cs if:(system.hardware.nvidia.detected == "1") ?>
    if [ -e /etc/yavdr/nvidia-settings ]; then 

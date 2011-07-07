@@ -1,0 +1,14 @@
+<?cs if:(system.x11.dualhead.enabled == "1") ?>
+start on openbox-started
+<?cs /if ?>
+
+env DISPLAY=:1.1
+export DISPLAY
+
+pre-start script
+DISPLAY=:1.1 hsetroot -center /usr/share/yavdr/images/yavdr_logo.png ||:
+xset -dpms s off -display :1.1
+end script 
+
+exec /usr/bin/openbox --config-file /etc/openbox/rc.xml
+
