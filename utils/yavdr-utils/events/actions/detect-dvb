@@ -58,6 +58,11 @@ if check_usb "0b48:3007" || check_usb "0b48:300A"; then
   SOURCE="SAT"
   DRIVER="s2-liplianin-dkms"
 
+# Pinnacle Systems, Inc. [hex] PCTV Sat HDTV Pro BDA Device
+elif check_usb "2304:021f"; then
+  SOURCE="SAT"
+  DRIVER="s2-liplianin-dkms"
+
 # TeVii S470 - optional aber läuft wohl besser mit s2
 elif check_pci "d470:9022"; then
   SOURCE="SAT"
