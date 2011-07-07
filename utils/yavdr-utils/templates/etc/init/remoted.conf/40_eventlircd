@@ -19,7 +19,7 @@ mkdir -p /var/run/lirc
 
 /sbin/modprobe uinput || /bin/true
 
-exec /usr/sbin/eventlircd -f
+exec /usr/sbin/eventlircd -f --repeat-filter
 end script
 <?cs /if ?>
 
