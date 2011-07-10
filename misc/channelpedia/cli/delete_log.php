@@ -26,7 +26,7 @@
  * this is a simple helper script to change stuff in the database
  * meant for maintainance purposes. Put in a SQL query you want
  * to execute and execute it once, then disable this script again.
- *
+ */
 //delete all log entries from table channel_update_log
 require_once '../classes/class.config.php';
 require_once '../classes/class.dbConnection.php';
@@ -35,6 +35,16 @@ $db = dbConnection::getInstance();
 //$query = $db->exec("DELETE FROM channel_update_log");
 //$query = $db->exec("UPDATE channels SET source='C[de_KabelDeutschland_Speyer]' where source='C[de_KabelDeutschland]'");
 //$query = $db->exec("DELETE FROM channels WHERE x_last_confirmed < 1303053421");
+/*
+
+$query = $db->exec("CREATE TABLE upload_log(
+    timestamp TIMESTAMP,
+    user TEXT,
+    source TEXT,
+    description TEXT
+);");
 */
+
+$query = $db->exec("ALTER TABLE channels ADD column x_utf8;");
 
 ?>

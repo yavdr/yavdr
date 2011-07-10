@@ -33,7 +33,7 @@ class GermanyWilhelmTel extends ruleBase {
             "country" => "de",
             "lang" => "deu", //this is the language code used in the channels audio description
             "validForSatellites" => array(),
-            "validForCableProviders" => array("C[de_WilhelmTel]"),
+            "validForCableProviders" => array("C[de_WilhelmTel]", "C[de_Alice_Hamburg]"),
             "validForTerrProviders" => array(),//none
         );
     }

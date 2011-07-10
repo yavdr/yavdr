@@ -45,6 +45,12 @@
 
 define("CUSTOM_PATH", "");
 
+define("PIWIK_TRACKING_ENABLED", false);
+//define("PIWIK_TRACKING_REMOTE_URL", "");
+//define("PIWIK_TRACKING_IDSITE", 0);
+//define("PIWIK_TRACKING_AUTH_TOKEN", "");
+
+
 
 $default_lang_de_cable_provider = array("de");
 

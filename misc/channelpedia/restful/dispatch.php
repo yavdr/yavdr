@@ -2,6 +2,7 @@
 
 // load Tonic library
 require_once '../classes/lib/tonic.php';
+require_once '../classes/lib/PiwikTracker.php';
 require_once '../classes/class.config.php';
 require_once '../classes/class.dbConnection.php';
 require_once '../classes/class.channelGroupIterator.php';
@@ -17,9 +18,18 @@ $request = new Request(array(
     'baseUri' => '/restful'
 ));
 
+if (PIWIK_TRACKING_ENABLED)
+    PiwikTracker::$URL = PIWIK_TRACKING_REMOTE_URL;
+
 try {
     $resource = $request->loadResource();
     $response = $resource->exec($request);
+    if (PIWIK_TRACKING_ENABLED){
+        $piwikTracker = new PiwikTracker( PIWIK_TRACKING_IDSITE, PIWIK_TRACKING_REMOTE_URL );
+        $piwikTracker->setTokenAuth( PIWIK_TRACKING_AUTH_TOKEN );
+        $piwikTracker->setUrl( "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] );
+        $piwikTracker->doTrackPageView( $_SERVER['REQUEST_URI'] );
+    }
 } catch (ResponseException $e) {
     switch ($e->getCode()) {
     case Response::UNAUTHORIZED:
@@ -31,4 +41,5 @@ try {
     }
 }
 $response->output();
+
 ?>

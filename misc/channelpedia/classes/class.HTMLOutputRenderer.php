@@ -466,7 +466,6 @@ class HTMLOutputRenderer{
         $nice_html_output =
             $this->getHTMLHeader($pagetitle).
             '<h1>'.htmlspecialchars( $pagetitle ).'</h1>
-            <p>Last updated on: '. date("D M j G:i:s T Y").'</p>
             <ul>
         ';
         foreach ($this->linklist as $line){
