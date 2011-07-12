@@ -1,0 +1,22 @@
+[audio]
+   path = /srv/audio
+   comment = Audio
+   browseable = yes
+   guest ok = yes
+# Angemeldete Benutzer dürfen auch schreiben
+   writeable = yes
+   browseable = yes
+# Rechte bei neuen Dateien/Verzeichnissen
+# Neue Dateien werden mit diesen Rechten versehen
+   create mode = 0664
+# Neue Verzeichnisse werden mit diesen Rechten versehen
+   directory mode = 0775
+# Benutzer und Gruppenzugehörigkeit
+# Egal mit welchen Daten sich ein Benutzer am Server anmeldet
+   force user = vdr
+# Die Daten werden lokal mit diesen Dateizugehörigkeiten abgelegt
+   force group = vdr
+   
+# symlinks werden verfolgt
+   follow symlinks = yes
+   wide links = yes

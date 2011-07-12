@@ -1,6 +1,6 @@
-[video]
-   path = /srv/vdr/video.00
-   comment = Video
+[picture]
+   path = /srv/picture
+   comment = Picture
    browseable = yes
    guest ok = yes
 # Angemeldete Benutzer dürfen auch schreiben
