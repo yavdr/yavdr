@@ -51,26 +51,9 @@ elif check_module "dvb-ttpci" || check_module "dvb_ttpci" ; then
   dbset vdr.frontend="disabled"
   dbset vdr.backend="sdff"
   /usr/bin/signal-event change-frontend
-fi
-
-# TT 3600 USB
-if check_usb "0b48:3007" || check_usb "0b48:300A"; then
-  SOURCE="SAT"
-  DRIVER="s2-liplianin-dkms"
-
-# Pinnacle Systems, Inc. [hex] PCTV Sat HDTV Pro BDA Device
-elif check_usb "2304:021f"; then
-  SOURCE="SAT"
-  DRIVER="s2-liplianin-dkms"
-
-# TeVii S470 - optional aber läuft wohl besser mit s2
-elif check_pci "d470:9022"; then
-  SOURCE="SAT"
-  DRIVER="s2-liplianin-dkms"
-fi
 
 # PVR350
-if check_pci "0070:4000" ; then
+elif check_pci "0070:4000" ; then
   dbset vdr.setup="custom"
   dbset vdr.frontend="disabled"
   dbset vdr.backend="pvr350"
@@ -98,6 +81,21 @@ elif check_usb "1c73:861f"; then
 
 # DVBWorld DVB-S2 PCIE2006
 elif check_pci "1ADE:2032"; then
+  SOURCE="SAT"
+  DRIVER="s2-liplianin-dkms"
+
+# TT 3600 USB
+elif check_usb "0b48:3007" || check_usb "0b48:300A"; then
+  SOURCE="SAT"
+  DRIVER="s2-liplianin-dkms"
+
+# Pinnacle Systems, Inc. [hex] PCTV Sat HDTV Pro BDA Device
+elif check_usb "2304:021f"; then
+  SOURCE="SAT"
+  DRIVER="s2-liplianin-dkms"
+
+# TeVii S470 - optional aber läuft wohl besser mit s2
+elif check_pci "d470:9022"; then
   SOURCE="SAT"
   DRIVER="s2-liplianin-dkms"
 
