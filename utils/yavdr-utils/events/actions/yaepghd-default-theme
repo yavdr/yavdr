@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [ "$(dbget vdr.backend)" = "xineliboutput" ] || [ "$(dbget vdr.backend)" = "xine" ]; then
+##  bitte ausfüllen :-)
+fi
