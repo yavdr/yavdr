@@ -26,7 +26,7 @@ case "$1" in
 	            signal-event addons-update
                     ;;
                 vdr-plugin-yaepghd)
-	            signal-event yaepghd-plugin
+	            signal-event.real yaepghd-plugin
                     ;;
             esac
         done
