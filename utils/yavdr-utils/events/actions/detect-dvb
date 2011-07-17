@@ -101,10 +101,6 @@ elif check_pci "d470:9022"; then
 
 # dann erkenne v4l-dvb-dkms wenn kein s2
 
-# Hauppauge WinTV-NOVA-HD-S2
-elif check_pci "14f1:0800"; then
-  SOURCE="SAT"
-  DRIVER="v4l-dvb-dkms"
 fi
 
 #echo $DRIVER
