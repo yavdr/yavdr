@@ -72,7 +72,7 @@ if check_usb "9022:d660"; then
   DRIVER="s2-liplianin-dkms"
 
 # TeVii S480
-elif check_pci "9022:d482" || check_pci "9022:d481"; then
+elif check_usb "9022:d482" || check_usb "9022:d481"; then
   SOURCE="SAT"
   DRIVER="s2-liplianin-dkms"
 
