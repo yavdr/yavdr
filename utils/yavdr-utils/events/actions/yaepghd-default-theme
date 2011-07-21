@@ -1,10 +1,23 @@
 #!/bin/bash
 
+SETUPCONF=/var/lib/vdr/setup.conf
+
 if [ "$(dbget vdr.backend)" = "xineliboutput" ] || [ "$(dbget vdr.backend)" = "xine" ]; then
 
-   if ! grep -q '^yaepghd.Theme =.*' /var/lib/vdr/setup.conf;then
-     echo "yaepghd.Theme = Vid_Win_1920" >> /var/lib/vdr/setup.conf
+# default yaepghd.Theme = Vid_Win_1920
+
+   if ! grep -q '^yaepghd.Theme =.*' $SETUPCONF;then
+     echo "yaepghd.Theme = Vid_Win_1920" >> $SETUPCONF
    else
-     sed -i 's/yaepghd.Theme =.*/yaepghd.Theme = Vid_Win_1920/g' /var/lib/vdr/setup.conf;
+     sed -i 's/yaepghd.Theme =.*/yaepghd.Theme = Vid_Win_1920/g' $SETUPCONF;
    fi
+
+# default yaepghd.EpgImages = 1
+
+if ! grep -q '^yaepghd.EpgImages =.*' $SETUPCONF;then 
+     echo "yaepghd.EpgImages = 1" >> $SETUPCONF
+   else
+     sed -i 's/yaepghd.EpgImages =.*/yaepghd.EpgImages = 1/g' $SETUPCONF;
+   fi
+
 fi
