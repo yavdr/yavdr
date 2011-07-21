@@ -1,5 +1,10 @@
 #!/bin/bash
 
 if [ "$(dbget vdr.backend)" = "xineliboutput" ] || [ "$(dbget vdr.backend)" = "xine" ]; then
-##  bitte ausfüllen :-)
+
+ if ! grep -q '^yaepghd.Theme =.*' /var/lib/vdr/setup.conf;then
+ echo "yaepghd.Theme = Vid_Win_1920" >> /var/lib/vdr/setup.conf;else
+ sed -i 's/yaepghd.Theme =.*/yaepghd.Theme = Vid_Win_1920/g' /var/lib/vdr/setup.conf;
+ fi
+
 fi
