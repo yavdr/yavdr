@@ -14,7 +14,7 @@ if [ "$(dbget vdr.backend)" = "xineliboutput" ] || [ "$(dbget vdr.backend)" = "x
 
 # default yaepghd.EpgImages = 1
 
-if ! grep -q '^yaepghd.EpgImages =.*' $SETUPCONF;then 
+   if ! grep -q '^yaepghd.EpgImages =.*' $SETUPCONF;then
      echo "yaepghd.EpgImages = 1" >> $SETUPCONF
    else
      sed -i 's/yaepghd.EpgImages =.*/yaepghd.EpgImages = 1/g' $SETUPCONF;
