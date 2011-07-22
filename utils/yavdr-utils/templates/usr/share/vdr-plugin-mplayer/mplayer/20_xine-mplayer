@@ -22,33 +22,41 @@ SUFFIX=$(echo -e "${FILE:$[${#FILE}-4]:4}" | tr [A-Z] [a-z])
 if test \( "$FILE" == "$DVDFiles/DVD" -o "$FILE" == "$DVDFiles/VCD" \) -a -n "$DVDFiles" -a -n "$DVD"; then
     if test "$FILE" == "$DVDFiles/DVD"; then
       if $DVDNAV; then
-        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $DVD dvdnav://"
+        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=<?cs var:system.hardware.alsa.hdmi.card ?>.<?cs var:system.hardware.alsa.hdmi.device ?>
+ -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $DVD dvdnav://"
       else
-        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -slave -ontop -v -noconfig all  -dvd-device $DVD dvd://"
+        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=<?cs var:system.hardware.alsa.hdmi.card ?>.<?cs var:system.hardware.alsa.hdmi.device ?>
+ -afm hwac3  -alang de,en -slave -ontop -v -noconfig all  -dvd-device $DVD dvd://"
       fi
     fi
     if test "$FILE" == "$DVDFiles/VCD"; then
-        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -slave  -ontop -v -noconfig all  -cdrom-device $DVD vcd://"
+        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=<?cs var:system.hardware.alsa.hdmi.card ?>.<?cs var:system.hardware.alsa.hdmi.device ?>
+ -afm hwac3  -alang de,en -slave  -ontop -v -noconfig all  -cdrom-device $DVD vcd://"
     fi
     unset FILE
 elif test "${SUFFIX}" == ".cue"; then
-    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -slave -ontop -v -noconfig all cue://$FILE:2"
+    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=<?cs var:system.hardware.alsa.hdmi.card ?>.<?cs var:system.hardware.alsa.hdmi.device ?>
+ -afm hwac3  -alang de,en -slave -ontop -v -noconfig all cue://$FILE:2"
     unset FILE
 elif test \( "$SUFFIX" == ".img" -o "$SUFFIX" == ".iso" \); then
     if $DVDNAV; then
-       CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $FILE dvdnav://"
+       CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=<?cs var:system.hardware.alsa.hdmi.card ?>.<?cs var:system.hardware.alsa.hdmi.device ?>
+ -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $FILE dvdnav://"
     else
-        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -slave -ontop -v -noconfig all dvd://"
+        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=<?cs var:system.hardware.alsa.hdmi.card ?>.<?cs var:system.hardware.alsa.hdmi.device ?>
+ -afm hwac3  -alang de,en -slave -ontop -v -noconfig all dvd://"
     fi
     unset FILE
 elif  (( [[ "$FILE" == *VIDEO_TS* ]] || [[ "$FILE" == *video_ts* ]] || [[ "$FILE" == *VTS_* ]] || [[ "$FILE" == *vts_* ]] ) && $DVDNAV ); then
     d=$(dirname $FILE)
     logger -s -- "$d"
-    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $FILE dvdnav://"
+    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=<?cs var:system.hardware.alsa.hdmi.card ?>.<?cs var:system.hardware.alsa.hdmi.device ?>
+ -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $FILE dvdnav://"
     unset d
     unset FILE
 else
-    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3 -cache 8192 -slave -ontop -v -noconfig all -idx"
+    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=<?cs var:system.hardware.alsa.hdmi.card ?>.<?cs var:system.hardware.alsa.hdmi.device ?>
+ -afm hwac3 -cache 8192 -slave -ontop -v -noconfig all -idx"
 
 fi
 
