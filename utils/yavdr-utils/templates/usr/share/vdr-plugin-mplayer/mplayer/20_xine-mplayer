@@ -1,4 +1,4 @@
-<?cs if:vdr.backend == "xine" ?>
+<?cs if:(vdr.backend == "xine" || vdr.backend == "xineliboutput") ?>
 export DISPLAY=:1
 svdrpsend REMO off
 
