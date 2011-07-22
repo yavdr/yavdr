@@ -1,3 +1,4 @@
+<?cs if:vdr.backend == "xine" ?>
 export DISPLAY=:1
 svdrpsend REMO off
 
@@ -54,3 +55,4 @@ fi
 $AUDIOSET
 $CMDLINE "$FILE"
 svdrpsend REMO on
+<?cs /if ?>
