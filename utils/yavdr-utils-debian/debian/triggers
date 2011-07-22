@@ -1,3 +1,4 @@
 interest yavdr-post-upgrade
 interest yavdr-addons-update
 interest vdr-plugin-yaepghd-trigger
+interest vdr-plugin-mplayer-trigger
