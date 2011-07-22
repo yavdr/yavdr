@@ -1,9 +1,9 @@
 <?cs if:(vdr.backend == "xine" || vdr.backend == "xineliboutput") ?>
 export DISPLAY=:1
-svdrpsend REMO off
+/usr/bin/vdr-dbus-send /Remote remote.Disable
 
 MPLAYER="/usr/bin/mplayer"
-AUDIOSET="/usr/bin/iecset audio 1"
+#AUDIOSET="/usr/bin/iecset audio 1"
 FILE="$1"
 
 # What is your DVD-ROM device ?
@@ -60,7 +60,7 @@ else
 
 fi
 
-$AUDIOSET
+#$AUDIOSET
 $CMDLINE "$FILE"
-svdrpsend REMO on
+/usr/bin/vdr-dbus-send /Remote remote.Enable
 <?cs /if ?>
