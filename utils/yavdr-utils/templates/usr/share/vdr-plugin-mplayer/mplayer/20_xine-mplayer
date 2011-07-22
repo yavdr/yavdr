@@ -1,0 +1,56 @@
+export DISPLAY=:1
+svdrpsend REMO off
+
+MPLAYER="/usr/bin/mplayer"
+AUDIOSET="/usr/bin/iecset audio 1"
+FILE="$1"
+
+# What is your DVD-ROM device ?
+DVD="/dev/dvd"
+
+# use dvdnav for playing DVDs
+# if set to false, mplayer will use dvd://
+DVDNAV="true"
+
+# Where to find DVD/VCD dummy files? (just a fake and empty text file for the plugin)
+DVDFiles="/var/lib/vdr-plugin-mplayer/DVD-VCD"
+
+# get the file extension of the video
+SUFFIX=$(echo -e "${FILE:$[${#FILE}-4]:4}" | tr [A-Z] [a-z])
+
+if test \( "$FILE" == "$DVDFiles/DVD" -o "$FILE" == "$DVDFiles/VCD" \) -a -n "$DVDFiles" -a -n "$DVD"; then
+    if test "$FILE" == "$DVDFiles/DVD"; then
+      if $DVDNAV; then
+        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $DVD dvdnav://"
+      else
+        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -slave -ontop -v -noconfig all  -dvd-device $DVD dvd://"
+      fi
+    fi
+    if test "$FILE" == "$DVDFiles/VCD"; then
+        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -slave  -ontop -v -noconfig all  -cdrom-device $DVD vcd://"
+    fi
+    unset FILE
+elif test "${SUFFIX}" == ".cue"; then
+    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -slave -ontop -v -noconfig all cue://$FILE:2"
+    unset FILE
+elif test \( "$SUFFIX" == ".img" -o "$SUFFIX" == ".iso" \); then
+    if $DVDNAV; then
+       CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $FILE dvdnav://"
+    else
+        CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -slave -ontop -v -noconfig all dvd://"
+    fi
+    unset FILE
+elif  (( [[ "$FILE" == *VIDEO_TS* ]] || [[ "$FILE" == *video_ts* ]] || [[ "$FILE" == *VTS_* ]] || [[ "$FILE" == *vts_* ]] ) && $DVDNAV ); then
+    d=$(dirname $FILE)
+    logger -s -- "$d"
+    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3  -alang de,en -nocache -slave -ontop -v -noconfig all  -dvd-device $FILE dvdnav://"
+    unset d
+    unset FILE
+else
+    CMDLINE="$MPLAYER -osdlevel 1 -vo vdpau  -vc ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,ffwmv3vdpau,ffodivx -fs  -monitoraspect 16:9 -ao alsa:device=hw=0.1 -afm hwac3 -cache 8192 -slave -ontop -v -noconfig all -idx"
+
+fi
+
+$AUDIOSET
+$CMDLINE "$FILE"
+svdrpsend REMO on
