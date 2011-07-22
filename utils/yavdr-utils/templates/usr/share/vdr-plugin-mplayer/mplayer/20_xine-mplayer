@@ -1,5 +1,5 @@
 <?cs if:(vdr.backend == "xine" || vdr.backend == "xineliboutput") ?>
-export DISPLAY=:1
+export DISPLAY=:1`dbget vdr.tempdisplay`
 /usr/bin/vdr-dbus-send /Remote remote.Disable
 
 MPLAYER="/usr/bin/mplayer"
