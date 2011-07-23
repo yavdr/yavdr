@@ -1,3 +1,4 @@
 #!/bin/bash
 
 process-template --mode 755 /usr/share/vdr-plugin-mplayer/mplayer
+process-template /usr/share/vdr-plugin-mplayer/mplayer.conf

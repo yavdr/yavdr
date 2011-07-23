@@ -1,0 +1,133 @@
+<?cs if:vdr.backend == "pvr350" ?>
+# Config File for mplayer.sh ...
+#
+# ...configured for cvidix ivtv
+
+# $Id: mplayer.sh.conf,v 1.24 2004/03/08 13:08:26 juri Exp $
+# modified by Dr. Seltsam for PVR350
+# Version 2009-06-30
+# ***
+# *** Mandatory Values 
+# *** 
+#
+# Where to find mplayer executable ?
+MPLAYER="/usr/bin/mplayer"
+
+# Where to find svdrpsend.pl executable ?
+SVDRPSEND="/usr/bin/svdrpsend"
+
+# Video out device
+VO="cvidix -screenw 720 -screenh 576"
+
+# Audio output device and possible additional options
+AO="alsa"
+#AO="v4l2"
+
+# we need at least the following Y resolution to show 
+# the video at full screen (-fs option).
+# (set to 0, if you want a full screen for videos of every resolution)
+MINIMUM_Y_FOR_FS="0"
+
+# Set the following to 'true' or 'false' according to
+# the capabilities of your TV set.
+#
+# In case of NTSC="false", see also DETC_FILTER below
+#
+# At least _one_ has to be true!
+# If your TV can do both, I strongly recommend to keep both set to "true"!
+PAL="true"
+NTSC="true"
+
+# Use mplayer's -speed option for videos with a different
+# frames/s value than the selected TV norm
+#
+# this setting is only used if either PAL or NTSC
+# is set to false!
+USE_SPEED="true"
+
+# set to true if you want to use AC3 output
+USEAC3="false"
+
+# how to play AC3 audio?
+# for AC3 via sound card (ALSA driver):
+AC3AOUT="-ao alsa9 -ac hwac3"
+
+# volume gain for AC3
+AC3_GAIN="-af volume=+20"
+
+# what aspect ratio has your TV set?
+# either 4/3 (conventional) or 16/9 (widescreen)
+# auto will use VideoFormat-setting in vdr`s setup.conf
+#TV_ASPECT="16/9"
+#TV_ASPECT="4/3"
+TV_ASPECT="auto"
+
+# ***
+# *** Optional Setting *** Simply Remove them if they do not fit your needs...
+# ***
+
+# What detelecinig filter should we use to play NTSC material as PAL?
+# This is only used if you have set NTSC to false and PAL to true.
+# If you use MPlayer versions 1.0 or higher I recommend to use the
+# following setting "ivtc=1", but this is not supported by MPlayer 0.9x
+DETC_FILTER="ivtc=1"
+#DETC_FILTER="detc=dr=2:am=1"
+
+# Cache Option for MPlayer
+CACHE="4096"
+
+# Framedrop
+#FRAMEDROP="true"
+FRAMEDROP="false"
+
+# h264
+H264_OPTIONS="-lavdopts threads=2:fast:skiploopfilter=all -sws 0"
+
+# Lirc RC File
+#LIRCRC="/video/.lircrc"
+
+# Where to find DVD/VCD dummy files? (just a fake and empty text file for the plugin)
+# Example: create two empty text files (DVD and VCD) in /video/plugins/DVD-VCD/
+# !!!The files must be named VCD and DVD (all capital letters)!!!
+DVDFiles="/var/lib/vdr-plugin-mplayer/DVD-VCD"
+
+# What is your DVD-ROM device ?
+DVD="/dev/dvd"
+
+# What languages do your DVD's use ?
+DVDLANG="de"
+
+# extra DVD options
+DVDOPTIONS="-af volume=+10"
+
+# use dvdnav for playing DVDs
+# if set to false, mplayer will use dvd://
+DVDNAV="true"
+#DVDNAV="false"
+
+# extra VCD options
+VCDOPTIONS=""
+
+# should MPEG files be played directly through the decoder (-vo v4l2) if possible?
+# warning: For unknown reason this gives bad results when pvrinput is running
+MPEG_DIRECT="false"
+#MPEG_DIRECT="true"
+
+#Subtitle options
+#SUBPOS="80"		#Vertical position 0-100
+#SUBCOLOR="0"		#Background color 0=black 255=white
+#SUBALPHA="30"		#Background transparency (0-255)
+
+# Userdefined Options - make sure they do not collide with options
+# used in mplayer.sh
+# Only for experienced users
+# USERDEF="-what -option you ever -like to give -to mplayer"
+USERDEF="-quiet"
+#USERDEF="-v"
+
+# set to true to enable debugging output
+DEBUG="true"
+
+# End of Options
+<?cs /if ?>
+
