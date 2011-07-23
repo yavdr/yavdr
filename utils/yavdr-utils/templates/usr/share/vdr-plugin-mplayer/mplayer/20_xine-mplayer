@@ -1,6 +1,6 @@
 <?cs if:(vdr.backend == "xine" || vdr.backend == "xineliboutput") ?>
 export DISPLAY=:1`dbget vdr.tempdisplay`
-/usr/bin/vdr-dbus-send /Remote remote.Disable
+#/usr/bin/vdr-dbus-send /Remote remote.Disable
 
 MPLAYER="/usr/bin/mplayer"
 #AUDIOSET="/usr/bin/iecset audio 1"
@@ -62,5 +62,5 @@ fi
 
 #$AUDIOSET
 $CMDLINE "$FILE"
-/usr/bin/vdr-dbus-send /Remote remote.Enable
+#/usr/bin/vdr-dbus-send /Remote remote.Enable
 <?cs /if ?>
