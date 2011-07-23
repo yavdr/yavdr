@@ -1,0 +1,18 @@
+#!/bin/bash
+
+SETUPCONF=/var/lib/vdr/setup.conf
+
+if ! grep -q '^mplayer.KeyCmd.*' $SETUPCONF;then
+
+echo "mplayer.KeyCmd0 = dvdnav menu
+mplayer.KeyCmd1 = audio_delay -0.1
+mplayer.KeyCmd2 = dvdnav up
+mplayer.KeyCmd3 = audio_delay +0.1
+mplayer.KeyCmd4 = dvdnav left
+mplayer.KeyCmd5 = dvdnav select
+mplayer.KeyCmd6 = dvdnav right
+mplayer.KeyCmd7 = dvdnav prev
+mplayer.KeyCmd8 = dvdnav down
+mplayer.KeyCmd9 = switch_audio" >> $SETUPCONF
+
+fi
