@@ -1,3 +1,9 @@
 #!/bin/bash
 
+if [ -e /etc/default/locale ]; then
+. /etc/default/locale
+fi
+
+export LANG
+
 process-template /etc/vdr/plugins/mplayersources.conf

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -e /etc/default/locale ]; then
+. /etc/default/locale
+fi
+
+export LANG
 
 mkdir -p /var/lib/vdr/.xbmc/userdata/Database/
 
