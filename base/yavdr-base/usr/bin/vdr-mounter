@@ -10,7 +10,7 @@ case $1 in
         --mount)
                 [ ! -h $VIDEO_DIR/"$NAME" ] && ln -s "$DIR" $VIDEO_DIR/"$NAME"
                 if [ "$(find $DIR -name *.rec)" != "" ]; then
-                    vdr-dbus-send /Recording recording.Update
+                    vdr-dbus-send /Recordings recording.Update
                     chown vdr:vdr $VIDEO_DIR/.update
                     vdr-dbus-send /Skin skin.QueueMessage string:''$NAME' mounted (with recordings)'
                 else

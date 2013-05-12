@@ -1,6 +1,6 @@
 ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="19c2", ATTR{idProduct}=="6a11", GROUP="vdr" , RUN+="/usr/sbin/LCDd -s true -c /etc/LCDd.conf.mdm166a"
 ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="19c2", ATTR{idProduct}=="6a11", RUN+="/usr/bin/svdrpsend PLUG proxy RSUM targavfd"
-#ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="19c2", ATTR{idProduct}=="6a11", RUN+="/usr/bin/vdr-dbus-send /Plugins/targvfd plugin.SVDRPCommand string:'on'"
+#ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="19c2", ATTR{idProduct}=="6a11", RUN+="/usr/bin/vdr-dbus-send /Plugins/targvfd plugin.SVDRPCommand string:'on' string:''"
 ACTION=="remove", SUBSYSTEM=="usb", ENV{ID_VENDOR_ID}=="19c2", ENV{ID_MODEL_ID}=="6a11", ENV{DEVTYPE}=="usb_device", RUN+="/usr/bin/killall /usr/sbin/LCDd"
 ACTION=="remove", SUBSYSTEM=="usb", ENV{ID_VENDOR_ID}=="19c2", ENV{ID_MODEL_ID}=="6a11", ENV{DEVTYPE}=="usb_device", RUN+="/usr/bin/svdrpsend PLUG proxy SUSP targavfd"
-#ACTION=="remove", SUBSYSTEM=="usb", ENV{ID_VENDOR_ID}=="19c2", ENV{ID_MODEL_ID}=="6a11", ENV{DEVTYPE}=="usb_device", RUN+="vdr-dbus-send /Plugins/targvfd plugin.SVDRPCommand string:'off'"
+#ACTION=="remove", SUBSYSTEM=="usb", ENV{ID_VENDOR_ID}=="19c2", ENV{ID_MODEL_ID}=="6a11", ENV{DEVTYPE}=="usb_device", RUN+="vdr-dbus-send /Plugins/targvfd plugin.SVDRPCommand string:'off' string:''"

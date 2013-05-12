@@ -19,12 +19,12 @@ if [ ! -z $STANDALONE ] ; then
 fi
 
 vdr-dbus-send /Remote remote.Disable
-vdr-dbus-send /Plugins/targvfd plugin.SVDRPCommand string:'off' ||:
+vdr-dbus-send /Plugins/targvfd plugin.SVDRPCommand string:'off' string:'' ||:
 end script
 
 post-stop script
 /bin/rm -f /tmp/.standalone 
-vdr-dbus-send /Plugins/targvfd plugin.SVDRPCommand string:'on' ||:
+vdr-dbus-send /Plugins/targvfd plugin.SVDRPCommand string:'on' string:'' ||:
 vdr-dbus-send /Remote remote.Enable
 /sbin/initctl emit --no-wait vdr-frontend-restart
 end script
