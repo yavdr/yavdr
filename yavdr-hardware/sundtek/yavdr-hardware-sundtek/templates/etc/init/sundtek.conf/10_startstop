@@ -1,2 +1,2 @@
-start on (local-filesystems and stopped networking)
+start on (local-filesystems and static-network-up)
 stop on runlevel [!2345]
